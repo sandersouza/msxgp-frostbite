@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "input": {
+    "path": "references/roms/frostbite.bin",
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "md5": "4ca73eb959299471788f0b685c3ba0b5",
+    "layout": "4K",
+    "trailing_words": {
+      "unused_nmi_word": 60090,
+      "reset": 61440,
+      "irq_word": 61440
+    }
+  },
+  "authority": {
+    "catalog_name": "Frostbite (1983) (Activision)",
+    "catalog_model": "AX-031",
+    "catalog_author": "Activision, Steve Cartwright",
+    "region_status": "NTSC detected by Stella; measured timing is reported separately",
+    "commercial_revision": "not independently established; no revision suffix in the matching catalog entry",
+    "dump_provenance": "owner-supplied local image; upstream dump provenance unknown",
+    "cpu": "6507",
+    "cartridge_bus_window": "$1000-$1FFF, mirrored in the CPU address space",
+    "disassembly_window": "$F000-$FFFF",
+    "tail_note": "6507 NMI/IRQ pins are not exposed; report raw trailing words without treating unused_nmi_word as an executable interrupt vector"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/stella-emu/stella/blob/d55b1aec0d067a4c901a6dcdf81cb8f579685659/src/emucore/stella.pro",
+      "match": "MD5 4ca73eb959299471788f0b685c3ba0b5"
+    },
+    {
+      "url": "https://www.atariage.com/manual_html_page.php?SoftwareLabelID=199",
+      "role": "original Activision manual reproduction; corroboration, not binary revision proof"
+    }
+  ]
+}
