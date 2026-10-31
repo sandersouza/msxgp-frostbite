@@ -25,8 +25,6 @@ Link reproducible checks, exact source/target artifact identities, limitations a
 
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 
-## Tracking
-
 ## Delivery evidence
 
 - [CI/tracking checklist](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/6-original-free-ci-tracking/docs/ci-and-tracking.md), [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/6-original-free-ci-tracking/docs/handoffs/issue-6.md).
