@@ -1,6 +1,6 @@
 # Reconstruct and annotate the Atari 2600 disassembly and state map
 
-Planning ID: P03. Status: approved backlog; implementation has not started.
+Planning ID: P03. Status: implementation delivered on the issue branch; review/integration pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/3
 
 ## Goal
@@ -25,7 +25,16 @@ Link reproducible checks, exact source/target artifact identities, limitations a
 
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 
-## Tracking
+## Delivery evidence
+
+- [Reconstruction and reviewed state map](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/3-reference-disassembly/docs/reference-disassembly.md), [compact map](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/3-reference-disassembly/references/disassembly-map.json), and [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/3-reference-disassembly/docs/handoffs/issue-3.md).
+- Canonical original and two fresh reconstructed outputs: 4096 bytes, SHA-256 `cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834`.
+- 26 original-free utility tests pass. Real DiStella/DASM round-trip passes; the short-input-name regression covers the pinned backend's filename limit.
+- Reviewed partition: 3374 code bytes / 1769 instructions, 722 data/trailing-word bytes, 19 JSR entries / 34 call sites, all 128 physical RAM bytes mapped. Direct targets checked at instruction boundaries.
+- Static review documents shared entries/flags, all hardware reads, collision clear/sample windows, reset preservation, fractional arithmetic, decimal score/temperature and RNG sites.
+- Dynamic contracts, complete path coverage/aligned replay and native/physical acceptance remain #4/#7 and later work. No MSX ROM or release is produced by this research issue.
+
+## Project metadata
 
 Project: [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).
 Type: Task (repository native issue types unavailable at planning inspection).

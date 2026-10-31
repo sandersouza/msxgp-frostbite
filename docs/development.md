@@ -12,8 +12,9 @@ No extra accessories. The owner approved the
   262 scanlines / 19,912 CPU cycles per frame. See the
   [inventory/timing evidence](reference-inventory.md) for startup observations,
   revision/provenance limits and pending full-state replay repeatability.
-- A byte-identical initial automatic disassembly/rebuild; semantic labels still
-  need research in issue #3.
+- A verified [disassembly reconstruction and state map](reference-disassembly.md):
+  byte-identical rebuild, reviewed routine/RAM/hardware boundaries and explicit
+  open contracts for issues #4/#7.
 - The [issue roadmap](superpowers/specs/2026-10-31-frostbite-backlog.md),
   [workflow](project-workflow.md) and verified
   [baseline preservation](baseline-preservation.md).
@@ -23,6 +24,8 @@ No extra accessories. The owner approved the
 Reference utilities now run with Python's standard library:
 `python3 -B scripts/reference_inventory.py` and
 `python3 -B scripts/source_timing.py` (the latter requires Stella 7.0/Debugger).
+`python3 -B scripts/reference_rebuild.py` reconstructs the original with local
+DiStella/DASM and compares all bytes; generated source/binaries remain ignored.
 `python3 -B -m unittest discover -s tests -v` runs original-free utility tests.
 
 There is no Frostbite MSX scaffold, build command, gameplay ROM or CI acceptance
