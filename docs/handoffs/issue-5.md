@@ -6,8 +6,9 @@ Branch: `codex/chore/5-macos-toolchain-scaffold`.
 Base: `5f2cb273ce80d0a6e37f4bc4aaff13f09ce47ff4` (issue #4 integration).
 Environment commit: `20f3c2e65994eb895c51f65cbfea774b82e17f87`.
 Scaffold/runtime checkpoint: `0ed3aa72f8d79b7d0000108c19aab82937287f77`.
-Final reviewed head/integration: this issue's delivery PR; the release tag and
-attached build.json identify the exact final tested source commit.
+Reviewed implementation head: `9681757e6dffbacacc0007f372f0dbd3bc1e46a4`.
+Integrated/tested release source: `8363b3f391caeef03dcd08ab380d26280e227831` (PR #23).
+The release tag and attached build.json identify these exact tested sources.
 Release target: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic
 
 ## Delivered scope
@@ -125,3 +126,19 @@ findings were reported. No second review cycle was requested.
 Review did not certify Intel/Rosetta, cold macOS installation, perceived audio,
 PAL, physical hardware, universal GUI capture or remote publication. These
 remain explicit limits; release publication is separately verified at delivery.
+
+## Published delivery and transfer
+
+Prerelease v0.0.1-diagnostic was published and all five assets were downloaded
+from GitHub into a fresh directory. SHA256SUMS passed for ROM, build.json,
+smoke.json and release-notes.md; ROM SHA-256 matches the value above. Both
+reports identify clean source8363b3f391caeef03dcd08ab380d26280e227831. The published
+release is a prerelease, not a draft; its target is the exact integrated commit.
+The integrated source passed all53 tests and a fresh bounded headless smoke
+before packaging/publication. Documentation-only closure adds no ROM version.
+
+Issue #6 is dependency-ready after #5 closure: configure original-free CI and
+idempotent scoped project tracking. No implementation files are pending; this
+chat transfers the shared checkout clean, with generated evidence ignored.
+Use the published release for human tests; audio/PAL/physical/Intel/cold-host
+limitations above remain pending and do not block synthetic CI work.
