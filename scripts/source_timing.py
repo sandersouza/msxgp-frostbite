@@ -164,6 +164,7 @@ def capture(rom: Path, stella: str, output_dir: Path) -> dict:
     executable = shutil.which(stella)
     if not executable:
         raise ValueError(f"missing Stella executable: {stella}")
+    executable = str(Path(executable).resolve())
     output_dir.mkdir(parents=True, exist_ok=False)
     settings = output_dir / "settings"
     settings.mkdir()

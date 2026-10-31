@@ -21,9 +21,9 @@ No extra accessories. The owner approved the
   does not establish a fresh Frostbite installation.
 
 Reference utilities now run with Python's standard library:
-\`python3 -B scripts/reference_inventory.py\` and
-\`python3 -B scripts/source_timing.py\` (the latter requires Stella 7.0/Debugger).
-\`python3 -B -m unittest discover -s tests -v\` runs original-free utility tests.
+`python3 -B scripts/reference_inventory.py` and
+`python3 -B scripts/source_timing.py` (the latter requires Stella 7.0/Debugger).
+`python3 -B -m unittest discover -s tests -v` runs original-free utility tests.
 
 There is no Frostbite MSX scaffold, build command, gameplay ROM or CI acceptance
 yet. The copied Seaquest Makefile/scripts/tests/results are quarantined under

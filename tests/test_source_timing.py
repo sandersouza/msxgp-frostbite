@@ -1,5 +1,6 @@
 import contextlib
 import io
+import os
 from pathlib import Path
 import struct
 import sys
@@ -8,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from source_timing import assess_repeatability, main, read_stella_state, summarize, validate_controls
+from source_timing import assess_repeatability, capture, main, read_stella_state, summarize, validate_controls
 
 
 def fixture(lines=262, events=(), frames=40, cycles=800000):
@@ -26,6 +27,23 @@ def fixture(lines=262, events=(), frames=40, cycles=800000):
 
 
 class TimingTests(unittest.TestCase):
+    def test_relative_backend_path_survives_the_isolated_working_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            executable = root / "stella-test"
+            executable.write_text("#!/bin/sh\nexit 0\n")
+            executable.chmod(0o755)
+            rom = root / "fixture.bin"
+            rom.write_bytes(bytes(4096))
+            relative = os.path.relpath(executable, Path.cwd())
+            with (
+                patch("source_timing.verified_input", return_value={}),
+                patch("source_timing.subprocess.run", side_effect=RuntimeError("intercepted launch")) as launch,
+                self.assertRaisesRegex(RuntimeError, "intercepted launch"),
+            ):
+                capture(rom, relative, root / "capture")
+            self.assertEqual(Path(launch.call_args.args[0][0]), executable.resolve())
+
     def test_console_buttons_have_the_observed_effect_and_reset_preserves_mode(self):
         points = [{"phase": phase, "ram_80": value} for phase, value in (
             ("cold_reset", 0), ("steady", 0), ("reset_pressed", 0), ("reset_released", 0),

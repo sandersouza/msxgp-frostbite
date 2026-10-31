@@ -57,7 +57,7 @@
           "requested_update_calls": 0,
           "release_update_calls_before": 0,
           "swchb_command": null,
-          "state_sha256": "4a5351718fe57a942a07d2c5e746eda12276cbbcd8a143ce220ba943654768c2"
+          "state_sha256": "34b080ae5dac375118beef7f3017c60b70c1cd7dbe52db3f5fd70996351408f8"
         },
         {
           "cycles": 3755,
@@ -72,127 +72,127 @@
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": null,
-          "state_sha256": "ff5034b388b93184b235c08fa933c3dfc94d7a0e58ff3aa0715e6a120540b4f6"
+          "state_sha256": "38e1b9e6cda5946bceb71e50ce9e422c74902f67723b8c5a3f33697ce93ff1cd"
         },
         {
-          "cycles": 43579,
-          "current_lines": 214,
-          "last_lines": 310,
+          "cycles": 22979,
+          "current_lines": 0,
+          "last_lines": 253,
           "previous_lines": 51,
           "frames": 2,
           "layout": 0,
           "ram_80": 0,
-          "ram_sha256": "5ff19c5d71574530cef91a28bc5a3678ec657eb20008ec8b89e359a9fb5f290b",
+          "ram_sha256": "8f29737f77a2c7db77169588252d38ddab4949218dbd7355663750260f95ae62",
           "phase": "second_update",
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": null,
-          "state_sha256": "b1aa189554f35b4bda72458fc214efdc4941ce7a701063929b2b2157f80bdfe9"
+          "state_sha256": "f3b6ec50ca128036f7ed9ca08109950bb6ec397a1905eb1522e36b42d7ad8ce6"
         },
         {
-          "cycles": 12005215,
+          "cycles": 11970179,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 602,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "31b504473adfbf873b2d4c8dc751b649bbf3f7c702cdc33ad84dad0a45ed908e",
+          "phase": "steady",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "c4f63325e030eb28695139d2af0f25977321fc04edb954229b3fe25ac3f94373"
+        },
+        {
+          "cycles": 11990091,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
           "frames": 603,
           "layout": 0,
           "ram_80": 0,
-          "ram_sha256": "3c6f23277803c626ebd4f3ed4e0d7af1a10ddaa4cc93334107bb481c10e66613",
-          "phase": "steady",
-          "requested_update_calls": 600,
-          "release_update_calls_before": 0,
-          "swchb_command": null,
-          "state_sha256": "57c05842e7ebd72396e3611759f47ab15d81fc86c4c6be8c6dd0e668679101ba"
-        },
-        {
-          "cycles": 12025127,
-          "current_lines": 0,
-          "last_lines": 262,
-          "previous_lines": 262,
-          "frames": 604,
-          "layout": 0,
-          "ram_80": 0,
-          "ram_sha256": "27197d8b5c3f2bad7510ca2e852b0aeadab724fbdc2fdea692d24fa64f606234",
+          "ram_sha256": "3e8ab0432b6981ce1d5191f09d19f76e8a59d6e702a2bfda0ec5d950cdb3bcfe",
           "phase": "reset_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": 62,
-          "state_sha256": "795192501f021cf866d59ea004ef1d839dc00f6a8dab1b8f489057c49958b4c6"
+          "state_sha256": "757c0ddb68280f542b0f26eba1ed572e0038747687b2db7fe542fe37323bf73c"
         },
         {
-          "cycles": 23972327,
+          "cycles": 23937291,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1203,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "8fe5029b145ca44bbd01d4cf9d092f634057657cc1dd9551f512e18813235d50",
+          "phase": "reset_released",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": 63,
+          "state_sha256": "de6841cc54899f51109e22e309640e4fb7a7de369a4830dc5740a8bb57394f3c"
+        },
+        {
+          "cycles": 23957203,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
           "frames": 1204,
           "layout": 0,
-          "ram_80": 0,
-          "ram_sha256": "f15100c94e864a0129c0e56c41912a8d5f3921b4ea55adc6151c3ef104f51fb9",
-          "phase": "reset_released",
-          "requested_update_calls": 600,
-          "release_update_calls_before": 0,
-          "swchb_command": 63,
-          "state_sha256": "df56327611fda3770e58bde2aea1e4f54d174aed0b0a9d2c8ee798becd37a8c3"
-        },
-        {
-          "cycles": 23992239,
-          "current_lines": 0,
-          "last_lines": 262,
-          "previous_lines": 262,
-          "frames": 1205,
-          "layout": 0,
           "ram_80": 1,
-          "ram_sha256": "2ab6a3bb627acf40e637b7e8c6041e01cd1788800372c3b7b92395d8e0a3186a",
+          "ram_sha256": "757cfb36037570f7cee88df8c47a4a6b1be8508707dda3aeb9e77da213fbfe6b",
           "phase": "select_1_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": 61,
-          "state_sha256": "5f829528699d589d2b63d1d0ae3d86a0c562544c0cd93e1041f4b9fd508fda06"
+          "state_sha256": "aa09f792479e6fbe625078ecf7f28edaab672e005ce00e9b3ed442f373da76b9"
         },
         {
-          "cycles": 24609511,
+          "cycles": 24574475,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
-          "frames": 1236,
+          "frames": 1235,
           "layout": 0,
           "ram_80": 2,
-          "ram_sha256": "bfb6a7eb430b1af93675a08e098a26fde6ef14b131ca55cf2fa8926c752dec15",
+          "ram_sha256": "a304fcf49370af9ea3dc1ab2b714734c9e32f581550efc17dcd5dfdb66d0f54a",
           "phase": "select_2_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 30,
           "swchb_command": 61,
-          "state_sha256": "8b7237aeae286ff704f12f8e5217ba88f0f8b244780d34b64c971501a09c3871"
+          "state_sha256": "0a99e95b302e761e3f4ae2f5670c7d4317e496f5ff6f3721b204284b29528aef"
         },
         {
-          "cycles": 25226783,
+          "cycles": 25191747,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
-          "frames": 1267,
+          "frames": 1266,
           "layout": 0,
           "ram_80": 3,
-          "ram_sha256": "9382aa5a50b0e86771fa18d05768c23a66074cad326f5e0281f985da2d9b66f2",
+          "ram_sha256": "d647b4604b159f1bdd74bf0edb2a2e0c7b4979e3c376a2bb9bee1f4295bba90e",
           "phase": "select_3_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 30,
           "swchb_command": 61,
-          "state_sha256": "1d41525b884e89025fb532a0ed1eec9a767f12214e1566bde0350098d6ec531c"
+          "state_sha256": "eb8aae9ceff7af3bfd4079aad87345381d52fe56cb136ae4c85889d64d042e80"
         },
         {
-          "cycles": 25844055,
+          "cycles": 25809019,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
-          "frames": 1298,
+          "frames": 1297,
           "layout": 0,
           "ram_80": 3,
-          "ram_sha256": "52c56f4d5d969fc13ac29baabe2e2666dcf8d131f419045d3f1e9d65de9e0e1a",
+          "ram_sha256": "6b58211f46122c06dc391ea5dbf4d098e3351a45e857f32c6f158453808ea67b",
           "phase": "advanced_reset_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 30,
           "swchb_command": 62,
-          "state_sha256": "0941ffeb38e64c787487c0a3a5a424afd889c4e410b3c9177e54de84ad2d0c3e"
+          "state_sha256": "73fe5774bbb6190ff57cfc3c1b6bcde938db42937e303a43b29c2381ab573c5d"
         }
       ],
       "summary": {
@@ -253,7 +253,7 @@
           "requested_update_calls": 0,
           "release_update_calls_before": 0,
           "swchb_command": null,
-          "state_sha256": "0afa6b35482672d64c1a936ad3f7510cdedd04eec4e683bbfabb1d31d322a9cc"
+          "state_sha256": "fc61c3f18d18a9ad81a1283302d23af64e74175c96b299b3d335683f4060dbef"
         },
         {
           "cycles": 3755,
@@ -268,11 +268,11 @@
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": null,
-          "state_sha256": "eb13b86933666fc16017449fcca0be78fcb2be2445a23b8f8ddff05689ae5251"
+          "state_sha256": "ddb608a6403a8c2ac1b8fa1aef910cf89be03f0460a73d6c35eb8dfa7a277b28"
         },
         {
-          "cycles": 35849,
-          "current_lines": 112,
+          "cycles": 43579,
+          "current_lines": 214,
           "last_lines": 310,
           "previous_lines": 51,
           "frames": 2,
@@ -283,112 +283,112 @@
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": null,
-          "state_sha256": "26aaf3a3b1e05ddac4cf44553a010e455eb5104a9755e3041b36bde60c9a91df"
+          "state_sha256": "97e65cc43b7c790b0368a095791daa52a582f09e7b487ce7f6b378dce47a615f"
         },
         {
-          "cycles": 11960071,
-          "current_lines": 0,
-          "last_lines": 262,
-          "previous_lines": 262,
-          "frames": 602,
-          "layout": 0,
-          "ram_80": 0,
-          "ram_sha256": "3dcf40797b0d9924a28f8f64e2697ea438f1872910a1feadd718ff975ff109b8",
-          "phase": "steady",
-          "requested_update_calls": 600,
-          "release_update_calls_before": 0,
-          "swchb_command": null,
-          "state_sha256": "a318b8879523ee132089a606e6c7ae8074f1016dbe395d3d480a67d6e9088044"
-        },
-        {
-          "cycles": 11979983,
+          "cycles": 11994423,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
           "frames": 603,
           "layout": 0,
           "ram_80": 0,
-          "ram_sha256": "f2e4dc96b82afcbf9ee1caf22d40899af8232374b0acb0a9ebc7e102361b74d3",
+          "ram_sha256": "4d3cad241ae780b5b569c7a608cf733e7175157ae58b6959f6b55d8065fe4a21",
+          "phase": "steady",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "83487964eebb1a58d9c83c8e1b527058332f2ff6402e54f7f2fed23f656ca12b"
+        },
+        {
+          "cycles": 12014335,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 604,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "b057448e0742f501f4c240aea21afce7589c88bd54a8580d2e1866f9513fecd5",
           "phase": "reset_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": 62,
-          "state_sha256": "08e0802facd8a9f1af85373b69c46e21e1e6e2720fe7f35bddcd2b3405d2864e"
+          "state_sha256": "bd09316584b2edb00483bf95a340003366279f647ff3fe6b76e10f2851b6670a"
         },
         {
-          "cycles": 23927183,
-          "current_lines": 0,
-          "last_lines": 262,
-          "previous_lines": 262,
-          "frames": 1203,
-          "layout": 0,
-          "ram_80": 0,
-          "ram_sha256": "4e1478be5110e79dfba3e00b91ae3000e57374170a4b8228d822fc01d121e574",
-          "phase": "reset_released",
-          "requested_update_calls": 600,
-          "release_update_calls_before": 0,
-          "swchb_command": 63,
-          "state_sha256": "d6086b724195ee9f72de787e0716d74dc948ef5c9617d73da2fc321f90cfba6f"
-        },
-        {
-          "cycles": 23947095,
+          "cycles": 23961535,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
           "frames": 1204,
           "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "ca6a3fddb4b38de3b4cf81fd51ce83ecb67c6f280a83dd327a476d749d158ee5",
+          "phase": "reset_released",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": 63,
+          "state_sha256": "12724648458be9de199c93b7616945084389de71eafbb154232f9a3e7b3f2f45"
+        },
+        {
+          "cycles": 23981447,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1205,
+          "layout": 0,
           "ram_80": 1,
-          "ram_sha256": "b0ba9fe26969bafddf89283deeeaf9dfcae44f56f6ce7195105e25bebebbab4c",
+          "ram_sha256": "ef95f7002d5f9f9eb9b82b50558d69aa2de25a2e2fdf38c5bc082f6dac3bd74d",
           "phase": "select_1_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 0,
           "swchb_command": 61,
-          "state_sha256": "b422719188108b8096d27ce942ecfb2ee85c09172b57ca2c8b6feccb47113eee"
+          "state_sha256": "ff5f74964b4eea5b4f62997880fe664b4155dd73c2cd1145ec7684555adad81a"
         },
         {
-          "cycles": 24564367,
+          "cycles": 24598719,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
-          "frames": 1235,
+          "frames": 1236,
           "layout": 0,
           "ram_80": 2,
-          "ram_sha256": "e3a44552c4075d03dc2bb96f3aa2bc33af2fd219395ac07b037973289641aad8",
+          "ram_sha256": "de7137415a1945e3826ae0f3339328d76dd279ca4e0f613ed4035af0b8db96a0",
           "phase": "select_2_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 30,
           "swchb_command": 61,
-          "state_sha256": "71af144e84c41913d8eb32c6cdb7ef5f3343f8d029230b75235adb64d314432b"
+          "state_sha256": "dc1c0902b793659a5b02a42b737ec9f936229b1a1400e5ea72174c88d8056413"
         },
         {
-          "cycles": 25181639,
+          "cycles": 25215991,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
-          "frames": 1266,
+          "frames": 1267,
           "layout": 0,
           "ram_80": 3,
-          "ram_sha256": "2587e79a49202d3866b0cf09e00957f715ed745ce97a34ac95c2098f597ba04f",
+          "ram_sha256": "2c1e9b55ba11e46f0bcd80247cacee75a363d454571f6b85528dbe234f7c4e12",
           "phase": "select_3_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 30,
           "swchb_command": 61,
-          "state_sha256": "aba96d64d8d3562055ed66da445f1f0da2b0d0b1c768bf8aed6edb6940b95aea"
+          "state_sha256": "f2237b06871a5630b241fce99070eb249592cd5df0df6a42bfcdb0256ad60fb1"
         },
         {
-          "cycles": 25798911,
+          "cycles": 25833263,
           "current_lines": 0,
           "last_lines": 262,
           "previous_lines": 262,
-          "frames": 1297,
+          "frames": 1298,
           "layout": 0,
           "ram_80": 3,
-          "ram_sha256": "904448bdb06620ec0f9a0b1564a77f6f0f55799744a85949ae195cfbac27f6d4",
+          "ram_sha256": "0a8c631c5fdd761eded286a9661b0383a62ae3ebfa2bb0eb008038b457d600b7",
           "phase": "advanced_reset_pressed",
           "requested_update_calls": 1,
           "release_update_calls_before": 30,
           "swchb_command": 62,
-          "state_sha256": "0fe0bfe59bdbf499ba3e0f18f19c06d11872a8748067b9509d9caa8a3c1ac1fa"
+          "state_sha256": "57ec496d28fe81784cbdb072304ca3420dff80a1b697bd97f60bdc7cd538edd7"
         }
       ],
       "summary": {
@@ -448,5 +448,5 @@
       "src/emucore/tia/frame-manager/AbstractFrameManager.cxx": "0f5d51ec64936a39b71026c9d8ac86842bd570d8"
     }
   },
-  "probe_utility_sha256": "92890d6f5ec1da8aa9dfae512b51875b257b35db575496fcd41a925d419ca3ad"
+  "probe_utility_sha256": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1"
 }

@@ -1,10 +1,19 @@
 # Issue #2 handoff — immutable source identity and measured cadence
 
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/2
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/20
 Branch: `codex/chore/2-reference-inventory`.
 Base: `b2a232cd170a2fe4c9b2a63ce1a0687ab33d7396` (issue #1 delivery).
 Inventory commit: `3ab81d9afe307c4c55121fc3ff3aa31f53ba8235`.
 Final reviewed head and integration identity are recorded by this issue's PR.
+
+Independent review of b2a232c..ea0f498 found no Critical or Important issues.
+Its relative-executable-path finding was reproduced by a failing test and fixed
+by resolving the backend before changing subprocess cwd. Documentation command
+formatting was corrected. The final 19 original-free tests and another repeated
+real capture pass. The reviewer also matched all published state hashes/decoded
+counters to local artifacts. A clean clone passed the original-free suite and
+failed clearly when the private ROM was absent.
 
 ## Delivered scope
 
