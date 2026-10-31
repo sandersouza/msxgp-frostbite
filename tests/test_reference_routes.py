@@ -20,15 +20,23 @@ class RefugeRouteTests(unittest.TestCase):
         return {'ram':ram}
 
     def fixtures(self):
-        return ([self.point(x,100) for x in range(64,32,-1)] + [self.point(8,84) for _ in range(32)],
-                [self.point(8,bear) for bear in (84,24,16,24,128,140,128)])
+        return ([self.point(x,100) for x in range(64,32,-1)] + [self.point(7,84) for _ in range(32)],
+                [self.point(7,bear) for bear in (84,24,16,15)] + [self.point(7,15) for _ in range(64)])
 
-    def test_refuge_requires_left_plateau_grounded_no_hit_and_bear_sweep(self):
+    def test_refuge_requires_airborne_access_then_blocked_bear_approach(self):
         approach, wait = self.fixtures()
+        approach[10]['ram'][0x64]=53;approach[10]['ram'][0x6A]=15
         result = self.api().assess_refuge(approach,wait)
-        self.assertEqual(result['refuge_x'], 8)
-        self.assertEqual((result['bear_min'],result['bear_max']), (16,140))
-        self.assertEqual(result['bear_direction_reversals'],2)
+        self.assertEqual(result['refuge_x'], 7)
+        self.assertEqual((result['bear_min'],result['bear_max']), (15,84))
+        self.assertTrue(result['bear_blocked_at_edge'])
+
+    def test_refuge_approach_uses_down_and_up_jumps(self):
+        api=self.api();self.assertTrue(hasattr(api,'refuge_approach'),'natural jumping approach missing')
+        steps=api.refuge_approach()
+        self.assertEqual(len(steps),192)
+        self.assertEqual(steps[100]['swcha'],0x9F)
+        self.assertEqual(steps[130]['swcha'],0xAF)
 
     def test_hit_jump_life_loss_and_partial_sweep_are_failures(self):
         for address,value in ((0xED,0x80),(0xEA,1),(0xCC,2),(0xF1,0x10)):

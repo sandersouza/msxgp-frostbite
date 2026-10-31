@@ -71,6 +71,11 @@ def validate_checkpoint(state, sample):
         raise ValueError('observed electrical controller/console state differs from requested input')
 
 
+def validate_progress(before, after):
+    if after['cycles'] <= before['cycles'] or after['tia']['frame']['total'] < before['tia']['frame']['total']:
+        raise ValueError('checkpoint has no fresh forward source execution')
+
+
 def private_output(path):
     path = Path(path).resolve()
     if path == (ROOT / 'outputs').resolve() or not path.is_relative_to((ROOT / 'outputs').resolve()):
@@ -156,7 +161,7 @@ def capture_steps(rom, initial, steps, out, stella='stella', policy=None):
         raise ValueError('capture requires1–5000 explicit source steps')
     for sample in steps: control_commands(sample)
     out = private_output(out); out.mkdir(parents=True, exist_ok=False)
-    current = initial; points = []; backend = None
+    current = initial; points = []; backend = None; previous = start
     for offset in range(0, len(steps), 10):
         batch = steps[offset:offset+10]
         states, current_backend = run_debugger(rom, batch_script(batch), out / f'batch-{offset:05d}',
@@ -167,6 +172,7 @@ def capture_steps(rom, initial, steps, out, stella='stella', policy=None):
         for slot, sample in enumerate(batch):
             current = states[slot]
             point = decode_state(current); validate_checkpoint(point, sample)
+            validate_progress(previous, point); previous = point
             point.update(index=len(points), input=sample)
             points.append(point)
     trace = {'schema_version': 1, 'source_sha256': verified_input(Path(rom))['sha256'], 'backend': backend,

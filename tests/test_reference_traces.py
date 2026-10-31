@@ -66,6 +66,13 @@ class CaptureTests(unittest.TestCase):
             source.write_bytes(b'changed source\n')
             with self.assertRaises(ValueError): api.verify_fingerprints(expected)
 
+    def test_preseeded_slot_cannot_masquerade_as_fresh_execution(self):
+        api=self.api();self.assertTrue(hasattr(api,'validate_progress'),'fresh execution progress gate missing')
+        before={'cycles':100,'tia':{'frame':{'total':2}}}
+        with self.assertRaises(ValueError): api.validate_progress(before,before)
+        with self.assertRaises(ValueError): api.validate_progress(before,{'cycles':101,'tia':{'frame':{'total':1}}})
+        api.validate_progress(before,{'cycles':101,'tia':{'frame':{'total':2}}})
+
     def test_unsupported_backend_is_refused_before_rom_execution(self):
         api = self.api()
         self.assertTrue(hasattr(api, 'backend_identity'), 'preflight backend identity missing')

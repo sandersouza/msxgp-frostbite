@@ -15,12 +15,15 @@ from trace_compare import compare_traces, validate_trace
 
 
 def assess_refuge(approach, wait):
-    if len(approach) < 32 or len(wait) < 3: raise ValueError('incomplete natural refuge route')
+    if len(approach) < 32 or len(wait) < 64: raise ValueError('incomplete natural refuge route')
     x = approach[-1]['ram'][0x66]
-    if x > 16 or any(point['ram'][0x66] != x for point in approach[-32:]):
+    if x >= 16 or any(point['ram'][0x66] != x for point in approach[-32:]):
         raise ValueError('extreme-left held-input plateau was not reached')
     reserve = approach[0]['ram'][0x4C]
-    for point in approach + wait:
+    for point in approach:
+        if point['ram'][0x4C] != reserve or point['ram'][0x71] != 0:
+            raise ValueError('approach lost a life or entered a death phase')
+    for point in approach[-32:] + wait:
         ram = point['ram']
         if (ram[0x4B] < 3 or ram[0x64] != 0x1B or ram[0x6A] != 0 or ram[0x6D] & 0x80
                 or ram[0x71] != 0 or ram[0x4C] != reserve):
@@ -30,10 +33,15 @@ def assess_refuge(approach, wait):
     unique = [value for index,value in enumerate(bear) if index == 0 or value != bear[index-1]]
     signs = [1 if b > a else -1 for a,b in zip(unique,unique[1:])]
     reversals = sum(a != b for a,b in zip(signs,signs[1:]))
-    if min(bear) > x+8 or max(bear) < 128 or reversals < 2:
-        raise ValueError('bear did not complete the observed two-direction shore sweep')
+    if min(bear) > x+8 or max(bear)-min(bear) < 32 or len(set(bear[-64:])) != 1:
+        raise ValueError('bear did not approach and remain blocked at the refuge edge')
     return {'refuge_x':x, 'bear_min':min(bear), 'bear_max':max(bear), 'bear_direction_reversals':reversals,
-            'reserve':reserve, 'grounded_shore':True, 'effective_bear_hits':0}
+            'bear_blocked_at_edge':True, 'reserve':reserve, 'grounded_shore':True, 'effective_bear_hits':0}
+
+
+def refuge_approach():
+    return ([{**NEUTRAL,'swcha':0xBF}]*100 + [{**NEUTRAL,'swcha':0x9F}]*30
+            + [{**NEUTRAL,'swcha':0xAF}]*30 + [NEUTRAL]*32)
 
 
 def source_reset_checkpoint(summary_path):
@@ -53,6 +61,8 @@ def source_reset_checkpoint(summary_path):
     expected = {key:value for key,value in trace['steps'][index].items() if key not in ('index','input')}
     if state != expected or state['ram'][0] != 2 or state['cpu']['pc'] != 0xF019:
         raise ValueError('source Reset checkpoint does not match complete raw evidence')
+    if state['ram'][0x67] != 0 or state['ram'][0x46] != 0:
+        raise ValueError('source Reset/input delay has not expired; regenerate active preparation')
     return raw, {'preparation_summary_sha256':digest, 'preparation_trace_sha256':declared['trace_sha256'],
                  'source_sha256':trace['source_sha256'], 'preparation_tool_commit':summary['tool_source_commit']}
 
@@ -63,21 +73,21 @@ def capture_refuge(rom, summary_path, out, stella='stella'):
     fingerprints = {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in
         (Path(__file__),ROOT/'scripts/reference_traces.py',ROOT/'scripts/reference_state.py',ROOT/'scripts/trace_compare.py')}
     out = private_output(out); out.mkdir(parents=True,exist_ok=False)
-    policy = {**provenance, 'route':'source-executed variation2 Reset -> held left500 -> neutral1536',
+    policy = {**provenance, 'route':'source-executed variation2 Reset -> walk100/down-left30/up-left30/neutral32 -> wait768',
               'ram_injections':{}, 'boundary':'PCF019; no frame/instruction skipping'}
-    steps = [{**NEUTRAL,'swcha':0xBF}]*500 + [NEUTRAL]*1536
+    approach=refuge_approach();steps=approach+[NEUTRAL]*768
     first, end_a = capture_steps(rom,initial,steps,out/'run-a',stella,policy)
-    print('Natural refuge first execution captured2036 intervals; starting independent replay.',flush=True)
+    observation = assess_refuge(first['steps'][:len(approach)],first['steps'][len(approach):])
+    print(f'Natural refuge first execution captured{len(steps)} intervals; starting independent replay.',flush=True)
     second,end_b = capture_steps(rom,initial,steps,out/'run-b',stella,policy)
     if compare_traces(first,second) or end_a != end_b: raise ValueError('natural refuge replay/full-state mismatch')
-    observation = assess_refuge(first['steps'][:500],first['steps'][500:])
     verify_fingerprints(fingerprints); verified_input(Path(rom))
     report = {'schema_version':1,'source':source,'provenance':provenance,'policy':policy,
         'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'utility_sha256':fingerprints[str(Path(__file__))], 'steps':len(steps), 'independent_runs':2,
         'full_states_equal':True,'observation':observation,
         'trace_sha256':hashlib.sha256((out/'run-a/trace.json').read_bytes()).hexdigest(),
-        'limits':['One naturally executed shore route at observed level4; not every bear/airborne/multi-threat geometry',
+        'limits':['One naturally executed jump-to-shore refuge at observed level4; not every bear/airborne/multi-threat geometry',
                   'No natural death/record-swap or complete-game acceptance; no MSX ROM produced']}
     (out/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
     return report
