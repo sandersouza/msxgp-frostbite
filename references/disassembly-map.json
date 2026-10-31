@@ -33,9 +33,11 @@
     {"pc": "FFD0", "callers": ["F598", "F59E", "F5A4"], "role": "Split packed step into integer 96+X and accumulating fractional 99+X"}
   ],
   "indirect_flow": {
+    "maximum_simultaneous_jsrs": 3,
+    "physical_return_byte_range": ["FA", "FF"],
     "jmp_indirect_sites": [],
     "dynamic_return_manipulation_found": false,
-    "reviewed_stack_behavior": "TXS during F006 initialization; balanced JSR/RTS with maximum two simultaneous calls in the reviewed graph. FC-FF are return-address storage, mirrored at 01FC-01FF.",
+    "reviewed_stack_behavior": "TXS during F006 initialization; balanced JSR/RTS. F00C -> FB3B/fall-through FB57 -> FB78 -> FEA6/fall-through FEB8 -> FEC2 -> FE00 reaches three simultaneous calls, storing returns at FA-FF (01FA-01FF). FA/FB overlap later scratch/fire-edge roles. Reset-to-F019 bounded CPU execution corroborates this path, not exhaustive Atari runtime coverage.",
     "indirect_data_pointer_pairs": ["85:86", "87:88", "89:8A", "8B:8C", "8D:8E", "8F:90"],
     "qualification": "No computed dispatch found in reviewed code. No exhaustive dynamic path-coverage claim. Indexed and indirect data reads still require bounded pointer/index contracts."
   },
@@ -95,9 +97,9 @@
     {"range": ["F5", "F5"], "role": "Floe activation/reset cooldown", "sites": ["F6C5", "F8E5", "F9ED"]},
     {"range": ["F6", "F6"], "role": "Landing/activation latch", "sites": ["F8CD", "F8E9", "F9D9"]},
     {"range": ["F7", "F7"], "role": "Object collection/progression counter; fish association needs dynamic confirmation", "sites": ["F709", "F92C", "FBE1"]},
-    {"range": ["F8", "FA"], "role": "Phase-local arithmetic/raster scratch; save before interpreting snapshots", "sites": ["F12D", "F3F6", "FCEC", "FA49"]},
-    {"range": ["FB", "FB"], "role": "Selected fire falling-edge latch, inhibited during jump", "sites": ["F5A9", "F5BE", "F903"]},
-    {"range": ["FC", "FF"], "role": "Stack return bytes in reviewed two-level JSR graph; no persistent gameplay variable found", "sites": ["F008", "FFD2", "FCF7"]}
+    {"range": ["F8", "FA"], "role": "Phase-local arithmetic/raster scratch; FA also holds a return byte at three-call depth during initialization", "sites": ["F12D", "F3F6", "FCEC", "FA49", "FEC2"]},
+    {"range": ["FB", "FB"], "role": "Selected fire falling-edge latch, inhibited during jump; also a return byte at three-call depth during initialization", "sites": ["F5A9", "F5BE", "F903", "FEC2"]},
+    {"range": ["FC", "FF"], "role": "Return bytes for first two call levels; third level overlaps FA/FB. No persistent gameplay variable found here", "sites": ["F008", "FFD2", "FCF7"]}
   ],
   "open_contracts": [
     "Dynamic alignment, RNG initialization/replay and complete path coverage (#7)",

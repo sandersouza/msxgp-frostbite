@@ -90,9 +90,14 @@ FBFD → FE9B → FEA6 → FEB8 → FEE6 returns to F856's caller; FCF0 → FCF7
 joins coordinate normalization. Shared entries FE00/FE03/FE04 implement four
 shifts/one shift/RTS-only respectively; FE05 initializes a counter before FE09.
 Treating each label as an independent function would lose live flags, delay
-cycles and fall-through effects. The reviewed call graph reaches two nested
-JSRs; FC–FF hold return bytes. Stack-depth claims are static, not a runtime
-high-water measurement.
+cycles and fall-through effects. Initialization reaches **three simultaneous
+JSRs**: F00C → FB3B (fall through FB57) → FB78 → FEA6 (fall through FEB8) →
+FEC2 → FE00. Return bytes occupy **FA–FF**, mirrored at 01FA–01FF. FA/FB overlap
+their later scratch/fire-edge roles; they are not exclusively gameplay state.
+A bounded py65 reset-to-F019 probe corroborated this path (1387 instructions,
+minimum SP=F9, FEC2 taken for all four row initializations). This CPU probe uses
+flat zeroed memory, not cycle-exact Atari hardware; it establishes the concrete
+stack path, not complete-game stack coverage.
 
 ## Frame order and hardware boundary
 
@@ -146,9 +151,10 @@ latched geometry before promoting these static findings to gameplay oracles.
 
 ## State, reset and arithmetic that must survive translation
 
-The JSON covers all 128 physical RAM bytes without gaps. Ranges are ownership
-by reviewed use, not C-style variables: pointers and F8–FA scratch change roles
-between phases. No scratch value is meaningful without its PC/phase.
+The JSON covers all 128 physical RAM bytes without gaps. Ranges describe
+reviewed uses, not exclusive C-style ownership: pointers and F8–FA scratch
+change roles between phases, and initialization-time returns overlap FA/FB.
+No scratch value is meaningful without its PC/phase.
 
 Reset is not simply a full RAM clear every time. F000 sets SEI/CLD and X=0;
 F006 clears indexed zero-page addresses, updates SP with TXS, and wraps X.

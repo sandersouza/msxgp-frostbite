@@ -5,6 +5,7 @@ Branch: `codex/chore/3-reference-disassembly`.
 Base: `eb8f5001550294b72ca51ae0bf5a5f719022cd1b` (issue #2 integration).
 Rebuild utility commit: `f85c2e0948de8e46009005eac87c2abdbad604fb`.
 Final reviewed head/integration identity: this issue's linked delivery PR.
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/21
 
 Read [reference analysis](../reference-disassembly.md), the compact
 [state map](../../references/disassembly-map.json),
@@ -43,6 +44,15 @@ not original-free CI and do not imply executed path coverage. The full listing
 and compact map identify all hardware reads, shared entries, flags, indirect
 data pointers, frame phases and collision clear/read windows.
 
+Independent review found one Important error in the initial stack map. The
+reset chain F00C→FB3B/FB57→FB78→FEA6/FEB8→FEC2→FE00 has three active JSRs,
+using FA–FF, with FA/FB overlapping later scratch/fire-edge roles. A bounded
+py65 reset-to-F019 probe reproduced 1387 instructions, minimum SP=F9 and four
+third-depth FEC2 calls. Its comparison to declared map metadata failed before
+the correction and passes afterwards. This is a flat-memory CPU proof of that
+path, not an Atari gameplay trace. No other Critical/Important/Minor findings
+were reported; original-free suite and real reconstruction were rechecked.
+
 ## Critical successor constraints
 
 - #4 owns full mechanics contracts; #7 owns aligned deterministic replay and
@@ -75,3 +85,27 @@ its local issue before editing. No pending files may silently cross ownership.
 No MSX ROM was built in #3; no release is needed. Every later useful diagnostic
 or playable MSX ROM requires a versioned prerelease with the exact ROM attached,
 SHA-256/commit, limitations, next steps and concrete human test instructions.
+
+## Review scope decisions
+
+The reviewer explicitly set aside these behaviors; the executor retained the
+following boundaries, with their practical costs if misunderstood:
+
+- Exact phase/input/trajectory/decimal/collision contracts stay in #4/#7.
+  Static names must not be used as already validated gameplay requirements.
+- Exhaustive paths, pointer/index domains and possible code/data dual use need
+  dynamic coverage; the partition cannot justify accepting unobserved states.
+- Cycle-exact bus behavior, full-game replay and physical acceptance belong to
+  later gates. This delivery cannot certify native/hardware correctness.
+- Release publication requires a new testable MSX ROM; this research creates
+  none. A future diagnostic must still receive its own attached prerelease.
+- Adversarial simultaneous replacement of inputs/tools is outside this trusted
+  local research workflow. Ordinary input mismatches are checked before/after;
+  hostile races could still invalidate provenance and are not claimed covered.
+- A failed rerun retains any previous compact success report, which identifies
+  its own immutable artifact directory. Check the current command's exit code;
+  treating an old report as evidence for a failed latest attempt would be wrong.
+
+No deferred minor review findings remain. The sole Important finding was fixed
+and reproduced RED→GREEN by the local reset-stack probe; no second review was
+used as a substitute for that verification.
