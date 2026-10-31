@@ -28,15 +28,15 @@ class RefugeRouteTests(unittest.TestCase):
         approach[10]['ram'][0x64]=53;approach[10]['ram'][0x6A]=15
         result = self.api().assess_refuge(approach,wait)
         self.assertEqual(result['refuge_x'], 7)
-        self.assertEqual((result['bear_min'],result['bear_max']), (15,84))
+        self.assertEqual((result['bear_min'],result['bear_max']), (15,100))
         self.assertTrue(result['bear_blocked_at_edge'])
 
     def test_refuge_approach_uses_down_and_up_jumps(self):
         api=self.api();self.assertTrue(hasattr(api,'refuge_approach'),'natural jumping approach missing')
         steps=api.refuge_approach()
-        self.assertEqual(len(steps),192)
-        self.assertEqual(steps[100]['swcha'],0x9F)
-        self.assertEqual(steps[130]['swcha'],0xAF)
+        self.assertEqual(len(steps),288)
+        self.assertEqual(steps[196]['swcha'],0x9F)
+        self.assertEqual(steps[226]['swcha'],0xAF)
 
     def test_hit_jump_life_loss_and_partial_sweep_are_failures(self):
         for address,value in ((0xED,0x80),(0xEA,1),(0xCC,2),(0xF1,0x10)):

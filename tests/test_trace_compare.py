@@ -43,3 +43,18 @@ class ComparatorTests(unittest.TestCase):
                 elif mutation == 'seed': actual['policy']['seed'] = 43
                 elif mutation == 'short': actual['steps'].pop()
                 self.assertTrue(self.api().compare_traces(expected, actual))
+
+    def test_native_logical_projection_preserves_mechanics_without_tia_machine_state(self):
+        api=self.api();self.assertTrue(hasattr(api,'logical_oracle'),'target-ready logical oracle missing')
+        trace=self.fixture()
+        for point in trace['steps']:point['cpu'].update(a=1,x=2,y=3,sp=255)
+        logical=api.logical_oracle(trace)
+        self.assertNotIn('tia',logical['steps'][0])
+        self.assertEqual(logical['steps'][0]['ram'],[0]*128)
+        altered=copy.deepcopy(logical);altered['steps'][0]['collision_inputs']['shore_latch']^=0x80
+        self.assertTrue(api.compare_logical_oracles(logical,altered))
+        altered=copy.deepcopy(logical);altered['steps'][0]['ram'][0x66]=9
+        self.assertTrue(api.compare_logical_oracles(logical,altered))
+        self.assertEqual(api.compare_logical_oracles(logical,copy.deepcopy(logical)),[])
+        alternate=copy.deepcopy(trace);alternate['steps'][0]['cycles']=999
+        self.assertEqual(api.logical_oracle(alternate),logical)

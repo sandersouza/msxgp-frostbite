@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "variation": 2,
+  "floe_alignment_wait": 96,
+  "bear_wait": 768,
+  "route": "walk left100, neutral96, down-left30, up-left30, neutral32; then wait768",
+  "scope": "Original controller inputs only; no RAM injection. Natural refuge must pass its own grounded/no-hit/life/sweep predicate."
+}

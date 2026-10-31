@@ -29,7 +29,7 @@ def assess_refuge(approach, wait):
                 or ram[0x71] != 0 or ram[0x4C] != reserve):
             raise ValueError('route hit/jump/phase/life-loss; no natural refuge acceptance')
     if any(point['ram'][0x66] != x for point in wait): raise ValueError('player left the refuge while waiting')
-    bear = [point['ram'][0x68] for point in wait]
+    bear = [point['ram'][0x68] for point in approach+wait]
     unique = [value for index,value in enumerate(bear) if index == 0 or value != bear[index-1]]
     signs = [1 if b > a else -1 for a,b in zip(unique,unique[1:])]
     reversals = sum(a != b for a,b in zip(signs,signs[1:]))
@@ -39,8 +39,9 @@ def assess_refuge(approach, wait):
             'bear_blocked_at_edge':True, 'reserve':reserve, 'grounded_shore':True, 'effective_bear_hits':0}
 
 
-def refuge_approach():
-    return ([{**NEUTRAL,'swcha':0xBF}]*100 + [{**NEUTRAL,'swcha':0x9F}]*30
+def refuge_approach(floe_wait=96):
+    if type(floe_wait) is not int or not 0 <= floe_wait <= 128: raise ValueError('invalid natural floe alignment wait')
+    return ([{**NEUTRAL,'swcha':0xBF}]*100 + [NEUTRAL]*floe_wait + [{**NEUTRAL,'swcha':0x9F}]*30
             + [{**NEUTRAL,'swcha':0xAF}]*30 + [NEUTRAL]*32)
 
 
@@ -70,12 +71,17 @@ def source_reset_checkpoint(summary_path):
 def capture_refuge(rom, summary_path, out, stella='stella'):
     source = verified_input(Path(rom)); initial, provenance = source_reset_checkpoint(summary_path)
     if provenance['source_sha256'] != source['sha256']: raise ValueError('refuge source identity mismatch')
+    config_path=ROOT/'references/refuge-scenario.json';config_bytes=config_path.read_bytes();config=json.loads(config_bytes)
+    if config['schema_version']!=1 or config['source_sha256']!=source['sha256'] or config['variation']!=2:
+        raise ValueError('natural refuge scenario source/schema mismatch')
+    bear_wait=config['bear_wait']
+    if type(bear_wait) is not int or not 64<=bear_wait<=2048:raise ValueError('invalid bounded bear observation')
     fingerprints = {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in
-        (Path(__file__),ROOT/'scripts/reference_traces.py',ROOT/'scripts/reference_state.py',ROOT/'scripts/trace_compare.py')}
+        (Path(__file__),ROOT/'scripts/reference_traces.py',ROOT/'scripts/reference_state.py',ROOT/'scripts/trace_compare.py',config_path)}
     out = private_output(out); out.mkdir(parents=True,exist_ok=False)
-    policy = {**provenance, 'route':'source-executed variation2 Reset -> walk100/down-left30/up-left30/neutral32 -> wait768',
+    policy = {**provenance, 'route':config['route'], 'config_sha256':hashlib.sha256(config_bytes).hexdigest(),
               'ram_injections':{}, 'boundary':'PCF019; no frame/instruction skipping'}
-    approach=refuge_approach();steps=approach+[NEUTRAL]*768
+    approach=refuge_approach(config['floe_alignment_wait']);steps=approach+[NEUTRAL]*bear_wait
     first, end_a = capture_steps(rom,initial,steps,out/'run-a',stella,policy)
     observation = assess_refuge(first['steps'][:len(approach)],first['steps'][len(approach):])
     print(f'Natural refuge first execution captured{len(steps)} intervals; starting independent replay.',flush=True)
