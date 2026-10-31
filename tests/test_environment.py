@@ -78,6 +78,17 @@ class EnvironmentTests(unittest.TestCase):
             self.assertIn('preserve', result.lower())
             self.assertEqual(list(root.iterdir()), [])
 
+    def test_version_probe_avoids_legacy_long_argv_buffer(self):
+        api=self.api()
+        self.assertTrue(hasattr(api,'version_output'),'bounded version probe missing')
+        with tempfile.TemporaryDirectory() as tmp:
+            directory=Path(tmp)/('x'*150)
+            directory.mkdir()
+            binary=directory/'probe'
+            binary.write_text(f'#!{sys.executable}\nimport sys\nassert sum(len(x)+1 for x in sys.argv)<132\nprint("PINNED")\n')
+            binary.chmod(0o755)
+            self.assertEqual(api.version_output(binary,[]).strip(),'PINNED')
+
 
 if __name__ == '__main__':
     unittest.main()

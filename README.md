@@ -5,21 +5,23 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The design is approved and repository preparation is underway.
-There is **no Frostbite MSX ROM to play or test yet**.
+The first [MSX1 diagnostic prerelease](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic)
+provides a 16 KiB cartridge for video, interrupts, controls and built-in PSG tests.
+**Frostbite gameplay is not implemented yet.**
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
 byte-identically and has a reviewed routine/state/hardware map. Commercial
 revision/provenance and full-state replay repeatability remain unverified.
 Source-addressed mechanics contracts and bounded CPU probes are available;
-the MSX scaffold and native gameplay remain planned work. Historical Seaquest
+native gameplay remains planned work. Historical Seaquest
 results are not Frostbite evidence.
 
 - [Approved design](docs/superpowers/specs/2026-10-31-frostbite-design.md)
 - [Issue roadmap](docs/superpowers/specs/2026-10-31-frostbite-backlog.md)
 - [GitHub project — MSX Game Ports #7](https://github.com/users/sandersouza/projects/7)
 - [Development status](docs/development.md)
+- [macOS setup/build/smoke checklist](docs/toolchain.md)
 - [Original reference inventory and timing](docs/reference-inventory.md)
 - [Disassembly reconstruction and state map](docs/reference-disassembly.md)
 - [Gameplay contracts and boundary routes](docs/gameplay-contracts.md)
@@ -45,7 +47,7 @@ ignored `.legacy/seaquest/`. Reuse requires a file-by-file audit. Its Makefile,
 scripts, tests, screenshots and success reports are not an active Frostbite
 build or test suite.
 
-[Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) will provide
+[Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) provides
 the macOS setup script, pinned tools, cross-build commands and diagnostic ROM.
 [Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) will provide
 original-free CI. Until those deliverables exist, no inherited command is

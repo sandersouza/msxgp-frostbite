@@ -51,12 +51,13 @@
 
 ## Task 3: Fresh-clone checklist, review, release and handoff
 
-**Files:** docs/development.md; docs/toolchain.md; docs/releases/v0.0.1-diagnostic.md; docs/handoffs/issue-5.md; issue copy/README.
+**Files:** scripts/package_diagnostic.py; tests/test_package_diagnostic.py; docs/development.md; docs/toolchain.md; docs/releases/v0.0.1-diagnostic.md; docs/handoffs/issue-5.md; issue copy/README.
 
 **Interfaces:** exact build/smoke artifacts and commit become release attachment/notes, with named human checks and next issues.
 
 - [ ] Run fresh-clone setup/check/test/build/smoke twice and compare ROM bytes. Expected: pass on available arm64; other host/hardware evidence remains explicitly pending.
 - [ ] Record source pins/license/provenance and reproducible command-by-command checklist; prepare human test notes.
+- [ ] Test the release identity gate before implementing packaging. Expected: dirty/stale/mismatched build/smoke inputs fail; a clean matching source snapshot packages exact validated ROM bytes.
 - [ ] Obtain one fresh whole-branch independent review; fix material findings with reproducing checks and green suite.
 - [ ] Focused PR/In review, integrate only after DoD; build/smoke exact integrated source and publish versioned diagnostic prerelease with ROM/SHA/build metadata.
 - [ ] Verify remote release downloads against tested bytes; close/Done and hand off to a dependency-ready successor in another exclusive fork.

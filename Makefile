@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 PYTHON ?= .venv/bin/python
-.PHONY: environment environment-check environment-dry-run build run smoke test reference-check reference-rebuild mechanics-check
+.PHONY: environment environment-check environment-dry-run build run smoke package test reference-check reference-rebuild mechanics-check
 environment:
 	@bash scripts/setup.sh
 environment-check:
@@ -13,6 +13,8 @@ run: build
 	@$(PYTHON) -B scripts/rom.py run
 smoke: build
 	@$(PYTHON) -B scripts/smoke.py
+package:
+	@$(PYTHON) -B scripts/package_diagnostic.py
 test:
 	@$(PYTHON) -B -m unittest discover -s tests -v
 reference-check:

@@ -75,6 +75,15 @@ def describe_plan(root=ROOT):
             'preserve existing .tools and fail on dirty/mismatched managed inputs. No changes applied.')
 
 
+def version_output(binary,args):
+    # DiStella's legacy argv buffer includes argv[0], even for its version banner.
+    result=subprocess.run([f'./{binary.name}',*args],cwd=binary.parent,
+                          capture_output=True,text=True,timeout=30)
+    if result.returncode not in (0,1):
+        raise ValueError(f'{binary.name}: version command failed')
+    return result.stdout+result.stderr
+
+
 def prepare_tool(root, name, spec):
     directory = tool_directory(root, name, spec)
     if not directory.exists():
@@ -92,9 +101,8 @@ def prepare_tool(root, name, spec):
     with (directory / '.frostbite-build.log').open('w') as log:
         run(spec['build'], cwd=directory, stdout=log, stderr=subprocess.STDOUT)
     validate_checkout(directory, spec['commit'])
-    process = subprocess.run([str(binary), *spec['version_args']], capture_output=True, text=True, timeout=30)
-    banner = process.stdout + process.stderr
-    if process.returncode not in (0, 1) or spec['version_contains'] not in banner:
+    banner = version_output(binary,spec['version_args'])
+    if spec['version_contains'] not in banner:
         raise ValueError(f'{name}: expected pinned version banner not found')
     architecture = output(['file', '-b', binary])
     if platform.machine() not in architecture:

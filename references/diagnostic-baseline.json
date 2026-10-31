@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "version": "0.0.1-diagnostic",
+  "checkpoint_source_commit": "0ed3aa72f8d79b7d0000108c19aab82937287f77",
+  "source_dirty": false,
+  "rom": {
+    "size": 16384,
+    "sha256": "d46320aec4b148c3b885d54de051bc078539b65a7a8bf739bb4e9e956c2028ca",
+    "mapper": "Normal/plain16KiB"
+  },
+  "host_validation": {
+    "architecture": "arm64",
+    "fresh_source_clone": true,
+    "host_prerequisites_preinstalled": true,
+    "tests_at_checkpoint": 47,
+    "setup_idempotent": true,
+    "existing_venv_and_inherited_tools_preserved": true,
+    "intel_tested": false
+  },
+  "automated_smoke": {
+    "passed": true,
+    "emulator": "openMSX 21.0\nflavour: opt\ncomponents: CORE GL LASERDISC",
+    "ram_bytes": 65536,
+    "configured_vram_kib": 16,
+    "vdp": "TMS9918A",
+    "z80_hz": 3579545,
+    "extra_extensions": 0,
+    "video": "SCREEN1/title/readouts",
+    "keyboard": "up/neutral/space/release/held-edge",
+    "psg": "period/volume-on/off",
+    "heartbeat": "advancing",
+    "machine_profile_sha256": "b003018357a984e0782ea8abef5c82580c1b8e5a679d1146c50e8d3e62dbf990"
+  },
+  "negative_control": "A booting heartbeat-disabled diagnostic was rejected; stale success summary removed.",
+  "rendered_preview": "Inspected actual normal-speed/frameskip0 emulator screenshot; accelerated headless checks are distinct.",
+  "limits": [
+    "Diagnostic only; no native gameplay or Atari-mechanics acceptance",
+    "Physical MSX, human listening, Intel macOS and PAL automated validation pending",
+    "Raw debugger VRAM backing size is not configured hardware capacity"
+  ]
+}
