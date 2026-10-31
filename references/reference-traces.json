@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "scope": "Independent original-execution oracles; no MSX gameplay/hardware acceptance",
+  "stella": {
+    "backend": {
+      "name": "Stella",
+      "version": "7.0",
+      "source_contract": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+      "binary_sha256": "7571cb35bbb16a590ecaca2bfed2b63c4b29c2184921c3896550841bf8425161"
+    },
+    "warmup_intervals": 32,
+    "warmup_full_states_equal": true,
+    "config_sha256": "a4be41fd81b08c149bb3c3fb91707df546810dd3f36381b87ab2fff604d4be38",
+    "poweron_sha256": "c223f981af8a286e4d8bca0ad9d37da99c70233a6dbf1d9ac60ac496d8bff1d4",
+    "aligned_sha256": "5f11cf9472bc8bd3d378b1bbbae10be1ff04b5c244da5d552c226d5d174b0da0",
+    "initial_conditions": {
+      "host_seed": 1,
+      "riot_timer_preset": 127
+    },
+    "scenarios": [
+      {
+        "variation": 0,
+        "steps": 121,
+        "mode_after_reset": 0,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "786bcbd50193bc0cf4298695313deb153b070e0b510c5bbced1c87bd7a2d4151",
+        "raw_state_chain_sha256": "cd6ffa25289ab83dd7967f88839a5158ef7e04eb5b04d413330c157a4e39d37d",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      },
+      {
+        "variation": 1,
+        "steps": 154,
+        "mode_after_reset": 1,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "ddac36d04c6ed5da22d41ed7b8268de3b0da87f5e7667e39a3ffe6da2d3507c1",
+        "raw_state_chain_sha256": "d82b539b899211935f5de60060d4d4cb1b6c6a460f6af9c962c8e5c8f1590589",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      },
+      {
+        "variation": 2,
+        "steps": 187,
+        "mode_after_reset": 2,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "4d845a64ff6b322ed5cdc5eeade3e970ae1263f558a892fd221cdcb7922787fe",
+        "raw_state_chain_sha256": "9f682f42f8c4b9f1bb9403227a488af13ac004c934698b3453169a59b1fe0242",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      },
+      {
+        "variation": 3,
+        "steps": 220,
+        "mode_after_reset": 3,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "bb6d2355bd221ba6a26bb6355f868e34cdd55c0864e12dc06626a1ad6c25a1f4",
+        "raw_state_chain_sha256": "99f01ae0a1581cfa6901747bd70fa02d8432d6c1d8d9301102e4ddbe2ba82f7c",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      }
+    ],
+    "controlled_player1_turns": [
+      {
+        "variation": 1,
+        "steps": 11,
+        "full_states_equal": true,
+        "port1_direction_and_fire_observed": true,
+        "trace_sha256": "4bd284feb999a98c4efdf9a4a28fddaa336bd9e9c5a0355470c9bae4f7c1980e"
+      },
+      {
+        "variation": 3,
+        "steps": 11,
+        "full_states_equal": true,
+        "port1_direction_and_fire_observed": true,
+        "trace_sha256": "f5ca8df748e9eb55028a9db0ffcba7034ee39e8c8b1403778834b45ee305c33e"
+      }
+    ]
+  },
+  "cpu": {
+    "py65": "1.2.0",
+    "py65_cpu_source_sha256": "15d93835b4f279b702270d9a0b417938291347ec57cc12d9e0307cd344d381fe",
+    "cases_sha256": "3d49b157e889683b9afd862bd1f6dde3f34ef23ac7eab5e54dbc7fff03d8d652",
+    "mechanics_cases_checked": 86,
+    "arithmetic_boundary_vectors": 288,
+    "excluded_constant_mmio_cases": 15,
+    "matched": 374,
+    "total": 374
+  },
+  "ale": {
+    "backend": {
+      "name": "ALE",
+      "version": "0.12.1",
+      "source_commit": "8a8fafb1ac37796e3e8197a2e5727204fa1b926d",
+      "binary_sha256": "34ac656b5d24fc5b4e3978c9628b958f95a620ab9cf10e159a7198a3d5bec8dc",
+      "numpy": "2.5.4"
+    },
+    "modes": [
+      {
+        "mode": 0,
+        "steps": 27,
+        "policy": {
+          "seed": 1,
+          "frame_skip": 1,
+          "repeat_action_probability": 0.0
+        },
+        "full_serialized_states_equal": true,
+        "ram_screen_inputs_equal": true,
+        "initial_sha256": "5422472ec1fa68ef509559560208cfcb241e2956254aee3230792e4a2f7b17d0",
+        "trace_sha256": "e4be539e4a424642949447708a6b4f5e9bf7e20405775990824c4510092eb37f"
+      },
+      {
+        "mode": 2,
+        "steps": 27,
+        "policy": {
+          "seed": 1,
+          "frame_skip": 1,
+          "repeat_action_probability": 0.0
+        },
+        "full_serialized_states_equal": true,
+        "ram_screen_inputs_equal": true,
+        "initial_sha256": "8f8e704443e506415d80bc2e6438153a022262e85a8ed290aa3f00995d2c1258",
+        "trace_sha256": "4ec2c88acc08c07055922dd51e6ada583ee18cf0221e36d8275e099fd2960058"
+      }
+    ]
+  },
+  "refuge": {
+    "steps": 1056,
+    "independent_runs": 2,
+    "full_states_equal": true,
+    "trace_sha256": "1ce7c16078c766bef2c21216994a36866f9f0517225ebe3eec208912607e839a",
+    "config_sha256": "930277a3e5ec8f8e45e7e79db8189470b2a50884b254dde3847dbabf021c400e",
+    "observation": {
+      "refuge_x": 9,
+      "bear_min": 15,
+      "bear_max": 133,
+      "bear_direction_reversals": 0,
+      "bear_blocked_at_edge": true,
+      "reserve": 3,
+      "grounded_shore": true,
+      "effective_bear_hits": 0
+    },
+    "provenance": {
+      "preparation_summary_sha256": "a71d7b06e76706584623d41cd89c396e6fe97ea3124127eb73139c4d2ebcf3e7",
+      "preparation_trace_sha256": "4d845a64ff6b322ed5cdc5eeade3e970ae1263f558a892fd221cdcb7922787fe",
+      "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+      "preparation_tool_commit": "f276112a2f819c2bcdbfa6fb3ee7db8e9a0836d1"
+    }
+  },
+  "console": {
+    "steps": 125,
+    "full_states_equal": true,
+    "observed_wrap_modes": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "mode_after_select_hold35": 0,
+    "mode_after_reset_select": 0,
+    "trace_sha256": "ed30c32a90d3b6bffa4a9f497a2e7ea70ac152ed6ac458bd7033c727ffc1ee02",
+    "provenance": {
+      "preparation_summary_sha256": "3934e6be564eca71fa01f359a5d3bbcb3cef32a3e7f3f53a5691845d74432d6c",
+      "preparation_trace_sha256": "4d845a64ff6b322ed5cdc5eeade3e970ae1263f558a892fd221cdcb7922787fe",
+      "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+      "preparation_tool_commit": "aa81b27ae3664be051aa4991337f760a596537a5"
+    }
+  },
+  "limits": [
+    "Controlled power-on RIOT/host seed, not every physical power-on",
+    "C7=1 port1 fixtures do not prove natural death/record swapping",
+    "One natural refuge route, not every geometry or complete game",
+    "ADC/SBC boundary matrix, not exhaustive NMOS conformance",
+    "ALE modes0/2 startup is not aligned to Stella; no cross-backend whole-state equality",
+    "Native logical adapter, target timing, audio, PAL and physical MSX remain later gates"
+  ],
+  "producers": {
+    "stella": {
+      "tool_source_commit": "aa81b27ae3664be051aa4991337f760a596537a5",
+      "utility_sha256": "b421e731c5ba8ff6a20ee982d40937c07d25653872eec9b1477a26392c2097c7",
+      "private_summary_sha256": "3934e6be564eca71fa01f359a5d3bbcb3cef32a3e7f3f53a5691845d74432d6c"
+    },
+    "cpu": {
+      "tool_source_commit": "35ba2526f237b36c81c8a72955d87223f3cdca22",
+      "utility_sha256": "6ec882951714ae3953dfb67fab88414557442cc1e94ac90a4c0f0d68af0b8531",
+      "private_summary_sha256": "e0825484fcb835a33f393449656ddf9fa944cbcc99f7daee4865c3b7050bb9a9"
+    },
+    "ale": {
+      "tool_source_commit": "64451438847ba70084a27335d62ea6415d8dd5e7",
+      "utility_sha256": "a31a65086e48697eb359abb41f52536da8e5435cec8602e0f72a864c490b8ee3",
+      "private_summary_sha256": "83d973ae3532be4caa515c50604ea8df9764211aea743e17057fa3d918a533cb"
+    },
+    "refuge": {
+      "tool_source_commit": "aa81b27ae3664be051aa4991337f760a596537a5",
+      "utility_sha256": "765ebde7b15cdf801633331462825f36c30e7cf589fb759abd5422916bf7680b",
+      "private_summary_sha256": "596d86f728b2c7ffb8d9dbe80f5145ec3627b1eb3e623ba8b1437f8ca353f65e"
+    },
+    "console": {
+      "tool_source_commit": "dc4c2c35f8510d660599668f1916dac908fea847",
+      "utility_sha256": "13bf260f0e39a0e9618d50bf6e9269d32938aae32dda78738a132faa326600f4",
+      "private_summary_sha256": "906d79c49a24c99f9595ef05bf8eae023646021db9e245f17e0f33e6f412c0ca"
+    }
+  },
+  "logical_projection": {
+    "contract": "frostbite/source-logical/F019/v1",
+    "utility_sha256": "d6f5077923406804626fedc3c69a16a405353e6628e91d5612550fcdb3635be8",
+    "tool_source_commit": "168b6b998f4f71ea0635e906743192c8ad406465"
+  },
+  "publication": {
+    "utility_sha256": "ce7bd2c4afbd9da802ad52b7e96663f9bc1d6b392655ff2cde02901cf2416a0d",
+    "tool_source_commit": "168b6b998f4f71ea0635e906743192c8ad406465"
+  }
+}

@@ -48,8 +48,10 @@ The bus decodes 6507 ROM and RIOT RAM/stack mirrors. Hardware reads are **only
 explicit constant stimuli**, and hardware writes are recorded without device
 effects. It does not advance RIOT timers, implement WSYNC, TIA pixels, bus
 residue or collision latches. No CPU cycle count is advertised as frame time.
-py65 decimal results require independent Stella confirmation in #7 before
-they serve as the complete NMOS flag oracle.
+Issue #7 independently confirmed86 no-MMIO cases and288ADC/SBC boundary vectors
+against actual Stella instructions, including all128RAM and CPU flags. This
+bounded confirmation is not exhaustive NMOS opcode/silicon conformance. See
+[independent reference evidence](reference-traces.md).
 
 The original [Activision manual, electronic reproduction](https://www.atariage.com/manual_html_page.php?SoftwareLabelID=199)
 corroborates variations, controls, row construction, threats, scoring, airborne
@@ -131,6 +133,9 @@ F2>=0 instead follows the contacted object's movement (97 and direction bit 7)
 and inhibits ordinary steering/jump/reversal paths. These states must remain
 distinct even if a renderer draws them similarly. See grounded-object-attaches,
 airborne-left-steering and coordinate cases.
+Actual mode2 source execution stops ordinary shore walking at X10, whereas the
+frozen down/up jump route lands at X09. Preserve FA43's shore pretest and the
+distinct airborne/carry paths; do not merge them into a common left clamp.
 
 **M3 — integer/fractional arithmetic.** FFD0 derives 96–98 and keeps three
 low-nibble accumulators in 99–9B; fractional carry conditionally adds one to
@@ -190,6 +195,11 @@ so that contact path can reach 0F. Normal bear movement has separate pretests
 and 97-sized increments; do not impose an invented common hard clamp.
 The manual's extreme-left refuge requires a natural TIA collision route: a
 CPU fixture with ED=0 cannot prove it. Airborne bear contact is inhibited.
+Issue #7 now measures a natural jump to X09, followed by768wait intervals with
+the bear blocked at X0F, ED bit7 clear and reserve3 unchanged. The walking-only
+X10 hypothesis failed source execution. The bear pursues Bailey and then stops;
+there is no invented automatic two-direction patrol. This establishes the frozen
+route, while other crowded/airborne collision geometries retain their own gates.
 
 **H3 — fish.** Grounded contact with low kind 1 increments F7, clears a segment
 bit in DC+row using the player/object offset table, rebuilds the display and
