@@ -1,6 +1,6 @@
 # Reconstruct and annotate the Atari 2600 disassembly and state map
 
-Planning ID: P03. Status: implementation and independent review complete; integration pending in PR #21.
+Planning ID: P03. Research delivery and independent review: PR #21; live lifecycle tracked on GitHub.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/3
 
 ## Goal
