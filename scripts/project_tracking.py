@@ -4,6 +4,7 @@ import argparse
 import json
 import math
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -40,6 +41,9 @@ def plan_changes(config, fields, snapshot, issue=None, status=None):
         selected[name] = matching[0]
         if name != 'Estimate' and matching[0].get('type') != 'ProjectV2SingleSelectField':
             raise ValueError(f'wrong field type for {name}')
+    if (selected['Estimate'].get('type') != 'ProjectV2Field'
+            or selected['Estimate'].get('dataType') != 'NUMBER'):
+        raise ValueError('Estimate must have verified NUMBER field schema')
     def option(name, value):
         options = [o for o in selected[name].get('options', []) if o['name'] == value]
         if len(options) != 1 or not options[0].get('id'):
@@ -58,8 +62,15 @@ def plan_changes(config, fields, snapshot, issue=None, status=None):
     owned = {}
     for item in items:
         content = item.get('content') or {}
-        if content.get('repository') != REPOSITORY or content.get('type') != 'Issue':
+        url_hint = content.get('url', '')
+        issue_prefix = f'https://github.com/{REPOSITORY}/issues/'
+        if content.get('repository') != REPOSITORY and not str(url_hint).startswith(issue_prefix):
             continue
+        if (content.get('repository') == REPOSITORY and content.get('type') == 'PullRequest'
+                and re.fullmatch(rf'https://github.com/{re.escape(REPOSITORY)}/pull/[1-9]\d*', str(url_hint))):
+            continue
+        if content.get('repository') != REPOSITORY or content.get('type') != 'Issue':
+            raise ValueError('conflicting/incomplete Frostbite project identity')
         number = content.get('number')
         url = f'https://github.com/{REPOSITORY}/issues/{number}'
         if type(number) is not int or number <= 0 or content.get('url') != url or not item.get('id'):
@@ -102,6 +113,15 @@ def snapshot(config):
     if project['id'] != config['id']:
         raise ValueError('live project identity mismatch; no mutations attempted')
     fields = gh('project', 'field-list', 7, '--owner', 'sandersouza', '--format', 'json', '--limit', 10000)
+    estimates = [field for field in complete(fields, 'fields') if field['name'] == 'Estimate']
+    if len(estimates) != 1:
+        raise ValueError('missing/ambiguous Estimate field')
+    field = estimates[0]
+    query = 'query($id:ID!){node(id:$id){... on ProjectV2Field{id name dataType}}}'
+    schema = gh('api', 'graphql', '-f', f'query={query}', '-F', f'id={field["id"]}')['data']['node']
+    if not schema or schema.get('id') != field['id'] or schema.get('name') != 'Estimate':
+        raise ValueError('Estimate schema identity mismatch')
+    field['dataType'] = schema.get('dataType')
     items = gh('project', 'item-list', 7, '--owner', 'sandersouza', '--format', 'json', '--limit', 10000)
     return fields, items
 

@@ -47,8 +47,9 @@ rules as macOS setup. It does not bypass host checks in `scripts/setup.sh`.
 `make source-check` reads Git's index blobs, not working-copy contents or ignored
 research. Run it after selectively staging files and before committing. It rejects
 local/generated paths, cartridge/archive extensions, symlinks/submodules/conflicts,
-binary/non-UTF8 content, the canonical original hash, blobs over1MiB and generated
-disassembly markers in assembly files. Force-added ignored inputs still fail.
+binary/non-UTF8 content, the canonical original hash, blobs over1MiB and recognizable
+generated-disassembly headers regardless of extension. Assembly files also receive
+a broader marker check. Force-added ignored inputs still fail.
 
 This is an enforceable source policy for the current text-only tree, not a
 copyright/provenance oracle. Renamed text tables without identifying markers
@@ -85,7 +86,9 @@ documents the targeted field updates used here.
 
 The helper verifies project identity, complete item/field responses, canonical
 repository/issue URL, unique attachments/options and finite positive estimates
-before writing. More than10,000 returned items/fields fails closed instead of
+before writing. Estimate's NUMBER schema is independently read through GraphQL;
+missing/contradictory Frostbite identity is an error, not an absent attachment.
+More than10,000 returned items/fields fails closed instead of
 operating on a truncated list. It refreshes/readbacks after each operation and
 never deletes items, changes shared field definitions or touches other games.
 An operation whose result is not visible stops rather than repeatedly writing.

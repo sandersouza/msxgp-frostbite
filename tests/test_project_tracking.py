@@ -2,6 +2,7 @@
 import copy
 import importlib
 import importlib.util
+import json
 import math
 from pathlib import Path
 import sys
@@ -28,7 +29,7 @@ class TrackingTests(unittest.TestCase):
              'options': [{'name': 'P2', 'id': 'p2'}]},
             {'id': 'size', 'name': 'Size', 'type': 'ProjectV2SingleSelectField',
              'options': [{'name': 'M', 'id': 'medium'}]},
-            {'id': 'estimate', 'name': 'Estimate', 'type': 'ProjectV2Field'}]}
+            {'id': 'estimate', 'name': 'Estimate', 'type': 'ProjectV2Field', 'dataType': 'NUMBER'}]}
         item = {'id': 'frostbite6', 'content': {'type': 'Issue', 'repository': REPO, 'number': 6, 'url': URL},
                 'priority': 'P2', 'size': 'M', 'estimate': 5, 'status': 'In progress'}
         unrelated = {'id': 'other6', 'content': {'type': 'Issue', 'repository': 'sandersouza/other',
@@ -40,6 +41,17 @@ class TrackingTests(unittest.TestCase):
         before = copy.deepcopy(args)
         self.assertEqual(self.api().plan_changes(*args), [])
         self.assertEqual(args, before)
+
+    def test_legitimate_draft_and_same_repo_pull_request_are_preserved(self):
+        config, fields, snapshot = self.fixture()
+        snapshot['items'] += [
+            {'id': 'draft', 'content': {'type': 'DraftIssue', 'title': 'draft'}},
+            {'id': 'pr', 'content': {'type': 'PullRequest', 'repository': REPO,
+                'number': 25, 'url': f'https://github.com/{REPO}/pull/25'}}]
+        snapshot['totalCount'] = 4
+        before = copy.deepcopy(snapshot)
+        self.assertEqual(self.api().plan_changes(config, fields, snapshot), [])
+        self.assertEqual(snapshot, before)
 
     def test_only_requested_status_changes(self):
         ops = self.api().plan_changes(*self.fixture(), issue=6, status='In review')
@@ -78,6 +90,30 @@ class TrackingTests(unittest.TestCase):
             with self.subTest(kwargs=kwargs), self.assertRaises(ValueError):
                 self.api().plan_changes(*self.fixture(), **kwargs)
 
+    def test_conflicting_or_incomplete_owned_identity_is_rejected(self):
+        for change in ({'repository': None}, {'repository': 'sandersouza/other'}, {'type': None}):
+            with self.subTest(change=change):
+                config, fields, snapshot = self.fixture()
+                snapshot['items'][1]['content'].update(change)
+                with self.assertRaises(ValueError):
+                    self.api().plan_changes(config, fields, snapshot)
+
+    def test_incompatible_estimate_schema_prevents_all_mutations(self):
+        api = self.api()
+        for kind, data_type in (('ProjectV2SingleSelectField', None), ('ProjectV2Field', 'TEXT')):
+            with self.subTest(kind=kind, data_type=data_type):
+                config, fields, snapshot = self.fixture()
+                fields['fields'][3].update(type=kind, dataType=data_type)
+                snapshot['items'][1]['priority'] = None
+                before = copy.deepcopy(snapshot)
+                with patch.object(api, 'snapshot', return_value=(fields, snapshot)):
+                    def forbidden_write(*args):
+                        self.fail('invalid schema must be refused before transport mutation')
+                    with patch.object(api, 'mutate', side_effect=forbidden_write):
+                        with self.assertRaises(ValueError):
+                            api.sync(config, issue=6, apply=True)
+                self.assertEqual(snapshot, before)
+
     def test_apply_readback_and_repeat_preserve_unrelated_items(self):
         api = self.api()
         config, fields, snapshot = self.fixture()
@@ -86,6 +122,8 @@ class TrackingTests(unittest.TestCase):
             if args[:2] == ('project', 'view'): return {'id': config['id']}
             if args[:2] == ('project', 'field-list'): return copy.deepcopy(fields)
             if args[:2] == ('project', 'item-list'): return copy.deepcopy(snapshot)
+            if args[:2] == ('api', 'graphql'):
+                return {'data': {'node': {'id': 'estimate', 'name': 'Estimate', 'dataType': 'NUMBER'}}}
             if args[:2] == ('project', 'item-edit'):
                 if args[args.index('--id') + 1] != 'frostbite6':
                     raise AssertionError('attempt to edit unrelated item')
@@ -109,9 +147,29 @@ class TrackingTests(unittest.TestCase):
             if args[:2] == ('project', 'view'): return {'id': config['id']}
             if args[:2] == ('project', 'field-list'): return fields
             if args[:2] == ('project', 'item-list'): return snapshot
+            if args[:2] == ('api', 'graphql'):
+                return {'data': {'node': {'id': 'estimate', 'name': 'Estimate', 'dataType': 'NUMBER'}}}
             raise ValueError('permission denied')
         with patch.object(api, 'gh', side_effect=fail_write):
             dry_run = api.sync(config, issue=6, status='In review')
             self.assertEqual(len(dry_run['planned']), 1)
             with self.assertRaisesRegex(ValueError, 'permission denied.*applied'):
                 api.sync(config, issue=6, status='In review', apply=True)
+
+    def test_partial_failure_reports_successful_write_and_replans_remainder(self):
+        api = self.api()
+        config, fields, snapshot = self.fixture()
+        snapshot['items'][1].update(priority=None, estimate=1)
+        def write(_config, operation):
+            if operation['field'] == 'Priority':
+                snapshot['items'][1]['priority'] = 'P2'
+            else:
+                raise ValueError('network failure')
+        with patch.object(api, 'snapshot', side_effect=lambda _: (fields, copy.deepcopy(snapshot))), \
+             patch.object(api, 'mutate', side_effect=write):
+            with self.assertRaises(ValueError) as caught:
+                api.sync(config, issue=6, apply=True)
+            result = json.loads(str(caught.exception))
+            self.assertEqual([op['field'] for op in result['applied']], ['Priority'])
+            remaining = api.sync(config, issue=6)['planned']
+            self.assertEqual([op['field'] for op in remaining], ['Estimate'])

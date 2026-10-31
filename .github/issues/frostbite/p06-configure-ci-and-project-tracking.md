@@ -1,6 +1,6 @@
 # Configure original-free CI and GitHub project tracking
 
-Planning ID: P06. Implementation verified; final independent review/CI/integration pending.
+Planning ID: P06. Implementation/review recorded in [PR #25](https://github.com/sandersouza/msxgp-frostbite/pull/25); its GitHub lifecycle records current checks/integration.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/6
 
 ## Goal
@@ -32,6 +32,7 @@ If this issue delivers a new testable MSX ROM version, publish a versioned GitHu
 - Git-index source gate rejects prohibited paths, binary/non-UTF8/oversized blobs, links and disassembly markers without reading ignored research. Arbitrary text-table provenance still requires review.
 - All17 intended metadata records match local issue bodies; live63-item audit and repeat apply are no-ops. Helper moved only issue6 to In review and a second apply made no write. Existing shared fields/other-game items preserved.
 - ROM bytes/version remain identical to published v0.0.1-diagnostic, SHA-256 `d46320aec4b148c3b885d54de051bc078539b65a7a8bf739bb4e9e956c2028ca`; no new ROM release is produced by this infrastructure delivery. Build CI does not establish emulator/gameplay/physical acceptance.
+- Both current-checkpoint push/PR runs41244304032/41244322317 passed70 tests; a new macOS source clone/new venv/new assembler passed the same checks. Independent review's three Important malformed-input cases were reproduced and fixed in one pass: renamed disassembly, incomplete identity, incompatible Estimate schema. Full suite75 passes; latest fixed-head CI must pass before integration. Review details and limits are in the handoff/PR.
 
 ## Project metadata
 

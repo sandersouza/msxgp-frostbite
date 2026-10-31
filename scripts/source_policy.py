@@ -45,6 +45,10 @@ def check_index(root=ROOT):
         except UnicodeDecodeError:
             problems.append(f'{name}: public sources must be UTF-8 text')
             continue
+        if re.search(r'^\s*(?:;|//|#)?\s*(?:disassembly\s+of\b|(?:auto[- ]?)?generated\b[^\n]*(?:distella|original[^\n]*rom))',
+                     text, re.I | re.M):
+            problems.append(f'{name}: recognizable generated disassembly header, regardless of filename')
+            continue
         if path.suffix.lower() in ('.asm', '.s', '.inc') and re.search(
                 r'distella|disassembly of .*rom|generated.*original.*rom', text, re.I):
             problems.append(f'{name}: original-derived disassembly requires local-only storage')
