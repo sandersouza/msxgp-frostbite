@@ -1,0 +1,2 @@
+# Optional CPU-slice research backend; no original ROMs are installed/fetched.
+py65==1.2.0
