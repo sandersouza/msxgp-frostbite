@@ -44,6 +44,10 @@ class SourcePolicyTests(unittest.TestCase):
     def test_cartridge_extension_is_rejected_even_when_text(self):
         self.assertTrue(self.check('src/game.rom', b'pretend text\n'))
 
+    def test_non_utf8_and_oversized_text_require_review(self):
+        self.assertTrue(self.check('src/renamed.txt', b'\xff\xfe'))
+        self.assertTrue(self.check('src/large.asm', b'A' * (1024 * 1024 + 1)))
+
     def test_symlink_cannot_smuggle_ignored_input(self):
         self.assertTrue(self.check('src/sprite.asm', b'../references/roms/game.bin', symlink=True))
 

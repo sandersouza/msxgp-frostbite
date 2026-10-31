@@ -2,6 +2,8 @@
 
 Work is tracked in [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).
 Only change this repository's items. Preserve shared fields and other games.
+Use the [CI/tracking checklist](ci-and-tracking.md) and scoped dry-run/apply helper
+for cataloged issue metadata and explicit lifecycle transitions.
 
 The owner approved the design and autonomous issue execution on 2026-10-31.
 The [approved design](superpowers/specs/2026-10-31-frostbite-design.md) and
