@@ -66,6 +66,17 @@ class ProbeTests(unittest.TestCase):
             api.execute_slice(rom, {'id': 'negative', 'start': 'F000', 'stops': ['F004'],
                 'watch': ['80'], 'expect': {'ram': {'80': '08'}}})
 
+    @unittest.skipUnless(importlib.util.find_spec('py65'), 'CPU tests require requirements-reference.txt')
+    def test_operand_byte_cannot_be_used_as_slice_entry(self):
+        api = self.api()
+        self.assertTrue(hasattr(api, 'instruction_boundaries'), 'instruction boundary validation missing')
+        rom = bytes.fromhex('a9 07 85 80') + bytes(4092)
+        boundaries = api.instruction_boundaries(rom, [['F000', 'F003']])
+        self.assertEqual(boundaries, {0xf000, 0xf002})
+        with self.assertRaisesRegex(ValueError, 'instruction boundary'):
+            api.execute_slice(rom, {'id': 'operand', 'start': 'F001', 'stops': ['F002']},
+                              boundaries=boundaries)
+
     def test_bad_rom_rejected_before_loading_cpu_backend(self):
         self.api()
         with tempfile.TemporaryDirectory() as directory:

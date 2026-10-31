@@ -92,7 +92,7 @@
     {"range": ["EF", "EF"], "role": "Bear graphic pointer selector", "sites": ["F0E3", "F7D1", "FAE5"]},
     {"range": ["F0", "F0"], "role": "Second terminal animation displacement", "sites": ["F746", "F74A", "F0D0"]},
     {"range": ["F1", "F1"], "role": "Multi-bit game phase dispatcher; do not reduce to ALE terminal predicate", "sites": ["F6BB", "F6CB", "F715", "F73D", "F754"]},
-    {"range": ["F2", "F2"], "role": "Occupied/carried row index or negative sentinel", "sites": ["FB92", "F859", "F94E", "F961"]},
+    {"range": ["F2", "F2"], "role": "Hazard attachment/push row index or negative free sentinel; ordinary floe transport uses B9 when F2 is negative (clarified by issue #4 CPU probes)", "sites": ["FB92", "F859", "F94E", "F961"]},
     {"range": ["F3", "F4"], "role": "Packed audio/event envelopes; some score events occur in audio update", "sites": ["F4DB", "F4FE", "F533", "F564"]},
     {"range": ["F5", "F5"], "role": "Floe activation/reset cooldown", "sites": ["F6C5", "F8E5", "F9ED"]},
     {"range": ["F6", "F6"], "role": "Landing/activation latch", "sites": ["F8CD", "F8E9", "F9D9"]},

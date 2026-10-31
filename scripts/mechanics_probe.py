@@ -54,7 +54,29 @@ class SliceBus:
             self.writes.append({'address': f'{offset:04X}', 'value': f'{value:02X}'})
 
 
-def execute_slice(data, case):
+def instruction_boundaries(data, ranges):
+    from py65.devices.mpu6502 import MPU
+    from py65.disassembler import Disassembler
+    if len(data) != 4096:
+        raise ValueError('boundary decode requires 4096 bytes')
+    memory = bytearray(65536)
+    memory[0xf000:] = data
+    disassembler = Disassembler(MPU(memory=memory))
+    boundaries = set()
+    for first, last in ranges:
+        pc, end = int(first, 16), int(last, 16) + 1
+        if not 0xf000 <= pc < end <= 0x10000:
+            raise ValueError('invalid code range')
+        while pc < end:
+            size, mnemonic = disassembler.instruction_at(pc)
+            if mnemonic.startswith('???') or pc + size > end:
+                raise ValueError('invalid code range decoding')
+            boundaries.add(pc)
+            pc += size
+    return boundaries
+
+
+def execute_slice(data, case, boundaries=None):
     # Import only after CLI canonical verification; unit fixtures can call directly.
     from py65.devices.mpu6502 import MPU
     bus = SliceBus(data, {int(k, 16): int(v, 16) for k, v in case.get('mmio', {}).items()})
@@ -67,6 +89,8 @@ def execute_slice(data, case):
     stops = {int(value, 16) for value in case['stops']}
     if not 0 <= start <= 65535 or not stops or any(not 0 <= v <= 65535 for v in stops):
         raise ValueError('slice requires valid start/stops')
+    if boundaries is not None and not ({start} | stops) <= boundaries:
+        raise ValueError(f"{case['id']}: start/stop is not a reviewed instruction boundary")
     cpu = MPU(memory=bus, pc=start)
     for name, value in case.get('registers', {}).items():
         if name not in ('a', 'x', 'y', 'p', 'sp') or type(value) is not int or not 0 <= value <= 255:
@@ -77,6 +101,8 @@ def execute_slice(data, case):
         raise ValueError('instruction limit must be 1-100000')
     steps = 0
     while cpu.pc not in stops:
+        if boundaries is not None and cpu.pc not in boundaries:
+            raise ValueError(f"{case['id']}: execution left reviewed instruction boundaries at {cpu.pc:04X}")
         if steps >= limit:
             raise ValueError(f"{case['id']}: instruction limit {limit} exceeded")
         cpu.step()
@@ -118,11 +144,17 @@ def main(argv=None):
         if cases.get('schema_version') != 1 or cases.get('source_sha256') != identity['sha256']:
             raise ValueError('case schema/source identity mismatch')
         data = rom.read_bytes()
-        results = [execute_slice(data, case) for case in cases['cases']]
+        map_data = (ROOT / 'references/disassembly-map.json').read_bytes()
+        source_map = json.loads(map_data)
+        if source_map.get('source_sha256') != identity['sha256']:
+            raise ValueError('disassembly map source identity mismatch')
+        boundaries = instruction_boundaries(data, source_map['classification']['code_ranges'])
+        results = [execute_slice(data, case, boundaries) for case in cases['cases']]
         verified_input(rom, args.manifest)
         report = {'schema_version': 1, 'source': identity, 'backend': {'py65': backend},
                   'utility_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   'cases_sha256': hashlib.sha256(cases_data).hexdigest(),
+                  'disassembly_map_sha256': hashlib.sha256(map_data).hexdigest(),
                   'scope': 'Bounded CPU slices with explicit constant hardware inputs; no TIA, timers, bus cycles or reachable-state proof.',
                   'results': results}
         args.output.parent.mkdir(parents=True, exist_ok=True)

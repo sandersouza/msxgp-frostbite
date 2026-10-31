@@ -1,0 +1,3174 @@
+{
+  "schema_version": 1,
+  "source": {
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "md5": "4ca73eb959299471788f0b685c3ba0b5",
+    "layout": "4K",
+    "trailing_words": {
+      "unused_nmi_word": 60090,
+      "reset": 61440,
+      "irq_word": 61440
+    }
+  },
+  "backend": {
+    "py65": "1.2.0"
+  },
+  "utility_sha256": "92ff5475fd0c8f849b57bedcf94c24950148930ceab205203fd3592adf6fa9b6",
+  "cases_sha256": "a75ac819f17f9c265aa248358338fc3278c2f0572079e4ab710d37ac81c5b66c",
+  "disassembly_map_sha256": "f934bf557893a789f7f6d60f20ead89c89b67671d43373cbbd92aaba8c3a6bfd",
+  "scope": "Bounded CPU slices with explicit constant hardware inputs; no TIA, timers, bus cycles or reachable-state proof.",
+  "results": [
+    {
+      "id": "init-variation-1",
+      "stop_pc": "FB94",
+      "instructions": 330,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "CB": "00",
+        "CC": "03",
+        "CD": "FF",
+        "D1": "00",
+        "D2": "00",
+        "D3": "FF",
+        "E5": "45",
+        "F1": "00",
+        "F2": "FF"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "init-variation-2",
+      "stop_pc": "FB94",
+      "instructions": 332,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "CB": "00",
+        "CC": "03",
+        "CD": "FF",
+        "D1": "00",
+        "D2": "04",
+        "D3": "FF",
+        "E5": "45",
+        "F1": "00",
+        "F2": "FF"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "init-variation-3",
+      "stop_pc": "FB94",
+      "instructions": 330,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "CB": "04",
+        "CC": "03",
+        "CD": "FF",
+        "D1": "04",
+        "D2": "00",
+        "D3": "FF",
+        "E5": "45",
+        "F1": "00",
+        "F2": "FF"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "init-variation-4",
+      "stop_pc": "FB94",
+      "instructions": 332,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "CB": "04",
+        "CC": "03",
+        "CD": "FF",
+        "D1": "04",
+        "D2": "04",
+        "D3": "FF",
+        "E5": "45",
+        "F1": "00",
+        "F2": "FF"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "swap-player-records",
+      "stop_pc": "FE8A",
+      "instructions": 40,
+      "registers": {
+        "a": 1,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "C7": "01",
+        "C8": "00",
+        "C9": "99",
+        "CA": "90",
+        "CB": "04",
+        "CC": "02",
+        "CD": "0A",
+        "CE": "01",
+        "CF": "23",
+        "D0": "45",
+        "D1": "02",
+        "D2": "03",
+        "D3": "07"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "score-ordinary",
+      "stop_pc": "FBC0",
+      "instructions": 8,
+      "registers": {
+        "a": 64,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "C8": "00",
+        "C9": "12",
+        "CA": "40",
+        "CC": "03"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "score-five-thousand",
+      "stop_pc": "FBC0",
+      "instructions": 23,
+      "registers": {
+        "a": 3,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "C8": "00",
+        "C9": "50",
+        "CA": "00",
+        "CC": "04"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "score-reserve-cap",
+      "stop_pc": "FBC0",
+      "instructions": 22,
+      "registers": {
+        "a": 9,
+        "x": 0,
+        "y": 0,
+        "p": 51,
+        "sp": 255
+      },
+      "ram": {
+        "C9": "50",
+        "CA": "00",
+        "CC": "09"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "score-six-digit-wrap",
+      "stop_pc": "FBC0",
+      "instructions": 21,
+      "registers": {
+        "a": 3,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "C8": "00",
+        "C9": "00",
+        "CA": "00",
+        "CC": "04"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "score-attract-inhibited",
+      "stop_pc": "FBC0",
+      "instructions": 4,
+      "registers": {
+        "a": 16,
+        "x": 0,
+        "y": 0,
+        "p": 178,
+        "sp": 255
+      },
+      "ram": {
+        "C9": "12",
+        "CA": "30",
+        "CC": "03"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-decimal-45",
+      "stop_pc": "FBCA",
+      "instructions": 6,
+      "registers": {
+        "a": 68,
+        "x": 0,
+        "y": 0,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "E5": "44"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-decimal-10",
+      "stop_pc": "FBCA",
+      "instructions": 6,
+      "registers": {
+        "a": 9,
+        "x": 0,
+        "y": 0,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "E5": "09"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-decimal-01",
+      "stop_pc": "FBCA",
+      "instructions": 6,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 51,
+        "sp": 255
+      },
+      "ram": {
+        "E5": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-decimal-00",
+      "stop_pc": "FBCA",
+      "instructions": 6,
+      "registers": {
+        "a": 153,
+        "x": 0,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E5": "99"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "input-player-one",
+      "stop_pc": "F65E",
+      "instructions": 16,
+      "registers": {
+        "a": 14,
+        "x": 0,
+        "y": 239,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "84": "0E"
+      },
+      "hardware_reads": [
+        {
+          "address": "0280",
+          "value": "EF"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "input-player-two",
+      "stop_pc": "F65E",
+      "instructions": 10,
+      "registers": {
+        "a": 15,
+        "x": 0,
+        "y": 239,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "84": "0F"
+      },
+      "hardware_reads": [
+        {
+          "address": "0280",
+          "value": "EF"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "fire-edge-80-00-jump00",
+      "stop_pc": "F5C0",
+      "instructions": 13,
+      "registers": {
+        "a": 255,
+        "x": 0,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "AF": "00",
+        "FB": "FF"
+      },
+      "hardware_reads": [
+        {
+          "address": "000C",
+          "value": "00"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "fire-edge-00-00-jump00",
+      "stop_pc": "F5C0",
+      "instructions": 9,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 50,
+        "sp": 255
+      },
+      "ram": {
+        "AF": "00",
+        "FB": "00"
+      },
+      "hardware_reads": [
+        {
+          "address": "000C",
+          "value": "00"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "fire-edge-00-80-jump00",
+      "stop_pc": "F5C0",
+      "instructions": 9,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 128,
+        "p": 50,
+        "sp": 255
+      },
+      "ram": {
+        "AF": "80",
+        "FB": "00"
+      },
+      "hardware_reads": [
+        {
+          "address": "000C",
+          "value": "80"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "fire-edge-80-00-jump01",
+      "stop_pc": "F5C0",
+      "instructions": 11,
+      "registers": {
+        "a": 1,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "AF": "00",
+        "FB": "00"
+      },
+      "hardware_reads": [
+        {
+          "address": "000C",
+          "value": "00"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "collision-reduction-priority",
+      "stop_pc": "F57C",
+      "instructions": 41,
+      "registers": {
+        "a": 0,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "B8": "00",
+        "B9": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "neutral-shore",
+      "stop_pc": "FAE7",
+      "instructions": 404,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E4": "1B",
+        "E5": "45",
+        "E6": "40",
+        "EA": "00",
+        "F1": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "shore-left",
+      "stop_pc": "FAE7",
+      "instructions": 418,
+      "registers": {
+        "a": 0,
+        "x": 8,
+        "y": 8,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "3F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "shore-right",
+      "stop_pc": "FAE7",
+      "instructions": 419,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "41"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "opposite-horizontal-left-priority",
+      "stop_pc": "FAE7",
+      "instructions": 418,
+      "registers": {
+        "a": 0,
+        "x": 8,
+        "y": 8,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "3F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "jump-down-start",
+      "stop_pc": "FAE7",
+      "instructions": 409,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E4": "1B",
+        "EA": "0F",
+        "F6": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "jump-up-start",
+      "stop_pc": "FAE7",
+      "instructions": 438,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "EA": "1F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "opposite-vertical-up-priority",
+      "stop_pc": "FAE7",
+      "instructions": 438,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "EA": "1F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "airborne-object-contact-ignored",
+      "stop_pc": "FAE7",
+      "instructions": 403,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "40",
+        "EA": "0E",
+        "F2": "FF"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "airborne-left-steering",
+      "stop_pc": "FAE7",
+      "instructions": 400,
+      "registers": {
+        "a": 0,
+        "x": 8,
+        "y": 8,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "3E",
+        "EA": "0E"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "airborne-bear-contact-ignored",
+      "stop_pc": "FAE7",
+      "instructions": 416,
+      "registers": {
+        "a": 1,
+        "x": 0,
+        "y": 7,
+        "p": 113,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "40",
+        "EA": "0E"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "grounded-object-attaches",
+      "stop_pc": "FAE7",
+      "instructions": 407,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "42",
+        "F2": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "fish-clears-segment",
+      "stop_pc": "FAE7",
+      "instructions": 497,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E7": "10",
+        "F4": "5B",
+        "F7": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "white-row-landing-builds",
+      "stop_pc": "FAE7",
+      "instructions": 452,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "AB": "98",
+        "CA": "10",
+        "CD": "00",
+        "F5": "10"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "blue-row-landing-no-build",
+      "stop_pc": "FAE7",
+      "instructions": 439,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "AB": "98",
+        "CA": "00",
+        "CD": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "row-reverse-cost",
+      "stop_pc": "FAE7",
+      "instructions": 445,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "50",
+        "CD": "03",
+        "F4": "8F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "row-reverse-completed-free",
+      "stop_pc": "FAE7",
+      "instructions": 440,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "50",
+        "CD": "0F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "row-reverse-no-block-inhibited",
+      "stop_pc": "FAE7",
+      "instructions": 432,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "10",
+        "CD": "FF"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "build-before-reverse-priority",
+      "stop_pc": "FAE7",
+      "instructions": 452,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "10",
+        "AB": "98",
+        "CA": "10",
+        "CD": "04"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "completed-igloo-white-row-still-scores",
+      "stop_pc": "FAE7",
+      "instructions": 456,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "AB": "98",
+        "CA": "10",
+        "CD": "0F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "reverse-shore-inhibited",
+      "stop_pc": "FAE7",
+      "instructions": 404,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "10",
+        "CD": "04"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "hazard-attachment-inhibits-reverse",
+      "stop_pc": "FAE7",
+      "instructions": 392,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "91": "10",
+        "CD": "04"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "all-blue-reset",
+      "stop_pc": "FAE7",
+      "instructions": 466,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "AB": "0C",
+        "AC": "0C",
+        "AD": "0C",
+        "AE": "0C"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "reset-cooldown-keeps-blue",
+      "stop_pc": "FAE7",
+      "instructions": 430,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 58,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "AB": "98",
+        "F5": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-frame-gate",
+      "stop_pc": "FAE7",
+      "instructions": 418,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E5": "44"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-zero-phase",
+      "stop_pc": "FAE7",
+      "instructions": 420,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E5": "00",
+        "F1": "10"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "water-no-row-contact",
+      "stop_pc": "FAE7",
+      "instructions": 258,
+      "registers": {
+        "a": 128,
+        "x": 255,
+        "y": 1,
+        "p": 177,
+        "sp": 255
+      },
+      "ram": {
+        "F1": "80"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "shore-no-row-contact-safe",
+      "stop_pc": "FAE7",
+      "instructions": 404,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "F1": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "bear-level-three-absent",
+      "stop_pc": "FAE7",
+      "instructions": 409,
+      "registers": {
+        "a": 2,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "40",
+        "F1": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "bear-level-four-contact",
+      "stop_pc": "FAE7",
+      "instructions": 61,
+      "registers": {
+        "a": 4,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "3F",
+        "EC": "08"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0015",
+          "value": "01"
+        },
+        {
+          "address": "0016",
+          "value": "08"
+        },
+        {
+          "address": "0019",
+          "value": "04"
+        },
+        {
+          "address": "001A",
+          "value": "04"
+        },
+        {
+          "address": "0017",
+          "value": "04"
+        },
+        {
+          "address": "0018",
+          "value": "04"
+        }
+      ]
+    },
+    {
+      "id": "bear-contact-left-boundary",
+      "stop_pc": "FAE7",
+      "instructions": 61,
+      "registers": {
+        "a": 4,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "E6": "3F",
+        "E8": "0F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0015",
+          "value": "01"
+        },
+        {
+          "address": "0016",
+          "value": "08"
+        },
+        {
+          "address": "0019",
+          "value": "04"
+        },
+        {
+          "address": "001A",
+          "value": "04"
+        },
+        {
+          "address": "0017",
+          "value": "04"
+        },
+        {
+          "address": "0018",
+          "value": "04"
+        }
+      ]
+    },
+    {
+      "id": "water-animation-to-delay",
+      "stop_pc": "FAE7",
+      "instructions": 22,
+      "registers": {
+        "a": 112,
+        "x": 0,
+        "y": 0,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "E7": "70",
+        "F1": "20"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "temperature-animation-to-delay",
+      "stop_pc": "FAE7",
+      "instructions": 41,
+      "registers": {
+        "a": 112,
+        "x": 4,
+        "y": 0,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "E7": "70",
+        "F0": "12",
+        "F1": "20"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "completion-block-bonus",
+      "stop_pc": "FAE7",
+      "instructions": 35,
+      "registers": {
+        "a": 85,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "CA": "10",
+        "CD": "0E",
+        "E7": "06"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "completion-temperature-bonus",
+      "stop_pc": "FAE7",
+      "instructions": 43,
+      "registers": {
+        "a": 85,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "CA": "10",
+        "E5": "00",
+        "E7": "02"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "completion-advance-request",
+      "stop_pc": "FAE7",
+      "instructions": 25,
+      "registers": {
+        "a": 48,
+        "x": 0,
+        "y": 0,
+        "p": 112,
+        "sp": 255
+      },
+      "ram": {
+        "E7": "30",
+        "F1": "08",
+        "F7": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "level-advance",
+      "stop_pc": "FAE7",
+      "instructions": 355,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "CB": "03",
+        "CD": "FF",
+        "E5": "45",
+        "F1": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "single-player-next-life",
+      "stop_pc": "FAE7",
+      "instructions": 429,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "C7": "00",
+        "CC": "01",
+        "F1": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "fish-count-survives-life-reset",
+      "stop_pc": "FAE7",
+      "instructions": 429,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "CC": "01",
+        "F7": "0B"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "two-player-next-turn",
+      "stop_pc": "FAE7",
+      "instructions": 387,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "C7": "01",
+        "CB": "04",
+        "CC": "03",
+        "D2": "02"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "dead-other-player-skipped",
+      "stop_pc": "FAE7",
+      "instructions": 429,
+      "registers": {
+        "a": 27,
+        "x": 255,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "C7": "00",
+        "CC": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "all-reserves-exhausted",
+      "stop_pc": "FAE7",
+      "instructions": 26,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "C6": "FF",
+        "F1": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "delay-blocks-state",
+      "stop_pc": "FAE7",
+      "instructions": 5,
+      "registers": {
+        "a": 1,
+        "x": 0,
+        "y": 0,
+        "p": 50,
+        "sp": 255
+      },
+      "ram": {
+        "CB": "02",
+        "E7": "00",
+        "F1": "08"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "igloo-entry-left-outside",
+      "stop_pc": "FAE7",
+      "instructions": 410,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E9": "00",
+        "EA": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "igloo-entry-left-inside",
+      "stop_pc": "FAE7",
+      "instructions": 399,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E9": "80",
+        "EA": "1F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "igloo-entry-right-inside",
+      "stop_pc": "FAE7",
+      "instructions": 399,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E9": "80",
+        "EA": "1F"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "igloo-entry-right-outside",
+      "stop_pc": "FAE7",
+      "instructions": 410,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E9": "00",
+        "EA": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "igloo-entry-incomplete-blocked",
+      "stop_pc": "FAE7",
+      "instructions": 417,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 27,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "E9": "00",
+        "EA": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "palette-level-byte-03",
+      "stop_pc": "FB3A",
+      "instructions": 21,
+      "registers": {
+        "a": 3,
+        "x": 10,
+        "y": 4,
+        "p": 51,
+        "sp": 255
+      },
+      "ram": {
+        "BB": "84",
+        "BC": "0A"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "palette-level-byte-04",
+      "stop_pc": "FB3A",
+      "instructions": 24,
+      "registers": {
+        "a": 4,
+        "x": 2,
+        "y": 12,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "BB": "80",
+        "BC": "02"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "palette-level-byte-07",
+      "stop_pc": "FB3A",
+      "instructions": 24,
+      "registers": {
+        "a": 7,
+        "x": 2,
+        "y": 12,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "BB": "80",
+        "BC": "02"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "palette-level-byte-08",
+      "stop_pc": "FB3A",
+      "instructions": 21,
+      "registers": {
+        "a": 8,
+        "x": 10,
+        "y": 4,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "BB": "84",
+        "BC": "0A"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "fish-envelope-awards-ten",
+      "stop_pc": "F4FE",
+      "instructions": 25,
+      "registers": {
+        "a": 16,
+        "x": 5,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "CA": "10",
+        "F4": "43"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0018",
+          "value": "03"
+        },
+        {
+          "address": "0016",
+          "value": "0C"
+        },
+        {
+          "address": "001A",
+          "value": "05"
+        }
+      ]
+    },
+    {
+      "id": "fish-envelope-quarter-gate",
+      "stop_pc": "F4FE",
+      "instructions": 13,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 114,
+        "sp": 255
+      },
+      "ram": {
+        "CA": "00",
+        "F4": "44"
+      },
+      "hardware_reads": [],
+      "hardware_writes": [
+        {
+          "address": "0018",
+          "value": "04"
+        },
+        {
+          "address": "0016",
+          "value": "0C"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "block-award-level-byte-00",
+      "stop_pc": "F5E0",
+      "instructions": 6,
+      "registers": {
+        "a": 16,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "95": "10"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "block-award-level-byte-07",
+      "stop_pc": "F5E0",
+      "instructions": 6,
+      "registers": {
+        "a": 128,
+        "x": 7,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "95": "80"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "block-award-level-byte-08",
+      "stop_pc": "F5E0",
+      "instructions": 7,
+      "registers": {
+        "a": 144,
+        "x": 8,
+        "y": 0,
+        "p": 177,
+        "sp": 255
+      },
+      "ram": {
+        "95": "90"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "block-award-level-byte-09",
+      "stop_pc": "F5E0",
+      "instructions": 7,
+      "registers": {
+        "a": 144,
+        "x": 8,
+        "y": 0,
+        "p": 177,
+        "sp": 255
+      },
+      "ram": {
+        "95": "90"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "block-award-level-byte-FF",
+      "stop_pc": "F5E0",
+      "instructions": 7,
+      "registers": {
+        "a": 144,
+        "x": 8,
+        "y": 0,
+        "p": 177,
+        "sp": 255
+      },
+      "ram": {
+        "95": "90"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "select-wrap-0",
+      "stop_pc": "F6AB",
+      "instructions": 32,
+      "registers": {
+        "a": 255,
+        "x": 0,
+        "y": 30,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "80": "01",
+        "83": "1E",
+        "C6": "FF"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FD"
+        }
+      ],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "select-wrap-1",
+      "stop_pc": "F6AB",
+      "instructions": 32,
+      "registers": {
+        "a": 255,
+        "x": 0,
+        "y": 30,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "80": "02",
+        "83": "1E",
+        "C6": "FF"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FD"
+        }
+      ],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "select-wrap-2",
+      "stop_pc": "F6AB",
+      "instructions": 32,
+      "registers": {
+        "a": 255,
+        "x": 0,
+        "y": 30,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "80": "03",
+        "83": "1E",
+        "C6": "FF"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FD"
+        }
+      ],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "select-wrap-3",
+      "stop_pc": "F6AB",
+      "instructions": 32,
+      "registers": {
+        "a": 255,
+        "x": 0,
+        "y": 30,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "80": "00",
+        "83": "1E",
+        "C6": "FF"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FD"
+        }
+      ],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "select-held-countdown",
+      "stop_pc": "F6AB",
+      "instructions": 10,
+      "registers": {
+        "a": 2,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "80": "01",
+        "83": "01"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FD"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "select-release-rearms",
+      "stop_pc": "F6AB",
+      "instructions": 7,
+      "registers": {
+        "a": 63,
+        "x": 0,
+        "y": 0,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "80": "01",
+        "83": "00"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FF"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "console-reset-preserves-reference-state",
+      "stop_pc": "F019",
+      "instructions": 602,
+      "registers": {
+        "a": 27,
+        "x": 51,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "80": "03",
+        "81": "55",
+        "82": "33",
+        "83": "19",
+        "84": "07",
+        "BF": "00",
+        "C5": "00",
+        "C7": "00",
+        "C8": "00",
+        "CB": "04",
+        "CC": "03",
+        "D2": "04"
+      },
+      "hardware_reads": [
+        {
+          "address": "0282",
+          "value": "FE"
+        }
+      ],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
+      "id": "coordinate-carry0-9F-01",
+      "stop_pc": "FCFA",
+      "instructions": 11,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 35,
+        "sp": 255
+      },
+      "ram": {
+        "F8": "9F",
+        "F9": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "coordinate-carry1-00-01",
+      "stop_pc": "FCFA",
+      "instructions": 10,
+      "registers": {
+        "a": 159,
+        "x": 0,
+        "y": 0,
+        "p": 160,
+        "sp": 255
+      },
+      "ram": {
+        "F8": "00",
+        "F9": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "coordinate-carry0-9E-01",
+      "stop_pc": "FCFA",
+      "instructions": 10,
+      "registers": {
+        "a": 159,
+        "x": 0,
+        "y": 0,
+        "p": 160,
+        "sp": 255
+      },
+      "ram": {
+        "F8": "9E",
+        "F9": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "coordinate-carry1-10-01",
+      "stop_pc": "FCFA",
+      "instructions": 9,
+      "registers": {
+        "a": 15,
+        "x": 0,
+        "y": 0,
+        "p": 32,
+        "sp": 255
+      },
+      "ram": {
+        "F8": "10",
+        "F9": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "fraction-without-carry",
+      "stop_pc": "FFE8",
+      "instructions": 16,
+      "registers": {
+        "a": 2,
+        "x": 0,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "96": "01",
+        "99": "02"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "fraction-with-carry",
+      "stop_pc": "FFE8",
+      "instructions": 17,
+      "registers": {
+        "a": 1,
+        "x": 0,
+        "y": 0,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "96": "02",
+        "99": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "rng-three-iterations-01",
+      "stop_pc": "FE9A",
+      "instructions": 28,
+      "registers": {
+        "a": 72,
+        "x": 0,
+        "y": 255,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "82": "08"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "rng-three-iterations-80",
+      "stop_pc": "FE9A",
+      "instructions": 28,
+      "registers": {
+        "a": 36,
+        "x": 0,
+        "y": 255,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "82": "04"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "rng-three-iterations-00",
+      "stop_pc": "FE9A",
+      "instructions": 28,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 255,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "82": "00"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "magic-fish-below-level-byte-twenty",
+      "stop_pc": "F0BD",
+      "instructions": 3,
+      "registers": {
+        "a": 19,
+        "x": 0,
+        "y": 0,
+        "p": 176,
+        "sp": 255
+      },
+      "ram": {
+        "8B": "00",
+        "8C": "F0"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "magic-fish-at-level-byte-twenty",
+      "stop_pc": "F0BD",
+      "instructions": 7,
+      "registers": {
+        "a": 253,
+        "x": 0,
+        "y": 0,
+        "p": 177,
+        "sp": 255
+      },
+      "ram": {
+        "8B": "6D",
+        "8C": "FD"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "fish-kind-below-spawn-threshold",
+      "stop_pc": "FEE6",
+      "instructions": 53,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 51,
+        "sp": 255
+      },
+      "ram": {
+        "91": "01"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    },
+    {
+      "id": "fish-kind-at-spawn-threshold",
+      "stop_pc": "FEE6",
+      "instructions": 58,
+      "registers": {
+        "a": 0,
+        "x": 0,
+        "y": 0,
+        "p": 51,
+        "sp": 255
+      },
+      "ram": {
+        "91": "02"
+      },
+      "hardware_reads": [],
+      "hardware_writes": []
+    }
+  ]
+}

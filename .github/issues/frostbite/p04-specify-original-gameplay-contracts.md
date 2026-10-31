@@ -1,6 +1,6 @@
 # Specify original gameplay contracts and edge-case probes
 
-Planning ID: P04. Status: approved backlog; implementation has not started.
+Planning ID: P04. Status: implementation delivered on the issue branch; independent review/integration pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/4
 
 ## Goal
@@ -25,7 +25,16 @@ Link reproducible checks, exact source/target artifact identities, limitations a
 
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 
-## Tracking
+## Delivery evidence
+
+- [Source contracts and boundary routes](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/docs/gameplay-contracts.md), [99 explicit CPU cases](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/references/mechanics-cases.json), [results](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/references/mechanics-probes.json), [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/docs/handoffs/issue-4.md).
+- 33 original-free utility tests pass without skips in .venv. All 99 canonical source CPU probes pass and produce byte-identical repeated metadata, tied to source/case/utility/map hashes and py65 1.2.0.
+- Boundary validation rejects operand-byte entry points; strict MMIO fails undeclared reads. No TIA/timer/reachable-state proof is claimed.
+- Every requested subsystem has state/phase/input/output contracts and source sites. Routes R01–R13 enumerate edge cases, completion/failure predicates and explicit timeout design bounds.
+- ROM-derived clarifications include hazard attachment versus floe carry, raw opposed-input priority, landing/reversal order, delayed fish scoring, all four variations/player records and source-based terminal/bonus progression.
+- Full-emulator alignment, collision/refuge geometry, independent NMOS flag confirmation and legal complete-game traces remain acceptance gates in #7 and later issues. No MSX ROM/release is produced by this research issue.
+
+## Project metadata
 
 Project: [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).
 Type: Task (repository native issue types unavailable at planning inspection).

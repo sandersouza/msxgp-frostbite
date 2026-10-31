@@ -15,6 +15,9 @@ No extra accessories. The owner approved the
 - A verified [disassembly reconstruction and state map](reference-disassembly.md):
   byte-identical rebuild, reviewed routine/RAM/hardware boundaries and explicit
   open contracts for issues #4/#7.
+- [Gameplay contracts and boundary routes](gameplay-contracts.md), supported by
+  99 bounded CPU-slice probes. These do not establish TIA geometry, aligned
+  full-game replay or native gameplay acceptance.
 - The [issue roadmap](superpowers/specs/2026-10-31-frostbite-backlog.md),
   [workflow](project-workflow.md) and verified
   [baseline preservation](baseline-preservation.md).
@@ -27,6 +30,11 @@ Reference utilities now run with Python's standard library:
 `python3 -B scripts/reference_rebuild.py` reconstructs the original with local
 DiStella/DASM and compares all bytes; generated source/binaries remain ignored.
 `python3 -B -m unittest discover -s tests -v` runs original-free utility tests.
+The optional CPU-slice backend is pinned in requirements-reference.txt;
+`.venv/bin/python -B scripts/mechanics_probe.py` runs the canonical source cases.
+Use `.venv/bin/python -B -m unittest discover -s tests -v` for the full suite
+with py65 present; standard Python explicitly skips CPU-specific unit cases
+when that optional backend is unavailable.
 
 There is no Frostbite MSX scaffold, build command, gameplay ROM or CI acceptance
 yet. The copied Seaquest Makefile/scripts/tests/results are quarantined under
