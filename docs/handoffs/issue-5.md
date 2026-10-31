@@ -1,6 +1,7 @@
 # Issue #5 handoff — managed tools and first MSX1 diagnostic
 
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/5
+PR: https://github.com/sandersouza/msxgp-frostbite/pull/23
 Branch: `codex/chore/5-macos-toolchain-scaffold`.
 Base: `5f2cb273ce80d0a6e37f4bc4aaff13f09ce47ff4` (issue #4 integration).
 Environment commit: `20f3c2e65994eb895c51f65cbfea774b82e17f87`.
@@ -52,7 +53,7 @@ The arm64 clean source clone was created at
 tool/environment cache. It built all three pinned assemblers and new venv,
 passed setup/check/repeat and then test/build/smoke. At the committed runtime
 checkpoint it passed47 original-free tests; package and long-version-path
-guards bring the current suite to51. Fresh-clone and primary ROMs have the
+guards bring the current suite to53. Fresh-clone and primary ROMs have the
 same hash above. Existing primary .venv package lists and both inherited and
 managed executable hashes stayed unchanged across repeated setup.
 
@@ -62,7 +63,9 @@ heartbeat, UP/release/SPACE/held-edge/release and PSG period/volume on/off.
 A booting fault-injection ROM with the heartbeat increment removed was rejected
 specifically as stopped heartbeat; stale latest-success evidence was removed.
 The actual normal-speed, frameskip0 screenshot was inspected and displays the
-diagnostic correctly. Human listening, physical machines, Intel/Rosetta and
+diagnostic correctly. One later optional GUI capture concurrent with a clean-clone smoke timed out
+safely; the fresh headless retry passed. Universal GUI capture stability was
+not established. Human listening, physical machines, Intel/Rosetta and
 automated PAL validation remain pending.
 
 ## Important implementation details
@@ -109,3 +112,16 @@ chat stops editing the shared checkout after dispatch.
 Every later changed testable ROM needs a new release/version with exact tested
 bytes, source commit, limitations, next work and concrete human tests. Never
 silently replace the published diagnostic attachment.
+
+## Independent review disposition
+
+One Important finding was reproduced and fixed: nonignored untracked sources
+could enter a pinned tool build. Validation now rejects them before compilation,
+preserves their contents and allows only named managed receipts/logs and known
+DiStella debug metadata. The new regression failed before the fix and passed
+afterwards; the full original-free suite now has53 tests. No Critical or Minor
+findings were reported. No second review cycle was requested.
+
+Review did not certify Intel/Rosetta, cold macOS installation, perceived audio,
+PAL, physical hardware, universal GUI capture or remote publication. These
+remain explicit limits; release publication is separately verified at delivery.

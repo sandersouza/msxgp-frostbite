@@ -35,7 +35,7 @@ def validate_host(system, machine):
         raise ValueError('Python >=3.11 required; install Homebrew python and rerun')
 
 
-def validate_checkout(path, commit):
+def validate_checkout(path, commit, generated_files=()):
     actual = output(['git', '-C', path, 'rev-parse', 'HEAD'])
     if actual != commit:
         raise ValueError(f'{path}: unexpected revision; preserve/inspect it, no reset performed')
@@ -43,6 +43,12 @@ def validate_checkout(path, commit):
                             capture_output=True, timeout=30)
     if result.returncode:
         raise ValueError(f'{path}: modified tracked source; preserved, not rebuilt/reset')
+    untracked = run(['git', '-C', path, 'ls-files', '--others', '--exclude-standard', '-z'],
+                    stdout=subprocess.PIPE).stdout.decode().split('\0')
+    allowed = {'.frostbite-build.log', '.frostbite-receipt.json', *generated_files}
+    unexpected = [name for name in untracked if name and name not in allowed]
+    if unexpected:
+        raise ValueError(f'{path}: unexpected untracked files {unexpected}; preserved, not rebuilt/reset')
 
 
 def validate_receipt(binary, receipt_path, commit):
@@ -60,7 +66,7 @@ def verified_tool(name, root=ROOT):
     lock = json.loads((root / 'references/tools-lock.json').read_text())
     spec = lock['tools'][name]
     directory = tool_directory(root, name, spec)
-    validate_checkout(directory, spec['commit'])
+    validate_checkout(directory, spec['commit'], spec.get('generated_files', ()))
     binary = directory / spec['binary']
     receipt = validate_receipt(binary, directory / '.frostbite-receipt.json', spec['commit'])
     if receipt.get('architecture') != platform.machine() or not os.access(binary, os.X_OK):
@@ -91,7 +97,7 @@ def prepare_tool(root, name, spec):
         print(f'Preparing pinned {name} source...', flush=True)
         run(['git', 'clone', '--quiet', '--filter=blob:none', '--no-checkout', spec['repository'], directory])
         run(['git', '-C', directory, 'checkout', '--quiet', '--detach', spec['commit']])
-    validate_checkout(directory, spec['commit'])
+    validate_checkout(directory, spec['commit'], spec.get('generated_files', ()))
     binary = directory / spec['binary']
     receipt_path = directory / '.frostbite-receipt.json'
     if receipt_path.exists() or binary.exists():
@@ -100,7 +106,7 @@ def prepare_tool(root, name, spec):
     print(f'Building {name}; log {directory / ".frostbite-build.log"}', flush=True)
     with (directory / '.frostbite-build.log').open('w') as log:
         run(spec['build'], cwd=directory, stdout=log, stderr=subprocess.STDOUT)
-    validate_checkout(directory, spec['commit'])
+    validate_checkout(directory, spec['commit'], spec.get('generated_files', ()))
     banner = version_output(binary,spec['version_args'])
     if spec['version_contains'] not in banner:
         raise ValueError(f'{name}: expected pinned version banner not found')

@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -69,6 +70,33 @@ class EnvironmentTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'binary'):
                 api.validate_receipt(binary, path, 'a' * 40)
             self.assertEqual(binary.read_bytes(), b'changed binary')
+
+    def test_untracked_source_is_preserved_before_build(self):
+        api = self.api()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            spec = {'commit': 'pending', 'binary': 'assembler', 'build': ['make']}
+            directory = api.tool_directory(root, 'fixture', spec)
+            directory.mkdir(parents=True)
+            spec['commit'] = self.checkout(directory)
+            with patch.object(api, 'tool_directory', return_value=directory):
+                extra = directory / 'extra.cpp'
+                extra.write_text('unexpected source\n')
+                with patch.object(api, 'run', wraps=api.run) as run:
+                    with self.assertRaisesRegex(ValueError, 'untracked'):
+                        api.prepare_tool(root, 'fixture', spec)
+                    self.assertFalse(any(call.args[0] == ['make'] for call in run.call_args_list))
+                self.assertEqual(extra.read_text(), 'unexpected source\n')
+                self.assertFalse((directory / '.frostbite-build.log').exists())
+
+    def test_managed_receipt_and_log_are_allowed(self):
+        api = self.api()
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            commit = self.checkout(directory)
+            (directory / '.frostbite-build.log').write_text('build log\n')
+            (directory / '.frostbite-receipt.json').write_text('{}\n')
+            api.validate_checkout(directory, commit)
 
     def test_dry_run_does_not_create_managed_tools(self):
         api = self.api()
