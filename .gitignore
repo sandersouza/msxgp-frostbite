@@ -1,0 +1,23 @@
+# Local research inputs and original-derived material
+/references/roms/
+/references/dissasm/
+/references/generated/
+/assets/generated/
+
+# Preserved inherited material; audit individual files before reuse
+/.legacy/
+
+# Build/research outputs, host tools and environments
+/outputs/
+/.tools/
+/.venv/
+/.superpowers/
+/.worktrees/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Local credentials and editor/runtime state
+.env
+.env.*
+!.env.example
