@@ -15,7 +15,7 @@
     "py65": "1.2.0"
   },
   "utility_sha256": "92ff5475fd0c8f849b57bedcf94c24950148930ceab205203fd3592adf6fa9b6",
-  "cases_sha256": "a75ac819f17f9c265aa248358338fc3278c2f0572079e4ab710d37ac81c5b66c",
+  "cases_sha256": "3d49b157e889683b9afd862bd1f6dde3f34ef23ac7eab5e54dbc7fff03d8d652",
   "disassembly_map_sha256": "f934bf557893a789f7f6d60f20ead89c89b67671d43373cbbd92aaba8c3a6bfd",
   "scope": "Bounded CPU slices with explicit constant hardware inputs; no TIA, timers, bus cycles or reachable-state proof.",
   "results": [
@@ -811,6 +811,167 @@
       "hardware_writes": []
     },
     {
+      "id": "input-filtered-by-terminal-countdown",
+      "stop_pc": "F65E",
+      "instructions": 21,
+      "registers": {
+        "a": 15,
+        "x": 0,
+        "y": 255,
+        "p": 49,
+        "sp": 255
+      },
+      "ram": {
+        "84": "0F",
+        "C6": "01"
+      },
+      "hardware_reads": [
+        {
+          "address": "0280",
+          "value": "EF"
+        }
+      ],
+      "hardware_writes": []
+    },
+    {
+      "id": "input-countdown-expiry-starts-attract",
+      "stop_pc": "F019",
+      "instructions": 524,
+      "registers": {
+        "a": 27,
+        "x": 1,
+        "y": 0,
+        "p": 48,
+        "sp": 255
+      },
+      "ram": {
+        "84": "07",
+        "C5": "80",
+        "C6": "FF",
+        "E5": "45"
+      },
+      "hardware_reads": [
+        {
+          "address": "0280",
+          "value": "EF"
+        }
+      ],
+      "hardware_writes": [
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        },
+        {
+          "address": "0019",
+          "value": "00"
+        },
+        {
+          "address": "001A",
+          "value": "00"
+        }
+      ]
+    },
+    {
       "id": "fire-edge-80-00-jump00",
       "stop_pc": "F5C0",
       "instructions": 13,
@@ -1130,6 +1291,7 @@
         "sp": 255
       },
       "ram": {
+        "DC": "03",
         "E7": "10",
         "F4": "5B",
         "F7": "01"

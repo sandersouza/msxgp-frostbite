@@ -5,9 +5,10 @@ Branch: `codex/docs/4-gameplay-contracts`.
 Base: `15ded9ec33174e037d7ff25127a613c62f446fff` (issue #3 integration).
 Initial slice utility commit: `124dcb5432643019e866de082ef09a6a09ce765b`.
 Final head, review and integration identity: this issue's delivery PR.
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/22
 
 Read [gameplay contracts](../gameplay-contracts.md),
-[99 cases](../../references/mechanics-cases.json),
+[101 cases](../../references/mechanics-cases.json),
 [recorded results](../../references/mechanics-probes.json), approved design and
 the issue copy before implementing a native subsystem. Contracts cover all
 requested mechanics, input phases/state/order, boundary routes and explicit
@@ -26,11 +27,15 @@ Existing .venv already contained reviewed py65 1.2.0; the install command is for
 reproduction when needed, not a claim of fresh-machine setup (#5). The full
 original-free suite passed 33 tests with no skips. Standard python3 also passes
 but explicitly skips four CPU-specific tests if py65 is unavailable.
-Canonical CPU probes passed all 99 cases and repeated byte-identically as a
+Canonical CPU probes passed all 101 cases and repeated byte-identically as a
 compact report. No original inputs are installed/fetched by the dependency file.
 
 Source: references/roms/frostbite.bin, 4096 bytes, SHA-256
 `cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834`.
+An isolated source clone with a newly created Python venv and only the pinned
+reference requirement also passed all 33 original-free tests. Missing private
+ROM input fails clearly. This validates that optional Python test path, not
+the complete macOS cross-development setup required by #5.
 Results record exact utility/case/map hashes and backend version. Probe input
 contains explicit RAM/registers and constant MMIO samples; results contain
 compact state/events, not complete source or original graphics.
@@ -51,6 +56,9 @@ was likewise checked against upstream M6532 and corrected with RED→GREEN.
   broad occupied/carried name is clarified in this issue.
 - Opposed horizontal inputs prioritize left; opposed vertical inputs select
   up. Fire is a phase-specific falling edge shared through AF, gated by EA=0.
+- Joystick normalization follows countdown filtering: on (81&07)=0 and C6!=0,
+  force the sampled Y to FF and decrement C6. Its expiry may set C5 bit 7 and
+  jump through the X=D4 partial reset before writing 84 or sampling the console.
 - Jump EA starts 0F/1F and advances on even frame-counter values. Each vertical
   arc has 15 updates and net 26 decimal pixels; input and parity boundaries
   matter. No high-level parabola or constant animation timer replaces it.
@@ -93,3 +101,36 @@ Only the new issue chat owns the shared checkout after dispatch. Do not delete
 No MSX ROM was produced in #4. Every later testable ROM, including a useful
 diagnostic, needs a versioned release/prerelease with exact ROM attachment,
 SHA-256/source commit, state/limitations, next steps and concrete human tests.
+
+## Independent review and scope decisions
+
+Fresh review reproduced 33 tests and the initial 99 cases/report. It also
+independently executed both complete jump arcs and the full fish envelope,
+confirming fifteen vertical updates/26-pixel displacement and twenty score
+calls/200 points. Those remain CPU-slice corroboration, not natural TIA routes.
+
+The Important input-contract finding was reproduced with a nonzero C6 on its
+eight-frame gate. I1/C1 and two new cases now cover neutral filtering and the
+early attract reset; expected input from the old interpretation failed before
+the correction and passes afterwards.
+
+The reviewer graded the fish segment assertion gap Minor. The executor treated
+it as Important because the named contact-effect case could accept deletion
+of its core H3 state mutation. An in-memory negative control replacing F93F's
+store with two NOPs initially passed the case; adding observed/expected DC=03
+now rejects the mutation (DC remains07). The canonical 101 cases, repeated
+report and all 33 tests pass after both corrections. No deferred minors remain.
+
+The reviewer set aside these behaviors; retained boundaries and costs are:
+
+- Full NMOS/BCD flag conformance remains #7; py65 alone cannot justify accepting
+  an incorrect native flag adapter.
+- TIA/refuge geometry, naturally reachable states and complete routes remain
+  #7/later gates; fixtures must not be upgraded into natural gameplay proof.
+- MSX fidelity/performance/hardware remain later delivery; no target ROM exists
+  here, so accepting native behavior or publishing a fake release would be wrong.
+- Full fresh macOS toolchain acceptance remains #5; the fresh Python-only clone
+  check above cannot stand in for cross-assembler/emulator/setup verification.
+- Prior full disassembly classification remains #3's reviewed input. Relevant
+  paths were checked here and F2 clarified; unobserved-path coverage is still
+  unresolved rather than silently certified by this issue.

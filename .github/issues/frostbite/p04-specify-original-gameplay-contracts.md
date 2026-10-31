@@ -1,6 +1,6 @@
 # Specify original gameplay contracts and edge-case probes
 
-Planning ID: P04. Status: implementation delivered on the issue branch; independent review/integration pending.
+Planning ID: P04. Research delivery and independent review: PR #22; live lifecycle tracked on GitHub.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/4
 
 ## Goal
@@ -27,11 +27,14 @@ If this issue delivers a new testable MSX ROM version, publish a versioned GitHu
 
 ## Delivery evidence
 
-- [Source contracts and boundary routes](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/docs/gameplay-contracts.md), [99 explicit CPU cases](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/references/mechanics-cases.json), [results](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/references/mechanics-probes.json), [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/docs/handoffs/issue-4.md).
-- 33 original-free utility tests pass without skips in .venv. All 99 canonical source CPU probes pass and produce byte-identical repeated metadata, tied to source/case/utility/map hashes and py65 1.2.0.
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/22
+
+- [Source contracts and boundary routes](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/docs/gameplay-contracts.md), [101 explicit CPU cases](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/references/mechanics-cases.json), [results](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/references/mechanics-probes.json), [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/4-gameplay-contracts/docs/handoffs/issue-4.md).
+- 33 original-free utility tests pass without skips in .venv. All 101 canonical source CPU probes pass and produce byte-identical repeated metadata, tied to source/case/utility/map hashes and py65 1.2.0.
 - Boundary validation rejects operand-byte entry points; strict MMIO fails undeclared reads. No TIA/timer/reachable-state proof is claimed.
 - Every requested subsystem has state/phase/input/output contracts and source sites. Routes R01–R13 enumerate edge cases, completion/failure predicates and explicit timeout design bounds.
 - ROM-derived clarifications include hazard attachment versus floe carry, raw opposed-input priority, landing/reversal order, delayed fish scoring, all four variations/player records and source-based terminal/bonus progression.
+- Independent review's input-filtering finding and fish-segment assertion gap were reproduced and corrected RED→GREEN. The fish case now rejects an in-memory missing-store negative control. Final 101 cases/33 tests pass; a fresh Python-only clone/venv also passes the original-free suite.
 - Full-emulator alignment, collision/refuge geometry, independent NMOS flag confirmation and legal complete-game traces remain acceptance gates in #7 and later issues. No MSX ROM/release is produced by this research issue.
 
 ## Project metadata

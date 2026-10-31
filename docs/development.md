@@ -16,7 +16,7 @@ No extra accessories. The owner approved the
   byte-identical rebuild, reviewed routine/RAM/hardware boundaries and explicit
   open contracts for issues #4/#7.
 - [Gameplay contracts and boundary routes](gameplay-contracts.md), supported by
-  99 bounded CPU-slice probes. These do not establish TIA geometry, aligned
+  101 bounded CPU-slice probes. These do not establish TIA geometry, aligned
   full-game replay or native gameplay acceptance.
 - The [issue roadmap](superpowers/specs/2026-10-31-frostbite-backlog.md),
   [workflow](project-workflow.md) and verified

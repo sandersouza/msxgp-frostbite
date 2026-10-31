@@ -15,7 +15,7 @@ original-versus-target comparison before its gameplay fidelity is accepted.
 
 ## Evidence and reproducible probes
 
-The [case definitions](../references/mechanics-cases.json) contain 99 explicit
+The [case definitions](../references/mechanics-cases.json) contain 101 explicit
 start/stop PCs, initial RAM/registers, constant hardware samples, instruction
 bounds and independently derived expected observables. The
 [recorded results](../references/mechanics-probes.json) identify the source,
@@ -40,6 +40,9 @@ before loading the backend, requires the reviewed py65 version, and validates
 every start/stop/executed PC against the reviewed code partition. Every case
 has an instruction limit; mismatched expectations or undeclared MMIO reads
 fail, rather than supplying invented input/collision values.
+Unspecified initial RAM is zero; CPU defaults are A/X/Y=0, SP=FF, P=30 before
+explicit case overrides. These controlled preconditions are not power-on or
+natural-gameplay initialization claims.
 
 The bus decodes 6507 ROM and RIOT RAM/stack mirrors. Hardware reads are **only
 explicit constant stimuli**, and hardware writes are recorded without device
@@ -92,12 +95,19 @@ as return storage. Scratch/pointer snapshots require their PC/phase.
 
 ## Input and movement contracts
 
-**I1 — controller selection and phases.** SWCHA's high nibble becomes 84 for
-C7=0, low nibble for C7=1 (F630–F65C). Bits 0/1/2/3 mean up/down/left/right,
-active low. Fire is read earlier at F5AD from INPT4/5 using the then-current C7.
+**I1 — controller selection and phases.** F630 samples SWCHA into Y. Before
+normalization, F633–F64F filters that sample: when (81&07)=0 and C6!=0, force
+Y=FF and decrement C6. If it reaches zero, decrement it again to FF; with
+C5 bit 7 clear, set that bit and take the X=D4 partial-reset path before
+normal joystick/console processing. Otherwise continue with the neutral sample.
+When F651–F65C is reached, the retained sample's high nibble becomes 84 for
+C7=0, low nibble for C7=1. Bits 0/1/2/3 mean up/down/left/right, active low.
+Fire is read earlier at F5AD from INPT4/5 using the then-current C7.
 AF is shared previous-sample state, not an invented per-player latch. FB is
 set only for a 1→0 fire-bit transition and EA=0; hold/release or an airborne
-press does not generate another reversal. See input/fire-edge cases.
+press does not generate another reversal. The countdown-filter/expiry cases
+also check that input can be neutralized, or its old 84 retained across the
+partial reset, even when SWCHA contains a direction.
 
 **I2 — raw combinations.** Preserve the ROM's branches for simultaneous bits.
 Both horizontal directions pressed prioritize left (FA4D–FA6A), not neutral.
@@ -250,7 +260,9 @@ the manual describes the icon imprecisely in terms of achievement/high score.
 Late-level object choices and packed movement derive from source tables and
 byte arithmetic; do not impose a new difficulty ceiling or copy Seaquest RNG.
 
-**C1 — Reset/Select/attract.** SWCHB Reset bit 0 is tested before Select bit 1.
+**C1 — Reset/Select/attract.** When the F665 console path is reached, SWCHB
+Reset bit 0 is tested before Select bit 1. I1's countdown expiry can instead
+take the attract partial reset before reaching this console path in that step.
 Reset jumps with X=BF to the partial clear loop: 80–BE survive; BF–FF clear,
 then player/row initialization runs. Select increments 80 modulo four,
 formats variation sentinels in the score, sets C6=FF and 83=1E. Holding Select
@@ -305,7 +317,7 @@ that alter collision, carry, order or one coordinate and demonstrably fail.
 - #15/#16: worst-case timing, complete-game routes, manual visual/listening and
   physical MSX evidence. No CPU fixture can satisfy those gates by inference.
 
-The 99 CPU probes and synthetic utility tests are current research evidence.
+The 101 CPU probes and synthetic utility tests are current research evidence.
 No MSX gameplay ROM is delivered here. Every future useful diagnostic or
 playable ROM must receive its own versioned release with the exact tested ROM,
 hash/commit, known limitations, next work and concrete human test instructions.
