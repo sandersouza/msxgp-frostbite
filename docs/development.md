@@ -8,13 +8,22 @@ No extra accessories. The owner approved the
 
 ## What is available now
 
-- A hash-bound local Atari reference image and a byte-identical initial automatic
-  disassembly/rebuild. Semantic labels and region/cadence still need research.
+- A verified local Atari reference identity and measured NTSC steady cadence:
+  262 scanlines / 19,912 CPU cycles per frame. See the
+  [inventory/timing evidence](reference-inventory.md) for startup observations,
+  revision/provenance limits and pending full-state replay repeatability.
+- A byte-identical initial automatic disassembly/rebuild; semantic labels still
+  need research in issue #3.
 - The [issue roadmap](superpowers/specs/2026-10-31-frostbite-backlog.md),
   [workflow](project-workflow.md) and verified
   [baseline preservation](baseline-preservation.md).
 - Locally preserved tools/environment from the supplied copy; their presence
   does not establish a fresh Frostbite installation.
+
+Reference utilities now run with Python's standard library:
+`python3 -B scripts/reference_inventory.py` and
+`python3 -B scripts/source_timing.py` (the latter requires Stella 7.0/Debugger).
+`python3 -B -m unittest discover -s tests -v` runs original-free utility tests.
 
 There is no Frostbite MSX scaffold, build command, gameplay ROM or CI acceptance
 yet. The copied Seaquest Makefile/scripts/tests/results are quarantined under
