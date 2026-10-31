@@ -1,6 +1,7 @@
-# Frostbite for MSX1 — proposed design and delivery roadmap
+# Frostbite for MSX1 — approved design and delivery roadmap
 
-Date: 2026-10-31. Status: proposed for owner review; no gameplay implementation started.
+Date: 2026-10-31. Status: approved by the owner in the planning chat on 2026-10-31;
+issue #1 repository preparation has started. No gameplay implementation started.
 Repository: https://github.com/sandersouza/msxgp-frostbite
 Tracking: https://github.com/users/sandersouza/projects/7
 
@@ -60,9 +61,10 @@ Exact equivalence is an acceptance objective, not a claim established by this pl
 3. A resident Atari CPU/TIA interpreter on MSX1. Retains source execution but
    adds a large runtime burden; reject as the default direction for the target.
 
-The recommendation is the agent's proposal for owner review, not a previously
-approved architecture. Research and planning are complete enough to review;
-scaffolding and game implementation follow approval.
+The owner approved the recommended native Z80 direction and autonomous execution
+in the planning chat on 2026-10-31 ("aprovado, pode seguir"). The approval includes
+the testable-ROM release policy added after the initial proposal. Repository
+preparation is issue #1; scaffolding and gameplay follow their own dependencies.
 
 ## Reference authority and initial findings
 

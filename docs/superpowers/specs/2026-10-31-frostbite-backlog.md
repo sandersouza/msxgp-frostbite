@@ -1,7 +1,8 @@
-# Frostbite proposed backlog
+# Frostbite approved backlog
 
-Status: all issues published as proposed Backlog items; no implementation started.
-Design and issue estimates remain subject to owner review. Priority P2 and native
+The owner approved the design and autonomous execution on 2026-10-31. Issue #1
+started in its dedicated forked chat; GitHub project statuses are live authority.
+Estimates remain revisable as research proceeds. Priority P2 and native
 Task type are recorded in the bodies because priority labels/types are unavailable.
 Project #7 stores Status, Priority, Size and Estimate. No milestone was invented.
 
@@ -29,5 +30,5 @@ Estimates include implementation and validation effort, not elapsed delivery dat
 Reverse-engineering discoveries may require splitting issues and revising estimates.
 
 First implementation: issue #1, through a dedicated forked Frostbite chat after
-design approval. Move the item to In progress only when that chat starts work.
+the owner's design approval. Move each item to In progress when its chat starts work.
 The planning chat stops editing the shared checkout when ownership is transferred.
