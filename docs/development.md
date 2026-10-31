@@ -23,6 +23,9 @@ No extra accessories. The owner approved the
   [baseline preservation](baseline-preservation.md).
 - Locally preserved tools/environment from the supplied copy; their presence
   does not establish a fresh Frostbite installation.
+- A [macOS toolchain and MSX1 diagnostic scaffold](toolchain.md), exercised from
+  a fresh source clone on arm64. The 16 KiB plain-ROM diagnostic checks video,
+  interrupts, controls and PSG; native Frostbite gameplay remains pending.
 
 Reference utilities now run with Python's standard library:
 `python3 -B scripts/reference_inventory.py` and
@@ -36,18 +39,17 @@ Use `.venv/bin/python -B -m unittest discover -s tests -v` for the full suite
 with py65 present; standard Python explicitly skips CPU-specific unit cases
 when that optional backend is unavailable.
 
-There is no Frostbite MSX scaffold, build command, gameplay ROM or CI acceptance
-yet. The copied Seaquest Makefile/scripts/tests/results are quarantined under
-ignored .legacy/seaquest/. Do not run them as Frostbite tooling or treat their
-historical pass records as current results.
+`make environment`, `make environment-check`, `make environment-dry-run`,
+`make test`, `make build`, `make smoke`, `make run` and `make package` are the
+current development entry points. See the command-by-command checklist in
+[toolchain.md](toolchain.md). The copied Seaquest tree remains quarantined;
+its historical results are not current acceptance.
 
 ## Upcoming developer entry points
 
-[Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) will deliver
-the reproducible macOS environment: setup/check/dry-run, pinned host tools,
-cross-assembly, ROM validation and openMSX diagnostic build/run/smoke.
-It must include a reproducible command-by-command fresh-clone checklist and
-record which host architectures were actually tested.
+[Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) supplies the
+toolchain/diagnostic. macOS Intel, physical MSX and human listening results
+remain pending; automatic checks here use an isolated NTSC C-BIOS MSX1 profile.
 
 [Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) will deliver
 synthetic CI and tracking helpers without original inputs.
@@ -60,6 +62,7 @@ ROM attached, hash/source commit, current state, next work and a specific human
 test checklist. Development builds are prereleases. Load/mapper/controls and
 expected results will be given in each release.
 
-Issue #1 changes documentation and local preservation only, so it produces no
-testable ROM and requires no human gameplay test. Automated checks, manual
-emulator review and physical hardware acceptance remain separate.
+The first diagnostic is [v0.0.1-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic),
+with concrete human checks in its release notes. It has no Frostbite gameplay.
+Automated checks, rendered preview, human listening and physical hardware
+acceptance remain separate.
