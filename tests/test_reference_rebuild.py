@@ -112,6 +112,13 @@ class RebuildTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.addCleanup(shutil.rmtree, ROOT / json.loads(self.report.read_text())['artifacts_directory'])
 
+    def test_distella_receives_bounded_whole_command_line(self):
+        self.distella = self.tool('backend-' + 'x' * 150,
+            'import sys\nassert sum(len(s)+1 for s in sys.argv) < 132\nprint("processor 6502")\n')
+        result = self.run_cli()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.addCleanup(shutil.rmtree, ROOT / json.loads(self.report.read_text())['artifacts_directory'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -18,46 +18,46 @@
   },
   "tools": {
     "distella": {
-      "path": "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/distella/distella",
-      "size": 71832,
-      "sha256": "a0b5f26daf61e9d63cfd93136b69214e5043f3f381889867fd44c88309df495a"
+      "path": "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/frostbite/distella-1015ae53b2d222320eb706c220186305fcac55dd/distella",
+      "size": 71880,
+      "sha256": "e437bc5adfbbb340fae64e266b5ec3dd739a6965dd2b4565a34564d3f57913d0"
     },
     "dasm": {
-      "path": "/opt/homebrew/Cellar/dasm/2.20.17/bin/dasm",
-      "size": 234360,
-      "sha256": "1a50c66fa460cda8f2ea9d933e0e326b7c18b577baf3d3b4bb8a9c8cee288a3d"
+      "path": "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/frostbite/dasm-cee322098fdf56585247433922dbac4aa93001fe/bin/dasm",
+      "size": 265848,
+      "sha256": "fcc846ad4e886e7fe4eac12f235d51ad64e45bce2fdc317919db3b5cf9b96cba"
     }
   },
   "commands": [
     [
-      "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/distella/distella",
+      "./distella",
       "-paf",
       "input.bin"
     ],
     [
-      "/opt/homebrew/Cellar/dasm/2.20.17/bin/dasm",
-      "/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/reference.asm",
+      "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/frostbite/dasm-cee322098fdf56585247433922dbac4aa93001fe/bin/dasm",
+      "/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-u59f4u2q/reference.asm",
       "-f3",
-      "-o/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/rebuilt.bin",
-      "-l/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/reference.lst",
-      "-s/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/reference.sym"
+      "-o/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-u59f4u2q/rebuilt.bin",
+      "-l/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-u59f4u2q/reference.lst",
+      "-s/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-u59f4u2q/reference.sym"
     ]
   ],
-  "artifacts_directory": "outputs/reference-rebuild/run-44gr79r7",
+  "artifacts_directory": "outputs/reference-rebuild/run-u59f4u2q",
   "artifacts": {
     "reference.asm": {
-      "size": 45250,
-      "sha256": "a648ce4eef4cf3096a9f2eada24854e11c640f53909304a50955d7228b8d7c45"
+      "size": 45183,
+      "sha256": "d8e39f35ca0f3d80f8568db78b8b306742359989c79c33b60fee1977af87351c"
     },
     "reference.lst": {
-      "size": 86759,
-      "sha256": "e73f8d1238d78ed8d90f0252d59b2d396e1f8bb32115cdfa8970e68ce63d4a00"
+      "size": 86692,
+      "sha256": "2704a0a920830a4025ce30d168f83888b1ca06d349242ce821b559214b12f556"
     },
     "reference.sym": {
       "size": 13979,
       "sha256": "248d69675bd2bcfe62eec0c1961088fb095ce70c8181a0cb8a95cf33e93cbb07"
     }
   },
-  "utility_sha256": "26a3548bab0cee95f1acd64e85df776092e3552e6c5d2406fbe18a5c4f8cf09c",
+  "utility_sha256": "9551a83f35193633985e33ca0072acd194874df0666f19b1a1384475b3adf96f",
   "scope": "Byte identity only; automatic code/data classification is heuristic."
 }

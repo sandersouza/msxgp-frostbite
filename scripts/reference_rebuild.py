@@ -36,6 +36,10 @@ def run_tool(command, directory):
 
 def reconstruct(rom, manifest, distella, dasm):
     source_identity = verified_input(rom, manifest)  # Fail before touching tools.
+    if distella is None or dasm is None:
+        from environment import verified_tool
+        distella = distella or verified_tool('distella')
+        dasm = dasm or verified_tool('dasm')
     distella, dasm = executable(distella), executable(dasm)
     root = ROOT / 'outputs/reference-rebuild'
     root.mkdir(parents=True, exist_ok=True)
@@ -53,6 +57,9 @@ def reconstruct(rom, manifest, distella, dasm):
                  f'-l{listing}', f'-s{symbols}']]
     tools = {name: {'path': str(path), **identity(path)}
              for name, path in (('distella', distella), ('dasm', dasm))}
+    # DiStella also concatenates argv[0] into a fixed 132-byte command buffer.
+    (directory / 'distella').symlink_to(distella)
+    commands[0][0] = './distella'
     source.write_bytes(run_tool(commands[0], directory))
     run_tool(commands[1], directory)
     original, rebuilt = rom.read_bytes(), binary.read_bytes()
@@ -75,8 +82,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rom', type=Path)
     parser.add_argument('--manifest', type=Path, default=MANIFEST)
-    parser.add_argument('--distella', default=str(ROOT / '.tools/distella/distella'))
-    parser.add_argument('--dasm', default='dasm')
+    parser.add_argument('--distella', help='explicit backend override; default is the verified managed tool')
+    parser.add_argument('--dasm', help='explicit backend override; default is the verified managed tool')
     parser.add_argument('--output', type=Path,
                         default=ROOT / 'outputs/reference-rebuild/report.json')
     args = parser.parse_args(argv)
