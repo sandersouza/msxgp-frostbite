@@ -23,6 +23,8 @@ Automated routes/replays pass on exact artifacts; manual view/listening and phys
 
 Link reproducible checks, exact source/target artifact identities, limitations and integration evidence before closing. A boot alone is not gameplay acceptance.
 
+If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
+
 ## Tracking
 
 Project: [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).

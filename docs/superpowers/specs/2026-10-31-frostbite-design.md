@@ -171,6 +171,26 @@ project fields and preserve unrelated items. No milestone will be invented.
 If native issue types or priority labels are unavailable, record their intended
 values in the issue body and report the limitation.
 
+## Testable-ROM release policy
+
+Owner instruction, 2026-10-31: every distinct testable ROM version must have a
+GitHub Release with the exact MSX ROM attached. This applies from the first
+useful diagnostic/scaffold test through playable milestones; do not describe a
+diagnostic as a playable game. Development/test builds use versioned prereleases.
+
+Each release must explain:
+- Current state: implemented behavior, verified checks and known limitations.
+- Next steps: the next planned work and relevant issue links.
+- Human test request: emulator/hardware setup, ROM loading/mapper instructions,
+  controls, concrete actions, expected results and what feedback/evidence to return.
+
+Attach the tested ROM and its SHA-256/build metadata tied to the source commit.
+Run appropriate automated checks before publishing; distinguish those results
+from pending manual and physical tests. If a new version is offered for human
+testing, its release and downloadable ROM are part of that delivery. Never
+replace an already published version's binary silently. Publish a new version
+when the ROM changes. No release is required for documentation-only changes.
+
 ## Acceptance strategy
 
 - Round-trip original disassembly plus reviewed entry points, RAM, TIA/RIOT
