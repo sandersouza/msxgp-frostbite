@@ -6,7 +6,7 @@
   "warmup_intervals": 32,
   "variations": [0, 1, 2, 3],
   "select_release_intervals": 32,
-  "reset_release_intervals": 16,
+  "reset_release_intervals": 80,
   "route": [
     {"count": 2, "swcha": 255, "swchb": 63, "fire": [false, false]},
     {"count": 4, "swcha": 238, "swchb": 63, "fire": [false, false]},
