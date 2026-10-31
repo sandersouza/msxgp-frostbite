@@ -35,6 +35,12 @@ def validate_host(system, machine):
         raise ValueError('Python >=3.11 required; install Homebrew python and rerun')
 
 
+def validate_binary_architecture(description, machine):
+    aliases = {'x86_64': ('x86_64', 'x86-64'), 'arm64': ('arm64',), 'aarch64': ('aarch64',)}
+    if not any(name in description for name in aliases.get(machine, (machine,))):
+        raise ValueError(f'unexpected executable architecture: {description}')
+
+
 def validate_checkout(path, commit, generated_files=()):
     actual = output(['git', '-C', path, 'rev-parse', 'HEAD'])
     if actual != commit:
@@ -111,8 +117,7 @@ def prepare_tool(root, name, spec):
     if spec['version_contains'] not in banner:
         raise ValueError(f'{name}: expected pinned version banner not found')
     architecture = output(['file', '-b', binary])
-    if platform.machine() not in architecture:
-        raise ValueError(f'{name}: unexpected executable architecture: {architecture}')
+    validate_binary_architecture(architecture, platform.machine())
     receipt_path.write_text(json.dumps({'commit': spec['commit'], 'repository': spec['repository'],
         'binary_sha256': digest(binary), 'architecture': platform.machine(), 'file': architecture,
         'version_banner': banner.strip(), 'build': spec['build']}, indent=2) + '\n')

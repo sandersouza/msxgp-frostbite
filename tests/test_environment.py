@@ -28,6 +28,14 @@ class EnvironmentTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'arm64'):
             api.validate_host('Darwin', 'ppc')
 
+    def test_elf_architecture_alias_is_checked_without_weakening_mismatch_guard(self):
+        api = self.api()
+        self.assertTrue(hasattr(api, 'validate_binary_architecture'), 'portable architecture check missing')
+        api.validate_binary_architecture('ELF 64-bit LSB pie executable, x86-64, version 1', 'x86_64')
+        api.validate_binary_architecture('Mach-O 64-bit executable arm64', 'arm64')
+        with self.assertRaisesRegex(ValueError, 'architecture'):
+            api.validate_binary_architecture('ELF 64-bit executable, ARM aarch64', 'x86_64')
+
     def checkout(self, directory):
         def git(*args):
             return subprocess.check_output(['git', '-C', str(directory), *args], stderr=subprocess.DEVNULL, text=True).strip()

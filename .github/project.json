@@ -1,0 +1,25 @@
+{
+  "owner": "sandersouza",
+  "number": 7,
+  "id": "PVT_kwHOAJR8nM4Bn8x0",
+  "repository": "sandersouza/msxgp-frostbite",
+  "issues": {
+    "1": {"Priority": "P2", "Size": "S", "Estimate": 3},
+    "2": {"Priority": "P2", "Size": "S", "Estimate": 3},
+    "3": {"Priority": "P2", "Size": "L", "Estimate": 12},
+    "4": {"Priority": "P2", "Size": "M", "Estimate": 8},
+    "5": {"Priority": "P2", "Size": "M", "Estimate": 8},
+    "6": {"Priority": "P2", "Size": "M", "Estimate": 5},
+    "7": {"Priority": "P2", "Size": "L", "Estimate": 14},
+    "8": {"Priority": "P2", "Size": "L", "Estimate": 12},
+    "9": {"Priority": "P2", "Size": "M", "Estimate": 8},
+    "10": {"Priority": "P2", "Size": "L", "Estimate": 16},
+    "11": {"Priority": "P2", "Size": "L", "Estimate": 14},
+    "12": {"Priority": "P2", "Size": "L", "Estimate": 16},
+    "13": {"Priority": "P2", "Size": "L", "Estimate": 14},
+    "14": {"Priority": "P2", "Size": "L", "Estimate": 12},
+    "15": {"Priority": "P2", "Size": "L", "Estimate": 12},
+    "16": {"Priority": "P2", "Size": "L", "Estimate": 16},
+    "17": {"Priority": "P2", "Size": "M", "Estimate": 8}
+  }
+}
