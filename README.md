@@ -8,15 +8,17 @@ original ROM as the authority for gameplay mechanics.
 The design is approved and repository preparation is underway.
 There is **no Frostbite MSX ROM to play or test yet**.
 
-The supplied 4 KiB Atari ROM has a recorded hash/catalog match, and the initial
-automatic disassembly rebuilt byte-identically. Region/cadence verification,
-semantic disassembly, the MSX development scaffold and gameplay implementation
-are still planned work. Historical Seaquest results are not Frostbite evidence.
+The supplied 4 KiB Atari ROM has a verified immutable identity and measured
+262-line / 19,912-CPU-cycle steady cadence. Initial automatic disassembly rebuilt
+byte-identically. Commercial revision/provenance and full-state replay
+repeatability remain unverified; semantic disassembly, the MSX scaffold and
+gameplay are still planned work. Historical Seaquest results are not Frostbite evidence.
 
 - [Approved design](docs/superpowers/specs/2026-10-31-frostbite-design.md)
 - [Issue roadmap](docs/superpowers/specs/2026-10-31-frostbite-backlog.md)
 - [GitHub project — MSX Game Ports #7](https://github.com/users/sandersouza/projects/7)
 - [Development status](docs/development.md)
+- [Original reference inventory and timing](docs/reference-inventory.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 

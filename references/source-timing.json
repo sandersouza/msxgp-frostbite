@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "rom": {
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "md5": "4ca73eb959299471788f0b685c3ba0b5",
+    "layout": "4K",
+    "trailing_words": {
+      "unused_nmi_word": 60090,
+      "reset": 61440,
+      "irq_word": 61440
+    }
+  },
+  "runs": [
+    {
+      "backend": {
+        "name": "Stella",
+        "version": "7.0",
+        "binary_sha256": "7571cb35bbb16a590ecaca2bfed2b63c4b29c2184921c3896550841bf8425161",
+        "source_contract_commit": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+        "state_header": "07000000state",
+        "byteorder": "little",
+        "features": "Features: Sound Joystick Debugger Cheats Images ZIP",
+        "build": "Build 8005, using SDL 2.32.74 [arm64]",
+        "host": {
+          "system": "Darwin",
+          "machine": "arm64"
+        }
+      },
+      "policy": {
+        "format": "AUTO (observed NTSC*)",
+        "ram_cpu_tia_randomization": false,
+        "random_unused_tia_pins": false,
+        "random_hotspot_peeks": false,
+        "initialization": "debugger reset (System reset), SWCHB=3f; not console Game Reset",
+        "console_switches": {
+          "released": "3f",
+          "reset_pressed": "3e",
+          "select_pressed": "3d"
+        },
+        "inputs": "both joysticks neutral, difficulty B/B, color",
+        "sound": false,
+        "script_sha256": "18275ea1b764fcf72543a32af296231fa7849cd02db7f92098e80590da0f6a51",
+        "boundary": "after each requested debugger update batch; partial startup frames retained"
+      },
+      "checkpoints": [
+        {
+          "cycles": 0,
+          "current_lines": 0,
+          "last_lines": 0,
+          "previous_lines": 0,
+          "frames": 0,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+          "phase": "cold_reset",
+          "requested_update_calls": 0,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "4a5351718fe57a942a07d2c5e746eda12276cbbcd8a143ce220ba943654768c2"
+        },
+        {
+          "cycles": 3755,
+          "current_lines": 0,
+          "last_lines": 51,
+          "previous_lines": 0,
+          "frames": 1,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "7c794caea788328956d51ae3c1d5dcd3a5be8c2c814cb0707d67f82fd3e8696d",
+          "phase": "first_update",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "ff5034b388b93184b235c08fa933c3dfc94d7a0e58ff3aa0715e6a120540b4f6"
+        },
+        {
+          "cycles": 43579,
+          "current_lines": 214,
+          "last_lines": 310,
+          "previous_lines": 51,
+          "frames": 2,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "5ff19c5d71574530cef91a28bc5a3678ec657eb20008ec8b89e359a9fb5f290b",
+          "phase": "second_update",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "b1aa189554f35b4bda72458fc214efdc4941ce7a701063929b2b2157f80bdfe9"
+        },
+        {
+          "cycles": 12005215,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 603,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "3c6f23277803c626ebd4f3ed4e0d7af1a10ddaa4cc93334107bb481c10e66613",
+          "phase": "steady",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "57c05842e7ebd72396e3611759f47ab15d81fc86c4c6be8c6dd0e668679101ba"
+        },
+        {
+          "cycles": 12025127,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 604,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "27197d8b5c3f2bad7510ca2e852b0aeadab724fbdc2fdea692d24fa64f606234",
+          "phase": "reset_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": 62,
+          "state_sha256": "795192501f021cf866d59ea004ef1d839dc00f6a8dab1b8f489057c49958b4c6"
+        },
+        {
+          "cycles": 23972327,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1204,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "f15100c94e864a0129c0e56c41912a8d5f3921b4ea55adc6151c3ef104f51fb9",
+          "phase": "reset_released",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": 63,
+          "state_sha256": "df56327611fda3770e58bde2aea1e4f54d174aed0b0a9d2c8ee798becd37a8c3"
+        },
+        {
+          "cycles": 23992239,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1205,
+          "layout": 0,
+          "ram_80": 1,
+          "ram_sha256": "2ab6a3bb627acf40e637b7e8c6041e01cd1788800372c3b7b92395d8e0a3186a",
+          "phase": "select_1_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": 61,
+          "state_sha256": "5f829528699d589d2b63d1d0ae3d86a0c562544c0cd93e1041f4b9fd508fda06"
+        },
+        {
+          "cycles": 24609511,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1236,
+          "layout": 0,
+          "ram_80": 2,
+          "ram_sha256": "bfb6a7eb430b1af93675a08e098a26fde6ef14b131ca55cf2fa8926c752dec15",
+          "phase": "select_2_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 30,
+          "swchb_command": 61,
+          "state_sha256": "8b7237aeae286ff704f12f8e5217ba88f0f8b244780d34b64c971501a09c3871"
+        },
+        {
+          "cycles": 25226783,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1267,
+          "layout": 0,
+          "ram_80": 3,
+          "ram_sha256": "9382aa5a50b0e86771fa18d05768c23a66074cad326f5e0281f985da2d9b66f2",
+          "phase": "select_3_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 30,
+          "swchb_command": 61,
+          "state_sha256": "1d41525b884e89025fb532a0ed1eec9a767f12214e1566bde0350098d6ec531c"
+        },
+        {
+          "cycles": 25844055,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1298,
+          "layout": 0,
+          "ram_80": 3,
+          "ram_sha256": "52c56f4d5d969fc13ac29baabe2e2666dcf8d131f419045d3f1e9d65de9e0e1a",
+          "phase": "advanced_reset_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 30,
+          "swchb_command": 62,
+          "state_sha256": "0941ffeb38e64c787487c0a3a5a424afd889c4e410b3c9177e54de84ad2d0c3e"
+        }
+      ],
+      "summary": {
+        "steady_scanlines": [
+          262
+        ],
+        "interval_observed_frames": 601,
+        "interval_cpu_cycles": 11967112,
+        "steady_cpu_cycles_per_frame": {
+          "numerator": 19912,
+          "denominator": 1
+        },
+        "scope": "observed aligned steady/Reset interval, not full-game acceptance"
+      }
+    },
+    {
+      "backend": {
+        "name": "Stella",
+        "version": "7.0",
+        "binary_sha256": "7571cb35bbb16a590ecaca2bfed2b63c4b29c2184921c3896550841bf8425161",
+        "source_contract_commit": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+        "state_header": "07000000state",
+        "byteorder": "little",
+        "features": "Features: Sound Joystick Debugger Cheats Images ZIP",
+        "build": "Build 8005, using SDL 2.32.74 [arm64]",
+        "host": {
+          "system": "Darwin",
+          "machine": "arm64"
+        }
+      },
+      "policy": {
+        "format": "AUTO (observed NTSC*)",
+        "ram_cpu_tia_randomization": false,
+        "random_unused_tia_pins": false,
+        "random_hotspot_peeks": false,
+        "initialization": "debugger reset (System reset), SWCHB=3f; not console Game Reset",
+        "console_switches": {
+          "released": "3f",
+          "reset_pressed": "3e",
+          "select_pressed": "3d"
+        },
+        "inputs": "both joysticks neutral, difficulty B/B, color",
+        "sound": false,
+        "script_sha256": "18275ea1b764fcf72543a32af296231fa7849cd02db7f92098e80590da0f6a51",
+        "boundary": "after each requested debugger update batch; partial startup frames retained"
+      },
+      "checkpoints": [
+        {
+          "cycles": 0,
+          "current_lines": 0,
+          "last_lines": 0,
+          "previous_lines": 0,
+          "frames": 0,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+          "phase": "cold_reset",
+          "requested_update_calls": 0,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "0afa6b35482672d64c1a936ad3f7510cdedd04eec4e683bbfabb1d31d322a9cc"
+        },
+        {
+          "cycles": 3755,
+          "current_lines": 0,
+          "last_lines": 51,
+          "previous_lines": 0,
+          "frames": 1,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "7c794caea788328956d51ae3c1d5dcd3a5be8c2c814cb0707d67f82fd3e8696d",
+          "phase": "first_update",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "eb13b86933666fc16017449fcca0be78fcb2be2445a23b8f8ddff05689ae5251"
+        },
+        {
+          "cycles": 35849,
+          "current_lines": 112,
+          "last_lines": 310,
+          "previous_lines": 51,
+          "frames": 2,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "5ff19c5d71574530cef91a28bc5a3678ec657eb20008ec8b89e359a9fb5f290b",
+          "phase": "second_update",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "26aaf3a3b1e05ddac4cf44553a010e455eb5104a9755e3041b36bde60c9a91df"
+        },
+        {
+          "cycles": 11960071,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 602,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "3dcf40797b0d9924a28f8f64e2697ea438f1872910a1feadd718ff975ff109b8",
+          "phase": "steady",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": null,
+          "state_sha256": "a318b8879523ee132089a606e6c7ae8074f1016dbe395d3d480a67d6e9088044"
+        },
+        {
+          "cycles": 11979983,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 603,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "f2e4dc96b82afcbf9ee1caf22d40899af8232374b0acb0a9ebc7e102361b74d3",
+          "phase": "reset_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": 62,
+          "state_sha256": "08e0802facd8a9f1af85373b69c46e21e1e6e2720fe7f35bddcd2b3405d2864e"
+        },
+        {
+          "cycles": 23927183,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1203,
+          "layout": 0,
+          "ram_80": 0,
+          "ram_sha256": "4e1478be5110e79dfba3e00b91ae3000e57374170a4b8228d822fc01d121e574",
+          "phase": "reset_released",
+          "requested_update_calls": 600,
+          "release_update_calls_before": 0,
+          "swchb_command": 63,
+          "state_sha256": "d6086b724195ee9f72de787e0716d74dc948ef5c9617d73da2fc321f90cfba6f"
+        },
+        {
+          "cycles": 23947095,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1204,
+          "layout": 0,
+          "ram_80": 1,
+          "ram_sha256": "b0ba9fe26969bafddf89283deeeaf9dfcae44f56f6ce7195105e25bebebbab4c",
+          "phase": "select_1_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 0,
+          "swchb_command": 61,
+          "state_sha256": "b422719188108b8096d27ce942ecfb2ee85c09172b57ca2c8b6feccb47113eee"
+        },
+        {
+          "cycles": 24564367,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1235,
+          "layout": 0,
+          "ram_80": 2,
+          "ram_sha256": "e3a44552c4075d03dc2bb96f3aa2bc33af2fd219395ac07b037973289641aad8",
+          "phase": "select_2_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 30,
+          "swchb_command": 61,
+          "state_sha256": "71af144e84c41913d8eb32c6cdb7ef5f3343f8d029230b75235adb64d314432b"
+        },
+        {
+          "cycles": 25181639,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1266,
+          "layout": 0,
+          "ram_80": 3,
+          "ram_sha256": "2587e79a49202d3866b0cf09e00957f715ed745ce97a34ac95c2098f597ba04f",
+          "phase": "select_3_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 30,
+          "swchb_command": 61,
+          "state_sha256": "aba96d64d8d3562055ed66da445f1f0da2b0d0b1c768bf8aed6edb6940b95aea"
+        },
+        {
+          "cycles": 25798911,
+          "current_lines": 0,
+          "last_lines": 262,
+          "previous_lines": 262,
+          "frames": 1297,
+          "layout": 0,
+          "ram_80": 3,
+          "ram_sha256": "904448bdb06620ec0f9a0b1564a77f6f0f55799744a85949ae195cfbac27f6d4",
+          "phase": "advanced_reset_pressed",
+          "requested_update_calls": 1,
+          "release_update_calls_before": 30,
+          "swchb_command": 62,
+          "state_sha256": "0fe0bfe59bdbf499ba3e0f18f19c06d11872a8748067b9509d9caa8a3c1ac1fa"
+        }
+      ],
+      "summary": {
+        "steady_scanlines": [
+          262
+        ],
+        "interval_observed_frames": 601,
+        "interval_cpu_cycles": 11967112,
+        "steady_cpu_cycles_per_frame": {
+          "numerator": 19912,
+          "denominator": 1
+        },
+        "scope": "observed aligned steady/Reset interval, not full-game acceptance"
+      }
+    }
+  ],
+  "repeatability": {
+    "isolated_runs": 2,
+    "stable_timing_equal": true,
+    "checkpoint_state_equal": false,
+    "serialized_bytes_equal": false,
+    "scope": "stable interval and mode checkpoints; full state/RNG replay is issue #7"
+  },
+  "limitations": [
+    "Commercial revision/dump provenance not independently established",
+    "Emulator counters, not physical-machine or wall-clock measurements",
+    "Checkpoint inventory, not frame-by-frame full-game timing coverage",
+    "Full serialized/game-state repeatability is not established by stable cadence"
+  ],
+  "captured_on": "2026-10-31",
+  "ale_crosscheck": {
+    "backend": "ale-py 0.12.1+8a8fafb",
+    "source_contract": "8a8fafb",
+    "policy": {
+      "seed": 0,
+      "frame_skip": 1,
+      "repeat_action_probability": 0,
+      "actions": "600 NOOP after loadROM warmup/resets"
+    },
+    "frame_count": 600,
+    "last_scanline_counts": {
+      "262": 600
+    },
+    "boundary": "post-act; TIA saved myScanlineCountForLastFrame",
+    "source": "https://github.com/Farama-Foundation/Arcade-Learning-Environment/blob/8a8fafb/src/ale/emucore/TIA.cxx",
+    "limitation": "post-ALE warmup; no cold-start or console-input equivalence"
+  },
+  "decoder_contract": {
+    "repository": "stella-emu/stella",
+    "commit": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+    "files": {
+      "src/emucore/Serializer.cxx": "c01c589d72e6f384a52ecb007f1b4b71f77929c4",
+      "src/emucore/System.cxx": "522ea454fcbe0b785fe6afeb251d85e9c47384d3",
+      "src/emucore/M6502.cxx": "76dd0320a9407e1c994341cb786ea162c7e145e7",
+      "src/emucore/M6532.cxx": "d9d2baad3deac15a943a073000e44a0b6dc730c7",
+      "src/emucore/tia/DelayQueue.hxx": "583f7f3a2b9c74d76be54d8c9f14ddc1f668c0e3",
+      "src/emucore/tia/frame-manager/AbstractFrameManager.cxx": "0f5d51ec64936a39b71026c9d8ac86842bd570d8"
+    }
+  },
+  "probe_utility_sha256": "92890d6f5ec1da8aa9dfae512b51875b257b35db575496fcd41a925d419ca3ad"
+}
