@@ -45,6 +45,11 @@ def refuge_approach(floe_wait=96):
             + [{**NEUTRAL,'swcha':0xAF}]*30 + [NEUTRAL]*32)
 
 
+def console_surface_steps():
+    return ([{**NEUTRAL,'swchb':0x3D},NEUTRAL]*4 + [{**NEUTRAL,'swchb':0x3D}]*35
+            + [NEUTRAL,{**NEUTRAL,'swchb':0x3C}] + [NEUTRAL]*80)
+
+
 def source_reset_checkpoint(summary_path):
     summary_bytes = Path(summary_path).read_bytes(); summary = json.loads(summary_bytes)
     digest = hashlib.sha256(summary_bytes).hexdigest()
@@ -99,21 +104,46 @@ def capture_refuge(rom, summary_path, out, stella='stella'):
     return report
 
 
+def capture_console(rom,summary_path,out,stella='stella'):
+    source=verified_input(Path(rom));initial,provenance=source_reset_checkpoint(summary_path)
+    if provenance['source_sha256']!=source['sha256']:raise ValueError('console source identity mismatch')
+    paths=(Path(__file__),ROOT/'scripts/reference_traces.py',ROOT/'scripts/reference_state.py',ROOT/'scripts/trace_compare.py')
+    fingerprints={str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+    tool_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    out=private_output(out);out.mkdir(parents=True,exist_ok=False)
+    policy={**provenance,'route':'four Select edges/release, hold35, release, Reset+Select, release80','ram_injections':{}}
+    a,last_a=capture_steps(rom,initial,console_surface_steps(),out/'run-a',stella,policy)
+    b,last_b=capture_steps(rom,initial,console_surface_steps(),out/'run-b',stella,policy)
+    if compare_traces(a,b) or last_a!=last_b:raise ValueError('full console replay differs')
+    modes=[a['steps'][index]['ram'][0] for index in (1,3,5,7)]
+    held=a['steps'][42]['ram'][0];simultaneous=a['steps'][44]['ram'][0]
+    if modes!=[3,0,1,2] or held!=0 or simultaneous!=0:
+        raise ValueError('original console wrap/hold/Reset precedence observations differ')
+    verify_fingerprints(fingerprints);verified_input(Path(rom))
+    report={'schema_version':1,'source':source,'tool_source_commit':tool_commit,'provenance':provenance,
+        'utility_sha256':fingerprints[str(Path(__file__))],'steps':len(a['steps']),'full_states_equal':True,
+        'observed_wrap_modes':modes,'mode_after_select_hold35':held,'mode_after_reset_select':simultaneous,
+        'trace_sha256':hashlib.sha256((out/'run-a/trace.json').read_bytes()).hexdigest()}
+    (out/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
+    return report
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rom',type=Path,default=ROOT/'references/roms/frostbite.bin')
     parser.add_argument('--preparation-summary',type=Path,default=ROOT/'outputs/reference-traces/summary.json')
     parser.add_argument('--stella',default='stella')
-    parser.add_argument('--output',type=Path,default=ROOT/'outputs/reference-refuge/summary.json')
+    parser.add_argument('--route',choices=('refuge','console'),default='refuge')
+    parser.add_argument('--output',type=Path)
     args=parser.parse_args(argv)
     try:
         verified_input(args.rom)
-        parent=ROOT/'outputs/reference-refuge';parent.mkdir(parents=True,exist_ok=True)
+        parent=ROOT/f'outputs/reference-{args.route}';parent.mkdir(parents=True,exist_ok=True)
         out=Path(tempfile.mkdtemp(prefix='capture-',dir=parent))/'raw'
-        report=capture_refuge(args.rom,args.preparation_summary,out,args.stella)
-        args.output.parent.mkdir(parents=True,exist_ok=True)
-        args.output.write_text(json.dumps(report,indent=2)+'\n')
-        print(f'Natural refuge route passed: {report["observation"]}; raw evidence {out}')
+        report=(capture_refuge if args.route=='refuge' else capture_console)(args.rom,args.preparation_summary,out,args.stella)
+        output=args.output or parent/'summary.json';output.parent.mkdir(parents=True,exist_ok=True)
+        output.write_text(json.dumps(report,indent=2)+'\n')
+        print(f'Original {args.route} route passed; raw evidence {out}')
         return 0
     except (OSError,ValueError,KeyError,TypeError,StopIteration,subprocess.SubprocessError) as error:
         print(f'Natural refuge capture failed: {error}',file=sys.stderr)

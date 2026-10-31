@@ -38,6 +38,15 @@ class RefugeRouteTests(unittest.TestCase):
         self.assertEqual(steps[196]['swcha'],0x9F)
         self.assertEqual(steps[226]['swcha'],0xAF)
 
+    def test_console_route_includes_wrap_hold_and_reset_select_together(self):
+        api=self.api();self.assertTrue(hasattr(api,'console_surface_steps'),'full-console input route missing')
+        steps=api.console_surface_steps()
+        self.assertEqual(len(steps),125)
+        self.assertEqual([point['swchb'] for point in steps[:8]],[0x3D,0x3F]*4)
+        self.assertEqual(steps[8]['swchb'],0x3D)
+        self.assertEqual(steps[44]['swchb'],0x3C)
+        self.assertEqual(steps[-1]['swchb'],0x3F)
+
     def test_hit_jump_life_loss_and_partial_sweep_are_failures(self):
         for address,value in ((0xED,0x80),(0xEA,1),(0xCC,2),(0xF1,0x10)):
             approach,wait=self.fixtures();wait[3]['ram'][address-0x80]=value
