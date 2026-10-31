@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "host_seed": 1,
+  "riot_timer_preset": 127,
+  "warmup_intervals": 32,
+  "variations": [0, 1, 2, 3],
+  "select_release_intervals": 32,
+  "reset_release_intervals": 80,
+  "route": [
+    {"count": 2, "swcha": 255, "swchb": 63, "fire": [false, false]},
+    {"count": 4, "swcha": 238, "swchb": 63, "fire": [false, false]},
+    {"count": 4, "swcha": 183, "swchb": 63, "fire": [false, false]},
+    {"count": 4, "swcha": 123, "swchb": 63, "fire": [false, false]},
+    {"count": 4, "swcha": 90, "swchb": 63, "fire": [false, false]},
+    {"count": 2, "swcha": 0, "swchb": 63, "fire": [false, false]},
+    {"count": 3, "swcha": 255, "swchb": 63, "fire": [true, false]},
+    {"count": 2, "swcha": 255, "swchb": 63, "fire": [false, false]},
+    {"count": 3, "swcha": 255, "swchb": 63, "fire": [false, true]},
+    {"count": 2, "swcha": 255, "swchb": 63, "fire": [false, false]},
+    {"count": 2, "swcha": 255, "swchb": 63, "fire": [true, true]},
+    {"count": 2, "swcha": 255, "swchb": 63, "fire": [false, false]},
+    {"count": 2, "swcha": 255, "swchb": 63, "fire": [true, false]},
+    {"count": 4, "swcha": 255, "swchb": 63, "fire": [false, false]}
+  ]
+}

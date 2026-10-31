@@ -1,6 +1,6 @@
 # Capture independent deterministic Atari traces and comparison oracles
 
-Planning ID: P07. Status: approved backlog; implementation has not started.
+Planning ID: P07. Status: implemented; delivery tracked in PR #26.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/7
 
 ## Goal
@@ -22,6 +22,24 @@ Definition of Ready: review the proposed Frostbite design, confirm dependency de
 Hash/revision/seed-bound traces reproduce independently; comparator detects injected coordinate/flag/collision/order errors; backend limitations and any instrumented two-player coverage are explicit.
 
 Link reproducible checks, exact source/target artifact identities, limitations and integration evidence before closing. A boot alone is not gameplay acceptance.
+
+## Delivery evidence
+
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/26. Independent
+review findings were reproduced and fixed in one pass; final-head CI/integration
+status belongs to that PR. Source schema2 rejects equal incomplete state/input
+records, and complete producer helper/config manifests must match Git before and
+after capture and at publication. All five evidence classes were recaptured with
+the fixed committed tools; historical producer identities remain unchanged.
+
+- [Reference operations and limits](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/7-independent-reference-traces/docs/reference-traces.md), [compact hashes/report](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/7-independent-reference-traces/references/reference-traces.json) and [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/7-independent-reference-traces/docs/handoffs/issue-7.md).
+- Stella7.0: all four variations, raw both-controller/console pins, complete structural source state, deterministic initial capsule, paired active routes and controlled selected-player fixtures; 1472 recorded checkpoints and six deliberate corruption classes per variation.
+- Actual Stella instructions agree with py65 for 86 no-MMIO mechanics cases and 288 binary/decimal ADC/SBC vectors, checking CPU flags/registers and all128 RAM bytes.
+- Secondary ALE0.12.1 single-player modes0/2: seed1, frame_skip1, sticky probability0, repeated27-frame whole-system states; no claimed Stella/ALE initial alignment.
+- A natural1056-interval jump/refuge route repeats completely and preserves X09/reserve3 during768 wait intervals with the bear blocked at0F. Walking-only refuge was rejected by source execution. Paired125-interval console route verifies variation wrap, held Select and Reset precedence.
+- Synthetic public tests require no original data or optional emulator imports. Original ROM/full states/traces remain ignored; no target ROM bytes changed. A future native adapter must obtain actual target values for the explicit logical comparison contract.
+
+Natural complete-game/two-player turn transitions, every collision geometry, native performance, presentation and physical hardware remain separate downstream acceptance gates.
 
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 

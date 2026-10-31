@@ -1,0 +1,3 @@
+# Optional secondary research backend; never installs/fetches original ROMs.
+# Reuse a matching existing environment; do not replace it automatically.
+ale-py==0.12.1

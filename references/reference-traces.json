@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "scope": "Independent original-execution oracles; no MSX gameplay/hardware acceptance",
+  "stella": {
+    "backend": {
+      "name": "Stella",
+      "version": "7.0",
+      "source_contract": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+      "binary_sha256": "7571cb35bbb16a590ecaca2bfed2b63c4b29c2184921c3896550841bf8425161"
+    },
+    "warmup_intervals": 32,
+    "warmup_full_states_equal": true,
+    "config_sha256": "a4be41fd81b08c149bb3c3fb91707df546810dd3f36381b87ab2fff604d4be38",
+    "poweron_sha256": "c223f981af8a286e4d8bca0ad9d37da99c70233a6dbf1d9ac60ac496d8bff1d4",
+    "aligned_sha256": "5f11cf9472bc8bd3d378b1bbbae10be1ff04b5c244da5d552c226d5d174b0da0",
+    "initial_conditions": {
+      "host_seed": 1,
+      "riot_timer_preset": 127
+    },
+    "scenarios": [
+      {
+        "variation": 0,
+        "steps": 121,
+        "mode_after_reset": 0,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "d8ebb5ddb6d3cf6a1b1829c7a4b432f14c1347d340bfed33310d6381f23eaba2",
+        "raw_state_chain_sha256": "cd6ffa25289ab83dd7967f88839a5158ef7e04eb5b04d413330c157a4e39d37d",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      },
+      {
+        "variation": 1,
+        "steps": 154,
+        "mode_after_reset": 1,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "b5133d4a80015f58edb1c9ba8380e94e2764800419771886389f4ed98d26415b",
+        "raw_state_chain_sha256": "d82b539b899211935f5de60060d4d4cb1b6c6a460f6af9c962c8e5c8f1590589",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      },
+      {
+        "variation": 2,
+        "steps": 187,
+        "mode_after_reset": 2,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "1e2587ac574bdee726f314242c0e910cd752d8ac20c23cf7d918bef5596c65d8",
+        "raw_state_chain_sha256": "9f682f42f8c4b9f1bb9403227a488af13ac004c934698b3453169a59b1fe0242",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      },
+      {
+        "variation": 3,
+        "steps": 220,
+        "mode_after_reset": 3,
+        "player_after_reset": 0,
+        "full_states_equal": true,
+        "trace_sha256": "5d646736e8f79cd1e1bb336ea157922430ef949f15e76f4327397212a62f0eb4",
+        "raw_state_chain_sha256": "99f01ae0a1581cfa6901747bd70fa02d8432d6c1d8d9301102e4ddbe2ba82f7c",
+        "negative_controls_detected": [
+          "coordinate",
+          "flag",
+          "collision",
+          "order",
+          "input",
+          "seed"
+        ]
+      }
+    ],
+    "controlled_player1_turns": [
+      {
+        "variation": 1,
+        "steps": 11,
+        "full_states_equal": true,
+        "port1_direction_and_fire_observed": true,
+        "trace_sha256": "0d7b6a3ce1736f7b17bf7301ca56e725471775d59e8d3af4b0ed0df27e91918a"
+      },
+      {
+        "variation": 3,
+        "steps": 11,
+        "full_states_equal": true,
+        "port1_direction_and_fire_observed": true,
+        "trace_sha256": "562c86a0130e5b00b1a5ed10b4096404cdd8391fdf77cc03633ee44679c7ef6c"
+      }
+    ]
+  },
+  "cpu": {
+    "py65": "1.2.0",
+    "py65_cpu_source_sha256": "15d93835b4f279b702270d9a0b417938291347ec57cc12d9e0307cd344d381fe",
+    "cases_sha256": "3d49b157e889683b9afd862bd1f6dde3f34ef23ac7eab5e54dbc7fff03d8d652",
+    "mechanics_cases_checked": 86,
+    "arithmetic_boundary_vectors": 288,
+    "excluded_constant_mmio_cases": 15,
+    "matched": 374,
+    "total": 374
+  },
+  "ale": {
+    "backend": {
+      "name": "ALE",
+      "version": "0.12.1",
+      "source_commit": "8a8fafb1ac37796e3e8197a2e5727204fa1b926d",
+      "binary_sha256": "34ac656b5d24fc5b4e3978c9628b958f95a620ab9cf10e159a7198a3d5bec8dc",
+      "numpy": "2.5.4"
+    },
+    "modes": [
+      {
+        "mode": 0,
+        "steps": 27,
+        "policy": {
+          "seed": 1,
+          "frame_skip": 1,
+          "repeat_action_probability": 0.0
+        },
+        "full_serialized_states_equal": true,
+        "ram_screen_inputs_equal": true,
+        "initial_sha256": "5422472ec1fa68ef509559560208cfcb241e2956254aee3230792e4a2f7b17d0",
+        "trace_sha256": "e4be539e4a424642949447708a6b4f5e9bf7e20405775990824c4510092eb37f"
+      },
+      {
+        "mode": 2,
+        "steps": 27,
+        "policy": {
+          "seed": 1,
+          "frame_skip": 1,
+          "repeat_action_probability": 0.0
+        },
+        "full_serialized_states_equal": true,
+        "ram_screen_inputs_equal": true,
+        "initial_sha256": "8f8e704443e506415d80bc2e6438153a022262e85a8ed290aa3f00995d2c1258",
+        "trace_sha256": "4ec2c88acc08c07055922dd51e6ada583ee18cf0221e36d8275e099fd2960058"
+      }
+    ]
+  },
+  "refuge": {
+    "steps": 1056,
+    "independent_runs": 2,
+    "full_states_equal": true,
+    "trace_sha256": "ccd94fd2c7df5acb4b13a10db6f73b8fa278966f6fde9508cf0b7f2c0dbf2173",
+    "config_sha256": "930277a3e5ec8f8e45e7e79db8189470b2a50884b254dde3847dbabf021c400e",
+    "observation": {
+      "refuge_x": 9,
+      "bear_min": 15,
+      "bear_max": 133,
+      "bear_direction_reversals": 0,
+      "bear_blocked_at_edge": true,
+      "reserve": 3,
+      "grounded_shore": true,
+      "effective_bear_hits": 0
+    },
+    "provenance": {
+      "preparation_summary_sha256": "eda36faf847841ddb3e2a08b94c79d3a7ceff3d060544a125c80d13708e13605",
+      "preparation_trace_sha256": "1e2587ac574bdee726f314242c0e910cd752d8ac20c23cf7d918bef5596c65d8",
+      "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+      "preparation_tool_commit": "eeefcccf693428517177ca184b9357406f95188f"
+    }
+  },
+  "console": {
+    "steps": 125,
+    "full_states_equal": true,
+    "observed_wrap_modes": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "mode_after_select_hold35": 0,
+    "mode_after_reset_select": 0,
+    "trace_sha256": "6fc1c62189e7790931b8af18dabf1c0f87abd31c04577016c24e8f304f929179",
+    "provenance": {
+      "preparation_summary_sha256": "eda36faf847841ddb3e2a08b94c79d3a7ceff3d060544a125c80d13708e13605",
+      "preparation_trace_sha256": "1e2587ac574bdee726f314242c0e910cd752d8ac20c23cf7d918bef5596c65d8",
+      "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+      "preparation_tool_commit": "eeefcccf693428517177ca184b9357406f95188f"
+    }
+  },
+  "limits": [
+    "Controlled power-on RIOT/host seed, not every physical power-on",
+    "C7=1 port1 fixtures do not prove natural death/record swapping",
+    "One natural refuge route, not every geometry or complete game",
+    "ADC/SBC boundary matrix, not exhaustive NMOS conformance",
+    "ALE modes0/2 startup is not aligned to Stella; no cross-backend whole-state equality",
+    "Native logical adapter, target timing, audio, PAL and physical MSX remain later gates"
+  ],
+  "producers": {
+    "stella": {
+      "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f",
+      "utility_sha256": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+      "utility_fingerprints": {
+        "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+        "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+        "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+        "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+        "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+        "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+        "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+        "references/trace-scenarios.json": "a4be41fd81b08c149bb3c3fb91707df546810dd3f36381b87ab2fff604d4be38"
+      },
+      "private_summary_sha256": "eda36faf847841ddb3e2a08b94c79d3a7ceff3d060544a125c80d13708e13605"
+    },
+    "cpu": {
+      "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f",
+      "utility_sha256": "79a0e3e25c96cbe267963e3201ac3ebf59e4b84af78795cfa30b3a61457e2ed2",
+      "utility_fingerprints": {
+        "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+        "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+        "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+        "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+        "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+        "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+        "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+        "scripts/reference_cpu_check.py": "79a0e3e25c96cbe267963e3201ac3ebf59e4b84af78795cfa30b3a61457e2ed2",
+        "scripts/mechanics_probe.py": "92ff5475fd0c8f849b57bedcf94c24950148930ceab205203fd3592adf6fa9b6",
+        "references/mechanics-cases.json": "3d49b157e889683b9afd862bd1f6dde3f34ef23ac7eab5e54dbc7fff03d8d652",
+        "references/disassembly-map.json": "f934bf557893a789f7f6d60f20ead89c89b67671d43373cbbd92aaba8c3a6bfd"
+      },
+      "private_summary_sha256": "3fefae71e25f3a4f6031fcd36c9a35f05ee9639bcd177af5a081049c1563bc0d"
+    },
+    "ale": {
+      "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f",
+      "utility_sha256": "a0eabd02572941952c90a004f217cc18fdf43b8af0277d931f8d501e5cb08be6",
+      "utility_fingerprints": {
+        "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+        "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+        "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+        "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+        "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+        "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+        "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+        "scripts/reference_ale_check.py": "a0eabd02572941952c90a004f217cc18fdf43b8af0277d931f8d501e5cb08be6"
+      },
+      "private_summary_sha256": "8316ed2e310d79aed5b93f1308025d5e347a48f6a6e4522fb45558dd3229369a"
+    },
+    "refuge": {
+      "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f",
+      "utility_sha256": "14b1859c2d415adb80dab12cf3015d46a9fd29cb736c13779ae62ff0a656994a",
+      "utility_fingerprints": {
+        "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+        "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+        "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+        "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+        "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+        "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+        "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+        "scripts/reference_routes.py": "14b1859c2d415adb80dab12cf3015d46a9fd29cb736c13779ae62ff0a656994a",
+        "references/refuge-scenario.json": "930277a3e5ec8f8e45e7e79db8189470b2a50884b254dde3847dbabf021c400e"
+      },
+      "private_summary_sha256": "a4b0f11519e1e6879a7b8d0032779a69eb42507dff3782d1e394044070097264"
+    },
+    "console": {
+      "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f",
+      "utility_sha256": "14b1859c2d415adb80dab12cf3015d46a9fd29cb736c13779ae62ff0a656994a",
+      "utility_fingerprints": {
+        "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+        "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+        "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+        "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+        "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+        "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+        "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+        "scripts/reference_routes.py": "14b1859c2d415adb80dab12cf3015d46a9fd29cb736c13779ae62ff0a656994a",
+        "references/refuge-scenario.json": "930277a3e5ec8f8e45e7e79db8189470b2a50884b254dde3847dbabf021c400e"
+      },
+      "private_summary_sha256": "4cad1cc1cb5f432da78c75c9c4469962d4299537c7e95aabd039ceb785ba440b"
+    }
+  },
+  "logical_projection": {
+    "contract": "frostbite/source-logical/F019/v1",
+    "utility_sha256": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+    "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f"
+  },
+  "publication": {
+    "utility_sha256": "37c1627c4de1377e92fcb922e52ff8d3f57d5ec6adeac79f372ffa9b0bacb2ff",
+    "tool_source_commit": "eeefcccf693428517177ca184b9357406f95188f"
+  }
+}
