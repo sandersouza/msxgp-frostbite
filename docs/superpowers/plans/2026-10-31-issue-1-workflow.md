@@ -54,11 +54,11 @@
 
 **Interfaces:** Consumes Task 1's verified preservation evidence. Produces English repository guidance, an approved design status, issue/PR evidence and an exclusive successor handoff.
 
-- [ ] Replace active Seaquest claims with Frostbite's actual state: no MSX ROM or fresh setup validated yet, no inherited commands represented as working Frostbite tooling.
-- [ ] Record forked issue chat, branch, status, review/integration, release and evidence rules; preserve owner Obsidian guideline requirements in AGENTS.md.
-- [ ] Preserve the supplied GPLv3 LICENSE unchanged; state that original Atari material has separate ownership and is not included.
-- [ ] Record owner design approval without rewriting historical starting-point evidence. Update issue #1 progress and acceptance record, keeping local/remote copies equal.
-- [ ] Verify relative Markdown links, tracked-file scope, absence of original/generated binaries, whitespace and all workflow/release requirements. Expected: all checks pass; no gameplay claim or testable-ROM release for this documentation-only issue.
+- [x] Replace active Seaquest claims with Frostbite's actual state: no MSX ROM or fresh setup validated yet, no inherited commands represented as working Frostbite tooling.
+- [x] Record forked issue chat, branch, status, review/integration, release and evidence rules; preserve owner Obsidian guideline requirements in AGENTS.md.
+- [x] Preserve the supplied GPLv3 LICENSE unchanged; state that original Atari material has separate ownership and is not included.
+- [x] Record owner design approval without rewriting historical starting-point evidence. Update issue #1 progress and acceptance record, keeping local/remote copies equal.
+- [x] Verify relative Markdown links, tracked-file scope, absence of original/generated binaries, whitespace and all workflow/release requirements. Expected: all checks pass; no gameplay claim or testable-ROM release for this documentation-only issue.
 - [ ] Obtain independent whole-branch review, resolve material findings, create/link PR and move #1 to In review while pending. Integrate only after its acceptance checks pass; then close #1/Done.
 - [ ] Fork a dependency-ready successor (normally #2) within Frostbite, hand over verified branch/artifact/dirty-state evidence and stop editing this checkout.
 
