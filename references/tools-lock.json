@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "python_minimum": "3.11",
+  "python_dependencies": {"py65": "1.2.0"},
+  "tools": {
+    "sjasmplus": {"repository": "https://github.com/z00m128/sjasmplus.git", "commit": "d379eeac9ad3857fb48fd3a3929175d0a56038ce", "version": "1.24.0", "binary": "sjasmplus", "build": ["make", "-j2", "USE_LUA=0"], "version_args": ["--nologo", "--version"], "version_contains": "1.24.0"},
+    "distella": {"repository": "https://github.com/johnkharvey/distella.git", "commit": "1015ae53b2d222320eb706c220186305fcac55dd", "version": "3.02-SNAPSHOT", "binary": "distella", "build": ["make", "auto"], "version_args": [], "version_contains": "DiStella v3.02-SNAPSHOT"},
+    "dasm": {"repository": "https://github.com/dasm-assembler/dasm.git", "commit": "cee322098fdf56585247433922dbac4aa93001fe", "version": "v2.20.17 (banner 2.20.16)", "binary": "bin/dasm", "build": ["make", "-j2", "build"], "version_args": [], "version_contains": "DASM 2.20.16"}
+  },
+  "host_emulators": {"openmsx": {"tested": "21.0", "installation": "Homebrew when missing; actual version is recorded by smoke"}, "stella": {"tested": "7.0/Debugger", "installation": "Homebrew when missing; source_timing separately guards its supported state format"}}
+}
