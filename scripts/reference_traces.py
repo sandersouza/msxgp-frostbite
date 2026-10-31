@@ -221,6 +221,7 @@ def selected_player_fixture(raw, player):
 
 def capture_suite(rom, config_path, out, stella='stella'):
     identity = verified_input(Path(rom))
+    tool_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     verify_fingerprints({str(Path(__file__)): LOADED_UTILITY_SHA256})
     dependencies = ('reference_traces.py', 'reference_state.py', 'trace_compare.py', 'source_timing.py', 'reference_inventory.py')
     fingerprints = {str(ROOT/'scripts'/name): hashlib.sha256((ROOT/'scripts'/name).read_bytes()).hexdigest()
@@ -289,6 +290,7 @@ def capture_suite(rom, config_path, out, stella='stella'):
         print(f'Variation{mode}: {len(a["steps"])} complete source states reproduced; six negative controls rejected.', flush=True)
     verify_fingerprints(fingerprints)
     report = {'schema_version': 1, 'source': identity, 'backend': backend, 'policy': base_policy,
+              'tool_source_commit': tool_commit,
               'config_sha256': hashlib.sha256(config_bytes).hexdigest(),
               'utility_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               'utility_fingerprints': {str(Path(path).relative_to(ROOT)): digest for path, digest in fingerprints.items()},
