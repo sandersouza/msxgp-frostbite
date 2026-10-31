@@ -1,6 +1,6 @@
 # Identify the original ROM revision, region and measured cadence
 
-Planning ID: P02. Status: approved backlog; implementation has not started.
+Planning ID: P02. Status: implemented in its dedicated fork; verification/review and integration tracked by the linked delivery PR.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/2
 
 ## Goal
@@ -36,3 +36,9 @@ Milestone: none, following existing project convention; no milestone was created
 Target: standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG, no expansions. The supplied Atari ROM is gameplay authority. Keep automated, manual-emulator and physical evidence distinct.
 
 Design: [Frostbite approved design](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/specs/2026-10-31-frostbite-design.md).
+
+## Issue #2 delivery evidence
+
+The owner-approved canonical image is verified by an immutable 4K manifest. Original-free utility tests pass (18 cases), including same-size corruption rejection before backend launch, malformed state-format checks, variable delay queues and publication boundaries. Two isolated Stella 7.0 probes measure an aligned 601-frame / 11,967,112-cycle interval: 262 lines and 19,912 CPU cycles per steady frame; Select observations progress through RAM[$80]=0,1,2,3 and Reset preserves the selected value. ALE 0.12.1+8a8fafb corroborates 262 lines in 600 post-warmup frames.
+
+Commercial revision/upstream provenance remain unverified. Startup includes 51/310-line emulator boundary events and possible partial frames. Full checkpoint/RAM/serialized repeatability is explicitly NOT established; that alignment belongs to #7 before gameplay-equivalence acceptance. See docs/reference-inventory.md, references/source-timing.json and docs/handoffs/issue-2.md. No MSX ROM or physical/gameplay acceptance is claimed, and no testable-ROM release is produced by this research-only delivery.
