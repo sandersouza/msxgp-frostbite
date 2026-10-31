@@ -1,6 +1,6 @@
 # Benchmark worst-case SCREEN 2 rendering and sprite allocation
 
-Planning ID: P08. Status: proposed backlog; implementation has not started.
+Planning ID: P08. Status: approved backlog; implementation has not started.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/8
 
 ## Goal
@@ -35,4 +35,4 @@ Milestone: none, following existing project convention; no milestone was created
 
 Target: standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG, no expansions. The supplied Atari ROM is gameplay authority. Keep automated, manual-emulator and physical evidence distinct.
 
-Design: [Frostbite proposed design](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/frostbite-planning/docs/superpowers/specs/2026-10-31-frostbite-design.md).
+Design: [Frostbite approved design](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/specs/2026-10-31-frostbite-design.md).

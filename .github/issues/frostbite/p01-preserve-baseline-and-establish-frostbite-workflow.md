@@ -1,6 +1,6 @@
 # Preserve the copied baseline and establish Frostbite issue/chat workflow
 
-Planning ID: P01. Status: proposed backlog; implementation has not started.
+Planning ID: P01. Status: delivery tracked in PR #19; the live GitHub project is authoritative.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/1
 
 ## Goal
@@ -35,4 +35,8 @@ Milestone: none, following existing project convention; no milestone was created
 
 Target: standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG, no expansions. The supplied Atari ROM is gameplay authority. Keep automated, manual-emulator and physical evidence distinct.
 
-Design: [Frostbite proposed design](https://github.com/sandersouza/msxgp-frostbite/blob/codex/docs/frostbite-planning/docs/superpowers/specs/2026-10-31-frostbite-design.md).
+Design: [Frostbite approved design](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/specs/2026-10-31-frostbite-design.md).
+
+## Implementation evidence — issue #1
+
+Owner approval: 2026-10-31 in the planning chat ("aprovado, pode seguir"). Planning PR #18 integrated as 468bfa53ac77e99af10aa0fa22130c230d019698. A complete external baseline archive was verified (6,452 files, 4 symlinks); 1,641 isolated file relocations/copies match the original manifest. Active Frostbite guidance replaces inherited claims. See docs/baseline-preservation.md and docs/handoffs/issue-1.md for hashes, recovery, boundaries and successor actions. Independent whole-branch review found no blocking findings. Verification evidence and the integration outcome are recorded in https://github.com/sandersouza/msxgp-frostbite/pull/19; use its exact head/merge commit. No testable ROM is produced by this documentation-only delivery.
