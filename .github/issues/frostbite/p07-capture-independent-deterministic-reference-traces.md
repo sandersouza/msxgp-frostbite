@@ -1,6 +1,6 @@
 # Capture independent deterministic Atari traces and comparison oracles
 
-Planning ID: P07. Status: implementation complete; independent review and integration pending.
+Planning ID: P07. Status: implemented; delivery tracked in PR #26.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/7
 
 ## Goal
@@ -24,6 +24,13 @@ Hash/revision/seed-bound traces reproduce independently; comparator detects inje
 Link reproducible checks, exact source/target artifact identities, limitations and integration evidence before closing. A boot alone is not gameplay acceptance.
 
 ## Delivery evidence
+
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/26. Independent
+review findings were reproduced and fixed in one pass; final-head CI/integration
+status belongs to that PR. Source schema2 rejects equal incomplete state/input
+records, and complete producer helper/config manifests must match Git before and
+after capture and at publication. All five evidence classes were recaptured with
+the fixed committed tools; historical producer identities remain unchanged.
 
 - [Reference operations and limits](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/7-independent-reference-traces/docs/reference-traces.md), [compact hashes/report](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/7-independent-reference-traces/references/reference-traces.json) and [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/7-independent-reference-traces/docs/handoffs/issue-7.md).
 - Stella7.0: all four variations, raw both-controller/console pins, complete structural source state, deterministic initial capsule, paired active routes and controlled selected-player fixtures; 1472 recorded checkpoints and six deliberate corruption classes per variation.

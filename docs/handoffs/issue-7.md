@@ -3,8 +3,8 @@
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/7
 Branch: `codex/chore/7-independent-reference-traces`.
 Base: `4cf8d58d3b53fd660ba92f70fc5e2fc91de398e0`.
-Delivery PR/integration evidence is linked from the issue; review is pending at
-this documentation checkpoint. Only the dedicated issue7 chat owns the shared
+Delivery PR: https://github.com/sandersouza/msxgp-frostbite/pull/26 (final-head CI
+and integration are recorded there). Only the dedicated issue7 chat owns the shared
 checkout until the explicit successor transfer.
 
 ## Evidence and exact identities
@@ -12,7 +12,9 @@ checkout until the explicit successor transfer.
 The [compact report](../../references/reference-traces.json) carries the original
 SHA-256, exact backend/config/utility hashes, producer commits, trace identities
 and private-summary hashes. [Operations](../reference-traces.md) explain every
-command and boundary. Producers are deliberately distinct from final publication:
+command and boundary. Final schema2 captures and all five complete dependency
+manifests use producer `eeefcccf693428517177ca184b9357406f95188f`.
+Earlier research retains its historical identities:
 
 - Primary full-state four-variation/selected-player traces and natural refuge:
   `aa81b27ae3664be051aa4991337f760a596537a5`.
@@ -20,11 +22,13 @@ command and boundary. Producers are deliberately distinct from final publication
   `35ba2526f237b36c81c8a72955d87223f3cdca22`.
 - ALE whole-system repeatability: `64451438847ba70084a27335d62ea6415d8dd5e7`.
 - Console wrap/hold/Reset precedence: `dc4c2c35f8510d660599668f1916dac908fea847`.
-- Compact publication tool: `168b6b9` (full identity is in the report).
+- First compact publication tool: `168b6b9`; the final report uses the fixed tool.
 
 Private summaries are under outputs/reference-{traces,cpu,ale,refuge,console}/.
-Accepted raw directories respectively end in capture-37674w4w, capture-0ugjg2ma,
-capture-pu1xaii0, capture-hzzx4lzp and capture-e7xdqdx5, each under raw/. They
+Historical accepted raw directories respectively end in capture-37674w4w,
+capture-0ugjg2ma, capture-pu1xaii0, capture-hzzx4lzp and capture-e7xdqdx5, each under
+raw/. Final raw directories are primary capture-ff_e5bmr, CPU capture-cqt6nizz,
+ALE capture-l8vpy3ol, refuge capture-gc16vgba and console capture-yr6nk475. They
 remain local/ignored along with the audited Stella source clone in outputs/issue7.
 Earlier provisional/failed captures remain private and are not accepted evidence.
 
@@ -56,8 +60,9 @@ Research commands require the local canonical original and documented backends.
 Public CI tests synthetic fixtures and builds only the existing diagnostic; it
 never downloads originals or uploads raw states/ROMs. Source metadata differences
 between producer commits are explicit, not normalized out of raw comparisons.
-The refuge parent primary summary predates aa81b27, but its preparation trace
-hash exactly matches the final primary mode2 hash; publication verifies that DAG.
+Route preparation is bound to the current primary mode2 trace hash. Historical
+refuge evidence used an older summary with an identical preparation trace; it
+keeps that true producer identity rather than being relabeled as a new capture.
 
 The native logical F019/v1 projection retains all128 logical RAM bytes, logical
 registers/flags, collision inputs and input ordering. A future native runner must
@@ -99,6 +104,44 @@ prerelease, exact tested bytes/hash/source and concrete human tests.
   accepted final captures exercise active input.
 - C7=1 selected-player tests are explicitly controlled one-byte fixtures. Cost:
   they do not establish natural death/record swap progression.
+- Raw schema2 includes exact private state bytes and re-decodes them before
+  equality, tying all required fields/hash to those bytes. Cost: additional
+  ignored storage and schema1 traces require recapture. No raw bytes are public.
+- All five evidence classes were recaptured under complete committed manifests;
+  pre-start dirty helpers and changes during execution fail. Cost: bounded replay
+  runtime; historical reports without helper manifests are no longer publication
+  inputs. Publication also checks its own committed helper snapshot.
+- Reviewer exclusions remain explicit: natural complete-game/alternating death,
+  native runtime/physical acceptance, whole Stella/ALE equivalence and exhaustive
+  NMOS conformance belong downstream. Cost: these reference passes cannot detect
+  defects outside their measured domains.
+
+## Independent review and disposition
+
+One fresh read-only gpt-6-astra/high reviewer examined4cf8d58..d7cd8a3, passed107
+synthetic tests and independently checked all3834 primary/refuge/console raw
+checkpoints against decoded observations, requested pins, forward progress and
+paired replay peers. No Critical or Minor findings. Two Important gaps were
+reproduced RED and fixed GREEN in one pass, followed by the111-test suite:
+
+- Matching incomplete source/logical records could pass equality. Source schema2
+  now re-decodes exact bytes and requires the complete decoded state/hash; both
+  comparator modes require structured supported backend/policy and full raw
+  controller/console/fire inputs. Synthetic fixtures contain full source state.
+- Entry-point hashes did not bind all helper code to producer commits. Complete
+  bounded transitive local dependency/configuration manifests now match Git before
+  and after capture, and during publication. Tests reject a helper modified before
+  capture, a reported helper mismatch and an omitted helper manifest entry.
+
+No second reviewer cycle was requested. The new committed producer preserves the
+historical four raw-state chains exactly, while its new schema/trace hashes and
+fresh execution provenance remain distinct.
+All five final captures passed again:374/374 CPU cases, both ALE modes, all4
+primary variations and selected-player fixtures,1056-interval refuge twice and
+125-interval console twice. The compact publisher verified all complete manifests
+and producer/config blobs. Final CPU state hashes and ALE trace hashes also equal
+their historical counterparts. Local111tests and source policy pass; final-head
+public CI and merge status remain independently visible in PR26.
 
 ## Delivery and continuation
 

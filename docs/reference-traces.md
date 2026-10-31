@@ -30,6 +30,11 @@ creates a fresh private directory and prints it. Source helpers/backend binary
 hashes are checked against changes during execution. Both full state replays
 must agree; any mismatch or watchdog failure prevents acceptance. Preserve the
 private directory when investigating a failure. A partial capture is not a pass.
+Every local helper and configuration in the declared transitive dependency
+manifest must match the producer commit before capture and still match after it.
+Publication verifies the same complete manifest; a helper already dirty before
+capture fails as well as one changed during the run. Commit intended tool changes
+before recapturing; unrelated documentation changes do not affect this check.
 
 For raw-state repeatability or the target-facing projection:
 
@@ -94,6 +99,14 @@ byte is injected at F019; the ROM then demonstrably ignores port0 and consumes
 port1 direction/fire. It does not prove a naturally resolved alternating death
 or record swap. Those broader routes remain for progression/full-game delivery.
 
+Raw schema2 includes exact state bytes in each private checkpoint. The comparator
+re-decodes those bytes and requires all recorded fields and their hash to match,
+then validates full raw inputs and the structured backend/policy. Equal omissions
+or placeholders on both sides cannot establish acceptance. Earlier schema1
+research traces remain historical and must be recaptured for this interface.
+The native logical contract remains v1, with complete structured provenance,
+raw inputs, register/RAM types and collision consistency checked before equality.
+
 Raw comparison checks the entire source trace, TIA fields, original state hashes,
 input/order and declared provenance. Coordinate, P flag, latched-collision,
 ordering, input and seed corruptions are deliberately rejected.
@@ -153,17 +166,18 @@ Reset+Select retains mode0, confirming Reset precedence. Every full state repeat
 
 The [compact report](../references/reference-traces.json) records the exact
 producer commits, utility/config/backend hashes, private-summary hashes and
-trace identities. Stella's primary traces and refuge route were produced by
-aa81b27; the374CPU pairs by35ba252; ALE by6445143; console bydc4c2c3. The report
-publisher verifies each utility blob at its declared Git commit. Publication
+trace identities. After independent review, the source capture tools at
+eeefccc require complete committed dependency manifests and raw schema2.
+The report publisher verifies every declared dependency blob at its producer
+commit, including local transitive helpers and configuration. Publication
 and source-execution commits have separate identities; a later documentation
 commit does not retrospectively produce those captures.
 
 The primary dataset records1472checkpoints across paired warmup/four-variation
-and selected-player captures. The refuge preparation used an earlier primary
-summary whose mode2 trace hash is identical to the final primary trace; the
-publisher checks that dependency by trace identity rather than conflating
-summary-publication revisions. Raw evidence stays local/ignored.
+and selected-player captures. Route preparation is bound to the primary mode2
+trace hash, independently of later summary-publication revisions. Raw evidence
+stays local/ignored. Historical aa81b27/35ba252/6445143/dc4c2c3 captures retain
+their true producer identities and are not relabeled as new executions.
 
 ## Remaining acceptance
 
