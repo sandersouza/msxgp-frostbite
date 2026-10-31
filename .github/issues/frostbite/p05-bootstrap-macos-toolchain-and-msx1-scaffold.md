@@ -1,6 +1,6 @@
 # Bootstrap a reproducible macOS toolchain and MSX1 ROM scaffold
 
-Planning ID: P05. Implementation/verification prepared; independent review addressed; integration and published diagnostic release pending.
+Planning ID: P05. Implemented and integrated through PR #23; diagnostic release published and downloaded assets verified.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/5
 
 ## Goal
@@ -27,14 +27,14 @@ If this issue delivers a new testable MSX ROM version, publish a versioned GitHu
 
 ## Delivery evidence
 
-- [Toolchain/checklist](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/5-macos-toolchain-scaffold/docs/toolchain.md), [diagnostic evidence](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/5-macos-toolchain-scaffold/references/diagnostic-baseline.json), [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/chore/5-macos-toolchain-scaffold/docs/handoffs/issue-5.md).
+- [Toolchain/checklist](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/toolchain.md), [diagnostic evidence](https://github.com/sandersouza/msxgp-frostbite/blob/main/references/diagnostic-baseline.json), [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/handoffs/issue-5.md).
 - Clean source clone/new venv/native pinned assembler builds passed setup/check/repeat on macOS arm64 with preinstalled host CLT/Homebrew/emulators. Intel/Rosetta and cold host-package installation remain untested; supplied .venv/cache were preserved.
 - Deterministic16KiB Normal diagnostic SHA-256 `d46320aec4b148c3b885d54de051bc078539b65a7a8bf739bb4e9e956c2028ca`; primary and clean-clone builds match. No original Atari input is required.
 - Isolated unexpanded C-BIOS MSX1/TMS9918A checks pass for enabled video/title/readouts, interrupts, keyboard edge/release and PSG register state. Rendered screenshot inspected; heartbeat-disabled runtime negative control rejected. Physical/human audio/PAL results pending.
 - Current original-free suite:53 tests. Source/binary receipts, dirty/mismatch refusal, stale-result removal and release identity gate are covered.
-- Release target: [v0.0.1-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic), to be published from the clean integrated commit with exact tested ROM/checksums/metadata and human-test notes before closure.
+- Release target: [v0.0.1-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic), published from clean integrated commit `8363b3f391caeef03dcd08ab380d26280e227831` with exact tested ROM/checksums/metadata and human-test notes. All five assets were downloaded into a fresh directory; checksums and source identities passed.
 - [PR #23](https://github.com/sandersouza/msxgp-frostbite/pull/23): independent review found one source-pin integrity gap; regression reproduced/fixed before compilation. No Critical or remaining Important findings.
-- PR uses Refs#5; close/Done only after integration and remote release-asset verification. No native gameplay acceptance is claimed.
+- PR #23 is merged. Integrated source passed all53 tests and a fresh smoke before packaging. Release publication/download verification satisfies the remaining delivery gate. No native gameplay acceptance is claimed.
 
 ## Project metadata
 
