@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "input": {
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "md5": "4ca73eb959299471788f0b685c3ba0b5",
+    "layout": "4K",
+    "trailing_words": {
+      "unused_nmi_word": 60090,
+      "reset": 61440,
+      "irq_word": 61440
+    }
+  },
+  "byte_identical": true,
+  "rebuilt": {
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834"
+  },
+  "tools": {
+    "distella": {
+      "path": "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/distella/distella",
+      "size": 71832,
+      "sha256": "a0b5f26daf61e9d63cfd93136b69214e5043f3f381889867fd44c88309df495a"
+    },
+    "dasm": {
+      "path": "/opt/homebrew/Cellar/dasm/2.20.17/bin/dasm",
+      "size": 234360,
+      "sha256": "1a50c66fa460cda8f2ea9d933e0e326b7c18b577baf3d3b4bb8a9c8cee288a3d"
+    }
+  },
+  "commands": [
+    [
+      "/Users/sandersouza/Developer/msx-gamePorts/frostbite/.tools/distella/distella",
+      "-paf",
+      "input.bin"
+    ],
+    [
+      "/opt/homebrew/Cellar/dasm/2.20.17/bin/dasm",
+      "/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/reference.asm",
+      "-f3",
+      "-o/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/rebuilt.bin",
+      "-l/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/reference.lst",
+      "-s/Users/sandersouza/Developer/msx-gamePorts/frostbite/outputs/reference-rebuild/run-44gr79r7/reference.sym"
+    ]
+  ],
+  "artifacts_directory": "outputs/reference-rebuild/run-44gr79r7",
+  "artifacts": {
+    "reference.asm": {
+      "size": 45250,
+      "sha256": "a648ce4eef4cf3096a9f2eada24854e11c640f53909304a50955d7228b8d7c45"
+    },
+    "reference.lst": {
+      "size": 86759,
+      "sha256": "e73f8d1238d78ed8d90f0252d59b2d396e1f8bb32115cdfa8970e68ce63d4a00"
+    },
+    "reference.sym": {
+      "size": 13979,
+      "sha256": "248d69675bd2bcfe62eec0c1961088fb095ce70c8181a0cb8a95cf33e93cbb07"
+    }
+  },
+  "utility_sha256": "26a3548bab0cee95f1acd64e85df776092e3552e6c5d2406fbe18a5c4f8cf09c",
+  "scope": "Byte identity only; automatic code/data classification is heuristic."
+}
