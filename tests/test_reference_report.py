@@ -76,7 +76,36 @@ class PublicationTests(unittest.TestCase):
             def git(*args):return subprocess.check_output(['git','-C',tmp,*args],stderr=subprocess.DEVNULL,text=True).strip()
             git('init','-q');git('add','scripts/fixture.py')
             git('-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-qm','fixture')
-            report={'tool_source_commit':git('rev-parse','HEAD'),'utility_sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
-            self.api().audit_producer(report,'scripts/fixture.py',root)
+            report={'tool_source_commit':git('rev-parse','HEAD'),'utility_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),
+                    'utility_fingerprints':{'scripts/fixture.py':hashlib.sha256(p.read_bytes()).hexdigest()}}
+            self.api().audit_producer(report,'scripts/fixture.py',root,('scripts/fixture.py',))
             report['utility_sha256']='0'*64
-            with self.assertRaises(ValueError):self.api().audit_producer(report,'scripts/fixture.py',root)
+            with self.assertRaises(ValueError):self.api().audit_producer(report,'scripts/fixture.py',root,('scripts/fixture.py',))
+
+    def test_helper_hash_must_match_producer_and_manifest_must_be_complete(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'scripts').mkdir()
+            for name in ('fixture.py','helper.py'):(root/'scripts'/name).write_bytes(name.encode())
+            def git(*args):return subprocess.check_output(['git','-C',tmp,*args],stderr=subprocess.DEVNULL,text=True).strip()
+            git('init','-q');git('add','scripts');git('-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-qm','fixture')
+            required=('scripts/fixture.py','scripts/helper.py')
+            report={'tool_source_commit':git('rev-parse','HEAD'),
+                    'utility_sha256':hashlib.sha256((root/required[0]).read_bytes()).hexdigest(),
+                    'utility_fingerprints':{path:hashlib.sha256((root/path).read_bytes()).hexdigest() for path in required}}
+            self.api().audit_producer(report,required[0],root,required)
+            report['utility_fingerprints']['scripts/helper.py']='0'*64
+            with self.assertRaises(ValueError):self.api().audit_producer(report,required[0],root,required)
+            del report['utility_fingerprints']['scripts/helper.py']
+            with self.assertRaises(ValueError):self.api().audit_producer(report,required[0],root,required)
+
+    def test_capture_rejects_helper_modified_before_start(self):
+        api=importlib.import_module('reference_provenance')
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'scripts').mkdir()
+            for name in ('fixture.py','helper.py'):(root/'scripts'/name).write_bytes(name.encode())
+            def git(*args):return subprocess.check_output(['git','-C',tmp,*args],stderr=subprocess.DEVNULL,text=True).strip()
+            git('init','-q');git('add','scripts');git('-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-qm','fixture')
+            paths=('scripts/fixture.py','scripts/helper.py')
+            api.snapshot_paths(paths,root)
+            (root/paths[1]).write_bytes(b'changed before start')
+            with self.assertRaises(ValueError):api.snapshot_paths(paths,root)

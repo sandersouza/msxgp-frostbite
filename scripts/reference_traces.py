@@ -15,6 +15,7 @@ import tempfile
 from reference_inventory import ROOT, verified_input
 from reference_state import decode_state, freeze_poweron
 from trace_compare import validate_trace, compare_traces
+from reference_provenance import producer_snapshot, verify_snapshot
 
 CONTRACT = 'd55b1aec0d067a4c901a6dcdf81cb8f579685659'
 STATE_NAME = 'Frostbite (1983) (Activision)'
@@ -173,9 +174,9 @@ def capture_steps(rom, initial, steps, out, stella='stella', policy=None):
             current = states[slot]
             point = decode_state(current); validate_checkpoint(point, sample)
             validate_progress(previous, point); previous = point
-            point.update(index=len(points), input=sample)
+            point.update(index=len(points), input=sample, state_bytes=current.hex())
             points.append(point)
-    trace = {'schema_version': 1, 'source_sha256': verified_input(Path(rom))['sha256'], 'backend': backend,
+    trace = {'schema_version': 2, 'source_sha256': verified_input(Path(rom))['sha256'], 'backend': backend,
              'initial_sha256': hashlib.sha256(initial).hexdigest(),
              'policy': policy or {'boundary': 'PCF019 interval; actual frame/cycle counters retained',
                                  'input_sampling': 'explicit raw pins at every boundary, no sticky-action RNG'},
@@ -227,12 +228,14 @@ def selected_player_fixture(raw, player):
 
 def capture_suite(rom, config_path, out, stella='stella'):
     identity = verified_input(Path(rom))
-    tool_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    producer=producer_snapshot('stella')
     verify_fingerprints({str(Path(__file__)): LOADED_UTILITY_SHA256})
     dependencies = ('reference_traces.py', 'reference_state.py', 'trace_compare.py', 'source_timing.py', 'reference_inventory.py')
     fingerprints = {str(ROOT/'scripts'/name): hashlib.sha256((ROOT/'scripts'/name).read_bytes()).hexdigest()
                     for name in dependencies}
     config_bytes = Path(config_path).read_bytes(); config = json.loads(config_bytes)
+    if hashlib.sha256(config_bytes).hexdigest()!=producer['utility_fingerprints']['references/trace-scenarios.json']:
+        raise ValueError('scenario differs from committed producer input')
     if config.get('schema_version') != 1 or config.get('source_sha256') != identity['sha256']:
         raise ValueError('scenario source/schema mismatch')
     if config['variations'] != [0, 1, 2, 3]: raise ValueError('all four original variations required')
@@ -295,11 +298,11 @@ def capture_suite(rom, config_path, out, stella='stella'):
                 'trace_sha256': hashlib.sha256((out/f'player1-{mode}-a/trace.json').read_bytes()).hexdigest()})
         print(f'Variation{mode}: {len(a["steps"])} complete source states reproduced; six negative controls rejected.', flush=True)
     verify_fingerprints(fingerprints)
+    verify_snapshot(producer,'stella')
     report = {'schema_version': 1, 'source': identity, 'backend': backend, 'policy': base_policy,
-              'tool_source_commit': tool_commit,
+              **producer,
               'config_sha256': hashlib.sha256(config_bytes).hexdigest(),
               'utility_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-              'utility_fingerprints': {str(Path(path).relative_to(ROOT)): digest for path, digest in fingerprints.items()},
               'poweron_sha256': hashlib.sha256(initial).hexdigest(),
               'aligned_sha256': hashlib.sha256(aligned).hexdigest(), 'warmup_intervals': len(warm),
               'warmup_full_states_equal': True, 'scenarios': scenarios, 'controlled_player1_turns': controlled_turns,

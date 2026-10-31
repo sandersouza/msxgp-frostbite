@@ -11,6 +11,7 @@ import tempfile
 
 from reference_inventory import ROOT, verified_input
 from reference_traces import private_output, verify_fingerprints
+from reference_provenance import producer_snapshot, verify_snapshot
 
 ALE_COMMIT = '8a8fafb1ac37796e3e8197a2e5727204fa1b926d'
 
@@ -46,7 +47,7 @@ def capture_ale(rom, out, seed=1):
     import ale_py._ale_py as binary
     import numpy
     if ale_py.__version__ != '0.12.1': raise ValueError('reviewed ALE0.12.1 required; preserve existing environment')
-    tool_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    producer=producer_snapshot('ale')
     fingerprints = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
                     for path in (Path(__file__), Path(binary.__file__))}
     out = private_output(out); out.mkdir(parents=True, exist_ok=False)
@@ -85,7 +86,8 @@ def capture_ale(rom, out, seed=1):
             'initial_sha256': runs[0]['initial_sha256'],
             'trace_sha256': hashlib.sha256((out/f'mode-{mode}-run-0/trace.json').read_bytes()).hexdigest()})
     verify_fingerprints(fingerprints); verified_input(Path(rom))
-    report = {'schema_version': 1, 'source': source, 'tool_source_commit': tool_commit,
+    verify_snapshot(producer,'ale')
+    report = {'schema_version': 1, 'source': source, **producer,
         'backend': {'name': 'ALE', 'version': ale_py.__version__, 'source_commit': ALE_COMMIT,
                     'binary_sha256': fingerprints[str(Path(binary.__file__))], 'numpy': numpy.__version__},
         'utility_sha256': fingerprints[str(Path(__file__))], 'modes': summaries,

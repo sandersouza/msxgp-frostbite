@@ -12,6 +12,7 @@ from reference_inventory import ROOT, verified_input
 from reference_state import decode_state
 from reference_traces import NEUTRAL, STATE_NAME, capture_steps, private_output, verify_fingerprints
 from trace_compare import compare_traces, validate_trace
+from reference_provenance import producer_snapshot, verify_snapshot
 
 
 def assess_refuge(approach, wait):
@@ -64,7 +65,7 @@ def source_reset_checkpoint(summary_path):
     index = trace['policy']['preparation_intervals']-1
     raw_path = root/f'variation-2-a/batch-{index//10*10:05d}/settings/state/{STATE_NAME}.st{index%10}'
     raw = raw_path.read_bytes(); state = decode_state(raw)
-    expected = {key:value for key,value in trace['steps'][index].items() if key not in ('index','input')}
+    expected = {key:value for key,value in trace['steps'][index].items() if key not in ('index','input','state_bytes')}
     if state != expected or state['ram'][0] != 2 or state['cpu']['pc'] != 0xF019:
         raise ValueError('source Reset checkpoint does not match complete raw evidence')
     if state['ram'][0x67] != 0 or state['ram'][0x46] != 0:
@@ -74,7 +75,8 @@ def source_reset_checkpoint(summary_path):
 
 
 def capture_refuge(rom, summary_path, out, stella='stella'):
-    source = verified_input(Path(rom)); initial, provenance = source_reset_checkpoint(summary_path)
+    source = verified_input(Path(rom));producer=producer_snapshot('refuge')
+    initial, provenance = source_reset_checkpoint(summary_path)
     if provenance['source_sha256'] != source['sha256']: raise ValueError('refuge source identity mismatch')
     config_path=ROOT/'references/refuge-scenario.json';config_bytes=config_path.read_bytes();config=json.loads(config_bytes)
     if config['schema_version']!=1 or config['source_sha256']!=source['sha256'] or config['variation']!=2:
@@ -93,8 +95,9 @@ def capture_refuge(rom, summary_path, out, stella='stella'):
     second,end_b = capture_steps(rom,initial,steps,out/'run-b',stella,policy)
     if compare_traces(first,second) or end_a != end_b: raise ValueError('natural refuge replay/full-state mismatch')
     verify_fingerprints(fingerprints); verified_input(Path(rom))
+    verify_snapshot(producer,'refuge')
     report = {'schema_version':1,'source':source,'provenance':provenance,'policy':policy,
-        'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+        **producer,
         'utility_sha256':fingerprints[str(Path(__file__))], 'steps':len(steps), 'independent_runs':2,
         'full_states_equal':True,'observation':observation,
         'trace_sha256':hashlib.sha256((out/'run-a/trace.json').read_bytes()).hexdigest(),
@@ -105,11 +108,11 @@ def capture_refuge(rom, summary_path, out, stella='stella'):
 
 
 def capture_console(rom,summary_path,out,stella='stella'):
-    source=verified_input(Path(rom));initial,provenance=source_reset_checkpoint(summary_path)
+    source=verified_input(Path(rom));producer=producer_snapshot('console')
+    initial,provenance=source_reset_checkpoint(summary_path)
     if provenance['source_sha256']!=source['sha256']:raise ValueError('console source identity mismatch')
     paths=(Path(__file__),ROOT/'scripts/reference_traces.py',ROOT/'scripts/reference_state.py',ROOT/'scripts/trace_compare.py')
     fingerprints={str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
-    tool_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     policy={**provenance,'route':'four Select edges/release, hold35, release, Reset+Select, release80','ram_injections':{}}
     a,last_a=capture_steps(rom,initial,console_surface_steps(),out/'run-a',stella,policy)
@@ -120,7 +123,8 @@ def capture_console(rom,summary_path,out,stella='stella'):
     if modes!=[3,0,1,2] or held!=0 or simultaneous!=0:
         raise ValueError('original console wrap/hold/Reset precedence observations differ')
     verify_fingerprints(fingerprints);verified_input(Path(rom))
-    report={'schema_version':1,'source':source,'tool_source_commit':tool_commit,'provenance':provenance,
+    verify_snapshot(producer,'console')
+    report={'schema_version':1,'source':source,**producer,'provenance':provenance,
         'utility_sha256':fingerprints[str(Path(__file__))],'steps':len(a['steps']),'full_states_equal':True,
         'observed_wrap_modes':modes,'mode_after_select_hold35':held,'mode_after_reset_select':simultaneous,
         'trace_sha256':hashlib.sha256((out/'run-a/trace.json').read_bytes()).hexdigest()}

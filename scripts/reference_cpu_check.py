@@ -14,6 +14,7 @@ from mechanics_probe import execute_slice, instruction_boundaries
 from reference_inventory import ROOT, verified_input
 from reference_state import decode_state
 from reference_traces import poweron_capsule, private_output, run_debugger, verify_fingerprints
+from reference_provenance import producer_snapshot, verify_snapshot
 
 
 def prepare_cpu_fixture(raw, case):
@@ -76,7 +77,7 @@ def arithmetic_vectors(data):
 
 def check_cpu(rom, cases_path, out, stella='stella'):
     source = verified_input(Path(rom))
-    tool_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    producer=producer_snapshot('cpu')
     if version('py65') != '1.2.0': raise ValueError('reviewed py65 1.2.0 required')
     from py65.devices.mpu6502 import MPU
     utility_paths = [Path(__file__), ROOT/'scripts/mechanics_probe.py', ROOT/'scripts/reference_state.py',
@@ -84,6 +85,8 @@ def check_cpu(rom, cases_path, out, stella='stella'):
                      Path(inspect.getfile(MPU))]
     fingerprints = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in utility_paths}
     metadata = json.loads(Path(cases_path).read_text())
+    if fingerprints[str(Path(cases_path))]!=producer['utility_fingerprints']['references/mechanics-cases.json']:
+        raise ValueError('CPU cases differ from committed producer input')
     if metadata.get('schema_version') != 1 or metadata.get('source_sha256') != source['sha256']:
         raise ValueError('CPU case source/schema mismatch')
     source_map = json.loads((ROOT/'references/disassembly-map.json').read_text())
@@ -109,8 +112,9 @@ def check_cpu(rom, cases_path, out, stella='stella'):
                         'py65_cpu_ram_sha256': hashlib.sha256(json.dumps(expected, sort_keys=True).encode()).hexdigest()})
         if index % 25 == 0: print(f'Independent CPU check {index+1}/{len(cases)}; mismatches={sum(not r["matched"] for r in results)}', flush=True)
     verify_fingerprints(fingerprints); verified_input(Path(rom))
+    verify_snapshot(producer,'cpu')
     report = {'schema_version': 1, 'source': source, 'stella': backend, 'py65': version('py65'),
-              'tool_source_commit': tool_commit,
+              **producer,
               'py65_cpu_source_sha256': fingerprints[str(Path(inspect.getfile(MPU)))],
               'utility_sha256': fingerprints[str(Path(__file__))],
               'cases_sha256': fingerprints[str(Path(cases_path))],

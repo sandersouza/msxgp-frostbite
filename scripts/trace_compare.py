@@ -5,42 +5,71 @@ import json
 from pathlib import Path
 import re
 import sys
+from reference_state import decode_state
+
+
+def validate_backend(backend):
+    if (not isinstance(backend,dict) or set(backend)!={'name','version','source_contract','binary_sha256'}
+            or backend['name']!='Stella' or backend['version']!='7.0'
+            or backend['source_contract']!='d55b1aec0d067a4c901a6dcdf81cb8f579685659'
+            or not isinstance(backend['binary_sha256'],str)
+            or not re.fullmatch('[0-9a-f]{64}',backend['binary_sha256'])):
+        raise ValueError('supported structured Stella source identity required')
+
+
+def validate_policy(policy):
+    if (not isinstance(policy,dict) or not policy
+            or not any(isinstance(policy.get(key),str) and policy[key] for key in ('boundary','route'))):
+        raise ValueError('structured source boundary/route policy required')
+    if 'host_seed' in policy and (type(policy['host_seed']) is not int or not 0<=policy['host_seed']<=0xFFFFFFFF):
+        raise ValueError('invalid source host seed')
+
+
+def validate_input(sample):
+    if not isinstance(sample,dict) or set(sample)!={'swcha','swchb','fire'}:
+        raise ValueError('complete raw controller/console input required')
+    if any(type(sample[key]) is not int or not 0<=sample[key]<=255 for key in ('swcha','swchb')):
+        raise ValueError('raw input bytes required')
+    if not isinstance(sample['fire'],list) or len(sample['fire'])!=2 or any(type(v) is not bool for v in sample['fire']):
+        raise ValueError('two explicit boolean fire inputs required')
 
 
 def validate_trace(trace):
     required = {'schema_version', 'source_sha256', 'backend', 'initial_sha256', 'policy', 'steps'}
-    if not isinstance(trace, dict) or not required <= trace.keys() or type(trace['schema_version']) is not int or trace['schema_version'] != 1:
+    if not isinstance(trace, dict) or set(trace) != required or type(trace['schema_version']) is not int or trace['schema_version'] != 2:
         raise ValueError('missing/unsupported trace schema')
     for name in ('source_sha256', 'initial_sha256'):
         if not isinstance(trace[name], str) or not re.fullmatch('[0-9a-f]{64}', trace[name]):
             raise ValueError(f'invalid {name}')
-    if not trace['backend'] or not isinstance(trace['policy'], dict) or not trace['policy']:
-        raise ValueError('backend and explicit policy required')
+    validate_backend(trace['backend']);validate_policy(trace['policy'])
     if not isinstance(trace['steps'], list) or not trace['steps']:
         raise ValueError('nonempty ordered steps required')
     for index, step in enumerate(trace['steps']):
-        if not isinstance(step, dict) or not {'index', 'input', 'cpu', 'ram', 'tia', 'state_sha256'} <= step.keys():
+        if not isinstance(step, dict) or not {'index','input','state_bytes'} <= step.keys():
             raise ValueError(f'incomplete step {index}')
         if type(step['index']) is not int or step['index'] != index:
             raise ValueError(f'nonsequential step {index}')
-        ram = step['ram']
-        if not isinstance(ram, list) or len(ram) != 128 or any(type(v) is not int or not 0 <= v <= 255 for v in ram):
-            raise ValueError(f'incomplete/invalid RAM step {index}')
-        for register, maximum in (('pc', 65535), ('p', 255)):
-            value = step['cpu'].get(register)
-            if type(value) is not int or not 0 <= value <= maximum:
-                raise ValueError(f'invalid CPU {register} step {index}')
-        if not step['tia'] or not isinstance(step['input'], dict) or not step['input']:
-            raise ValueError(f'TIA/input evidence required step {index}')
-        if not isinstance(step['state_sha256'], str) or not re.fullmatch('[0-9a-f]{64}', step['state_sha256']):
-            raise ValueError(f'invalid state hash step {index}')
+        validate_input(step['input'])
+        encoded=step['state_bytes']
+        if not isinstance(encoded,str) or len(encoded)>8*1024*1024 or not re.fullmatch('(?:[0-9a-f]{2})+',encoded):
+            raise ValueError(f'invalid raw state bytes step {index}')
+        decoded=decode_state(bytes.fromhex(encoded))
+        recorded={key:value for key,value in step.items() if key not in ('index','input','state_bytes')}
+        if differences(decoded,recorded,'decoded') or decoded['cpu']['pc']!=0xF019:
+            raise ValueError(f'incomplete/inconsistent decoded state step {index}')
+        swcha=0
+        for port,controller in enumerate(decoded['controllers']):
+            for bit,level in enumerate(controller['digital'][:4]):swcha|=int(level)<<(bit+(4 if port==0 else 0))
+        observed={'swcha':swcha,'swchb':decoded['switches'],
+                  'fire':[not controller['digital'][4] for controller in decoded['controllers']]}
+        if observed!=step['input']:raise ValueError(f'observed input mismatch step {index}')
 
 
 def compare_traces(expected, actual):
     mismatches = []
     for name, trace in (('expected', expected), ('actual', actual)):
         try: validate_trace(trace)
-        except (ValueError, TypeError, AttributeError) as error: mismatches.append(f'{name}: {error}')
+        except (ValueError, TypeError, KeyError, AttributeError) as error: mismatches.append(f'{name}: {error}')
     if mismatches: return mismatches
     return differences(expected, actual, 'trace')
 
@@ -83,20 +112,28 @@ def logical_oracle(trace):
 
 
 def validate_logical_oracle(trace):
-    if trace['schema_version'] != 1 or trace['contract'] != 'frostbite/source-logical/F019/v1':
+    if (not isinstance(trace,dict) or set(trace)!={'schema_version','contract','oracle','steps'}
+            or type(trace['schema_version']) is not int or trace['schema_version'] != 1
+            or trace['contract'] != 'frostbite/source-logical/F019/v1'):
         raise ValueError('unsupported logical oracle contract')
     oracle = trace['oracle']
-    if not oracle['source_backend'] or not oracle['policy']: raise ValueError('logical source provenance required')
+    if not isinstance(oracle,dict) or set(oracle)!={'source_backend','policy','source_sha256','initial_sha256'}:
+        raise ValueError('complete logical source provenance required')
+    validate_backend(oracle['source_backend']);validate_policy(oracle['policy'])
     for name in ('source_sha256','initial_sha256'):
         if not re.fullmatch('[0-9a-f]{64}', oracle[name]): raise ValueError('invalid logical source identity')
-    if not trace['steps']: raise ValueError('empty logical oracle')
+    if not isinstance(trace['steps'],list) or not trace['steps']: raise ValueError('empty logical oracle')
     for index, point in enumerate(trace['steps']):
-        if point['index'] != index or point['source_phase_pc'] != 0xF019: raise ValueError('logical order/phase mismatch')
+        if not isinstance(point,dict) or set(point)!={'index','source_phase_pc','input','cpu','ram','collision_inputs'}:
+            raise ValueError('incomplete logical point')
+        if type(point['index']) is not int or point['index'] != index or type(point['source_phase_pc']) is not int or point['source_phase_pc'] != 0xF019:
+            raise ValueError('logical order/phase mismatch')
         ram = point['ram']
-        if len(ram) != 128 or any(type(v) is not int or not 0 <= v <= 255 for v in ram): raise ValueError('invalid logical RAM')
+        if not isinstance(ram,list) or len(ram) != 128 or any(type(v) is not int or not 0 <= v <= 255 for v in ram): raise ValueError('invalid logical RAM')
         if set(point['cpu']) != {'a','x','y','p','sp'} or any(type(v) is not int or not 0<=v<=255 for v in point['cpu'].values()):
             raise ValueError('invalid logical source-register mapping')
-        if not point['input'] or point['collision_inputs'] != collision_inputs(ram): raise ValueError('logical input/collision inconsistency')
+        validate_input(point['input'])
+        if differences(collision_inputs(ram),point['collision_inputs'],'collision'): raise ValueError('logical collision inconsistency')
 
 
 def compare_logical_oracles(expected, actual):

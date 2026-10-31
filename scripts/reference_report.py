@@ -9,6 +9,7 @@ import subprocess
 import sys
 
 from reference_inventory import ROOT, load_manifest
+from reference_provenance import COMMON, DEPENDENCIES, audit_manifest, snapshot_paths
 
 COMPONENTS = {'stella':('reference-traces','reference_traces'), 'cpu':('reference-cpu','reference_cpu_check'),
               'ale':('reference-ale','reference_ale_check'), 'refuge':('reference-refuge','reference_routes'),
@@ -104,13 +105,16 @@ def compact_reports(source_sha, parts):
     return result
 
 
-def audit_producer(report, script_path, root=ROOT):
+def audit_producer(report, script_path, root=ROOT, required_paths=None):
     commit=report['tool_source_commit'];digest(commit,40);digest(report['utility_sha256'])
     blob=subprocess.check_output(['git','show',f'{commit}:{script_path}'],cwd=root,timeout=30)
     require(hashlib.sha256(blob).hexdigest()==report['utility_sha256'],'reported utility does not match producer commit')
+    paths=required_paths or DEPENDENCIES[next(name for name,(_,module) in COMPONENTS.items() if f'scripts/{module}.py'==script_path)]
+    audit_manifest(report,paths,root)
 
 
 def assemble():
+    publication=snapshot_paths(COMMON+('scripts/reference_report.py',))
     parts={};raw_hashes={}
     for name,(directory,module) in COMPONENTS.items():
         path=ROOT/f'outputs/{directory}/summary.json';data=path.read_bytes()
@@ -124,11 +128,11 @@ def assemble():
         part=parts[name];expected=part['policy'][key] if name=='refuge' else part[key]
         blob=subprocess.check_output(['git','show',f'{part["tool_source_commit"]}:{path}'],cwd=ROOT,timeout=30)
         require(hashlib.sha256(blob).hexdigest()==expected,'producer input/config identity mismatch')
-    result['producers']={name:{**select(part,'tool_source_commit utility_sha256'),'private_summary_sha256':raw_hashes[name]}
+    result['producers']={name:{**select(part,'tool_source_commit utility_sha256 utility_fingerprints'),'private_summary_sha256':raw_hashes[name]}
                          for name,part in parts.items()}
     result['logical_projection']={'contract':'frostbite/source-logical/F019/v1',
         'utility_sha256':hashlib.sha256((ROOT/'scripts/trace_compare.py').read_bytes()).hexdigest(),
-        'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()}
+        'tool_source_commit':publication['tool_source_commit']}
     result['publication']={'utility_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                            'tool_source_commit':result['logical_projection']['tool_source_commit']}
     return result
