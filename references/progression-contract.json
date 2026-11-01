@@ -39,5 +39,5 @@
     "source_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99",
     "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6"
   },
-  "status": "Complete repaired-producer raw acceptance seal and independent review/fix pass;303 host tests. All source/native/96-view/stress/runtime-control proofs pass. PAL minimum margin283 cycles. Integration/release/download delivery remains pending."
+  "status": "Complete automated acceptance and independent review/fix pass;303 host tests. Integrated runtime and clean-main identical rebuild/CI pass. Published v0.0.6-progression exact-source prerelease and all4 fresh asset downloads verified. Final receipt integration/issue closure remain terminal controls; manual/physical/full-game acceptance separate."
 }

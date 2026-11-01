@@ -78,12 +78,21 @@
 
 **Files:** Update local P13 issue, README, `docs/handoffs/issue-13.md`, archive execution ledger, and `references/progression-delivery.json`.
 
-**Interfaces:** Consumes sealed Task4 bundle; produces focused linked PR, exact-head/main CI and byte-identical merged-main rebuild, public prerelease/download verification and exclusive successor handoff.
+**Interfaces:** Consumes sealed Task4 bundle; produces focused linked PR, exact-head/main CI and byte-identical merged-main rebuild, public prerelease/download verification, final receipt artifacts and a prepared exclusive successor. Terminal operational closure follows the last repository bookkeeping write.
 
-- [ ] Run one fresh whole-branch review; regrade findings by user impact, one RED→GREEN blocking-fix pass with green suite, ledger deferred minors and every disposition. No per-task reviewer or re-review.
-- [ ] Move13 In review, push/create/attach focused PR, verify exact-head CI, integrate under existing owner authorization. Rebuild clean merged main and compare ROM bytes to the seal; confirm main CI.
-- [ ] Publish prerelease `v0.0.6-progression` at exact tested source with four public assets. Download and compare every asset; notes must name diagnostic limits and concrete human tests.
-- [ ] Integrate final delivery receipt/documentation, close13/Done only after its acceptance passes. Fork the dependency-ready successor (#14), verify Frostbite project/cwd, send explicit sole-writer transfer with actual clean main/hash/evidence/limits; stop writing this checkout afterward.
+- [x] Run one fresh whole-branch review; regrade findings by user impact, one RED→GREEN blocking-fix pass with green suite, ledger deferred minors and every disposition. No per-task reviewer or re-review.
+- [x] Move13 In review, push/create/attach focused PR, verify exact-head CI, integrate under existing owner authorization. Rebuild clean merged main and compare ROM bytes to the seal; confirm main CI.
+- [x] Publish prerelease `v0.0.6-progression` at exact tested source with four public assets. Download and compare every asset; notes must name diagnostic limits and concrete human tests.
+- [x] Prepare final delivery receipt/documentation and the dependency-ready successor (#14); verify Frostbite project/cwd and keep it idle. Archive the verified execution ledger and all rulings before terminal operational closure.
+
+## Terminal operational closure
+
+After repository artifacts and the execution ledger are complete, integrate the
+receipt-only PR after its exact-head checks, verify clean main, and close13/Done
+only after all delivery conditions pass. Send the final explicit sole-writer
+transfer with actual main/hash/evidence/limits; verify it through read-only app
+state and stop changing this checkout. This ordering follows the owner's
+single-writer rule: no repository bookkeeping may follow the transfer.
 
 ## Plan self-review
 
