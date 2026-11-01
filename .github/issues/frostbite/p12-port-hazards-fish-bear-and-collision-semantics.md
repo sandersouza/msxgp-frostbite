@@ -1,6 +1,6 @@
 # Port hazards, fish, bear and original collision semantics
 
-Planning ID: P12. Status: In progress in dedicated Frostbite issue 12 fork; dependency #11 is integrated, closed/Done and released.
+Planning ID: P12. Status: implemented, independently reviewed, integrated and released; all four release downloads verified. Final receipt integration precedes close/Done and exclusive successor handoff. Dependency11 is integrated, closed/Done and released.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/12
 
 ## Goal
@@ -45,7 +45,7 @@ Plan: `docs/superpowers/plans/2026-11-01-issue-12-hazard-collisions.md`. Extend 
 
 The released dependency is [v0.0.4-buildloop](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop), ROM SHA-256 `c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600`. Its 232-cycle worst PAL margin requires fresh crowded paced measurement for this work. Original graphics/HUD/audio and whole-game/manual/physical acceptance remain separate later gates. No new issue 12 testable ROM exists yet.
 
-## Source research checkpoint
+## Historical initial research checkpoint
 
 The frozen additive all-window observer passes 9,476 controlled cases/all 228 literal views, 32 unchanged-Stella full CPU/RAM phase comparisons, 768 row/header/other-window invariance links, 2,560 exact object-window pairs and 2,880 shore-window pairs across every player X. The old floe protocol remains identical in 64 compatibility cases. The domain includes cold-cleared A3=0 and all 32 animated pointers, producing 264 shape/reflection/NUSIZ modes. A real count-zero edge ghost is reproduced.
 
@@ -53,4 +53,30 @@ Canonical source components are being acquired with frozen committed helpers, im
 
 The conditional native lookup and compact table compiler are under implementation. An original-free unit cartridge passes 464 actual standard-MSX1 Z80 checks: 288 physical sparse/slot decoder cases, 16 banked profile-directory cases including mode 264, and all 160 copy distances. Its first run caught an incorrect carry result for a noncontact distance; the corrected full check passes. This synthetic fixture is not a playable Frostbite ROM or whole-game acceptance. Current host suite: 232 tests passing.
 
-The original odd latch is sampled during the final graphic line, not after the whole sprite. Simplified edge/bear raster formulas remain rejected. Complete-domain capacity, any ordinary copy alias, actual all-channel CPU/RAM equality, crowded natural/timing/release acceptance remain pending. The PR stays draft and the issue stays In progress. See `docs/hazard-collisions.md` for scope and reproduction.
+The original odd latch is sampled during the final graphic line, not after the whole sprite. Simplified edge/bear raster formulas remain rejected. At this historical checkpoint, complete/native/paced acceptance was pending and the PR was draft. The final delivered result follows.
+
+## Verified delivery
+
+[PR35](https://github.com/sandersouza/msxgp-frostbite/pull/35) merged at
+9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7. Exact-head and merged-main CI passed,
+as did268 clean main tests/source policy and a complete byte-identical rebuild.
+[v0.0.5-hazards](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.5-hazards)
+publishes the exact4MiB ASCII16 ROM, SHA/build/compact-validation files. Every
+download is byte-identical to the sealed package; tag source is
+e83569dfde46f9bb6f39ea05817d6e3204333a54 and ROM SHA-256 is
+37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93.
+
+Acceptance includes50,289,350 source cells,14828 complete actual visible phases,
+652 full-native cases,65536 Z80 shift cases,32 input-only route/clock/view
+combinations (24604 completed pixel frames),15 stress modes and11 intended
+faults. Tightest PAL margin645 cycles with unchanged budgets and29-cycle IO.
+Independent review found no blocker; one metadata-summary minor is deferred.
+
+See [technical evidence](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/hazard-collisions.md),
+[delivery receipt](https://github.com/sandersouza/msxgp-frostbite/blob/main/references/hazard-delivery.json)
+and [human tests](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/releases/v0.0.5-hazards.md).
+Synthetic graphics/limited HUD/silence are explicit limits; progression/full-game,
+manual-emulator and physical acceptance remain separate. Prepared dedicated
+successor `Frostbite — ISSUE #13`, thread01a197d6-373a-7f30-9389-070dc5ac992b,
+has the correct Frostbite project/workspace and stays idle until receipt
+integration, closed/Done and explicit exclusive ownership transfer.

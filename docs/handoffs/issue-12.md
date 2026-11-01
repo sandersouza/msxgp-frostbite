@@ -108,3 +108,27 @@ invalidate the current ROM or its measured limits.
 
 All execution rulings, rejected experiments and review dispositions are in
 [the execution archive](issue-12-execution-ledger.md).
+
+## Verified delivery receipt
+
+PR35 merged at `9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7`; exact-head CI
+41323343142/41323348033 and merged-main
+[41323447274](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41323447274)
+passed. Clean merged main passed268 tests/source policy and rebuilt the exact
+ROM37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93.
+
+[v0.0.5-hazards](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.5-hazards)
+is public as a prerelease. The tag resolves to the exact tested sourcee83569d;
+ROM/build.json/validation.json/SHA256SUMS were all downloaded afresh and compare
+byte for byte with the sealed bundle. No private source/derived data or private
+evidence manifest was uploaded. The
+[compact delivery receipt](../../references/hazard-delivery.json) records every
+asset size/hash and integration/CI/rebuild identity.
+
+Prepared successor is `Frostbite — ISSUE #13`, thread
+`01a197d6-373a-7f30-9389-070dc5ac992b`, explicitly assigned to Frostbite project
+`0fd5a899-599e-40d4-988e-46b3d31433dd`, verified idle with the correct shared
+checkout. It has no permission to write until the parent's final explicit
+exclusive handoff. The parent first integrates this documentation receipt,
+closes12/Done, and verifies clean main; its final message supplies the actual
+current main commit and zero pending source files.

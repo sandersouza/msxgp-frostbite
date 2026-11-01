@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
+  "implementation_pr": "https://github.com/sandersouza/msxgp-frostbite/pull/35",
+  "implementation_merge_commit": "9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7",
+  "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.5-hazards",
+  "tag": "v0.0.5-hazards",
+  "tag_target_commit": "e83569dfde46f9bb6f39ea05817d6e3204333a54",
+  "prerelease": true,
+  "published_at": "2026-11-01T15:58:00Z",
+  "rom": {
+    "filename": "frostbite-0.0.5-hazards.rom",
+    "size": 4194304,
+    "sha256": "37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93",
+    "mapper": "ASCII16"
+  },
+  "tested_source_commit": "e83569dfde46f9bb6f39ea05817d6e3204333a54",
+  "independent_review": {
+    "head": "c4bedae7439f31ec36d50d4a3dde29af484999db",
+    "blocking_findings": 0,
+    "deferred_minors": 1
+  },
+  "final_head_ci": [
+    {
+      "run_id": 41323343142,
+      "conclusion": "success"
+    },
+    {
+      "run_id": 41323348033,
+      "conclusion": "success"
+    }
+  ],
+  "merged_main_ci": {
+    "conclusion": "success",
+    "head_sha": "9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7",
+    "html_url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41323447274/job/124898332855",
+    "name": "synthetic"
+  },
+  "merged_main_rebuild": {
+    "source_commit": "9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7",
+    "source_dirty": false,
+    "rom_sha256": "37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93",
+    "byte_identical_to_tested_rom": true,
+    "host_tests": 268,
+    "public_source_policy": "passed"
+  },
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "size": 94,
+      "sha256": "351c8d92f121ea2899615ef9353fb46bfa78ceb8a0a0afb2fc3c634f558d358a",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.5-hazards/SHA256SUMS",
+      "byte_identical_to_sealed_bundle": true
+    },
+    {
+      "name": "build.json",
+      "size": 43174,
+      "sha256": "c85caf0a8c04c0a6539171a4ad59f34ea04a03b15ca0ccfb91359d8eac582ccc",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.5-hazards/build.json",
+      "byte_identical_to_sealed_bundle": true
+    },
+    {
+      "name": "frostbite-0.0.5-hazards.rom",
+      "size": 4194304,
+      "sha256": "37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.5-hazards/frostbite-0.0.5-hazards.rom",
+      "byte_identical_to_sealed_bundle": true
+    },
+    {
+      "name": "validation.json",
+      "size": 26456,
+      "sha256": "12d223cc7e20684746fd69abf4decf7cc69b1c9ff560760364b4776112cdeb3a",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.5-hazards/validation.json",
+      "byte_identical_to_sealed_bundle": true
+    }
+  ],
+  "manual_emulator": "Pending owner feedback",
+  "physical_hardware": "Pending owner feedback",
+  "successor": {
+    "title": "Frostbite \u2014 ISSUE #13",
+    "thread_id": "01a197d6-373a-7f30-9389-070dc5ac992b",
+    "project_id": "0fd5a899-599e-40d4-988e-46b3d31433dd",
+    "workspace": "/Users/sandersouza/Developer/msx-gamePorts/frostbite",
+    "ownership": "Idle; transfer only after receipt integration, issue12 closed/Done and clean main"
+  }
+}
