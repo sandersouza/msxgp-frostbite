@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "select_release_intervals": 32,
+  "reset_release_intervals": 80,
+  "riot_timer_preset": 127,
+  "routes": {
+    "bear-refuge": {"variation": 2, "seed": 1, "warmup": 32, "maximum_intervals": 1056, "floe_alignment_wait": 96, "bear_wait": 768},
+    "bear-chase": {"variation": 3, "seed": 17, "warmup": 32, "maximum_intervals": 2000},
+    "fish-envelope": {"variation": 2, "seed": 17, "warmup": 48, "maximum_intervals": 3000}
+  },
+  "authority": "Unmodified original, cold power-on, real Select/Reset/controller inputs and preserved complete restore journal. No active RAM/contact injections or disabled hazards.",
+  "limits": "Named bounded interactions only. Controlled seeded native cases and whole-game acceptance are separate. A timed-out or predicate-failing capture is failed research."
+}

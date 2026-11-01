@@ -3,7 +3,26 @@
 Predicates certify their named event sequence; complete source continuity and
 native equality have separate mandatory gates. Original states remain private.
 """
-from reference_routes import assess_refuge
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+from environment import ROOT
+from reference_inventory import verified_input
+from reference_provenance import COMMON,audit_manifest,snapshot_paths
+from reference_routes import assess_refuge,refuge_approach
+from reference_state import decode_state
+from reference_traces import NEUTRAL,capture_steps,poweron_capsule,private_output
+from trace_compare import compare_traces,validate_trace
+
+CONFIG=ROOT/'references/hazard-routes.json'
+HELPERS=tuple(dict.fromkeys((*COMMON,'scripts/hazard_routes.py','scripts/reference_routes.py','scripts/environment.py',
+                           'references/hazard-routes.json','references/tools-lock.json')))
+
+
+def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def validate_policy(policy):
@@ -98,3 +117,109 @@ def assess(points,route_kind,active_start=0,approach_end=None):
         end=recovery(rows,death,initial)
         return {'kind':route_kind,'death_step':death,'recovery_step':end,'entry_flag':128 if water else 16}
     raise ValueError('known explicit hazard interaction predicate required')
+
+
+def prepare_inputs(config,case):
+    result=[NEUTRAL]*case['warmup']
+    for _ in range(case['variation']):result.extend([{**NEUTRAL,'swchb':61}]+[NEUTRAL]*config['select_release_intervals'])
+    return result+[{**NEUTRAL,'swchb':62}]+[NEUTRAL]*config['reset_release_intervals']
+
+
+def fish_input(ram):
+    if ram[0x77] or ram[0x71] or ram[0x67] or ram[0x46]:return dict(NEUTRAL)
+    x,y=ram[0x66],ram[0x64];target=ram[0x56]
+    desired=target+3 if ram[0x13]&3==1 and 24<=target<=132 else 80
+    direction=127 if x<desired-1 else 191 if x>desired+1 else 255
+    if ram[0x6A]==0:
+        if y<79:direction&=223
+        elif y>79:direction&=239
+        elif ram[0x13]&3!=1 and 8<=target<=151 and abs(x-target)<24:direction&=239
+    player=ram[0x47]
+    return {**NEUTRAL,'swcha':direction if player==0 else (direction>>4)|240}
+
+
+def finish_producer(producer):
+    if any(digest(ROOT/name)!=sha for name,sha in producer['utility_fingerprints'].items()):
+        raise ValueError('frozen source route helper closure changed')
+    return {'observed_final_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+            'observed_final_dirty':bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())}
+
+
+def capture(out,kind,stella='stella'):
+    if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():raise ValueError('clean committed source route start required')
+    producer=snapshot_paths(HELPERS);config=json.loads(CONFIG.read_text());case=config['routes'][kind]
+    if config['schema_version']!=1 or config['source_sha256']!=verified_input(ROOT/'references/roms/frostbite.bin')['sha256']:
+        raise ValueError('exact original source route configuration required')
+    if not 1<=case['maximum_intervals']<=5000 or case['variation'] not in range(4):raise ValueError('bounded original route required')
+    out=private_output(out);out.mkdir(parents=True,exist_ok=False);rom=ROOT/'references/roms/frostbite.bin'
+    initial,backend=poweron_capsule(rom,out/'poweron',case['seed'],config['riot_timer_preset'],stella)
+    prep=prepare_inputs(config,case);policy={'host_seed':case['seed'],'variation':case['variation'],'kind':kind,
+          'preparation_intervals':len(prep),'ram_injections':{},'source_hazards_disabled':False,'instruction_skipping':False,
+          'raw_input_every_interval':True,'boundary':'Unchanged original PCF019 every interval; controlled cold power-on and real Select/Reset',
+          'initialization':'poweron_capsule; no active source state or contact writes'}
+    validate_policy(policy);points=[];inputs=[];journal=[];current=initial;trace=None;assessment=None
+    def segment(samples,label):
+        nonlocal current,trace
+        path=out/label;trace,current=capture_steps(rom,current,samples,path,stella,policy)
+        if trace['backend']!=backend:raise ValueError('original route backend changed')
+        for point in trace['steps']:point['index']=len(points);points.append(point)
+        inputs.extend(samples);journal.append({'path':label,'intervals':len(samples),'trace_sha256':digest(path/'trace.json'),
+                                                'final_sha256':digest(path/'final.state')})
+    segment(prep,'prepare');start=len(points)
+    if kind=='bear-refuge':
+        approach=refuge_approach(case['floe_alignment_wait']);segment(approach+[NEUTRAL]*case['bear_wait'],'refuge')
+        assessment=assess(points,kind,start,start+len(approach))
+    else:
+        body=0;last_error='predicate not reached'
+        while body<case['maximum_intervals']:
+            r=decode_state(current)['ram'];n=min(1 if kind=='fish-envelope' else 10,case['maximum_intervals']-body)
+            samples=[fish_input(r) if kind=='fish-envelope' else dict(NEUTRAL) for _ in range(n)]
+            segment(samples,f'body-{body:04d}');body+=n
+            try:assessment=assess(points,kind,start)
+            except ValueError as error:last_error=str(error)
+            else:break
+            if r[0x45]&128 or r[0x46]&128:break
+            if body%100==0:print(f'HAZARD_ROUTE_PROGRESS {kind} intervals={body} X={r[0x66]} Y={r[0x64]} fish={r[0x77]} reserves={reserves(r)}',flush=True)
+        if assessment is None:
+            (out/'failure.json').write_text(json.dumps({'kind':kind,'intervals':body,'reason':last_error,'journal':journal},indent=2)+'\n')
+            raise ValueError(f'bounded original route failed: {kind}: {last_error}; {out}')
+    combined={**trace,'initial_sha256':hashlib.sha256(initial).hexdigest(),'steps':points,'policy':policy};validate_trace(combined)
+    (out/'trace.json').write_text(json.dumps(combined,indent=2)+'\n');(out/'inputs.json').write_text(json.dumps(inputs,indent=2)+'\n')
+    (out/'initial.state').write_bytes(initial);(out/'final.state').write_bytes(current);(out/'journal.json').write_text(json.dumps(journal,indent=2)+'\n')
+    report={'schema_version':1,**producer,**finish_producer(producer),'clean_start':True,'kind':kind,'backend':backend,'steps':len(points),
+            'assessment':assessment,'preparation_intervals':len(prep),'source_initial_rng':points[start]['ram'][2],
+            'files':{name:digest(out/name) for name in ('trace.json','inputs.json','initial.state','final.state','journal.json')},
+            'scope':'Unmodified original input-only named route, complete source state checkpoints. Native real-device replay, whole-frame timing, manual and physical acceptance are separate.'}
+    (out/'route.json').write_text(json.dumps(report,indent=2)+'\n');return report
+
+
+def replay(original,out,stella='stella'):
+    producer=snapshot_paths(HELPERS);original=Path(original);receipt=json.loads((original/'route.json').read_text())
+    audit_manifest(receipt,HELPERS)
+    if receipt.get('clean_start') is not True:raise ValueError('clean original route producer required')
+    if any(digest(original/name)!=sha for name,sha in receipt['files'].items()):raise ValueError('original route evidence changed')
+    expected=json.loads((original/'trace.json').read_text());validate_trace(expected);validate_policy(expected['policy'])
+    inputs=json.loads((original/'inputs.json').read_text());journal=json.loads((original/'journal.json').read_text())
+    if len(inputs)!=len(expected['steps']) or sum(item['intervals'] for item in journal)!=len(inputs):raise ValueError('complete source input/restore journal required')
+    out=private_output(out);out.mkdir(parents=True,exist_ok=False);current=(original/'initial.state').read_bytes();points=[];cursor=0;combined=None
+    for i,entry in enumerate(journal):
+        path=original/entry['path']
+        if digest(path/'trace.json')!=entry['trace_sha256'] or digest(path/'final.state')!=entry['final_sha256']:
+            raise ValueError('original restore segment changed')
+        samples=inputs[cursor:cursor+entry['intervals']];cursor+=len(samples)
+        combined,current=capture_steps(ROOT/'references/roms/frostbite.bin',current,samples,out/f'segment-{i:04d}',stella,expected['policy'])
+        for point in combined['steps']:point['index']=len(points);points.append(point)
+    combined={**combined,'initial_sha256':expected['initial_sha256'],'steps':points};differences=compare_traces(expected,combined)
+    if differences or current!=(original/'final.state').read_bytes():raise ValueError('complete original route replay differs: '+str(differences[:3]))
+    (out/'trace.json').write_text(json.dumps(combined,indent=2)+'\n');(out/'final.state').write_bytes(current)
+    report={**producer,**finish_producer(producer),'complete':True,'steps':len(points),'route_sha256':digest(original/'route.json'),
+            'identical_full_cpu_ram_tia_riot_inputs':True,'replay_trace_sha256':digest(out/'trace.json')}
+    (out/'replay.json').write_text(json.dumps(report,indent=2)+'\n');return report
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True)
+    parser.add_argument('--kind',choices=('bear-refuge','bear-chase','fish-envelope'));parser.add_argument('--replay',type=Path);args=parser.parse_args()
+    if not args.replay and not args.kind:parser.error('select a named source route or an existing replay')
+    result=replay(args.replay,args.out) if args.replay else capture(args.out,args.kind)
+    print(json.dumps({key:result[key] for key in ('steps','assessment') if key in result},indent=2))

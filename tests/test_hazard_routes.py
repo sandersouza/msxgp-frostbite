@@ -18,6 +18,24 @@ def points(patches):
 class HazardRouteTests(unittest.TestCase):
     def api(self):return importlib.import_module('hazard_routes')
 
+    def test_real_console_edges_and_active_player_input_lines(self):
+        api=self.api();prep=api.prepare_inputs({'select_release_intervals':2,'reset_release_intervals':3},{'warmup':2,'variation':2})
+        self.assertEqual(len(prep),12);self.assertEqual([i for i,p in enumerate(prep) if p['swchb']==61],[2,5])
+        self.assertEqual([i for i,p in enumerate(prep) if p['swchb']==62],[8])
+        r=points([{0xE4:53,0x93:1,0xD6:100}])[0]['ram']
+        self.assertEqual(api.fish_input(r)['swcha'],95)
+        r[0x47]=1;self.assertEqual(api.fish_input(r)['swcha'],245)
+        r[0x77]=1;self.assertEqual(api.fish_input(r)['swcha'],255)
+
+    def test_refuge_requires_a_bear_sweep_and_continuously_safe_wait(self):
+        route=points([{0xE6:9,0xE8:max(15,133-i*4)} for i in range(64)]+[{0xE6:9,0xE8:15}]*64)
+        result=self.api().assess(route,'bear-refuge',approach_end=64)
+        self.assertEqual((result['refuge_x'],result['bear_min'],result['bear_max']),(9,15,133))
+        bad=copy.deepcopy(route);bad[-1]['ram'][0x6D]=128
+        with self.assertRaises(ValueError):self.api().assess(bad,'bear-refuge',approach_end=64)
+        for point in route:point['ram'][0x68]=15
+        with self.assertRaises(ValueError):self.api().assess(route,'bear-refuge',approach_end=64)
+
     def test_bear_requires_actual_grounded_hit_push_death_and_active_recovery(self):
         route=points([{0xE8:120},{0xE8:64,0xED:128},{0xE6:63,0xED:128},
                       {0xE6:0,0xED:128,0xF1:128},{0xCC:2,0xE7:1},{0xCC:2}])
