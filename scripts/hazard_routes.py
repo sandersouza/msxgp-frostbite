@@ -125,6 +125,19 @@ def prepare_inputs(config,case):
     return result+[{**NEUTRAL,'swchb':62}]+[NEUTRAL]*config['reset_release_intervals']
 
 
+def literal_inputs(case):
+    """Expand a bounded, precommitted input-only plan; no state feedback/writes."""
+    runs=case.get('input_runs',[]);result=[]
+    if not runs:raise ValueError('nonempty literal controller runs required')
+    for keys,count in runs:
+        if (type(keys) is not int or not 0<=keys<=255 or keys&15!=15
+                or type(count) is not int or not 1<=count<=5000):
+            raise ValueError('bounded player-one controller input run required')
+        result.extend({**NEUTRAL,'swcha':keys} for _ in range(count))
+        if len(result)>case['maximum_intervals']:raise ValueError('literal input route exceeds declared bound')
+    return result
+
+
 def fish_input(ram):
     if ram[0x77] or ram[0x71] or ram[0x67] or ram[0x46]:return dict(NEUTRAL)
     x,y=ram[0x66],ram[0x64];row=fish_row(ram);target=ram[0x54+row];target_y=53+(3-row)*26
@@ -181,6 +194,12 @@ def capture(out,kind,stella='stella'):
     if kind=='bear-refuge':
         approach=refuge_approach(case['floe_alignment_wait']);segment(approach+[NEUTRAL]*case['bear_wait'],'refuge')
         assessment=assess(points,kind,start,start+len(approach))
+    elif 'input_runs' in case:
+        samples=literal_inputs(case);segment(samples,'literal-body')
+        try:assessment=assess(points,kind,start)
+        except ValueError as error:
+            (out/'failure.json').write_text(json.dumps({'kind':kind,'intervals':len(samples),'reason':str(error),'journal':journal},indent=2)+'\n')
+            raise
     else:
         body=0;last_error='predicate not reached'
         while body<case['maximum_intervals']:

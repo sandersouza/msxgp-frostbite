@@ -18,6 +18,14 @@ def points(patches):
 class HazardRouteTests(unittest.TestCase):
     def api(self):return importlib.import_module('hazard_routes')
 
+    def test_literal_input_runs_are_bounded_controller_inputs_only(self):
+        api=self.api()
+        inputs=api.literal_inputs({'input_runs':[[223,1],[127,3],[255,2]],'maximum_intervals':6})
+        self.assertEqual([p['swcha'] for p in inputs],[223,127,127,127,255,255])
+        self.assertTrue(all(p['swchb']==63 and p['fire']==[False,False] for p in inputs))
+        for runs,maximum in (([[0,1]],1),([[255,0]],1),([[255,True]],1),([[255,7]],6),([],6)):
+            with self.assertRaises(ValueError):api.literal_inputs({'input_runs':runs,'maximum_intervals':maximum})
+
     def test_real_console_edges_and_active_player_input_lines(self):
         api=self.api();prep=api.prepare_inputs({'select_release_intervals':2,'reset_release_intervals':3},{'warmup':2,'variation':2})
         self.assertEqual(len(prep),12);self.assertEqual([i for i,p in enumerate(prep) if p['swchb']==61],[2,5])

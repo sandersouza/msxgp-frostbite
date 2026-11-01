@@ -7,7 +7,8 @@
   "routes": {
     "bear-refuge": {"variation": 2, "seed": 1, "warmup": 32, "maximum_intervals": 1056, "floe_alignment_wait": 96, "bear_wait": 768},
     "bear-chase": {"variation": 3, "seed": 17, "warmup": 32, "maximum_intervals": 2000},
-    "fish-envelope": {"variation": 2, "seed": 17, "warmup": 48, "maximum_intervals": 3000}
+    "fish-envelope": {"variation": 2, "seed": 17, "warmup": 48, "maximum_intervals": 617,
+      "input_runs": [[223,1],[255,31],[223,1],[255,31],[111,1],[127,31],[255,32],[127,32],[223,1],[255,31],[239,1],[255,424]]}
   },
   "authority": "Unmodified original, cold power-on, real Select/Reset/controller inputs and preserved complete restore journal. No active RAM/contact injections or disabled hazards.",
   "limits": "Named bounded interactions only. Controlled seeded native cases and whole-game acceptance are separate. A timed-out or predicate-failing capture is failed research."
