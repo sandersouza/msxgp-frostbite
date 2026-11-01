@@ -147,7 +147,7 @@ proc dispatch_decoder {{}} {{
     debug write memory 0xC794 $y
     reg HL $hl;reg DE $de;reg BC $bc;reg A $a;reg IX 0xDDDD;reg IY 0xEEEE;reg SP 0xF380
     debug write_block memory 0xC6D0 [binary format cu* [list 205 [expr {{$entry&255}}] [expr {{$entry>>8}}] 195 214 198 24 254]]
-    reg PC 0xC6D0;debug cont
+    reg PC 0xC6D0;set ::started [machine_info time];debug cont
 }}
 set boot [debug set_bp {syms['ready']} {{}} {{
     debug remove_bp $::boot
@@ -155,7 +155,7 @@ set boot [debug set_bp {syms['ready']} {{}} {{
     after break {{
         if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_decoder target}}
         debug set_bp 0xC6D6 {{}} {{debug break;after break {{
-            puts $::result "$::count [reg A] [reg F] [reg HL] [reg BC] [reg DE] [reg IX] [reg IY] [reg SP] [reg IFF]"
+            puts $::result "$::count [reg A] [reg F] [reg HL] [reg BC] [reg DE] [reg IX] [reg IY] [reg SP] [reg IFF] [expr {{round(([machine_info time]-$::started)*3579545)}}]"
             incr ::count;dispatch_decoder
         }}}}
         dispatch_decoder
@@ -171,7 +171,7 @@ after time 30 {{fail_decoder watchdog}}
     actual=[[int(value) for value in line.split()] for line in (out/'actual.tsv').read_text().splitlines()]
     if len(actual)!=len(cases):raise ValueError('partial actual decoder fixture')
     for i,(c,r) in enumerate(zip(cases,actual)):
-        index,a,flags,hl,bc,de,ix,iy,sp,iff=r
+        index,a,flags,hl,bc,de,ix,iy,sp,iff,cycles=r
         if index!=i or ix!=0xDDDD or iy!=0xEEEE or sp!=0xF380 or iff&3:raise ValueError(f'unsafe decoder case{i}')
         if 'distance' in c:
             d=c['distance'];hit=d<8 or d>=153
@@ -181,6 +181,7 @@ after time 30 {{fail_decoder watchdog}}
     if any(digest(ROOT/name)!=sha for name,sha in helpers.items()):raise ValueError('decoder fixture producer changed')
     report={'complete':True,'cases':len(cases),'decoder_cases':288,'profile_directory_cases':16,'all_160_copy_distances':True,'helpers':helpers,
             'producer_commit':producer_commit,'producer_dirty':producer_dirty,
+            'max_cycles_including_rpc_call_return':{entry:max(r[-1] for c,r in zip(cases,actual) if c['entry']==entry) for entry in ('contact_compact','hazard_lookup','hazard_copy_distance')},
             'fixture_sha256':digest(rom),'emulator_sha256':digest(emulator),'profile_sha256':digest(user/'machines/Frostbite_Decoder.xml'),
             'scope':'Original-free synthetic unit cartridge only; actual standard MSX1 Z80. No gameplay, full-ROM timing, human or physical claim.'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');return report

@@ -3,8 +3,8 @@
 No compiled cartridge pointers or generated MSX masks are read by this oracle.
 The ordinary single-copy basis requires a separately accepted alias proof.
 """
-from functools import lru_cache
 import json
+import mmap
 from pathlib import Path
 
 from environment import ROOT
@@ -37,14 +37,20 @@ class Component:
             for px in self.plan['player_x'][part['start']:part['stop']]:
                 name=f'player-{px:03d}.truth';self.paths[px]=directory/name;self.hashes[px]=part['profiles'][name]
         self.modes={tuple(sorted(mode.items())):index for index,mode in enumerate(self.plan['modes'])}
+        self.maps={}
 
-    @lru_cache(maxsize=2)
     def profile(self,px):
+        if px in self.maps:return self.maps[px]
         path=self.paths[px]
         if digest(path)!=self.hashes[px]:raise ValueError('raw source profile changed')
-        data=path.read_bytes()
+        with path.open('rb') as stream:data=mmap.mmap(stream.fileno(),0,access=mmap.ACCESS_READ)
         if len(data)!=self.plan['cases_per_player']*58:raise ValueError('partial raw source profile')
+        self.maps[px]=data
         return data
+
+    def verify_consumed(self):
+        for px in self.maps:
+            if digest(self.paths[px])!=self.hashes[px]:raise ValueError('consumed raw source profile changed')
 
     def record(self,px,y,mode,coordinate):
         data=self.profile(px);p=self.plan
@@ -56,6 +62,11 @@ class RawContacts:
     def __init__(self,floes,edge,ordinary,shore):
         rom=(ROOT/'references/roms/frostbite.bin').read_bytes();self.floes=RawFloes(floes)
         self.edge=Component(edge,rom);self.ordinary=Component(ordinary,rom);self.shore=Component(shore,rom)
+
+    def verify_consumed(self):
+        for component in (self.edge,self.ordinary,self.shore):component.verify_consumed()
+        for px,path in self.floes.paths.items():
+            if digest(path)!=self.floes.hashes[px]:raise ValueError('raw floe source profile changed')
 
     def row_record(self,ram,row):
         px=ram[0x66];y=row_y(ram[0x64],row);shape=ram[0x23+row];reflection=bool(ram[0x11+row]&128);copies=ram[0x58+row];x=ram[0x54+row]

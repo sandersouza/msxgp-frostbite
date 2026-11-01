@@ -33,7 +33,7 @@ HELPERS=tuple(dict.fromkeys((*FILES,*OBSERVER_HELPERS,*NATIVE_HELPERS,'scripts/f
          'scripts/trace_compare.py','scripts/source_timing.py')))
 
 
-def run_target(out,build_dir,records,expected,natural=False,explore=False,inject='none',step_fixture=False,extra_helpers=()):
+def run_target(out,build_dir,records,expected,natural=False,explore=False,inject='none',step_fixture=False,extra_helpers=(),target_script='scripts/floe_native.tcl'):
     expected=[{'registers':row['registers'],'ram':list(row['ram'])} for row in expected]
     out=private_output(out);out.mkdir(parents=True,exist_ok=False);build_dir=Path(build_dir)
     metadata=json.loads((build_dir/'build.json').read_text());rom=build_dir/metadata['rom']['filename'];artifact=rom.read_bytes()
@@ -43,6 +43,7 @@ def run_target(out,build_dir,records,expected,natural=False,explore=False,inject
         if metadata['source_dirty'] or subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():raise ValueError('clean committed native capture required')
         audit_manifest({'tool_source_commit':metadata['source_commit'],'utility_fingerprints':metadata['source_files']},FILES)
     helpers=tuple(dict.fromkeys((*HELPERS,*extra_helpers)))
+    if target_script not in helpers:raise ValueError('target script must be in the audited helper closure')
     producer=snapshot_paths(helpers) if not explore else {'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'utility_fingerprints':{name:digest(ROOT/name) for name in helpers}}
     (out/'cases.bin').write_bytes(records);(out/'expected.json').write_text(json.dumps(expected,indent=2)+'\n')
@@ -55,7 +56,7 @@ def run_target(out,build_dir,records,expected,natural=False,explore=False,inject
     syms=symbols(build_dir/'floes.sym');launcher=out/'launch.tcl'
     launcher.write_text(f'set floe_dir {{{out}}}\nset natural {int(natural)}\nset step_fixture {int(step_fixture)}\nset inject {{{inject}}}\n'
         +'array set symbols {'+' '.join(f'{name} {syms[name]}' for name in ('native_reset_done','native_step','visible_step','sample_native_return'))+'}\n'
-        +f'source {{{ROOT/"scripts/floe_native.tcl"}}}\n')
+        +f'source {{{ROOT/target_script}}}\n')
     result=subprocess.run([str(emulator),'-setting',str(settings),'-machine','Frostbite_Floes','-cart',str(out/rom.name),
         '-romtype','ASCII16','-script',str(launcher)],cwd=ROOT,env={**os.environ,'OPENMSX_USER_DATA':str(user),
         'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'},capture_output=True,text=True,errors='replace',timeout=120)

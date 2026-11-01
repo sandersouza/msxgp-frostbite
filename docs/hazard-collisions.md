@@ -81,8 +81,6 @@ Final complete-domain capacity and actual Z80 access costs are gates of native
 integration, followed by whole-frame timing. No new testable ROM is implied by
 the source foundation or the size prototypes.
 
-## Reproduction
-
 ## Native lookup groundwork
 
 The component collector freezes its complete source helper closure and uses at
