@@ -171,22 +171,36 @@ def compile_component(pool,plan,profiles):
     return result
 
 
-def emit_component(packed,compiled):
-    modes=bytearray();plan=compiled['plan']
+def emit_component(packed,compiled,profile_ys=None,players=None):
+    modes=bytearray();plan=compiled['plan'];selected=list(plan['ys'] if profile_ys is None else profile_ys)
+    if (not selected or selected!=sorted(set(selected)) or any(y not in plan['ys'] for y in selected)
+            or compiled['active_y']-set(selected)):raise ValueError('profile projection cannot omit a live source Y or invent a coordinate')
+    selected_players=list(plan['player_x'] if players is None else players)
+    if selected_players!=plan['player_x']:
+        omitted=set(plan['player_x'])-set(selected_players)
+        if (plan['kind']!='ordinary' or selected_players!=list(range(9,25)) or omitted!=set(range(25,152))
+                or any(compiled['profiles'][px]!=compiled['profiles'][25] for px in omitted)):
+            raise ValueError('omitted player directories require complete resident common-profile equivalence')
+    compiled['_profile_ys']=selected;compiled['_directory_players']=selected_players
+    indices=[plan['ys'].index(y) for y in selected]
     for mode in range(len(plan['modes'])):
         players=bytearray()
-        for px in plan['player_x']:
-            ys=b''.join(pointer(packed.rows[row]) for row in compiled['profiles'][px][mode])
-            players.extend(pointer(packed.put(ys)))
+        for px in selected_players:
+            rows=compiled['profiles'][px][mode]
+            data=b''.join(pointer(packed.rows[rows[yi]]) for yi in indices)
+            players.extend(pointer(packed.put(data)))
         modes.extend(pointer(packed.put(players)))
     return bytes(modes)
 
 
-def ordinary_common(packed,compiled,minimum=25,maximum=151):
+def ordinary_common(packed,compiled,minimum=25,maximum=151,profile_ys=None):
     profiles=compiled['profiles'];reference=profiles[minimum]
     if compiled['plan']['kind']!='ordinary' or any(profiles[px]!=reference for px in range(minimum,maximum+1)):
         raise ValueError('complete source ordinary profiles differ; resident common lookup forbidden')
-    return b''.join(pointer(packed.put(b''.join(pointer(packed.rows[row]) for row in ys))) for ys in reference)
+    selected=compiled['plan']['ys'] if profile_ys is None else profile_ys
+    if compiled['active_y']-set(selected):raise ValueError('resident profile cannot omit a live source Y')
+    indices=[compiled['plan']['ys'].index(y) for y in selected]
+    return b''.join(pointer(packed.put(b''.join(pointer(packed.rows[rows[yi]]) for yi in indices))) for rows in reference)
 
 
 def verify_aliases(ordinary,aliases):
@@ -213,14 +227,21 @@ def verify_aliases(ordinary,aliases):
             'scope':'Actual original NUSIZ0..3 in the explicitly declared component domains, with rotating original shapes/reflections; pattern-independent copy clocks additionally follow pinned Player/DrawCounterDecodes. Not an exhaustive Cartesian product of all shapes and counts.'}
 
 
-def verify_packed_component(packed,compiled,profiles,directory):
+def verify_packed_component(packed,compiled,profiles,directory,common=None):
     p=compiled['plan'];columns=len(p['coordinates']);checked=0;banks=packed.banks
+    players_selected=compiled.get('_directory_players',p['player_x']);ys_selected=compiled.get('_profile_ys',p['ys'])
+    indices=[p['ys'].index(y) for y in ys_selected]
     for mode in range(len(p['modes'])):
-        ptr=directory[mode*3:mode*3+3];players=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(p['player_x'])*3)
-        for xi,px in enumerate(p['player_x']):
-            ptr=players[xi*3:xi*3+3];ys=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(p['ys'])*3)
-            expected=b''.join(pointer(packed.rows[row]) for row in compiled['profiles'][px][mode])
+        ptr=directory[mode*3:mode*3+3];players=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(players_selected)*3)
+        for xi,px in enumerate(players_selected):
+            ptr=players[xi*3:xi*3+3];ys=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(ys_selected)*3)
+            rows=compiled['profiles'][px][mode];expected=b''.join(pointer(packed.rows[rows[yi]]) for yi in indices)
             if ys!=expected:raise ValueError('compiled profile directory differs from complete source rows')
+        if len(players_selected)!=len(p['player_x']):
+            if common is None or len(common)!=len(p['modes'])*3:raise ValueError('complete resident common directory required')
+            ptr=common[mode*3:mode*3+3];ys=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(ys_selected)*3)
+            rows=compiled['profiles'][25][mode]
+            if ys!=b''.join(pointer(packed.rows[rows[yi]]) for yi in indices):raise ValueError('resident common directory differs from complete source rows')
     last_px=None;source=None
     for row,(px,yi,mode) in compiled['examples'].items():
         if px!=last_px:
@@ -249,9 +270,13 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
     for kind in ('edge','ordinary','shore'):
         plan,paths,_=components[kind];profiles[kind]=paths;compiled[kind]=compile_component(pool,plan,paths)
         if 0 in compiled[kind]['active_y']:raise ValueError('outside hazard sentinel is not zero; early zero return forbidden')
-    packed=pool.emit(14);directories={kind:emit_component(packed,component) for kind,component in compiled.items()}
-    common=ordinary_common(packed,compiled['ordinary'])
-    queries={kind:verify_packed_component(packed,component,profiles[kind],directories[kind]) for kind,component in compiled.items()}
+    row_ys=compiled['edge']['active_y']|compiled['ordinary']['active_y'];shore_ys=compiled['shore']['active_y']
+    projected={'floe':fplan['ys'],'edge':list(range(min(row_ys),max(row_ys)+1)),
+               'ordinary':list(range(min(row_ys),max(row_ys)+1)),'shore':list(range(min(shore_ys),max(shore_ys)+1))}
+    packed=pool.emit(14)
+    directories={kind:emit_component(packed,component,projected[kind],list(range(9,25)) if kind=='ordinary' else None) for kind,component in compiled.items()}
+    common=ordinary_common(packed,compiled['ordinary'],profile_ys=projected['ordinary'])
+    queries={kind:verify_packed_component(packed,component,profiles[kind],directories[kind],common if kind=='ordinary' else None) for kind,component in compiled.items()}
     controls=floe_manifest['controls'];floe_roots=bytearray();base=bytearray()
     for control in range(len(controls)):
         for px in range(160):
@@ -267,7 +292,6 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
         path=out/name;path.write_bytes(data);return f'    INCBIN "{path.resolve()}"'
     resident=[f'contact_record_bank EQU {packed.metadata["record_bank"]}',f'contact_block_bank EQU {packed.metadata["block_bank"]}',
               'floe_roots:',blob('floe-roots.bin',floe_roots),'floe_base:',blob('floe-base.bin',base),'    ALIGN 256','floe_control_index:']
-    row_ys=compiled['edge']['active_y']|compiled['ordinary']['active_y'];shore_ys=compiled['shore']['active_y']
     resident[:0]=[f'hazard_row_min_y EQU {min(row_ys)}',f'hazard_row_max_y EQU {max(row_ys)}',
                   f'hazard_shore_min_y EQU {min(shore_ys)}',f'hazard_shore_max_y EQU {max(shore_ys)}']
     indices=bytearray([255]*256)
@@ -289,6 +313,7 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
             'components':audits,'floe_catalog_sha256':digest(Path(floes)/'catalog.json'),'aliases':alias,
             'codec':packed.metadata,'unique_records':len(pool.records),'unique_blocks':len(pool.blocks),'unique_rows':len(pool.rows),
             'active_y':{kind:sorted(value['active_y']) for kind,value in compiled.items()},
+            'profile_ys':projected,'banked_player_directories':{kind:value['_directory_players'] for kind,value in compiled.items()},
             'ordinary_common':{'player_x_min':25,'player_x_max':151,'profiles':127,'source_cells':127*components['ordinary'][0]['cases_per_player'],'resident_bytes':len(common)},
             'physical_leaf_queries':queries,'banks':len(packed.banks),'used_bytes':sum(len(data) for data in packed.banks),
             'resident_data_bytes':len(floe_roots)+len(base)+256+40+sum(len(directories[k]) for k in ('edge','ordinary','shore'))+264+len(common),

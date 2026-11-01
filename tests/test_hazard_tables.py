@@ -10,6 +10,17 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class HazardTableTests(unittest.TestCase):
+    def test_profile_projection_can_remove_zero_rows_but_not_either_live_channel(self):
+        api=importlib.import_module('hazard_tables');codec=importlib.import_module('collision_compact')
+        plan={'kind':'edge','player_x':[0],'ys':[0,36,53,61,65],'modes':[{}],'coordinates':list(range(160)),'cases_per_player':800}
+        raw=bytearray(800*58);raw[(2*160+159)*58]=1
+        shadow=bytes([255])*28+b'\x0f';raw[(3*160)*58+29:(3*160+1)*58]=shadow
+        pool=codec.CompactRows();compiled=api.compile_component(pool,plan,{0:bytes(raw)});packed=pool.emit()
+        directory=api.emit_component(packed,compiled,profile_ys=[36,53,61])
+        self.assertEqual(compiled['_profile_ys'],[36,53,61])
+        self.assertGreater(api.verify_packed_component(packed,compiled,{0:bytes(raw)},directory),0)
+        with self.assertRaisesRegex(ValueError,'live source Y'):api.emit_component(packed,compiled,profile_ys=[36,53])
+
     def test_resident_common_profiles_require_byte_exact_source_equivalence(self):
         api=importlib.import_module('hazard_tables');codec=importlib.import_module('collision_compact')
         plan={'kind':'ordinary','player_x':[25,26],'ys':[0,53],'modes':[{}],'coordinates':list(range(-7,8)),'cases_per_player':30}

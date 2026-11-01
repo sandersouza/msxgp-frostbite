@@ -33,7 +33,7 @@ hazard_shore:
     RET C
     CP hazard_shore_max_y+1
     RET NC
-    SUB 3                  ; captured shore Y4..56 → index1..53
+    SUB hazard_shore_min_y  ; only proven live-Y entries have profile pointers
     LD (hazard_y),A
     LD A,($C068)
     CP 160
@@ -73,7 +73,7 @@ hazard_row:
     RET C
     CP hazard_row_max_y+1
     RET NC
-    SUB 31                 ; captured row Y32..65 → index1..34
+    SUB hazard_row_min_y
     LD (hazard_y),A
     LD A,(IX+0)
     LD L,A
