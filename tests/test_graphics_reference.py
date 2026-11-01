@@ -59,10 +59,14 @@ class GraphicsReferenceTests(unittest.TestCase):
         api=self.api()
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);suffixes=('tia','before-ram','ram','state','mapped','vram','target')
-            point={'name':'fixture','file_sha256':{s:hashlib.sha256(b'fixture').hexdigest() for s in suffixes}}
+            point={'name':'fixture','initial_sha256':hashlib.sha256(b'initial').hexdigest(),
+                   'file_sha256':{s:hashlib.sha256(b'fixture').hexdigest() for s in suffixes}}
+            (root/'initial.state').write_bytes(b'initial')
             for suffix in suffixes:(root/f'0000-fixture.{suffix}').write_bytes(b'fixture')
             api.validate_files(root,[point])
             (root/'0000-fixture.tia').write_bytes(b'changed')
+            with self.assertRaises(ValueError):api.validate_files(root,[point])
+            (root/'0000-fixture.tia').write_bytes(b'fixture');(root/'initial.state').write_bytes(b'changed')
             with self.assertRaises(ValueError):api.validate_files(root,[point])
 
     def test_floe_cases_cover_original_white_activated_and_reflected_terminal_views(self):
@@ -83,3 +87,14 @@ class GraphicsReferenceTests(unittest.TestCase):
         for i in range(5):vram[0x1B00+4*i:0x1B04+4*i]=bytes([255,i*16,0,1])
         vram[0x1B14]=208
         with self.assertRaisesRegex(ValueError,'sprite'):api.validate_target(bytes(vram),pixels)
+
+    def test_intended_igloo_levels_are_not_coverage_when_raster_is_unchanged(self):
+        api=self.api();points=[{'name':f'igloo-{i}','source_sha256':f'{i:064x}'} for i in range(16)]
+        points += [{'name':'palette-0-floe-0','source_sha256':'a'*64,'source_probe':[132,10]},
+                   {'name':'palette-7-floe-0','source_sha256':'b'*64,'source_probe':[128,2]}]
+        api.validate_variation(points)
+        points[-1]['source_probe']=[132,10]
+        with self.assertRaises(ValueError):api.validate_variation(points)
+        points[-1]['source_probe']=[128,2]
+        for point in points[:16]:point['source_sha256']='c'*64
+        with self.assertRaises(ValueError):api.validate_variation(points)

@@ -23,7 +23,8 @@ HELPERS=('scripts/graphics_reference.py','scripts/original_graphics.py','scripts
 FACTS=('cases','table_views','raw_matches','blank_views','repeat_equal','max_tiles_per_bank',
        'max_changed_pixels','total_changed_pixels','overcolor_rows','crop_checked',
        'source_state_unchanged_by_mapping','families','palette_codes','target_vram_bytes',
-       'runtime_changed','negative_controls','max_sprites_per_line','max_sprite_patterns_bytes','total_patched_pixels')
+       'runtime_changed','negative_controls','max_sprites_per_line','max_sprite_patterns_bytes','total_patched_pixels',
+       'igloo_distinct_states','daynight_source_probe_verified')
 
 
 def digest(data):return hashlib.sha256(data).hexdigest()
@@ -78,6 +79,11 @@ def compact_report(run):
 
 def validate_files(directory,points):
     suffixes={'tia','before-ram','ram','state','mapped','vram','target'}
+    initial=Path(directory)/'initial.state'
+    if not initial.is_file() or initial.is_symlink() or not points:
+        raise ValueError('initial original state missing or changed')
+    initial_hash=digest(initial.read_bytes())
+    if any(initial_hash!=p['initial_sha256'] for p in points):raise ValueError('initial original state changed')
     for index,point in enumerate(points):
         if not re.fullmatch('[a-z0-9-]{1,80}',point['name']) or set(point['file_sha256'])!=suffixes:
             raise ValueError('bounded complete raw artifact list required')
@@ -92,6 +98,17 @@ def validate_target(vram,expected):
     if peak>4:raise ValueError('actual SAT exceeds4 sprite rectangles per line')
     if decode_screen(vram)!=expected or bytes(decode_pixels(vram,bytes([2,0xC2,6,255,3,54,7,1])))!=expected:
         raise ValueError('independently decoded actual VRAM differs from mapped source')
+
+
+def validate_variation(points):
+    indexed={point['name']:point for point in points}
+    stages={indexed[f'igloo-{i}']['source_sha256'] for i in range(16)}
+    if len(stages)!=16:raise ValueError('igloo requested stages did not produce16 distinct source rasters')
+    if indexed['palette-0-floe-0']['source_sha256']==indexed['palette-7-floe-0']['source_sha256']:
+        raise ValueError('day/night source rasters did not change')
+    if (indexed['palette-0-floe-0']['source_probe']!=[132,10]
+            or indexed['palette-7-floe-0']['source_probe']!=[128,2]):
+        raise ValueError('actual source day/night sky/shore colors do not match original palette paths')
 
 
 def fixtures(rom):
@@ -125,7 +142,7 @@ def fixtures(rom):
         add(f'digit-{digit}','hud',{0xC8:digit*17,0xC9:digit*17,0xCA:digit*17,0xE5:digit*17,0xCC:digit},f'digit-{digit}')
     for stage in range(16):add(f'igloo-{stage}','igloo',{0xCD:stage})
     for rng in (1,9):
-        for level in (3,8):add(f'door-{level}-{rng}','igloo',{0xCD:15,0x82:rng,0xCB:level})
+        for level in (3,7):add(f'door-{level}-{rng}','igloo',{0xCD:15,0x82:rng,0xCB:level})
     for player in (0,2):add(f'hud-player-{player}-level20','hud-scene',{0xC7:player,0xCB:20,0xC8:0x12,0xC9:0x34,0xCA:0x56})
     for level in (0,3,7,8,11,15):
         for phase in range(16):
@@ -185,9 +202,15 @@ def capture(rom_path,destination,explore=False):
         ale.loadROM(str(rom_path))
         for _ in range(20):ale.act(0)
         baseline=ale.cloneSystemState();initial=digest(baseline.serialize());directory=destination/f'run-{repeat}';directory.mkdir();points=[]
+        (directory/'initial.state').write_bytes(baseline.serialize())
         for index,fixture in enumerate(cases):
             ale.restoreSystemState(baseline)
             for address,value in fixture['patch'].items():ale.setRAM(address&127,value)
+            if fixture['family']=='igloo':
+                # C0..C4 are prepared in the prior frame's overscan from CD.
+                # A RAM selector change alone is not evidence of a drawn stage.
+                ale.act(0)
+                for address,value in fixture['patch'].items():ale.setRAM(address&127,value)
             before=bytes(ale.getRAM());ale.act(0);ram=bytes(ale.getRAM());frame=ale.getScreen().tobytes();rgb=ale.getScreenRGB().reshape(-1,3)
             for code in set(frame):
                 offset=frame.index(code);color=tuple(int(c) for c in rgb[offset])
@@ -205,7 +228,8 @@ def capture(rom_path,destination,explore=False):
                 'source_sha256':digest(frame),'state_sha256':digest(state),'ram_sha256':digest(ram),
                 'mapped_sha256':digest(mapped),'vram_sha256':digest(compiled['vram']),'decoded_sha256':digest(decoded),
                 'tiles_per_bank':compiled['tiles_per_bank'],'changed_pixels':compiled['changed_pixels'],
-                'overcolor_rows':compiled['overcolor_rows'],'raw_match':matched,'match_location':location,'initial_sha256':initial}
+                'overcolor_rows':compiled['overcolor_rows'],'raw_match':matched,'match_location':location,'initial_sha256':initial,
+                'source_probe':[frame[10*160+10],frame[45*160+10]]}
             if sum(a!=b for a,b in zip(mapped,decoded))!=compiled['changed_pixels']:raise ValueError('independent VRAM decode loss count differs')
             stem=directory/f'{index:04d}-{fixture["name"]}'
             blobs={'tia':frame,'before-ram':before,'ram':ram,'state':state,'mapped':mapped,'vram':compiled['vram'],'target':decoded}
@@ -226,7 +250,7 @@ def capture(rom_path,destination,explore=False):
         validate_files(directory,points)
         (directory/'points.json').write_text(json.dumps(points,indent=2)+'\n');runs.append(points)
         print(f'Original graphics repeat{repeat+1}: {len(points)} frames',flush=True)
-    validate_repeats(*runs,[case['name'] for case in cases])
+    validate_repeats(*runs,[case['name'] for case in cases]);validate_variation(runs[0]);validate_variation(runs[1])
     negatives=[]
     for key,value in [('source_sha256','0'*64),('actual',{})]:
         wrong=copy.deepcopy(runs[1]);wrong[0][key]=value
@@ -244,6 +268,20 @@ def capture(rom_path,destination,explore=False):
     try:match_view(bytes(bad),item,item['colors'],[(x,y)])
     except ValueError:negatives.append('table_pixels')
     else:raise ValueError('corrupted table pixel escaped rejection')
+    target=(destination/'run-0/0000-player-0-0-0.mapped').read_bytes()
+    original_vram=(destination/'run-0/0000-player-0-0-0.vram').read_bytes()
+    corrupt=bytearray(original_vram);tile=corrupt[0x1800];corrupt[tile*8]=255;corrupt[0x2000+tile*8]=0xF1
+    try:validate_target(bytes(corrupt),target)
+    except ValueError:negatives.append('target_pixels')
+    else:raise ValueError('changed target pixels escaped rejection')
+    corrupt=bytearray(original_vram)
+    for index in range(5):corrupt[0x1B00+4*index:0x1B04+4*index]=bytes([255,index*16,0,1])
+    corrupt[0x1B14]=208
+    try:validate_target(bytes(corrupt),target)
+    except ValueError as error:
+        if 'sprite' not in str(error):raise
+        negatives.append('fifth_sprite')
+    else:raise ValueError('fifth sprite rectangle escaped rejection')
     validate_files(destination/'run-0',runs[0])
     if not explore:
         if snapshot_paths(HELPERS)!=producer:raise ValueError('producer changed during capture')
@@ -258,6 +296,7 @@ def capture(rom_path,destination,explore=False):
             'crop_checked':True,'source_state_unchanged_by_mapping':True,'families':sorted({c['family'] for c in cases}),
             'palette_codes':len(palette),'target_vram_bytes':16384,'runtime_changed':False,'negative_controls':negatives,
             'max_sprites_per_line':max_sprites,'max_sprite_patterns_bytes':max_patterns,'total_patched_pixels':patched}}
+    result['facts'].update({'igloo_distinct_states':16,'daynight_source_probe_verified':True})
     (destination/'summary.json').write_text(json.dumps(result,indent=2)+'\n')
     if not explore:(ROOT/'references/graphics-result.json').write_text(json.dumps(compact_report(result),indent=2)+'\n')
     return result
