@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "authority_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "scope": "Static native Z80 post-visible phase F476 to F019 and named mechanics slices; not a whole-game or natural-collision contract",
+  "source_ram": {"first": "80", "bytes": 128, "native_first": "C000"},
+  "cpu": {
+    "a": "A", "x": "B", "y": "C", "carry": "E bit 0", "negative_zero": "Z80 F S/Z",
+    "overflow": "C600 bit 6", "mode": "C601 D/I/B/unused", "stack": "IX plus C60B high bit",
+    "entry_sp_min": "86", "entry_sp_max": "FF", "proved_call_depth": 3,
+    "observable_flags": "Only published mechanics stops and explicit arithmetic/RMW/clear/phase stops returned by observable_stops(); adding a stop requires regeneration"
+  },
+  "bus": {
+    "decode": "6507 physical address & 1FFF; separate read and write mirrors; zero-page indexes wrap at 256",
+    "tia_read": "C300..C30F", "tia_write": "C700..C73F",
+    "riot_read": "C340..C347", "riot_write": "C740..C75F",
+    "data": "Source FC00..FFFF only; 1024 bytes local/ignored, not the complete original ROM"
+  },
+  "checks": [
+    "Independent py65 1.2.0 NMOS execution versus actual standard-speed openMSX Z80",
+    "All A/X/Y/P/SP and all 128 RAM bytes, including source JSR return-byte writes",
+    "Final per-step hardware write shadows; event ordering/audio/timing at the original bus is outside this proof",
+    "Four 192-step continuous native chains retain their own previous RAM/CPU; only named contact and hardware inputs are injected",
+    "All 256 bounded zero-clear start indexes, indexed hardware wraps, entry stack bounds, decimal/flag corner cases",
+    "Complete records, stack/heap guards, 64 KiB RAM, 3579545 Hz, source/binary/helper/backend identity"
+  ],
+  "contacts": "Declared scripted B0..B9 and ED inputs; these are fixtures, not implemented collision acquisition",
+  "artifacts": "outputs/native/ is ignored; native-contract.rom is an internal RPC CPU proof, not an offered human diagnostic",
+  "timing": "Raw CPU proof cycles do not certify integrated input/mapper/render/PAL capacity"
+}
