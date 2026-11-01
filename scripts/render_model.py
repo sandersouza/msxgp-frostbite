@@ -5,7 +5,7 @@ part of this presentation ABI. Original asset integration must remeasure it.
 """
 from functools import lru_cache
 
-BAND_Y=((80,88,106,114,132,140,158,166),(72,80,116,124,144,152,168,176))
+BAND_Y=((80,88,104,112,136,144,160,168),(80,88,104,124,136,144,160,168))
 PLAYER_COLORS=(6,7,15)
 FONT={
  'A':('01110','10001','10001','11111','10001','10001','10001'),
@@ -188,6 +188,8 @@ def static_names(s):
     text(names,0,1,'FROSTBITE RENDER BENCH')
     text(names,1,1,'SYNTHETIC NO GAMEPLAY')
     text(names,2,1,'ARROWS MOVE SPACE CHANGES')
+    text(names,1,27,f'{s["player_x"]:02X}')
+    text(names,1,30,str(s['palette']))
     for y in range(4):
         for x in range(8):
             fill=(y*8+x)<s['igloo']*11
@@ -218,6 +220,46 @@ def background_pixels(s):
                     if root+sx<160 and mask(kind,sx,sy):
                         for dx in range(display_x(root+sx),display_x(root+sx+1)):
                             pixels[(y0+sy)*256+dx]=color
+    return pixels
+
+
+def cache_base(layout,page,band):return 64+(band%4)*32+layout*16+page*8
+
+
+def cache_segments(layout,page,band):
+    y=BAND_Y[layout][band];base=cache_base(layout,page,band);shift=y%8;segments=[]
+    for column in range(4):
+        address=(y//64)*2048+(base+column)*8+shift
+        segments.append((address,8-shift,column*8+shift))
+        if shift:
+            address=((y+7)//64)*2048+(base+4+column)*8
+            segments.append((address,shift,32+column*8))
+    return segments
+
+
+def decode_pixels(vram,regs):
+    if len(vram)!=16384 or len(regs)!=8 or regs[0]&2!=2 or regs[1]&3!=2:
+        raise ValueError('exact16KiB SCREEN2/16x16 unmagnified state required')
+    water=regs[7]&15;names=(regs[2]&15)*1024;pixels=bytearray(256*192)
+    for y in range(192):
+        bank=(y//64)*2048
+        for column in range(32):
+            tile=vram[names+(y//8)*32+column];index=bank+tile*8+y%8
+            bits=vram[index];color=vram[0x2000+index]
+            for bit in range(8):
+                value=(color>>(4 if bits&(128>>bit) else 0))&15
+                pixels[y*256+column*8+bit]=value or water
+    sprites=[];sat=(regs[5]&127)*128;spt=(regs[6]&7)*2048
+    for offset in range(0,128,4):
+        sy,sx,pattern,color=vram[sat+offset:sat+offset+4]
+        if sy==208:break
+        sprites.append(((sy+1)&255,sx-32 if color&128 else sx,pattern&252,color&15))
+    for sy,sx,pattern,color in reversed(sprites):
+        if not color:continue
+        for y in range(min(16,192-sy)):
+            for x in range(16):
+                if 0<=sx+x<256 and vram[spt+pattern*8+(x//8)*16+y]&(128>>(x%8)):
+                    pixels[(sy+y)*256+sx+x]=color
     return pixels
 
 

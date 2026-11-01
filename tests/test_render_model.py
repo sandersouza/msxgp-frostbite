@@ -34,6 +34,14 @@ class RendererModelTests(unittest.TestCase):
                     self.assertEqual(sum(byte.bit_count() for byte in block),sum(byte.bit_count() for byte in tables[((kind*16+phase)*4)*64:((kind*16+phase)*4+1)*64]))
         self.assertIn(124,api.BAND_Y[1])
 
+    def test_independent_band_caches_do_not_compete_for_one_name_cell(self):
+        for layout in self.api().BAND_Y:
+            occupied=set()
+            for y in layout:
+                cells=set(range(y//8,(y+7)//8+1))
+                self.assertFalse(occupied&cells)
+                occupied|=cells
+
     def test_hybrid_sprite_rectangles_never_exceed_four_and_all_sprite_option_fails(self):
         api=self.api()
         for x in range(160):

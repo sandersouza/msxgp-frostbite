@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 PYTHON ?= .venv/bin/python
-.PHONY: environment environment-check environment-dry-run build run smoke package test source-check ci-verify reference-check reference-rebuild mechanics-check reference-traces reference-cpu reference-ale reference-refuge reference-console reference-report
+.PHONY: environment environment-check environment-dry-run build run smoke package test source-check ci-verify reference-check reference-rebuild mechanics-check reference-traces reference-cpu reference-ale reference-refuge reference-console reference-report render-build render-bench
 source-check:
 	@$(PYTHON) -B scripts/source_policy.py
 ci-verify:
@@ -39,3 +39,7 @@ reference-console:
 	@$(PYTHON) -B scripts/reference_routes.py --route console
 reference-report:
 	@$(PYTHON) -B scripts/reference_report.py
+render-build:
+	@$(PYTHON) -B scripts/render_build.py
+render-bench: render-build
+	@$(PYTHON) -B scripts/render_bench.py --suite

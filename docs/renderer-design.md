@@ -23,11 +23,25 @@ are workload fixtures, not a replacement for original TIA collision geometry.
 Right-edge player masks are preclipped; bear input is bounded0..151. Future original
 assets must explicitly establish their required masks/bounds and remeasure.
 
+The initial unaligned layout was rejected: adjacent threat/ice bands shared one
+name cell, and the independent pixel check caught the overwrite. Its generic
+implementation cost roughly97k cycles including the synthetic step. The selected
+normal layout aligns bands to eight-pixel rows, shifting them at most four display
+pixels from the investigated26-pixel-spacing proposal. The stress layout isolates
+one bank-crossing band without a neighboring name-cell conflict. This is an
+explicit presentation compromise, not a source-state or collision change. Issue9
+must establish the original-to-presentation Y mapping and assess fidelity; this
+diagnostic does not claim original geometry/pixel equivalence.
+
 Pattern/color caches alternate tile IDs under an inactive name page. Preparing
 the next frame must preserve the visible page; VBlank commits the name page, SAT
 and backdrop. Static patterns/names are initialized on both pages. Full color,
 igloo and layout transition costs are measured rather than assuming dirty writes
 are free. The VDP never supplies gameplay collision results.
+Each layout has its own two frame caches, so vertical padding stays zero when
+layouts alternate. Local band IDs are shared only between different SCREEN2 banks;
+the crossing lower fragment and the last band's upper fragment occupy distinct
+halves. Synthetic alias tests and actual pixels validate these boundaries.
 
 VRAM uses0000–17FF patterns,1800/1C00 name pages,1B00 SAT,2000–37FF colors and
 3800–3FFF sprite patterns:16000bytes,384bytes unallocated. Sprite patterns consume
