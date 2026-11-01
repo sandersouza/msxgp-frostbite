@@ -85,10 +85,13 @@ presentation remain intact. Generated effect data stays local; public metadata
 contains only domain/address descriptions and hashes.
 
 An independent original-CPU oracle and actual standard MSX1 Z80 microcartridge
-pass135168 cases:69649 summarized executions and65519 rejected-guard executions,
-including all256×256 index/bound pairs, all source accumulator values and flag
-combinations. Complete CPU/all128RAM, untouched bytes, mode/V, IX/IY/SP/DI and
-memory guards are verified. The existing native shift/flag lowering is unchanged.
+pass135168 cases:69649 summarized executions compared with the original CPU,
+and65519 rejected guards that preserve the complete entry state before the
+unchanged native body. Guard selection includes all256×256 index/bound pairs;
+fast cases span all source accumulator values and flag combinations. Complete
+CPU/all128RAM, untouched bytes, mode/V, IX/IY/SP/DI and memory guards are verified.
+The micro-harness stops at fallback entry; complete integrated phases/routes
+separately test the program. Existing native shift/flag lowering is unchanged.
 The new core uses10240 of16384 bytes in its existing bank; cartridge size, RAM
 requirements, source contact catalogs and their helper closure remain unchanged.
 

@@ -13,8 +13,31 @@
     "console": "Reset/Select combinations with color/difficulty bit variants; exact source CPU/RAM comparison"
   },
   "evidence_policy": "Controlled fixtures are distinct from continuous input-only source routes, independent replay, paced target, human emulator and physical evidence",
-  "source_routes": {"variations": [0, 1, 2, 3], "routes": 8, "logical_intervals": 21468, "independent_complete_replays": 8},
-  "native_lowering": {"kind": "Guarded pure ROM-indexed RAM-write loop summary", "micro_cases": 135168, "fast_path_cases": 69649, "guard_fallback_cases": 65519, "all_index_bound_pairs": 65536, "complete_cpu_and_ram": true},
-  "candidate_rom": {"version": "0.0.6-progression", "size": 4194304, "mapper": "ASCII16", "source_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99", "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6"},
-  "status": "Issue13 in progress; original/source replays, all8 actual native routes,818 full phases and135168 actual-Z80 micro cases pass. Representative PAL layout1/width1 passes at69464/71364 with1900 margin. Complete view/clock/stress matrix, review and delivery pending"
+  "source_routes": {
+    "variations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "routes": 8,
+    "logical_intervals": 21468,
+    "independent_complete_replays": 8
+  },
+  "native_lowering": {
+    "kind": "Guarded pure ROM-indexed RAM-write loop summary",
+    "micro_cases": 135168,
+    "fast_path_cases": 69649,
+    "guard_fallback_cases": 65519,
+    "all_index_bound_pairs": 65536,
+    "complete_cpu_and_ram": true
+  },
+  "candidate_rom": {
+    "version": "0.0.6-progression",
+    "size": 4194304,
+    "mapper": "ASCII16",
+    "source_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99",
+    "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6"
+  },
+  "status": "All original/source replays,12 actual native routes,818 full phases,135168 guard/summary microcases,all96 clock/view routes,15stress modes and14 runtime controls pass. PAL minimum margin283 cycles. Final raw sealing, independent review and delivery remain pending."
 }
