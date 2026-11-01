@@ -24,9 +24,9 @@ produce C6=FF/F1=00; that differs from single-player emulator terminal shortcuts
 The initial exploratory checks passed816 actual-Z80 primitive cases (maximum3139
 cycles) and728 complete visible/native phases (maximum22609 cycles) against the
 unchanged v0.0.5 mechanics. These are controlled fixtures, not continuous gameplay
-or acceptance of a new release. Clean committed producers, new diagnostic ROM,
-continuous all-mode progression/turn/exhaustion/restart routes and all paced
-views/clocks are still required. Manual emulator and physical tests are pending.
+or acceptance of a new release. Later sections record the clean source/native
+evidence; the full paced view/clock matrix and release delivery remain pending.
+Manual emulator and physical tests are pending.
 
 ## Continuous original source acceptance
 
@@ -58,6 +58,44 @@ enter the source capture. Failed/stopped exploratory routes remain ignored and
 are excluded from acceptance. The compact
 [source result](../references/progression-source-result.json) binds each accepted
 route/replay receipt and exact producer revision without distributing raw states.
+
+## Native progression diagnostic and measured optimization
+
+Clean candidate `0.0.6-progression` from
+`ac146a7c82bd5ab77a5dff2deb5d5452a0478c99` is4194304 bytes/ASCII16, SHA-256
+`1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6`.
+All eight actual MSX1 cold input-only routes match21468 complete original CPU/RAM
+checkpoints and every named milestone. The818 controlled full visible/native
+phases also pass (maximum20223 cycles). Intentional real target mutations of
+score CA, saved record CE and active-player C7 are rejected at those exact bytes.
+
+The first candidate preserved the old core but the new advanced route exposed a
+real PAL overrun:81673 cycles for71364. Profiling measured only~4500 cycles in
+contact acquisition; a16-iteration native translation of a pure ROM-indexed
+write loop dominated completed-igloo work. That failed candidate remains private
+and is excluded from acceptance.
+
+`native_write_loop.py` recognizes the instruction pattern rather than a game
+rule/address substitution. Runtime X=0 and a source-derived safe bound prefix
+use precomputed partial RAM writes and exact final A/X/Y/N/Z/C; V/mode and
+untouched RAM are preserved. Reads must remain in approved ROM data, writes in
+canonical RAM, and no destination may alias the bound. Every other entry follows
+the original native body. Input instruction points, RNG order, source steps and
+presentation remain intact. Generated effect data stays local; public metadata
+contains only domain/address descriptions and hashes.
+
+An independent original-CPU oracle and actual standard MSX1 Z80 microcartridge
+pass135168 cases:69649 summarized executions and65519 rejected-guard executions,
+including all256×256 index/bound pairs, all source accumulator values and flag
+combinations. Complete CPU/all128RAM, untouched bytes, mode/V, IX/IY/SP/DI and
+memory guards are verified. The existing native shift/flag lowering is unchanged.
+The new core uses10240 of16384 bytes in its existing bank; cartridge size, RAM
+requirements, source contact catalogs and their helper closure remain unchanged.
+
+The formerly failing advanced PAL layout1/width1 route now passes2061 logical
+states and1725 completed pixel frames, maximum69464/71364 cycles (1900 margin).
+That is one matrix cell, not the full timing/release gate. Full new/old route
+views, dense stress, final review, integration and public release remain pending.
 
 The approved S1/S2/V1/V2/V3/C1 contracts remain in
 [gameplay-contracts.md](gameplay-contracts.md). Definitive HUD/art/audio belongs
