@@ -12,13 +12,15 @@ import shutil
 from environment import ROOT
 from floe_bench import validate_receipt,decode_scene
 from floe_build import FILES,expected_pixels
+from floe_observer_check import CHECK_HELPERS
 from floe_paced import FRAME_BYTES
+from floe_routes import HELPERS as ROUTE_HELPERS
 from floe_tables import verified_profiles
 from native_contract import compare
 from reference_provenance import audit_manifest,snapshot_paths
 from reference_traces import private_output
 from render_bench import PACED_MODES,validate_source_files
-from stella_floe import digest
+from stella_floe import HELPERS as OBSERVATION_HELPERS,REVISION,digest,validate_observation
 import render_model as model
 
 COUNTS={'geometry':1368,'mechanics':86,'natural':2254,'cpu-generic':4497,'cpu-fast':1793}
@@ -71,6 +73,58 @@ def tree(directory):
     return {str(path.relative_to(directory)):digest(path) for path in sorted(paths)}
 
 
+def validate_observer(path,catalog):
+    path=Path(path);report=json.loads(path.read_text())
+    coverage={'schema_version':1,'cases':4632,'actual_views':228,'invariant_links':3756,
+              'independent_unmodified_stella_phases':32,'cached_window_comparisons':768}
+    if any(type(report.get(key)) is not int or report[key]!=value for key,value in coverage.items()):
+        raise ValueError('complete observer acceptance coverage required')
+    if report.get('binary_sha256')!=catalog['binary_sha256']:
+        raise ValueError('observer acceptance backend differs from catalog')
+    checker=report.get('checker_helpers',{})
+    audit_manifest({'tool_source_commit':report['source_commit'],'utility_fingerprints':checker},CHECK_HELPERS)
+    if report.get('checker_sha256')!=checker[CHECK_HELPERS[0]]:
+        raise ValueError('observer checker identity differs from committed helper')
+    observations=report.get('observations',[])
+    if not isinstance(observations,list) or len(observations)!=3:
+        raise ValueError('all observer acceptance observations required')
+    helpers={name:catalog['helpers'][name] for name in OBSERVATION_HELPERS}
+    for embedded,(name,count,roi) in zip(observations,(('full',4632,False),('cache-full',768,False),('cache-roi',768,True))):
+        directory=path.parent/name;observed=json.loads((directory/'observation.json').read_text())
+        backend=observed.get('backend',{})
+        if (observed!=embedded or observed.get('schema_version')!=1 or observed.get('cases')!=count
+                or observed.get('mode')!=('top-floe ROI' if roi else 'complete visible phase')
+                or observed.get('helpers')!=helpers or observed.get('upstream_revision')!=REVISION
+                or backend.get('name')!='Stella' or backend.get('version')!='7.0'
+                or backend.get('source_contract')!=REVISION or backend.get('binary_sha256')!=catalog['binary_sha256']):
+            raise ValueError('observer raw receipt differs from accepted catalog producer')
+        audit_manifest({'tool_source_commit':report['source_commit'],'utility_fingerprints':observed['helpers']},OBSERVATION_HELPERS)
+        if set(observed.get('files',{}))!={'initial.state','cases.bin','results.bin','raw/stella.log'}:
+            raise ValueError('complete observer raw file manifest required')
+        audit_artifacts(directory,observed['files'])
+        if observed['files']['initial.state']!=catalog['initial_sha256'] or (directory/'cases.bin').stat().st_size!=count*128:
+            raise ValueError('observer acceptance capsule/fixtures differ from catalog')
+        validate_observation((directory/'results.bin').read_bytes(),(directory/'raw/stella.log').read_text(),count,roi)
+    return report
+
+
+def validate_original_replay(original,replayed):
+    original=Path(original);replayed=Path(replayed)
+    route=json.loads((original/'route.json').read_text());replay=json.loads((replayed/'replay.json').read_text())
+    audit_manifest(route,ROUTE_HELPERS);audit_manifest(replay,ROUTE_HELPERS)
+    if (replay.get('identical_full_cpu_ram_tia_riot_inputs') is not True
+            or replay.get('original_route_sha256')!=digest(original/'route.json')
+            or replay.get('replay_trace_sha256')!=digest(replayed/'trace.json')):
+        raise ValueError('strict original full-state replay identity required')
+    if set(route.get('files',{}))!={'trace.json','inputs.json','initial.state','final.state'}:
+        raise ValueError('complete original route file manifest required')
+    audit_artifacts(original,route['files'])
+    for name in ('trace.json','final.state'):
+        if digest(replayed/name)!=route['files'][name]:
+            raise ValueError('replay trace/final state differs from frozen original')
+    return route,replay
+
+
 def seal(config_path,out):
     config=json.loads(Path(config_path).read_text());out=private_output(out)
     if out.exists():raise ValueError('immutable package path already exists')
@@ -79,8 +133,9 @@ def seal(config_path,out):
     validate_source_files(build);audit_manifest({'tool_source_commit':build['source_commit'],'utility_fingerprints':build['source_files']},FILES)
     catalog=ROOT/config['catalog'];manifest,profiles=verified_profiles(catalog);del profiles
     if digest(catalog/'catalog.json')!=build['tables']['catalog_sha256']:raise ValueError('build/catalog identity differs')
+    observer_path=ROOT/config['observer'];observer=validate_observer(observer_path,manifest)
     roots={'electrical_catalog':catalog,'original_route':ROOT/config['source_route'],'original_replay':ROOT/config['source_replay'],
-           'observer':(ROOT/config['observer']).parent,'build_tables':build_dir/'tables'}
+           'observer':observer_path.parent,'build_tables':build_dir/'tables'}
     summaries={};reports={}
     required=set(COUNTS)|{'paced-ntsc','paced-pal'}
     if set(config['checks'])!=required:raise ValueError('complete positive gate set required')
@@ -93,9 +148,7 @@ def seal(config_path,out):
         if kind.startswith('paced-') and (directory/'frames.bin').stat().st_size!=report['frames']*FRAME_BYTES:raise ValueError('partial natural frame stream')
         roots[kind]=path.parent;reports[kind]=report
         summaries[kind]={'report_sha256':digest(path),**{key:report[key] for key in ('cases','source_steps','frames','max_cycles','max_native_cycles','max_busy_cycles','frame_budget','min_margin_cycles','pixel_errors','assessment') if key in report}}
-    route=json.loads((roots['original_route']/'route.json').read_text());replay=json.loads((roots['original_replay']/'replay.json').read_text())
-    if replay.get('identical_full_cpu_ram_tia_riot_inputs') is not True or replay['original_route_sha256']!=digest(roots['original_route']/'route.json'):raise ValueError('strict original full-state replay required')
-    if any(digest(roots['original_route']/name)!=value for name,value in route['files'].items()):raise ValueError('original route changed')
+    route,replay=validate_original_replay(roots['original_route'],roots['original_replay'])
     suite_path=ROOT/config['suite'];suite=json.loads(suite_path.read_text());expected={name for name,*_ in PACED_MODES}|{'counts','ntsc_transitions_inverted','pal_transitions_inverted','negative_controls'}
     if set(suite)!=expected:raise ValueError('all dense/counts/toggle scenarios required')
     for name,report in suite.items():
@@ -135,6 +188,7 @@ def seal(config_path,out):
     out.mkdir(parents=True,exist_ok=False);(out/'private-evidence.json').write_text(json.dumps(evidence,sort_keys=True,indent=2)+'\n')
     result={'schema_version':1,'version':build['version'],'diagnostic':True,'rom':build['rom'],'source_commit':build['source_commit'],
         'source':build['original'],'table_producer_commit':manifest['producer_commit'],'catalog_sha256':digest(catalog/'catalog.json'),
+        'observer_acceptance':{'report_sha256':digest(observer_path),**{key:observer[key] for key in ('cases','actual_views','invariant_links','independent_unmodified_stella_phases','cached_window_comparisons','binary_sha256','source_commit')}},
         'original_route_sha256':digest(roots['original_route']/'route.json'),'original_replay_sha256':digest(roots['original_replay']/'replay.json'),
         'checks':summaries,'negative_controls':[*causes,'port2_fire'],'private_evidence_manifest_sha256':digest(out/'private-evidence.json'),
         'manual_emulator':'Pending owner feedback','physical_hardware':'Pending owner feedback',
