@@ -78,3 +78,10 @@ class HazardDeliveryTests(unittest.TestCase):
             with self.assertRaises(ValueError):api.validate_negative_manifest(bad,'abc')
         reports.pop('row_priority')
         with self.assertRaises(ValueError):api.validate_negative_manifest(reports,'abc')
+
+    def test_compact_core_requires_the_complete_clean_actual_z80_shift_matrix(self):
+        api=self.api();r={'complete':True,'exploratory':False,'cases':65536,'variants':64,'all_values':256,
+            'observed_nz_masks':[0,1,2,3],'carry_inputs':[0,1],'overflow_inputs':[0,64],'canonical_ram_guard':True}
+        api.validate_shift_unit(r)
+        for patch in ({'cases':65535},{'exploratory':True},{'canonical_ram_guard':False},{'observed_nz_masks':[0,3]}):
+            with self.assertRaises(ValueError):api.validate_shift_unit({**r,**patch})

@@ -64,7 +64,7 @@ proc finish_paced {} {
     for {set i 0} {$i<128} {incr i} {if {[lindex $stack $i]!=165} {set stack_min [expr {0xF300+$i}];break}}
     if {$stack_min<0xF340} {fail_paced stack-reserve}
     set f [open $::paced_dir/complete.json w]
-    puts $f "\{\"complete\":true,\"source_steps\":$::source_count,\"frames\":$::frame_count,\"canonical_ram_injections\":0,\"clock_hz\":[machine_info z80_freq],\"ram_bytes\":[debug size {Main RAM}],\"min_spacing\":$::min_spacing,\"max_sprites_per_line\":$::max_slots,\"stack_min\":$stack_min,\"pal_flag\":[debug read memory 0xC21B]\}"
+    puts $f "\{\"complete\":true,\"source_steps\":$::source_count,\"frames\":$::frame_count,\"canonical_ram_injections\":0,\"clock_hz\":[machine_info z80_freq],\"ram_bytes\":[debug size {Main RAM}],\"min_spacing\":$::min_spacing,\"max_sprites_per_line\":$::max_slots,\"stack_min\":$stack_min,\"pal_flag\":[debug read memory 0xC21B],\"layout\":$::initial_layout,\"width\":$::initial_width\}"
     close $f;exit
 }
 set boot_bp [debug set_bp $symbols(native_reset_done) {} {
@@ -72,6 +72,9 @@ set boot_bp [debug set_bp $symbols(native_reset_done) {} {
     if {[machine_info z80_freq]!=3579545 || [debug size {Main RAM}]!=65536} {fail_paced clock-or-ram}
     if {[dict get [machine_info device VDP] version] ni {TMS9918A TMS9929A} || [llength [machine_info extension]]!=1} {fail_paced vdp-or-expansion}
     set ::slot [debug read ioports 168]
+    # Presentation-only initial settings. Original canonical state is untouched.
+    debug write memory 0xC11F $::initial_layout
+    debug write memory 0xC11E $::initial_width
     debug write_block memory 0xD000 [string repeat [binary format c 165] 0x2300]
     debug write_block memory 0xF300 [string repeat [binary format c 165] 128]
     set input [read $::inputs 4]

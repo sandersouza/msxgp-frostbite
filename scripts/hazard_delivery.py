@@ -28,6 +28,7 @@ from hazard_routes import HELPERS as ROUTE_HELPERS,validate_policy,assess
 from hazard_tables import verified_profiles
 from hazard_truth import FULL_BYTES,full_record,contacts,compare_roi,validate_invariants
 from native_contract import compare
+from native_shift_check import HELPERS as SHIFT_HELPERS,audit_saved as audit_shift_rows
 from reference_inventory import verified_input
 from reference_provenance import audit_manifest,snapshot_paths
 from reference_state import decode_state
@@ -50,9 +51,11 @@ NEGATIVE_CAUSES={'collision':'RAM B7','rng':'RAM 82','row_priority':'CPU y','sti
                  'spacing':'fast-io-spacing','sprite':'fifth-sprite-slot','guard':'heap-guard',
                  'state':'RAM AA','pixel':'pixel mismatch','contact':'RAM B6','cache':'pixel mismatch'}
 ROUTE_STEPS={'bear-chase':702,'bear-refuge':1235,'fish-envelope':812,'threat-push':603}
+PACED_MODES={f'{family}-layout{layout}-width{width}':(family,layout,width) for family in ('ntsc','pal') for layout in (0,1) for width in (0,1)}
 DELIVERY_HELPERS=tuple(dict.fromkeys((*TARGET_HELPERS,*ROUTE_HELPERS,*CHECK_HELPERS,'scripts/hazard_delivery.py',
     'scripts/hazard_mechanics.py','scripts/hazard_paced.py','scripts/hazard_play.py','scripts/hazard_bench.py',
     'scripts/floe_delivery.py','scripts/floe_bench.py','scripts/render_model.py')))
+DELIVERY_HELPERS=tuple(dict.fromkeys((*DELIVERY_HELPERS,*SHIFT_HELPERS)))
 
 
 def validate_target(kind,r,sha,count):
@@ -123,6 +126,13 @@ def validate_negative_manifest(reports,sha):
     for name,r in reports.items():
         if (r.get('detected') is not True or r.get('rom_sha256')!=sha or r.get('harness_dirty') is not False
                 or NEGATIVE_CAUSES[name] not in r.get('detail','')):raise ValueError('wrong or stale negative-control identity')
+
+
+def validate_shift_unit(r):
+    if (r.get('complete') is not True or r.get('exploratory') is not False or r.get('cases')!=65536
+            or r.get('variants')!=64 or r.get('all_values')!=256 or r.get('observed_nz_masks')!=[0,1,2,3]
+            or r.get('carry_inputs')!=[0,1] or r.get('overflow_inputs')!=[0,64] or r.get('canonical_ram_guard') is not True):
+        raise ValueError('complete clean actual-Z80 compact shift proof required')
 
 
 def audit_observer(path,source):
@@ -259,6 +269,11 @@ def seal(config_path,out):
     if build['source_dirty'] or sha!=build['rom']['sha256'] or build['original']!=verified_input(ROOT/'references/roms/frostbite.bin'):raise ValueError('clean exact ROM/source build required')
     validate_source_files(build);audit_manifest({'tool_source_commit':build['source_commit'],'utility_fingerprints':build['source_files']},FILES)
     validate_source_summary(build['tables']);roots={'build':build_dir};summaries={}
+    shift_path=ROOT/config['shift_unit'];shift=json.loads(shift_path.read_text());validate_shift_unit(shift)
+    audit_manifest(shift,SHIFT_HELPERS);audit_artifacts(shift_path.parent,shift['artifacts'])
+    if digest(shift_path.parent/'unit.rom')!=shift['rom_sha256'] or audit_shift_rows(shift_path.parent)!=shift['max_cycles_including_rpc']:
+        raise ValueError('actual compact shift unit ROM/rows changed')
+    roots['shift-unit']=shift_path.parent;summaries['shift-unit']={k:shift[k] for k in ('cases','variants','max_cycles_including_rpc')}
     for kind in COMPONENT_CASES:
         root=ROOT/config['catalogs'][kind];manifest,_,audit=verified_profiles(root)
         if audit!=build['tables']['components'][kind]:raise ValueError('source component changed since tested build')
@@ -282,14 +297,15 @@ def seal(config_path,out):
     for kind,entry in config['routes'].items():
         source=ROOT/entry['source'];replay=ROOT/entry['replay'];route=audit_route(source,replay);validate_route_binding(kind,route)
         roots['source-'+kind]=source;roots['replay-'+kind]=replay
-        if set(entry['paced'])!={'ntsc','pal'}:raise ValueError('both natural clock families required')
-        for family,relative in entry['paced'].items():
+        if set(entry['paced'])!=set(PACED_MODES):raise ValueError('all eight natural clock/presentation combinations required')
+        for mode,relative in entry['paced'].items():
+            family,layout,width=PACED_MODES[mode]
             path=ROOT/relative;r=json.loads(path.read_text());validate_target('paced',r,sha,route['steps']);audit_manifest(r,tuple(r['utility_fingerprints']))
-            if r['family']!=family or r['original_route_sha256']!=digest(source/'route.json'):raise ValueError('paced route/family identity changed')
+            if (r['family'],r['layout'],r['width'])!=(family,layout,width) or r['original_route_sha256']!=digest(source/'route.json'):raise ValueError('paced route/family/view identity changed')
             audit_artifacts(path.parent,r['artifacts']);audit_binary(path.parent,r,build);audit_profile(path.parent,r,'Frostbite_Paced.xml',family)
             period,busy,cycles=verify_saved(path.parent,source,family,r)
             if (r['max_busy_cycles'],r['max_native_cycles'])!=(max(busy),max(cycles)):raise ValueError('paced raw timing differs from receipt')
-            roots[f'paced-{kind}-{family}']=path.parent;summaries[f'paced-{kind}-{family}']={k:r[k] for k in ('source_steps','frames','max_busy_cycles','frame_budget','min_margin_cycles','assessment')}
+            roots[f'paced-{kind}-{mode}']=path.parent;summaries[f'paced-{kind}-{mode}']={k:r[k] for k in ('source_steps','frames','max_busy_cycles','frame_budget','min_margin_cycles','assessment','layout','width')}
     suite=json.loads((ROOT/config['suite']).read_text());validate_suite_manifest(suite,sha)
     for name,r in suite.items():
         validate_receipt(r,r['frame_budget'],r['layout'],r['width'],r['transitions']);audit_manifest(r,tuple(r['utility_fingerprints']))
@@ -297,11 +313,11 @@ def seal(config_path,out):
         roots['stress-'+name]=directory;summaries['stress-'+name]={k:r[k] for k in ('max_busy_cycles','frame_budget','canonical_nusiz_codes')}
     negatives=json.loads((ROOT/config['negatives']).read_text());validate_negative_manifest(negatives,sha)
     for name,r in negatives.items():audit_negative(name,r,suite,build);roots['negative-'+name]=ROOT/r['directory']
-    # Published old bytes remain independently reproducible; generated native
-    # source text is identical, while resident input-call addresses can relocate.
+    # Published old bytes remain independently reproducible through the shared
+    # unchanged translator; the new compact core has separate unit/phase proof.
     old=ROOT/config['previous_build'];previous=json.loads((old/'build.json').read_text());validate_source_files(previous)
-    if digest(old/previous['rom']['filename'])!='c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600' or (old/'core.inc').read_bytes()!=(build_dir/'core.inc').read_bytes():
-        raise ValueError('old published identity or native source semantics changed')
+    if digest(old/previous['rom']['filename'])!='c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600':
+        raise ValueError('old published ROM identity changed')
     evidence={name:{'directory':str(directory.relative_to(ROOT)),'files':tree(directory)} for name,directory in roots.items()}
     out.mkdir(parents=True,exist_ok=False);(out/'private-evidence.json').write_text(json.dumps(evidence,sort_keys=True,indent=2)+'\n')
     result={'schema_version':1,'version':build['version'],'diagnostic':True,'rom':build['rom'],'source_commit':build['source_commit'],

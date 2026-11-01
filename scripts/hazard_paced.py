@@ -36,7 +36,8 @@ def validate_report(report,steps,family):
             or not 1+sum(model.schedule(frames,period))<=steps<=1+sum(model.schedule(frames+1,period))
             or report.get('canonical_ram_injections')!=0 or report.get('clock_hz')!=3579545 or report.get('ram_bytes')!=65536
             or report.get('min_spacing',0)<29 or not 1<=report.get('max_sprites_per_line',0)<=4
-            or report.get('stack_min',0)<0xF340 or report.get('pal_flag')!=int(family=='pal')):
+            or report.get('stack_min',0)<0xF340 or report.get('pal_flag')!=int(family=='pal')
+            or any(type(report.get(k)) is not int or report[k] not in (0,1) for k in ('layout','width'))):
         raise ValueError('incomplete/unsafe paced named-route evidence')
 
 
@@ -66,6 +67,7 @@ def verify_saved(out,source,family,report):
         canonical=row[28:156];scene=row[156:188]
         if canonical!=bytes(points[steps-1]['ram']):raise ValueError('natural renderer did not use its own latest source state')
         decoded=decode_scene(scene)
+        if (decoded['layout'],decoded['width'])!=(report['layout'],report['width']):raise ValueError('paced named presentation mode differs')
         if model.encode_scene(presentation(canonical,decoded['layout'],decoded['width']))!=scene:raise ValueError('natural presentation adaptation differs')
         before=row[188:16572];before_regs=list(row[16572:16580]);prepared=row[16580:32964];prepared_regs=list(row[32964:32972])
         presented=row[32972:49356];presented_regs=list(row[49356:49364])
@@ -77,8 +79,9 @@ def verify_saved(out,source,family,report):
     return period,busy,source_cycles
 
 
-def capture(out,build_dir,source,family='ntsc',explore=False):
-    if family not in ('ntsc','pal'):raise ValueError('explicit NTSC/PAL family required')
+def capture(out,build_dir,source,family='ntsc',explore=False,layout=0,width=0):
+    if family not in ('ntsc','pal') or any(type(v) is not int or v not in (0,1) for v in (layout,width)):
+        raise ValueError('explicit NTSC/PAL family and presentation mode required')
     source=Path(source);out=private_output(out);out.mkdir(parents=True,exist_ok=False);build_dir=Path(build_dir)
     source_receipt=json.loads((source/'route.json').read_text())
     audit_manifest(source_receipt,SOURCE_HELPERS)
@@ -104,7 +107,7 @@ def capture(out,build_dir,source,family='ntsc',explore=False):
     user=out/'user-data';(user/'machines').mkdir(parents=True);(user/'machines/Frostbite_Paced.xml').write_bytes(profile)
     settings=out/'settings.xml';settings.write_text('<?xml version="1.0"?><!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
     syms=symbols(build_dir/'floes.sym');names=('native_reset_done','native_step','native_return','paced_frame_start','prepare','paced_wait','paced_commit','commit_end','status_sample')
-    launcher=out/'launch.tcl';launcher.write_text(f'set paced_dir {{{out}}}\narray set symbols {{'+' '.join(f'{name} {syms[name]}' for name in names)+'}\n'+f'source {{{ROOT/"scripts/hazard_paced.tcl"}}}\n')
+    launcher=out/'launch.tcl';launcher.write_text(f'set paced_dir {{{out}}}\nset initial_layout {layout}\nset initial_width {width}\narray set symbols {{'+' '.join(f'{name} {syms[name]}' for name in names)+'}\n'+f'source {{{ROOT/"scripts/hazard_paced.tcl"}}}\n')
     result=subprocess.run([str(emulator),'-setting',str(settings),'-machine','Frostbite_Paced','-cart',str(out/rom.name),'-romtype','ASCII16','-script',str(launcher)],
         cwd=ROOT,env={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'},capture_output=True,text=True,errors='replace',timeout=120)
     (out/'emulator.log').write_text(result.stdout+result.stderr)
@@ -126,5 +129,6 @@ def capture(out,build_dir,source,family='ntsc',explore=False):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);parser.add_argument('--build-dir',type=Path,default=OUT)
     parser.add_argument('--source',type=Path,required=True);parser.add_argument('--family',choices=('ntsc','pal'),default='ntsc');parser.add_argument('--explore',action='store_true')
-    args=parser.parse_args();r=capture(args.out,args.build_dir,args.source,args.family,args.explore)
+    parser.add_argument('--layout',type=int,choices=(0,1),default=0);parser.add_argument('--width',type=int,choices=(0,1),default=0)
+    args=parser.parse_args();r=capture(args.out,args.build_dir,args.source,args.family,args.explore,args.layout,args.width)
     print(json.dumps({key:r[key] for key in ('source_steps','frames','max_busy_cycles','frame_budget','min_margin_cycles','pixel_errors')}))

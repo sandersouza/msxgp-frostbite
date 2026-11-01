@@ -10,7 +10,7 @@ import floe_build
 import movement_build
 from hazard_catalog import HELPERS as SOURCE_HELPERS
 from hazard_tables import compile_catalog
-from native_fast import generate_fast
+from native_shifts import generate as generate_fast
 from reference_inventory import verified_input
 from reference_traces import private_output
 from render_build import symbols
@@ -20,7 +20,7 @@ VERSION='0.0.5-hazards'
 OUT=ROOT/'outputs/hazards/build'
 ROM=OUT/f'frostbite-{VERSION}.rom'
 FILES=tuple(dict.fromkeys((*floe_build.FILES,*SOURCE_HELPERS,'src/hazard_contacts.asm','scripts/hazard_build.py',
-        'scripts/hazard_tables.py','scripts/collision_compact.py','scripts/floe_catalog.py','scripts/floe_tables.py')))
+        'scripts/hazard_tables.py','scripts/collision_compact.py','scripts/floe_catalog.py','scripts/floe_tables.py','scripts/native_shifts.py')))
 def presentation(ram,layout=0,width=0):
     scene=floe_build.presentation(ram,layout,width)
     codes=list(reversed(ram[0x58:0x5C]))
