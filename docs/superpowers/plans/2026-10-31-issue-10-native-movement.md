@@ -60,8 +60,8 @@
 **Files:** docs/native-movement.md, docs/releases/<new-version>.md, references/native-result.json, docs/handoffs/issue-10.md, local p10, README.
 **Interfaces:** compact evidence binds source/native binary/helper/tool/profile identities; package copies exact tested ROM without rebuilding/relabeling. Notes identify scripted contacts and required human setup/actions/results.
 
-- [ ] Full suite/source policy, one fresh read-only whole-branch review with five Review Focus cases and ledger rulings. Material findings get owned RED→GREEN fixes in one pass/full suite; no second review.
-- [ ] Exact-head CI green, focused linked PR integrated, clean merged main verified. Publish new prerelease with exact tested ROM/hash/source/current/next/human instructions; download/verify assets before close/Done.
+- [x] Full suite/source policy, one fresh read-only whole-branch review with five Review Focus cases and ledger rulings. Material findings get owned RED→GREEN fixes in one pass/full suite; no second review.
+- [x] Exact-head CI green, focused linked PR integrated, clean merged main verified. Publish new prerelease with exact tested ROM/hash/source/current/next/human instructions; download/verify assets before close/Done.
 - [ ] Durable handoff and exclusive transfer to dependency-ready #11 in a separate Frostbite fork, preserving all source/asset/legacy boundaries. Old chat stops checkout edits.
 
 Self-review: p10 input/movement/equivalence/timing/release acceptance maps to Tasks1–4. Full visible TIA execution, natural collision acquisition and complete-game proof are not replaced by the post-visible CPU contract or scripted movement contexts.

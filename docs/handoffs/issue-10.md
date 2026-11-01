@@ -4,8 +4,9 @@ Issue:https://github.com/sandersouza/msxgp-frostbite/issues/10.
 Branch:`codex/feat/10-native-movement`; base
 `94bdfb6373be06ab241fcd2adfccc80c76d0f8f7`.
 Issue10 retains exclusive checkout ownership until its explicit transfer.
-Independent review and its material auditor fix are complete. Final-head CI,
-merge, release/download and Done readbacks remain required before transfer.
+Independent review, its material auditor fix, final-head/merged CI, integration
+and release/download verification are complete. The documentation receipt must
+be integrated before close/Done and exclusive successor transfer.
 
 ## Frozen bytes and evidence
 
@@ -104,3 +105,46 @@ Transfer clean merged main, exact source/binary/report identities, no pending
 implementation files and these remaining constraints. The prior issue chat stops
 all checkout edits after transfer. Preserve .legacy/seaquest and its verified
 external snapshot; final legacy deletion is17 after replacement acceptance.
+
+## Verified delivery receipt
+
+[PR31](https://github.com/sandersouza/msxgp-frostbite/pull/31) merged as
+`04d215e25e14afc759ceab4815ed523d6155e3ab`, from final head
+`af77cae59702f22cdf1fa928c482493a6e2ebd8b`.
+[Push CI41272000235](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41272000235),
+[PR CI41272004728](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41272004728)
+and [merged-main CI41272076159](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41272076159)
+passed. All three downloaded report sets contain exactly the three permitted
+files,174tests and zero skipped results, with the unchanged original-free ROM.
+The PR report correctly identifies GitHub's synthetic merge `a828f47`, while
+push/main reports identify their exact commits. Local merged174tests, policy,
+repeat diagnostic build and renderer build pass. Runtime/proof dependency blobs
+still equal the frozen64c2cec producer; the merged consumer fully audits the
+unchanged primary and separate integrity seal.
+
+The [v0.0.3-movement prerelease](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.3-movement)
+is published, tagged at exact runtime producer64c2cec. All six assets were
+freshly downloaded into `outputs/issue10/release-download-v0.0.3/` and compared
+byte-for-byte to `outputs/releases/v0.0.3-movement-verified/`; all five declared
+checksums match. The downloaded262144-byte ROM has the31bb62e4 SHA-256 recorded
+above. Release asset IDs697289257..697289261 and697289279 identify the public
+build/ROM/result/integrity/notes/SUMS. The release's full note body supplies
+current scope, next issues and six concrete human-test steps. No original ROM,
+full source disassembly, generated source-derived assets or raw captures were
+uploaded. Manual/emulator subjective and physical verdicts remain pending.
+
+The one read-only review found one Important auditor gap, fixed infa128da with
+three RED→GREEN host regressions, all three original review reproductions now
+rejected, explicit missing-OMR/mirror and empty-mutant checks, and full174suite.
+No Critical/Minor findings remain. Raw failure identities are checked against
+actual emulator logs or raw CPU/pixel comparisons, then sealed independently.
+Review limitations match the contracts above; no second review was dispatched.
+
+Prepared successor fork: `Frostbite — ISSUE #11`, thread
+`01a1954d-55b9-7ca0-8801-8d2f8a1432e5`. Its idle cwd was verified as this checkout
+and its project explicitly assigned/read back as
+`0fd5a899-599e-40d4-988e-46b3d31433dd`. It does not start until the explicit
+exclusive transfer message after this receipt integrates and10is closed/Done.
+No implementation files are pending. That message revokes all further checkout
+edits by the issue10chat and starts11with its board transition. Issue10's final
+documentation PR/closure readbacks are available from its GitHub issue.

@@ -15,7 +15,8 @@ adds a synthetic SCREEN2 workload in a plain32KiB cartridge. Its
 [Original graphics extraction and SCREEN2 asset-fit evidence](docs/original-graphics.md)
 are prepared locally. They are not yet integrated into the cartridge.
 
-The [native movement diagnostic](docs/native-movement.md) executes the original
+The [downloadable v0.0.3-movement diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.3-movement)
+([technical contract](docs/native-movement.md)) executes the original
 post-visible phase as Z80, samples real MSX controls at source boundaries and
 measures the complete input/mapper/render pipeline on NTSC/PAL. It uses a 256 KiB
 ASCII16 cartridge with 64 KiB RAM/16KiB VRAM. **Contacts and graphics are diagnostic;
