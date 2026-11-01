@@ -1,0 +1,131 @@
+{
+  "schema": 2,
+  "authority_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "status": "Automated issue11 electrical/native/paced/timing/package gates passed; integration/release tracked in GitHub issue11.",
+  "boundary": "Original F019 to F476, then native F476 to F019; D0/SPFF entry",
+  "source_observation": {
+    "producer_commit": "07195b02711a24994facfd02307a084d78b3b13f",
+    "catalog_sha256": "2c5022075e1e03e5eecda0c6ef53e145e10af660c48239c3d07c6a4bc05b8e83",
+    "cases": 8704000,
+    "views_per_case": 228,
+    "backend_sha256": "1b84b99fe8554405b1138fb63de4ef1aa56c7730a43a7e24f2349239f428e297",
+    "upstream_revision": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+    "domain": {
+      "player_x": [
+        0,
+        159
+      ],
+      "floe_x": [
+        0,
+        159
+      ],
+      "control_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          128
+        ],
+        [
+          0,
+          144
+        ],
+        [
+          0,
+          160
+        ],
+        [
+          0,
+          176
+        ],
+        [
+          0,
+          192
+        ],
+        [
+          16,
+          128
+        ],
+        [
+          32,
+          128
+        ],
+        [
+          48,
+          128
+        ],
+        [
+          64,
+          128
+        ]
+      ],
+      "top_row_y": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77
+      ],
+      "outside_actor_sentinel_y": 0
+    },
+    "record": "58bytes:228P0-contact bits +228M1/P1-shadow bits; near records retain both channels",
+    "cross_checks": {
+      "actual_view_cases": 4632,
+      "actual_views": 228,
+      "invariant_links": 3756,
+      "unmodified_stella_phases": 32,
+      "cached_full_pairs": 768
+    }
+  },
+  "native_adapter": {
+    "source_state": "All128RAM and A/X/Y/P/SP; sticky ED; palette/attract, final pointers/scratch/return bytes and footer flags",
+    "inputs": "Target-owned state; original-clock floe table; explicit neutral07 odd/shore channels until issue12",
+    "cartridge": "4MiB ASCII16,64KiB system RAM/16KiB VRAM; no Atari interpreter",
+    "presentation": "Synthetic; FF empty, incomplete coarse stages1/2, only CD0F completed door; original graphics/HUD/audio later"
+  },
+  "evidence_boundaries": {
+    "geometry": "1368complete source-instruction CPU/RAM cases,1081full actual-original phase cases and287declared neutral hazard cases",
+    "natural": "2254uninterrupted logical states from cold reset/input; construction1733,entry1912,next-level2252;3reserve losses; no source/contact injections or disabled source hazards",
+    "paced_natural": "Clean canonical actual ROM:2254CPU/RAM states per family,2253NTSC/1886PAL completed frames,zero pixel errors; source continuity, cadence, I/O, sprite, stack/heap and VBlank gates pass.",
+    "manual_emulator": "Pending owner feedback",
+    "physical_hardware": "Pending owner feedback"
+  },
+  "scope": "Full hazard/RNG/TIA acquisition in12; progression13, original graphics/audio14, full-game/timing15/16 and legacy deletion17 remain separate",
+  "rejected_models": [
+    "visible-raster overlap",
+    "glyph-independent coefficient convolution",
+    "all-Y bit6 sentinel factorization"
+  ],
+  "local_only": "Original ROM/disassembly, source-derived data, observer builds, complete states/screens and raw evidence remain ignored",
+  "documentation": "docs/floe-loop.md"
+}

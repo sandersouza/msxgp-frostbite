@@ -23,6 +23,15 @@ ASCII16 cartridge with 64 KiB RAM/16KiB VRAM. **Contacts and graphics are diagno
 natural collisions, original presentation/audio and a complete game remain
 pending.** Exact artifact identity and human tests accompany its versioned release.
 
+The [v0.0.4-buildloop diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop)
+adds original-clock floe contacts and the native build-and-enter loop. Its
+4 MiB ASCII16 cartridge still needs only 64 KiB RAM/16 KiB VRAM. Automated
+NTSC/PAL replay completes construction, entry and the next-level transition.
+Presentation remains synthetic and silent; full hazard/shore acquisition and
+complete-game acceptance remain pending. See the [technical evidence](docs/floe-loop.md)
+and [human test instructions](docs/releases/v0.0.4-buildloop.md). The tightest
+measured PAL stress margin is 232 cycles; physical testing remains pending.
+
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
 byte-identically and has a reviewed routine/state/hardware map. Commercial
@@ -44,6 +53,7 @@ results are not Frostbite evidence.
 - [Renderer feasibility and synthetic benchmark](docs/renderer-feasibility.md)
 - [Original graphics, coordinate/palette mapping and asset fit](docs/original-graphics.md)
 - [Native movement, input, mapper, timing and reproduction](docs/native-movement.md)
+- [Floe contacts, natural build loop and timing](docs/floe-loop.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 
@@ -51,8 +61,8 @@ results are not Frostbite evidence.
 
 Standard-speed **MSX1, 64 KiB RAM and 16 KiB VRAM**, TMS9918-family VDP and
 built-in PSG. No RAM expansion, turbo, disk drive or extra sound hardware.
-The current movement diagnostic uses 256 KiB ASCII16, selected from measured
-implementation needs; it requires no RAM or sound expansion.
+The current build-loop diagnostic uses 4 MiB ASCII16, selected from measured
+lossless original-clock contact tables; it requires no RAM or sound expansion.
 
 The port aims to preserve original mechanics exactly: source-coordinate
 movement, arithmetic/flags, update ordering, collisions, game modes and timing.

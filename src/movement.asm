@@ -3,7 +3,11 @@
     DB "AB"
     DW start
     DS 12,0
+    IFDEF WITH_FLOES
+    DB "FBF0"
+    ELSE
     DB "FBM0"
+    ENDIF
 start:
     DI
     IM 1
@@ -80,6 +84,12 @@ start:
     LD DE,INPUT
     LD BC,32
     LDIR
+    IFDEF WITH_FLOES
+    LD DE,$5B00              ; terminate SAT before enabling display/pacing
+    CALL set_address
+    LD A,208
+    OUT ($98),A
+    ENDIF
     LD HL,vdp_register_values
     LD B,8
     LD C,$80
@@ -97,6 +107,7 @@ start:
     XOR A
     LD ($C622),A
     CALL native_reset
+native_reset_done:
     CALL adapt_scene
     CALL prepare
     CALL wait_vblank
@@ -257,7 +268,11 @@ native_step:
     LD A,(core_sp)
     CP 255
     JP NZ,core_fault         ; physical source return writes use proved call depth
+    IFDEF WITH_FLOES
+    CALL visible_step
+    ELSE
     CALL scripted_contacts
+    ENDIF
     LD A,(core_sp)
     AND 127
     LD L,A
@@ -513,11 +528,26 @@ adapt_scene:
     RRCA
     LD (INPUT+28),A
     LD A,($C04D)
+    IFDEF WITH_FLOES
+    CP 255
+    LD A,0
+    JR Z,.igloo
+    LD A,($C04D)
+    CP 15
+    LD A,3
+    JR Z,.igloo
+    LD A,($C04D)
+    CP 8
+    LD A,1
+    JR C,.igloo
+    INC A
+    ELSE
     SRL A
     SRL A
     CP 4
     JR C,.igloo
     LD A,3
+    ENDIF
 .igloo:
     LD (INPUT+29),A
 adapt_done:
@@ -537,7 +567,12 @@ normalize_x:
 vdp_register_values:
     DB $02,$C2,$06,$FF,$03,$36,$07,$04
 identity:
+    IFDEF WITH_FLOES
+    DB "FROSTBITE BUILD LOOP DIAGNOSTIC 0.0.4 REAL FLOES SYNTHETIC NO AUDIO",0
+    INCLUDE "floe_visible.asm"
+    ELSE
     DB "FROSTBITE MOVEMENT DIAGNOSTIC 0.0.3 SCRIPTED CONTACTS SYNTHETIC NO AUDIO",0
+    ENDIF
     INCLUDE "resident_tables.inc"
 resident_end:
     ASSERT $ <= $8000
@@ -557,7 +592,12 @@ native_end:
     ASSERT $ <= $C000
     DS $C000-$,$FF
     INCLUDE "row_banks.inc"
+    IFDEF WITH_FLOES
+    INCLUDE "contact_banks.inc"
+    INCLUDE "cartridge_padding.inc"
+    ELSE
     ORG $8000
     DS $4000,$FF
     ORG $8000
     DS $4000,$FF
+    ENDIF

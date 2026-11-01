@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "version": "0.0.4-buildloop",
+  "diagnostic": true,
+  "rom": {
+    "filename": "frostbite-0.0.4-buildloop.rom",
+    "size": 4194304,
+    "sha256": "c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600",
+    "mapper": "ASCII16"
+  },
+  "source_commit": "81619c058e04a644564404ec4bd8582ac46cee41",
+  "source": {
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "md5": "4ca73eb959299471788f0b685c3ba0b5",
+    "layout": "4K",
+    "trailing_words": {
+      "unused_nmi_word": 60090,
+      "reset": 61440,
+      "irq_word": 61440
+    }
+  },
+  "table_producer_commit": "07195b02711a24994facfd02307a084d78b3b13f",
+  "catalog_sha256": "2c5022075e1e03e5eecda0c6ef53e145e10af660c48239c3d07c6a4bc05b8e83",
+  "original_route_sha256": "f1790305ede9a061e245290d2ec6aca9465689bcbc1d8259fd066a27e0ceefa3",
+  "original_replay_sha256": "bcf0937a593a113893cdebb071be033ea00d5fdb78be63cbedee6c9e3b51941a",
+  "checks": {
+    "geometry": {
+      "report_sha256": "f9d666ab705e31ed2d344bc6d4385b4310562a81e34f6429607b8bc8d5eb9713",
+      "cases": 1368,
+      "max_native_cycles": 3869
+    },
+    "mechanics": {
+      "report_sha256": "60935ef843f4d3da80521a4b1dbacfdf70b7f93548c969b0d63135893b8d7bd2",
+      "cases": 86,
+      "max_native_cycles": 30145
+    },
+    "natural": {
+      "report_sha256": "e55a07a12525c02991d8c0ba8cf63fe23b1c79bac6fea5af0cd8d00f4de4269d",
+      "cases": 2254,
+      "max_native_cycles": 30356,
+      "assessment": {
+        "construction_step": 1733,
+        "entry_step": 1912,
+        "next_level_step": 2252,
+        "initial_reserve": 3,
+        "final_reserve": 0,
+        "reserve_decrements": 3,
+        "source_hazards_disabled": false,
+        "ram_or_contact_injections": false
+      }
+    },
+    "paced-ntsc": {
+      "report_sha256": "941d36ab38b6001c45180b5471e88ab9af1bd4f4e47d4fa7e1d153e9582ad64e",
+      "source_steps": 2254,
+      "frames": 2253,
+      "max_native_cycles": 30174,
+      "max_busy_cycles": 44074,
+      "frame_budget": 59736,
+      "min_margin_cycles": 15662,
+      "pixel_errors": 0,
+      "assessment": {
+        "construction_step": 1733,
+        "entry_step": 1912,
+        "next_level_step": 2252,
+        "initial_reserve": 3,
+        "final_reserve": 0,
+        "reserve_decrements": 3,
+        "source_hazards_disabled": false,
+        "ram_or_contact_injections": false
+      }
+    },
+    "paced-pal": {
+      "report_sha256": "bcd6c4bbd8ac08c31a8da99df4eca4643607c42a0492a8c7355343892f05520a",
+      "source_steps": 2254,
+      "frames": 1886,
+      "max_native_cycles": 30174,
+      "max_busy_cycles": 70205,
+      "frame_budget": 71364,
+      "min_margin_cycles": 1159,
+      "pixel_errors": 0,
+      "assessment": {
+        "construction_step": 1733,
+        "entry_step": 1912,
+        "next_level_step": 2252,
+        "initial_reserve": 3,
+        "final_reserve": 0,
+        "reserve_decrements": 3,
+        "source_hazards_disabled": false,
+        "ram_or_contact_injections": false
+      }
+    },
+    "cpu-generic": {
+      "report_sha256": "512c4befd668ade6355b1383ad267f08e4518d52244b8228adc7d5074c88141c",
+      "cases": 4497,
+      "max_cycles": 31492
+    },
+    "cpu-fast": {
+      "report_sha256": "362923b821e0d22279bdf1d9c870b0f59eba1152880287af0f2b98ac812dd6dc",
+      "cases": 1793,
+      "max_cycles": 21006
+    },
+    "stress-ntsc": {
+      "frames": 240,
+      "max_busy_cycles": 44226,
+      "frame_budget": 59736,
+      "margin": 15510
+    },
+    "stress-ntsc_layout0_width1": {
+      "frames": 240,
+      "max_busy_cycles": 44226,
+      "frame_budget": 59736,
+      "margin": 15510
+    },
+    "stress-ntsc_layout1_width0": {
+      "frames": 240,
+      "max_busy_cycles": 48086,
+      "frame_budget": 59736,
+      "margin": 11650
+    },
+    "stress-ntsc_layout1_width1": {
+      "frames": 240,
+      "max_busy_cycles": 48196,
+      "frame_budget": 59736,
+      "margin": 11540
+    },
+    "stress-pal": {
+      "frames": 240,
+      "max_busy_cycles": 66348,
+      "frame_budget": 71364,
+      "margin": 5016
+    },
+    "stress-pal_layout0_width1": {
+      "frames": 240,
+      "max_busy_cycles": 66348,
+      "frame_budget": 71364,
+      "margin": 5016
+    },
+    "stress-pal_layout1_width0": {
+      "frames": 240,
+      "max_busy_cycles": 69957,
+      "frame_budget": 71364,
+      "margin": 1407
+    },
+    "stress-pal_layout1_width1": {
+      "frames": 240,
+      "max_busy_cycles": 69957,
+      "frame_budget": 71364,
+      "margin": 1407
+    },
+    "stress-ntsc_transitions": {
+      "frames": 240,
+      "max_busy_cycles": 48048,
+      "frame_budget": 59736,
+      "margin": 11688
+    },
+    "stress-pal_transitions": {
+      "frames": 240,
+      "max_busy_cycles": 69162,
+      "frame_budget": 71364,
+      "margin": 2202
+    },
+    "stress-ntsc_transitions_inverted": {
+      "frames": 240,
+      "max_busy_cycles": 49011,
+      "frame_budget": 59736,
+      "margin": 10725
+    },
+    "stress-pal_transitions_inverted": {
+      "frames": 240,
+      "max_busy_cycles": 71132,
+      "frame_budget": 71364,
+      "margin": 232
+    },
+    "stress-counts": {
+      "frames": 240,
+      "max_busy_cycles": 44226,
+      "frame_budget": 59736,
+      "margin": 15510
+    }
+  },
+  "negative_controls": [
+    "spacing",
+    "sprite",
+    "guard",
+    "state",
+    "pixel",
+    "contact",
+    "cache",
+    "port2_fire"
+  ],
+  "private_evidence_manifest_sha256": "e07ce869afa53f9640a40215b7691c543c2643ba2a82ec2752898447575ba440",
+  "manual_emulator": "Pending owner feedback",
+  "physical_hardware": "Pending owner feedback",
+  "limitations": "Native source mechanics and real floe acquisition; synthetic presentation/no audio. Full hazard/shore acquisition and whole-game/hardware acceptance remain pending.",
+  "packager": {
+    "tool_source_commit": "c4d2102c97257b09b7c27b66125e930c3802ef27",
+    "utility_fingerprints": {
+      "scripts/floe_delivery.py": "7d02fd034c260059c3588ee9ee7f5e965af6090fa3b6dba3b490fd8d3a2bdce8"
+    }
+  },
+  "status": "Automated issue11 acceptance passed; integration/release completion receipt is tracked in GitHub issue11.",
+  "pull_request": "https://github.com/sandersouza/msxgp-frostbite/pull/33",
+  "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop",
+  "validation_sha256": "9e4a73e22a3fd291b596cae5ab41f0980b2521a2eae57dc00d9a1f69fd8ed08b",
+  "private_bundle": "outputs/floes/issue11-final-v2",
+  "evidence_note": "Private source captures/manifest stay local. Manual-emulator and physical acceptance remain pending.",
+  "observer_acceptance": {
+    "report_sha256": "b7af3af718d898574f88463efa0e3432753a081b48862f06137b29c9c67d752d",
+    "cases": 4632,
+    "actual_views": 228,
+    "invariant_links": 3756,
+    "independent_unmodified_stella_phases": 32,
+    "cached_window_comparisons": 768,
+    "binary_sha256": "1b84b99fe8554405b1138fb63de4ef1aa56c7730a43a7e24f2349239f428e297",
+    "source_commit": "07195b02711a24994facfd02307a084d78b3b13f"
+  },
+  "host_tests": 203
+}

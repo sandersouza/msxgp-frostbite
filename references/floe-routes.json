@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "seed": 1,
+  "riot_timer_preset": 127,
+  "warmup": 32,
+  "reset_release": 80,
+  "maximum_batches": 400,
+  "authority": "Unmodified original ROM and real controller/console input only",
+  "goal": "First-level construction, actual door entry, bonus conversion and initialized level1; deaths are counted explicitly"
+}
