@@ -194,15 +194,26 @@
   "physical_hardware": "Pending owner feedback",
   "limitations": "Native source mechanics and real floe acquisition; synthetic presentation/no audio. Full hazard/shore acquisition and whole-game/hardware acceptance remain pending.",
   "packager": {
-    "tool_source_commit": "81619c058e04a644564404ec4bd8582ac46cee41",
+    "tool_source_commit": "c4d2102c97257b09b7c27b66125e930c3802ef27",
     "utility_fingerprints": {
-      "scripts/floe_delivery.py": "70e2534ae2618f6736be2507be34c52c160ef5097df466a2cfe336ffdf9b3ae1"
+      "scripts/floe_delivery.py": "7d02fd034c260059c3588ee9ee7f5e965af6090fa3b6dba3b490fd8d3a2bdce8"
     }
   },
   "status": "Automated issue11 acceptance passed; integration/release completion receipt is tracked in GitHub issue11.",
   "pull_request": "https://github.com/sandersouza/msxgp-frostbite/pull/33",
   "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop",
-  "validation_sha256": "8e67d622f1b9836ecffbf9f6d296708416c6c5365b20c8ea63d12a17fc04501a",
-  "private_bundle": "outputs/floes/issue11-final",
-  "evidence_note": "Private source captures/manifest stay local. Manual-emulator and physical acceptance remain pending."
+  "validation_sha256": "9e4a73e22a3fd291b596cae5ab41f0980b2521a2eae57dc00d9a1f69fd8ed08b",
+  "private_bundle": "outputs/floes/issue11-final-v2",
+  "evidence_note": "Private source captures/manifest stay local. Manual-emulator and physical acceptance remain pending.",
+  "observer_acceptance": {
+    "report_sha256": "b7af3af718d898574f88463efa0e3432753a081b48862f06137b29c9c67d752d",
+    "cases": 4632,
+    "actual_views": 228,
+    "invariant_links": 3756,
+    "independent_unmodified_stella_phases": 32,
+    "cached_window_comparisons": 768,
+    "binary_sha256": "1b84b99fe8554405b1138fb63de4ef1aa56c7730a43a7e24f2349239f428e297",
+    "source_commit": "07195b02711a24994facfd02307a084d78b3b13f"
+  },
+  "host_tests": 203
 }

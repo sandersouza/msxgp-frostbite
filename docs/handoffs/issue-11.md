@@ -23,9 +23,9 @@ release/issue 10 outputs. Final legacy deletion remains #17.
 
 - ROM: `frostbite-0.0.4-buildloop.rom`, 4,194,304 bytes, ASCII16.
 - SHA-256: `c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600`.
-- Private final bundle: `outputs/floes/issue11-final/`.
+- Private final bundle: `outputs/floes/issue11-final-v2/`.
 - Public compact result: `references/floe-result.json`.
-- Validation SHA-256: `8e67d622f1b9836ecffbf9f6d296708416c6c5365b20c8ea63d12a17fc04501a`.
+- Validation SHA-256: `9e4a73e22a3fd291b596cae5ab41f0980b2521a2eae57dc00d9a1f69fd8ed08b`.
 - Private evidence manifest SHA-256:
   `e07ce869afa53f9640a40215b7691c543c2643ba2a82ec2752898447575ba440`.
 
@@ -111,3 +111,21 @@ free space and PAL timing are real constraints, not permission to approximate.
 Publish every next testable ROM version with exact tested bytes/source/SHA and
 human test expectations. Finish #12 with its own PR/release/handoff and another
 exclusive fork. Never implement it inside issue 11's chat.
+
+## Independent review and sealing correction
+
+The read-only whole-branch review found no concrete runtime regression. Two
+Important evidence-sealing gaps were fixed in one RED→GREEN pass: the observer
+acceptance receipt/backend/coverage/committed helpers/raw data are now enforced,
+and replay trace/final bytes must match the recorded hash and frozen original.
+All 203 host tests pass. The packaging utility is committed at
+`c4d2102c97257b09b7c27b66125e930c3802ef27`; the tested ROM source and all capture
+identities remain unchanged. The replacement immutable seal is the v2 path
+above; the earlier unshipped seal remains local historical evidence.
+
+The prepared successor is `Frostbite — ISSUE #12`, thread
+`01a19650-5f24-78c3-b4cf-3b2942a756ac`, in the same Frostbite project/workspace.
+It remains idle until the parent explicitly transfers exclusive ownership after
+integration and release-download verification. No minor findings were deferred.
+All execution rulings and review dispositions are archived in
+[issue-11-execution-ledger.md](issue-11-execution-ledger.md).

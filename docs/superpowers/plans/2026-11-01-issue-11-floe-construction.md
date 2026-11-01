@@ -65,7 +65,7 @@
 
 **Files:** docs/floe-loop.md, references/floe-result.json, docs/releases/v0.0.4-buildloop.md, docs/handoffs/issue-11.md, local p11, README.
 
-- [ ] One fresh read-only whole-branch review on the most capable reviewer, five focus classes and ledger rulings. Regrade material findings; one owned RED→GREEN fix pass/full suite, no review loop.
+- [x] One fresh read-only whole-branch review on the most capable reviewer, five focus classes and ledger rulings. Regrade material findings; one owned RED→GREEN fix pass/full suite, no review loop.
 - [ ] Exact-head CI, focused linked PR and clean merged-main checks. Publish prerelease with exact tested ROM/SHA/source/current/next/human tests; download and verify every asset before close/Done.
 - [ ] Durable handoff of hashes, limits and exclusive ownership to a separate Frostbite issue12 fork. Stop editing this checkout after transfer; keep legacy deletion for17.
 
