@@ -88,5 +88,21 @@ class ProgressionRouteTests(unittest.TestCase):
                     {**proposal, 'inputs': [{**samples[0], 'swcha': 256}]}):
             with self.assertRaises(ValueError): api.proposal_inputs(bad, 2, 10)
 
+    def test_loss_route_uses_real_direction_pins_and_releases_during_recovery(self):
+        api = self.api()
+        ram = points([{}], 1)[0]['ram']
+        self.assertEqual(api.loss_inputs(ram, 2, 159)[0]['swcha'], 159)
+        ram[0x47] = 1
+        self.assertEqual(api.loss_inputs(ram, 2, 159)[0]['swcha'], 249)
+        ram[0x67] = 64
+        self.assertEqual(api.loss_inputs(ram, 2, 159)[0]['swcha'], 255)
+
+    def test_restart_requires_recovery_delay_to_finish_before_route_ends(self):
+        route = points([{}, {0xF1: 128}, {0xCC: 0, 0xC6: 255}, {0xE7: 64}])
+        with self.assertRaises(ValueError): self.api().assess(route, 'exhaustion-restart')
+        route += points([{}])
+        route[-1]['index'] = 4
+        self.assertEqual(self.api().assess(route, 'exhaustion-restart')['restart_step'], 3)
+
 
 if __name__ == '__main__': unittest.main()

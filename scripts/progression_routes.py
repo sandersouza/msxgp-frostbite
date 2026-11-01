@@ -49,6 +49,13 @@ def proposal_inputs(proposal, variation, maximum):
     return samples
 
 
+def loss_inputs(ram, count, keys=159):
+    if len(ram) != 128 or type(count) is not int or not 1 <= count <= 10:
+        raise ValueError('complete RAM and bounded input batch required')
+    direction = keys if ram[0x71] == 0 and ram[0x67] == 0 else 255
+    return [{**NEUTRAL, 'swcha': controller(direction, ram[0x47])} for _ in range(count)]
+
+
 def assess(points, kind, active_start=0):
     if (kind not in KINDS or not points or not 0 <= active_start < len(points)
             or any(len(p.get('ram', [])) != 128 for p in points)
@@ -97,6 +104,9 @@ def assess(points, kind, active_start=0):
                           and rows[i][0x48:0x4B] == [0, 0, 0]), None)
         if restarted is None or variation & 1 and not {0, 1}.issubset(result['turn_players']):
             raise ValueError('natural death, both-empty terminal, both turn directions and actual restart required')
+        if not any(r[0x67] == r[0x6A] == r[0x71] == r[0x46] == 0 and r[0x64] == 27
+                   and not r[0x45] & 128 for r in rows[restarted:]):
+            raise ValueError('restart must finish recovery delay and reach active control')
         result.update(death_step=death, terminal_step=terminal, restart_step=restarted)
     return result
 
@@ -155,8 +165,7 @@ def capture(out, kind, variation, stella='stella', plan=None):
             samples = [{**NEUTRAL, 'swchb': 62}] + [NEUTRAL] * config['reset_release_intervals']
             reset_sent = True
         else:
-            direction = 0xDF if ram[0x71] == 0 and ram[0x67] == 0 else 255
-            samples = [{**NEUTRAL, 'swcha': controller(direction, ram[0x47])}] * 10
+            samples = loss_inputs(ram, 10, config['exhaustion_direction'])
         segment(samples, f'body-{batch:04d}'); elapsed += len(samples)
         try:
             assessment = assess(points, kind, active_start)

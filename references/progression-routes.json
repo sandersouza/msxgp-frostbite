@@ -5,6 +5,7 @@
   "warmup": 32,
   "select_release_intervals": 2,
   "reset_release_intervals": 80,
+  "exhaustion_direction": 159,
   "maximum_batches": 1800,
   "maximum_intervals": 18000,
   "variations": [0, 1, 2, 3],
