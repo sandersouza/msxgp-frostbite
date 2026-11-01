@@ -23,7 +23,9 @@ def decode_record(data):
 
 
 class CompactRows:
-    def __init__(self):
+    def __init__(self,row_format='bitmap'):
+        if row_format not in ('bitmap','nibble'):raise ValueError('known exact sparse row format required')
+        self.row_format=row_format
         self.records=[bytes(30)];self.record_ids={bytes(30):0}
         self.blocks=[];self.block_ids={};self.rows=[];self.row_ids={}
 
@@ -42,7 +44,7 @@ class CompactRows:
     def intern_indices(self,ids):
         if len(ids)!=160 or any(type(value) is not int or not 0<=value<len(self.records) for value in ids):
             raise ValueError('complete160-coordinate row of existing exact record IDs required')
-        bitmap=0;references=bytearray()
+        bitmap=0;references=bytearray();ranks=bytearray(5)
         for index in range(10):
             values=ids[index*16:(index+1)*16]
             if not any(values):continue
@@ -50,19 +52,20 @@ class CompactRows:
             if data not in self.block_ids:
                 if len(self.blocks)>=65536:raise ValueError('compact block index overflow')
                 self.block_ids[data]=len(self.blocks);self.blocks.append(data)
-            bitmap|=1<<index;references.extend(self.block_ids[data].to_bytes(2,'little'))
-        node=bitmap.to_bytes(2,'little')+references
+            bitmap|=1<<index;ranks[index//2]|=(len(references)//2+1)<<((index%2)*4)
+            references.extend(self.block_ids[data].to_bytes(2,'little'))
+        node=(bytes(ranks) if self.row_format=='nibble' else bitmap.to_bytes(2,'little'))+references
         if node not in self.row_ids:self.row_ids[node]=len(self.rows);self.rows.append(node)
         return self.row_ids[node]
 
     def emit(self,first_bank=14):
         if not self.rows or type(first_bank) is not int or not 0<=first_bank<=255:
             raise ValueError('nonempty compact table and physical first bank required')
-        return PackedRows(first_bank,self.records,self.blocks,self.rows)
+        return PackedRows(first_bank,self.records,self.blocks,self.rows,self.row_format)
 
 
 class PackedRows:
-    def __init__(self,first_bank,records,blocks,rows):
+    def __init__(self,first_bank,records,blocks,rows,row_format='bitmap'):
         self.pools=[]
         def slots(values):
             for offset in range(0,len(values),512):
@@ -74,7 +77,7 @@ class PackedRows:
         if tree_bank>255:raise ValueError('compact pools exceed ASCII16 bank range')
         self.tree=BankPacker(tree_bank);self.rows=[self.tree.put(row) for row in rows]
         self.metadata={'first_bank':first_bank,'record_bank':first_bank,'record_count':len(records),
-                       'block_bank':block_bank,'block_count':len(blocks),'tree_bank':tree_bank}
+                       'block_bank':block_bank,'block_count':len(blocks),'tree_bank':tree_bank,'row_format':row_format}
 
     @property
     def banks(self):
@@ -99,12 +102,20 @@ def read_row(banks,metadata,root,index):
         if not 0<=number<metadata[kind+'_count']:raise ValueError('compact slot index outside emitted pool')
         return read((metadata[kind+'_bank']+number//512,0x8000+(number%512)*32),32)
     if root[0]<metadata['tree_bank']:raise ValueError('compact row pointer is not in the tree pool')
-    bitmap=int.from_bytes(read(root,2),'little')
-    if bitmap&~1023:raise ValueError('compact row bitmap has undefined coordinates')
     bit=index//16
-    if not bitmap&(1<<bit):return bytes(58)
-    node=read(root,2+2*bitmap.bit_count());rank=(bitmap&((1<<bit)-1)).bit_count()
-    block=int.from_bytes(node[2+rank*2:4+rank*2],'little')
+    if metadata.get('row_format','bitmap')=='nibble':
+        prefix=read(root,5);ranks=[(prefix[n//2]>>((n%2)*4))&15 for n in range(10)];nonzero=[rank for rank in ranks if rank]
+        if nonzero!=list(range(1,len(nonzero)+1)):raise ValueError('compact nibble ranks are not complete ordered references')
+        rank=ranks[bit]
+        if not rank:return bytes(58)
+        block=int.from_bytes(read((root[0],root[1]+5+(rank-1)*2),2),'little')
+    elif metadata.get('row_format','bitmap')=='bitmap':
+        bitmap=int.from_bytes(read(root,2),'little')
+        if bitmap&~1023:raise ValueError('compact row bitmap has undefined coordinates')
+        if not bitmap&(1<<bit):return bytes(58)
+        node=read(root,2+2*bitmap.bit_count());rank=(bitmap&((1<<bit)-1)).bit_count()
+        block=int.from_bytes(node[2+rank*2:4+rank*2],'little')
+    else:raise ValueError('unknown compact row format')
     references=slot('block',block);offset=index%16*2
     record=int.from_bytes(references[offset:offset+2],'little')
     return decode_record(slot('record',record)[:30])

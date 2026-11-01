@@ -54,3 +54,15 @@ class CompactCollisionTests(unittest.TestCase):
         self.assertEqual(root,table.intern_row([raw]+[bytes(58)]*159))
         with self.assertRaises(ValueError):table.intern_indices([record+1]+[0]*159)
         with self.assertRaises(ValueError):table.intern_indices([record]*159)
+
+    def test_nibble_rank_roots_retain_all_ten_blocks_without_a_scan(self):
+        api=self.api();table=api.CompactRows(row_format='nibble');rows=[bytes(58)]*160
+        for block in (0,1,4,8,9):rows[block*16+15]=bytes([block+1])+bytes(57)
+        root=table.intern_row(rows);packed=table.emit()
+        self.assertEqual(packed.metadata['row_format'],'nibble')
+        for x in range(160):self.assertEqual(api.read_row(packed.banks,packed.metadata,packed.rows[root],x),rows[x])
+        bank,address=packed.rows[root];offset=address-0x8000
+        self.assertEqual(bytes(packed.banks[bank-14][offset:offset+5]),bytes([0x21,0,3,0,0x54]))
+        bad=[bytearray(bank) for bank in packed.banks];bad[bank-14][offset]=0x31
+        with self.assertRaises(ValueError):api.read_row(bad,packed.metadata,packed.rows[root],15)
+        with self.assertRaises(ValueError):api.CompactRows(row_format='unknown')

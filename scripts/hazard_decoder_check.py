@@ -26,11 +26,17 @@ def check(out):
     producer_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
     helpers={name:digest(ROOT/name) for name in ('src/hazard_contacts.asm','scripts/hazard_decoder_check.py','scripts/collision_compact.py',
                                                'scripts/hazard_tables.py','scripts/floe_tables.py','scripts/floe_truth.py','scripts/smoke.py','scripts/environment.py','scripts/render_build.py')}
-    pool=CompactRows();roots=[];rows=[]
+    pool=CompactRows(row_format='nibble');roots=[];rows=[]
     for n in range(520):
         row=[bytes(58)]*160;raw=(n+1).to_bytes(2,'little')+bytes(27)
         shadow=bytes([255])*28+b'\x0f' if n%3==0 else bytes(29)
         row[(0,15,16,159)[n%4]]=raw+shadow;rows.append(row);roots.append(pool.intern_row(row))
+    dense=[bytes(58)]*160
+    for block in range(10):
+        raw=((block+1)*37).to_bytes(2,'little')+bytes(27)
+        shadow=bytes([255])*28+b'\x0f' if block%2 else bytes(29)
+        dense[block*16]=dense[block*16+15]=raw+shadow
+    rows.append(dense);roots.append(pool.intern_row(dense))
     plan={'kind':'edge','player_x':[0],'ys':[0,53],'modes':[{}]*264,'coordinates':list(range(160)),'cases_per_player':2*264*160}
     data=bytearray(plan['cases_per_player']*58)
     for mode in range(264):
@@ -43,6 +49,11 @@ def check(out):
                 bank,address=packed.rows[roots[n]]
                 cases.append({'entry':'contact_compact','bank':bank,'hl':address,'de':x,'bc':0x1357,'a':0,
                               'byte':view//8,'mask':1<<(view%8),'want':sample(rows[n][x],view)})
+    for x in (0,15,16,31,47,63,79,95,111,127,143,159):
+        for view in (0,1,7,8,9,15,16,227):
+            bank,address=packed.rows[roots[520]]
+            cases.append({'entry':'contact_compact','bank':bank,'hl':address,'de':x,'bc':0x1357,'a':0,
+                          'byte':view//8,'mask':1<<(view%8),'want':sample(dense[x],view)})
     for mode in (0,255,256,263):
         for y in (0,1):
             for view in (0,8):
@@ -179,7 +190,8 @@ after time 30 {{fail_decoder watchdog}}
                 raise ValueError(f'copy-distance differs at actual original-free Z80 case{i} distance{d} A{a} F{flags}')
         elif a!=c['want']:raise ValueError(f'physical native decoder differs at case{i}: {a} != {c["want"]}')
     if any(digest(ROOT/name)!=sha for name,sha in helpers.items()):raise ValueError('decoder fixture producer changed')
-    report={'complete':True,'cases':len(cases),'decoder_cases':288,'profile_directory_cases':16,'all_160_copy_distances':True,'helpers':helpers,
+    report={'complete':True,'cases':len(cases),'decoder_cases':sum(c['entry']=='contact_compact' for c in cases),
+            'all_ten_nibble_ranks':True,'profile_directory_cases':16,'all_160_copy_distances':True,'helpers':helpers,
             'producer_commit':producer_commit,'producer_dirty':producer_dirty,
             'max_cycles_including_rpc_call_return':{entry:max(r[-1] for c,r in zip(cases,actual) if c['entry']==entry) for entry in ('contact_compact','hazard_lookup','hazard_copy_distance')},
             'fixture_sha256':digest(rom),'emulator_sha256':digest(emulator),'profile_sha256':digest(user/'machines/Frostbite_Decoder.xml'),

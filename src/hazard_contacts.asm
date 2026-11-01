@@ -204,10 +204,12 @@ hazard_lookup:
     LD E,A
     JP contact_compact
 
-; HL=mapped sparse row root, E=source coordinate0..159.
+; HL=mapped five-byte nibble-rank row root, E=source coordinate0..159.
 ; The immutable verified tables keep every record/block in a bank-local32B slot.
 ; Returns the exact source electrical byte. IX/IY are preserved.
 contact_compact:
+    LD B,H
+    LD C,L
     LD A,E
     AND 15
     LD (hazard_leaf),A
@@ -217,26 +219,29 @@ contact_compact:
     RRCA
     RRCA
     AND 15
+    LD D,A
+    RRCA
+    AND 7
     LD E,A
-    LD C,(HL)
-    INC HL
-    LD B,(HL)
-    INC HL
-.rank:
-    LD A,E
-    OR A
-    JR Z,.target
-    SRL B
-    RR C
-    JR NC,.skip
-    INC HL
-    INC HL
-.skip:
-    DEC E
-    JR .rank
-.target:
-    BIT 0,C
+    LD A,D
+    LD D,0
+    ADD HL,DE
+    RRCA
+    LD A,(HL)
+    JR NC,.low
+    RRCA
+    RRCA
+    RRCA
+    RRCA
+.low:
+    AND 15
     JR Z,.zero
+    ADD A,A
+    ADD A,3                ; first reference starts at root+5
+    LD E,A
+    LD H,B
+    LD L,C
+    ADD HL,DE
     LD E,(HL)
     INC HL
     LD D,(HL)

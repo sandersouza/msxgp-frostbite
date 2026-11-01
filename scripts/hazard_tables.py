@@ -200,8 +200,10 @@ def verify_aliases(ordinary,aliases):
                     if copy_union(px,y,shape,reflection,copies,x,single)!=data[start:start+58]:
                         raise ValueError(f'original copy factorization rejected PX{px} Y{y} shape{shape} ref{reflection} NUSIZ{copies} X{x}')
                     checked+=1
-    return {'cases':checked,'literal_views':228,'channels':2,'complete_geometry':True,
-            'scope':'Actual original NUSIZ0..3 at every ordinary P0 X, object X and vertical window, with rotating original shapes/reflections; pattern-independent copy clocks additionally follow pinned Player/DrawCounterDecodes. Not an exhaustive Cartesian product of all shapes and counts.'}
+    return {'cases':checked,'literal_views':228,'channels':2,
+            'complete_geometry':bool(normal_plan['complete_component_domain'] and alias_plan['complete_component_domain']),
+            'player_positions':len(alias_plan['player_x']),
+            'scope':'Actual original NUSIZ0..3 in the explicitly declared component domains, with rotating original shapes/reflections; pattern-independent copy clocks additionally follow pinned Player/DrawCounterDecodes. Not an exhaustive Cartesian product of all shapes and counts.'}
 
 
 def verify_packed_component(packed,compiled,profiles,directory):
@@ -235,7 +237,7 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
     fplan={'kind':'floe','player_x':list(range(160)),'ys':list(FLOE_YS),
            'modes':floe_manifest['controls'],'coordinates':list(range(160)),
            'cases_per_player':len(FLOE_YS)*len(floe_manifest['controls'])*160}
-    pool=CompactRows();compiled={};profiles={'floe':floe_profiles}
+    pool=CompactRows(row_format='nibble');compiled={};profiles={'floe':floe_profiles}
     compiled['floe']=compile_component(pool,fplan,floe_profiles)
     for kind in ('edge','ordinary','shore'):
         plan,paths,_=components[kind];profiles[kind]=paths;compiled[kind]=compile_component(pool,plan,paths)

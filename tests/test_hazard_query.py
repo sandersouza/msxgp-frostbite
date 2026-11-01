@@ -1,11 +1,25 @@
 import importlib
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class HazardQueryTests(unittest.TestCase):
+    def test_consumed_memory_mapped_profile_is_rechecked_after_access(self):
+        api=importlib.import_module('hazard_query')
+        with tempfile.TemporaryDirectory() as temporary:
+            path=Path(temporary)/'profile.truth';path.write_bytes(bytes(58))
+            component=api.Component.__new__(api.Component);component.paths={64:path};component.hashes={64:api.digest(path)}
+            component.plan={'cases_per_player':1};component.maps={}
+            data=component.profile(64)
+            try:
+                self.assertEqual(data[:],bytes(58));component.verify_consumed()
+                path.write_bytes(b'\x01'+bytes(57))
+                with self.assertRaisesRegex(ValueError,'consumed raw'):component.verify_consumed()
+            finally:data.close()
+
     def test_all_four_odd_rows_and_shore_use_the_actual_view_and_keep_count_zero(self):
         api=importlib.import_module('hazard_query');query=api.RawContacts.__new__(api.RawContacts)
         class Floes:
