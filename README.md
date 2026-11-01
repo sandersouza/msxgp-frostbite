@@ -32,7 +32,8 @@ complete-game acceptance remain pending. See the [technical evidence](docs/floe-
 and [human test instructions](docs/releases/v0.0.4-buildloop.md). The tightest
 measured PAL stress margin is 232 cycles; physical testing remains pending.
 
-The v0.0.5-hazards diagnostic adds actual threat/fish/bear/shore contacts and
+The [v0.0.5-hazards diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.5-hazards)
+adds actual threat/fish/bear/shore contacts and
 original interaction ordering in the same 4 MiB ASCII16 hardware target.
 Its sealed automated evidence covers 14,828 visible phases, 652 controlled
 native cases, 65,536 Z80 shift/flag cases, all 32 natural route/clock/view
@@ -40,8 +41,9 @@ combinations and 15 crowded stress modes. The tightest measured PAL margin is
 645 cycles. [Technical evidence](docs/hazard-collisions.md),
 [compact validation](references/hazard-result.json) and
 [release notes/human tests](docs/releases/v0.0.5-hazards.md) describe the exact
-ROM and its synthetic, silent presentation. Independent review passed;
-release integration is pending at this checkpoint. Whole-game, progression and
+ROM and its synthetic, silent presentation. Independent review, merged-main
+rebuild/CI and all four published asset downloads passed;
+[delivery receipt](references/hazard-delivery.json). Whole-game, progression and
 manual/physical acceptance remain separate.
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured

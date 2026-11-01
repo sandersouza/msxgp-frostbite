@@ -50,7 +50,10 @@ The first alternate-view PAL test failed at 74,816 cycles. Compact flag lowering
 reduced that exact complete original route/view to 70,719, then the clean ROM
 received the entire expanded matrix and all other gates again. Earlier
 candidates/seals below are historical and are not publication candidates.
-Independent review passed with no blocking findings; release integration is pending. See
+Independent review passed with no blocking findings. PR35 is integrated, the
+clean merged-main rebuild is byte-identical, and all four published release
+assets were downloaded and verified; see the
+[delivery receipt](../references/hazard-delivery.json). See
 [human test instructions](releases/v0.0.5-hazards.md); original presentation,
 progression/whole-game and manual/physical acceptance remain later work.
 
