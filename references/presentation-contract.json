@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "issue": 14,
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "drawing_phase": {"before": "F019", "visible_end": "F476", "after": "F019"},
+  "source_clock": {"numerator": 3579545, "divisor": 3},
+  "stream": {
+    "magic": "FBPR0001",
+    "header": "little-endian 8sIII: magic, record_count1..5000, clock_numerator, divisor",
+    "record_header": "little-endian IHHHIIIH: ordinal, beforePC, visiblePC, afterPC, source_frame, visible_cycles, interval_cycles, audio_write_count",
+    "snapshots": "before, visible_end, after: A/X/Y/P/SP bytes then all128 canonical RAM bytes each",
+    "raster": "160x210 original indexed pixels for the before-state visible phase",
+    "audio_write": "little-endian IBB: normalized source-cycle offset, decoded TIA audio write address15..1A, unmodified bus value",
+    "audio_order": "Retain every ordered write, including unchanged values and silent intervals; no deduplication",
+    "terminator": "FBPRDONE then little-endian uint32 record_count; no trailing bytes"
+  },
+  "evidence_policy": "Independent original raster/audio observations, controlled fixtures, natural input-only replay, target pixels/events/state, manual review and physical acceptance remain separate",
+  "status": "Source observation protocol/parser under implementation; backend and actual source acceptance pending"
+}
