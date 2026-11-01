@@ -40,8 +40,8 @@ combinations and 15 crowded stress modes. The tightest measured PAL margin is
 645 cycles. [Technical evidence](docs/hazard-collisions.md),
 [compact validation](references/hazard-result.json) and
 [release notes/human tests](docs/releases/v0.0.5-hazards.md) describe the exact
-ROM and its synthetic, silent presentation. Independent review and release
-integration are pending at this checkpoint; whole-game, progression and
+ROM and its synthetic, silent presentation. Independent review passed;
+release integration is pending at this checkpoint. Whole-game, progression and
 manual/physical acceptance remain separate.
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured

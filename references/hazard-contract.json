@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
-  "status": "Complete expanded automated matrix and immutable package accepted; independent review and release integration pending",
+  "status": "Complete expanded automated matrix, immutable package and independent review accepted; release integration pending",
   "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
   "original_phase": {"entry": "F019", "exit": "F476", "ram_bytes": 128},
   "local_protocol": {

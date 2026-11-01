@@ -77,7 +77,8 @@ only issue17 may remove it after replacement acceptance.
 ## Delivery and exclusive successor gate
 
 At this documentation checkpoint the immutable automated package passed;
-independent review, integration and release/download receipts remain pending.
+independent review also passed without blocking findings. Integration and
+release/download receipts remain pending.
 The issue12 chat owns all pending documentation/delivery files. Do not transfer
 the checkout or implement13 until12 has its own review, integrated PR, exact
 prerelease/download verification and closed/Done status.
@@ -89,3 +90,21 @@ ownership explicitly; the old chat stops writing. Issue13 owns score BCD,
 progression, reserves, all four variations, alternating players/game-over/
 restart and their boundary/natural acceptance. Routine successor start and its
 next testable-ROM release are already authorized by the owner.
+
+## Independent review and deferred minor
+
+One fresh whole-branch review at `c4bedae7439f31ec36d50d4a3dde29af484999db`
+found no Critical/Important issue. The reviewer independently ran268 tests,
+checked exact build/package/public-result identities, rechecked all65536
+microproof rows and the tightest679-frame PAL/layout1/width1 original replay.
+No further reviewer or runtime repair was needed.
+
+Deferred minor: the sealer validates every stress `busy_cycles` against the
+budget but copies `max_busy_cycles` into its compact summary without deriving
+that field again. Current summaries are correct; a future metadata-only edit
+could misstate a maximum while the safe raw-cycle gate still holds. Recompute
+or assert that summary in later acceptance-maintenance work. This does not
+invalidate the current ROM or its measured limits.
+
+All execution rulings, rejected experiments and review dispositions are in
+[the execution archive](issue-12-execution-ledger.md).

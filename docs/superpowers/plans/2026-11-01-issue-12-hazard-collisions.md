@@ -83,7 +83,7 @@ The smaller candidate `collision_compact.CompactRows.intern_row(records) -> row_
 
 **Files:** local p12 issue, README, docs/releases/v0.0.5-hazards.md, docs/handoffs/issue-12.md, archived execution ledger and compact delivery receipt.
 
-- [ ] One fresh read-only whole-branch review on the most capable model checks the five focus classes and ledger rulings. Regrade material findings; one owned RED→GREEN fix pass and full green suite, no rereview loop.
+- [x] One fresh read-only whole-branch review on the most capable model checks the focus classes and ledger rulings. Regrade material findings; one owned RED→GREEN fix pass and full green suite, no rereview loop. Astra/high approved c4bedae with no blocking issue; one metadata-summary minor is deferred and documented.
 - [ ] Exact-head CI, focused linked PR, clean merged-main checks and versioned prerelease attach only exact tested ROM/SHA/build/compact validation. Download every asset and verify bytes before close/Done.
 - [ ] Synchronize local/live issue, record source/ROM/limits/evidence and exclusive pending-file ownership. Prepare a separate Frostbite issue 13 fork; transfer only after issue 12 acceptance/integration/release gates and stop editing this checkout.
 
