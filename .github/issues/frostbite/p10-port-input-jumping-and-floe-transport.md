@@ -1,6 +1,6 @@
 # Port native input, jumping, air control and floe transport
 
-Planning ID: P10. Status: In review; canonical automated evidence frozen; independent review and its material auditor fix complete; final CI, integration and release readbacks remain pending.
+Planning ID: P10. Status: In review; canonical automated evidence frozen; independent review and its material auditor fix complete; PR31 integrated; final CI and release/download verified; documentation receipt integration and close/Done remain pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/10
 
 ## Goal
@@ -46,3 +46,7 @@ Exact ROM producer:64c2cec6d37e5b988b0b86bc1d57836dbe43498a. ROM SHA-256:31bb62e
 Public CI remains original-free. Manual emulator, subjective audio/palette, expanded-slot and physical acceptance remain pending. Close/Done only after the reviewed delivery is integrated and its exact release assets are downloaded and verified.
 
 Independent review found one material delivery-auditor gap, now fixed in fa128da: complete required raw-file sets and hashes, OMR/mirror/profile binding, and actual failure stage/cause verification. All three review reproductions reject; 174 host tests pass. The separate immutable integrity supplement leaves original runtime/capture producer and ROM bytes unchanged; public summary:references/native-integrity-result.json.
+
+## Delivery receipt
+
+PR31 merged as04d215e25e14afc759ceab4815ed523d6155e3ab. Final push41272000235/PR41272004728/main41272076159 CI passed; downloaded reports have174tests,zero skips and exactly3allowed files. Local merged checks and frozen dependency identities pass. Published [v0.0.3-movement](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.3-movement) at exact producer64c2cec; all6downloaded assets are byte-identical and all5checksums pass. ROM262144bytes/ASCII16/SHA31bb62e4886c8baf361584ce6a140fc05e34c77be15642780e23ad5d5fdb9f82. See docs/handoffs/issue-10.md. Close/Done after the documentation receipt integrates; successor fork01a1954d-55b9-7ca0-8801-8d2f8a1432e5is prepared within Frostbite and waits for exclusive transfer.
