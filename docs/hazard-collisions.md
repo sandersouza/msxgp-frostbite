@@ -4,7 +4,61 @@ Issue #12 extends the original-clock boundary used by the native MSX1 port.
 The source ROM and unchanged original execution remain authoritative; a VDP
 collision flag or synthetic display geometry cannot supply gameplay contacts.
 
-## Boundary and current evidence
+## Current automated checkpoint
+
+The clean candidate at `025bc66683d612aeb88b817e28b316bcab723769` is a
+4,194,304-byte ASCII16 ROM, SHA-256
+`cd2ca94637d409c1d31afda0262e44b1ea422809afdc871aa1b54038f8e4cac2`.
+It passes 14,828 actual original-visible CPU/all-128-RAM cases and 652 controlled
+whole-native-phase cases. The latter include both players, every row/kind,
+grounded/airborne contact, three seeds/six stages, existing fish at F7=0C,
+bear stage2/3, water/temperature causes and every 8-bit RNG seed. Maximum visible
+phase cost is 6,679 cycles; the largest controlled full phase is 36,275 cycles.
+
+Four cold input-only original routes and independent complete-state replays
+also pass in the actual paced MSX ROM for both clock families:
+
+| Route | Source checkpoints | NTSC completed frames / busiest cycles | PAL completed frames / busiest cycles |
+| --- | ---: | ---: | ---: |
+| Bear chase / death / recovery | 702 | 701 / 41,762 | 587 / 62,909 |
+| Bear refuge and blocked sweep | 1,235 | 1,234 / 44,794 | 1,033 / 67,942 |
+| Fish and complete reward envelope | 812 | 811 / 45,842 | 679 / 70,846 |
+| Threat attachment / push / death / recovery | 603 | 602 / 45,818 | 504 / 69,364 |
+
+Fish collection at checkpoint771 removes one segment and the complete twenty
+ten-point awards finish at798. Threat attachment/push/recovery occur at
+304/306/602. Every checkpoint compares all logical CPU registers and all128RAM;
+every completed frame checks pixels, its own latest state and uninterrupted
+source cadence. Active canonical RAM/contact injections are zero. Cold source
+preparation and restore journals remain explicit and independently replayed.
+
+All fifteen dense/cache/layout/toggle stress modes pass, including both
+NTSC/PAL mixed seeds with actual source NUSIZ0/1/2/3. Each benchmark seeds
+canonical state once and compares every subsequent complete phase continuously;
+its dense visual overlay is separately labeled. Maximum crowded NTSC/PAL work
+is 51,321/68,018 cycles. Source budgets remain 59,736/71,364 cycles; the tightest
+accepted named-route PAL margin is 518. Every checked VRAM interval is at
+least29 cycles, occupancy stays within four sprites, commits stay in VBlank,
+and guards, slots and interrupt state pass. All eleven intentional mutations
+are detected at their intended comparison: row collision, RNG, row priority,
+shore sticky lifetime, VRAM spacing, fifth sprite, heap guard, canonical state,
+pixel, floe contact and cache state.
+
+An earlier candidate failed the same PAL fish route at71,404 cycles. The repair
+clears all odd latches and dispatches the single live26-Y band proved by every
+literal-view source profile. It changes no lookup value, RNG or source step.
+The complete geometry, controlled cases and all named paced routes were rerun
+on the changed ROM. Original instructions/seeded controlled fixtures and natural
+input-only routes remain distinct. The generated native core source text is
+byte-identical to the published0.0.4 rebuild; resident-call relocation changes
+assembled bank bytes. The published0.0.4 ROM remains byte-identical.
+
+Immutable packaging, independent review and release integration are pending
+at this checkpoint. Synthetic graphics/HUD and no audio remain diagnostic
+limitations. Manual-emulator and physical MSX acceptance require owner feedback;
+whole-game/progression acceptance belongs to later issues.
+
+## Boundary and historical source research
 
 The original kernel clears shore collisions at F1FC and reads CXPPMM at F244.
 It clears each row at F307, reads odd object windows at F331 and combines
@@ -29,9 +83,8 @@ CPU/RAM reduction matches. Thirty-two unchanged-Stella phase comparisons and
 64 old-floe protocol comparisons pass. A first count-zero/object-X0 case
 produces the real B7 ghost contact; count zero is not an invented empty mask.
 
-This is controlled source research. The complete geometry catalog, native
-all-channel target, crowded natural routes, timing and release are not yet
-accepted. A failed first capture exceeded the unchanged 30-second process
+That initial checkpoint was controlled source research, before the complete
+catalog/native/paced acceptance above. A failed first capture exceeded the unchanged 30-second process
 watchdog; its partial bytes remain failed exploration. The successful checker
 uses the same cases in independent batches of at most 1,024.
 

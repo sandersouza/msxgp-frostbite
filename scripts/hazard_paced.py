@@ -40,6 +40,43 @@ def validate_report(report,steps,family):
         raise ValueError('incomplete/unsafe paced named-route evidence')
 
 
+def verify_saved(out,source,family,report):
+    out=Path(out);source=Path(source)
+    source_receipt=json.loads((source/'route.json').read_text())
+    trace=json.loads((source/'trace.json').read_text());inputs=json.loads((source/'inputs.json').read_text())
+    states=(out/'states.bin').read_bytes();frames=(out/'frames.bin').read_bytes()
+    validate_report(report,len(inputs),family)
+    if len(states)!=137*len(inputs) or len(frames)!=FRAME_BYTES*report['frames']:raise ValueError('truncated paced state/frame observations')
+    points=[];source_cycles=[]
+    for index,want in enumerate(trace['steps']):
+        row=states[index*137:(index+1)*137];got={'registers':dict(zip(('a','x','y','p','sp'),row[:5])),'ram':list(row[5:133])}
+        expected={'registers':{key:want['cpu'][key] for key in ('a','x','y','p','sp')},'ram':want['ram']}
+        try:compare(expected,got)
+        except ValueError as error:raise ValueError(f'paced native state{index}: {error}; {out}') from error
+        points.append({**got,'index':index});source_cycles.append(struct.unpack('<I',row[133:137])[0])
+    if assess(points,source_receipt['kind'],source_receipt['preparation_intervals'],source_receipt['assessment'].get('approach_end'))!=source_receipt['assessment']:
+        raise ValueError('paced named-route interaction milestones differ')
+    period=59736 if family=='ntsc' else 71364;busy=[];vdp_frames=[];logical=1;peak=0
+    for index,nsteps in enumerate(model.schedule(report['frames'],period)):
+        row=frames[index*FRAME_BYTES:(index+1)*FRAME_BYTES];frame,steps,work,spacing,commit,y0,y1=struct.unpack('<7i',row[:28])
+        logical+=nsteps
+        if steps!=logical or not 0<=steps-1<len(points):raise ValueError('paced source count/cadence differs')
+        if index and (not 0<work<period or abs(spacing-period)>40):raise ValueError(f'natural frame budget/cadence exceeded at{index}: {work}/{period}')
+        if not 0<commit<4000 or 0<=y0<192 or 0<=y1<192:raise ValueError('natural commit outside VBlank')
+        canonical=row[28:156];scene=row[156:188]
+        if canonical!=bytes(points[steps-1]['ram']):raise ValueError('natural renderer did not use its own latest source state')
+        decoded=decode_scene(scene)
+        if model.encode_scene(presentation(canonical,decoded['layout'],decoded['width']))!=scene:raise ValueError('natural presentation adaptation differs')
+        before=row[188:16572];before_regs=list(row[16572:16580]);prepared=row[16580:32964];prepared_regs=list(row[32964:32972])
+        presented=row[32972:49356];presented_regs=list(row[49356:49364])
+        if visible_signature(before,before_regs)!=visible_signature(prepared,prepared_regs):raise ValueError('natural preparation changed the visible frame')
+        if bytes(model.decode_pixels(presented,presented_regs))!=bytes(expected_pixels(decoded)):raise ValueError(f'natural pixel mismatch frame{index}')
+        if presented[0x1B00:0x1B21]!=model.sprite_attributes(decoded) or presented[0x3800:0x4000]!=model.sprite_patterns():raise ValueError('natural SAT/pattern mismatch')
+        peak=max(peak,max(model.occupancy(presented[0x1B00:0x1B21])));vdp_frames.append(frame);busy.append(work)
+    if any(b-a!=1 for a,b in zip(vdp_frames,vdp_frames[1:])) or peak!=report['max_sprites_per_line']:raise ValueError('natural skipped frames or mismatched sprite receipt')
+    return period,busy,source_cycles
+
+
 def capture(out,build_dir,source,family='ntsc',explore=False):
     if family not in ('ntsc','pal'):raise ValueError('explicit NTSC/PAL family required')
     source=Path(source);out=private_output(out);out.mkdir(parents=True,exist_ok=False);build_dir=Path(build_dir)
@@ -72,36 +109,8 @@ def capture(out,build_dir,source,family='ntsc',explore=False):
         cwd=ROOT,env={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'},capture_output=True,text=True,errors='replace',timeout=120)
     (out/'emulator.log').write_text(result.stdout+result.stderr)
     if result.returncode or not (out/'complete.json').is_file():raise ValueError(f'paced natural replay incomplete {out}: '+(result.stdout+result.stderr)[-1000:])
-    report=json.loads((out/'complete.json').read_text());states=(out/'states.bin').read_bytes();frames=(out/'frames.bin').read_bytes()
-    validate_report(report,len(inputs),family)
-    if len(states)!=137*len(inputs) or len(frames)!=FRAME_BYTES*report['frames']:raise ValueError('truncated paced state/frame observations')
-    points=[];source_cycles=[]
-    for index,want in enumerate(trace['steps']):
-        row=states[index*137:(index+1)*137];got={'registers':dict(zip(('a','x','y','p','sp'),row[:5])),'ram':list(row[5:133])}
-        expected={'registers':{key:want['cpu'][key] for key in ('a','x','y','p','sp')},'ram':want['ram']}
-        try:compare(expected,got)
-        except ValueError as error:raise ValueError(f'paced native state{index}: {error}; {out}') from error
-        points.append({**got,'index':index});source_cycles.append(struct.unpack('<I',row[133:137])[0])
-    if assess(points,source_receipt['kind'],source_receipt['preparation_intervals'],source_receipt['assessment'].get('approach_end'))!=source_receipt['assessment']:
-        raise ValueError('paced named-route interaction milestones differ')
-    period=59736 if family=='ntsc' else 71364;busy=[];vdp_frames=[];logical=1;peak=0
-    for index,nsteps in enumerate(model.schedule(report['frames'],period)):
-        row=frames[index*FRAME_BYTES:(index+1)*FRAME_BYTES];frame,steps,work,spacing,commit,y0,y1=struct.unpack('<7i',row[:28])
-        logical+=nsteps
-        if steps!=logical or not 0<=steps-1<len(points):raise ValueError('paced source count/cadence differs')
-        if index and (not 0<work<period or abs(spacing-period)>40):raise ValueError(f'natural frame budget/cadence exceeded at{index}: {work}/{period}')
-        if not 0<commit<4000 or 0<=y0<192 or 0<=y1<192:raise ValueError('natural commit outside VBlank')
-        canonical=row[28:156];scene=row[156:188]
-        if canonical!=bytes(points[steps-1]['ram']):raise ValueError('natural renderer did not use its own latest source state')
-        decoded=decode_scene(scene)
-        if model.encode_scene(presentation(canonical,decoded['layout'],decoded['width']))!=scene:raise ValueError('natural presentation adaptation differs')
-        before=row[188:16572];before_regs=list(row[16572:16580]);prepared=row[16580:32964];prepared_regs=list(row[32964:32972])
-        presented=row[32972:49356];presented_regs=list(row[49356:49364])
-        if visible_signature(before,before_regs)!=visible_signature(prepared,prepared_regs):raise ValueError('natural preparation changed the visible frame')
-        if bytes(model.decode_pixels(presented,presented_regs))!=bytes(expected_pixels(decoded)):raise ValueError(f'natural pixel mismatch frame{index}')
-        if presented[0x1B00:0x1B21]!=model.sprite_attributes(decoded) or presented[0x3800:0x4000]!=model.sprite_patterns():raise ValueError('natural SAT/pattern mismatch')
-        peak=max(peak,max(model.occupancy(presented[0x1B00:0x1B21])));vdp_frames.append(frame);busy.append(work)
-    if any(b-a!=1 for a,b in zip(vdp_frames,vdp_frames[1:])) or peak!=report['max_sprites_per_line']:raise ValueError('natural skipped frames or mismatched sprite receipt')
+    report=json.loads((out/'complete.json').read_text())
+    period,busy,source_cycles=verify_saved(out,source,family,report)
     if digest(emulator)!=emulator_sha or rom.read_bytes()!=artifact:raise ValueError('paced emulator/ROM changed')
     validate_source_files(metadata)
     if any(digest(ROOT/name)!=sha for name,sha in producer['utility_fingerprints'].items()):raise ValueError('paced helper changed during capture')

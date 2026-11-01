@@ -63,10 +63,10 @@ The smaller candidate `collision_compact.CompactRows.intern_row(records) -> row_
 
 **Interfaces:** `assess(points,route_kind) -> assessment` requires bounded explicit predicates for fish collection/reward envelope, threat attachment/push/recovery-or-death, bear chase/refuge and water/temperature loss. Routes record cold/reset preparation, complete CPU/RAM/TIA/RIOT/input checkpoints, seed, restore journal and final state. Controlled seeded fixtures and natural input-only routes are separately labeled.
 
-- [ ] RED→GREEN predicate tests reject truncated routes, wrong reward/death ordering, disabled hazards and missing source continuity. Implement frozen directional/fire policies with declared maximum lengths and useful failure artifacts.
-- [ ] Match the original native instruction paths for grounded/airborne threats, row priority, fish segment removal and delayed points, already-present fish after F7=0C, attachment and direction, bear onset/refuge/chase, deaths and simultaneous events. Include multiple meaningful source seeds/stages and both players.
-- [ ] Capture/replay continuous input-only original routes and run their real-key target counterparts with all contacts target-owned. Expected: every complete CPU/RAM checkpoint matches and each explicit interaction predicate passes; no synthetic contact/expected-state writes.
-- [ ] Negative controls alter a real collision, RNG state/order, row priority and shore sticky bit and must fail their intended comparison. Run full host suite; commit before canonical target captures.
+- [x] RED→GREEN predicate tests reject truncated routes, wrong reward/death ordering, disabled hazards and missing source continuity. Implement frozen directional/fire policies with declared maximum lengths and useful failure artifacts.
+- [x] Match the original native instruction paths for grounded/airborne threats, row priority, fish segment removal and delayed points, already-present fish after F7=0C, attachment and direction, bear onset/refuge/chase, deaths and simultaneous events. Include multiple meaningful source seeds/stages and both players.
+- [x] Capture/replay continuous input-only original routes and run their real-key target counterparts with all contacts target-owned. Expected: every complete CPU/RAM checkpoint matches and each explicit interaction predicate passes; no synthetic contact/expected-state writes.
+- [x] Negative controls alter a real collision, RNG state/order, row priority and shore sticky bit and must fail their intended comparison. Run full host suite; commit before canonical target captures.
 
 ### Task 4: Crowded paced acceptance and immutable diagnostic package
 
