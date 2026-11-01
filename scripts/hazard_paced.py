@@ -41,7 +41,11 @@ def validate_report(report,steps,family):
         raise ValueError('incomplete/unsafe paced named-route evidence')
 
 
-def verify_saved(out,source,family,report):
+def assess_receipt(points,receipt):
+    return assess(points,receipt['kind'],receipt['preparation_intervals'],receipt['assessment'].get('approach_end'))
+
+
+def verify_saved(out,source,family,report,*,assessor=assess_receipt,pixels=expected_pixels,scene_builder=presentation):
     out=Path(out);source=Path(source)
     source_receipt=json.loads((source/'route.json').read_text())
     trace=json.loads((source/'trace.json').read_text());inputs=json.loads((source/'inputs.json').read_text())
@@ -55,7 +59,7 @@ def verify_saved(out,source,family,report):
         try:compare(expected,got)
         except ValueError as error:raise ValueError(f'paced native state{index}: {error}; {out}') from error
         points.append({**got,'index':index});source_cycles.append(struct.unpack('<I',row[133:137])[0])
-    if assess(points,source_receipt['kind'],source_receipt['preparation_intervals'],source_receipt['assessment'].get('approach_end'))!=source_receipt['assessment']:
+    if assessor(points,source_receipt)!=source_receipt['assessment']:
         raise ValueError('paced named-route interaction milestones differ')
     period=59736 if family=='ntsc' else 71364;busy=[];vdp_frames=[];logical=1;peak=0
     for index,nsteps in enumerate(model.schedule(report['frames'],period)):
@@ -68,23 +72,25 @@ def verify_saved(out,source,family,report):
         if canonical!=bytes(points[steps-1]['ram']):raise ValueError('natural renderer did not use its own latest source state')
         decoded=decode_scene(scene)
         if (decoded['layout'],decoded['width'])!=(report['layout'],report['width']):raise ValueError('paced named presentation mode differs')
-        if model.encode_scene(presentation(canonical,decoded['layout'],decoded['width']))!=scene:raise ValueError('natural presentation adaptation differs')
+        if model.encode_scene(scene_builder(canonical,decoded['layout'],decoded['width']))!=scene:raise ValueError('natural presentation adaptation differs')
         before=row[188:16572];before_regs=list(row[16572:16580]);prepared=row[16580:32964];prepared_regs=list(row[32964:32972])
         presented=row[32972:49356];presented_regs=list(row[49356:49364])
         if visible_signature(before,before_regs)!=visible_signature(prepared,prepared_regs):raise ValueError('natural preparation changed the visible frame')
-        if bytes(model.decode_pixels(presented,presented_regs))!=bytes(expected_pixels(decoded)):raise ValueError(f'natural pixel mismatch frame{index}')
+        if bytes(model.decode_pixels(presented,presented_regs))!=bytes(pixels(decoded)):raise ValueError(f'natural pixel mismatch frame{index}')
         if presented[0x1B00:0x1B21]!=model.sprite_attributes(decoded) or presented[0x3800:0x4000]!=model.sprite_patterns():raise ValueError('natural SAT/pattern mismatch')
         peak=max(peak,max(model.occupancy(presented[0x1B00:0x1B21])));vdp_frames.append(frame);busy.append(work)
     if any(b-a!=1 for a,b in zip(vdp_frames,vdp_frames[1:])) or peak!=report['max_sprites_per_line']:raise ValueError('natural skipped frames or mismatched sprite receipt')
     return period,busy,source_cycles
 
 
-def capture(out,build_dir,source,family='ntsc',explore=False,layout=0,width=0):
+def capture(out,build_dir,source,family='ntsc',explore=False,layout=0,width=0,*,
+            source_helpers=SOURCE_HELPERS,build_files=FILES,assessor=assess_receipt,
+            pixels=expected_pixels,scene_builder=presentation,input_encoder=input_records,additional_helpers=()):
     if family not in ('ntsc','pal') or any(type(v) is not int or v not in (0,1) for v in (layout,width)):
         raise ValueError('explicit NTSC/PAL family and presentation mode required')
     source=Path(source);out=private_output(out);out.mkdir(parents=True,exist_ok=False);build_dir=Path(build_dir)
     source_receipt=json.loads((source/'route.json').read_text())
-    audit_manifest(source_receipt,SOURCE_HELPERS)
+    audit_manifest(source_receipt,source_helpers)
     if source_receipt.get('clean_start') is not True:raise ValueError('clean original source route required')
     if any(digest(source/name)!=sha for name,sha in source_receipt['files'].items()):raise ValueError('natural original evidence changed')
     trace=json.loads((source/'trace.json').read_text());inputs=json.loads((source/'inputs.json').read_text())
@@ -94,10 +100,11 @@ def capture(out,build_dir,source,family='ntsc',explore=False,layout=0,width=0):
     validate_source_files(metadata)
     dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
     if not explore and (dirty or metadata['source_dirty']):raise ValueError('clean committed paced producer required')
-    producer=snapshot_paths(HELPERS) if not explore else {'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-              'utility_fingerprints':{name:digest(ROOT/name) for name in HELPERS}}
-    if not explore:audit_manifest({'tool_source_commit':metadata['source_commit'],'utility_fingerprints':metadata['source_files']},FILES)
-    raw_inputs=input_records(inputs,trace['steps'])
+    helpers=tuple(dict.fromkeys((*HELPERS,*source_helpers,*build_files,*additional_helpers)))
+    producer=snapshot_paths(helpers) if not explore else {'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+              'utility_fingerprints':{name:digest(ROOT/name) for name in helpers}}
+    if not explore:audit_manifest({'tool_source_commit':metadata['source_commit'],'utility_fingerprints':metadata['source_files']},build_files)
+    raw_inputs=input_encoder(inputs,trace['steps'])
     (out/'inputs.bin').write_bytes(raw_inputs);(out/rom.name).write_bytes(artifact)
     (out/'build.json').write_text(json.dumps(metadata,indent=2)+'\n')
     emulator=Path(shutil.which('openmsx')).resolve();emulator_sha=digest(emulator)
@@ -113,11 +120,11 @@ def capture(out,build_dir,source,family='ntsc',explore=False,layout=0,width=0):
     (out/'emulator.log').write_text(result.stdout+result.stderr)
     if result.returncode or not (out/'complete.json').is_file():raise ValueError(f'paced natural replay incomplete {out}: '+(result.stdout+result.stderr)[-1000:])
     report=json.loads((out/'complete.json').read_text())
-    period,busy,source_cycles=verify_saved(out,source,family,report)
+    period,busy,source_cycles=verify_saved(out,source,family,report,assessor=assessor,pixels=pixels,scene_builder=scene_builder)
     if digest(emulator)!=emulator_sha or rom.read_bytes()!=artifact:raise ValueError('paced emulator/ROM changed')
     validate_source_files(metadata)
     if any(digest(ROOT/name)!=sha for name,sha in producer['utility_fingerprints'].items()):raise ValueError('paced helper changed during capture')
-    if not explore and snapshot_paths(HELPERS)!=producer:raise ValueError('paced producer revision changed')
+    if not explore and snapshot_paths(helpers)!=producer:raise ValueError('paced producer revision changed')
     report.update(**producer,family=family,rom=metadata['rom'],build_source_commit=metadata['source_commit'],exploratory=explore,
         original_route_sha256=digest(source/'route.json'),assessment=source_receipt['assessment'],frame_budget=period,max_busy_cycles=max(busy),
         min_margin_cycles=period-max(busy),max_native_cycles=max(source_cycles),pixel_errors=0,emulator_sha256=emulator_sha,

@@ -6,7 +6,7 @@ from pathlib import Path
 from environment import ROOT
 from floe_model import visible_state
 from floe_reference import visible_reference
-from hazard_build import OUT
+from progression_build import OUT, FILES
 from hazard_check import run_target
 from hazard_query import RawContacts
 from native_contract import compare, reference, run_contract
@@ -51,7 +51,7 @@ def check(out, build_dir, reader, initial_path, explore=False):
             for a in (*range(0xC5, 0xD4), 0xE5, 0xE7, 0xF1, 0xF4)}})
     reader.verify_consumed()
     report, _ = run_target(out, build_dir, bytes(records), expected,
-        step_fixture=True, explore=explore, additional_helpers=HELPERS)
+        step_fixture=True, explore=explore, additional_helpers=HELPERS, build_files=FILES)
     report.update(scenarios=summary, initial_sha256=digest(initial_path),
         scope='Declared controlled RAM fixtures; actual source-clock contacts and complete original CPU/all128RAM versus actual MSX1 native phase. Continuous play and paced/manual/physical acceptance are separate.')
     (Path(out) / 'progression.json').write_text(json.dumps(report, indent=2) + '\n')

@@ -43,11 +43,11 @@ def source_identity(reader,metadata):
 
 
 @contextmanager
-def scope(build_dir):
+def scope(build_dir,builder=build):
     names=('OUT','ROM','VERSION','FILES','expected_pixels','presentation');previous={n:getattr(bench,n) for n in names}
     try:
-        bench.OUT=Path(build_dir).resolve();bench.ROM=bench.OUT/f'frostbite-{build.VERSION}.rom'
-        for n in names[2:]:setattr(bench,n,getattr(build,n))
+        bench.OUT=Path(build_dir).resolve();bench.ROM=bench.OUT/f'frostbite-{builder.VERSION}.rom'
+        for n in names[2:]:setattr(bench,n,getattr(builder,n))
         bench.expected_image.cache_clear()
         yield
     finally:
@@ -55,10 +55,10 @@ def scope(build_dir):
         bench.expected_image.cache_clear()
 
 
-def capture(build_dir,reader,mixed=False,**options):
-    with scope(build_dir):
+def capture(build_dir,reader,mixed=False,builder=build,additional_helpers=(),**options):
+    with scope(build_dir,builder):
         r=bench.capture(**options,source_reader=reader,source_identity=source_identity,initial_override=mixed_initial if mixed else dense_initial,
-                        additional_helpers=(*HELPERS,'scripts/hazard_bench.py'))
+                        additional_helpers=(*HELPERS,*builder.FILES,'scripts/hazard_bench.py',*additional_helpers))
     records=(ROOT/r['directory']/'states.bin').read_bytes();codes=set()
     for index in range(r['source_steps']):
         for offset in (0,133,266):codes.update(records[index*404+offset+5+0x58:index*404+offset+5+0x5C])

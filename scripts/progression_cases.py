@@ -84,6 +84,15 @@ def phase_cases(base):
         for console in range(4):
             pins = (63 ^ switches) & ~console
             add(f'console-{pins:02x}', {0x80: 3, 0x83: 0, 0xC7: 1})
+    for score in (90, 4990, 9990, 14990, 999990):
+        for reserve in (0, 8, 9):
+            for player in (0, 1):
+                for kind, flags, envelope in (('fish', 0, 2), ('bonus', 64, 0), ('death-priority', 192, 2)):
+                    high, middle, low = bcd_score(score)
+                    add(f'phase-score-{kind}-{score}-reserve{reserve}-p{player}', {
+                        0x80: 3, 0xC7: player, 0xC8: high, 0xC9: middle, 0xCA: low,
+                        0xCB: 4, 0xCC: reserve, 0xCD: 0, 0xE5: 1, 0xF1: flags, 0xF4: envelope,
+                        0xCE: 0x12, 0xCF: 0x34, 0xD0: 0x50, 0xD1: 7, 0xD2: 8, 0xD3: 10})
     return result
 
 

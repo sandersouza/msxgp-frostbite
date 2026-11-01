@@ -36,6 +36,9 @@ class ProgressionCaseTests(unittest.TestCase):
                 self.assertIn(f'level-{level:02x}-p{player}', ids)
         for flag in (8, 16, 32, 64, 128, 24, 48, 96, 192, 255):
             self.assertIn(f'dispatch-{flag:02x}', ids)
+        for player in (0, 1):
+            for kind in ('fish', 'bonus', 'death-priority'):
+                self.assertIn(f'phase-score-{kind}-999990-reserve9-p{player}', ids)
         for variation in range(4):
             for player in (0, 1):
                 for own in (0, 1, 8, 9):

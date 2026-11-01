@@ -30,16 +30,21 @@ def presentation(ram,layout=0,width=0):
     return scene
 
 
-def diagnostic_names(scene):
+def diagnostic_names(scene,banner=None):
+    if banner is not None and (not isinstance(banner,(tuple,list)) or len(banner)!=2
+            or any(not isinstance(s,str) or not s or len(s)>limit or any(c not in model.GLYPHS+' ' for c in s)
+                   for s,limit in zip(banner,(30,25)))):
+        raise ValueError('two bounded uppercase diagnostic banner lines required')
+    title,subtitle=banner or ('FROSTBITE HAZARDS DIAGNOSTIC','REAL CONTACTS NO AUDIO')
     names=bytearray(model.static_names(scene));names[:96]=bytes(96)
-    model.text(names,0,1,'FROSTBITE HAZARDS DIAGNOSTIC');model.text(names,1,1,'REAL CONTACTS NO AUDIO')
+    model.text(names,0,1,title);model.text(names,1,1,subtitle)
     model.text(names,2,1,'F1 RESET F2 SELECT F3 F4 VIEW')
     model.text(names,1,27,f'{scene["player_x"]:02X}');model.text(names,1,30,str(scene['palette']))
     return bytes(names)
 
 
-def expected_pixels(scene):
-    pixels=model.background_pixels(scene);names=diagnostic_names(scene);patterns,colors=model.static_patterns()
+def expected_pixels(scene,banner=None):
+    pixels=model.background_pixels(scene);names=diagnostic_names(scene,banner);patterns,colors=model.static_patterns()
     water=1 if scene['palette'] else 4
     for y in range(24):
         for x in range(256):
@@ -49,18 +54,19 @@ def expected_pixels(scene):
     return model.paint_sprites(pixels,scene)
 
 
-def build(floes,edge,ordinary,shore,aliases,out=OUT):
+def build(floes,edge,ordinary,shore,aliases,out=OUT,*,version=VERSION,banner=None,additional_files=()):
+    diagnostic_names(model.scene(0),banner)
     producer_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     producer_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
-    source_files={name:digest(ROOT/name) for name in FILES}
-    out=private_output(out);out.mkdir(parents=True,exist_ok=True);rom=out/f'frostbite-{VERSION}.rom'
+    source_files={name:digest(ROOT/name) for name in dict.fromkeys((*FILES,*additional_files))}
+    out=private_output(out);out.mkdir(parents=True,exist_ok=True);rom=out/f'frostbite-{version}.rom'
     source=verified_input(ROOT/'references/roms/frostbite.bin');original=(ROOT/'references/roms/frostbite.bin').read_bytes()
     if (out/'tables').exists():raise ValueError('fresh immutable table build directory required')
     tables=compile_catalog(floes,edge,ordinary,shore,aliases,out/'tables')
     (out/'core.inc').write_text(generate_fast(original,carry_fusion=True));(out/'data.bin').write_bytes(original[0xC00:])
     previous=movement_build.OUT;previous_names=movement_build.diagnostic_names
     try:
-        movement_build.OUT=out;movement_build.diagnostic_names=diagnostic_names;atlas=movement_build.write_assets()
+        movement_build.OUT=out;movement_build.diagnostic_names=lambda scene:diagnostic_names(scene,banner);atlas=movement_build.write_assets()
     finally:movement_build.OUT=previous;movement_build.diagnostic_names=previous_names
     total=14+tables['banks'];cartridge_banks=floe_build.capacity(total)
     (out/'cartridge_padding.inc').write_text(''.join('    ORG $8000\n    DS $4000,$FF\n' for _ in range(cartridge_banks-total)))
@@ -76,7 +82,7 @@ def build(floes,edge,ordinary,shore,aliases,out=OUT):
             or any(digest(ROOT/name)!=sha for name,sha in source_files.items())
             or verified_input(ROOT/'references/roms/frostbite.bin')!=source):raise ValueError('hazard build producer changed during compilation')
     final_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
-    metadata={'version':VERSION,'diagnostic':True,'source_commit':producer_commit,
+    metadata={'version':version,'diagnostic':True,'presentation_banner':list(banner) if banner is not None else None,'source_commit':producer_commit,
         'source_dirty':producer_dirty or final_dirty,'source_dirty_at_start':producer_dirty,'source_dirty_at_finish':final_dirty,'original':source,
         'rom':{'filename':rom.name,'size':len(artifact),'sha256':hashlib.sha256(artifact).hexdigest(),'mapper':'ASCII16'},
         'banks':{'resident_used':syms['resident_end']-0x4000,'assets_used':syms['assets_end']-0x8000,'native_used':syms['native_end']-0x8000,
