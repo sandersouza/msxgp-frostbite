@@ -16,6 +16,10 @@ from render_build import ROOT,OUT,ROM,validate_identity,symbols
 import render_model as model
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
+PACED_MODES=tuple((family if layout==width==0 else f'{family}_layout{layout}_width{width}',family,layout,width,False)
+    for family in ('ntsc','pal') for layout in (0,1) for width in (0,1)) + (
+    ('ntsc_transitions','ntsc',0,0,True),('pal_transitions','pal',0,0,True))
+
 def validate_observations(result,expected_cases,rom_hash):
     if (result.get('complete') is not True or result.get('cases')!=expected_cases
         or result.get('min_spacing',0)<29 or result.get('pixel_errors')!=0
@@ -32,7 +36,7 @@ def validate_source_files(metadata,root=ROOT):
             raise ValueError(f'build source changed since compilation: {path}')
 
 
-def validate_paced(result,period):
+def validate_paced(result,period,layout=0,width=0,transitions=False):
     if result.get('complete') is not True or result.get('cases')!=240:raise ValueError('240 paced frames required')
     frames=result['frames'];busy=result['busy_cycles'];commits=result['commit_cycles']
     if len(frames)!=240 or any(b-a!=1 for a,b in zip(frames,frames[1:])):raise ValueError('skipped/repeated VDP frames')
@@ -50,6 +54,8 @@ def validate_paced(result,period):
         raise ValueError('unmeasured source-step reservation')
     if type(result.get('max_sprites_per_line')) is not int or not 0<result['max_sprites_per_line']<=4:
         raise ValueError('actual SAT occupancy missing/overloaded')
+    expected_modes=[3 if (index//4)%2==0 else 0 for index in range(240)] if transitions else [2*layout+width]*240
+    if result.get('mode_samples')!=expected_modes:raise ValueError('paced layout/width/transition was not exercised')
 
 
 def validate_controls(result):
@@ -94,7 +100,9 @@ def visible_signature(vram,regs):
     return hashlib.sha256(data).hexdigest()
 
 
-def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inject='none'):
+def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inject='none',layout=0,width=0,transitions=False):
+    if type(layout) is not int or layout not in (0,1) or type(width) is not int or width not in (0,1) or type(transitions) is not bool:
+        raise ValueError('explicit bounded paced mode required')
     data=ROM.read_bytes();metadata=json.loads((OUT/'build.json').read_text());validate_identity(data,metadata)
     validate_source_files(metadata)
     selected=cases() if selected is None else selected
@@ -116,6 +124,7 @@ def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inje
             'commit_begin','commit_end','status_sample','surrogate_call','surrogate_return')
     launcher=directory/'launch.tcl'
     launcher.write_text(f'set bench_dir {{{directory}}}\nset bench_mode {mode}\nset capture_image {int(screenshot)}\nset inject_fault {inject}\n'
+        +f'set initial_layout {layout}\nset initial_width {width}\nset transition_mode {int(transitions)}\n'
         +'array set symbols {'+' '.join(f'{name} {syms[name]}' for name in needed)+'}\n'
         +f'source {{{ROOT/"scripts/render_bench.tcl"}}}\n')
     env={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_AUDIODRIVER':'dummy'}
@@ -174,13 +183,13 @@ def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inje
             peak=max(peak,max(model.occupancy(vr[0x1B00:0x1B21])))
             previous=vr
         if observation['max_sprites_per_line']!=peak:raise ValueError('SAT occupancy evidence differs')
-        if observation['data_writes']!=len(selected)*929:raise ValueError('unexpected renderer write count')
+        if observation['data_writes']!=sum(929+64*scene['layout'] for scene in selected):raise ValueError('unexpected renderer write count')
         observation.update(pixel_errors=errors,max_busy_cycles=max(cycles),frame_budget=59736)
         validate_observations(observation,len(selected),metadata['rom']['sha256'])
         observation['worst_case']=cycles.index(max(cycles))
     elif mode=='pace':
         period=59736 if family=='ntsc' else 71364
-        validate_paced(observation,period)
+        validate_paced(observation,period,layout,width,transitions)
         if observation['min_spacing']<29:raise ValueError('unsafe paced IO spacing')
         observation.update(frame_budget=period)
     else:validate_controls(observation)
@@ -204,11 +213,12 @@ def negative_controls():
 
 
 def run_suite(screenshot=False,preview=False):
-    result={'schema_version':1,'rpc':execute_capture(),
-            'ntsc':execute_capture('pace','ntsc',screenshot=screenshot),
-            'pal':execute_capture('pace','pal'), 'controls':execute_capture('controls'),
-            'negative_controls':negative_controls()}
-    hashes={result[name]['rom_sha256'] for name in ('rpc','ntsc','pal','controls')}
+    result={'schema_version':1,'rpc':execute_capture()}
+    for name,family,layout,width,transitions in PACED_MODES:
+        result[name]=execute_capture('pace',family,layout=layout,width=width,transitions=transitions,
+                                     screenshot=screenshot and name=='ntsc')
+    result.update(controls=execute_capture('controls'),negative_controls=negative_controls())
+    hashes={result[name]['rom_sha256'] for name in ('rpc','controls',*(mode[0] for mode in PACED_MODES))}
     if len(hashes)!=1:raise ValueError('suite ROM identity differs')
     if preview:result['preview']=write_preview(ROOT/result['ntsc']['directory'])
     (OUT/'suite.json').write_text(json.dumps(result,indent=2)+'\n')
@@ -220,16 +230,18 @@ def main():
     parser.add_argument('--suite',action='store_true')
     parser.add_argument('--mode',choices=('rpc','pace','controls'),default='rpc');parser.add_argument('--family',choices=('ntsc','pal'),default='ntsc')
     parser.add_argument('--preview',action='store_true')
+    parser.add_argument('--layout',type=int,choices=(0,1),default=0);parser.add_argument('--width',type=int,choices=(0,1),default=0)
+    parser.add_argument('--transitions',action='store_true')
     parser.add_argument('--screenshot',action='store_true')
     parser.add_argument('--inject',choices=('none','pixel','sprite','overflow','guard','spacing'),default='none');args=parser.parse_args()
     try:
         if args.suite:
             result=run_suite(args.screenshot,args.preview)
-            print('Full renderer suite passed:643pixel cases,240NTSC/240PAL frames, controls and five negative faults.')
+            print('Full renderer suite passed:643pixel cases,10x240paced mode/transition frames, controls and five negative faults.')
             print(f'Exact ROM {result["rpc"]["rom_sha256"]}; evidence {OUT/"suite.json"}')
         else:
             selected=cases()[:args.limit] if args.limit else None
-            result=execute_capture(args.mode,args.family,selected,args.screenshot,args.inject)
+            result=execute_capture(args.mode,args.family,selected,args.screenshot,args.inject,args.layout,args.width,args.transitions)
             print(json.dumps(result,indent=2))
         return 0
     except (OSError,ValueError,KeyError,ET.ParseError,subprocess.SubprocessError) as error:

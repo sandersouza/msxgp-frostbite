@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 
 from render_build import ROOT,OUT,ROM,VERSION,validate_identity
-from render_bench import validate_observations,validate_paced,validate_controls
+from render_bench import PACED_MODES,validate_observations,validate_paced,validate_controls
 from reference_provenance import audit_manifest,snapshot_paths
 
 BUILD_FILES=('src/render_benchmark.asm','src/render.asm','scripts/render_build.py','scripts/render_model.py',
@@ -19,6 +19,7 @@ HARNESS_FILES=('scripts/render_bench.py','scripts/render_bench.tcl','scripts/ren
                'scripts/environment.py','references/renderer-contract.json','references/tools-lock.json')
 ROM_KEYS=('filename','size','used_bytes','padding_bytes','sha256','mapper')
 FAULTS={'pixel','sprite','overflow','guard','spacing'}
+CAPTURE_NAMES=('rpc',*(mode[0] for mode in PACED_MODES),'controls')
 REPORT=ROOT/'references/renderer-result.json'
 
 
@@ -42,7 +43,8 @@ def validate_bundle(build,suite,rom=None):
     for value in build['source_files'].values():digest(value)
     if rom is not None:validate_identity(rom,build)
     require(suite['schema_version']==1,'unsupported renderer suite')
-    for name in ('rpc','ntsc','pal','controls'):
+    require(set(CAPTURE_NAMES)<=suite.keys(),'all paced layout/width/transition probes required')
+    for name in CAPTURE_NAMES:
         part=suite[name]
         require(part['rom_sha256']==build['rom']['sha256'] and part['build_source_commit']==build['source_commit']
                 and part['build_source_dirty'] is False and part['harness_source_dirty'] is False,'capture/build provenance differs or is dirty')
@@ -52,9 +54,12 @@ def validate_bundle(build,suite,rom=None):
         for path,value in part['harness_hashes'].items():
             digest(value)
             if path in build['source_files']:require(value==build['source_files'][path],'capture oracle/build dependency differs')
+        require(type(part.get('stack_min')) is int and 0xF340<=part['stack_min']<=0xF380,'stack guard evidence incomplete')
     validate_observations(suite['rpc'],643,build['rom']['sha256'])
-    require(suite['rpc']['data_writes']==643*929,'incomplete RPC transfers')
-    validate_paced(suite['ntsc'],59736);validate_paced(suite['pal'],71364);validate_controls(suite['controls'])
+    require(suite['rpc']['data_writes']==643*929+320*64,'incomplete RPC transfers')
+    for name,family,layout,width,transitions in PACED_MODES:
+        validate_paced(suite[name],59736 if family=='ntsc' else 71364,layout,width,transitions)
+    validate_controls(suite['controls'])
     require(set(suite['negative_controls'])==FAULTS and all(value is True for value in suite['negative_controls'].values()),'five actual fault detections required')
 
 
@@ -64,19 +69,21 @@ def selected(record,keys):return {key:record[key] for key in keys}
 def compact_bundle(build,suite):
     validate_bundle(build,suite)
     timings={}
-    for name in ('rpc','ntsc','pal'):
-        part=suite[name];period=59736 if name!='pal' else 71364
+    for name in ('rpc',*(mode[0] for mode in PACED_MODES)):
+        part=suite[name];period=71364 if name.startswith('pal') else 59736
         timings[name]={**selected(part,('cases','max_busy_cycles','min_spacing','max_sprites_per_line','data_writes')),
                        'frame_budget_cycles':period,'margin_cycles':period-part['max_busy_cycles']}
         if name!='rpc':
+            _,_,layout,width,transitions=next(mode for mode in PACED_MODES if mode[0]==name)
             timings[name].update({'max_commit_cycles':max(part['commit_cycles']),
                 'period_min_cycles':min(part['period_cycles']),'period_max_cycles':max(part['period_cycles']),
-                'source_reservations':part['step_counts'][-1],'consecutive_frames':True,'commit_inside_vblank':True})
+                'source_reservations':part['step_counts'][-1],'consecutive_frames':True,'commit_inside_vblank':True,
+                'layout':layout,'width':width,'space_transitions':transitions})
     result={'schema_version':1,'version':VERSION,'scope':'Original-free synthetic renderer diagnostic; no native gameplay/original-graphics/hardware acceptance',
         'source_commit':build['source_commit'],'rom':selected(build['rom'],ROM_KEYS),
         'target':{'ram_kib':64,'vram_kib':16,'z80_hz':3579545,'extra_expansions':False},
         'allocation':{'vram_used_bytes':16000,'vram_free_bytes':384,'ram_state_extent_bytes':2816,
-                      'guarded_stack_min':min(suite[name]['stack_min'] for name in ('rpc','ntsc','pal')),
+                      'guarded_stack_min':min(suite[name]['stack_min'] for name in CAPTURE_NAMES),
                       'maximum_sprites_per_line':4,'surrogate_cycles_per_call':10018},
         'timings':timings,'controls':suite['controls']['control_checks'].copy(),
         'negative_controls':{name:True for name in sorted(FAULTS)},
@@ -85,7 +92,7 @@ def compact_bundle(build,suite):
             'captures':{name:{'harness_source_commit':suite[name]['harness_source_commit'],
                 'helper_sha256':{path:suite[name]['harness_hashes'][path] for path in HARNESS_FILES},
                 'emulator_sha256':suite[name]['emulator_sha256'],'profile_sha256':suite[name]['profile_sha256']}
-                for name in ('rpc','ntsc','pal','controls')}},
+                for name in CAPTURE_NAMES}},
         'limits':['Synthetic masks/font, not original Frostbite assets or playable mechanics',
                   'Grid presentation rows; original coordinate/palette mapping remains issue9',
                   '10k-step surrogate is not measured native game/input/audio cost; integration must remeasure',
@@ -101,7 +108,7 @@ def compact_bundle(build,suite):
 
 def audit_bundle(build,suite):
     audit_manifest({'tool_source_commit':build['source_commit'],'utility_fingerprints':build['source_files']},BUILD_FILES)
-    for name in ('rpc','ntsc','pal','controls'):
+    for name in CAPTURE_NAMES:
         part=suite[name]
         audit_manifest({'tool_source_commit':part['harness_source_commit'],'utility_fingerprints':part['harness_hashes']},HARNESS_FILES)
         directory=(ROOT/part['directory']).resolve()

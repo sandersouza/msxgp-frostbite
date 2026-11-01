@@ -74,7 +74,22 @@ def write_tables():
                 lines.append(f'fast_band_{layout}_{page}_{band}:')
                 y=model.BAND_Y[layout][band];row=band//2;ice=band%2
                 if y%8:
-                    lines.extend([f'LD A,{band}','LD (BAND),A','JP prepare_band']);continue
+                    # One isolated crossing ice band: bulk both32-byte halves,
+                    # including zero pattern padding. Avoid per-column parsing.
+                    segments=model.cache_segments(layout,page,band)
+                    top=segments[0][0]-y%8;bottom=segments[1][0]
+                    lines += [f'LD A,(INPUT+{row})','LD (ROOTX),A','LD A,(INPUT+30)',
+                        'RLCA','RLCA','RLCA','RLCA','LD H,A','LD A,(ROOTX)','AND 15','ADD A,H',
+                        'ADD A,phase_data/256','LD H,A',f'LD L,{(y%8)//2*64}',
+                        f'LD DE,${top|0x4000:04X}','LD B,32','CALL vdp_write',
+                        f'LD DE,${bottom|0x4000:04X}','LD B,32','CALL vdp_write',
+                        f'LD A,(INPUT+{8+row})','ADD A,A','LD E,A','LD D,0','LD HL,color_pointers',
+                        'ADD HL,DE','LD E,(HL)','INC HL','LD D,(HL)','EX DE,HL',
+                        f'LD DE,${top|0x6000:04X}','LD B,32','CALL vdp_write',
+                        f'LD DE,${bottom|0x6000:04X}','LD B,32','CALL vdp_write',
+                        f'LD A,{y}','LD (YPOS),A',f'LD A,{band}','LD (BAND),A',
+                        'LD A,3','LD (COPIES),A','LD A,32','LD (GAP),A','JP stage_band_names']
+                    continue
                 addr=model.cache_segments(layout,page,band)[0][0]
                 pos=row if ice else row+4
                 lines.extend([f'LD A,(INPUT+{pos})','LD (ROOTX),A',

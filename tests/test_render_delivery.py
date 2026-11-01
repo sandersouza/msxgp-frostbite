@@ -14,6 +14,7 @@ class RendererDeliveryTests(unittest.TestCase):
 
     def fixture(self):
         api=self.api();from render_model import schedule
+        from render_bench import PACED_MODES
         data=bytearray(32768);data[:2]=b'AB';data[2:4]=(0x4014).to_bytes(2,'little');data[16:20]=b'FBR8'
         build={'version':'0.0.2-renderer','source_commit':'a'*40,'source_dirty':False,
                'rom':{'filename':'frostbite-0.0.2-renderer.rom','size':32768,'used_bytes':30674,
@@ -23,22 +24,24 @@ class RendererDeliveryTests(unittest.TestCase):
               'harness_source_dirty':False,'harness_hashes':{p:'b'*64 for p in api.HARNESS_FILES},
               'rom_sha256':build['rom']['sha256'],'complete':True,'min_spacing':29,
               'max_sprites_per_line':4,'emulator':'openMSX 21.0','emulator_sha256':'d'*64,'profile_sha256':'e'*64}
-        rpc={**base,'cases':643,'max_busy_cycles':58409,'frame_budget':59736,'pixel_errors':0,
-             'data_writes':643*929,'stack_min':62324}
+        rpc={**base,'cases':643,'max_busy_cycles':58000,'frame_budget':59736,'pixel_errors':0,
+             'data_writes':643*929+320*64,'stack_min':62322}
         suite={'schema_version':1,'rpc':rpc,'negative_controls':{p:True for p in ('pixel','sprite','overflow','guard','spacing')}}
-        for family,period,busy in (('ntsc',59736,55455),('pal',71364,65426)):
+        for name,family,layout,width,transitions in PACED_MODES:
+            period=59736 if family=='ntsc' else 71364;busy=55000 if family=='ntsc' else 65000
             total=0;steps=[]
             for n in schedule(240,period):total+=n;steps.append(total)
-            suite[family]={**base,'cases':240,'max_busy_cycles':busy,'frame_budget':period,'stack_min':62324,
+            suite[name]={**base,'cases':240,'max_busy_cycles':busy,'frame_budget':period,'stack_min':62324,
                 'frames':list(range(240)),'busy_cycles':[busy]*240,'commit_cycles':[1205]*240,
                 'commit_start_y':[192]*240,'commit_y':[197]*240,'period_cycles':[period]*240,
-                'step_counts':steps,'surrogate_cycles':[10018]*total,'pal_flag':int(family=='pal'),'data_writes':223856}
-        suite['controls']={**base,'cases':1,'control_checks':['right','left','space-edge','space-held','space-repress']}
+                'step_counts':steps,'surrogate_cycles':[10018]*total,'pal_flag':int(family=='pal'),'data_writes':223856,
+                'mode_samples':[3 if (i//4)%2==0 else 0 for i in range(240)] if transitions else [2*layout+width]*240}
+        suite['controls']={**base,'cases':1,'stack_min':62322,'control_checks':['right','left','space-edge','space-held','space-repress']}
         return bytes(data),build,suite
 
     def test_only_complete_clean_identity_bound_evidence_can_be_published(self):
         api=self.api();data,build,suite=self.fixture();api.validate_bundle(build,suite,data)
-        for fault in ('dirty-build','dirty-harness','wrong-rom','wrong-producer','missing-helper','failed-control','failed-negative'):
+        for fault in ('dirty-build','dirty-harness','wrong-rom','wrong-producer','missing-helper','failed-control','failed-negative','failed-stress','missing-transitions'):
             b=copy.deepcopy(build);s=copy.deepcopy(suite);rom=data
             if fault=='dirty-build':b['source_dirty']=True
             elif fault=='dirty-harness':s['ntsc']['harness_source_dirty']=True
@@ -46,7 +49,9 @@ class RendererDeliveryTests(unittest.TestCase):
             elif fault=='wrong-producer':s['rpc']['build_source_commit']='f'*40
             elif fault=='missing-helper':s['pal']['harness_hashes'].pop(next(iter(api.HARNESS_FILES)))
             elif fault=='failed-control':s['controls']['control_checks']=[]
-            else:s['negative_controls']['spacing']=False
+            elif fault=='failed-negative':s['negative_controls']['spacing']=False
+            elif fault=='failed-stress':s['ntsc_layout1_width1']['busy_cycles']=[60000]*240
+            else:del s['pal_transitions']
             with self.subTest(fault=fault),self.assertRaises(ValueError):api.validate_bundle(b,s,rom)
 
     def test_compact_report_excludes_unknown_raw_fields(self):
@@ -54,7 +59,7 @@ class RendererDeliveryTests(unittest.TestCase):
         build['rom']['raw_original']='PRIVATE';suite['rpc']['ram']=[0]*128;suite['ntsc']['private']='PRIVATE'
         public=api.compact_bundle(build,suite)
         self.assertNotIn('PRIVATE',str(public));self.assertNotIn('ram',public['timings']['rpc'])
-        self.assertEqual(public['timings']['rpc']['margin_cycles'],1327)
+        self.assertEqual(public['timings']['rpc']['margin_cycles'],1736)
 
     def test_package_copies_exact_tested_bytes_and_never_replaces_a_version(self):
         api=self.api();data,build,suite=self.fixture();report=api.compact_bundle(build,suite)

@@ -28,6 +28,7 @@ set commit_start_y {}
 set period_cycles {}
 set last_commit -1
 set step_counts {}
+set mode_samples {}
 set surrogate_cycles {}
 set max_slots 0
 set control_checks {}
@@ -48,6 +49,12 @@ proc checked {script} {
 proc require {expression message} {if {![uplevel 1 [list expr $expression]]} {error $message}}
 proc binary_file {path} {set f [open $path wb];fconfigure $f -translation binary;return $f}
 proc snapshot {channel} {puts -nonewline $channel [debug read_block VRAM 0 16384]}
+proc pace_keys {} {
+    if {$::transition_mode} {
+        if {$::count%4==0} {keymatrixdown 8 1}
+        if {$::count%4==2} {keymatrixup 8 1}
+    }
+}
 proc measure_slots {} {
     binary scan [debug read_block VRAM 0x1B00 128] cu* sat
     array set lines {}
@@ -80,7 +87,7 @@ proc finish {} {
     set f [binary_file $::bench_dir/final-regs.bin];puts -nonewline $f [debug read_block {VDP regs} 0 8];close $f
     set control_json [join [lmap item $::control_checks {format {"%s"} $item}] ,]
     set f [open $::bench_dir/complete.json w]
-    puts $f "\{\"complete\":true,\"cases\":$::count,\"min_spacing\":$::min_spacing,\"data_writes\":$::data_writes,\"stack_min\":$lowest,\"max_busy_cycles\":$::max_busy,\"max_sprites_per_line\":$::max_slots,\"control_checks\":\[$control_json\],\"frames\":\[[join $::frame_counts ,]\],\"busy_cycles\":\[[join $::busy_cycles ,]\],\"commit_cycles\":\[[join $::commit_cycles ,]\],\"commit_y\":\[[join $::commit_y ,]\],\"commit_start_y\":\[[join $::commit_start_y ,]\],\"period_cycles\":\[[join $::period_cycles ,]\],\"pal_flag\":[debug read memory 0xC21B],\"step_counts\":\[[join $::step_counts ,]\],\"surrogate_cycles\":\[[join $::surrogate_cycles ,]\]\}"
+    puts $f "\{\"complete\":true,\"cases\":$::count,\"min_spacing\":$::min_spacing,\"data_writes\":$::data_writes,\"stack_min\":$lowest,\"max_busy_cycles\":$::max_busy,\"max_sprites_per_line\":$::max_slots,\"control_checks\":\[$control_json\],\"frames\":\[[join $::frame_counts ,]\],\"busy_cycles\":\[[join $::busy_cycles ,]\],\"commit_cycles\":\[[join $::commit_cycles ,]\],\"commit_y\":\[[join $::commit_y ,]\],\"commit_start_y\":\[[join $::commit_start_y ,]\],\"period_cycles\":\[[join $::period_cycles ,]\],\"pal_flag\":[debug read memory 0xC21B],\"mode_samples\":\[[join $::mode_samples ,]\],\"step_counts\":\[[join $::step_counts ,]\],\"surrogate_cycles\":\[[join $::surrogate_cycles ,]\]\}"
     close $f
     exit
 }
@@ -175,6 +182,12 @@ after time 5 {checked {
                 start_controls
                 debug cont
             } else {
+                debug write memory 0xC11F $::initial_layout
+                debug write memory 0xC11E $::initial_width
+                debug write memory 0xC21A 0
+                keymatrixup 8 1
+                pace_keys
+                debug set_bp $::symbols(paced_frame_start) {} {pace_keys}
                 debug write memory 0xC212 0
                 debug write memory 0xC213 0
                 debug write memory 0xC218 0
@@ -189,6 +202,7 @@ after time 5 {checked {
                     lappend ::frame_counts [machine_info VDP_frame_count]
                     lappend ::commit_start_y [machine_info VDP_msx_y_pos]
                     lappend ::step_counts [expr {[debug read memory 0xC218]+256*[debug read memory 0xC219]}]
+                    lappend ::mode_samples [expr {2*[debug read memory 0xC11F]+[debug read memory 0xC11E]}]
                     incr ::count
                 }}
                 debug set_bp $::symbols(commit_end) {} {
