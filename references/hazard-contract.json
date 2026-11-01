@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
-  "status": "Frozen all-window source foundation passed; complete catalog, native target and crowded timing pending",
+  "status": "Complete source lookup and actual native visible CPU/RAM passed; remaining mechanics and crowded timing pending",
   "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
   "original_phase": {"entry": "F019", "exit": "F476", "ram_bytes": 128},
   "local_protocol": {
@@ -40,8 +40,8 @@
     "local_report": "outputs/hazards/observer-check-clean-d/check.json"
   },
   "acceptance": {
-    "complete_source_domain": "Pending measured lossless representation and canonical capture",
-    "native_cpu_ram_equivalence": "Pending",
+    "complete_source_domain": "50,289,350 audited source cells including floes and independent copy aliases; 239 contact banks",
+    "native_cpu_ram_equivalence": "14,828 actual complete visible phases, zero neutral substitutions; 702 chase and 1,235 refuge cold real-key checkpoints",
     "crowded_paced_ntsc_pal": "Pending",
     "manual_emulator": "Pending owner feedback",
     "physical_hardware": "Pending owner feedback"

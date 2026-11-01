@@ -143,3 +143,72 @@ margin. A candidate must fit its measured cartridge layout and pass fresh
 full-density and true paced NTSC/PAL checks with actual acquisition work,
 29-cycle VDP data spacing, four sprite slots, VBlank commit, device/stack/heap
 guards and every required source step. No new testable MSX ROM exists yet.
+
+## Complete lookup and boundary checkpoint
+
+The clean `ce8cbe9606ca639f4efcd5f5c67e6c5e7af28142` engineering build
+contains the actual eight row channels and sticky shore acquisition. Its
+4,194,304-byte ASCII16 image has SHA-256
+`c50df909b6ddba21b7b463c0db9fbd8791eae912aba4eacf70a1dcccbd54f08f`.
+This is an internal verification checkpoint; publication requires the remaining
+mechanics and whole-frame gates.
+
+The complete components contain 25,132,800 exceptional-X cells, 4,954,950
+ordinary single-copy cells, 8,294,400 shore cells and 3,203,200 independently
+executed actual-copy alias cells. Together with the frozen 8,704,000 floe
+cells, the compiler audits 50,289,350 source observations. It verifies every
+declared raw input/result/log/receipt/profile and their committed producer,
+backend and preparation identities before packing.
+
+All 10,716 records, 59,246 blocks and 104,849 row roots remain lossless.
+An independent physical-bank reader checks 16,776,480 leaf queries across
+their unique source rows. The image uses 239 contact banks and 256 cartridge
+banks; resident/assets/native usage is 12,416/13,088/9,216 bytes respectively.
+The first complete layout exceeded the ASCII16 bank limit and was rejected.
+The accepted layout removes repeated zero-Y profile pointers and ordinary
+player directories already served by the proven resident common profiles.
+It does not omit live contacts, either electrical channel or raw evidence.
+
+Every source row component is zero outside normalized Y36..61 within the
+captured domain; shore truth is zero outside Y12..46. Native early returns
+and compact profile indices use the same generated bounds. Compilation
+rejects omitting any live or shadow-only Y. Ordinary profiles at every
+PX25..151 are byte-identical, admitting 198 bytes of resident common pointers;
+PX9..24 retains its actual directory, and the 17 exceptional positions retain
+all 264 modes.
+
+For NUSIZ0..3, pinned Stella's draw-counter decodes use single-width copies
+at offsets 0, 16 and 32 modulo 160, independently of pattern bits. The
+ordinary representation unions actual single-copy truth at those positions;
+it does not compute overlap from a raster. Its independent actual-copy matrix
+covers every ordinary player X, object X, vertical window and count, with
+rotating source shapes/reflections and all 228 literal player views. This
+matrix is not the Cartesian product of every shape with every count; the
+pattern-independent counter implementation supplies that structural argument.
+Hidden-clock exceptional positions are never factored this way. Primary code:
+[draw-counter decodes](https://github.com/stella-emu/stella/blob/d55b1aec0d067a4c901a6dcdf81cb8f579685659/src/emucore/tia/DrawCounterDecodes.cxx),
+[player clocks](https://github.com/stella-emu/stella/blob/d55b1aec0d067a4c901a6dcdf81cb8f579685659/src/emucore/tia/Player.hxx).
+
+The actual ROM matches the complete original visible CPU/all-128-RAM result
+in 14,828 controlled cases, including every exceptional position/mode, all
+literal views, all source Y values, different row data, blanking, headers and
+sticky carry-over. No odd/shore sample is neutralized. Maximum measured visible
+phase cost is 6,990 cycles. The original-free Z80 unit cartridge passes 576
+checks; maximum decoder/generic/common/copy-distance costs are
+805/1,295/1,135/93 cycles including RPC call/return overhead.
+
+Real-key cold replays also match 702 original bear-chase checkpoints and 1,235
+refuge checkpoints. Chase contact/push/death/active-recovery occur at
+362/363/426/693, including the two-player reserve total 7→6 and turn swap.
+The refuge holds X9 with bear X15 and reserve3 throughout its 768-interval
+safe wait. The corrected test harness selects canonical C047 (source C7);
+an earlier C007 typo was caught by the first nonneutral refuge input. The ROM
+bytes were unchanged by that harness correction. These are unpaced automated
+replays; crowded timing, remaining fish/threat/reward validation and manual or
+physical acceptance remain separate.
+
+The synthetic presenter now maps original NUSIZ0/1/2/3 to 1/2/2/3 copies and
+16/16/32/16 spacing independently of row-direction flags. Original graphics,
+clipping, HUD and audio are still later presentation work. The published
+0.0.4 ROM rebuild remains byte-identical, and every input consumed by its clean
+42261b7 rebuild is unchanged at this checkpoint.
