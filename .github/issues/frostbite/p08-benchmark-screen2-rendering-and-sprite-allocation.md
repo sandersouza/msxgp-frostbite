@@ -1,6 +1,6 @@
 # Benchmark worst-case SCREEN 2 rendering and sprite allocation
 
-Planning ID: P08. Status: approved backlog; implementation has not started.
+Planning ID: P08. Status: implemented; review, integration and release verification pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/8
 
 ## Goal
@@ -22,6 +22,15 @@ Definition of Ready: review the proposed Frostbite design, confirm dependency de
 A measured renderer decision stays within 16 KiB VRAM, 64 KiB RAM and standard CPU budgets with numeric margin; four-sprites-per-line behavior is addressed; collision coordinates remain source-owned; mapper selection is justified or deferred with bounds.
 
 Link reproducible checks, exact source/target artifact identities, limitations and integration evidence before closing. A boot alone is not gameplay acceptance.
+
+## Delivery evidence
+
+- [Measured renderer decision](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/docs/renderer-feasibility.md), [compact report](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/references/renderer-result.json) and [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/docs/handoffs/issue-8.md).
+- Original-free32KiB ROM source dd7c46563252b6c3910777458bae5e9ca87eef75, SHA-256 f311480240f5f6f52a1baea835264e4cb06e5aeb05795174564c059ea15155d4. Uses16000VRAM bytes and30674ROM bytes; no mapper/expansion.
+- 643 independent pixel/SAT cases, allX/phases, clipping/wrap/crowded landings/color/igloo and bank-crossing cases; actual maximum4sprites/line and29cycleminimum data spacing. Five deliberate fault classes fail for the intended reason.
+- 240NTSC consecutive frames max55455/59736cycles;240PAL max65426/71364,286source reservations. Worst crossingRPC58409leaves1327cycles including the10018cycle surrogate. Native gameplay/input/audio costs remain unmeasured and must fit later.
+- Canonical RAM/input/heap/stack guards and actual keyboard direction/SPACE edge/held/repress checks pass. Grid presentation quantization is explicit; original mapping/assets are9. VRAM preview is a reconstruction, not an accepted live framebuffer/manual/hardware result.
+- [v0.0.2-renderer release notes and human tests](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/docs/releases/v0.0.2-renderer.md). Publish/verify the actual prerelease and attached exact ROM before closing; previous diagnostic stays unchanged.
 
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 

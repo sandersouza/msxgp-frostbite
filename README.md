@@ -9,10 +9,17 @@ The first [MSX1 diagnostic prerelease](https://github.com/sandersouza/msxgp-fros
 provides a 16 KiB cartridge for video, interrupts, controls and built-in PSG tests.
 **Frostbite gameplay is not implemented yet.**
 
+The [v0.0.2 renderer benchmark](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.2-renderer)
+adds a synthetic SCREEN2 workload in a plain32KiB cartridge. Its
+[measured limits and commands](docs/renderer-feasibility.md) and
+[human tests](docs/releases/v0.0.2-renderer.md) explain the current state.
+Original graphics and native gameplay remain later deliveries.
+
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
 byte-identically and has a reviewed routine/state/hardware map. Commercial
-revision/provenance and full-state replay repeatability remain unverified.
+revision/provenance remains unverified. Bounded complete-state replays now repeat
+under declared initialization; natural complete-game coverage remains pending.
 Source-addressed mechanics contracts and bounded CPU probes are available;
 native gameplay remains planned work. Historical Seaquest
 results are not Frostbite evidence.
@@ -25,6 +32,8 @@ results are not Frostbite evidence.
 - [Original reference inventory and timing](docs/reference-inventory.md)
 - [Disassembly reconstruction and state map](docs/reference-disassembly.md)
 - [Gameplay contracts and boundary routes](docs/gameplay-contracts.md)
+- [Independent original-execution oracles](docs/reference-traces.md)
+- [Renderer feasibility and synthetic benchmark](docs/renderer-feasibility.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 
@@ -49,9 +58,9 @@ build or test suite.
 
 [Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) provides
 the macOS setup script, pinned tools, cross-build commands and diagnostic ROM.
-[Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) will provide
-original-free CI. Until those deliverables exist, no inherited command is
-advertised as a working Frostbite development entry point.
+[Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) provides
+original-free CI. `make render-build` and `make render-bench` build/test the
+synthetic renderer; the original diagnostic remains the default `make build`.
 
 Every new testable MSX ROM version will have a versioned GitHub release
 (prerelease during development), with the exact ROM attached, its hash/source
