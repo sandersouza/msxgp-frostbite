@@ -23,7 +23,7 @@ CHECK_HELPERS=(*HELPERS,'scripts/hazard_observer_check.py','scripts/floe_model.p
 
 
 def shapes(rom):
-    result=set()
+    result={0}  # F006 cold RAM clear precedes the first animated pointer update.
     for kind in range(4):
         for frame in range(256):
             index=kind*2
@@ -83,6 +83,17 @@ def invariant_cases(base,domain,controls):
         for row in range(4):ram[0x1F+row]=rng.randrange(160)
         ram[0x1C],ram[0x1D]=rng.choice(controls)
         cases.append(bytes(ram));links.append((start+3,len(cases)-1,1,1,'other-windows'))
+    for group in range(48):
+        px=(0,1,7,8,9,24,25,64,151,152,158,159)[group%12]
+        y=(4,11,12,27,30,48,49,56)[group%8]
+        ram=bytearray(fixture(base,px,y,64,domain[group%len(domain)],group%4,bear_x=(0,15,16,64,139,159)[group%6]))
+        ram[0x6F]=group%8;ram[0x6C]=16 if group&1 else 0
+        start=len(cases);cases.append(bytes(ram))
+        for c5,cb,cd in ((0,0,15),(128,0,255),(0,4,15),(0,20,255)):
+            variant=bytearray(ram);variant[0x45]=c5;variant[0x4B]=cb;variant[0x4D]=cd
+            cases.append(bytes(variant));links.append((start,len(cases)-1,8,8,'shore-header'))
+        variant=bytearray(ram);variant[0x6D]=135
+        cases.append(bytes(variant));links.append((start,len(cases)-1,8,8,'shore-sticky-input'))
     return cases,links
 
 
@@ -123,6 +134,23 @@ def check(out,binary,initial_path,original_binary='stella',old_binary=None):
         full_chunks.append(full);roi_chunks.append(roi)
         roi_receipts.append({'start':offset,'stop':offset+len(batch),'full':full_receipt,'roi':roi_receipt})
     roi_count=compare_roi(b''.join(full_chunks),b''.join(roi_chunks))
+    shore_cases=[];shore_receipts=[];shore_count=0
+    for px in range(160):
+        for y in (4,12,27,30,48,56):
+            for dx in (-16,0,16):
+                ram=bytearray(fixture(base['ram'],px,y,64,domain[0],0,bear_x=(px+dx)%160))
+                ram[0x6F]=len(shore_cases)%8;ram[0x6C]=16 if px&1 else 0
+                ram[0x6D]=135 if len(shore_cases)%7==0 else 0
+                shore_cases.append(bytes(ram))
+    for offset in range(0,len(shore_cases),960):
+        batch=shore_cases[offset:offset+960]
+        full,full_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'shore-full-{offset:05d}')
+        roi,roi_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'shore-cached-{offset:05d}',shore=True)
+        shore_count+=compare_roi(full,roi,window=8)
+        for i,ram in enumerate(batch):
+            record=full_record(full[i*FULL_BYTES:(i+1)*FULL_BYTES])
+            compare(visible_state(rom,ram,base['cpu'],contacts(record,ram)),record)
+        shore_receipts.append({'start':offset,'stop':offset+len(batch),'full':full_receipt,'roi':roi_receipt})
     unmodified=[]
     for index in range(0,224,7):
         ram=cases[index];capsule=bytearray(initial);offset=base['_offsets']['ram'];capsule[offset:offset+128]=ram
@@ -145,6 +173,7 @@ def check(out,binary,initial_path,original_binary='stella',old_binary=None):
             'helpers':helpers,'binary_sha256':digest(binary),'initial_sha256':digest(initial_path),
             'cases':len(cases),'actual_views':228,'object_shapes':len(domain),'nusiz_values':[0,1,2,3],
             'invariant_links':invariant_count,'invariant_observation':invariant_receipt,'roi_comparisons':roi_count,'roi_observations':roi_receipts,
+            'shore_roi_comparisons':shore_count,'shore_roi_observations':shore_receipts,
             'independent_unmodified_phases':unmodified,'old_floe_compatibility_cases':old_count,'observations':observations,
             'scope':'Controlled all-window source verification only; complete catalog/natural routes/native target/hardware remain pending'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')

@@ -64,5 +64,10 @@ class HazardObserverTests(unittest.TestCase):
             metadata['patches']['tools/stella-hazard.patch']='0'*64;path.write_text(json.dumps(metadata))
             with self.assertRaises(ValueError):api.verified_backend(binary)
 
+    def test_source_shape_domain_includes_the_cold_cleared_pointer(self):
+        checker=importlib.import_module('hazard_observer_check')
+        # Synthetic pointer/motion tables: ordinary values16/32, cold RAM0.
+        self.assertEqual(set(checker.shapes(bytes([16])*4096)),{0,16,32})
+
 
 if __name__=='__main__':unittest.main()
