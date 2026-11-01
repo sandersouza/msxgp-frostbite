@@ -20,7 +20,7 @@ def validate_entries(cases):
             raise ValueError('fast whole-phase ABI requires source D=0 and SP=FF')
 
 
-def translate_fast(item,facts):
+def translate_fast(item,facts,omit_carry_capture=False):
     op=item['mnemonic'];mode=item['mode'];value=item['value'];live=facts['live_out']
     n,z,v,c=(bool(live&bit) for bit in (1,2,4,8))
     indexed=mode=='zpx' and 128<=value<=255 and max(facts['x'])+value<256
@@ -32,6 +32,8 @@ def translate_fast(item,facts):
     code=None
     if op in ('CLC','SEC') and not c:code=[]
     elif op in ('CMP','CPX','CPY') and not live&11 and mode=='imm':code=[]
+    elif op in ('CPX','CPY') and omit_carry_capture:
+        code=operand(item)+['ld d,a',f'ld a,{"b" if op=="CPX" else "c"}','cp h','ld a,d']
     elif op=='BIT' and mode in ('zpg','abs') and not z:
         code=[f'ld hl,{mapped(value)}']
         if v:code+=['ld d,a','ld a,(hl)','and $40','ld (core_v),a','ld a,d']
@@ -76,7 +78,32 @@ def translate_fast(item,facts):
     return code
 
 
-def generate_fast(rom):
+def carry_fusions(instructions,facts):
+    """Reuse raw Z80 carry only at an adjacent branch with one proved entry.
+
+    CMP/CPX/CPY/SBC use inverted carry; binary ADC uses matching carry. E is
+    still materialized when the branch successors observe source carry.
+    Decimal arithmetic and every alternate branch entry retain the old path.
+    """
+    predecessors={};branches={};drops=set()
+    for key,value in facts.items():
+        for target in value['successors']:predecessors.setdefault(target,set()).add(key)
+    for key,value in facts.items():
+        pc,returns=key;item=instructions.get(pc)
+        if not item or item['mnemonic'] not in ('CMP','CPX','CPY','ADC','SBC'):continue
+        branch_key=(pc+item['size'],returns)
+        if branch_key not in facts:continue
+        branch=instructions[branch_key[0]];following=facts[branch_key]
+        if (branch['mnemonic'] not in ('BCC','BCS') or predecessors.get(branch_key)!={key}
+                or len(following['successors'])!=2):continue
+        if item['mnemonic'] in ('ADC','SBC') and value['decimal']!=frozenset({0}):continue
+        same=item['mnemonic']=='ADC'
+        branches[branch_key]='c' if (branch['mnemonic']=='BCS')==same else 'nc'
+        if not following['live_out']&8:drops.add(key)
+    return branches,drops
+
+
+def generate_fast(rom,carry_fusion=False):
     if len(rom)!=4096 or hashlib.sha256(rom).hexdigest()!=SOURCE_SHA256:raise ValueError('original identity mismatch')
     instructions=reachable(rom);stack_depth(instructions);facts=analyze(instructions,contexts=True);clears=clear_patterns(instructions)
     if any(i['mnemonic']=='TSX' for i in instructions.values()):raise ValueError('fast phase cannot hide an observable source SP read')
@@ -84,6 +111,7 @@ def generate_fast(rom):
     def label(pc,returns):return f'core_{pc:04X}'+(''.join(f'_r{ret:04X}' for ret in returns))
     lines=['; Local whole-phase specialization. Entry F476 requires source D=0.','core_F019:','    ret']
     ordered=sorted((key for key in facts if key[0]!=0xF019),key=lambda key:(key[1],key[0]))
+    fused_branches,dropped_carry=carry_fusions(instructions,facts) if carry_fusion else ({},set())
     for index,key in enumerate(ordered):
         pc,returns=key;item=instructions[pc];following=pc+item['size'];op=item['mnemonic']
         physical_next=ordered[index+1] if index+1<len(ordered) else None
@@ -93,9 +121,13 @@ def generate_fast(rom):
         if op=='JSR':
             code=[f'ld hl,${pc+2:04X}',f'ld (${0xC07E-2*len(returns):04X}),hl',f'call core_{item["target"]:04X}']
         elif op=='RTS':code=['ret']
+        elif key in fused_branches:code=[f'jp {fused_branches[key]},core_{item["target"]:04X}']
         elif op in BRANCHES and (item['target'],returns) not in facts[key]['successors']:code=[]
         elif op in BRANCHES and (following,returns) not in facts[key]['successors']:code=[f'jp core_{item["target"]:04X}']
-        else:code=translate_fast(item,facts[key])
+        else:
+            live=facts[key]
+            if key in dropped_carry:live={**live,'live_out':(live['live_out']&~8)|2}
+            code=translate_fast(item,live,omit_carry_capture=key in dropped_carry)
         context=returns+(following,) if op=='JSR' else returns
         code=[re.sub(r'core_([0-9A-F]{4})\b',lambda m:label(int(m[1],16),context),line) for line in code]
         if op not in ('JMP','RTS') and (following,returns) in facts and physical_next!=(following,returns):code+=[f'jp {label(following,returns)}']

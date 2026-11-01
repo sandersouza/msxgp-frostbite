@@ -1,8 +1,9 @@
-"""Explicit visible-boundary reduction and original-raster bit intersections.
+"""Exact visible-boundary reduction plus rejected raster research helpers.
 
 This adapter is separate from the static gameplay translator. Its CPU/RAM
 effects must match unmodified original F019→F476 execution. Collision catalog
-bytes are generated locally from the actual original raster, never MSX shapes.
+bytes for the accepted path are original-clock literal-view observations.
+The raster-only helpers below remain solely for rejected-model reproduction.
 """
 
 
@@ -80,6 +81,7 @@ def visible_state(rom,ram,registers,contacts):
 
 
 def floe_contacts(rom,ram,catalog):
+    """REJECTED raster-only candidate; never use for runtime or acceptance."""
     sprite=player_rows(rom,ram);result=bytearray([7]*8)
     control=(ram[0x1C],ram[0x1D])
     for row in range(4):

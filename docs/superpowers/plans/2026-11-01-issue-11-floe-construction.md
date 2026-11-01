@@ -31,17 +31,17 @@
 
 **Files:** scripts/floe_reference.py, scripts/floe_model.py, tests/test_floe_model.py, references/floe-contract.json, ignored outputs/floes/.
 
-**Interfaces:** `visible_reference(rom,ram,registers,contacts)->CPU/RAM` executes original F019→F476 with declared per-window electrical samples. `visible_state(rom,ram,registers,contacts)->CPU/RAM` is its explicit native-adapter specification. `floe_contacts(rom,ram,catalog)->bytes[8]` will query complete original-clock truth for all228 literal player views; inactive object bytes retain the source electrical low bits. `floe_catalog.capture(...)` freezes the complete controlled domain and source identity locally. scripts/stella_floe.py builds the pinned observation-only backend; scripts/floe_observer_check.py compares unchanged original CPU/RAM/latches and cached/full execution.
+**Interfaces:** `visible_reference(rom,ram,registers,contacts)->CPU/RAM` executes original F019→F476 with declared per-window electrical samples. `visible_state(rom,ram,registers,contacts)->CPU/RAM` is its explicit native-adapter specification. `RawContacts.contacts(ram)` queries complete original-clock truth for all228 literal player views; inactive object bytes retain the source electrical low bits. `floe_catalog.capture(...)` freezes the complete controlled domain and source identity locally. scripts/stella_floe.py builds the pinned observation-only backend; scripts/floe_observer_check.py compares unchanged original CPU/RAM/latches and cached/full execution.
 
-- [ ] RED→GREEN host tests: mask clipping/wrap/empty/reflection, exact phase write set/CPU return, shape domain and complete case/manifest requirements. No original bytes enter unit fixtures.
+- [x] RED→GREEN host tests: mask clipping/wrap/empty/reflection, exact phase write set/CPU return, shape domain and complete case/manifest requirements. No original bytes enter unit fixtures.
 - [x] Capture all160 floe positions ×16 shaping phases ×7 lines in independent ALE executions; compare all four row windows. Raster-only collision inference rejected by electrical edge probes.
-- [ ] Capture all160 player positions ×160 floe positions ×10 legal control pairs ×34 vertical samples ×228 literal views, with both original latch channels. Deduplicate complete records/profiles only byte-exactly. Validate all four windows, outside-Y sentinel, blanking, header/view invariance and cached/full equivalence against unchanged original execution.
-- [ ] Compare exact full visible CPU/RAM reduction against original py65 instruction execution, plus independent Stella phase checkpoints and actual per-window contacts for seeded boundary/landing cases. Keep unsupported full hazard acquisition explicit.
-- [ ] Full suite; commit clean helpers and capture canonical evidence with exact backend/tool/provenance identities.
+- [x] Capture all160 player positions ×160 floe positions ×10 legal control pairs ×34 vertical samples ×228 literal views, with both original latch channels. Deduplicate complete records/profiles only byte-exactly. Validate all four windows, outside-Y sentinel, blanking, header/view invariance and cached/full equivalence against unchanged original execution.
+- [x] Compare exact full visible CPU/RAM reduction against original py65 instruction execution, plus independent Stella phase checkpoints and actual per-window contacts for seeded boundary/landing cases. Keep unsupported full hazard acquisition explicit.
+- [x] Full suite; commit clean helpers and capture canonical evidence with exact backend/tool/provenance identities.
 
 ### Task 2: Native visible adapter and natural loop
 
-**Files:** src/floes.asm, scripts/floe_build.py, scripts/floe_check.py/.tcl, tests/test_floe_build.py, scripts/floe_routes.py, references/floe-routes.json.
+**Files:** src/floe_visible.asm, scripts/floe_build.py, scripts/floe_check.py, scripts/floe_native.tcl, scripts/floe_mechanics.py, scripts/floe_paced.py/.tcl, tests/test_floe_build.py, scripts/floe_routes.py, references/floe-routes.json.
 
 **Interfaces:** `visible_step` consumes target-owned canonical RAM and generates contacts/visible final state without source snapshots. `frame_step` then executes existing native F476→F019 with genuine MSX input. Build output lives under ignored outputs/floes; version0.0.4-buildloop/ASCII16 capacity is measured. Route policy consumes current state and emits only controller/console pins; acceptance compares independent source/target full states.
 
@@ -52,7 +52,7 @@
 
 ### Task 3: Integrated testable ROM and timing
 
-**Files:** scripts/floe_build.py, scripts/floe_bench.py/.tcl, src/floes.asm, selected renderer modules only if measured need, tests/test_floe_build.py.
+**Files:** scripts/floe_build.py, scripts/floe_bench.py/.tcl, src/floe_visible.asm, scripts/native_fast.py and selected renderer modules for measured bottlenecks, tests/test_floe_build.py.
 
 **Interfaces:** Reuse prepare/commit mapper ABI and read-only presentation adapter. Real `frame_step` replaces scripted contacts. Pixel oracle remains independent of gameplay geometry. Package freezes the exact ROM/captures; no synthetic CPU reserve.
 

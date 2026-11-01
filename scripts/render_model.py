@@ -264,7 +264,10 @@ def decode_pixels(vram,regs):
 
 
 def expected_pixels(s):
-    pixels=background_pixels(s)
+    return paint_sprites(background_pixels(s),s)
+
+
+def paint_sprites(pixels,s):
     # Lower SAT index wins. Paint bear first, then player in reverse priority.
     for actor in ('bear','player'):
         origin=s[actor+'_x'];top=s[actor+'_y']

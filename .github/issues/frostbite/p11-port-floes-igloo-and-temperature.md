@@ -38,3 +38,9 @@ Target: standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and bui
 Execution plan: docs/superpowers/plans/2026-11-01-issue-11-floe-construction.md. Exclusive branch:codex/feat/11-floe-construction, base05c5f29507ee9cfa3d2c1ceb9964eb53beae9532. The visible-phase adapter will preserve original state effects and use original-clock literal-view floe tables (raster-only collision inference was rejected by source edge probes); synthetic display geometry cannot determine contacts. Natural first-level construction/entry/next-level acceptance is distinct from the full hazard acquisition owned by12.
 
 Design: [Frostbite approved design](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/specs/2026-10-31-frostbite-design.md).
+
+## Implementation progress
+
+Original-clock observation helpers are committed at07195b0; the controlled full geometry matrix is being captured with all228 literal player views and both latch channels. Raster-only and glyph-coefficient collision approximations were rejected by original edge probes. The native visible adapter/table compiler is in progress; there is no new testable MSX ROM yet.
+
+The unmodified-original natural-route producer is committed at a8e06e8. Exploratory original-only input reached construction, actual entry and initialized next level with three reserve losses; canonical capture/replay and continuous MSX comparison remain required. Automated electrical checks currently cover4632cases,3756invariance links,32unmodified Stella phase pairs and768cached/full-window pairs. These are source research checks, not MSX timing, gameplay, manual-emulator or physical acceptance.

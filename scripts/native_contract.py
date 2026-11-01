@@ -123,8 +123,8 @@ def cases(rom,syms,phase_only=False):
     return source
 
 
-def run_contract(selected=None,profile=False,explore=False,input_controls=None,corrupt_port2=False,fast_phase=False):
-    build=build_contract(input_controls is not None,corrupt_port2,fast_phase);rom=(ROOT/'references/roms/frostbite.bin').read_bytes();syms=symbols(OUT/'native.sym')
+def run_contract(selected=None,profile=False,explore=False,input_controls=None,corrupt_port2=False,fast_phase=False,carry_fusion=False):
+    build=build_contract(input_controls is not None,corrupt_port2,fast_phase,carry_fusion);rom=(ROOT/'references/roms/frostbite.bin').read_bytes();syms=symbols(OUT/'native.sym')
     if build['source_dirty'] and not explore:raise ValueError('canonical native proof requires clean committed producers; use --explore for WIP')
     if version('py65')!='1.2.0' or sys.byteorder!='little':raise ValueError('reviewed py65/little-endian host required')
     cpu_path=Path(inspect.getfile(MPU));cpu_hash=hashlib.sha256(cpu_path.read_bytes()).hexdigest()
@@ -229,7 +229,7 @@ def run_contract(selected=None,profile=False,explore=False,input_controls=None,c
     if hashlib.sha256(cpu_path.read_bytes()).hexdigest()!=cpu_hash or hashlib.sha256(Path(emulator).read_bytes()).hexdigest()!=emulator_hash:
         raise ValueError('independent CPU/emulator binary changed')
     report={'cases':len(selected),'max_cycles':max_cycles,'rom_sha256':build['rom_sha256'],'build_source_commit':build['source_commit'],
-            'fast_phase':fast_phase,'input_adapter':input_controls is not None,
+            'fast_phase':fast_phase,'carry_fusion':carry_fusion,'input_adapter':input_controls is not None,
             'build_dirty':build['source_dirty'],'directory':str(directory.relative_to(ROOT)),
             **producer,'harness_dirty':build['source_dirty'],'backend':{'py65':'1.2.0','cpu_source_sha256':cpu_hash,'emulator_sha256':emulator_hash,
                 'profile_sha256':hashlib.sha256(profile_data).hexdigest()},
@@ -249,4 +249,5 @@ def run_contract(selected=None,profile=False,explore=False,input_controls=None,c
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--explore',action='store_true')
-    parser.add_argument('--fast-phase',action='store_true');args=parser.parse_args();run_contract(explore=args.explore,fast_phase=args.fast_phase)
+    parser.add_argument('--fast-phase',action='store_true');parser.add_argument('--carry-fusion',action='store_true')
+    args=parser.parse_args();run_contract(explore=args.explore,fast_phase=args.fast_phase,carry_fusion=args.carry_fusion)

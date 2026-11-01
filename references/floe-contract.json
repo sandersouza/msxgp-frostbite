@@ -1,19 +1,131 @@
 {
-  "schema": 1,
+  "schema": 2,
   "authority_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
-  "status": "Issue11 work in progress: visible CPU/RAM reduction checked; candidate raster-only contact model rejected by electrical edge probes",
-  "boundary": "Original F019 to F476, before the existing native post-visible phase",
-  "visible_reduction": {
-    "input": "128 canonical RAM bytes, source D clear/SP FF, eight original row samples and sticky shore sample",
-    "output": "All128 RAM and A/X/Y/P/SP; palette and attract state, constant final display pointers/scratch/source return bytes, original per-window contacts",
-    "oracle": "Unmodified original instructions under py65; independent Stella checkpoints remain required",
-    "coverage_to_date": "1500 deterministic exploratory complete CPU/RAM cases, not a published canonical acceptance"
+  "status": "Source electrical matrix complete; native implementation and exploratory gates pass. Clean canonical delivery/review/release remain pending.",
+  "boundary": "Original F019 to F476, then native F476 to F019; D0/SPFF entry",
+  "source_observation": {
+    "producer_commit": "07195b02711a24994facfd02307a084d78b3b13f",
+    "catalog_sha256": "2c5022075e1e03e5eecda0c6ef53e145e10af660c48239c3d07c6a4bc05b8e83",
+    "cases": 8704000,
+    "views_per_case": 228,
+    "backend_sha256": "1b84b99fe8554405b1138fb63de4ef1aa56c7730a43a7e24f2349239f428e297",
+    "upstream_revision": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+    "domain": {
+      "player_x": [
+        0,
+        159
+      ],
+      "floe_x": [
+        0,
+        159
+      ],
+      "control_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          128
+        ],
+        [
+          0,
+          144
+        ],
+        [
+          0,
+          160
+        ],
+        [
+          0,
+          176
+        ],
+        [
+          0,
+          192
+        ],
+        [
+          16,
+          128
+        ],
+        [
+          32,
+          128
+        ],
+        [
+          48,
+          128
+        ],
+        [
+          64,
+          128
+        ]
+      ],
+      "top_row_y": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77
+      ],
+      "outside_actor_sentinel_y": 0
+    },
+    "record": "58bytes:228P0-contact bits +228M1/P1-shadow bits; near records retain both channels",
+    "cross_checks": {
+      "actual_view_cases": 4632,
+      "actual_views": 228,
+      "invariant_links": 3756,
+      "unmodified_stella_phases": 32,
+      "cached_full_pairs": 768
+    }
   },
-  "floe_geometry": {
-    "raster_domain": "All160 source positions and16 shaping phases; four seven-line visible row windows",
-    "warning": "HMOVE collision acquisition includes hidden-clock effects. Visible raster agreement and inferred cyclic masks alone fail electrical edge cases. Do not promote current candidate overlap to acceptance.",
-    "required": "Actual source per-window latch agreement, clipped/hidden/counter timing, target-owned native state and an independent natural construction-entry-next-level route"
+  "native_adapter": {
+    "source_state": "All128RAM and A/X/Y/P/SP; sticky ED; palette/attract, final pointers/scratch/return bytes and footer flags",
+    "inputs": "Target-owned state; original-clock floe table; explicit neutral07 odd/shore channels until issue12",
+    "cartridge": "4MiB ASCII16,64KiB system RAM/16KiB VRAM; no Atari interpreter",
+    "presentation": "Synthetic; FF empty, incomplete coarse stages1/2, only CD0F completed door; original graphics/HUD/audio later"
   },
-  "scope": "Real floe acquisition/build/entry/temperature in11; full hazard/RNG/TIA acquisition in12. No original presentation/audio/hardware or complete-game acceptance inferred.",
-  "local_only": "Raw source masks, emulator states/screens, derived tables and source instrumentation builds remain ignored under outputs/floes"
+  "evidence_boundaries": {
+    "geometry": "1368complete source-instruction CPU/RAM cases,1081full actual-original phase cases and287declared neutral hazard cases",
+    "natural": "2254uninterrupted logical states from cold reset/input; construction1733,entry1912,next-level2252;3reserve losses; no source/contact injections or disabled source hazards",
+    "paced_natural": "Actual ROM scheduler/native core/renderer verified separately for NTSC/PAL; canonical final result pending",
+    "manual_emulator": "Pending owner feedback",
+    "physical_hardware": "Pending owner feedback"
+  },
+  "scope": "Full hazard/RNG/TIA acquisition in12; progression13, original graphics/audio14, full-game/timing15/16 and legacy deletion17 remain separate",
+  "rejected_models": [
+    "visible-raster overlap",
+    "glyph-independent coefficient convolution",
+    "all-Y bit6 sentinel factorization"
+  ],
+  "local_only": "Original ROM/disassembly, source-derived data, observer builds, complete states/screens and raw evidence remain ignored",
+  "documentation": "docs/floe-loop.md"
 }

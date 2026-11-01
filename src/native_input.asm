@@ -57,6 +57,9 @@ sample_native_input:
     RLCA
     RLCA
     AND $80
+    IFDEF WITH_FLOES
+    OR $0C                 ; original LDA $0C,X dummy read leaves low bus bits0C
+    ENDIF
     LD ($C30C),A
     LD A,B
     AND 15
@@ -78,6 +81,9 @@ sample_native_input:
     RLCA
     RLCA
     AND $80
+    IFDEF WITH_FLOES
+    OR $0C
+    ENDIF
     IFDEF INPUT_CORRUPT_PORT2
     XOR $80
     ENDIF
@@ -134,7 +140,11 @@ sample_native_input:
     LD D,0
     LD HL,$C30C
     ADD HL,DE
+    IFDEF WITH_FLOES
+    LD (HL),$0C
+    ELSE
     LD (HL),0
+    ENDIF
 .done:
     POP HL
     POP DE

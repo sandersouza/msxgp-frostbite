@@ -144,7 +144,44 @@ zero_names: DS 64,0
 patch_white: DS 32,$F0
 patch_blue: DS 32,$50
 
+    IFDEF WITH_FLOES
+; Initial name rows10/13/17/20 are zero on both pages. CB00/01 track
+; whether all four hazard rows remain blank; a nonempty request invalidates
+; that page. The first empty request clears it before later skips are safe.
+prepare_hazard_cache:
+    LD HL,INPUT+16
+    LD A,(HL)
+    INC L
+    OR (HL)
+    INC L
+    OR (HL)
+    INC L
+    OR (HL)
+    LD E,A
+    LD A,(PAGE)
+    LD L,A
+    LD H,$CB
+    LD A,E
+    OR A
+    LD A,0
+    JR NZ,.active
+    LD A,(HL)
+    LD ($CB02),A
+    LD (HL),255
+    RET
+.active:
+    LD (HL),A
+    LD ($CB02),A
+    RET
+    ENDIF
+
 render_atlas_rows:
+    IFDEF WITH_FLOES
+    CALL prepare_hazard_cache
+    LD A,($CB02)
+    OR A
+    JR NZ,.hazard0_done
+    ENDIF
     LD A,(INPUT+12)
     RLCA
     RLCA
@@ -163,12 +200,18 @@ render_atlas_rows:
     ADD HL,DE
     LD A,(HL)
     CALL row_10
+.hazard0_done:
     LD A,(INPUT+30)
     ADD A,A
     LD B,A
     LD A,(INPUT+8)
     OR B
     CALL row_11
+    IFDEF WITH_FLOES
+    LD A,($CB02)
+    OR A
+    JR NZ,.hazard1_done
+    ENDIF
     LD A,(INPUT+13)
     RLCA
     RLCA
@@ -187,6 +230,7 @@ render_atlas_rows:
     ADD HL,DE
     LD A,(HL)
     CALL row_13
+.hazard1_done:
     LD A,(INPUT+31)
     OR A
     JR Z,.aligned
@@ -219,6 +263,11 @@ render_atlas_rows:
     OR B
     CALL row_14
 .after_crossing:
+    IFDEF WITH_FLOES
+    LD A,($CB02)
+    OR A
+    JR NZ,.hazard2_done
+    ENDIF
     LD A,(INPUT+14)
     RLCA
     RLCA
@@ -237,12 +286,18 @@ render_atlas_rows:
     ADD HL,DE
     LD A,(HL)
     CALL row_17
+.hazard2_done:
     LD A,(INPUT+30)
     ADD A,A
     LD B,A
     LD A,(INPUT+10)
     OR B
     CALL row_18
+    IFDEF WITH_FLOES
+    LD A,($CB02)
+    OR A
+    JR NZ,.hazard3_done
+    ENDIF
     LD A,(INPUT+15)
     RLCA
     RLCA
@@ -261,6 +316,7 @@ render_atlas_rows:
     ADD HL,DE
     LD A,(HL)
     CALL row_20
+.hazard3_done:
     LD A,(INPUT+30)
     ADD A,A
     LD B,A
