@@ -1,6 +1,7 @@
 """Original-free lossless fragment and hardware allocation contracts."""
 import hashlib
 import importlib
+import copy
 from pathlib import Path
 import sys
 import tempfile
@@ -72,3 +73,48 @@ class PresentationAssetsTests(unittest.TestCase):
             self.assertFalse(first['runtime_qualified'])
             with self.assertRaises(FileExistsError): api.compile_assets(rom, Path(directory) / 'a', measured_palette=palette)
             with self.assertRaisesRegex(ValueError, '128'): api.compile_assets(rom, Path(directory) / 'c', measured_palette={0: (0, 0, 0)})
+
+    def test_generation_updates_never_touch_live_patterns_names_or_sprite_shapes(self):
+        api = self.api(); from graphics_mapping import decode_screen
+        image = bytearray([1]) * 49152; image[:8] = bytes((1, 1, 1, 2, 2, 2, 3, 4))
+        state = None; last = None
+        for step in range(4):
+            planned = api.pack_frame(bytes(image), state)
+            self.assertEqual(decode_screen(planned['decoded_vram']), bytes(image))
+            self.assertEqual(planned['sprite_patterns_bytes'], 64)
+            self.assertEqual(planned['sprites_per_line'], 2)
+            for upload in planned['uploads']:
+                if upload['phase'] == 'prepare' and last:
+                    for bank in range(3):
+                        active = last['generation'] * 1024
+                        for base in (bank * 2048, 0x2000 + bank * 2048):
+                            self.assertFalse(upload['address'] < base + active + 1024 and base + active < upload['address'] + len(upload['data']))
+                    for start, end in ((last['names_address'], last['names_address'] + 768),
+                                       (0x3800 + last['generation'] * 512, 0x3A00 + last['generation'] * 512)):
+                        self.assertFalse(upload['address'] < end and start < upload['address'] + len(upload['data']))
+            self.assertTrue(all(upload['address'] == 0x1B00 for upload in planned['uploads'] if upload['phase'] == 'commit'))
+            if step >= 2:
+                self.assertEqual(planned['new_tiles'], 0)
+                self.assertEqual(planned['prepare_bytes'], 0)
+            state = planned['cache']; last = planned
+        image[0:8] = bytes([15]) * 8
+        changed = api.pack_frame(bytes(image), state)
+        self.assertGreater(changed['new_tiles'], 0)
+        self.assertEqual(decode_screen(changed['decoded_vram']), bytes(image))
+
+    def test_fragment_eviction_is_local_to_inactive_generation_and_capacity_is_enforced(self):
+        api = self.api()
+        def frame(start, count):
+            image = bytearray([1]) * 49152
+            for tile in range(count):
+                value = (start + tile) % 256
+                for bit in range(8):
+                    if value & (128 >> bit): image[((tile // 32) * 8) * 256 + (tile % 32) * 8 + bit] = 2
+            return bytes(image)
+        cache = None
+        for start in (1, 65, 129, 193, 65, 1, 193, 129):
+            before = copy.deepcopy(cache); result = api.pack_frame(frame(start, 64), cache)
+            self.assertEqual(cache, before)
+            self.assertTrue(all(len(bank) <= 128 for group in result['cache']['tiles'] for bank in group))
+            cache = result['cache']
+        with self.assertRaisesRegex(ValueError, '128'): api.pack_frame(frame(1, 129), cache)

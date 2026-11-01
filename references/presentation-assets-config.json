@@ -1,0 +1,6 @@
+{
+  "source_config": "references/presentation-source-config.json",
+  "source_receipt": "outputs/presentation/source-check-canonical-a/source.json",
+  "source_summary": "references/presentation-source-result.json",
+  "palette": "outputs/presentation/palette-canonical-a"
+}

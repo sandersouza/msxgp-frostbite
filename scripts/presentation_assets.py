@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 from environment import ROOT
-from graphics_mapping import map_x, palette_map
+from graphics_mapping import compile_screen, decode_screen, map_x, palette_map
 
 
 def _byte(value):
@@ -51,6 +51,68 @@ def check_rectangles(rectangles):
     peak = max(occupancy)
     if peak > 4: raise ValueError('sprite repair exceeds4 scanline slots')
     return {'max_per_line': peak, 'slots': len(rectangles), 'spt_bytes': len(rectangles) * 32}
+
+
+def pack_frame(pixels, cache=None):
+    """Host resource/transaction model, not target code or frame playback.
+
+    Prepare writes only unreferenced tile/name/SPT generations. The SAT is
+    committed in VBlank before selecting the prepared name page. Name bytes
+    and already resident fragments are skipped when unchanged.
+    """
+    compiled = compile_screen(pixels, restore=True); raw = compiled['vram']
+    if max(compiled['tiles_per_bank']) > 128: raise ValueError('frame exceeds128 generation tile slots')
+    if compiled['sprite_patterns_bytes'] > 512: raise ValueError('repair exceeds16 double-buffered sprite patterns')
+    generation = 0 if cache is None else 1 - cache['generation']
+    if cache is not None and cache['generation'] not in (0, 1): raise ValueError('invalid cache generation')
+    memory = bytearray(16384) if cache is None else bytearray(cache['vram'])
+    if len(memory) != 16384: raise ValueError('complete VRAM cache shadow required')
+    tiles = [[{} for _ in range(3)] for _ in range(2)] if cache is None else [[dict(bank) for bank in group] for group in cache['tiles']]
+    uploads = []; new_tiles = 0; names = bytearray(768)
+    def upload(address, data, phase='prepare'):
+        data = bytes(data)
+        if memory[address:address + len(data)] != data:
+            uploads.append({'address': address, 'data': data, 'phase': phase})
+            memory[address:address + len(data)] = data
+    for bank, count in enumerate(compiled['tiles_per_bank']):
+        keys = [(raw[bank * 2048 + n * 8:bank * 2048 + n * 8 + 8],
+                 raw[0x2000 + bank * 2048 + n * 8:0x2008 + bank * 2048 + n * 8]) for n in range(count)]
+        resident = tiles[generation][bank]; needed = set(keys)
+        # Keep cached non-live shapes when possible; evict only this generation.
+        for key in list(resident):
+            if key not in needed and len(resident) + sum(k not in resident for k in keys) > 128: del resident[key]
+        available = iter(sorted(set(range(128)) - set(resident.values())))
+        for key in keys:
+            if key not in resident:
+                resident[key] = next(available); new_tiles += 1
+                offset = bank * 2048 + (generation * 128 + resident[key]) * 8
+                upload(offset, key[0]); upload(0x2000 + offset, key[1])
+        for offset in range(bank * 256, (bank + 1) * 256): names[offset] = generation * 128 + resident[keys[raw[0x1800 + offset]]]
+    names_address = 0x1800 if generation == 0 else 0x1C00
+    # Each changed run is an offscreen transaction; do not upload a full table.
+    index = 0
+    while index < 768:
+        if memory[names_address + index] == names[index]: index += 1; continue
+        end = index + 1
+        while end < 768 and memory[names_address + end] != names[end]: end += 1
+        upload(names_address + index, names[index:end]); index = end
+    size = compiled['sprite_patterns_bytes']; upload(0x3800 + generation * 512, raw[0x3800:0x3800 + size])
+    sat = bytearray(); rectangles = []
+    for index in range(size // 32):
+        entry = bytearray(raw[0x1B00 + index * 4:0x1B04 + index * 4]); entry[2] += generation * 64
+        rectangles.append({'x': entry[1] - (32 if entry[3] & 128 else 0), 'y': (entry[0] + 1) & 255, 'width': 16, 'height': 16})
+        sat.extend(entry)
+    sat.append(208); limits = check_rectangles(rectangles); upload(0x1B00, sat, 'commit')
+    # graphics_mapping's decoder reads names at1800; this copy is decoder-only.
+    projected = bytearray(memory); projected[0x1800:0x1B00] = names
+    if decode_screen(projected) != pixels: raise ValueError('generation packing lost mapped source pixels')
+    return {'cache': {'generation': generation, 'tiles': tiles, 'vram': bytes(memory)},
+            'generation': generation, 'names_address': names_address, 'name_register': names_address // 1024,
+            'uploads': uploads, 'decoded_vram': bytes(projected), 'new_tiles': new_tiles,
+            'prepare_bytes': sum(len(u['data']) for u in uploads if u['phase'] == 'prepare'),
+            'commit_bytes': sum(len(u['data']) for u in uploads if u['phase'] == 'commit'),
+            'sprites_per_line': limits['max_per_line'], 'sprite_patterns_bytes': size,
+            'tiles_per_bank': compiled['tiles_per_bank'], 'runtime_qualified': False}
 
 
 def compile_assets(rom: bytes, out: Path, *, measured_palette: dict) -> dict:
