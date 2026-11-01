@@ -80,10 +80,10 @@
 
 **Interfaces:** Consumes sealed Task4 bundle; produces focused linked PR, exact-head/main CI and byte-identical merged-main rebuild, public prerelease/download verification, final receipt artifacts and a prepared exclusive successor. Terminal operational closure follows the last repository bookkeeping write.
 
-- [ ] Run one fresh whole-branch review; regrade findings by user impact, one RED→GREEN blocking-fix pass with green suite, ledger deferred minors and every disposition. No per-task reviewer or re-review.
-- [ ] Move13 In review, push/create/attach focused PR, verify exact-head CI, integrate under existing owner authorization. Rebuild clean merged main and compare ROM bytes to the seal; confirm main CI.
-- [ ] Publish prerelease `v0.0.6-progression` at exact tested source with four public assets. Download and compare every asset; notes must name diagnostic limits and concrete human tests.
-- [ ] Prepare final delivery receipt/documentation and the dependency-ready successor (#14); verify Frostbite project/cwd and keep it idle. Archive the verified execution ledger and all rulings before terminal operational closure.
+- [x] Run one fresh whole-branch review; regrade findings by user impact, one RED→GREEN blocking-fix pass with green suite, ledger deferred minors and every disposition. No per-task reviewer or re-review.
+- [x] Move13 In review, push/create/attach focused PR, verify exact-head CI, integrate under existing owner authorization. Rebuild clean merged main and compare ROM bytes to the seal; confirm main CI.
+- [x] Publish prerelease `v0.0.6-progression` at exact tested source with four public assets. Download and compare every asset; notes must name diagnostic limits and concrete human tests.
+- [x] Prepare final delivery receipt/documentation and the dependency-ready successor (#14); verify Frostbite project/cwd and keep it idle. Archive the verified execution ledger and all rulings before terminal operational closure.
 
 ## Terminal operational closure
 
