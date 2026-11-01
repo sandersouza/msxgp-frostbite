@@ -1,6 +1,6 @@
 # Extract Frostbite graphics and map MSX1 coordinates and palette
 
-Planning ID: P09. Status: implemented; independent review and integration pending.
+Planning ID: P09. Status: implemented and independently reviewed; final CI/integration pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/9
 
 ## Goal
@@ -31,6 +31,7 @@ If this issue delivers a new testable MSX ROM version, publish a versioned GitHu
 - Clean producer82ac6a37447b65ef132c8d9b9370f85f95ae8e43;544fixtures independently repeated twice,398table views,382nonblank raster matches,16visible igloo stages and actual day/night colors. Source/helper/backend/state/artifact hashes are pinned. Six deliberate corruptions reject.
 - Offline SCREEN2 packing preserves every mapped pixel; two independent VRAM decoders,16KiB allocation,192tile-ID limit/bank and4sprite-rectangle limit/line. Palette and black-row separator adaptations are explicit. Original serialized state/RAM remain unchanged by mapping.
 - Source ROM and generated original-derived catalog/pixels/VRAM remain ignored/local. Public CI uses synthetic fixtures. Runtime/ROM unchanged; latest testable ROM stays v0.0.2-renderer. No new ROM release is created for asset tooling. Native adapter/timing integration follows in#10; manual/physical evidence remains pending.
+- [PR29](https://github.com/sandersouza/msxgp-frostbite/pull/29): one fresh independent review found no findings and replayed every source fixture/target VRAM image.147tests pass; exact-head CI/readbacks are linked from the PR. Close/Done only after verified integration.
 
 ## Tracking metadata
 

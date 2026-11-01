@@ -99,3 +99,29 @@ exact commit, no pending implementation ownership, source/ROM identities and the
 limits. #10 owns native input/jump/air/floe transport, source-state equivalence,
 asset integration where needed and full active-play timing. No #10 code belongs
 in this issue chat. After explicit transfer issue9 stops all checkout edits.
+
+## Independent review and delivery checkpoint
+
+[PR29](https://github.com/sandersouza/msxgp-frostbite/pull/29) carries the focused
+delivery. One fresh read-only reviewer at160c4d6 found no Critical, Important or
+Minor findings. It reran147host tests, all544original ALE fixtures with exact
+before/after RAM/full states, both private artifact runs and producer/backend
+manifests. It regenerated all544mappings/VRAM images, checked both decoders,
+45/31/47tiles,3slots,352SPTbytes and6032repairs with zero final pixel loss. It also
+verified the16igloo differences occur in the construction region. No fix pass or
+redundant second review was needed.
+
+[Push CI41260445125](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41260445125)
+and [PR CI41260491893](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41260491893)
+passed at160c4d6. Downloaded CI reports contain exactly the three allowed files,
+147tests and zero skipped results; CI builds the unchanged111ded95renderer ROM.
+Final documentation-head CI/merge/closure readbacks are recorded in PR29/issue9.
+
+Review boundaries were explicitly accepted: native upload/cache/input/audio timing
+and adapter integration remain10; controlled fixtures do not prove natural/full
+gameplay; finite edge coverage cannot certify all future states; physical RGB,
+manual viewing/listening and hardware verdicts remain pending. Costs are latent
+integration/performance, rare-state and hardware defects until those gates run.
+The reviewer did not certify future GitHub delivery; the executor must verify
+exact final-head CI and clean merged main before closure. No ROM changed, so no
+new release/testable-ROM claim follows from this asset preparation.
