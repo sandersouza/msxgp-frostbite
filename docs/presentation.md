@@ -98,9 +98,72 @@ and combined scenes still need the general compositor proof. The extreme control
 fixtures are not evidence that normal play reaches those coordinates. Real Atari
 hardware has not adjudicated the emulator disagreement.
 
+## General source compositor and finite resources
+
+The read-only `presentation_model.describe/pixels` implementation reproduces
+every one of33600 source pixels in all2115 checked frames:1690 controlled
+fixtures,31 regular cold-route frames and394 natural-window observations.
+It derives glyph masks, coordinates, priority, colors and source scanline holds
+from the original tables/kernel. It contains no frame/route playback table and
+does not replace the native gameplay core. Seven irregular seeded startup frames
+remain explicitly outside the normalized rendering domain.
+
+The [resource receipt](../references/presentation-assets-result.json) binds
+producer `641c26a2cf7e5aba354fc3ff1429a74c7fc65d5a`, the original source receipt,
+measured palette receipt and all consumed helper/config hashes. Its private
+full proof SHA-256 is
+`50f3730428d8a0dbc9fc5bf5f40b0cde8a15a435f7f83e10f5deb6bbef28d355`.
+The checker reopens source scripts, raw streams, checkpoint files and provenance
+before comparing pixels. The independent palette calibration measures all128
+even source codes in two seeded ALE0.12.1 instances, retaining complete
+indexed/RGB images and unchanged before/after readback states. This is RGB
+calibration only; Stella7 remains the selected rendering/contact authority.
+
+Exact offline SCREEN2 compilation needs at most45/34/47 tiles across its three
+banks, four full sprite rectangles per scanline and384 sprite-pattern bytes.
+The complete colored tile unions are715/1182/618, so a static global atlas
+cannot occupy the256 available hardware IDs per bank. Two64-slot generations
+per bank fit the complete checked domain, with explicit rejection above64 and
+no lossy fallback. A signature is only a lookup hint: full16-byte tile equality
+governs reuse. Prepare transactions target unreferenced patterns, colors,
+name pages and sprite patterns; SAT publication belongs to VBlank. Unchanged
+resources are reused. This host model is not live Z80 performance evidence.
+
+One16KiB primitive bank uses13984 bytes:12288 for all eight-bit expansion masks
+at16 horizontal phases,1024 for source table views,256 reversal entries,
+160 clipping masks and256 source-color conversion entries. These generated
+original-derived bytes remain ignored. No full bitmap is stored as ROM playback
+or uploaded every frame. The largest2784-byte preparation in the offline suite
+includes initialization and arbitrary fixture transitions; it does not prove a
+frame deadline. The maximum SAT transaction is49 bytes.
+
+The proposed standard64KiB RAM reservation holds exact cache tile bytes at
+D000–E7FF (6144 bytes), separate768-byte name shadows atC800–CAFF andCD00–CFFF,
+and signatures/scratch/control data atCB00–CCFF. Primitive work usesC480–C4FF
+and two128-byte source snapshots useC500–C5FF. CanonicalC000–C07F, source ABI
+C600–C6FF and IO shadowC700–C75F retain their roles. The presentation profile
+must enforce the E800–F2FF heap guard, F300–F33F stack redzone and F340–F37F
+stack bounds. Frozen diagnostic profiles retain their original guard. The
+manifest lists disjoint reservations; actual target writes/guards and the
+complete graphics/input/audio frame budget still require verification.
+
+Reproduce from committed producers and the retained ignored inputs:
+
+```sh
+.venv/bin/python -B scripts/presentation_palette.py --out outputs/presentation/palette-new
+# Use that fresh calibrated path in a reviewed committed assets config.
+.venv/bin/python -B scripts/presentation_assets_check.py --out outputs/presentation/assets-check-new
+.venv/bin/python -B -m unittest discover -s tests
+.venv/bin/python -B scripts/source_policy.py
+```
+
+The committed config references the existing immutable calibration; a new
+capture does not silently replace it. Diagnostic layout metadata stays outside
+the source compositor; every target view needs its own checks.
+
 ## Remaining target work
 
 Source acquisition does not qualify a dynamic renderer, listening review or new
 testable MSX ROM. The published progression diagnostic is unchanged; graphics
-from issue9 prove offline fit only. New live graphics/HUD/PSG need fresh combined
+from issue9 and the resource model above prove offline fit only. New live graphics/HUD/PSG need fresh combined
 NTSC/PAL timing, actual pixels/events and complete source/native state checks.

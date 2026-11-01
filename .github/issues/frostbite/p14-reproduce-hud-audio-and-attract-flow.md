@@ -1,6 +1,6 @@
 # Reproduce Frostbite HUD, PSG event timing and attract flow
 
-Planning ID: P14. Status: In progress in the dedicated Frostbite — ISSUE #14 fork; source raster/audio observation and native presentation integration are starting.
+Planning ID: P14. Status: In progress in the dedicated Frostbite — ISSUE #14 fork; independent source acquisition and general compositor/resource checks pass, native graphics/PSG integration remains pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/14
 
 ## Goal
@@ -34,6 +34,14 @@ through [the issue14 plan](https://github.com/sandersouza/msxgp-frostbite/blob/m
 Static original-graphics fit from9 is separate from live renderer feasibility;
 all integrated graphics/HUD/PSG changes require fresh source/pixel/event/state
 and complete standard-clock timing checks. No new ROM release is claimed yet.
+
+The general compositor matches all33600 pixels on2115 source observations.
+The resource model fits two64-slot tile generations per SCREEN2 bank, with
+max45/34/47 tiles, four sprite rectangles per line,13984 primitive ROM bytes
+and6144 bytes for exact tile-cache content in standard64KiB RAM. These are
+offline checks; the live Z80 pipeline, PSG, integrated timing and manual/physical
+acceptance remain pending. See [the source/resource evidence](../../../docs/presentation.md)
+and [compact resource receipt](../../../references/presentation-assets-result.json).
 
 
 Project: [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).

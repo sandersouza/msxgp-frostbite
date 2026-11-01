@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "producer": {
+    "tool_source_commit": "641c26a2cf7e5aba354fc3ff1429a74c7fc65d5a",
+    "utility_fingerprints": {
+      "scripts/presentation_reference.py": "32be75eb47817b7a142fa1d4f3ee8f94a8ac514cd7ea89668e27bcad8ed1ed47",
+      "scripts/presentation_records.py": "5d77bb8392ee358e6f23555edf551aa87e31898e594eec7181e9f8f7ca433efe",
+      "tools/stella-presentation.patch": "dba4a2b3076ccfdaf838178a8c5ae68a45675507afcade617c3f1d9db733aefb",
+      "references/presentation-contract.json": "8f304a579b54f7279f34b164d3836f06452694dd69f19bd6c5d7da2132947ba0",
+      "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+      "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+      "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+      "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+      "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+      "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+      "scripts/graphics_mapping.py": "f2282fe53363e8d8d90b852888e659096d2ee3151ca5498529ecdb623b5cfa85",
+      "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+      "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+      "scripts/presentation_source_check.py": "0e2d391547fe34edcea863fabce8802f9510459d42b00e46722e83a145ba14d7",
+      "scripts/graphics_reference.py": "63f68b0a2fd2f8e02a1267480d83950ae978fad865f14f1bfd5f44ef2ff2857a",
+      "scripts/original_graphics.py": "41094856026c54f011de61ce12405f6893b31075d7d9b09ce7c2713a38f83fc1",
+      "scripts/render_model.py": "db22ca179647a41e49910665c46a424f8bd4385dbe2eca8a24b29a9b1d56271c",
+      "references/progression-config.json": "cd95b70aaac71bab9e2e394a75adb42c980265d2ac24c4d973be2636f7ddcde1",
+      "references/graphics-result.json": "1f2846a1879bfd6900c097dc6fa2a936825864328669e13cb2538cdd009f0efa",
+      "references/presentation-source-config.json": "684c63d41a8ec6710e44acc0c8b205418955ee845c7f896b786255e651b778f2",
+      "scripts/presentation_palette.py": "67e1f62a1c7dcb0d673d48135efe0a567aeab76a70f611d024a8b2b480370434",
+      "scripts/presentation_model.py": "22eac5e0157b728deabeb05d3bb33f0a1e1104ac011befc115870786d13e1054",
+      "scripts/presentation_assets.py": "1d8b6a39f76fcd2425a6c0caa1d329bfab453b2b9b47932701dc3da690b6f93c",
+      "scripts/presentation_assets_check.py": "e334db3278ef68e9b4a7fd119d80fe8c34ab3ecbeea0aaadedc88fd2d6bbba39",
+      "references/presentation-assets-config.json": "6d7f4a575c602b5f9d37a6bbb3ad762a768d56baa65bd29f2b34f099ad43df06",
+      "references/presentation-source-result.json": "1b4a15ef2c7e6b267b9236bb8f516c98ca5862b61b16699b21888ca91db865a1"
+    }
+  },
+  "source_receipt_sha256": "874e8e309afa19ff0ba3bbf34532e3a8ed14887b7a53184d69410a5bd0ed0247",
+  "palette_receipt_sha256": "5ddbdf3fd6eedca6cf64e8f42c2edfec75ab316e1ed52956ef7d0c075ad39147",
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "assets": {
+    "schema_version": 1,
+    "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "sha256": "44209bad44ab497c31a25d14be6d8632e35cc00e19e83b58c594a730f67fbac6",
+    "used_bytes": 13984,
+    "bank_bytes": 16384,
+    "sections": {
+      "expansion": {
+        "offset": 0,
+        "size": 12288
+      },
+      "glyphs": {
+        "offset": 12288,
+        "size": 1024
+      },
+      "reverse": {
+        "offset": 13312,
+        "size": 256
+      },
+      "clip": {
+        "offset": 13568,
+        "size": 160
+      },
+      "colors": {
+        "offset": 13728,
+        "size": 256
+      }
+    },
+    "tile_generations": {
+      "slots_each": 64,
+      "count": 2,
+      "banks": 3
+    },
+    "vram_regions": [
+      {
+        "name": "patterns",
+        "start": 0,
+        "end": 6144
+      },
+      {
+        "name": "names_a",
+        "start": 6144,
+        "end": 6912
+      },
+      {
+        "name": "sat",
+        "start": 6912,
+        "end": 7040
+      },
+      {
+        "name": "names_b",
+        "start": 7168,
+        "end": 7936
+      },
+      {
+        "name": "colors",
+        "start": 8192,
+        "end": 14336
+      },
+      {
+        "name": "sprite_patterns",
+        "start": 14336,
+        "end": 15360
+      }
+    ],
+    "ram": {
+      "ram_bytes": 65536,
+      "regions": [
+        {
+          "name": "canonical",
+          "start": 49152,
+          "end": 49280
+        },
+        {
+          "name": "diagnostic_input",
+          "start": 49408,
+          "end": 49440
+        },
+        {
+          "name": "runtime",
+          "start": 49664,
+          "end": 49920
+        },
+        {
+          "name": "source_io_read",
+          "start": 49920,
+          "end": 50176
+        },
+        {
+          "name": "sat",
+          "start": 50176,
+          "end": 50304
+        },
+        {
+          "name": "primitive_work",
+          "start": 50304,
+          "end": 50432
+        },
+        {
+          "name": "scene_snapshots",
+          "start": 50432,
+          "end": 50688
+        },
+        {
+          "name": "source_abi",
+          "start": 50688,
+          "end": 50944
+        },
+        {
+          "name": "source_io_write",
+          "start": 50944,
+          "end": 51040
+        },
+        {
+          "name": "names_a",
+          "start": 51200,
+          "end": 51968
+        },
+        {
+          "name": "tile_signatures",
+          "start": 51968,
+          "end": 52352
+        },
+        {
+          "name": "tile_scratch",
+          "start": 52352,
+          "end": 52384
+        },
+        {
+          "name": "cache_control",
+          "start": 52384,
+          "end": 52480
+        },
+        {
+          "name": "names_b",
+          "start": 52480,
+          "end": 53248
+        },
+        {
+          "name": "tile_bytes",
+          "start": 53248,
+          "end": 59392
+        },
+        {
+          "name": "heap_guard",
+          "start": 59392,
+          "end": 62208
+        },
+        {
+          "name": "stack_redzone",
+          "start": 62208,
+          "end": 62272
+        },
+        {
+          "name": "stack",
+          "start": 62272,
+          "end": 62336
+        }
+      ],
+      "runtime_qualified": false,
+      "scope": "Measured reservation; live target writes/guards/timing remain to be implemented and verified"
+    },
+    "runtime_qualified": false,
+    "pending": [
+      "native RAM allocation enforcement",
+      "dirty-band/cache implementation",
+      "worst-case timing and transfer checks"
+    ]
+  },
+  "families": {
+    "fixtures": 1690,
+    "cold_route": 31,
+    "natural_window": 394
+  },
+  "unmapped_startup": 7,
+  "maxima": {
+    "prepare_bytes": 2784,
+    "commit_bytes": 49,
+    "new_tiles": 108,
+    "sprite_patterns_bytes": 384,
+    "sprites_per_line": 4
+  },
+  "max_tiles_per_bank": [
+    45,
+    34,
+    47
+  ],
+  "different_source_pixels": 0,
+  "scope": "General source compositor and offline resource/transaction model; no target CPU/RAM/VRAM performance acceptance",
+  "pending": [
+    "native RAM/cache allocation",
+    "live Z80 compositor",
+    "audio",
+    "standard-clock integrated timing",
+    "manual/hardware acceptance"
+  ],
+  "frames": 2115,
+  "private_sha256": "50f3730428d8a0dbc9fc5bf5f40b0cde8a15a435f7f83e10f5deb6bbef28d355"
+}
