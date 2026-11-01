@@ -146,7 +146,9 @@ seal. The [compact delivery receipt](../../references/progression-delivery.json)
 records source, CI, rebuild, tag and every asset size/hash. No private evidence,
 original captures or standalone derived assets were uploaded.
 
-Integrate the final receipt-only documentation and close13/Done first.
+Integrate [receipt-only PR38](https://github.com/sandersouza/msxgp-frostbite/pull/38)
+and close13/Done first. The [execution ledger](issue-13-execution-ledger.md)
+archives all decisions, verification boundaries and the single review/fix pass.
 Then fork or reuse `Frostbite — ISSUE #14` in the Frostbite project, verify its
 workspace and send an explicit sole-writer handoff with the actual clean main
 commit, zero pending source files, exact ROM/hash and limitations. The old chat

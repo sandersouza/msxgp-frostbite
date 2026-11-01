@@ -1,6 +1,6 @@
 # Port scoring, progression, reserves and all game variations
 
-Planning ID: P13. Status: automated acceptance, independent review/fix pass, runtime integration, main rebuild/CI and published prerelease/download checks pass. Final receipt integration and terminal issue closure are pending.
+Planning ID: P13. Status: automated acceptance, independent review/fix pass, runtime integration, main rebuild/CI and published prerelease/download checks pass. Receipt PR38 carries final documentation; terminal closure follows its verified integration.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/13
 
 ## Goal
@@ -55,6 +55,7 @@ pass; clean main rebuilds the exact tested ROM. The
 contains the exact ROM and all four freshly downloaded assets compare byte for
 byte with the seal. See the
 [delivery receipt](https://github.com/sandersouza/msxgp-frostbite/blob/main/references/progression-delivery.json).
+Final receipt-only documentation: [PR38](https://github.com/sandersouza/msxgp-frostbite/pull/38).
 
 Candidate:4194304-byte ASCII16 `0.0.6-progression`, build source
 `ac146a7c82bd5ab77a5dff2deb5d5452a0478c99`, ROM SHA-256

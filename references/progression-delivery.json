@@ -87,5 +87,6 @@
   ],
   "manual_emulator": "Pending owner feedback",
   "physical_hardware": "Pending owner feedback",
-  "private_inputs_uploaded": false
+  "private_inputs_uploaded": false,
+  "receipt_pr": "https://github.com/sandersouza/msxgp-frostbite/pull/38"
 }
