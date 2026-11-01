@@ -180,11 +180,14 @@ def negative_controls(explore=False,source_catalog=None):
     snapshot=snapshot_paths(paths) if not explore else {'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'utility_fingerprints':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths}}
     for fault,needle in expected.items():
+        before=set(OUT.glob('pace-ntsc-*'))
         try:capture(explore=explore,inject=fault,source_catalog=source_catalog,catalog='counts' if fault=='cache' else 'dense')
         except ValueError as error:
             if needle not in str(error):raise ValueError(f'{fault}: wrong failure: {error}') from error
+            created=set(OUT.glob('pace-ntsc-*'))-before
+            if len(created)!=1:raise ValueError('negative capture directory is ambiguous')
             result[fault]={'detected':True,'detail':str(error),'rom_sha256':digest,'build_source_commit':metadata['source_commit'],
-                'harness_dirty':explore,'producer':snapshot}
+                'harness_dirty':explore,'producer':snapshot,'directory':str(created.pop().relative_to(ROOT))}
         else:raise ValueError(f'{fault}: negative fault escaped')
     if ROM.read_bytes()!=artifact or any(hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h for p,h in snapshot['utility_fingerprints'].items()):
         raise ValueError('negative-control binary/helper changed')
