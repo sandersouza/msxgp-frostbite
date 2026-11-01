@@ -10,8 +10,8 @@ from py65.devices.mpu6502 import MPU
 SOURCE_SHA256='cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834'
 SIZES={'imp':1,'acc':1,'imm':2,'zpg':2,'zpx':2,'zpy':2,'rel':2,'abs':3,'abx':3,'aby':3,'ind':3,'inx':2,'iny':2}
 BRANCHES={'BCC','BCS','BEQ','BNE','BMI','BPL','BVC','BVS'}
-ROOTS=(0xF476,0xFB3B,0xF6AB,0xFFD0,0xFCEA,0xFF5B,0xFE77,0xFE8B)
-STOPS={0xF019}
+ROOTS=(0xF000,0xF476,0xFB3B,0xF6AB,0xFFD0,0xFCEA,0xFF5B,0xFE77,0xFE8B,0xFAEA,0xF0AF)
+STOPS={0xF019,0xF0BD}
 SUPPORTED={'LDA','LDX','LDY','STA','STX','STY','AND','ORA','EOR','CMP','CPX','CPY','ADC','SBC',
            'INC','DEC','INX','DEX','INY','DEY','TAX','TAY','TXA','TYA','TXS','TSX','ASL','LSR','ROL','ROR',
            'BIT','JMP','JSR','RTS','CLC','SEC','CLV','SED','CLD','SEI','CLI','NOP'}|BRANCHES
@@ -202,8 +202,8 @@ def generate(rom):
     nz_defs={'LDA','LDX','LDY','AND','ORA','EOR','ADC','SBC','CMP','CPX','CPY','ASL','LSR','ROL','ROR','INC','DEC',
              'INX','DEX','INY','DEY','TAX','TAY','TXA','TYA','TSX','BIT'}
     ns=flag_liveness(nz_defs,{'BMI','BPL'});zs=flag_liveness(nz_defs,{'BEQ','BNE'});vs=flag_liveness({'BIT','ADC','SBC','CLV'},{'BVC','BVS'})
-    lines=['; Local original-derived native code. Never commit this generated file.',
-                                     'core_F019:','    ret']
+    lines=['; Local original-derived native code. Never commit this generated file.']
+    for pc in sorted(STOPS):lines.extend([f'core_{pc:04X}:','    ret'])
     for pc,item in sorted(instructions.items()):
         lines.append(f'core_{pc:04X}:')
         if pc in clears and not any(pc<s<clears[pc] for s in pins):
@@ -211,4 +211,6 @@ def generate(rom):
         if pc in (0xF5AD,0xF630):
             lines+=['    IFDEF WITH_NATIVE_INPUT',f'    call sample_{"fire" if pc==0xF5AD else "directions"}','    ENDIF']
         lines.extend('    '+line for line in translate(item,ns[pc],zs[pc],vs[pc]))
+        if pc+item['size'] in STOPS and item['mnemonic'] not in ('JMP','RTS'):
+            lines.append(f'    jp core_{pc+item["size"]:04X}')
     return '\n'.join(lines)+'\n'

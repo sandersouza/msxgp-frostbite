@@ -137,6 +137,9 @@ core_clear:
     POP DE
     POP BC
     LD B,0
+    IFDEF FAST_PHASE
+    LD IY,$C000
+    ENDIF
     LD IX,$C07F
     LD A,128
     LD (core_stack_high),A
@@ -178,15 +181,11 @@ core_bit:
 core_capture_v:
     PUSH AF
     POP HL
-    LD A,L
-    AND 4
-    RLCA
-    RLCA
-    RLCA
-    RLCA
+    LD D,H
+    LD H,core_v_table/256
+    LD A,(HL)                ; table lookup uses only LDs, retaining actual S/Z/C
     LD (core_v),A
-    PUSH HL
-    POP AF
+    LD A,D
     RET
 
 core_adc:
@@ -312,6 +311,12 @@ core_adc_decimal:
     POP AF
     LD A,D
     RET
+
+    ALIGN 256
+core_v_table:
+    DUP 32
+    DB 0,0,0,0,$40,$40,$40,$40
+    EDUP
 
 ; NMOS SBC: flags are binary; low/high decimal borrow corrections are separate.
 core_sbc_decimal:

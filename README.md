@@ -7,23 +7,28 @@ original ROM as the authority for gameplay mechanics.
 
 The first [MSX1 diagnostic prerelease](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic)
 provides a 16 KiB cartridge for video, interrupts, controls and built-in PSG tests.
-**Frostbite gameplay is not implemented yet.**
 
 The [v0.0.2 renderer benchmark](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.2-renderer)
 adds a synthetic SCREEN2 workload in a plain32KiB cartridge. Its
 [measured limits and commands](docs/renderer-feasibility.md) and
 [human tests](docs/releases/v0.0.2-renderer.md) explain the current state.
 [Original graphics extraction and SCREEN2 asset-fit evidence](docs/original-graphics.md)
-are prepared locally. They are not yet integrated into the cartridge; native
-gameplay remains later work.
+are prepared locally. They are not yet integrated into the cartridge.
+
+The [native movement diagnostic](docs/native-movement.md) executes the original
+post-visible phase as Z80, samples real MSX controls at source boundaries and
+measures the complete input/mapper/render pipeline on NTSC/PAL. It uses a 256 KiB
+ASCII16 cartridge with 64 KiB RAM/16KiB VRAM. **Contacts and graphics are diagnostic;
+natural collisions, original presentation/audio and a complete game remain
+pending.** Exact artifact identity and human tests accompany its versioned release.
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
 byte-identically and has a reviewed routine/state/hardware map. Commercial
 revision/provenance remains unverified. Bounded complete-state replays now repeat
 under declared initialization; natural complete-game coverage remains pending.
-Source-addressed mechanics contracts and bounded CPU probes are available;
-native gameplay remains planned work. Historical Seaquest
+Source-addressed mechanics contracts, independent CPU probes and native movement
+are available at their declared boundaries. Historical Seaquest
 results are not Frostbite evidence.
 
 - [Approved design](docs/superpowers/specs/2026-10-31-frostbite-design.md)
@@ -37,6 +42,7 @@ results are not Frostbite evidence.
 - [Independent original-execution oracles](docs/reference-traces.md)
 - [Renderer feasibility and synthetic benchmark](docs/renderer-feasibility.md)
 - [Original graphics, coordinate/palette mapping and asset fit](docs/original-graphics.md)
+- [Native movement, input, mapper, timing and reproduction](docs/native-movement.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 
@@ -44,11 +50,12 @@ results are not Frostbite evidence.
 
 Standard-speed **MSX1, 64 KiB RAM and 16 KiB VRAM**, TMS9918-family VDP and
 built-in PSG. No RAM expansion, turbo, disk drive or extra sound hardware.
-Cartridge size/mapper will be selected from measured implementation needs.
+The current movement diagnostic uses 256 KiB ASCII16, selected from measured
+implementation needs; it requires no RAM or sound expansion.
 
 The port aims to preserve original mechanics exactly: source-coordinate
 movement, arithmetic/flags, update ordering, collisions, game modes and timing.
-The proposed implementation translates gameplay to native Z80 and compares
+The implementation translates gameplay to native Z80 and compares
 state against independent execution of the original. Graphics and sound are
 adapted to MSX hardware, with differences documented explicitly.
 
@@ -64,6 +71,9 @@ the macOS setup script, pinned tools, cross-build commands and diagnostic ROM.
 [Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) provides
 original-free CI. `make render-build` and `make render-bench` build/test the
 synthetic renderer; the original diagnostic remains the default `make build`.
+`make movement-build`, `make movement-check` and `make movement-run` build,
+validate and launch the source-dependent native movement diagnostic. See its
+dedicated checklist before canonical capture or packaging.
 
 Every new testable MSX ROM version will have a versioned GitHub release
 (prerelease during development), with the exact ROM attached, its hash/source

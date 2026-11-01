@@ -24,7 +24,7 @@ from reference_provenance import snapshot_paths
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-HELPERS=tuple(dict.fromkeys((*BUILD_FILES,'scripts/native_contract.py','scripts/native_contract.tcl','scripts/mechanics_probe.py',
+HELPERS=tuple(dict.fromkeys((*BUILD_FILES,'scripts/native_fast.py','scripts/native_analysis.py','scripts/native_contract.py','scripts/native_contract.tcl','scripts/mechanics_probe.py',
     'scripts/reference_cpu_check.py','scripts/reference_provenance.py','scripts/reference_state.py','scripts/source_timing.py',
     'scripts/reference_traces.py','scripts/trace_compare.py','scripts/render_build.py','scripts/render_model.py','scripts/smoke.py','scripts/rom.py')))
 
@@ -75,15 +75,17 @@ def chains(rom):
             ram=contact_environment(bytes(previous['ram']))
             directions=15 if tick<80 else 13 if tick<115 else 11 if tick<140 else 14 if tick<175 else 7
             fire=0 if tick in range(120,125) else 255
-            case={'id':f'chain-{variation}-{tick}','start':'F476','stops':['F019'],'chain':True,
+            case={'id':f'chain-{variation}-{tick}','start':'F476','stops':['F019'],'chain':tick>0,
                   'ram':{f'{i+128:02X}':f'{v:02X}' for i,v in enumerate(ram)},'registers':previous['registers'],
                   'mmio':{'0280':f'{directions*17:02X}','0282':'3F','0284':'00','000C':f'{fire:02X}','000D':f'{fire:02X}'},'limit':10000}
             previous=reference(rom,case);result.append(case)
     return result
 
 
-def cases(rom,syms):
+def cases(rom,syms,phase_only=False):
     source=json.loads((ROOT/'references/mechanics-cases.json').read_text())['cases']+arithmetic_vectors(rom)
+    source.append({'id':'cold-reset','start':'F000','stops':['F019'],'registers':{'a':165,'x':90,'y':75,'p':255},
+                   'ram':{f'{a:02X}':f'{(a*37+11)&255:02X}' for a in range(128,256)},'limit':10000})
     for index in range(256):
         source.append({'id':f'clear-{index}','start':'F004','stops':['F00C'],
             'registers':{'a':165,'x':index,'y':90,'p':0x71},
@@ -115,23 +117,40 @@ def cases(rom,syms):
                             'start':'F476','stops':['F019'],'ram':ram,'registers':{},
                             'mmio':{'0280':f'{directions*17:02X}','0282':'3F','0284':'00','000C':f'{fire:02X}','000D':f'{fire:02X}'},'limit':10000})
     source+=chains(rom)
-    return [c for c in source if 'core_'+c['start'] in syms and all('core_'+s in syms for s in c['stops'])]
+    if phase_only:source=[c for c in source if c['start'] in ('F000','F476')]
+    missing=[c['id'] for c in source if 'core_'+c['start'] not in syms or any('core_'+s not in syms for s in c['stops'])]
+    if missing:raise ValueError('native scope lost required source cases: '+','.join(missing))
+    return source
 
 
-def run_contract(selected=None,profile=False,explore=False,input_controls=None,corrupt_port2=False):
-    build=build_contract(input_controls is not None,corrupt_port2);rom=(ROOT/'references/roms/frostbite.bin').read_bytes();syms=symbols(OUT/'native.sym')
+def run_contract(selected=None,profile=False,explore=False,input_controls=None,corrupt_port2=False,fast_phase=False):
+    build=build_contract(input_controls is not None,corrupt_port2,fast_phase);rom=(ROOT/'references/roms/frostbite.bin').read_bytes();syms=symbols(OUT/'native.sym')
     if build['source_dirty'] and not explore:raise ValueError('canonical native proof requires clean committed producers; use --explore for WIP')
     if version('py65')!='1.2.0' or sys.byteorder!='little':raise ValueError('reviewed py65/little-endian host required')
     cpu_path=Path(inspect.getfile(MPU));cpu_hash=hashlib.sha256(cpu_path.read_bytes()).hexdigest()
     helpers=HELPERS+('scripts/device_replay.py','scripts/native_input_check.py','src/native_input.asm') if input_controls is not None else HELPERS
     producer=snapshot_paths(helpers) if not explore else {'tool_source_commit':build['source_commit'],
         'utility_fingerprints':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in helpers}}
-    selected=cases(rom,syms) if selected is None else selected
+    default_cases=selected is None
+    selected=cases(rom,syms,fast_phase) if default_cases else selected
+    if fast_phase:
+        filtered=[];reset_chain=True
+        for case in selected:
+            if case['start'] not in ('F000','F476'):
+                if not default_cases:raise ValueError('fast phase only exposes F000/F476 entries')
+                reset_chain=True;continue
+            case=copy.deepcopy(case)
+            if reset_chain:case['chain']=False
+            reset_chain=False;filtered.append(case)
+        selected=filtered
+        from native_fast import validate_entries
+        validate_entries(selected)
     if any(int(stop,16) not in observable_stops() for case in selected for stop in case['stops']):
         raise ValueError('native CPU stop not pinned for observable flags')
     expected=[reference(rom,c) for c in selected]
     if not selected:raise ValueError('native source cases required')
     directory=Path(tempfile.mkdtemp(prefix='contract-',dir=OUT));packed=bytearray()
+    (directory/'native-contract.rom').write_bytes(ROM.read_bytes());(directory/'build.json').write_text(json.dumps(build,indent=2)+'\n')
     for case,want in zip(selected,expected):
         registers={'a':0,'x':0,'y':0,'p':0x30,'sp':255,**case.get('registers',{})};p=registers['p']
         validate_entry(registers)
@@ -178,6 +197,7 @@ def run_contract(selected=None,profile=False,explore=False,input_controls=None,c
             event(time,['debug','write_block','CPU regs','20',struct.pack('>H',syms['rpc_start'])])
         replay(seed,events,7+len(selected)*.03,directory/'devices.omr')
         device_setup=(f'set input_mode 1\nset input_entry {syms["sample_native_input"]}\nset input_return {syms["sample_native_return"]}\n'
+            +f'set fire_return {syms["core_F5AD"]+3}\nset directions_return {syms["core_F630"]+3}\n'
             +f'reverse loadreplay -goto begin -viewonly {{{directory/"devices.omr"}}}\n')
     launcher=directory/'launch.tcl';launcher.write_text(f'set native_dir {{{directory}}}\nset rpc_start {syms["rpc_start"]}\nset idle {syms["idle"]}\nset input_mode 0\n'
         +device_setup
@@ -209,6 +229,7 @@ def run_contract(selected=None,profile=False,explore=False,input_controls=None,c
     if hashlib.sha256(cpu_path.read_bytes()).hexdigest()!=cpu_hash or hashlib.sha256(Path(emulator).read_bytes()).hexdigest()!=emulator_hash:
         raise ValueError('independent CPU/emulator binary changed')
     report={'cases':len(selected),'max_cycles':max_cycles,'rom_sha256':build['rom_sha256'],'build_source_commit':build['source_commit'],
+            'fast_phase':fast_phase,'input_adapter':input_controls is not None,
             'build_dirty':build['source_dirty'],'directory':str(directory.relative_to(ROOT)),
             **producer,'harness_dirty':build['source_dirty'],'backend':{'py65':'1.2.0','cpu_source_sha256':cpu_hash,'emulator_sha256':emulator_hash,
                 'profile_sha256':hashlib.sha256(profile_data).hexdigest()},
@@ -217,7 +238,7 @@ def run_contract(selected=None,profile=False,explore=False,input_controls=None,c
     if input_controls is not None:
         from native_input_check import hardware
         mirrors=(directory/'mirrors.bin').read_bytes()
-        if len(mirrors)!=4*len(selected) or receipt.get('input_samples',0)<len(selected):raise ValueError('missing genuine input samples')
+        if len(mirrors)!=4*len(selected) or receipt.get('input_samples',0)!=2*len(selected):raise ValueError('missing genuine input samples')
         for i,(case,controls) in enumerate(zip(selected,input_controls)):
             player=int(case['ram'].get('C7','00'),16)
             if tuple(mirrors[i*4:i*4+4])!=hardware(controls,player):raise ValueError(f'{case["id"]}: stale/incorrect hardware mirrors')
@@ -228,4 +249,4 @@ def run_contract(selected=None,profile=False,explore=False,input_controls=None,c
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--explore',action='store_true')
-    args=parser.parse_args();run_contract(explore=args.explore)
+    parser.add_argument('--fast-phase',action='store_true');args=parser.parse_args();run_contract(explore=args.explore,fast_phase=args.fast_phase)

@@ -24,6 +24,14 @@
     "Complete records, stack/heap guards, 64 KiB RAM, 3579545 Hz, source/binary/helper/backend identity"
   ],
   "contacts": "Declared scripted B0..B9 and ED inputs; these are fixtures, not implemented collision acquisition",
+  "fast_phase": {
+    "entries": "F476 requires D=0/SP=FF; F000 executes real CLD/stack clear; only F019 is an observable CPU boundary",
+    "analysis": "Finite X/D/C domains and NZCV/IY liveness over real bounded call contexts; no source-address behavior substitutions",
+    "index": "IY=C000+X where live; direct indexed RAM requires a proved non-wrapping range; generic 6507 addressing remains otherwise",
+    "stack": "No TSX permitted, TXS only in proved top-level zero-clear; source return words still physically written at FF minus context depth. Unobserved internal source SP is implicit; F019 exposes FF",
+    "coverage": "1793 independent full-phase/cold/continuous cases; generic4497 cases retain all101published mechanics cases and named arithmetic/flag/stack slices",
+    "fallback": "Unsupported fast phase entries/D/SP/stops reject explicitly; no silent coverage reduction"
+  },
   "input": {
     "hooks": ["F5AD fire", "F630 directions/console"],
     "sampler": "Direct standard MSX1 PSG/PPI ports; raw opposing states retained; keyboard joins only C7-selected port0/1",

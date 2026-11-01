@@ -6,7 +6,7 @@
 
 **Architecture:** Statically translate the verified post-visible phase F476→F019 and required subroutines; keep original logical RAM, carry/overflow/decimal and 6507 return-stack writes. No interpreter ships. Source hardware reads/writes terminate at explicit sampled-input/contact/shadow boundaries. A separate contract cartridge runs native slices under openMSX; the integrated diagnostic uses real per-source-step MSX controls and the synthetic measured renderer, with contacts explicitly scripted until #11. Original graphic integration is separate from mechanics and cannot silently change geometry.
 
-**Tech Stack:** Existing pinned .venv/py65, sjasmplus, ALE/Stella and openMSX; standard-speed64KiB MSX1/TMS9918/PSG. Start CPU proof plain32KiB; use ASCII16 only if measured combined code/tables need it, with banked core/phase-data windows and resident input/render code. No system RAM expansion.
+**Tech Stack:** Existing pinned .venv/py65, sjasmplus, ALE/Stella and openMSX; standard-speed64KiB MSX1/TMS9918/PSG. CPU proof plain32KiB; the final measured diagnostic uses256KiB ASCII16 with resident code, native/data and immutable atlas/name-row banks. The smaller dynamic-upload candidates failed timing. No system RAM expansion.
 
 **Spec:** docs/superpowers/specs/2026-10-31-frostbite-design.md, local p10 and docs/gameplay-contracts.md.
 

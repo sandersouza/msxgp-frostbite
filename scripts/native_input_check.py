@@ -55,12 +55,12 @@ def fixtures(rom):
     return cases,devices
 
 
-def run(explore=False,negative=False):
+def run(explore=False,negative=False,fast_phase=False):
     verified_input(ROOT/'references/roms/frostbite.bin');rom=(ROOT/'references/roms/frostbite.bin').read_bytes()
     cases,controls=fixtures(rom)
-    return run_contract(cases,explore=explore,input_controls=controls,corrupt_port2=negative)
+    return run_contract(cases,explore=explore,input_controls=controls,corrupt_port2=negative,fast_phase=fast_phase)
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--explore',action='store_true');parser.add_argument('--negative',action='store_true')
-    args=parser.parse_args();run(args.explore,args.negative)
+    parser.add_argument('--fast-phase',action='store_true');args=parser.parse_args();run(args.explore,args.negative,args.fast_phase)

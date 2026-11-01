@@ -1,6 +1,6 @@
 # Port native input, jumping, air control and floe transport
 
-Planning ID: P10. Status: approved backlog; implementation has not started.
+Planning ID: P10. Status: implementation in progress; canonical freeze, independent review and delivery remain pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/10
 
 ## Goal

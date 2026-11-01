@@ -47,7 +47,8 @@ proc dispatch_native {} {
     set entry [expr {[lindex $h 0]+256*[lindex $h 1]}]
     set stop [expr {[lindex $h 2]+256*[lindex $h 3]}]
     if {$::input_mode} {
-        read $::cases 152
+        set fixture [read $::cases 152]
+        binary scan [string index $fixture 1] cu ::expected_fire_phase
         if {$::stop_bp!=-1} {debug remove_bp $::stop_bp}
         set ::stop_bp [debug set_bp $stop {} {debug break;after break capture_native}]
         debug cont
@@ -113,6 +114,14 @@ after time 5 {
     if {$::input_mode} {
         debug set_bp $::rpc_start {} {set ::started [machine_info time]}
         debug set_bp $::input_entry {} {
+            set phase [debug read memory 0xC001]
+            set sp [reg SP]
+            set target [expr {[debug read memory $sp]+256*[debug read memory [expr {$sp+1}]]}]
+            if {$::input_samples%2==0} {
+                if {$phase!=$::expected_fire_phase || $target!=$::fire_return} {fail_native wrong-fire-source-phase}
+            } else {
+                if {$phase!=(($::expected_fire_phase+1)&255) || $target!=$::directions_return} {fail_native wrong-direction-source-phase}
+            }
             set ::input_regs [list [reg AF] [reg BC] [reg DE] [reg HL] [reg IX] [reg IY] [reg SP]]
             set ::psg15 [debug read {PSG regs} 15]
             set ::ppi [debug read ioports 170]

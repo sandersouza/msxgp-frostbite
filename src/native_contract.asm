@@ -26,6 +26,10 @@ rpc_start:
     LD A,($C6F4)
     LD E,A
     LD BC,($C6F2)
+    LD H,$C0
+    LD L,B
+    PUSH HL
+    POP IY
     LD HL,($C6F0)
     PUSH HL
     POP AF
