@@ -10,6 +10,21 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class HazardTableTests(unittest.TestCase):
+    def test_compiler_keeps_the_264th_mode_and_last_source_coordinate(self):
+        api=importlib.import_module('hazard_tables');codec=importlib.import_module('collision_compact')
+        plan={'kind':'edge','player_x':[159],'ys':[0,53],'modes':[{}]*264,'coordinates':list(range(160)),'cases_per_player':2*264*160}
+        profile=bytearray(plan['cases_per_player']*58)
+        for mode in range(264):
+            offset=((264+mode)*160+159)*58;profile[offset:offset+2]=(mode+1).to_bytes(2,'little')
+        pool=codec.CompactRows();compiled=api.compile_component(pool,plan,{159:bytes(profile)})
+        packed=pool.emit();directory=api.emit_component(packed,compiled)
+        self.assertEqual(len(directory),264*3)
+        bank=directory[791];address=int.from_bytes(directory[789:791],'little')
+        pointer=api.read_bytes(packed.banks,14,(bank,address),3)
+        pointer=api.read_bytes(packed.banks,14,(pointer[2],int.from_bytes(pointer[:2],'little')),6)[3:6]
+        row=codec.read_row(packed.banks,packed.metadata,(pointer[2],int.from_bytes(pointer[:2],'little')),159)
+        self.assertEqual(row[:2],(264).to_bytes(2,'little'))
+
     def test_complete_layout_rejects_exploration_and_missing_cold_mode(self):
         api=importlib.import_module('hazard_tables');domain=importlib.import_module('hazard_catalog')
         rom=bytearray(4096);rom[0xD0A:0xD12]=bytes([80,88,120,128,160,168,200,208]);rom[0xDC2:0xDD2]=bytes(range(16))
@@ -62,7 +77,7 @@ class HazardTableTests(unittest.TestCase):
             plan={'kind':'ordinary','player_x':[64],'ys':[0],'modes':[{}],'coordinates':[0],'cases_per_player':1,'expected_cases':1}
             manifest={**plan,'complete':True,'exploratory':True,'source':{'sha':'source'},'producer_commit':'capture','helpers':helpers,
                       'backend_build':backend,'binary_sha256':api.digest(root/'stella'),'backend_build_sha256':api.digest(root/'frostbite-hazard-observer.json'),
-                      'initial_sha256':api.digest(root/'initial.state'),'cases':1}
+                      'initial_sha256':api.digest(root/'initial.state'),'preparation':{'capsule':'known'},'cases':1}
             part={'start':0,'stop':1,'cases':1}
             def reseal():
                 observed['files']={name:api.digest(batch/name) for name in ('initial.state','cases.bin','results.bin','raw/stella.log')}
@@ -75,8 +90,12 @@ class HazardTableTests(unittest.TestCase):
             with (patch.object(api,'ROOT',root),patch.object(api,'capture_plan',return_value=plan),
                   patch.object(api,'producer',return_value=helpers),patch.object(api,'verified_input',return_value={'sha':'source'}),
                   patch.object(api,'audit_manifest'),patch.object(api,'verified_backend',return_value=backend),
+                  patch.object(api,'source_reset_checkpoint',create=True,return_value=(b'capsule',{'capsule':'known'})),
                   patch.object(api,'decode_state',return_value={'ram':bytes(128)}),patch.object(api,'make_case',return_value=bytes(128))):
                 reseal();self.assertEqual(api.verified_profiles(root,exploratory=True)[2]['cases'],1)
+                manifest['preparation']={'capsule':'different'};reseal()
+                with self.assertRaisesRegex(ValueError,'preparation'):api.verified_profiles(root,exploratory=True)
+                manifest['preparation']={'capsule':'known'}
                 profile.write_bytes(b'\x01'+bytes(57));reseal()
                 with self.assertRaisesRegex(ValueError,'profile differs'):api.verified_profiles(root,exploratory=True)
                 profile.write_bytes(bytes(58));(batch/'cases.bin').write_bytes(b'\x01'+bytes(127));reseal()

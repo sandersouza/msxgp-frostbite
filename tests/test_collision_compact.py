@@ -46,3 +46,11 @@ class CompactCollisionTests(unittest.TestCase):
         bad=[bytearray(bank) for bank in packed.banks]
         bad[packed.metadata['block_bank']-14][:2]=b'\xff\xff'
         with self.assertRaises(ValueError):api.read_row(bad,packed.metadata,packed.rows[ids[0]],0)
+
+    def test_preinterned_zero_tail_is_byte_exact_and_rejects_unknown_ids(self):
+        api=self.api();table=api.CompactRows();raw=b'\x05'+bytes(57)
+        record=table.intern_record(raw)
+        root=table.intern_indices([record]+[0]*159)
+        self.assertEqual(root,table.intern_row([raw]+[bytes(58)]*159))
+        with self.assertRaises(ValueError):table.intern_indices([record+1]+[0]*159)
+        with self.assertRaises(ValueError):table.intern_indices([record]*159)

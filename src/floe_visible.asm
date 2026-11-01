@@ -1,6 +1,6 @@
 ; Exact F019→F476 visible reduction. Source gameplay remains the native core.
 ; Literal-view contact tables come from complete original-clock observation.
-; Odd hazard and shore acquisition remain issue12; ED retains source stickiness.
+; WITH_HAZARDS adds the actual odd/shore source channels and compact row reader.
 floe_profile EQU $C780       ; word address, byte bank
 floe_baseptr EQU $C783       ; word resident base-shadow row
 floe_viewbyte EQU $C785
@@ -72,6 +72,9 @@ visible_step:
     JR .footer
 .contacts:
     CALL floe_acquire
+    IFDEF WITH_HAZARDS
+    CALL hazard_acquire
+    ENDIF
 .footer:
     LD A,2
     LD ($7000),A
@@ -249,6 +252,11 @@ floe_row:
     ADD A,160
 .relative:
     LD E,A
+    IFDEF WITH_HAZARDS
+    CALL contact_compact
+    LD (IY+0),A
+    RET
+    ELSE
     LD D,0
     ADD HL,DE
     SLA E
@@ -274,6 +282,7 @@ floe_row:
 .store:
     LD (IY+0),C
     RET
+    ENDIF
 
 floe_deref:
     LD E,(HL)
@@ -289,4 +298,7 @@ floe_final_pointers:
     DB $90,$FF,$98,$FF,$A0,$FF,$A8,$FF,$B0,$FF,$B8,$FF
 floe_bit_masks:
     DB 1,2,4,8,16,32,64,128
+    IFDEF WITH_HAZARDS
+    INCLUDE "hazard_contacts.asm"
+    ENDIF
     INCLUDE "contact_resident.inc"

@@ -83,6 +83,39 @@ the source foundation or the size prototypes.
 
 ## Reproduction
 
+## Native lookup groundwork
+
+The component collector freezes its complete source helper closure and uses at
+most four bounded workers. Edge truth keeps all 264 modes at all 17 exceptional
+player positions; ordinary single-copy, actual-copy alias and shore components
+are separate domains. A 34,650-case ordinary-X smoke capture passes a second
+audit of every raw case, observation marker, result, log and profile. Partial
+or exploratory components cannot become complete native build inputs.
+
+The compiler rejects substituted preparation capsules, missing receipt ranges
+and rehashed profiles/fixtures which disagree with original raw execution.
+Source-only acquisition may overlap unrelated native edits: the root producer
+and consumed helper hashes remain frozen, while each batch honestly retains
+its observed global commit/dirty facts. This is not whole-ROM clean-producer
+acceptance; that still requires a fresh committed build and capture.
+
+The native compact reader passes 464 actual standard-MSX1 Z80 unit checks in an
+original-free synthetic fixture cartridge: 288 sparse/slot/bank boundary cases,
+16 profile-directory cases including mode 264, and all 160 copy distances.
+The first native distance run failed at distance 8 because a compare carry was
+mistakenly returned as a hit. The corrected full check passes, including IX/IY,
+stack and interrupt preservation. The fixture is not a playable game version.
+
+Full-domain native ROM generation, ordinary-copy alias proof, complete original
+CPU/RAM phase equality, natural routes, footprint and crowded frame timing are
+still pending. Existing releases remain the human-testable artifacts.
+
+```sh
+.venv/bin/python -B scripts/hazard_decoder_check.py --out outputs/hazards/decoder-fixture-new
+```
+
+## Source reproduction
+
 Keep the existing source ROM, environments, frozen evidence and legacy intact.
 Use fresh ignored output directories; full states and original-derived tables
 are never public source or release assets.

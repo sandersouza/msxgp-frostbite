@@ -30,13 +30,18 @@ class CompactRows:
     def intern_row(self,records):
         if len(records)!=160 or any(not isinstance(row,(bytes,bytearray,memoryview)) for row in records):
             raise ValueError('complete160-coordinate original contact row required')
-        ids=[]
-        for row in records:
-            data=encode_record(row)
-            if data not in self.record_ids:
-                if len(self.records)>=65536:raise ValueError('compact record index overflow')
-                self.record_ids[data]=len(self.records);self.records.append(data)
-            ids.append(self.record_ids[data])
+        return self.intern_indices([self.intern_record(row) for row in records])
+
+    def intern_record(self,row):
+        data=encode_record(row)
+        if data not in self.record_ids:
+            if len(self.records)>=65536:raise ValueError('compact record index overflow')
+            self.record_ids[data]=len(self.records);self.records.append(data)
+        return self.record_ids[data]
+
+    def intern_indices(self,ids):
+        if len(ids)!=160 or any(type(value) is not int or not 0<=value<len(self.records) for value in ids):
+            raise ValueError('complete160-coordinate row of existing exact record IDs required')
         bitmap=0;references=bytearray()
         for index in range(10):
             values=ids[index*16:(index+1)*16]
