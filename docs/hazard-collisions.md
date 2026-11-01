@@ -51,6 +51,36 @@ positions 64/151, but fails at the edges. It is not an accepted substitute for
 original-clock acquisition. Edge truth and complete domain/capacity proof remain
 required before native use.
 
+## Frozen source foundation
+
+The final foundation checker at clean source
+`fe4814081bb7ecadb45a9dec048f5bd81d284d91` passes 9,476 controlled cases,
+768 literal-view invariance links, 2,560 object-window and 2,880 shore-window
+full/ROI pairs, 32 unchanged-Stella phases and 64 old-protocol comparisons.
+The domain contains 33 object pointers: 32 animated pointers plus cold-cleared
+A3=0. The full shape/reflection/NUSIZ mode list has 264 entries and requires
+an index wider than eight bits. All eight bear animation indices retain their
+source pointer aliases.
+
+The shore ROI stops at F246 and records the fresh accumulator sample; old
+sticky ED is not a substitute for that read. Source/header/row/prefix helpers
+and backend identities are frozen in the local receipts. The full host suite
+has 221 passing tests at this source checkpoint.
+
+Capacity prototypes reconstruct 13,004,800 existing floe and declared partial
+edge cells through 2,654,560 distinct leaf queries without differences. Typed
+32-byte pools, 16-bit IDs and sparse roots occupy 58 banks for that combined
+corpus. Each record scalarizes bit6 only after validating its 228 identical
+bits; bit6 may still differ between Y samples. View-dependent channels reject
+this representation. The three-X edge experiment is partial and excludes the
+newly identified cold pointer; it is never complete-domain acceptance.
+
+The simplified bear overlap model is rejected because it diverges even at
+ordinary player X. Shore acquisition retains complete original-clock truth.
+Final complete-domain capacity and actual Z80 access costs are gates of native
+integration, followed by whole-frame timing. No new testable ROM is implied by
+the source foundation or the size prototypes.
+
 ## Reproduction
 
 Keep the existing source ROM, environments, frozen evidence and legacy intact.

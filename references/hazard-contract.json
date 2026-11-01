@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
-  "status": "All-window controlled source observer verified experimentally; canonical catalog and native target pending",
+  "status": "Frozen all-window source foundation passed; complete catalog, native target and crowded timing pending",
   "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
   "original_phase": {"entry": "F019", "exit": "F476", "ram_bytes": 128},
   "local_protocol": {
@@ -24,6 +24,20 @@
     "even_reads": ["F3BE", "F3C0"],
     "shore_lifetime": "Only a negative acquired sample overwrites sticky ED",
     "count_zero": "NUSIZ zero still permits an original single-copy/edge ghost contact"
+  },
+  "source_foundation": {
+    "producer_commit": "fe4814081bb7ecadb45a9dec048f5bd81d284d91",
+    "clean": true,
+    "controlled_cases": 9476,
+    "object_pointers_including_cold_zero": 33,
+    "shape_reflection_nusiz_modes": 264,
+    "invariant_links": 768,
+    "object_full_roi_pairs": 2560,
+    "shore_full_roi_pairs": 2880,
+    "unchanged_stella_phases": 32,
+    "old_floe_compatibility_cases": 64,
+    "host_tests": 221,
+    "local_report": "outputs/hazards/observer-check-clean-d/check.json"
   },
   "acceptance": {
     "complete_source_domain": "Pending measured lossless representation and canonical capture",
