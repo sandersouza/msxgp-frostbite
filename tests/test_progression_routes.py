@@ -72,5 +72,21 @@ class ProgressionRouteTests(unittest.TestCase):
                         {0xC7: 1, 0xCC: 0, 0xD2: 0, 0xC6: 255}, {}], 1)
         self.assertEqual(self.api().assess(route, 'exhaustion-restart')['restart_step'], 6)
 
+    def test_transient_terminal_is_detected_inside_a_capture_batch(self):
+        route = points([{}, {0xF1: 128}, {0xCC: 0, 0xF1: 32},
+                        {0xCC: 0, 0xC6: 255}, {0xCC: 0, 0xC6: 254}])
+        self.assertEqual(self.api().terminal_index(route, 0), 3)
+        self.assertIsNone(self.api().terminal_index(route[:3], 0))
+
+    def test_input_proposal_is_bounded_matching_pins_without_state_injection(self):
+        api = self.api()
+        samples = [{'swcha': 223, 'swchb': 63, 'fire': [False, False]}]
+        proposal = {'variation': 2, 'inputs': samples, 'predicted_final': {'ram': 'never consumed'}}
+        self.assertEqual(api.proposal_inputs(proposal, 2, 10), samples)
+        for bad in ({**proposal, 'variation': 3}, {**proposal, 'inputs': []},
+                    {**proposal, 'inputs': samples * 11},
+                    {**proposal, 'inputs': [{**samples[0], 'swcha': 256}]}):
+            with self.assertRaises(ValueError): api.proposal_inputs(bad, 2, 10)
+
 
 if __name__ == '__main__': unittest.main()

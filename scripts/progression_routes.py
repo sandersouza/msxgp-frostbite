@@ -3,12 +3,13 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 
 from environment import ROOT
 from floe_routes import HELPERS as FLOE_HELPERS, route_policy
 from reference_provenance import audit_manifest, snapshot_paths
 from reference_state import decode_state
-from reference_traces import NEUTRAL, capture_steps, poweron_capsule, private_output
+from reference_traces import NEUTRAL, capture_steps, poweron_capsule, private_output, control_commands
 from stella_floe import digest
 from trace_compare import compare_traces, validate_trace
 
@@ -27,6 +28,25 @@ def validate_policy(policy):
     if (policy.get('ram_injections') != {} or policy.get('source_hazards_disabled') is not False
             or policy.get('instruction_skipping') is not False or policy.get('raw_input_every_interval') is not True):
         raise ValueError('continuous input-only original policy required')
+
+
+def terminal_index(points, active_start=0):
+    death = None
+    for i in range(active_start, len(points)):
+        r = points[i]['ram']
+        if death is None and r[0x71] & 0x90: death = i
+        if death is not None and i > death and r[0x4C] == r[0x52] == 0 and r[0x46] == 255 and r[0x71] == 0:
+            return i
+    return None
+
+
+def proposal_inputs(proposal, variation, maximum):
+    samples = proposal.get('inputs')
+    if (proposal.get('variation') != variation or not isinstance(samples, list)
+            or not samples or len(samples) > maximum):
+        raise ValueError('bounded matching progression input proposal required')
+    for sample in samples: control_commands(sample)
+    return samples
 
 
 def assess(points, kind, active_start=0):
@@ -69,8 +89,7 @@ def assess(points, kind, active_start=0):
         result.update(construction_step=built, entry_step=entered, bonus_complete_step=request, next_level_step=advanced)
     else:
         death = next((i for i in range(active_start, len(rows)) if rows[i][0x71] & 0x90), None)
-        terminal = next((i for i in range((death + 1) if death is not None else len(rows), len(rows))
-                         if rows[i][0x4C] == rows[i][0x52] == 0 and rows[i][0x46] == 255 and rows[i][0x71] == 0), None)
+        terminal = terminal_index(points, active_start)
         restarted = next((i for i in range((terminal + 1) if terminal is not None else len(rows), len(rows))
                           if rows[i][0] == variation and rows[i][0x47] == 0 and rows[i][0x4B] == start_level
                           and rows[i][0x4C] == 3 and rows[i][0x52] == (4 if variation & 1 else 0)
@@ -82,9 +101,11 @@ def assess(points, kind, active_start=0):
     return result
 
 
-def capture(out, kind, variation, stella='stella'):
+def capture(out, kind, variation, stella='stella', plan=None):
     if kind not in KINDS or type(variation) is not int or variation not in range(4):
         raise ValueError('declared route and variation0..3 required')
+    if subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip():
+        raise ValueError('clean committed source route producer required')
     producer = snapshot_paths(HELPERS)
     config = json.loads(CONFIG.read_text())
     out = private_output(out); out.mkdir(parents=True, exist_ok=False)
@@ -98,6 +119,13 @@ def capture(out, kind, variation, stella='stella'):
               'instruction_skipping': False, 'raw_input_every_interval': True, 'preparation_intervals': len(prep),
               'boundary': 'Unchanged original PCF019; cold power-on and physical Select/Reset/controller pins'}
     validate_policy(policy)
+    proposed = None
+    if plan is not None:
+        proposal = json.loads(Path(plan).read_text())
+        if kind != 'progression': raise ValueError('input proposals apply only to progression routes')
+        proposed = proposal_inputs(proposal, variation, config['maximum_intervals'])
+        (out / 'input-proposal.json').write_bytes(Path(plan).read_bytes())
+        policy['input_proposal_sha256'] = digest(out / 'input-proposal.json')
     points, inputs, journal = [], [], []
     current, trace = initial, None
 
@@ -117,10 +145,13 @@ def capture(out, kind, variation, stella='stella'):
     stage, elapsed, assessment, reset_sent = 'build', 0, None, False
     for batch in range(config['maximum_batches']):
         ram = decode_state(current)['ram']
-        if kind == 'progression':
+        if proposed is not None:
+            samples = proposed[elapsed:elapsed + 10]
+            if not samples: break
+        elif kind == 'progression':
             stage, samples = route_policy(ram, stage, elapsed)
             samples = [{**s, 'swcha': controller(s['swcha'], ram[0x47])} for s in samples]
-        elif ram[0x46] == 255 and ram[0x4C] == ram[0x52] == 0 and not reset_sent:
+        elif terminal_index(points, active_start) is not None and not reset_sent:
             samples = [{**NEUTRAL, 'swchb': 62}] + [NEUTRAL] * config['reset_release_intervals']
             reset_sent = True
         else:
@@ -133,6 +164,7 @@ def capture(out, kind, variation, stella='stella'):
             last_error = str(error)
         else:
             break
+        if kind == 'progression' and terminal_index(points, active_start) is not None: break
         if elapsed >= config['maximum_intervals']:
             break
         if batch % 50 == 0:
@@ -146,13 +178,16 @@ def capture(out, kind, variation, stella='stella'):
     for name, data in (('trace.json', combined), ('inputs.json', inputs), ('journal.json', journal)):
         (out / name).write_text(json.dumps(data, indent=2) + '\n')
     (out / 'initial.state').write_bytes(initial); (out / 'final.state').write_bytes(current)
-    if snapshot_paths(HELPERS) != producer:
+    if (snapshot_paths(HELPERS) != producer
+            or subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()):
         raise ValueError('original route producer changed during capture')
     report = {'schema_version': 1, **producer, 'clean_start': True, 'kind': kind, 'variation': variation,
               'backend': backend, 'steps': len(points), 'active_start': active_start,
               'preparation_intervals': len(prep), 'assessment': assessment,
               'files': {name: digest(out / name) for name in ('trace.json', 'inputs.json', 'journal.json', 'initial.state', 'final.state')},
               'scope': 'Original input-only continuous route; native/paced/manual/physical acceptance separate'}
+    if proposed is not None:
+        report['files']['input-proposal.json'] = digest(out / 'input-proposal.json')
     (out / 'route.json').write_text(json.dumps(report, indent=2) + '\n')
     return report
 
@@ -195,8 +230,9 @@ if __name__ == '__main__':
     p.add_argument('--kind', choices=KINDS)
     p.add_argument('--variation', type=int, choices=range(4))
     p.add_argument('--replay', type=Path)
+    p.add_argument('--plan', type=Path)
     args = p.parse_args()
     if not args.replay and (args.kind is None or args.variation is None):
         p.error('capture requires kind and variation')
-    result = replay(args.replay, args.out) if args.replay else capture(args.out, args.kind, args.variation)
+    result = replay(args.replay, args.out) if args.replay else capture(args.out, args.kind, args.variation, plan=args.plan)
     print(json.dumps({k: result[k] for k in ('steps', 'assessment') if k in result}, indent=2))
