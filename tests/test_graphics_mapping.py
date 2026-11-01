@@ -37,6 +37,11 @@ class GraphicsMappingTests(unittest.TestCase):
         colors=self.api().palette_map({0:(0,0,0),144:(0,24,124),12:(232,232,232)})
         self.assertEqual(colors,{0:1,144:4,12:15})
 
+    def test_achromatic_bear_igloo_shore_and_ice_keep_contrast_without_magenta(self):
+        colors=self.api().palette_map({0:(0,0,0),4:(111,111,111),6:(142,142,142),
+                                       10:(192,192,192),12:(214,214,214)})
+        self.assertEqual(colors,{0:1,4:1,6:14,10:15,12:15})
+
     def test_overcolor_loss_is_explicit_and_deterministic(self):
         api=self.api();pixels=bytearray([1])*(256*192);pixels[:8]=bytes([1,1,1,2,2,2,3,4])
         a=api.compile_screen(bytes(pixels));b=api.compile_screen(bytes(pixels))

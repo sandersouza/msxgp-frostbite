@@ -29,8 +29,15 @@ def palette_map(palette):
         raise ValueError('invalid measured Atari RGB palette')
     # Keep colored water/sky/creatures colored even when the TMS lacks their
     # dark luminance. Unconstrained RGB distance can incorrectly choose black.
-    return {k:nearest(v,tuple(c for c in range(1,16) if c not in (1,14,15))
-                      if max(v)-min(v)>=24 else range(1,16)) for k,v in palette.items()}
+    result={}
+    for code,rgb in palette.items():
+        if max(rgb)-min(rgb)<24:
+            # Stretch the limited grayscale to retain bear/igloo/shore contrast;
+            # source6(142)->gray, source10(192)->white rather than merging them.
+            luminance=sum(rgb)//3
+            result[code]=1 if luminance<128 else 14 if luminance<176 else 15
+        else:result[code]=nearest(rgb,tuple(c for c in range(1,16) if c not in (1,14,15)))
+    return result
 
 
 def map_frame(source,palette):
