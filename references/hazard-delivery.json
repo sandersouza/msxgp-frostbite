@@ -2,6 +2,7 @@
   "schema_version": 1,
   "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
   "implementation_pr": "https://github.com/sandersouza/msxgp-frostbite/pull/35",
+  "receipt_pr": "https://github.com/sandersouza/msxgp-frostbite/pull/36",
   "implementation_merge_commit": "9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7",
   "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.5-hazards",
   "tag": "v0.0.5-hazards",

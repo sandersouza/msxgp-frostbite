@@ -111,6 +111,8 @@ All execution rulings, rejected experiments and review dispositions are in
 
 ## Verified delivery receipt
 
+Final documentation receipt: [PR36](https://github.com/sandersouza/msxgp-frostbite/pull/36).
+
 PR35 merged at `9454d9cbced1ff1fc2a37cf980328e7a3c9c3dc7`; exact-head CI
 41323343142/41323348033 and merged-main
 [41323447274](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41323447274)
