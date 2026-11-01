@@ -54,7 +54,8 @@ def expected_pixels(scene,banner=None):
     return model.paint_sprites(pixels,scene)
 
 
-def build(floes,edge,ordinary,shore,aliases,out=OUT,*,version=VERSION,banner=None,additional_files=()):
+def build(floes,edge,ordinary,shore,aliases,out=OUT,*,version=VERSION,banner=None,additional_files=(),
+          core_generator=generate_fast,defines=()):
     diagnostic_names(model.scene(0),banner)
     producer_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     producer_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
@@ -63,14 +64,15 @@ def build(floes,edge,ordinary,shore,aliases,out=OUT,*,version=VERSION,banner=Non
     source=verified_input(ROOT/'references/roms/frostbite.bin');original=(ROOT/'references/roms/frostbite.bin').read_bytes()
     if (out/'tables').exists():raise ValueError('fresh immutable table build directory required')
     tables=compile_catalog(floes,edge,ordinary,shore,aliases,out/'tables')
-    (out/'core.inc').write_text(generate_fast(original,carry_fusion=True));(out/'data.bin').write_bytes(original[0xC00:])
+    (out/'core.inc').write_text(core_generator(original,carry_fusion=True));(out/'data.bin').write_bytes(original[0xC00:])
     previous=movement_build.OUT;previous_names=movement_build.diagnostic_names
     try:
         movement_build.OUT=out;movement_build.diagnostic_names=lambda scene:diagnostic_names(scene,banner);atlas=movement_build.write_assets()
     finally:movement_build.OUT=previous;movement_build.diagnostic_names=previous_names
     total=14+tables['banks'];cartridge_banks=floe_build.capacity(total)
     (out/'cartridge_padding.inc').write_text(''.join('    ORG $8000\n    DS $4000,$FF\n' for _ in range(cartridge_banks-total)))
-    (out/'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    INCLUDE "movement.asm"\n')
+    (out/'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n'
+        +''.join(f'    DEFINE {name}\n' for name in defines)+'    INCLUDE "movement.asm"\n')
     assembler=verified_tool('sjasmplus')
     result=subprocess.run([str(assembler),'--nologo',f'--inc={ROOT/"src"}',f'--inc={out}',f'--inc={out/"tables"}',
         f'--raw={rom}',f'--sym={out/"floes.sym"}',f'--lst={out/"floes.lst"}',str(out/'entry.asm')],cwd=ROOT,capture_output=True,text=True,timeout=60)
@@ -82,7 +84,8 @@ def build(floes,edge,ordinary,shore,aliases,out=OUT,*,version=VERSION,banner=Non
             or any(digest(ROOT/name)!=sha for name,sha in source_files.items())
             or verified_input(ROOT/'references/roms/frostbite.bin')!=source):raise ValueError('hazard build producer changed during compilation')
     final_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
-    metadata={'version':version,'diagnostic':True,'presentation_banner':list(banner) if banner is not None else None,'source_commit':producer_commit,
+    metadata={'version':version,'diagnostic':True,'presentation_banner':list(banner) if banner is not None else None,
+        'native_generator':core_generator.__module__+'.'+core_generator.__name__,'assembler_defines':list(defines),'source_commit':producer_commit,
         'source_dirty':producer_dirty or final_dirty,'source_dirty_at_start':producer_dirty,'source_dirty_at_finish':final_dirty,'original':source,
         'rom':{'filename':rom.name,'size':len(artifact),'sha256':hashlib.sha256(artifact).hexdigest(),'mapper':'ASCII16'},
         'banks':{'resident_used':syms['resident_end']-0x4000,'assets_used':syms['assets_end']-0x8000,'native_used':syms['native_end']-0x8000,

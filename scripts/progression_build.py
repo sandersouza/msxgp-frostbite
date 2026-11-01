@@ -5,12 +5,13 @@ from pathlib import Path
 
 from environment import ROOT
 import hazard_build
+from native_write_loop import generate, manifest
 
 VERSION = '0.0.6-progression'
 BANNER = ('FROSTBITE PROGRESSION DIAG', 'ALL GAME MODES NO AUDIO')
 OUT = ROOT / 'outputs/progression/build'
 ROM = OUT / f'frostbite-{VERSION}.rom'
-FILES = (*hazard_build.FILES, 'scripts/progression_build.py')
+FILES = (*hazard_build.FILES, 'scripts/progression_build.py', 'scripts/native_write_loop.py')
 presentation = hazard_build.presentation
 
 
@@ -21,8 +22,12 @@ def expected_pixels(scene): return hazard_build.expected_pixels(scene, BANNER)
 
 
 def build(floes, edge, ordinary, shore, aliases, out=OUT):
-    return hazard_build.build(floes, edge, ordinary, shore, aliases, out,
-        version=VERSION, banner=BANNER, additional_files=('scripts/progression_build.py',))
+    metadata = hazard_build.build(floes, edge, ordinary, shore, aliases, out,
+        version=VERSION, banner=BANNER, additional_files=('scripts/progression_build.py', 'scripts/native_write_loop.py'),
+        core_generator=generate, defines=('WITH_PROGRESSION',))
+    metadata['native_write_loops'] = manifest((ROOT / 'references/roms/frostbite.bin').read_bytes())
+    (Path(out) / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')
+    return metadata
 
 
 if __name__ == '__main__':
