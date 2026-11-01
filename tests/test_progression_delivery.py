@@ -57,6 +57,13 @@ class ProgressionDeliveryTests(unittest.TestCase):
         for raw, count, maximum in ((rows[:-1], 2, 700), (rows, 1, 700), (rows, 2, 699), (b'', 0, 0)):
             with self.assertRaises(ValueError): api.native_maximum(raw, count, maximum)
 
+    def test_natural_cold_checkpoint_has_zero_timing_but_later_steps_must_be_positive(self):
+        api = self.api(); rows = bytes(137) + bytes(133) + struct.pack('<I', 700)
+        self.assertEqual(api.native_maximum(rows, 2, 700, natural=True), 700)
+        with self.assertRaises(ValueError): api.native_maximum(rows, 2, 700)
+        with self.assertRaises(ValueError): api.native_maximum(rows + bytes(137), 3, 700, natural=True)
+        with self.assertRaises(ValueError): api.native_maximum(bytes(133) + struct.pack('<I', 1) + rows[137:], 2, 700, natural=True)
+
     def test_missing_or_ineffective_negative_witness_never_passes(self):
         api = self.api(); sha = 'a' * 64
         r = {'detected': True, 'rom_sha256': sha, 'harness_dirty': False, 'detail': 'RAM CA differs'}

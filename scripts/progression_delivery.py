@@ -65,11 +65,13 @@ def observed_maximum(report, raw):
     return max(busy)
 
 
-def native_maximum(raw, count, maximum):
+def native_maximum(raw, count, maximum, natural=False):
     if not count or len(raw) != count * 137:
         raise ValueError('complete actual native timing rows required')
     cycles = [struct.unpack_from('<I', raw, i * 137 + 133)[0] for i in range(count)]
-    if min(cycles) <= 0 or max(cycles) != maximum:
+    # Natural row0 is the cold reset checkpoint, before any timed phase.
+    if ((natural and cycles[0] != 0) or any(v <= 0 for v in cycles[1 if natural else 0:])
+            or max(cycles) != maximum):
         raise ValueError('raw native timing maximum differs')
     return maximum
 
@@ -251,7 +253,7 @@ def seal(config_path, out):
         if (directory / 'cases.bin').read_bytes() != input_records(json.loads((source / 'inputs.json').read_text()), trace['steps']): raise ValueError('native natural raw inputs differ')
         if len(expected) != len(trace['steps']): raise ValueError('native route checkpoint count differs')
         for p, want in zip(trace['steps'], expected): compare({'ram': p['ram'], 'registers': p['cpu']}, want)
-        native_maximum((directory / 'actual.bin').read_bytes(), r['cases'], r['max_native_cycles'])
+        native_maximum((directory / 'actual.bin').read_bytes(), r['cases'], r['max_native_cycles'], natural=True)
         roots['native-' + name] = directory
         checks['native-' + name] = {'cases': r['cases'], 'max_native_cycles': r['max_native_cycles'], 'assessment': r['assessment']}
         for view, relative in entry['paced'].items():
