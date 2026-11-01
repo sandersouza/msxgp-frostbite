@@ -11,6 +11,7 @@ import subprocess
 
 from environment import ROOT
 from floe_model import visible_state
+from hazard_domain import shapes
 from hazard_truth import FULL_BYTES,compare_roi,contacts,full_record,validate_invariants
 from native_contract import compare
 from reference_inventory import verified_input
@@ -19,23 +20,7 @@ from reference_traces import private_output,run_debugger
 from stella_floe import control_pairs,observe as observe_floes
 from stella_hazard import HELPERS,digest,fixture,helper_identity,observe
 
-CHECK_HELPERS=(*HELPERS,'scripts/hazard_observer_check.py','scripts/floe_model.py','scripts/native_contract.py')
-
-
-def shapes(rom):
-    result={0}  # F006 cold RAM clear precedes the first animated pointer update.
-    for kind in range(4):
-        for frame in range(256):
-            index=kind*2
-            if not frame&(16 if index==6 else 8):index+=1
-            low=rom[0xD0A+index]
-            if index>=2:
-                phase=(frame>>3)&31
-                if phase>=16:phase^=31
-                low=(low+rom[0xDC2+phase])&255
-            if low>248:raise ValueError('legal object graphic crosses an unmodeled page')
-            result.add(low)
-    return sorted(result)
+CHECK_HELPERS=(*HELPERS,'scripts/hazard_domain.py','scripts/hazard_observer_check.py','scripts/floe_model.py','scripts/native_contract.py')
 
 
 def cases_for(base,domain):
@@ -76,6 +61,9 @@ def invariant_cases(base,domain,controls):
         for c5,cb,cd,ef in ((0,0,15,0),(128,0,255,0),(0,4,15,7),(0,20,255,3)):
             ram=bytearray(cases[start]);ram[0x45]=c5;ram[0x4B]=cb;ram[0x4D]=cd;ram[0x6F]=ef
             cases.append(bytes(ram));links.append((start,len(cases)-1,7,7,'header'))
+        for bear_x,fade in ((0,1),(15,2),(159,3)):
+            ram=bytearray(cases[start]);ram[0x68]=bear_x;ram[0x70]=fade
+            cases.append(bytes(ram));links.append((start,len(cases)-1,7,7,'bear-position/color'))
         ram=bytearray(cases[start+3])
         for row in (1,2,3):
             ram[0x54+row]=rng.randrange(160);ram[0x58+row]=rng.randrange(4)

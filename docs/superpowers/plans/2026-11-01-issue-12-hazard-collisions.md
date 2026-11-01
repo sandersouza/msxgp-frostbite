@@ -30,13 +30,15 @@
 
 ### Task 1: Complete original-clock observation and bounded representation proof
 
-**Files:** create scripts/hazard_truth.py, scripts/stella_hazard.py, scripts/hazard_observer_check.py, scripts/collision_blocks.py, scripts/collision_compact.py, tools/stella-hazard.patch, tests/test_hazard_truth.py, tests/test_hazard_observer.py, tests/test_collision_blocks.py, tests/test_collision_compact.py; local outputs/hazards/; document references/hazard-contract.json and docs/hazard-collisions.md.
+**Files:** create scripts/hazard_truth.py, scripts/hazard_domain.py, scripts/stella_hazard.py, scripts/hazard_observer_check.py, scripts/collision_blocks.py, scripts/collision_compact.py, tools/stella-hazard.patch, tests/test_hazard_truth.py, tests/test_hazard_domain.py, tests/test_hazard_observer.py, tests/test_collision_blocks.py, tests/test_collision_compact.py; local outputs/hazards/; document references/hazard-contract.json and docs/hazard-collisions.md.
 
 **Interfaces:** `full_record(data: bytes) -> dict` decodes a strict 674-byte record: nine 58-byte two-channel literal-view windows (row indexes 0..7, shore index 8), 128 RAM bytes, A/X/Y/P/SP and 19 glyph bytes. `observe(rom,binary,initial,cases,out) -> (bytes,receipt)` executes unchanged original instructions. An additive observation patch applies after the frozen floe patch; the old command/protocol remains unchanged. `contacts(record,ram) -> {rows:bytes[8],shore:int}` selects the actual one of 228 views.
 
 `collision_blocks.put_row(packer, records: sequence[bytes]) -> (bank,address)` interns a complete 160-coordinate row through ten 16-cell blocks of bank-local three-byte pointers. Its independent decoder checks original coordinate bounds and physical bank-local pointers. This measured representation proof changes no source collision result or published ROM; Task 2 consumes it only after size and access-cost acceptance.
 
 The smaller candidate `collision_compact.CompactRows.intern_row(records) -> row_id` / `emit(first_bank) -> PackedRows` uses fixed 32-byte record/block pools, 16-bit IDs and sparse row bitmaps. A record retains its own bit6 value only after verifying all 228 shadow bits are uniform; otherwise compilation rejects it. `read_row(banks, metadata, root, index)` reconstructs all 58 original bytes independently. Task 2 owns complete-domain capacity and native access-cost acceptance.
+
+`hazard_domain.shapes(rom)` includes initial pointer zero and every animated pointer; `object_modes(rom)` enumerates all shape/reflection/NUSIZ tuples without byte truncation. `bear_modes(rom)` returns representative source EF values and all eight pose aliases, deduplicating only byte-identical source pointers. Keeping domain derivation separate avoids freezing unrelated native/test harness imports during long source-only capture.
 
 - [ ] RED→GREEN protocol tests reject partial records, invalid padding/views, and wrong electrical low bits. Implement strict decoding without proprietary fixtures.
 - [ ] Extend only observation sidecars to acquire every original row/shore read and both latch channels, including CXCLR and P0 data-dependent update events. Retain the old binary/capture trees; build the new pinned backend separately.
