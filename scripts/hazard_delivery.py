@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import shutil
 import struct
+import xml.etree.ElementTree as ET
 
 from environment import ROOT
 from floe_delivery import audit_artifacts,cpu_rows,tree
@@ -42,6 +43,9 @@ COMPONENT_CASES={'edge':25132800,'ordinary':4954950,'shore':8294400,'aliases':32
 OBSERVER_COUNTS={'cases':9476,'actual_views':228,'object_shapes':33,'invariant_links':768,
                  'roi_comparisons':2560,'shore_roi_comparisons':2880,'old_floe_compatibility_cases':64}
 STRESS_NAMES={name for name,*_ in PACED_MODES}|{'ntsc_transitions_inverted','pal_transitions_inverted','counts','mixed_ntsc','mixed_pal'}
+STRESS_MODES={name:(family,layout,width,transitions) for name,family,layout,width,transitions in PACED_MODES}
+STRESS_MODES.update(ntsc_transitions_inverted=('ntsc',1,1,True),pal_transitions_inverted=('pal',1,1,True),
+                    counts=('ntsc',0,0,False),mixed_ntsc=('ntsc',0,0,False),mixed_pal=('pal',0,0,False))
 NEGATIVE_CAUSES={'collision':'RAM B7','rng':'RAM 82','row_priority':'CPU y','sticky':'RAM ED',
                  'spacing':'fast-io-spacing','sprite':'fifth-sprite-slot','guard':'heap-guard',
                  'state':'RAM AA','pixel':'pixel mismatch','contact':'RAM B6','cache':'pixel mismatch'}
@@ -84,9 +88,34 @@ def validate_observer_summary(r):
 def validate_suite_manifest(reports,sha):
     if set(reports)!=STRESS_NAMES:raise ValueError('all fifteen crowded/cache/mixed/toggle modes required')
     for name,r in reports.items():
+        mode=tuple(r.get(k) for k in ('family','layout','width','transitions'))
         if (r.get('rom_sha256')!=sha or r.get('harness_dirty') is not False or r.get('build_dirty') is not False
+                or mode!=STRESS_MODES[name] or r.get('catalog')!=('counts' if name=='counts' else 'dense')
+                or r.get('canonical_seed')!=('mixed-counts' if name.startswith('mixed') else 'three-copies')
                 or name.startswith('mixed') and r.get('canonical_nusiz_codes')!=[0,1,2,3]):
             raise ValueError('clean current-ROM stress and all real copy codes required')
+
+
+def validate_route_binding(kind,route):
+    if kind not in ROUTE_STEPS or route.get('kind')!=kind or route.get('steps')!=ROUTE_STEPS[kind]:
+        raise ValueError('named natural gate must use its own complete original interaction')
+
+
+def audit_binary(directory,report,build):
+    directory=Path(directory);sha=build['rom']['sha256']
+    if (digest(directory/build['rom']['filename'])!=sha or json.loads((directory/'build.json').read_text())!=build
+            or report.get('build_source_commit')!=build['source_commit']
+            or report.get('rom',{}).get('sha256',report.get('rom_sha256'))!=sha
+            or 'rom' in report and report['rom']!=build['rom']):
+        raise ValueError('copied tested ROM/build/header identity differs from sealed candidate')
+
+
+def audit_profile(directory,report,name,family=None):
+    path=Path(directory)/'user-data/machines'/name;data=path.read_bytes()
+    if digest(path)!=report['profile_sha256']:raise ValueError('actual machine profile differs from tested receipt')
+    validate_machine_profile(data)
+    if family and ET.fromstring(data).findtext('.//VDP/version')!=('TMS9918A' if family=='ntsc' else 'TMS9929A'):
+        raise ValueError('actual VDP family differs from named clock gate')
 
 
 def validate_negative_manifest(reports,sha):
@@ -192,10 +221,12 @@ def audit_route(original,replayed):
     return r
 
 
-def audit_negative(name,r,positive,sha):
+def audit_negative(name,r,positive,sealed_build):
+    sha=sealed_build['rom']['sha256']
     directory=ROOT/r['directory'];audit_manifest(r,tuple(r['utility_fingerprints']));audit_artifacts(directory,r['artifacts'])
     build=json.loads((directory/'build.json').read_text())
     if build['source_dirty'] or build['rom']['sha256']!=sha or digest(directory/build['rom']['filename'])!=sha:raise ValueError('negative ROM/build identity changed')
+    if build!=sealed_build:raise ValueError('negative copied build differs from sealed candidate')
     launch=(directory/'launch.tcl').read_text()
     if f'set inject {{{name}}}' not in launch and f'set inject_fault {name}\n' not in launch:raise ValueError('intended runtime mutation missing')
     if name in ('spacing','sprite','guard'):
@@ -243,27 +274,29 @@ def seal(config_path,out):
     for kind,count in (('geometry',14828),('mechanics',652)):
         path=ROOT/config[kind];r=json.loads(path.read_text());validate_target(kind,r,sha,count);audit_manifest(r,tuple(r['utility_fingerprints']))
         directory=path.parent/'native' if kind=='geometry' else path.parent;audit_artifacts(directory,r['artifacts']);cpu_rows(directory)
+        audit_binary(directory,r,build);audit_profile(directory,r,'Frostbite_Floes.xml')
         if kind=='geometry':audit_geometry(path,r)
         else:audit_mechanics(path,reader,floes/'initial.state')
         roots[kind]=path.parent;summaries[kind]={'cases':count,'report_sha256':digest(path),'max_native_cycles':r['max_native_cycles']}
     if set(config['routes'])!=set(ROUTE_STEPS):raise ValueError('all four complete natural interactions required')
     for kind,entry in config['routes'].items():
-        source=ROOT/entry['source'];replay=ROOT/entry['replay'];route=audit_route(source,replay);roots['source-'+kind]=source;roots['replay-'+kind]=replay
+        source=ROOT/entry['source'];replay=ROOT/entry['replay'];route=audit_route(source,replay);validate_route_binding(kind,route)
+        roots['source-'+kind]=source;roots['replay-'+kind]=replay
         if set(entry['paced'])!={'ntsc','pal'}:raise ValueError('both natural clock families required')
         for family,relative in entry['paced'].items():
             path=ROOT/relative;r=json.loads(path.read_text());validate_target('paced',r,sha,route['steps']);audit_manifest(r,tuple(r['utility_fingerprints']))
             if r['family']!=family or r['original_route_sha256']!=digest(source/'route.json'):raise ValueError('paced route/family identity changed')
-            audit_artifacts(path.parent,r['artifacts']);validate_machine_profile((path.parent/'user-data/machines/Frostbite_Paced.xml').read_bytes())
+            audit_artifacts(path.parent,r['artifacts']);audit_binary(path.parent,r,build);audit_profile(path.parent,r,'Frostbite_Paced.xml',family)
             period,busy,cycles=verify_saved(path.parent,source,family,r)
             if (r['max_busy_cycles'],r['max_native_cycles'])!=(max(busy),max(cycles)):raise ValueError('paced raw timing differs from receipt')
             roots[f'paced-{kind}-{family}']=path.parent;summaries[f'paced-{kind}-{family}']={k:r[k] for k in ('source_steps','frames','max_busy_cycles','frame_budget','min_margin_cycles','assessment')}
     suite=json.loads((ROOT/config['suite']).read_text());validate_suite_manifest(suite,sha)
     for name,r in suite.items():
         validate_receipt(r,r['frame_budget'],r['layout'],r['width'],r['transitions']);audit_manifest(r,tuple(r['utility_fingerprints']))
-        directory=ROOT/r['directory'];audit_artifacts(directory,r['artifacts']);validate_machine_profile((directory/'user-data/machines/Frostbite_Movement.xml').read_bytes())
+        directory=ROOT/r['directory'];audit_artifacts(directory,r['artifacts']);audit_binary(directory,r,build);audit_profile(directory,r,'Frostbite_Movement.xml',r['family'])
         roots['stress-'+name]=directory;summaries['stress-'+name]={k:r[k] for k in ('max_busy_cycles','frame_budget','canonical_nusiz_codes')}
     negatives=json.loads((ROOT/config['negatives']).read_text());validate_negative_manifest(negatives,sha)
-    for name,r in negatives.items():audit_negative(name,r,suite,sha);roots['negative-'+name]=ROOT/r['directory']
+    for name,r in negatives.items():audit_negative(name,r,suite,build);roots['negative-'+name]=ROOT/r['directory']
     # Published old bytes remain independently reproducible; generated native
     # source text is identical, while resident input-call addresses can relocate.
     old=ROOT/config['previous_build'];previous=json.loads((old/'build.json').read_text());validate_source_files(previous)

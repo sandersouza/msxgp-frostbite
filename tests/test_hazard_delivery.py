@@ -1,7 +1,10 @@
 import copy
+import hashlib
 import importlib
+import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
@@ -37,12 +40,34 @@ class HazardDeliveryTests(unittest.TestCase):
 
     def test_stress_catalog_requires_both_toggle_orientations_and_real_mixed_counts(self):
         api=self.api();reports={name:{'rom_sha256':'abc','canonical_nusiz_codes':[0,1,2,3] if name.startswith('mixed') else [0,3],
-                  'harness_dirty':False,'build_dirty':False} for name in api.STRESS_NAMES}
+                  'harness_dirty':False,'build_dirty':False,'family':mode[0],'layout':mode[1],'width':mode[2],
+                  'transitions':mode[3],'catalog':'counts' if name=='counts' else 'dense',
+                  'canonical_seed':'mixed-counts' if name.startswith('mixed') else 'three-copies'} for name,mode in api.STRESS_MODES.items()}
         api.validate_suite_manifest(reports,'abc')
         bad=dict(reports);bad.pop('pal_transitions_inverted')
         with self.assertRaises(ValueError):api.validate_suite_manifest(bad,'abc')
         bad=copy.deepcopy(reports);bad['mixed_pal']['canonical_nusiz_codes']=[0,3]
         with self.assertRaises(ValueError):api.validate_suite_manifest(bad,'abc')
+        bad=copy.deepcopy(reports);bad['pal']['family']='ntsc'
+        with self.assertRaises(ValueError):api.validate_suite_manifest(bad,'abc')
+
+    def test_natural_config_key_cannot_substitute_another_successful_route(self):
+        api=self.api();route={'kind':'fish-envelope','steps':812}
+        api.validate_route_binding('fish-envelope',route)
+        with self.assertRaises(ValueError):api.validate_route_binding('threat-push',route)
+
+    def test_actual_copied_rom_build_and_profile_must_match_the_verified_header(self):
+        api=self.api()
+        with tempfile.TemporaryDirectory() as tmp:
+            directory=Path(tmp);artifact=b'AB-synthetic-rom';sha=hashlib.sha256(artifact).hexdigest()
+            build={'rom':{'filename':'unit.rom','sha256':sha},'source_commit':'abc'}
+            (directory/'unit.rom').write_bytes(artifact);(directory/'build.json').write_text(json.dumps(build))
+            r={'rom':build['rom'],'build_source_commit':'abc'}
+            api.audit_binary(directory,r,build)
+            (directory/'unit.rom').write_bytes(b'old-version')
+            with self.assertRaises(ValueError):api.audit_binary(directory,r,build)
+            (directory/'unit.rom').write_bytes(artifact);(directory/'build.json').write_text('{}')
+            with self.assertRaises(ValueError):api.audit_binary(directory,r,build)
 
     def test_negative_manifest_rejects_wrong_cause_stale_rom_and_missing_mutation(self):
         api=self.api();reports={name:{'detected':True,'detail':needle,'rom_sha256':'abc','harness_dirty':False}
