@@ -174,7 +174,9 @@ def fixture_batch(fixtures, probe):
                 or not isinstance(ram, (bytes, list)) or len(ram) != 128
                 or any(type(b) is not int or not 0 <= b <= 255 for b in ram)):
             raise ValueError('bounded named complete uint8 RAM fixture required')
-        commands += ['loadState 9'] + [f'ram ${address + 128:02x} ${value:02x}' for address, value in enumerate(ram)]
+        # Stella's system labels "$1e"/"$1f" resolve to read-register14/15!
+        # Explicit decimal constants cannot collide with those numeric labels.
+        commands += ['loadState 9'] + [f'ram ${address + 128:02x} #{value}' for address, value in enumerate(ram)]
         commands += control_commands(fixture['input'])
         commands += ['presentationProbe' if probe else 'runToPc $f019', f'saveState {slot}']
     return '\n'.join(commands + ['exitRom', ''])

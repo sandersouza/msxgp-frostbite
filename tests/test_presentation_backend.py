@@ -90,10 +90,19 @@ class PresentationBackendTests(unittest.TestCase):
         fixtures = [{'name': 'score-0', 'ram': list(range(128)), 'input': sample}]
         script = api.fixture_batch(fixtures, probe=True)
         self.assertIn('loadState 0\nsaveState 9\nloadState 9\n', script)
-        self.assertIn('ram $80 $00\n', script); self.assertIn('ram $ff $7f\n', script)
+        self.assertIn('ram $80 #0\n', script); self.assertIn('ram $ff #127\n', script)
         self.assertEqual(script.count('\nram '), 128)
         self.assertIn('presentationProbe\nsaveState 0\n', script)
         self.assertNotIn('presentationProbe', api.fixture_batch(fixtures, probe=False))
         for bad in ([], fixtures * 10, [{**fixtures[0], 'ram': [0] * 127}],
                     [{**fixtures[0], 'ram': [256] * 128}], [{**fixtures[0], 'name': '../original'}]):
             with self.assertRaises(ValueError): api.fixture_batch(bad, probe=True)
+
+    def test_literal_fixture_bytes_cannot_resolve_as_hex_looking_debugger_system_labels(self):
+        api = self.api(); sample = {'swcha': 255, 'swchb': 63, 'fire': [False, False]}
+        for start in (0, 128):
+            ram = list(range(start, start + 128))
+            script = api.fixture_batch([{'name': 'all-bytes', 'ram': ram, 'input': sample}], probe=True)
+            for n, value in enumerate(ram):
+                self.assertIn(f'ram ${n + 128:02x} #{value}\n', script)
+        self.assertNotIn('$1e', script); self.assertNotIn('$1f', script)
