@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "version": "0.0.2-renderer",
+  "scope": "Original-free synthetic renderer diagnostic; no native gameplay/original-graphics/hardware acceptance",
+  "source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+  "rom": {
+    "filename": "frostbite-0.0.2-renderer.rom",
+    "size": 32768,
+    "used_bytes": 30848,
+    "padding_bytes": 1920,
+    "sha256": "111ded95de3c91ff92093abe5fcee4b436150a99ee96a5a9634dfc9ebeffd4c7",
+    "mapper": "Normal/plain32KiB"
+  },
+  "target": {
+    "ram_kib": 64,
+    "vram_kib": 16,
+    "z80_hz": 3579545,
+    "extra_expansions": false
+  },
+  "allocation": {
+    "vram_used_bytes": 16000,
+    "vram_free_bytes": 384,
+    "ram_state_extent_bytes": 2816,
+    "guarded_stack_min": 62322,
+    "maximum_sprites_per_line": 4,
+    "surrogate_cycles_per_call": 10018
+  },
+  "timings": {
+    "rpc": {
+      "cases": 643,
+      "max_busy_cycles": 57139,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 617827,
+      "frame_budget_cycles": 59736,
+      "margin_cycles": 2597
+    },
+    "ntsc": {
+      "cases": 240,
+      "max_busy_cycles": 55455,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 223856,
+      "frame_budget_cycles": 59736,
+      "margin_cycles": 4281,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 59705,
+      "period_max_cycles": 59768,
+      "source_reservations": 240,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 0,
+      "width": 0,
+      "space_transitions": false
+    },
+    "ntsc_layout0_width1": {
+      "cases": 240,
+      "max_busy_cycles": 55455,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 223856,
+      "frame_budget_cycles": 59736,
+      "margin_cycles": 4281,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 59705,
+      "period_max_cycles": 59768,
+      "source_reservations": 240,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 0,
+      "width": 1,
+      "space_transitions": false
+    },
+    "ntsc_layout1_width0": {
+      "cases": 240,
+      "max_busy_cycles": 58989,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 239280,
+      "frame_budget_cycles": 59736,
+      "margin_cycles": 747,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 59705,
+      "period_max_cycles": 59767,
+      "source_reservations": 240,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 1,
+      "width": 0,
+      "space_transitions": false
+    },
+    "ntsc_layout1_width1": {
+      "cases": 240,
+      "max_busy_cycles": 58989,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 239280,
+      "frame_budget_cycles": 59736,
+      "margin_cycles": 747,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 59705,
+      "period_max_cycles": 59767,
+      "source_reservations": 240,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 1,
+      "width": 1,
+      "space_transitions": false
+    },
+    "pal": {
+      "cases": 240,
+      "max_busy_cycles": 65426,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 223856,
+      "frame_budget_cycles": 71364,
+      "margin_cycles": 5938,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 71335,
+      "period_max_cycles": 71395,
+      "source_reservations": 286,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 0,
+      "width": 0,
+      "space_transitions": false
+    },
+    "pal_layout0_width1": {
+      "cases": 240,
+      "max_busy_cycles": 65426,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 223856,
+      "frame_budget_cycles": 71364,
+      "margin_cycles": 5938,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 71335,
+      "period_max_cycles": 71395,
+      "source_reservations": 286,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 0,
+      "width": 1,
+      "space_transitions": false
+    },
+    "pal_layout1_width0": {
+      "cases": 240,
+      "max_busy_cycles": 68995,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 239280,
+      "frame_budget_cycles": 71364,
+      "margin_cycles": 2369,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 71333,
+      "period_max_cycles": 71393,
+      "source_reservations": 286,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 1,
+      "width": 0,
+      "space_transitions": false
+    },
+    "pal_layout1_width1": {
+      "cases": 240,
+      "max_busy_cycles": 68995,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 239280,
+      "frame_budget_cycles": 71364,
+      "margin_cycles": 2369,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 71333,
+      "period_max_cycles": 71393,
+      "source_reservations": 286,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 1,
+      "width": 1,
+      "space_transitions": false
+    },
+    "ntsc_transitions": {
+      "cases": 240,
+      "max_busy_cycles": 58971,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 231600,
+      "frame_budget_cycles": 59736,
+      "margin_cycles": 765,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 59707,
+      "period_max_cycles": 59766,
+      "source_reservations": 240,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 0,
+      "width": 0,
+      "space_transitions": true
+    },
+    "pal_transitions": {
+      "cases": 240,
+      "max_busy_cycles": 68786,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "data_writes": 231600,
+      "frame_budget_cycles": 71364,
+      "margin_cycles": 2578,
+      "max_commit_cycles": 1205,
+      "period_min_cycles": 71333,
+      "period_max_cycles": 71394,
+      "source_reservations": 286,
+      "consecutive_frames": true,
+      "commit_inside_vblank": true,
+      "layout": 0,
+      "width": 0,
+      "space_transitions": true
+    }
+  },
+  "controls": [
+    "right",
+    "left",
+    "space-edge",
+    "space-held",
+    "space-repress"
+  ],
+  "negative_controls": {
+    "guard": true,
+    "overflow": true,
+    "pixel": true,
+    "spacing": true,
+    "sprite": true
+  },
+  "provenance": {
+    "build_source_files": {
+      "src/render_benchmark.asm": "1d1ac363f258fde735403b53568e7edcf1a51d379434849f44db371ff02f37c0",
+      "src/render.asm": "1064faa41de4c96858283175c9d5ce02cc5f2850f981f9be1e096821ac859584",
+      "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+      "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+      "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+      "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+    },
+    "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+    "captures": {
+      "rpc": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      },
+      "ntsc": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      },
+      "ntsc_layout0_width1": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      },
+      "ntsc_layout1_width0": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      },
+      "ntsc_layout1_width1": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      },
+      "pal": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "22000e434ab1b70ecc7c1cc15ec2017c81c50e39bda1390d0357550d4cfbfe4c"
+      },
+      "pal_layout0_width1": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "22000e434ab1b70ecc7c1cc15ec2017c81c50e39bda1390d0357550d4cfbfe4c"
+      },
+      "pal_layout1_width0": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "22000e434ab1b70ecc7c1cc15ec2017c81c50e39bda1390d0357550d4cfbfe4c"
+      },
+      "pal_layout1_width1": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "22000e434ab1b70ecc7c1cc15ec2017c81c50e39bda1390d0357550d4cfbfe4c"
+      },
+      "ntsc_transitions": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      },
+      "pal_transitions": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "22000e434ab1b70ecc7c1cc15ec2017c81c50e39bda1390d0357550d4cfbfe4c"
+      },
+      "controls": {
+        "harness_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+        "helper_sha256": {
+          "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+          "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+          "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+          "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+          "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+          "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+          "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+          "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+          "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+          "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+        },
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f"
+      }
+    }
+  },
+  "limits": [
+    "Synthetic masks/font, not original Frostbite assets or playable mechanics",
+    "Grid presentation rows; original coordinate/palette mapping remains issue9",
+    "10k-step surrogate is not measured native game/input/audio cost; integration must remeasure",
+    "Pixel oracle covers643 RPC scenes; paced frames check timing/slots/guards, not every paced pixel",
+    "VRAM reconstruction preview is not a framebuffer screenshot; RGB is approximate",
+    "Expanded cartridge slots, manual emulator review, audio and physical MSX acceptance remain pending"
+  ],
+  "preview": {
+    "sha256": "0925757d32708f9fbda30d2fd0cda73580154f441959aa31049c44f58a7d4a03",
+    "method": "Actual emulated VRAM reconstruction; approximate RGB, not framebuffer capture"
+  },
+  "publication": {
+    "tool_source_commit": "b249373be1cc2382f87b5bb97caa865ae0c6641c",
+    "utility_fingerprints": {
+      "scripts/render_delivery.py": "867cea4f063a4401ed5d919ce2f44d85d4bdd9194efa19bd02b9ac3a9db750f0",
+      "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+      "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+      "scripts/render_bench.py": "2abf78c987c73bd277c29af59a17ea63f7e9bba03891e78b37ea7eb9e4cc2f1c",
+      "scripts/render_bench.tcl": "cb941c592b10fbf98462e74e8d0dabe25dc68b2138ff91b6c786d6d33df06cb1",
+      "scripts/render_controls.tcl": "1788abb76c02e10c8c4852200ed6ae3406182419a7b9d546b72cc9d98038dcb7",
+      "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+      "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+      "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01",
+      "scripts/rom.py": "9b85d7c43a7c75a9c754d33257f68c6026aa230eb07a951c93b00698d1350c0b",
+      "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+      "references/renderer-contract.json": "c6dc7d80341707080e846d54695e2480952da439134c3bf86e7c04541b71cf65",
+      "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+    },
+    "build_metadata_sha256": "0d1d343d11d243401f7d8200fd08d11591b4d3e22c940346f37ac40415d067a1",
+    "private_suite_sha256": "e83e93008967ca1b1416b7f9453c7400562f475a29a6366df4986f918cfbb2c0"
+  }
+}

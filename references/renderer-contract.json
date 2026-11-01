@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic renderer feasibility, not original graphics or native mechanics",
+  "target": {"ram_kib":64,"vram_kib":16,"z80_hz":3579545,"vdp":"TMS9918 family","expansions":false},
+  "abi": {"canonical_ram":"C000-C07F read-only","presentation_input":"C100-C11F read-only during renderer","name_staging":"C800-CAFF","sat_staging":"C400-C420","stack_top":"F380"},
+  "coordinates": {"source_x_min":0,"source_x_max":159,"display_x":"8 + floor(3*x/2)","player_top_y":"presentation0..191; no gameplay conversion","bear_x_max":151,"row_layouts":[[80,88,104,112,136,144,160,168],[80,88,104,124,136,144,160,168]],"row_quantization":"grid feasibility layout; up to4 display pixels from investigated layout, source coordinates/collisions unchanged; original mapping requires issue9"},
+  "allocation": {"ice":"3 background copies,32 logical pixel spacing","threats":"0..3 background copies,16 or32 logical pixel spacing","player":"3 colors x2 vertically nonoverlapping16x16pieces","bear":"1 color x2 vertically nonoverlapping16x16pieces","maximum_sprites_per_line":4,"sprite_pattern_bytes":2048,"used_vram_bytes":16000},
+  "pacing": {"source_equivalent_cycles":59736,"ntsc_presentation_cycles":59736,"pal_presentation_cycles":71364,"max_steps_per_presentation":2,"surrogate_step_cycles":10000,"limits":"10k synthetic reservation is not measured native gameplay cost"},
+  "asset_provenance": "New synthetic masks and font; no Atari/Seaquest graphic tables"
+}
