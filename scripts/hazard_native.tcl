@@ -36,7 +36,8 @@ proc devices_floe {swcha swchb fire} {
     keymatrixup 6 96;keymatrixdown 6 $console
 }
 proc devices_raw {swcha swchb fire0 fire1} {
-    set player [debug read memory 0xC007]
+    set player [debug read memory 0xC047]
+    if {$player ni {0 1}} {fail_floe invalid-active-player}
     if {$player==0} {set keys $swcha;set fire $fire0} else {set keys [expr {(($swcha&15)<<4)|15}];set fire $fire1}
     devices_floe $keys $swchb $fire
 }
