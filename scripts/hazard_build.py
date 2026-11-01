@@ -21,7 +21,13 @@ OUT=ROOT/'outputs/hazards/build'
 ROM=OUT/f'frostbite-{VERSION}.rom'
 FILES=tuple(dict.fromkeys((*floe_build.FILES,*SOURCE_HELPERS,'src/hazard_contacts.asm','scripts/hazard_build.py',
         'scripts/hazard_tables.py','scripts/collision_compact.py','scripts/floe_catalog.py','scripts/floe_tables.py')))
-presentation=floe_build.presentation
+def presentation(ram,layout=0,width=0):
+    scene=floe_build.presentation(ram,layout,width)
+    codes=list(reversed(ram[0x58:0x5C]))
+    if any(value not in range(4) for value in codes):raise ValueError('original NUSIZ0..3 required')
+    scene['counts']=[(1,2,2,3)[value] for value in codes]
+    scene['spacing']=[int(value==2) for value in codes]
+    return scene
 
 
 def diagnostic_names(scene):

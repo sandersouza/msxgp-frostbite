@@ -27,6 +27,15 @@ class HazardRouteTests(unittest.TestCase):
         r[0x47]=1;self.assertEqual(api.fish_input(r)['swcha'],245)
         r[0x77]=1;self.assertEqual(api.fish_input(r)['swcha'],255)
 
+    def test_fish_policy_targets_an_observed_fish_row_and_releases_vertical_input_in_air(self):
+        api=self.api();r=points([{0xE4:79,0xE6:100,0x94:1,0xD7:100}])[0]['ram']
+        self.assertEqual(api.fish_input(r)['swcha'],111)
+        self.assertEqual(api.body_batch('fish-envelope',r,100),1)
+        r[0x6A]=20;self.assertEqual(api.fish_input(r)['swcha'],127)
+        self.assertEqual(api.body_batch('fish-envelope',r,100),4)
+        r[0x77]=1;self.assertEqual(api.body_batch('fish-envelope',r,100),10)
+        self.assertEqual(api.body_batch('fish-envelope',r,3),3)
+
     def test_refuge_requires_a_bear_sweep_and_continuously_safe_wait(self):
         route=points([{0xE6:9,0xE8:max(15,133-i*4)} for i in range(64)]+[{0xE6:9,0xE8:15}]*64)
         result=self.api().assess(route,'bear-refuge',approach_end=64)

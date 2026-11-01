@@ -127,15 +127,27 @@ def prepare_inputs(config,case):
 
 def fish_input(ram):
     if ram[0x77] or ram[0x71] or ram[0x67] or ram[0x46]:return dict(NEUTRAL)
-    x,y=ram[0x66],ram[0x64];target=ram[0x56]
-    desired=target+3 if ram[0x13]&3==1 and 24<=target<=132 else 80
+    x,y=ram[0x66],ram[0x64];row=fish_row(ram);target=ram[0x54+row];target_y=53+(3-row)*26
+    desired=target+3 if ram[0x11+row]&3==1 and 24<=target<=132 else 80
     direction=127 if x<desired-1 else 191 if x>desired+1 else 255
     if ram[0x6A]==0:
-        if y<79:direction&=223
-        elif y>79:direction&=239
-        elif ram[0x13]&3!=1 and 8<=target<=151 and abs(x-target)<24:direction&=239
+        if y<target_y:direction&=223
+        elif y>target_y:direction&=239
+        elif ram[0x11+row]&3!=1 and 8<=target<=151 and abs(x-target)<24:direction&=239
     player=ram[0x47]
     return {**NEUTRAL,'swcha':direction if player==0 else (direction>>4)|240}
+
+
+def fish_row(ram):
+    candidates=[row for row in range(4) if ram[0x11+row]&3==1]
+    return min(candidates,key=lambda row:(not 24<=ram[0x54+row]<=132,abs(53+(3-row)*26-ram[0x64]))) if candidates else 2
+
+
+def body_batch(kind,ram,remaining):
+    if kind!='fish-envelope' or ram[0x77] or ram[0x71] or ram[0x67] or ram[0x46]:return min(10,remaining)
+    row=fish_row(ram)
+    near=ram[0x6A]==0 and ram[0x11+row]&3==1 and abs(ram[0x66]-ram[0x54+row])<24
+    return min(1 if near else 4,remaining)
 
 
 def finish_producer(producer):
@@ -172,7 +184,7 @@ def capture(out,kind,stella='stella'):
     else:
         body=0;last_error='predicate not reached'
         while body<case['maximum_intervals']:
-            r=decode_state(current)['ram'];n=min(1 if kind=='fish-envelope' else 10,case['maximum_intervals']-body)
+            r=decode_state(current)['ram'];n=body_batch(kind,r,case['maximum_intervals']-body)
             samples=[fish_input(r) if kind=='fish-envelope' else dict(NEUTRAL) for _ in range(n)]
             segment(samples,f'body-{body:04d}');body+=n
             try:assessment=assess(points,kind,start)

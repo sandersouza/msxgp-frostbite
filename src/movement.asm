@@ -463,44 +463,100 @@ adapt_scene:
     LD A,2
     LD (INPUT+15),A
     LD A,($C05B)
+    IFDEF WITH_HAZARDS
+    CP 2
+    JR NC,$+3
+    INC A
+    ELSE
     CP 4
     JR C,$+4
     LD A,3
+    ENDIF
     LD (INPUT+16),A
     LD A,($C05A)
+    IFDEF WITH_HAZARDS
+    CP 2
+    JR NC,$+3
+    INC A
+    ELSE
     CP 4
     JR C,$+4
     LD A,3
+    ENDIF
     LD (INPUT+17),A
     LD A,($C059)
+    IFDEF WITH_HAZARDS
+    CP 2
+    JR NC,$+3
+    INC A
+    ELSE
     CP 4
     JR C,$+4
     LD A,3
+    ENDIF
     LD (INPUT+18),A
     LD A,($C058)
+    IFDEF WITH_HAZARDS
+    CP 2
+    JR NC,$+3
+    INC A
+    ELSE
     CP 4
     JR C,$+4
     LD A,3
+    ENDIF
     LD (INPUT+19),A
+    IFDEF WITH_HAZARDS
+    LD A,($C05B)
+    CP 2
+    LD A,0
+    JR NZ,$+3
+    INC A
+    ELSE
     LD A,($C014)
     AND 64
     RLCA
     RLCA
+    ENDIF
     LD (INPUT+20),A
+    IFDEF WITH_HAZARDS
+    LD A,($C05A)
+    CP 2
+    LD A,0
+    JR NZ,$+3
+    INC A
+    ELSE
     LD A,($C013)
     AND 64
     RLCA
     RLCA
+    ENDIF
     LD (INPUT+21),A
+    IFDEF WITH_HAZARDS
+    LD A,($C059)
+    CP 2
+    LD A,0
+    JR NZ,$+3
+    INC A
+    ELSE
     LD A,($C012)
     AND 64
     RLCA
     RLCA
+    ENDIF
     LD (INPUT+22),A
+    IFDEF WITH_HAZARDS
+    LD A,($C058)
+    CP 2
+    LD A,0
+    JR NZ,$+3
+    INC A
+    ELSE
     LD A,($C011)
     AND 64
     RLCA
     RLCA
+    ENDIF
     LD (INPUT+23),A
     LD A,($C066)
     CALL normalize_x
