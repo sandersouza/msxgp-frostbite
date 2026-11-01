@@ -44,3 +44,9 @@ Exclusive fork: `Frostbite — ISSUE #12`, thread `01a19650-5f24-78c3-b4cf-3b294
 Plan: `docs/superpowers/plans/2026-11-01-issue-12-hazard-collisions.md`. Extend independent original-clock observation to every row window and sticky shore latch, measure lossless lookup capacity/cost, then validate native acquisition plus RNG/interaction/death ordering with controlled and natural routes. Count-zero edge ghosts remain real source behavior. Prior issue 11's neutral hazard fixtures do not prove this issue's collision acceptance.
 
 The released dependency is [v0.0.4-buildloop](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop), ROM SHA-256 `c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600`. Its 232-cycle worst PAL margin requires fresh crowded paced measurement for this work. Original graphics/HUD/audio and whole-game/manual/physical acceptance remain separate later gates. No new issue 12 testable ROM exists yet.
+
+## Source research checkpoint
+
+The additive all-window observer passes 9,444 controlled cases/all 228 literal views, 32 unchanged-Stella full CPU/RAM phase comparisons, 384 row/header/other-window invariance links and 2,560 exact cached/full-window pairs across every player X. The old floe protocol remains identical in 64 compatibility cases. A real count-zero edge ghost is reproduced.
+
+The original odd latch is sampled during the final graphic line, not after the whole sprite. A source-clock reduction is being investigated; its remaining edge differences are explicitly unaccepted. Complete lossless lookup capacity, native acquisition and crowded natural/timing/release acceptance remain pending. Current full host suite: 211 tests passing. See `docs/hazard-collisions.md` for scope and reproduction.

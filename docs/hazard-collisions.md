@@ -35,6 +35,22 @@ accepted. A failed first capture exceeded the unchanged 30-second process
 watchdog; its partial bytes remain failed exploration. The successful checker
 uses the same cases in independent batches of at most 1,024.
 
+A cached top-object command restores the complete original prefix plus all
+observation sidecars and executes the unchanged F263→F335 window. Its 78-byte
+record retains the full two-channel truth, actual B7 sample and glyph. A
+2,560-case comparison spanning all 160 player X positions matches complete
+phase execution byte for byte. A further 384 literal-view invariance links
+across four rows, header changes and other-window changes pass. Backend
+receipts bind the exact binary to the pinned revision and additive patches.
+
+Unchanged-Stella snapshots show the final odd sample at horizontal counter 93
+when source Y is 0..18, and 57 otherwise. Thus the final graphic line is only
+partially sampled; a whole-image overlap invents contacts. A clock-horizon
+research formula matches 2,080,272 literal-view checks at sampled ordinary X
+positions 64/151, but fails at the edges. It is not an accepted substitute for
+original-clock acquisition. Edge truth and complete domain/capacity proof remain
+required before native use.
+
 ## Reproduction
 
 Keep the existing source ROM, environments, frozen evidence and legacy intact.

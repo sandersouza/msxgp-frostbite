@@ -11,12 +11,12 @@ import subprocess
 
 from environment import ROOT
 from floe_model import visible_state
-from hazard_truth import FULL_BYTES,contacts,full_record
+from hazard_truth import FULL_BYTES,compare_roi,contacts,full_record,validate_invariants
 from native_contract import compare
 from reference_inventory import verified_input
 from reference_state import decode_state
 from reference_traces import private_output,run_debugger
-from stella_floe import observe as observe_floes
+from stella_floe import control_pairs,observe as observe_floes
 from stella_hazard import HELPERS,digest,fixture,helper_identity,observe
 
 CHECK_HELPERS=(*HELPERS,'scripts/hazard_observer_check.py','scripts/floe_model.py','scripts/native_contract.py')
@@ -64,6 +64,28 @@ def cases_for(base,domain):
     return cases
 
 
+def invariant_cases(base,domain,controls):
+    rng=random.Random(1202);cases=[];links=[]
+    for group in range(48):
+        px=(0,1,7,8,9,24,25,64,151,152,158,159)[group%12]
+        ox=rng.randrange(160);shape=domain[group%len(domain)];copies=group%4;reflection=bool(group&1);dy=rng.randrange(-8,20)
+        start=len(cases)
+        for row in (3,2,1,0):
+            cases.append(fixture(base,px,43+(3-row)*26+dy,ox,shape,copies,reflection,bear_x=64))
+            if row!=3:links.append((start,len(cases)-1,7,row*2+1,'vertical-row'))
+        for c5,cb,cd,ef in ((0,0,15,0),(128,0,255,0),(0,4,15,7),(0,20,255,3)):
+            ram=bytearray(cases[start]);ram[0x45]=c5;ram[0x4B]=cb;ram[0x4D]=cd;ram[0x6F]=ef
+            cases.append(bytes(ram));links.append((start,len(cases)-1,7,7,'header'))
+        ram=bytearray(cases[start+3])
+        for row in (1,2,3):
+            ram[0x54+row]=rng.randrange(160);ram[0x58+row]=rng.randrange(4)
+            ram[0x23+row]=rng.choice(domain);ram[0x11+row]=rng.randrange(256)
+        for row in range(4):ram[0x1F+row]=rng.randrange(160)
+        ram[0x1C],ram[0x1D]=rng.choice(controls)
+        cases.append(bytes(ram));links.append((start+3,len(cases)-1,1,1,'other-windows'))
+    return cases,links
+
+
 def check(out,binary,initial_path,original_binary='stella',old_binary=None):
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     source=verified_input(ROOT/'references/roms/frostbite.bin');rom=(ROOT/'references/roms/frostbite.bin').read_bytes()
@@ -84,6 +106,23 @@ def check(out,binary,initial_path,original_binary='stella',old_binary=None):
         compare(visible_state(rom,ram,base['cpu'],acquired),record)
         if ram[0x3F]&128 and (any(row!=7 for row in acquired['rows']) or acquired['shore']!=7):
             raise ValueError('blanked source acquired new collisions')
+    invariant,links=invariant_cases(base['ram'],domain,control_pairs(rom))
+    invariant_data,invariant_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,invariant,out/'invariants')
+    invariant_records=[full_record(invariant_data[i*FULL_BYTES:(i+1)*FULL_BYTES]) for i in range(len(invariant))]
+    invariant_count=validate_invariants(invariant_records,links)
+    for ram,record in zip(invariant,invariant_records):compare(visible_state(rom,ram,base['cpu'],contacts(record,ram)),record)
+    (out/'invariant-links.json').write_text(json.dumps(links,indent=2)+'\n')
+    roi_rng=random.Random(1203)
+    roi_cases=[fixture(base['ram'],px,y,roi_rng.randrange(160),domain[(px*4+copy)%len(domain)],copy,bool(px&1))
+               for px in range(160) for y in (35,43,53,61) for copy in range(4)]
+    full_chunks=[];roi_chunks=[];roi_receipts=[]
+    for offset in range(0,len(roi_cases),1024):
+        batch=roi_cases[offset:offset+1024]
+        full,full_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'roi-full-{offset:05d}')
+        roi,roi_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'roi-cached-{offset:05d}',roi=True)
+        full_chunks.append(full);roi_chunks.append(roi)
+        roi_receipts.append({'start':offset,'stop':offset+len(batch),'full':full_receipt,'roi':roi_receipt})
+    roi_count=compare_roi(b''.join(full_chunks),b''.join(roi_chunks))
     unmodified=[]
     for index in range(0,224,7):
         ram=cases[index];capsule=bytearray(initial);offset=base['_offsets']['ram'];capsule[offset:offset+128]=ram
@@ -105,6 +144,7 @@ def check(out,binary,initial_path,original_binary='stella',old_binary=None):
     result={'schema_version':1,'complete':True,'source':source,'producer_commit':commit,'producer_dirty':dirty,
             'helpers':helpers,'binary_sha256':digest(binary),'initial_sha256':digest(initial_path),
             'cases':len(cases),'actual_views':228,'object_shapes':len(domain),'nusiz_values':[0,1,2,3],
+            'invariant_links':invariant_count,'invariant_observation':invariant_receipt,'roi_comparisons':roi_count,'roi_observations':roi_receipts,
             'independent_unmodified_phases':unmodified,'old_floe_compatibility_cases':old_count,'observations':observations,
             'scope':'Controlled all-window source verification only; complete catalog/natural routes/native target/hardware remain pending'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')

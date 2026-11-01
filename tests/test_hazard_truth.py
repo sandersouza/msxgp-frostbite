@@ -49,5 +49,24 @@ class HazardTruthTests(unittest.TestCase):
         with self.assertRaises(ValueError):api.contacts(record,ram)
         with self.assertRaises(ValueError):api.contacts(record,ram[:-1])
 
+    def test_cached_window_must_equal_complete_truth_latch_and_glyph(self):
+        api=self.api();raw=self.fixture()
+        roi=raw[7*58:8*58]+raw[577:578]+raw[655:674]
+        self.assertEqual(api.compare_roi(raw,roi),1)
+        for offset in (0,29,58,59):
+            corrupt=bytearray(roi);corrupt[offset]^=128
+            with self.assertRaises(ValueError):api.compare_roi(raw,corrupt)
+        with self.assertRaises(ValueError):api.compare_roi(raw,roi[:-1])
+        with self.assertRaises(ValueError):api.compare_roi(raw[:-1],roi)
+
+    def test_invariance_cannot_ignore_either_channel_or_bad_window_indexes(self):
+        api=self.api();a=api.full_record(self.fixture());b=api.full_record(self.fixture())
+        links=[(0,1,7,1,'row translation')]
+        self.assertEqual(api.validate_invariants([a,b],links),1)
+        b['truth'][1]=bytes(29)+b'\x01'+bytes(28)
+        with self.assertRaises(ValueError):api.validate_invariants([a,b],links)
+        with self.assertRaises(ValueError):api.validate_invariants([a,b],[(0,1,7,9,'bad window')])
+        with self.assertRaises(ValueError):api.validate_invariants([a,b],[(0,2,7,1,'missing case')])
+
 
 if __name__=='__main__':unittest.main()
