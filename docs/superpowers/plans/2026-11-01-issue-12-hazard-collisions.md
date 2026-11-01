@@ -30,9 +30,11 @@
 
 ### Task 1: Complete original-clock observation and bounded representation proof
 
-**Files:** create scripts/hazard_truth.py, scripts/stella_hazard.py, scripts/hazard_observer_check.py, tools/stella-hazard.patch, tests/test_hazard_truth.py, tests/test_hazard_observer.py; local outputs/hazards/; document references/hazard-contract.json and docs/hazard-collisions.md.
+**Files:** create scripts/hazard_truth.py, scripts/stella_hazard.py, scripts/hazard_observer_check.py, scripts/collision_blocks.py, tools/stella-hazard.patch, tests/test_hazard_truth.py, tests/test_hazard_observer.py, tests/test_collision_blocks.py; local outputs/hazards/; document references/hazard-contract.json and docs/hazard-collisions.md.
 
 **Interfaces:** `full_record(data: bytes) -> dict` decodes a strict 674-byte record: nine 58-byte two-channel literal-view windows (row indexes 0..7, shore index 8), 128 RAM bytes, A/X/Y/P/SP and 19 glyph bytes. `observe(rom,binary,initial,cases,out) -> (bytes,receipt)` executes unchanged original instructions. An additive observation patch applies after the frozen floe patch; the old command/protocol remains unchanged. `contacts(record,ram) -> {rows:bytes[8],shore:int}` selects the actual one of 228 views.
+
+`collision_blocks.put_row(packer, records: sequence[bytes]) -> (bank,address)` interns a complete 160-coordinate row through ten 16-cell blocks of bank-local three-byte pointers. Its independent decoder checks original coordinate bounds and physical bank-local pointers. This measured representation proof changes no source collision result or published ROM; Task 2 consumes it only after size and access-cost acceptance.
 
 - [ ] RED→GREEN protocol tests reject partial records, invalid padding/views, and wrong electrical low bits. Implement strict decoding without proprietary fixtures.
 - [ ] Extend only observation sidecars to acquire every original row/shore read and both latch channels, including CXCLR and P0 data-dependent update events. Retain the old binary/capture trees; build the new pinned backend separately.
