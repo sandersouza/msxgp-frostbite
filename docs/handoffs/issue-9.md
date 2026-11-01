@@ -125,3 +125,20 @@ integration/performance, rare-state and hardware defects until those gates run.
 The reviewer did not certify future GitHub delivery; the executor must verify
 exact final-head CI and clean merged main before closure. No ROM changed, so no
 new release/testable-ROM claim follows from this asset preparation.
+
+## Verified integration receipt
+
+PR29 merged as `340c0beed6ff5842ecceaee519c1c91c5437914f`.
+[Final-head CI41260698227](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41260698227)
+and [merged-main CI41260780952](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41260780952)
+passed. Final CI reports were downloaded:three allowed files,147tests,zero skipped
+results and unchanged renderer ROM111ded95. Local merged147tests and source policy
+pass; main was clean. Final integrated helper/contract blobs equal frozen82ac6a3,
+whose private artifact and original/target identities remain unchanged.
+
+The final documentation receipt is linked from issue9; close/Done follows its
+integration. Prepared successor `Frostbite — ISSUE #10`, thread
+`01a194b3-49d2-76b0-868a-693d1d876035`, was forked, titled and assigned to Frostbite
+project `0fd5a899-599e-40d4-988e-46b3d31433dd`; its idle cwd is this checkout.
+It starts only after explicit exclusive ownership transfer. No implementation
+files are pending. Preserve all original/generated/legacy local material.
