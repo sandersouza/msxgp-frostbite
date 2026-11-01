@@ -45,10 +45,10 @@
 
 **Interfaces:** `visible_step` consumes target-owned canonical RAM and generates contacts/visible final state without source snapshots. `frame_step` then executes existing native F476→F019 with genuine MSX input. Build output lives under ignored outputs/floes; version0.0.4-buildloop/ASCII16 capacity is measured. Route policy consumes current state and emits only controller/console pins; acceptance compares independent source/target full states.
 
-- [ ] RED→GREEN translation/build tests pin ROM identity, mask-bank bounds, visible adapter ownership and source cadence. Implement Z80 bitwise contact queries and exact phase state; retain source gameplay core and input semantics.
-- [ ] Actual openMSX differential cases cover activation/rearm/wrap, fire costs/hold/air gates, igloo boundaries and timeout/landing ordering, all published mechanics regressions, CPU/RAM guards and negative controls.
-- [ ] Develop a bounded natural first-level route using only input from reset. Require construction completion, actual entry and next-level transition; preserve target-owned continuity and compare with independent original execution and replay. A seeded route is a separate boundary test, never the natural route.
-- [ ] Full suite and exact native tests; commit clean producer before canonical capture.
+- [x] RED→GREEN translation/build tests pin ROM identity, mask-bank bounds, visible adapter ownership and source cadence. Implement Z80 bitwise contact queries and exact phase state; retain source gameplay core and input semantics.
+- [x] Actual openMSX differential cases cover activation/rearm/wrap, fire costs/hold/air gates, igloo boundaries and timeout/landing ordering, all published mechanics regressions, CPU/RAM guards and negative controls.
+- [x] Develop a bounded natural first-level route using only input from reset. Require construction completion, actual entry and next-level transition; preserve target-owned continuity and compare with independent original execution and replay. A seeded route is a separate boundary test, never the natural route.
+- [x] Full suite and exact native tests; commit clean producer before canonical capture.
 
 ### Task 3: Integrated testable ROM and timing
 
@@ -56,10 +56,10 @@
 
 **Interfaces:** Reuse prepare/commit mapper ABI and read-only presentation adapter. Real `frame_step` replaces scripted contacts. Pixel oracle remains independent of gameplay geometry. Package freezes the exact ROM/captures; no synthetic CPU reserve.
 
-- [ ] Integrate the new adapter and core into a clearly labeled build-loop diagnostic. Keep original graphics/audio/full hazard acceptance explicitly pending.
-- [ ] Remeasure every layout/width, held/repressed selectors, focused0/1/2 counts and NTSC/PAL active frames with actual new contact/core work; compare every pixel, all native state, uninterrupted source count,29cycle spacing,4slots,stack/heap, visible invariance and VBlank commit.
-- [ ] Inject actual contact/state/pixel/device/guard faults and require their intended gates. Optimize only demonstrated bottlenecks; never omit simulation or relax gates.
-- [ ] Freeze a complete immutable version package after clean canonical captures; full host suite and old published ROM identities pass.
+- [x] Integrate the new adapter and core into a clearly labeled build-loop diagnostic. Keep original graphics/audio/full hazard acceptance explicitly pending.
+- [x] Remeasure every layout/width, held/repressed selectors, focused0/1/2 counts and NTSC/PAL active frames with actual new contact/core work; compare every pixel, all native state, uninterrupted source count,29cycle spacing,4slots,stack/heap, visible invariance and VBlank commit.
+- [x] Inject actual contact/state/pixel/device/guard faults and require their intended gates. Optimize only demonstrated bottlenecks; never omit simulation or relax gates.
+- [x] Freeze a complete immutable version package after clean canonical captures; full host suite and old published ROM identities pass.
 
 ### Task 4: Review, release and dedicated successor
 

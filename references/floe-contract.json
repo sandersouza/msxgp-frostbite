@@ -1,7 +1,7 @@
 {
   "schema": 2,
   "authority_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
-  "status": "Source electrical matrix complete; native implementation and exploratory gates pass. Clean canonical delivery/review/release remain pending.",
+  "status": "Automated issue11 electrical/native/paced/timing/package gates passed; integration/release tracked in GitHub issue11.",
   "boundary": "Original F019 to F476, then native F476 to F019; D0/SPFF entry",
   "source_observation": {
     "producer_commit": "07195b02711a24994facfd02307a084d78b3b13f",
@@ -116,7 +116,7 @@
   "evidence_boundaries": {
     "geometry": "1368complete source-instruction CPU/RAM cases,1081full actual-original phase cases and287declared neutral hazard cases",
     "natural": "2254uninterrupted logical states from cold reset/input; construction1733,entry1912,next-level2252;3reserve losses; no source/contact injections or disabled source hazards",
-    "paced_natural": "Actual ROM scheduler/native core/renderer verified separately for NTSC/PAL; canonical final result pending",
+    "paced_natural": "Clean canonical actual ROM:2254CPU/RAM states per family,2253NTSC/1886PAL completed frames,zero pixel errors; source continuity, cadence, I/O, sprite, stack/heap and VBlank gates pass.",
     "manual_emulator": "Pending owner feedback",
     "physical_hardware": "Pending owner feedback"
   },
