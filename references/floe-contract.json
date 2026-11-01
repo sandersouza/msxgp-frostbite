@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "authority_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "status": "Issue11 work in progress: visible CPU/RAM reduction checked; candidate raster-only contact model rejected by electrical edge probes",
+  "boundary": "Original F019 to F476, before the existing native post-visible phase",
+  "visible_reduction": {
+    "input": "128 canonical RAM bytes, source D clear/SP FF, eight original row samples and sticky shore sample",
+    "output": "All128 RAM and A/X/Y/P/SP; palette and attract state, constant final display pointers/scratch/source return bytes, original per-window contacts",
+    "oracle": "Unmodified original instructions under py65; independent Stella checkpoints remain required",
+    "coverage_to_date": "1500 deterministic exploratory complete CPU/RAM cases, not a published canonical acceptance"
+  },
+  "floe_geometry": {
+    "raster_domain": "All160 source positions and16 shaping phases; four seven-line visible row windows",
+    "warning": "HMOVE collision acquisition includes hidden-clock effects. Visible raster agreement and inferred cyclic masks alone fail electrical edge cases. Do not promote current candidate overlap to acceptance.",
+    "required": "Actual source per-window latch agreement, clipped/hidden/counter timing, target-owned native state and an independent natural construction-entry-next-level route"
+  },
+  "scope": "Real floe acquisition/build/entry/temperature in11; full hazard/RNG/TIA acquisition in12. No original presentation/audio/hardware or complete-game acceptance inferred.",
+  "local_only": "Raw source masks, emulator states/screens, derived tables and source instrumentation builds remain ignored under outputs/floes"
+}
