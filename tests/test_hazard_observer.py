@@ -38,5 +38,31 @@ class HazardObserverTests(unittest.TestCase):
                      (0,27,160,64,0,False),(0,27,0,249,0,False),(0,27,0,64,4,False)):
             with self.assertRaises(ValueError):api.fixture(base,*args)
 
+    def test_top_object_roi_keeps_exact_latch_and_complete_marker(self):
+        api=self.api();raw=bytearray(78);raw[58]=199
+        self.assertEqual(api.validate_observation(raw,'FROSTBITE_HAZARDS_COMPLETE 1\n',1,roi=True),1)
+        for data in (raw[:-1],raw+b'\0'):
+            with self.assertRaises(ValueError):api.validate_observation(data,'FROSTBITE_HAZARDS_COMPLETE 1\n',1,roi=True)
+        raw[58]=128
+        with self.assertRaises(ValueError):api.validate_observation(raw,'FROSTBITE_HAZARDS_COMPLETE 1\n',1,roi=True)
+
+    def test_backend_patch_and_binary_identity_cannot_be_mixed(self):
+        import hashlib
+        import json
+        import tempfile
+        api=self.api()
+        with tempfile.TemporaryDirectory() as tmp:
+            binary=Path(tmp)/'stella';binary.write_bytes(b'original-free synthetic executable identity')
+            patches={str(path.relative_to(api.ROOT)):hashlib.sha256(path.read_bytes()).hexdigest()
+                     for path in (api.FLOE_PATCH,api.PATCH)}
+            metadata={'revision':api.REVISION,'patches':patches,'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest()}
+            path=binary.parent/'frostbite-hazard-observer.json';path.write_text(json.dumps(metadata))
+            self.assertEqual(api.verified_backend(binary),metadata)
+            binary.write_bytes(b'another executable')
+            with self.assertRaises(ValueError):api.verified_backend(binary)
+            metadata['binary_sha256']=hashlib.sha256(binary.read_bytes()).hexdigest()
+            metadata['patches']['tools/stella-hazard.patch']='0'*64;path.write_text(json.dumps(metadata))
+            with self.assertRaises(ValueError):api.verified_backend(binary)
+
 
 if __name__=='__main__':unittest.main()
