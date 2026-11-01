@@ -55,5 +55,11 @@ class PhysicalFrameTests(unittest.TestCase):
             wrong = bytearray(pixels); wrong[y * 160] = 8
             with self.subTest(row=y), self.assertRaises(ValueError): api.normalize_frame({**frame, 'pixels': bytes(wrong)})
 
+    def test_original_right_edge_263_line_frame_keeps_the_same_measured_viewport(self):
+        pixels = bytearray(160 * 228); pixels[212 * 160 + 150] = 12
+        frame = {'frame': 43, 'width': 160, 'height': 228, 'start_line': 23, 'scanlines': 263, 'pixels': bytes(pixels)}
+        self.assertEqual(api.normalize_frame(frame)[201 * 160 + 150], 12)
+        self.assertEqual(api.normalize_frame(frame), bytes(pixels[11 * 160:221 * 160]))
+
 
 if __name__ == '__main__': unittest.main()

@@ -24,11 +24,15 @@ Full source
 serialized states/TIA/RIOT/input journals and producer/backend hashes accompany
 the raw stream locally; they are not public assets.
 
-For regular262-line frames, normalization selects native rows11..220. The
+For measured262/263-line frames, normalization selects native rows11..220. The
 remaining native margins and every row omitted by the approved MSX mapping must
 be black. The first controlled cross-backend fixture matches all33,600 ALE pixels
 exactly with this alignment. Partial buffers and irregular startup frames cannot
 pass normalization; they remain in the raw observation stream.
+The original right-edge bear positioning adds one scanline for controlled
+coordinates151/159:19988 source cycles, versus19912 in the interior. Identical
+plain/probe full capsules and all ALE pixels agree there. The target frame
+budgets remain59736/71364 Z80 cycles; source duration is retained independently.
 
 Full capsule equality uses identical input and restore journals. Restoring an
 already steady Stella state can increment its disabled-jitter stability counter;
