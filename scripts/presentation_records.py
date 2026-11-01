@@ -14,6 +14,21 @@ SNAPSHOT_BYTES = 133
 MAX_INTERVAL_CYCLES = 1 << 19  # Includes seeded8-bit/1024-divider RIOT startup.
 
 
+def normalize_frame(frame):
+    """Measured Stella start23 -> original/ALE start34; never accept lost pixels."""
+    if (type(frame.get('frame')) is not int or frame['frame'] < 1
+            or (frame.get('width'), frame.get('height'), frame.get('start_line'), frame.get('scanlines')) != (160, 228, 23, 262)
+            or not isinstance(frame.get('pixels'), bytes) or len(frame['pixels']) != 160 * 228):
+        raise ValueError('completed regular measured native viewport required')
+    pixels = frame['pixels']
+    if any(pixels[:11 * 160]) or any(pixels[221 * 160:]):
+        raise ValueError('nonblack content outside measured original viewport')
+    raster = pixels[11 * 160:221 * 160]
+    if any(any(raster[y * 160:(y + 1) * 160]) for y in range(210) if map_y(y) is None):
+        raise ValueError('nonblack source pixel in omitted presentation rows')
+    return raster
+
+
 def parse_records(data):
     if not isinstance(data, bytes): raise ValueError('immutable source observation bytes required')
     position = 0

@@ -6,6 +6,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from presentation_records import parse_records
+import presentation_records as api
 
 RECORD = struct.Struct('<IHHHIIIIIHH')
 VIDEO = struct.Struct('<IHHHH')
@@ -41,6 +42,18 @@ class PhysicalFrameTests(unittest.TestCase):
                     stream(frames=[video(500), video(19913)]), stream(frames=[video(500, 321), video(19900)]),
                     stream()[:-1], stream() + b'x'):
             with self.subTest(size=len(raw)), self.assertRaises(ValueError): parse_records(raw)
+
+    def test_measured_viewport_alignment_preserves_all_pixels_and_rejects_partial_or_unsteady_video(self):
+        pixels = bytearray(160 * 228); pixels[18 * 160 + 20] = 132
+        frame = {'frame': 43, 'width': 160, 'height': 228, 'start_line': 23, 'scanlines': 262, 'pixels': bytes(pixels)}
+        normalized = api.normalize_frame(frame)
+        self.assertEqual(normalized, bytes(pixels[11 * 160:221 * 160]))
+        self.assertEqual(normalized[7 * 160 + 20], 132)
+        for changes in ({'frame': None}, {'start_line': 24}, {'height': 227}, {'scanlines': 310}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError): api.normalize_frame({**frame, **changes})
+        for y in (0, 10, 11, 17, 197, 198, 199, 213, 220, 221, 227):
+            wrong = bytearray(pixels); wrong[y * 160] = 8
+            with self.subTest(row=y), self.assertRaises(ValueError): api.normalize_frame({**frame, 'pixels': bytes(wrong)})
 
 
 if __name__ == '__main__': unittest.main()

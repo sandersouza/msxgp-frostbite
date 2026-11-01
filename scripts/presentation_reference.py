@@ -6,7 +6,7 @@ import re
 import os
 import subprocess
 
-from presentation_records import parse_records
+from presentation_records import parse_records, normalize_frame
 from reference_provenance import snapshot_paths, audit_manifest
 from reference_state import decode_state
 from reference_traces import (private_output, run_debugger, batch_script, control_commands,
@@ -159,5 +159,81 @@ def observe(out, initial, inputs, backend):
     report = {'schema_version': 2, 'producer': producer, 'backend': identity, 'initial_sha256': hashlib.sha256(initial_bytes).hexdigest(),
               'final_sha256': hashlib.sha256(current).hexdigest(), 'points': points, 'journals': journals,
               'all_complete_capsules_equal': True, 'limits': ['Raw native viewports retained; target mapping and manual/physical review are separate gates']}
+    (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+    return report
+
+
+def fixture_batch(fixtures, probe):
+    """Explicit controlled RAM fixtures; slot9 is the independent restore baseline."""
+    if not isinstance(fixtures, list) or not 1 <= len(fixtures) <= 9:
+        raise ValueError('one controlled batch requires1..9 fixtures')
+    commands = ['base dec', 'loadState 0', 'saveState 9']
+    for slot, fixture in enumerate(fixtures):
+        ram = fixture.get('ram')
+        if (not re.fullmatch('[a-z0-9-]{1,80}', str(fixture.get('name', '')))
+                or not isinstance(ram, (bytes, list)) or len(ram) != 128
+                or any(type(b) is not int or not 0 <= b <= 255 for b in ram)):
+            raise ValueError('bounded named complete uint8 RAM fixture required')
+        commands += ['loadState 9'] + [f'ram ${address + 128:02x} ${value:02x}' for address, value in enumerate(ram)]
+        commands += control_commands(fixture['input'])
+        commands += ['presentationProbe' if probe else 'runToPc $f019', f'saveState {slot}']
+    return '\n'.join(commands + ['exitRom', ''])
+
+
+def observe_fixtures(out, initial, fixtures, backend):
+    """Disclosed controlled fixtures, never represented as natural reachability."""
+    if not isinstance(fixtures, list) or not 1 <= len(fixtures) <= 5000 or len({f['name'] for f in fixtures}) != len(fixtures):
+        raise ValueError('bounded unique controlled fixtures required')
+    for offset in range(0, len(fixtures), 9): fixture_batch(fixtures[offset:offset + 9], probe=True)
+    producer = _producer(); identity = verify_backend(backend); audit_manifest(identity['producer'], HELPERS)
+    initial_bytes = Path(initial).read_bytes(); initial_state = decode_state(initial_bytes)
+    if initial_state['cpu']['pc'] != 0xF019: raise ValueError('complete stable F019 capsule required')
+    out = private_output(out); out.mkdir(parents=True, exist_ok=False)
+    (out / 'initial.state').write_bytes(initial_bytes)
+    points = []; journals = []
+    serialized = [{k: list(v) if isinstance(v, bytes) else v for k, v in f.items() if k != 'expected_raster'} for f in fixtures]
+    (out / 'fixtures.json').write_text(json.dumps(serialized, indent=2) + '\n')
+    for offset in range(0, len(fixtures), 9):
+        samples = fixtures[offset:offset + 9]; directory = out / f'batch-{offset:05d}'; directory.mkdir()
+        plain, plain_identity = run_debugger(ROOT / 'references/roms/frostbite.bin', fixture_batch(samples, probe=False),
+                                            directory / 'plain', initial_bytes, str(backend))
+        env = {'FROSTBITE_PRESENTATION_OUTPUT': str(directory / 'records.bin'), 'FROSTBITE_PRESENTATION_COUNT': str(len(samples))}
+        previous_env = {key: os.environ.get(key) for key in env}
+        try:
+            os.environ.update(env)
+            observed, observed_identity = run_debugger(ROOT / 'references/roms/frostbite.bin', fixture_batch(samples, probe=True),
+                                                       directory / 'observed', initial_bytes, str(backend))
+        finally:
+            for key, value in previous_env.items():
+                if value is None: os.environ.pop(key, None)
+                else: os.environ[key] = value
+        slots = set(range(len(samples))) | {9}
+        if set(plain) != slots or set(observed) != slots or plain_identity != observed_identity or plain[9] != observed[9]:
+            raise ValueError('incomplete/different controlled source chains or restore baselines')
+        validate_marker((directory / 'observed/stella.log').read_text(), len(samples))
+        records = parse_records((directory / 'records.bin').read_bytes())
+        for slot, (fixture, record) in enumerate(zip(samples, records)):
+            before = {**initial_state, 'ram': list(fixture['ram'])}; after = decode_state(plain[slot])
+            validate_equivalence([record], before, [after], [plain[slot]], [observed[slot]])
+            validate_checkpoint(after, fixture['input'])
+            if len(record['frames']) != 1:
+                raise ValueError('controlled presentation fixture must draw one complete physical frame')
+            raster = normalize_frame(record['frames'][0])
+            if 'expected_raster' in fixture and raster != fixture['expected_raster']:
+                raise ValueError(f'original raster differs from independent fixture: {fixture["name"]}')
+            stem = out / f'{offset + slot:04d}-{fixture["name"]}'; stem.with_suffix('.tia').write_bytes(raster)
+            points.append({'name': fixture['name'], 'family': fixture.get('family', 'controlled'),
+                           'requested_ram_sha256': hashlib.sha256(bytes(fixture['ram'])).hexdigest(),
+                           'before_ram_sha256': hashlib.sha256(bytes(record['before']['ram'])).hexdigest(),
+                           'raster_sha256': hashlib.sha256(raster).hexdigest(), 'state_sha256': hashlib.sha256(observed[slot]).hexdigest(),
+                           'audio_writes': len(record['audio']), 'independent_raster_match': 'expected_raster' in fixture})
+        journals.append({'offset': offset, 'count': len(samples), 'restored_sha256': hashlib.sha256(plain[9]).hexdigest(),
+                         'records_sha256': digest(directory / 'records.bin')})
+    if _producer() != producer or verify_backend(backend) != identity:
+        raise ValueError('fixture producer/backend changed during capture')
+    report = {'schema_version': 2, 'producer': producer, 'backend': identity, 'points': points, 'journals': journals,
+              'all_complete_capsules_equal': True, 'fixture_sha256': digest(out / 'fixtures.json'), 'initial_sha256': hashlib.sha256(initial_bytes).hexdigest(),
+              'limits': ['All128RAM injected after a baseline restore per fixture; controlled source rendering, not natural reachability',
+                         'Exact independent original rasters and black omissions; offline evidence only, target/manual/physical remain separate']}
     (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     return report

@@ -83,3 +83,17 @@ class PresentationBackendTests(unittest.TestCase):
                 api.verify_source_tree(root, patch)
             source.write_text('unrelated change\n')
             with self.assertRaises(ValueError): api.verify_source_tree(root, patch)
+
+    def test_controlled_fixtures_restore_a_separate_baseline_and_inject_only_complete_ram(self):
+        api = self.api()
+        sample = {'swcha': 255, 'swchb': 63, 'fire': [False, False]}
+        fixtures = [{'name': 'score-0', 'ram': list(range(128)), 'input': sample}]
+        script = api.fixture_batch(fixtures, probe=True)
+        self.assertIn('loadState 0\nsaveState 9\nloadState 9\n', script)
+        self.assertIn('ram $80 $00\n', script); self.assertIn('ram $ff $7f\n', script)
+        self.assertEqual(script.count('\nram '), 128)
+        self.assertIn('presentationProbe\nsaveState 0\n', script)
+        self.assertNotIn('presentationProbe', api.fixture_batch(fixtures, probe=False))
+        for bad in ([], fixtures * 10, [{**fixtures[0], 'ram': [0] * 127}],
+                    [{**fixtures[0], 'ram': [256] * 128}], [{**fixtures[0], 'name': '../original'}]):
+            with self.assertRaises(ValueError): api.fixture_batch(bad, probe=True)

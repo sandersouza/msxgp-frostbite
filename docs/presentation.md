@@ -24,6 +24,19 @@ Full source
 serialized states/TIA/RIOT/input journals and producer/backend hashes accompany
 the raw stream locally; they are not public assets.
 
+For regular262-line frames, normalization selects native rows11..220. The
+remaining native margins and every row omitted by the approved MSX mapping must
+be black. The first controlled cross-backend fixture matches all33,600 ALE pixels
+exactly with this alignment. Partial buffers and irregular startup frames cannot
+pass normalization; they remain in the raw observation stream.
+
+Full capsule equality uses identical input and restore journals. Restoring an
+already steady Stella state can increment its disabled-jitter stability counter;
+comparing to a continuous trace with a different restore schedule would otherwise
+misattribute that emulator bookkeeping to the observer. No serialized field is
+normalized away. Controlled fixtures disclose their full128-byte RAM injection,
+restore baseline and input pins; they do not establish natural reachability.
+
 This is protocol implementation, not a claim of a completed observer, dynamic
 renderer, listening review or new testable ROM. Task1 source acceptance is still
 pending. An exploratory sound-enabled observer using standard debugger
