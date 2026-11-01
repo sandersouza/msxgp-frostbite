@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source": "Indexed original NTSC raster160x210; supplied ROM authority",
+  "x_mapping": "8+floor(3*x/2); preserve every original source pixel with alternating1/2 display pixels; viewport8..247",
+  "y_mapping": "source7..185 -> target0..178 and189..201 ->179..191, both1:1; omit0..6,186..188,202..209 only; verify every omitted row black per fixture. Removes3 blank separator rows, retains edge-shifted footer199.",
+  "palette": "Measured ALE RGB. Chroma(max-min)<24: grayscale contrast bins mean<128 ->black1,128..175 ->gray14,>=176 ->white15, preserving dark bear / gray igloo / white shore+ice. Chromatic colors: nearest squared-distance nominal TMS RGB excluding black/gray/white, ties lower index. Approximation, not physical color fidelity.",
+  "screen2_fit": "Offline background plus sprite repairs, deduplicated patterns+colors per64-line bank, at most192tile IDs/bank, duplicate name pages1800/1C00, patterns0000/colors2000/SAT1B00/SPT3800;16384VRAM bytes",
+  "overcolor": "Keep two most frequent colors per8-pixel row, ties lower index; map others to nearest retained RGB, then restore every lost mapped pixel through16x16 sprite color planes. Reject more than32slots or4slot rectangles on any scanline. No final mapped-pixel loss allowed in canonical capture.",
+  "runtime_boundary": "No ROM or native renderer change; fit compiler is not a dynamic frame uploader or timing acceptance. New native graphics integration must remeasure all layouts/widths/SPACE/NTSC/PAL and logical-state invariance.",
+  "mechanics": "Mapping consumes raster copies only; never changes canonical source RAM, collisions or game time",
+  "local_only": "ROMs, decoded catalog, source/target pixels, VRAM, complete frames and original-derived assembly remain ignored"
+}
