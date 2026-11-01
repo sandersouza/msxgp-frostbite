@@ -1,6 +1,6 @@
 # Reproduce Frostbite HUD, PSG event timing and attract flow
 
-Planning ID: P14. Status: approved backlog; implementation has not started.
+Planning ID: P14. Status: In progress in the dedicated Frostbite — ISSUE #14 fork; source raster/audio observation and native presentation integration are starting.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/14
 
 ## Goal
@@ -26,6 +26,15 @@ Link reproducible checks, exact source/target artifact identities, limitations a
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 
 ## Tracking
+
+The clean delivered baseline is main `f516b9e22b44644bafac222a5565287f8e80a949`,
+with303 original-free tests passing. Issues9/13 are closed. Exclusive branch:
+`codex/feat/14-hud-psg-attract`. The approved native design is being executed
+through [the issue14 plan](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/plans/2026-11-01-issue-14-presentation.md).
+Static original-graphics fit from9 is separate from live renderer feasibility;
+all integrated graphics/HUD/PSG changes require fresh source/pixel/event/state
+and complete standard-clock timing checks. No new ROM release is claimed yet.
+
 
 Project: [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).
 Type: Task (repository native issue types unavailable at planning inspection).
