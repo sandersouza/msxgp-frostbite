@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source": "Indexed original NTSC raster160x210; supplied ROM authority",
+  "x_mapping": "8+floor(3*x/2); preserve every original source pixel with alternating1/2 display pixels; viewport8..247",
+  "y_mapping": "source7..198 -> target0..191 exactly; omit source0..6 and199..209 only; verify omitted rows contain no nonblack content in each fixture",
+  "palette": "Nearest squared-distance nominal TMS RGB, ties lower nontransparent index; observed ALE RGB lookup; approximation explicitly measured, not physical color fidelity",
+  "screen2_fit": "Offline background-only, deduplicated patterns+colors per64-line bank, at most192tile IDs/bank, duplicate name pages1800/1C00, patterns0000/colors2000/SAT1B00/SPT3800;16384VRAM bytes",
+  "overcolor": "Keep two most frequent colors per8-pixel row, ties lower index; remap others to nearest retained nominal RGB; count every changed pixel",
+  "runtime_boundary": "No ROM or native renderer change; fit compiler is not a dynamic frame uploader or timing acceptance. New native graphics integration must remeasure all layouts/widths/SPACE/NTSC/PAL and logical-state invariance.",
+  "mechanics": "Mapping consumes raster copies only; never changes canonical source RAM, collisions or game time",
+  "local_only": "ROMs, decoded catalog, source/target pixels, VRAM, complete frames and original-derived assembly remain ignored"
+}
