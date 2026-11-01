@@ -28,6 +28,37 @@ or acceptance of a new release. Clean committed producers, new diagnostic ROM,
 continuous all-mode progression/turn/exhaustion/restart routes and all paced
 views/clocks are still required. Manual emulator and physical tests are pending.
 
+## Continuous original source acceptance
+
+All eight cold input-only source routes and their independent complete replays
+passed. They contain21468 logical intervals, each retaining CPU, all128 RAM,
+TIA, RIOT, raw inputs and the serialized final capsule. Every replay preserves
+the original restore journal and ends byte-identically. Nothing writes active
+source state, disables a hazard or skips source instructions.
+
+| Variation (source80) | Progression intervals | Exhaustion/restart intervals |
+|---|---:|---:|
+| 0 regular one player |2254|4334|
+| 1 regular alternating players |2268|2537|
+| 2 advanced one player |2061|1700|
+| 3 advanced alternating players |3051|3263|
+
+Progression requires construction, actual door entry, complete block/temperature
+bonus and initialized next level. Exhaustion requires an observed death,
+both-reserves-zero terminal C6=FF/F1=00, real Reset and a completed recovery delay
+before active control. Alternating exhaustion routes observe seven natural
+record swaps1→0→1→0→1→0→1; the six-byte active/saved records are checked exactly.
+The regular progression route also swaps both ways with distinct score/igloo
+records. This certifies source routes, not target replay or frame timing yet.
+
+Advanced input proposals were searched with the existing original-CPU/contact
+model. That search produces controller pins only. Unchanged Stella execution and
+an independent full replay certify the actual route; predicted states never
+enter the source capture. Failed/stopped exploratory routes remain ignored and
+are excluded from acceptance. The compact
+[source result](../references/progression-source-result.json) binds each accepted
+route/replay receipt and exact producer revision without distributing raw states.
+
 The approved S1/S2/V1/V2/V3/C1 contracts remain in
 [gameplay-contracts.md](gameplay-contracts.md). Definitive HUD/art/audio belongs
 to #14; this work certifies mechanics and keeps presentation adaptations explicit.

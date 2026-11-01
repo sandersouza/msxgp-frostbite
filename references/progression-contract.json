@@ -13,5 +13,6 @@
     "console": "Reset/Select combinations with color/difficulty bit variants; exact source CPU/RAM comparison"
   },
   "evidence_policy": "Controlled fixtures are distinct from continuous input-only source routes, independent replay, paced target, human emulator and physical evidence",
-  "status": "Issue13 in progress; exploratory boundaries pass, clean final-ROM and continuous/paced acceptance pending"
+  "source_routes": {"variations": [0, 1, 2, 3], "routes": 8, "logical_intervals": 21468, "independent_complete_replays": 8},
+  "status": "Issue13 in progress; clean original boundaries and all-mode continuous source/replay acceptance pass. New final-ROM native/paced acceptance and delivery pending"
 }
