@@ -10,6 +10,8 @@ from pathlib import Path
 from environment import ROOT
 from graphics_mapping import compile_screen, decode_screen, map_x, palette_map
 
+SLOTS = 64
+
 
 def _byte(value):
     if type(value) is not int or not 0 <= value <= 255: raise ValueError('uint8 required')
@@ -53,6 +55,26 @@ def check_rectangles(rectangles):
     return {'max_per_line': peak, 'slots': len(rectangles), 'spt_bytes': len(rectangles) * 32}
 
 
+def memory_layout():
+    """Proposed presentation-profile allocation; native guards must enforce it.
+
+    Cache signatures are hints only: compare the complete16-byte tile before
+    reuse, so even an adversarial signature collision cannot change pixels.
+    Frozen diagnostic profiles retain their original D000-F2FF guard.
+    """
+    regions = [('canonical', 0xC000, 0xC080), ('diagnostic_input', 0xC100, 0xC120),
+               ('runtime', 0xC200, 0xC300), ('source_io_read', 0xC300, 0xC400),
+               ('sat', 0xC400, 0xC480), ('primitive_work', 0xC480, 0xC500),
+               ('scene_snapshots', 0xC500, 0xC600), ('source_abi', 0xC600, 0xC700),
+               ('source_io_write', 0xC700, 0xC760), ('names_a', 0xC800, 0xCB00),
+               ('tile_signatures', 0xCB00, 0xCC80), ('tile_scratch', 0xCC80, 0xCCA0),
+               ('cache_control', 0xCCA0, 0xCD00), ('names_b', 0xCD00, 0xD000),
+               ('tile_bytes', 0xD000, 0xE800), ('heap_guard', 0xE800, 0xF300),
+               ('stack_redzone', 0xF300, 0xF340), ('stack', 0xF340, 0xF380)]
+    return {'ram_bytes': 65536, 'regions': [{'name': name, 'start': start, 'end': end} for name, start, end in regions],
+            'runtime_qualified': False, 'scope': 'Measured reservation; live target writes/guards/timing remain to be implemented and verified'}
+
+
 def pack_frame(pixels, cache=None):
     """Host resource/transaction model, not target code or frame playback.
 
@@ -61,7 +83,7 @@ def pack_frame(pixels, cache=None):
     and already resident fragments are skipped when unchanged.
     """
     compiled = compile_screen(pixels, restore=True); raw = compiled['vram']
-    if max(compiled['tiles_per_bank']) > 128: raise ValueError('frame exceeds128 generation tile slots')
+    if max(compiled['tiles_per_bank']) > SLOTS: raise ValueError(f'frame exceeds{SLOTS} generation tile slots')
     if compiled['sprite_patterns_bytes'] > 512: raise ValueError('repair exceeds16 double-buffered sprite patterns')
     generation = 0 if cache is None else 1 - cache['generation']
     if cache is not None and cache['generation'] not in (0, 1): raise ValueError('invalid cache generation')
@@ -80,14 +102,14 @@ def pack_frame(pixels, cache=None):
         resident = tiles[generation][bank]; needed = set(keys)
         # Keep cached non-live shapes when possible; evict only this generation.
         for key in list(resident):
-            if key not in needed and len(resident) + sum(k not in resident for k in keys) > 128: del resident[key]
-        available = iter(sorted(set(range(128)) - set(resident.values())))
+            if key not in needed and len(resident) + sum(k not in resident for k in keys) > SLOTS: del resident[key]
+        available = iter(sorted(set(range(SLOTS)) - set(resident.values())))
         for key in keys:
             if key not in resident:
                 resident[key] = next(available); new_tiles += 1
-                offset = bank * 2048 + (generation * 128 + resident[key]) * 8
+                offset = bank * 2048 + (generation * SLOTS + resident[key]) * 8
                 upload(offset, key[0]); upload(0x2000 + offset, key[1])
-        for offset in range(bank * 256, (bank + 1) * 256): names[offset] = generation * 128 + resident[keys[raw[0x1800 + offset]]]
+        for offset in range(bank * 256, (bank + 1) * 256): names[offset] = generation * SLOTS + resident[keys[raw[0x1800 + offset]]]
     names_address = 0x1800 if generation == 0 else 0x1C00
     # Each changed run is an offscreen transaction; do not upload a full table.
     index = 0
@@ -118,7 +140,7 @@ def pack_frame(pixels, cache=None):
 def compile_assets(rom: bytes, out: Path, *, measured_palette: dict) -> dict:
     """Emit one bank of lossless fragments; require explicit measured RGB input.
 
-    This resource manifest reserves two generations of128 tile IDs per bank.
+    This resource manifest reserves two generations of64 tile IDs per bank.
     It does not assert that native work/caches or VBlank transfer budgets fit.
     """
     out = Path(out).resolve()
@@ -142,10 +164,11 @@ def compile_assets(rom: bytes, out: Path, *, measured_palette: dict) -> dict:
             ('names_b', 0x1C00, 0x1F00), ('colors', 0x2000, 0x3800), ('sprite_patterns', 0x3800, 0x3C00)]
     manifest = {'schema_version': 1, 'source_sha256': hashlib.sha256(rom).hexdigest(),
                 'sha256': hashlib.sha256(bank).hexdigest(), 'used_bytes': used, 'bank_bytes': len(bank),
-                'sections': sections, 'tile_generations': {'slots_each': 128, 'count': 2, 'banks': 3},
+                'sections': sections, 'tile_generations': {'slots_each': SLOTS, 'count': 2, 'banks': 3},
                 'vram_regions': [{'name': name, 'start': start, 'end': end} for name, start, end in vram],
+                'ram': memory_layout(),
                 'runtime_qualified': False,
-                'pending': ['native RAM allocation', 'dirty-band/cache implementation', 'worst-case timing and transfer checks']}
+                'pending': ['native RAM allocation enforcement', 'dirty-band/cache implementation', 'worst-case timing and transfer checks']}
     out = Path(out); out.mkdir(parents=True, exist_ok=False)
     (out / 'fragments.bin').write_bytes(bank)
     (out / 'fragments.inc').write_text('; Generated source primitive offsets, not frame playback.\n' +

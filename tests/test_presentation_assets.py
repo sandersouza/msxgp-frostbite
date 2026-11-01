@@ -65,7 +65,7 @@ class PresentationAssetsTests(unittest.TestCase):
             self.assertEqual(first['sha256'], hashlib.sha256(bank).hexdigest())
             section = first['sections']['glyphs']
             self.assertEqual(bank[section['offset']:section['offset'] + section['size']], rom[0xC00:])
-            self.assertEqual(first['tile_generations'], {'slots_each': 128, 'count': 2, 'banks': 3})
+            self.assertEqual(first['tile_generations'], {'slots_each': 64, 'count': 2, 'banks': 3})
             regions = first['vram_regions']
             for index, a in enumerate(regions):
                 self.assertLessEqual(a['end'], 16384)
@@ -86,9 +86,9 @@ class PresentationAssetsTests(unittest.TestCase):
             for upload in planned['uploads']:
                 if upload['phase'] == 'prepare' and last:
                     for bank in range(3):
-                        active = last['generation'] * 1024
+                        active = last['generation'] * 512
                         for base in (bank * 2048, 0x2000 + bank * 2048):
-                            self.assertFalse(upload['address'] < base + active + 1024 and base + active < upload['address'] + len(upload['data']))
+                            self.assertFalse(upload['address'] < base + active + 512 and base + active < upload['address'] + len(upload['data']))
                     for start, end in ((last['names_address'], last['names_address'] + 768),
                                        (0x3800 + last['generation'] * 512, 0x3A00 + last['generation'] * 512)):
                         self.assertFalse(upload['address'] < end and start < upload['address'] + len(upload['data']))
@@ -113,8 +113,23 @@ class PresentationAssetsTests(unittest.TestCase):
             return bytes(image)
         cache = None
         for start in (1, 65, 129, 193, 65, 1, 193, 129):
-            before = copy.deepcopy(cache); result = api.pack_frame(frame(start, 64), cache)
+            before = copy.deepcopy(cache); result = api.pack_frame(frame(start, 63), cache)
             self.assertEqual(cache, before)
-            self.assertTrue(all(len(bank) <= 128 for group in result['cache']['tiles'] for bank in group))
+            self.assertTrue(all(len(bank) <= 64 for group in result['cache']['tiles'] for bank in group))
             cache = result['cache']
-        with self.assertRaisesRegex(ValueError, '128'): api.pack_frame(frame(1, 129), cache)
+        with self.assertRaisesRegex(ValueError, '64'): api.pack_frame(frame(1, 64), cache)
+
+    def test_exact_tile_cache_and_two_name_shadows_fit_existing64k_ram(self):
+        api = self.api(); layout = api.memory_layout()
+        self.assertEqual(layout['ram_bytes'], 65536)
+        areas = {area['name']: area for area in layout['regions']}
+        self.assertEqual((areas['canonical']['start'], areas['canonical']['end']), (0xC000, 0xC080))
+        self.assertEqual(areas['tile_bytes']['end'] - areas['tile_bytes']['start'], 2 * 3 * 64 * 16)
+        self.assertEqual((areas['heap_guard']['start'], areas['heap_guard']['end']), (0xE800, 0xF300))
+        self.assertEqual((areas['source_abi']['start'], areas['source_abi']['end']), (0xC600, 0xC700))
+        for name in ('names_a', 'names_b'): self.assertEqual(areas[name]['end'] - areas[name]['start'], 768)
+        for index, a in enumerate(layout['regions']):
+            self.assertGreaterEqual(a['start'], 0xC000); self.assertLessEqual(a['end'], 0xF380)
+            for b in layout['regions'][index + 1:]:
+                self.assertFalse(a['start'] < b['end'] and b['start'] < a['end'])
+        self.assertFalse(layout['runtime_qualified'])
