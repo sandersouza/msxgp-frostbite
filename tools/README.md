@@ -24,3 +24,17 @@ logs and compiled tools remain under ignored `outputs/floes/`.
 
 See [floe-loop.md](../docs/floe-loop.md) for the strict record protocol, complete
 domain, validations, source replay journal and limitations.
+
+## Separate hazard observer
+
+`stella-hazard.patch` is additive after `stella-floe.patch` at the same pinned
+revision. Run `.venv/bin/python -B scripts/stella_hazard.py build` with a fresh
+ignored output directory. It adds `hazardProbe` for all eight row windows and
+the sticky shore read, retaining both electrical high bits and literal-view
+data-dependent scheduling. The old command/protocol and frozen backend are
+preserved; compatibility is checked independently.
+
+The builder does not replace the old checkout/binary or install dependencies.
+Original states, backend binaries and derived tables stay local under ignored
+`outputs/hazards/`. See [hazard-collisions.md](../docs/hazard-collisions.md) for
+the strict 674-byte protocol, current research evidence and remaining gates.

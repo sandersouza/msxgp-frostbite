@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
+  "status": "All-window controlled source observer verified experimentally; canonical catalog and native target pending",
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "original_phase": {"entry": "F019", "exit": "F476", "ram_bytes": 128},
+  "local_protocol": {
+    "bytes": 674,
+    "windows": 9,
+    "window_order": "B0..B7, shore",
+    "literal_player_views": 228,
+    "window_bytes": 58,
+    "electrical_high_bits": [7, 6],
+    "row_electrical_low_bits": 7,
+    "ram_offset": 522,
+    "cpu_offset": 650,
+    "glyph_offset": 655
+  },
+  "ordering": {
+    "shore_clear": "F1FC",
+    "shore_read": "F244",
+    "row_clear": "F307",
+    "odd_read": "F331",
+    "even_reads": ["F3BE", "F3C0"],
+    "shore_lifetime": "Only a negative acquired sample overwrites sticky ED",
+    "count_zero": "NUSIZ zero still permits an original single-copy/edge ghost contact"
+  },
+  "acceptance": {
+    "complete_source_domain": "Pending measured lossless representation and canonical capture",
+    "native_cpu_ram_equivalence": "Pending",
+    "crowded_paced_ntsc_pal": "Pending",
+    "manual_emulator": "Pending owner feedback",
+    "physical_hardware": "Pending owner feedback"
+  }
+}
