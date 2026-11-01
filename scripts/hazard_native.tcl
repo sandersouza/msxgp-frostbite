@@ -105,6 +105,9 @@ set boot_bp [debug set_bp $symbols(native_reset_done) {} {
         if {$::inject eq "rng"} {
             debug set_bp $::symbols(native_call) {} {debug write memory 0xC002 [expr {1^[debug read memory 0xC002]}]}
         }
+        if {$::inject eq "collision"} {
+            debug set_bp $::symbols(native_call) {} {debug write memory 0xC037 [expr {128^[debug read memory 0xC037]}]}
+        }
         if {$::inject eq "row_priority"} {
             debug set_bp $::symbols(native_call) {} {
                 set first [debug read memory 0xC031];set last [debug read memory 0xC037]
