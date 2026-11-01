@@ -26,6 +26,13 @@ def dense_initial(initial):
     return result
 
 
+def mixed_initial(initial):
+    result=dense_initial(initial);r=result['ram']
+    r[0x58:0x5C]=[0,1,2,3];r[0x5C:0x60]=[1,3,5,7]
+    r[0x54:0x58]=[48,64,80,112]
+    return result
+
+
 def source_identity(reader,metadata):
     tables=metadata['tables']
     if digest(reader.floes.directory/'catalog.json')!=tables['floe_catalog_sha256']:raise ValueError('benchmark floe source differs from build')
@@ -48,10 +55,15 @@ def scope(build_dir):
         bench.expected_image.cache_clear()
 
 
-def capture(build_dir,reader,**options):
+def capture(build_dir,reader,mixed=False,**options):
     with scope(build_dir):
-        r=bench.capture(**options,source_reader=reader,source_identity=source_identity,initial_override=dense_initial,
+        r=bench.capture(**options,source_reader=reader,source_identity=source_identity,initial_override=mixed_initial if mixed else dense_initial,
                         additional_helpers=(*HELPERS,'scripts/hazard_bench.py'))
+    records=(ROOT/r['directory']/'states.bin').read_bytes();codes=set()
+    for index in range(r['source_steps']):
+        for offset in (0,133,266):codes.update(records[index*404+offset+5+0x58:index*404+offset+5+0x5C])
+    if mixed and codes!={0,1,2,3}:raise ValueError('all four real original NUSIZ codes must be observed')
+    r.update(canonical_seed='mixed-counts' if mixed else 'three-copies',canonical_nusiz_codes=sorted(codes))
     r['scope']='Seeded standard MSX1 continuous native all-channel acquisition/core/input state, initially three real copies per row; synthetic dense visual overlays independently stress every completed frame, cache, VRAM spacing, VBlank and four sprite slots. No per-step canonical/contact writes; input-only named routes and manual/physical acceptance are separate.'
     (ROOT/r['directory']/'verified.json').write_text(json.dumps(r,indent=2)+'\n');return r
 
@@ -60,9 +72,9 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,default=build.OUT)
     for n in ('floes','edge','ordinary','shore'):p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--layout',type=int,choices=(0,1),default=0)
-    p.add_argument('--width',type=int,choices=(0,1),default=0);p.add_argument('--transitions',action='store_true');p.add_argument('--explore',action='store_true')
+    p.add_argument('--width',type=int,choices=(0,1),default=0);p.add_argument('--transitions',action='store_true');p.add_argument('--explore',action='store_true');p.add_argument('--mixed',action='store_true')
     p.add_argument('--catalog',choices=('dense','counts'),default='dense');p.add_argument('--inject',choices=('none','state','pixel','spacing','guard','sprite','contact','cache'),default='none');args=p.parse_args()
     reader=RawContacts(args.floes,args.edge,args.ordinary,args.shore)
     r=capture(args.build_dir,reader,family=args.family,layout=args.layout,width=args.width,transitions=args.transitions,
-              explore=args.explore,catalog=args.catalog,inject=args.inject)
+              explore=args.explore,catalog=args.catalog,inject=args.inject,mixed=args.mixed)
     print(json.dumps({n:r[n] for n in ('directory','source_steps','max_busy_cycles','frame_budget')}))

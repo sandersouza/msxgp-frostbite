@@ -14,3 +14,10 @@ class HazardBenchTests(unittest.TestCase):
         self.assertEqual(dense['ram'][0x11:0x15],[0,65,2,67])
         self.assertEqual((dense['ram'][0x4B],dense['ram'][0x64]),(4,53))
         self.assertEqual(initial['ram'],[0]*128)
+
+    def test_mixed_canonical_counts_keep_the_source_segment_offsets(self):
+        api=importlib.import_module('hazard_bench');initial={'ram':[0]*128,'registers':{'sp':255}}
+        mixed=api.mixed_initial(initial)
+        self.assertEqual(mixed['ram'][0x58:0x5C],[0,1,2,3])
+        self.assertEqual(mixed['ram'][0x5C:0x60],[1,3,5,7])
+        self.assertEqual(mixed['ram'][0x54:0x58],[48,64,80,112])
