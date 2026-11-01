@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "authority_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "scope": "Static native Z80 post-visible phase F476 to F019 and named mechanics slices; not a whole-game or natural-collision contract",
+  "source_ram": {"first": "80", "bytes": 128, "native_first": "C000"},
+  "cpu": {
+    "a": "A", "x": "B", "y": "C", "carry": "E bit 0", "negative_zero": "Z80 F S/Z",
+    "overflow": "C600 bit 6", "mode": "C601 D/I/B/unused", "stack": "IX plus C60B high bit",
+    "entry_sp_min": "86", "entry_sp_max": "FF", "proved_call_depth": 3,
+    "observable_flags": "Only published mechanics stops and explicit arithmetic/RMW/clear/phase stops returned by observable_stops(); adding a stop requires regeneration"
+  },
+  "bus": {
+    "decode": "6507 physical address & 1FFF; separate read and write mirrors; zero-page indexes wrap at 256",
+    "tia_read": "C300..C30F", "tia_write": "C700..C73F",
+    "riot_read": "C340..C347", "riot_write": "C740..C75F",
+    "data": "Source FC00..FFFF only; 1024 bytes local/ignored, not the complete original ROM"
+  },
+  "checks": [
+    "Independent py65 1.2.0 NMOS execution versus actual standard-speed openMSX Z80",
+    "All A/X/Y/P/SP and all 128 RAM bytes, including source JSR return-byte writes",
+    "Final per-step hardware write shadows; event ordering/audio/timing at the original bus is outside this proof",
+    "Four 192-step continuous native chains retain their own previous RAM/CPU; only named contact and hardware inputs are injected",
+    "All 256 bounded zero-clear start indexes, indexed hardware wraps, entry stack bounds, decimal/flag corner cases",
+    "Complete records, stack/heap guards, 64 KiB RAM, 3579545 Hz, source/binary/helper/backend identity"
+  ],
+  "contacts": "Declared scripted B0..B9 and ED inputs; these are fixtures, not implemented collision acquisition",
+  "fast_phase": {
+    "entries": "F476 requires D=0/SP=FF; F000 executes real CLD/stack clear; only F019 is an observable CPU boundary",
+    "analysis": "Finite X/D/C domains and NZCV/IY liveness over real bounded call contexts; no source-address behavior substitutions",
+    "index": "IY=C000+X where live; direct indexed RAM requires a proved non-wrapping range; generic 6507 addressing remains otherwise",
+    "stack": "No TSX permitted, TXS only in proved top-level zero-clear; source return words still physically written at FF minus context depth. Unobserved internal source SP is implicit; F019 exposes FF",
+    "coverage": "1793 independent full-phase/cold/continuous cases; generic4497 cases retain all101published mechanics cases and named arithmetic/flag/stack slices",
+    "fallback": "Unsupported fast phase entries/D/SP/stops reject explicitly; no silent coverage reduction"
+  },
+  "input": {
+    "hooks": ["F5AD fire", "F630 directions/console"],
+    "sampler": "Direct standard MSX1 PSG/PPI ports; raw opposing states retained; keyboard joins only C7-selected port0/1",
+    "preservation": "AF/BC/DE/HL/IX/IY/SP, source V/mode, full PSG15, PPI-C and slots; DI retained",
+    "port_setup": "Release PSG15 bits0..3 and lower both common/strobe bits4/5 while sampling; restore exact prior outputs afterward",
+    "console": "Held F1 Reset/F2 Select; F3 and other keys do not toggle original difficulty bits",
+    "tests": "1354 actual-device cases, all16raw combinations, both ports, mixed keyboard/joysticks,768continuous steps with declared contacts; poisoned hardware mirrors and deliberately inverted port2 fire"
+  },
+  "artifacts": "outputs/native/ is ignored; native-contract.rom is an internal RPC CPU proof, not an offered human diagnostic",
+  "timing": "Raw CPU proof cycles do not certify integrated input/mapper/render/PAL capacity"
+}

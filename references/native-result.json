@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "version": "0.0.3-movement",
+  "source_commit": "64c2cec6d37e5b988b0b86bc1d57836dbe43498a",
+  "rom": {
+    "filename": "frostbite-0.0.3-movement.rom",
+    "size": 262144,
+    "sha256": "31bb62e4886c8baf361584ce6a140fc05e34c77be15642780e23ad5d5fdb9f82",
+    "mapper": "ASCII16"
+  },
+  "scope": "Native post-visible F476 to F019 diagnostic; synthetic graphics and scripted contacts, not natural/full-game acceptance",
+  "target": {
+    "ram_kib": 64,
+    "vram_kib": 16,
+    "cpu_hz": 3579545,
+    "mapper": "ASCII16",
+    "extra_expansions": false
+  },
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "cpu": {
+    "generic": {
+      "cases": 4497,
+      "max_cycles": 31492,
+      "rom_sha256": "7e5b9ad57258aa373c08c9a6eb501fc8ed39d342905d129574e2118ce19d4bbf",
+      "verified_sha256": "d55044bace575e49091f78c848f0a0c04b08a5b8cace7c87adde025984faa9d0",
+      "capture_directory": "outputs/native/contract-ooa9txsu"
+    },
+    "phase": {
+      "cases": 1793,
+      "max_cycles": 22142,
+      "rom_sha256": "9253525ba87397d1ce8940860b7b77550d605b5de071352198d6a24d367cdf32",
+      "verified_sha256": "3212f886c197594f771dedc717d4e6b67682b7db27697747e6c6e7ea068d5bb6",
+      "capture_directory": "outputs/native/contract-46_xhhov"
+    },
+    "devices_generic": {
+      "cases": 1354,
+      "max_cycles": 30275,
+      "rom_sha256": "80e5989078dc8246c38a25012ed9b6c943cda47c67c6929945b11b5e890c1012",
+      "verified_sha256": "3d6ab62d3f35a461f1d443c2f33df9b9b683448c2f390d2306cf73bc57c5fbe3",
+      "capture_directory": "outputs/native/contract-p1r0d8rg"
+    },
+    "devices_phase": {
+      "cases": 1354,
+      "max_cycles": 21115,
+      "rom_sha256": "3026bfc4aca6b445f5ee5cb84f2fcc37ad68a21998c9ab3fefe2751cf3a259c3",
+      "verified_sha256": "f09257886c997a8d1898cc2894c59c97f313a5c332af5672063be91d3ab44b17",
+      "capture_directory": "outputs/native/contract-yognd2ca"
+    }
+  },
+  "timings": {
+    "ntsc": {
+      "frames": 240,
+      "source_steps": 240,
+      "max_busy_cycles": 45030,
+      "frame_budget": 59736,
+      "margin_cycles": 14706,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-ntsc-f43mnkqy",
+      "verified_sha256": "b58806d81808c98482ff1302fd24280bd6c9cd0c49f9088b256ded363cb97509"
+    },
+    "ntsc_layout0_width1": {
+      "frames": 240,
+      "source_steps": 240,
+      "max_busy_cycles": 45030,
+      "frame_budget": 59736,
+      "margin_cycles": 14706,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-ntsc-vou67jzb",
+      "verified_sha256": "b2ac469a01fe156eaa280baf3e180b77e2eeaf7ae26807594dec9a227d4c0251"
+    },
+    "ntsc_layout1_width0": {
+      "frames": 240,
+      "source_steps": 240,
+      "max_busy_cycles": 49000,
+      "frame_budget": 59736,
+      "margin_cycles": 10736,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-ntsc-1eodvmuj",
+      "verified_sha256": "7beac42d7906c66cc2a4ca6857358ea98202aec354d482e8726751b32d91d32e"
+    },
+    "ntsc_layout1_width1": {
+      "frames": 240,
+      "source_steps": 240,
+      "max_busy_cycles": 49000,
+      "frame_budget": 59736,
+      "margin_cycles": 10736,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-ntsc-5c3f_3ns",
+      "verified_sha256": "816b08c50b0a3b82f56e05b4f41537a07b2216db38aad4b785cc74790bcfa440"
+    },
+    "pal": {
+      "frames": 240,
+      "source_steps": 286,
+      "max_busy_cycles": 66167,
+      "frame_budget": 71364,
+      "margin_cycles": 5197,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-pal-92jsbuhe",
+      "verified_sha256": "e3f767a5e765339eee456a41b1f9c5bd5bdf204d4d0e793a47e1891a73f6f189"
+    },
+    "pal_layout0_width1": {
+      "frames": 240,
+      "source_steps": 286,
+      "max_busy_cycles": 66167,
+      "frame_budget": 71364,
+      "margin_cycles": 5197,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-pal-dojdl6fb",
+      "verified_sha256": "09307cfa5993e923457dcfd249e8a630aee08dff50f64d05bd6f355e7ffaa62a"
+    },
+    "pal_layout1_width0": {
+      "frames": 240,
+      "source_steps": 286,
+      "max_busy_cycles": 67878,
+      "frame_budget": 71364,
+      "margin_cycles": 3486,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-pal-mj1_ixtz",
+      "verified_sha256": "ab1b7af582603f546fabc40c44f4fc7fe2eafb6d9be4079265352a3d42b72fde"
+    },
+    "pal_layout1_width1": {
+      "frames": 240,
+      "source_steps": 286,
+      "max_busy_cycles": 70137,
+      "frame_budget": 71364,
+      "margin_cycles": 1227,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-pal-j4xbnegd",
+      "verified_sha256": "9cabd90abeb0a484678e7d7f9bb6a256b3fccf34beb360f7da11350c0b97f5a5"
+    },
+    "ntsc_transitions": {
+      "frames": 240,
+      "source_steps": 240,
+      "max_busy_cycles": 47144,
+      "frame_budget": 59736,
+      "margin_cycles": 12592,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-ntsc-_v73rlnc",
+      "verified_sha256": "8fded99696cb8da1da89df99e71e11b00dafd10a086a9f3573291a557f138380"
+    },
+    "pal_transitions": {
+      "frames": 240,
+      "source_steps": 286,
+      "max_busy_cycles": 67787,
+      "frame_budget": 71364,
+      "margin_cycles": 3577,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-pal-mv7u21j8",
+      "verified_sha256": "c6a81347ca9560b38fc341bc69707dcc337e630e07d239bc6b0765af9a00473c"
+    },
+    "counts": {
+      "frames": 240,
+      "source_steps": 240,
+      "max_busy_cycles": 45030,
+      "frame_budget": 59736,
+      "margin_cycles": 14706,
+      "min_spacing": 29,
+      "max_sprites_per_line": 4,
+      "stack_min": 62318,
+      "max_commit_cycles": 1205,
+      "capture_directory": "outputs/movement/pace-ntsc-40kcs0z7",
+      "verified_sha256": "9c854751c4b52fdab177b9dc211f1e627966f96ef3e0448d2b63d0ca7aec11b3"
+    }
+  },
+  "negative_controls": {
+    "spacing": true,
+    "sprite": true,
+    "guard": true,
+    "state": true,
+    "pixel": true,
+    "port2_fire": true
+  },
+  "build_source_files": {
+    "scripts/movement_build.py": "3fe09e213e9edc0bf3b56858eb76c0522d81e8941798bf1a26bb07aa3187a917",
+    "scripts/movement_atlas.py": "5f9596f52ead318845fee6e56f96a45f9e3dfe0d822d46cb6ac8d6b5309500f6",
+    "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+    "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047",
+    "scripts/native_codegen.py": "ea1fd932e46761d91d6a1baba3d089d4457f7cf68175bee73125167799b9a18f",
+    "scripts/native_fast.py": "7a2e0eda04aaeebf4465de97a245327cb5abb4f3fbf11be42abd7534c74c1df5",
+    "scripts/native_analysis.py": "b89718c014e9fc88de12c64738060f4baea6b3ce8444aa9ee7bf411755f870f9",
+    "src/movement_rows.asm": "84138e8bcbb51917b56833fc368de50ccf23a6f9682efc7874b90119f514f4a4",
+    "src/movement_cache.asm": "a67f798b0d199eed841e8fac9aaec02f32963d44ad70a1cca908288941e21055",
+    "src/movement.asm": "d8dd5007646a127551cdbd17d6fcbf7e35a806438e1f09d4e36b641e8ff7c830",
+    "src/native_input.asm": "abcfa3d5839a1ea925a10eec1a8fa764f787e547146bfe1bc82188a03a58a786",
+    "src/native_cpu.asm": "dad5dc5795c53a4df74888f7e507e49234e10b12dc6008ea5896c2f10009fadd",
+    "src/render.asm": "1064faa41de4c96858283175c9d5ce02cc5f2850f981f9be1e096821ac859584",
+    "references/mechanics-cases.json": "3d49b157e889683b9afd862bd1f6dde3f34ef23ac7eab5e54dbc7fff03d8d652",
+    "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+    "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+    "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+    "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3"
+  },
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "atlas": {
+    "colored_tiles": [
+      228,
+      260
+    ],
+    "ordinary_tiles": 192,
+    "row_bytes": 174080,
+    "row_variants": 34,
+    "bottom_static_tiles": 248,
+    "bottom_dynamic_slots_per_page": 4
+  },
+  "limitations": [
+    "No natural collision acquisition or whole-frame/game proof; issues11/12 reconcile the missing visible/contact phase",
+    "Original graphics prepared in9 remain offline; this runtime uses synthetic masks and a diagnostic HUD",
+    "No audio engine; source writes terminate at explicit shadows, not an ordered PSG/audio proof",
+    "Fast whole-phase entry requires D=0/SP=FF; generic CPU slices keep their separate bounded ABI",
+    "Automated emulated evidence only; manual viewing/listening, expanded slots and physical hardware remain pending"
+  ]
+}

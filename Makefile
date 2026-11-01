@@ -1,5 +1,19 @@
 .DEFAULT_GOAL := build
 PYTHON ?= .venv/bin/python
+.PHONY: native-check native-phase-check native-input-check movement-build movement-check movement-run
+native-check:
+	@$(PYTHON) -B scripts/native_contract.py
+native-phase-check:
+	@$(PYTHON) -B scripts/native_contract.py --fast-phase
+native-input-check:
+	@$(PYTHON) -B scripts/native_input_check.py
+	@$(PYTHON) -B scripts/native_input_check.py --fast-phase
+movement-build:
+	@$(PYTHON) -B scripts/movement_build.py
+movement-check: movement-build
+	@$(PYTHON) -B scripts/movement_bench.py --suite
+movement-run: movement-build
+	@openmsx -machine C-BIOS_MSX1 -cart outputs/movement/frostbite-0.0.3-movement.rom -romtype ASCII16
 .PHONY: environment environment-check environment-dry-run build run smoke package test source-check ci-verify reference-check reference-rebuild mechanics-check reference-traces reference-cpu reference-ale reference-refuge reference-console reference-report render-build render-bench graphics-check
 graphics-check:
 	@$(PYTHON) -B scripts/graphics_reference.py
