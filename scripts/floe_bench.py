@@ -66,6 +66,56 @@ def validate_receipt(report,period,layout,width,transitions):
         raise ValueError('unsafe VRAM/SAT/stack observation')
 
 
+def verify_data(directory,report,reader,original):
+    directory=Path(directory)
+    records=(directory/'states.bin').read_bytes()
+    if len(records)!=report['source_steps']*404:raise ValueError('truncated native source-step records')
+    previous=None
+    for index in range(report['source_steps']):
+        row=records[index*404:(index+1)*404]
+        def phase(offset):
+            return {'registers':dict(zip(('a','x','y','p','sp'),row[offset:offset+5])),'ram':list(row[offset+5:offset+133])}
+        initial=phase(0);before=phase(133);after=phase(266)
+        contacts=reader.contacts(initial['ram'])
+        expected_visible=visible_reference(original,initial['ram'],initial['registers'],contacts)
+        compare(expected_visible,visible_state(original,initial['ram'],initial['registers'],contacts))
+        try:compare(expected_visible,before)
+        except ValueError as error:raise ValueError(f'visible step{index}: {error}; {directory}') from error
+        ports,console,f1,f2=hardware((0,row[399],0,0),before['ram'][0xC7-128])
+        if tuple(row[400:404])!=(ports,console,f1,f2):raise ValueError(f'stale input at native step{index}')
+        case={'id':f'integrated-{index}','start':'F476','stops':['F019'],'registers':before['registers'],
+            'ram':{f'{i+128:02X}':f'{v:02X}' for i,v in enumerate(before['ram'])},'limit':10000,
+            'mmio':{'0280':f'{ports:02X}','0282':f'{console:02X}','0284':'00','000C':f'{f1:02X}','000D':f'{f2:02X}'}}
+        try:compare(reference(original,case),after)
+        except ValueError as error:raise ValueError(f'native step{index}: {error}; {directory}') from error
+        if previous is not None:compare(previous,initial)
+        previous=after
+    adapters=(directory/'adapters.bin').read_bytes();scenes=(directory/'scene_actual.bin').read_bytes()
+    if len(adapters)!=241*160 or len(scenes)!=241*32:raise ValueError('truncated scene/adapter evidence')
+    for index in range(241):
+        row=adapters[index*160:(index+1)*160];actual=row[128:]
+        if model.encode_scene(presentation(row[:128],actual[31],actual[30]))!=actual:raise ValueError('source-to-presentation adapter changed coordinates')
+    chunks={name:(directory/(name+'.bin')).read_bytes() for name in ('before_vram','before_regs','prepared','prepared_regs','presented','presented_regs')}
+    for name,blob in chunks.items():
+        count=240 if name.startswith('presented') else 241;size=8 if name.endswith('regs') else 16384
+        if len(blob)!=count*size:raise ValueError(f'truncated visual observation {name}')
+    peak=0
+    for index in range(241):
+        before=chunks['before_vram'][index*16384:(index+1)*16384];prepared=chunks['prepared'][index*16384:(index+1)*16384]
+        before_regs=list(chunks['before_regs'][index*8:index*8+8]);prepared_regs=list(chunks['prepared_regs'][index*8:index*8+8])
+        if visible_signature(before,before_regs)!=visible_signature(prepared,prepared_regs):raise ValueError(f'visible frame changed during preparation {index}')
+        if index==240:continue
+        vram=chunks['presented'][index*16384:(index+1)*16384];regs=list(chunks['presented_regs'][index*8:index*8+8]);scene=scenes[index*32:index*32+32]
+        pixels=bytes(model.decode_pixels(vram,regs));wanted=expected_image(scene)
+        if pixels!=wanted:
+            at=next(i for i,(a,b) in enumerate(zip(pixels,wanted)) if a!=b)
+            raise ValueError(f'pixel mismatch frame{index} at{at%256},{at//256}: actual{pixels[at]} expected{wanted[at]}; {directory}')
+        decoded=decode_scene(scene)
+        if vram[0x1B00:0x1B21]!=model.sprite_attributes(decoded) or vram[0x3800:0x4000]!=model.sprite_patterns():raise ValueError('SAT/sprite pattern mismatch')
+        peak=max(peak,max(model.occupancy(vram[0x1B00:0x1B21])))
+    if peak!=report['max_sprites_per_line']:raise ValueError('SAT occupancy receipt differs from dumps')
+
+
 def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,inject='none',catalog='dense',source_catalog=None,
             source_reader=None,source_identity=None,initial_override=None,additional_helpers=()):
     if family not in ('ntsc','pal') or type(layout) is not int or layout not in (0,1) or type(width) is not int or width not in (0,1) or type(transitions) is not bool:
@@ -113,57 +163,12 @@ def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,injec
     if not explore and snapshot_paths(helpers)!=producer:raise ValueError('movement producer changed during capture')
     if hashlib.sha256(Path(emulator).resolve().read_bytes()).hexdigest()!=emulator_hash:raise ValueError('emulator changed during capture')
     report=json.loads((directory/'complete.json').read_text());report['directory']=str(directory.relative_to(ROOT));report['rom_sha256']=metadata['rom']['sha256']
-    records=(directory/'states.bin').read_bytes()
-    if len(records)!=report['source_steps']*404:raise ValueError('truncated native source-step records')
     reader=RawContacts(source_catalog) if source_reader is None else source_reader
     if source_reader is None:
         if digest_catalog(reader)!=metadata['tables']['catalog_sha256']:raise ValueError('timing source catalog differs from build')
     elif source_identity is None:raise ValueError('explicit source-reader build binding required')
     else:source_identity(reader,metadata)
-    previous=None
-    for index in range(report['source_steps']):
-        row=records[index*404:(index+1)*404]
-        def phase(offset):
-            return {'registers':dict(zip(('a','x','y','p','sp'),row[offset:offset+5])),'ram':list(row[offset+5:offset+133])}
-        initial=phase(0);before=phase(133);after=phase(266)
-        contacts=reader.contacts(initial['ram'])
-        expected_visible=visible_reference(original,initial['ram'],initial['registers'],contacts)
-        compare(expected_visible,visible_state(original,initial['ram'],initial['registers'],contacts))
-        try:compare(expected_visible,before)
-        except ValueError as error:raise ValueError(f'visible step{index}: {error}; {directory}') from error
-        ports,console,f1,f2=hardware((0,row[399],0,0),before['ram'][0xC7-128])
-        if tuple(row[400:404])!=(ports,console,f1,f2):raise ValueError(f'stale input at native step{index}')
-        case={'id':f'integrated-{index}','start':'F476','stops':['F019'],'registers':before['registers'],
-            'ram':{f'{i+128:02X}':f'{v:02X}' for i,v in enumerate(before['ram'])},'limit':10000,
-            'mmio':{'0280':f'{ports:02X}','0282':f'{console:02X}','0284':'00','000C':f'{f1:02X}','000D':f'{f2:02X}'}}
-        try:compare(reference(original,case),after)
-        except ValueError as error:raise ValueError(f'native step{index}: {error}; {directory}') from error
-        if previous is not None:compare(previous,initial)
-        previous=after
-    adapters=(directory/'adapters.bin').read_bytes();scenes=(directory/'scene_actual.bin').read_bytes()
-    if len(adapters)!=241*160 or len(scenes)!=241*32:raise ValueError('truncated scene/adapter evidence')
-    for index in range(241):
-        row=adapters[index*160:(index+1)*160];actual=row[128:]
-        if model.encode_scene(presentation(row[:128],actual[31],actual[30]))!=actual:raise ValueError('source-to-presentation adapter changed coordinates')
-    chunks={name:(directory/(name+'.bin')).read_bytes() for name in ('before_vram','before_regs','prepared','prepared_regs','presented','presented_regs')}
-    for name,blob in chunks.items():
-        count=240 if name.startswith('presented') else 241;size=8 if name.endswith('regs') else 16384
-        if len(blob)!=count*size:raise ValueError(f'truncated visual observation {name}')
-    peak=0
-    for index in range(241):
-        before=chunks['before_vram'][index*16384:(index+1)*16384];prepared=chunks['prepared'][index*16384:(index+1)*16384]
-        before_regs=list(chunks['before_regs'][index*8:index*8+8]);prepared_regs=list(chunks['prepared_regs'][index*8:index*8+8])
-        if visible_signature(before,before_regs)!=visible_signature(prepared,prepared_regs):raise ValueError(f'visible frame changed during preparation {index}')
-        if index==240:continue
-        vram=chunks['presented'][index*16384:(index+1)*16384];regs=list(chunks['presented_regs'][index*8:index*8+8]);scene=scenes[index*32:index*32+32]
-        pixels=bytes(model.decode_pixels(vram,regs));wanted=expected_image(scene)
-        if pixels!=wanted:
-            at=next(i for i,(a,b) in enumerate(zip(pixels,wanted)) if a!=b)
-            raise ValueError(f'pixel mismatch frame{index} at{at%256},{at//256}: actual{pixels[at]} expected{wanted[at]}; {directory}')
-        decoded=decode_scene(scene)
-        if vram[0x1B00:0x1B21]!=model.sprite_attributes(decoded) or vram[0x3800:0x4000]!=model.sprite_patterns():raise ValueError('SAT/sprite pattern mismatch')
-        peak=max(peak,max(model.occupancy(vram[0x1B00:0x1B21])))
-    if peak!=report['max_sprites_per_line']:raise ValueError('SAT occupancy receipt differs from dumps')
+    verify_data(directory,report,reader,original)
     period=59736 if family=='ntsc' else 71364
     print(json.dumps({'directory':report['directory'],'max_busy_cycles':max(report['busy_cycles']),'frame_budget':period,'frames':report['frames'][:4]},indent=2))
     validate_receipt(report,period,layout,width,transitions)

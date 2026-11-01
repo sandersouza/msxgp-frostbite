@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "issue": 13,
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "native_architecture": "Existing static Z80 whole-phase lowering; no runtime Atari interpreter or high-level replacement gameplay",
+  "boundaries": {
+    "primitive_cases": 816,
+    "whole_phase_cases": 818,
+    "score": "Valid packed BCD awards, low-byte carry gates, 5000/10000 thresholds, six-digit overflow, reserve0/1/8/9 and attract inhibition; saved six-byte record unchanged",
+    "level": "Every CB byte and both active players; FF wraps to00, source initialization and CPU flags retained",
+    "recovery": "All four variations, both C7 values, own/other reserves0/1/8/9, exact six-byte swap or double-swap skip; both empty sets C6=FF/F1=00",
+    "dispatch": "Each F1 priority bit plus combined flags; bonus/envelope/initialization-delay boundaries",
+    "console": "Reset/Select combinations with color/difficulty bit variants; exact source CPU/RAM comparison"
+  },
+  "evidence_policy": "Controlled fixtures are distinct from continuous input-only source routes, independent replay, paced target, human emulator and physical evidence",
+  "source_routes": {
+    "variations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "routes": 8,
+    "logical_intervals": 21468,
+    "independent_complete_replays": 8
+  },
+  "native_lowering": {
+    "kind": "Guarded pure ROM-indexed RAM-write loop summary",
+    "micro_cases": 135168,
+    "fast_path_cases": 69649,
+    "guard_fallback_cases": 65519,
+    "all_index_bound_pairs": 65536,
+    "complete_cpu_and_ram": true
+  },
+  "candidate_rom": {
+    "version": "0.0.6-progression",
+    "size": 4194304,
+    "mapper": "ASCII16",
+    "source_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99",
+    "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6"
+  },
+  "status": "Complete repaired-producer raw acceptance seal and independent review/fix pass;303 host tests. All source/native/96-view/stress/runtime-control proofs pass. PAL minimum margin283 cycles. Integration/release/download delivery remains pending."
+}

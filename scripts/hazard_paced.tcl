@@ -17,7 +17,7 @@ set frames [open $paced_dir/frames.bin wb]
 fconfigure $frames -translation binary
 proc fail_paced {message} {
     set f [open $::paced_dir/failure-sat.bin wb];fconfigure $f -translation binary;puts -nonewline $f [debug read_block VRAM 0x1B00 128];close $f
-    puts stderr "FLOE_PACED_FAIL $message source=$::source_count frame=$::frame_count pc=[reg PC]";exit 1
+    puts stderr "FLOE_PACED_FAIL $message source=$::source_count frame=$::frame_count pc=[reg PC]";exit 1;return -code error $message
 }
 proc saved_paced_cpu {} {
     binary scan [debug read_block memory 0xC6F0 5] cu* r
@@ -65,7 +65,7 @@ proc finish_paced {} {
     if {$stack_min<0xF340} {fail_paced stack-reserve}
     set f [open $::paced_dir/complete.json w]
     puts $f "\{\"complete\":true,\"source_steps\":$::source_count,\"frames\":$::frame_count,\"canonical_ram_injections\":0,\"clock_hz\":[machine_info z80_freq],\"ram_bytes\":[debug size {Main RAM}],\"min_spacing\":$::min_spacing,\"max_sprites_per_line\":$::max_slots,\"stack_min\":$stack_min,\"pal_flag\":[debug read memory 0xC21B],\"layout\":$::initial_layout,\"width\":$::initial_width\}"
-    close $f;exit
+    close $f;exit;return
 }
 set boot_bp [debug set_bp $symbols(native_reset_done) {} {
     debug remove_bp $::boot_bp

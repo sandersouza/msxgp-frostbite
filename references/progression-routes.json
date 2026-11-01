@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "seed": 1,
+  "riot_timer_preset": 127,
+  "warmup": 32,
+  "select_release_intervals": 2,
+  "reset_release_intervals": 80,
+  "exhaustion_direction": 159,
+  "maximum_batches": 1800,
+  "maximum_intervals": 18000,
+  "variations": [0, 1, 2, 3],
+  "kinds": ["progression", "exhaustion-restart"],
+  "authority": "Unmodified original, complete F019 CPU/RAM/TIA/RIOT/input capsules; no active-state injections",
+  "completion": "Construction/actual entry/bonus/next level, or real death/all reserves exhausted/terminal/Reset playable; alternating modes need both turn directions"
+}

@@ -8,6 +8,16 @@ No extra accessories. The owner approved the
 
 ## What is available now
 
+The current issue13 candidate and its accepted capture matrix are documented in
+[scoring-progression.md](scoring-progression.md); use the
+[dedicated reproduction checklist](progression-checklist.md) for source/native
+checks. It has all-four-mode progression/terminal/restart evidence on the
+standard MSX1 target. Complete raw sealing and independent review/fix checks pass;
+integration and release delivery are pending. The
+[compact validation](../references/progression-result.json) binds the exact ROM;
+definitive HUD/art/audio and whole-game/manual/physical acceptance remain separate.
+The older reference/toolchain milestones below retain their own evidence scope.
+
 - A verified local Atari reference identity and measured NTSC steady cadence:
   262 scanlines / 19,912 CPU cycles per frame. See the
   [inventory/timing evidence](reference-inventory.md) for startup observations,
@@ -51,9 +61,9 @@ its historical results are not current acceptance.
 toolchain/diagnostic. macOS Intel, physical MSX and human listening results
 remain pending; automatic checks here use an isolated NTSC C-BIOS MSX1 profile.
 
-[Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) will deliver
-synthetic CI and tracking helpers without original inputs.
-Do not advertise those entry points until verified deliverables exist.
+[Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) delivered
+original-free CI and scoped tracking helpers; see [ci-and-tracking.md](ci-and-tracking.md).
+Original-dependent native/pixel acquisition remains a local acceptance step.
 
 ## Human tests and releases
 

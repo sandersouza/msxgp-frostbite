@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "routes": [
+    {
+      "kind": "progression",
+      "variation": 0,
+      "steps": 2254,
+      "assessment": {
+        "kind": "progression",
+        "variation": 0,
+        "start_level": 0,
+        "turn_players": [],
+        "turns": [],
+        "construction_step": 1733,
+        "entry_step": 1912,
+        "bonus_complete_step": 2203,
+        "next_level_step": 2252
+      },
+      "source_producer_commit": "4e02ff3b2c6dea5a8abe5c8409464fff4668c6c0",
+      "route_receipt_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "replay_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "replay_receipt_sha256": "d9c1bfacaff73927d53001518f9034fc76c74aadaede24d6dffeca0bd35345f4",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "fd17be6c9b1c6bf0dd0c9ee0665262f8f8ef6335cfc99809d6e4004db22c126a"
+    },
+    {
+      "kind": "progression",
+      "variation": 1,
+      "steps": 2268,
+      "assessment": {
+        "kind": "progression",
+        "variation": 1,
+        "start_level": 0,
+        "turn_players": [
+          1,
+          0
+        ],
+        "turns": [
+          {
+            "step": 749,
+            "player": 1
+          },
+          {
+            "step": 1464,
+            "player": 0
+          }
+        ],
+        "construction_step": 1765,
+        "entry_step": 1916,
+        "bonus_complete_step": 2210,
+        "next_level_step": 2259
+      },
+      "source_producer_commit": "4e02ff3b2c6dea5a8abe5c8409464fff4668c6c0",
+      "route_receipt_sha256": "4785f7173a8c7ebf3f75842f68498a3dfbcfa5d43a1ace98ea73a2fd879c2925",
+      "replay_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "replay_receipt_sha256": "e9ef5716a3ea226d12c88da7550421eecb012f8bd1f74dd99f70e0a394bbbbd4",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "ba03d37c873081ec15f86927c3ee03e3657939be69ea283204f88bb392035cc5"
+    },
+    {
+      "kind": "progression",
+      "variation": 2,
+      "steps": 2061,
+      "assessment": {
+        "kind": "progression",
+        "variation": 2,
+        "start_level": 4,
+        "turn_players": [],
+        "turns": [],
+        "construction_step": 1297,
+        "entry_step": 1720,
+        "bonus_complete_step": 2011,
+        "next_level_step": 2060
+      },
+      "source_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "route_receipt_sha256": "035665f57dfb692caa7e124c8e10fe5712b3f50973459d2592b9db945d3cb493",
+      "replay_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "replay_receipt_sha256": "db2d9eba3348d03a320584229f5a167ac7d4b31c32a02b921868e87a36b6fba9",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "16eed0cc7257935192f125eb6fee9d1ab8a8c49e2ad7298bb9106042d877909b"
+    },
+    {
+      "kind": "progression",
+      "variation": 3,
+      "steps": 3051,
+      "assessment": {
+        "kind": "progression",
+        "variation": 3,
+        "start_level": 4,
+        "turn_players": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "turns": [
+          {
+            "step": 643,
+            "player": 1
+          },
+          {
+            "step": 1171,
+            "player": 0
+          },
+          {
+            "step": 1699,
+            "player": 1
+          },
+          {
+            "step": 2227,
+            "player": 0
+          }
+        ],
+        "construction_step": 2353,
+        "entry_step": 2710,
+        "bonus_complete_step": 3001,
+        "next_level_step": 3050
+      },
+      "source_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "route_receipt_sha256": "c9c4c90ddc2c8cb3c1fd80638fef774a24b20911e0e010e2268e6710166e6331",
+      "replay_producer_commit": "02d834d9a04a889401b14956177ed9fe35db9d59",
+      "replay_receipt_sha256": "b1287b79bab98d411a9e866830139b57fa9b6a3319d472ca992030d4262cfbc8",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "67e740bb376e197de1424c1195f8f8ed2f2004b42f9a35b84af499679fb02add"
+    },
+    {
+      "kind": "exhaustion-restart",
+      "variation": 0,
+      "steps": 4334,
+      "assessment": {
+        "kind": "exhaustion-restart",
+        "variation": 0,
+        "start_level": 0,
+        "turn_players": [],
+        "turns": [],
+        "death_step": 1025,
+        "terminal_step": 4245,
+        "restart_step": 4253
+      },
+      "source_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "route_receipt_sha256": "b8f1acad5b5d72738e3c5abe535df9632003b0d287c01212735776481bae1d9f",
+      "replay_producer_commit": "02d834d9a04a889401b14956177ed9fe35db9d59",
+      "replay_receipt_sha256": "6ba2876f36cc392eb4a180e7b27a9605ada44006aeb05d8c663dd9e5d282439f",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "d4f40442519ddd4a0b918fbfdc8777f57067e4d6ff4c47cb37e38ae8980246f4"
+    },
+    {
+      "kind": "exhaustion-restart",
+      "variation": 1,
+      "steps": 2537,
+      "assessment": {
+        "kind": "exhaustion-restart",
+        "variation": 1,
+        "start_level": 0,
+        "turn_players": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "turns": [
+          {
+            "step": 349,
+            "player": 1
+          },
+          {
+            "step": 649,
+            "player": 0
+          },
+          {
+            "step": 949,
+            "player": 1
+          },
+          {
+            "step": 1249,
+            "player": 0
+          },
+          {
+            "step": 1549,
+            "player": 1
+          },
+          {
+            "step": 1849,
+            "player": 0
+          },
+          {
+            "step": 2149,
+            "player": 1
+          }
+        ],
+        "death_step": 145,
+        "terminal_step": 2449,
+        "restart_step": 2456
+      },
+      "source_producer_commit": "02d834d9a04a889401b14956177ed9fe35db9d59",
+      "route_receipt_sha256": "8e39eb001ae651fabd1f2515fb507a972196b1e91d66987cbd318dc343f71c8d",
+      "replay_producer_commit": "02d834d9a04a889401b14956177ed9fe35db9d59",
+      "replay_receipt_sha256": "a6fe08e529874e7459b60d193100c12cdce680435e6e9df5eeafe85536b2464a",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "490c4eac40ebf07fc85fd1e57f2d7bf3a0fd3ac791d8ebe68e2d1c26f887fbbc"
+    },
+    {
+      "kind": "exhaustion-restart",
+      "variation": 2,
+      "steps": 1700,
+      "assessment": {
+        "kind": "exhaustion-restart",
+        "variation": 2,
+        "start_level": 4,
+        "turn_players": [],
+        "turns": [],
+        "death_step": 239,
+        "terminal_step": 1613,
+        "restart_step": 1619
+      },
+      "source_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "route_receipt_sha256": "6aa9d0f168d88162718a4592c4c9788c5ec6802600867096e8c0a40b496edb00",
+      "replay_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "replay_receipt_sha256": "ee2f887f4f5fd9af395511b6e363990415730235a9e9a5f39b652b13c99c1f7b",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "4091c6ebce79b7747608bb77f7e3dd521ad52dc9e2f14b491aa6626253852121"
+    },
+    {
+      "kind": "exhaustion-restart",
+      "variation": 3,
+      "steps": 3263,
+      "assessment": {
+        "kind": "exhaustion-restart",
+        "variation": 3,
+        "start_level": 4,
+        "turn_players": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "turns": [
+          {
+            "step": 445,
+            "player": 1
+          },
+          {
+            "step": 835,
+            "player": 0
+          },
+          {
+            "step": 1225,
+            "player": 1
+          },
+          {
+            "step": 1615,
+            "player": 0
+          },
+          {
+            "step": 2005,
+            "player": 1
+          },
+          {
+            "step": 2395,
+            "player": 0
+          },
+          {
+            "step": 2785,
+            "player": 1
+          }
+        ],
+        "death_step": 241,
+        "terminal_step": 3175,
+        "restart_step": 3182
+      },
+      "source_producer_commit": "012de13d1f3bc7c98745ede321451f719446eba4",
+      "route_receipt_sha256": "51c902531ed9309534a9b4ebdce74f17c3995ad74193b87c8df36ab8f928dc11",
+      "replay_producer_commit": "02d834d9a04a889401b14956177ed9fe35db9d59",
+      "replay_receipt_sha256": "1ced6648763278f2b29cc2cc6e7823fc190e767fb8825be77c8db22c0a06fa89",
+      "identical_full_cpu_ram_tia_riot_inputs": true,
+      "source_final_capsule_sha256": "eacfa391f72b39b9ff66e65ecf7e6356e7a1f161784c0cbe3a96ed1e383d0883"
+    }
+  ],
+  "total_intervals": 21468,
+  "scope": "Actual unchanged original input-only routes and independent complete replays. Target native/paced, manual-emulator and physical acceptance remain separate."
+}

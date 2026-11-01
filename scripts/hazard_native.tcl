@@ -10,7 +10,7 @@ set actual [open $floe_dir/actual.bin wb]
 fconfigure $actual -translation binary
 set bp -1
 if {![info exists step_fixture]} {set step_fixture 0}
-proc fail_floe {message} {puts stderr "FLOE_NATIVE_FAIL $message case=$::count pc=[reg PC] fault=[debug read memory 0xC6FD]";exit 1}
+proc fail_floe {message} {puts stderr "FLOE_NATIVE_FAIL $message case=$::count pc=[reg PC] fault=[debug read memory 0xC6FD]";exit 1;return -code error $message}
 proc saved_floe_cpu {} {
     binary scan [debug read_block memory 0xC6F0 5] cu* r
     set flags [lindex $r 0]
@@ -27,7 +27,7 @@ proc finish_floe {} {
     if {$stack_min<0xF340} {fail_floe stack-reserve}
     set f [open $::floe_dir/complete.json w]
     puts $f "\{\"complete\":true,\"cases\":$::count,\"stack_min\":$stack_min,\"clock_hz\":[machine_info z80_freq],\"ram_bytes\":[debug size {Main RAM}],\"canonical_ram_injections\":[expr {$::natural ? 0 : $::count}]\}"
-    close $f;exit
+    close $f;exit;return
 }
 proc devices_floe {swcha swchb fire} {
     set mask [expr {(($swcha&16) ? 0 : 32)|(($swcha&32) ? 0 : 64)|(($swcha&64) ? 0 : 16)|(($swcha&128) ? 0 : 128)|($fire ? 1 : 0)}]

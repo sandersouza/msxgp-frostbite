@@ -22,18 +22,19 @@ HELPERS=tuple(dict.fromkeys((*FILES,'scripts/hazard_check.py','scripts/hazard_na
 
 
 @contextmanager
-def target_scope():
+def target_scope(build_files=FILES):
     previous=floe_check.FILES
     try:
-        floe_check.FILES=FILES
+        floe_check.FILES=build_files
         yield
     finally:floe_check.FILES=previous
 
 
-def run_target(out,build_dir,records,expected,additional_helpers=(),**options):
-    with target_scope():
-        return floe_check.run_target(out,build_dir,records,expected,extra_helpers=(*HELPERS,*additional_helpers),
-                                     target_script='scripts/hazard_native.tcl',extra_symbols=('native_call',),**options)
+def run_target(out,build_dir,records,expected,additional_helpers=(),build_files=FILES,
+               target_script='scripts/hazard_native.tcl',extra_symbols=(),**options):
+    with target_scope(build_files):
+        return floe_check.run_target(out,build_dir,records,expected,extra_helpers=(*HELPERS,*build_files,*additional_helpers),
+                                     target_script=target_script,extra_symbols=tuple(dict.fromkeys(('native_call',*extra_symbols))),**options)
 
 
 def geometry_cases(base,rom):
