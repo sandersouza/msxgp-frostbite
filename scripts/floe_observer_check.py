@@ -17,10 +17,13 @@ from reference_state import decode_state
 from reference_traces import run_debugger,private_output
 from stella_floe import control_pairs,digest,fixture,observe
 
+CHECK_HELPERS=('scripts/floe_observer_check.py','scripts/floe_model.py','scripts/native_contract.py')
+
 
 def check(out,binary,initial_path):
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     initial=Path(initial_path).read_bytes();base=decode_state(initial);rom=(ROOT/'references/roms/frostbite.bin').read_bytes()
+    checker_helpers={name:digest(ROOT/name) for name in CHECK_HELPERS}
     rng=random.Random(111);cases=[];links=[];blanks=[];controls=control_pairs(rom)
     def add(px,y,fx,pair,extra=None):
         ram=bytearray(fixture(base['ram'],px,y,fx,pair))
@@ -75,7 +78,8 @@ def check(out,binary,initial_path):
         a=full_record(full[index*384:(index+1)*384]);b=roi_record(roi[index*78:(index+1)*78])
         if a['truth'][3]!=b['truth'] or a['ram'][0x36]!=b['actual'] or a['glyph']!=b['glyph']:
             raise ValueError('cached original prefix/window differs from complete execution')
-    result={'schema_version':1,'cases':len(cases),'actual_views':228,'invariant_links':len(links),
+    if checker_helpers!={name:digest(ROOT/name) for name in CHECK_HELPERS}:raise ValueError('observer checker changed during verification')
+    result={'schema_version':1,'cases':len(cases),'actual_views':228,'invariant_links':len(links),'checker_helpers':checker_helpers,
             'independent_unmodified_stella_phases':32,'cached_window_comparisons':len(roi_cases),
             'binary_sha256':digest(binary),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
             'checker_sha256':digest(__file__),'observations':[receipt,full_receipt,roi_receipt],

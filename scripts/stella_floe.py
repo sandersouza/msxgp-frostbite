@@ -21,7 +21,8 @@ REVISION='d55b1aec0d067a4c901a6dcdf81cb8f579685659'
 PATCH=ROOT/'tools/stella-floe.patch'
 HELPERS=('scripts/stella_floe.py','scripts/floe_truth.py','scripts/reference_traces.py',
          'scripts/reference_state.py','scripts/reference_inventory.py','scripts/environment.py',
-         'tools/stella-floe.patch','references/manifest.json')
+         'scripts/reference_provenance.py','scripts/trace_compare.py','scripts/source_timing.py',
+         'tools/stella-floe.patch','references/manifest.json','references/tools-lock.json')
 
 
 def digest(path):
