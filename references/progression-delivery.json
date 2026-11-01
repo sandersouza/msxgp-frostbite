@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/13",
+  "implementation_pr": "https://github.com/sandersouza/msxgp-frostbite/pull/37",
+  "implementation_merge_commit": "00c22d4d919e671440e0b08cd9b20a9debb319c0",
+  "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.6-progression",
+  "tag": "v0.0.6-progression",
+  "tag_target_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99",
+  "prerelease": true,
+  "published_at": "2026-11-01T20:10:53Z",
+  "rom": {
+    "filename": "frostbite-0.0.6-progression.rom",
+    "size": 4194304,
+    "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6",
+    "mapper": "ASCII16"
+  },
+  "tested_source_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99",
+  "packager_commit": "7cbcf7bdb31a6b83bd605da3b6688b5ef82cd489",
+  "independent_review": {
+    "head": "1cafa0e04832c1d3530a89a842149f378a0f2cf5",
+    "important_findings": 1,
+    "fixed_findings": 1,
+    "fix_commit": "7cbcf7bdb31a6b83bd605da3b6688b5ef82cd489",
+    "deferred_minors": 0,
+    "host_tests_after_fix": 303
+  },
+  "final_head_ci": [
+    {
+      "run_id": 41344848655,
+      "head_sha": "0d194256f016b400584b48dd366934cb1325ce77",
+      "event": "push",
+      "conclusion": "success",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41344848655"
+    },
+    {
+      "run_id": 41344853140,
+      "head_sha": "0d194256f016b400584b48dd366934cb1325ce77",
+      "event": "pull_request",
+      "conclusion": "success",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41344853140"
+    }
+  ],
+  "merged_main_ci": {
+    "run_id": 41345012514,
+    "head_sha": "00c22d4d919e671440e0b08cd9b20a9debb319c0",
+    "conclusion": "success",
+    "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41345012514"
+  },
+  "merged_main_rebuild": {
+    "source_commit": "00c22d4d919e671440e0b08cd9b20a9debb319c0",
+    "source_dirty": false,
+    "rom_sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6",
+    "byte_identical_to_tested_rom": true,
+    "build_input_fingerprints_identical": true,
+    "host_tests": 303,
+    "public_source_policy": "passed"
+  },
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "size": 98,
+      "sha256": "428d3c89d5f319083610dcaa7c08ec283486c61845b3b1b6853fbca21d37a519",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.6-progression/SHA256SUMS",
+      "byte_identical_to_sealed_bundle": true
+    },
+    {
+      "name": "build.json",
+      "size": 44768,
+      "sha256": "50eaeeac1e19161c72dfd0275b34f06f2af65625fcc7fc2faa3f383f0dad87d6",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.6-progression/build.json",
+      "byte_identical_to_sealed_bundle": true
+    },
+    {
+      "name": "frostbite-0.0.6-progression.rom",
+      "size": 4194304,
+      "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.6-progression/frostbite-0.0.6-progression.rom",
+      "byte_identical_to_sealed_bundle": true
+    },
+    {
+      "name": "validation.json",
+      "size": 79622,
+      "sha256": "e6b5a03cb9bfc600236b3a8e87e83ee73e009e130ad5657f6cc8000c0f23115d",
+      "download_url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.6-progression/validation.json",
+      "byte_identical_to_sealed_bundle": true
+    }
+  ],
+  "manual_emulator": "Pending owner feedback",
+  "physical_hardware": "Pending owner feedback",
+  "private_inputs_uploaded": false
+}

@@ -15,10 +15,11 @@ Exclusive owner: `Frostbite — ISSUE #13`, thread
 `codex/feat/13-scoring-progression`, base
 `b0d8fe206f46106e20ba5b3df43297667b3c08f3`.
 
-Complete raw sealing and independent review/fix checks pass. Integration,
-release and asset-download verification are still pending. Issue13 is open and
-must remain In review until its delivery gates pass. No successor owns the
-checkout yet; this chat retains all pending source-file ownership.
+Complete raw sealing, independent review/fix checks, runtime integration,
+exact-head/main CI, clean-main rebuild and all four public release downloads
+pass. Final receipt-only integration and issue closure remain the terminal
+operational actions. Issue13 remains In review until they pass. No successor
+owns the checkout yet; this chat retains all pending source-file ownership.
 
 Prepared successor: `Frostbite — ISSUE #14`, fork thread
 `01a198a2-9ef4-77d2-b114-c5f107a205c4`, explicitly assigned to Frostbite project
@@ -132,7 +133,20 @@ temperature state is checked automatically; it is not fully displayed. Human
 manual-emulator and physical feedback remain pending and cannot be inferred
 from any automated result. Complete-game acceptance is separate.
 
-Finish13 review/CI/main rebuild/release/download/receipt and close/Done first.
+Runtime delivery is integrated by [PR37](https://github.com/sandersouza/msxgp-frostbite/pull/37),
+merge `00c22d4d919e671440e0b08cd9b20a9debb319c0`. Final feature-head CI
+41344848655/41344853140 and merged-main CI41345012514 pass. That clean main
+passes303 host tests/source policy and rebuilds the exact sealed ROM with
+identical build-input fingerprints.
+
+[v0.0.6-progression](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.6-progression)
+is published as a prerelease at exact tested sourceac146a7. Fresh downloads of
+ROM/build.json/validation.json/SHA256SUMS all compare byte for byte with the
+seal. The [compact delivery receipt](../../references/progression-delivery.json)
+records source, CI, rebuild, tag and every asset size/hash. No private evidence,
+original captures or standalone derived assets were uploaded.
+
+Integrate the final receipt-only documentation and close13/Done first.
 Then fork or reuse `Frostbite — ISSUE #14` in the Frostbite project, verify its
 workspace and send an explicit sole-writer handoff with the actual clean main
 commit, zero pending source files, exact ROM/hash and limitations. The old chat

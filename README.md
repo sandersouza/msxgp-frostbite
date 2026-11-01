@@ -46,7 +46,8 @@ rebuild/CI and all four published asset downloads passed;
 [delivery receipt](references/hazard-delivery.json). Whole-game, progression and
 manual/physical acceptance remain separate.
 
-The sealed `v0.0.6-progression` candidate adds all four original variations, score/reserve
+The [v0.0.6-progression diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.6-progression)
+adds all four original variations, score/reserve
 boundaries, alternating records, progression, exhaustion and restart proof.
 All 96 new/retained route/clock/view combinations pass (198,560 complete state
 checkpoints and 182,308 pixel frames), plus controlled boundaries and dense
@@ -56,7 +57,8 @@ retains the same unexpanded MSX1 target. See [technical evidence](docs/scoring-p
 [human test instructions](docs/releases/v0.0.6-progression.md).
 [Compact validation](references/progression-result.json) records the complete raw
 state/pixel/cycle audit. Independent review and its guard-error fix pass are
-complete; integration and release delivery remain pending.
+complete. Exact-head/main CI, a byte-identical merged-main rebuild and all four
+published asset downloads pass; see the [delivery receipt](references/progression-delivery.json).
 HUD/art remain synthetic and audio is absent; presentation belongs to #14.
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
