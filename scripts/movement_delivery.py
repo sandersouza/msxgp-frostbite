@@ -5,15 +5,18 @@ import json
 from pathlib import Path
 import subprocess
 import tempfile
+import re
 
 import movement_build as build_api
 from movement_build import ROOT,OUT,ROM,VERSION,FILES,validate_rom
 from movement_bench import capture,negative_controls,validate_receipt
 from native_contract import HELPERS,run_contract
 from native_input_check import run as input_check
-from reference_provenance import audit_manifest
+from reference_provenance import audit_manifest,snapshot_paths
 from render_bench import PACED_MODES
 from native_build import OUT as CPU_OUT,BUILD_FILES as CPU_BUILD_FILES
+from movement_evidence import (VISUAL_ROOT,VISUAL_PROFILE,CPU_PROFILE,PORT2_DECLARED,FAILURES,
+    cpu_files,visual_files,digest_files,audit_files,validate_failure_identity,verify_failure_data)
 
 POSITIVES=tuple(n for n,*_ in PACED_MODES)+('counts',)
 CPU_COUNTS={'generic':4497,'phase':1793,'devices_generic':1354,'devices_phase':1354}
@@ -69,7 +72,7 @@ def read_frozen(path):
     return {name:(path/name).read_bytes() for name in sums}
 
 
-def audit(build,suite,cpu,port2,rom):
+def _audit_primary(build,suite,cpu,port2,rom):
     require(not validate_rom(rom) and build['rom']['sha256']==sha(rom) and build['version']==VERSION and build['source_dirty'] is False,'clean exact movement build required')
     audit_manifest({'tool_source_commit':build['source_commit'],'utility_fingerprints':build['source_files']},FILES)
     require(set(suite)==set(POSITIVES)|{'negative_controls'},'complete11-mode movement suite required')
@@ -83,8 +86,8 @@ def audit(build,suite,cpu,port2,rom):
         audit_producer(part,'movement')
         directory=(ROOT/part['directory']).resolve();require(directory.is_relative_to(OUT.resolve()),'movement capture outside owned outputs')
         require(json.loads((directory/'verified.json').read_text())==part,'suite differs from verified capture')
-        for filename,digest in part['artifacts'].items():
-            require(Path(filename).name==filename and sha((directory/filename).read_bytes())==digest,'capture artifact hash differs')
+        audit_files(directory,part['artifacts'],VISUAL_ROOT|{ROM.name})
+        require(sha((directory/VISUAL_PROFILE).read_bytes())==part['profile_sha256'],'movement machine profile differs')
     require(set(cpu)==set(CPU_COUNTS),'complete generic/phase/device CPU proofs required')
     for name,count in CPU_COUNTS.items():
         part=cpu[name]
@@ -94,21 +97,98 @@ def audit(build,suite,cpu,port2,rom):
         if name.startswith('devices_'):require(part['receipt']['input_samples']==2*count,'missing per-phase genuine input reads')
         audit_producer(part,'devices' if name.startswith('devices_') else 'generic')
         directory=(ROOT/part['directory']).resolve();require(directory.is_relative_to((ROOT/'outputs/native').resolve()),'CPU capture outside owned outputs')
+        digest_files(directory,cpu_files(name.startswith('devices_')))
         require(json.loads((directory/'verified.json').read_text())==part and sha((directory/'native-contract.rom').read_bytes())==part['rom_sha256'],'CPU receipt/binary differs')
+        require(json.loads((directory/'complete.json').read_text())==part['receipt'],'CPU completion receipt differs')
+        require(sha((directory/CPU_PROFILE).read_bytes())==part['backend']['profile_sha256'],'CPU machine profile differs')
+        native_build=json.loads((directory/'build.json').read_text())
+        require(native_build['source_commit']==part['build_source_commit'] and native_build['source_dirty'] is False
+            and native_build['rom_sha256']==part['rom_sha256'] and native_build['source']==build['original']
+            and native_build['fast_phase']==part['fast_phase'] and native_build['input_adapter']==part['input_adapter']
+            and native_build['corrupt_port2'] is False,'CPU build metadata differs')
+        audit_manifest({'tool_source_commit':native_build['source_commit'],'utility_fingerprints':native_build['source_files']},
+            CPU_BUILD_FILES+('scripts/native_fast.py','scripts/native_analysis.py')+(('src/native_input.asm',) if name.startswith('devices_') else ()))
         for filename,key in (('cases.bin','input_sha256'),('expected.json','expected_sha256'),('actual.bin','actual_sha256')):
             require(sha((directory/filename).read_bytes())==part[key],'CPU artifact differs')
+        if name.startswith('devices_'):
+            require(sha((directory/'devices.omr').read_bytes())==part['device_replay_sha256']
+                and sha((directory/'mirrors.bin').read_bytes())==part['mirrors_sha256'],'device replay/mirror hash differs')
     faults=suite['negative_controls'];require(set(faults)=={'pixel','state','sprite','guard','spacing'},'five actual injected faults required')
-    for part in faults.values():
+    for fault,part in faults.items():
         require(part['detected'] is True and part['harness_dirty'] is False and part['rom_sha256']==sha(rom)
             and part['build_source_commit']==build['source_commit'],'negative-control binary/producer differs')
         audit_producer(part['producer'],'movement')
+        require(FAILURES[fault][1] in part['detail'],'negative detail lacks expected cause')
     require(port2['detected'] is True and 'RAM AF' in port2['detail'],'actual port2 fire inversion must fail source comparison')
     mutant=port2['build'];require(mutant['source_dirty'] is False and mutant['source_commit']==build['source_commit']
         and mutant['corrupt_port2'] is True and mutant['input_adapter'] is True and mutant['fast_phase'] is True,'port2 mutant producer differs')
     audit_producer({'tool_source_commit':mutant['source_commit'],'utility_fingerprints':mutant['source_files']},'mutant_build')
     directory=(ROOT/port2['directory']).resolve();require(directory.is_relative_to(CPU_OUT.resolve()),'port2 capture outside owned outputs')
+    digest_files(directory,cpu_files(True,verified=False))
     require(json.loads((directory/'build.json').read_text())==mutant and sha((directory/'native-contract.rom').read_bytes())==mutant['rom_sha256'],'port2 mutant binary differs')
-    for filename,digest in port2['artifacts'].items():require(sha((directory/filename).read_bytes())==digest,'port2 mutant records differ')
+    audit_files(directory,port2['artifacts'],PORT2_DECLARED)
+    require(sha((directory/CPU_PROFILE).read_bytes())==cpu['devices_phase']['backend']['profile_sha256'],'port2 machine profile differs')
+
+
+def integrity_evidence(build,suite,cpu,port2):
+    artifacts={};failures={};baseline=ROOT/suite['ntsc']['directory']
+    for name in POSITIVES:
+        directory=ROOT/suite[name]['directory']
+        artifacts['visual:'+name]={'directory':suite[name]['directory'],'hashes':digest_files(directory,visual_files(ROM.name))}
+    for name in CPU_COUNTS:
+        directory=ROOT/cpu[name]['directory']
+        artifacts['cpu:'+name]={'directory':cpu[name]['directory'],'hashes':digest_files(directory,cpu_files(name.startswith('devices_')))}
+    artifacts['cpu:port2']={'directory':port2['directory'],'hashes':digest_files(ROOT/port2['directory'],cpu_files(True,verified=False))}
+    for fault,part in {**suite['negative_controls'],'port2_fire':port2}.items():
+        stage,cause=FAILURES[fault]
+        if fault=='port2_fire':directory=(ROOT/part['directory']).resolve();required=cpu_files(True,verified=False)
+        else:
+            match=re.search(re.escape(str(OUT.resolve()))+r'/pace-[^\s:;]+',part['detail'])
+            require(match is not None,'negative capture directory absent');directory=Path(match[0]).resolve()
+            require(directory.is_relative_to(OUT.resolve()),'negative capture outside owned outputs')
+            required=visual_files(ROM.name,verified=False,complete=stage=='comparison')
+            require(not (directory/'verified.json').exists(),'negative capture incorrectly marked verified')
+            require(f'set inject_fault {fault}\n' in (directory/'launch.tcl').read_text(),'negative injection selector differs')
+            require(json.loads((directory/'build.json').read_text())==build and sha((directory/ROM.name).read_bytes())==build['rom']['sha256'],'negative target differs')
+            require(sha((directory/VISUAL_PROFILE).read_bytes())==suite['ntsc']['profile_sha256'],'negative machine profile differs')
+        record={'injection':fault,'stage':stage,'cause':cause,'detected':part['detected'],'detail':part['detail'],
+            'directory':str(directory.relative_to(ROOT)),'artifacts':digest_files(directory,required)}
+        verify_failure_data(record,directory,baseline)
+        failures[fault]=record
+    return {'artifacts':artifacts,'failures':failures}
+
+
+def integrity_summary(manifest):
+    return {'schema':1,'scope':'Separate post-review integrity audit of unchanged original captures; no runtime or producer relabeling',
+        'runtime_source_commit':manifest['runtime_source_commit'],'rom_sha256':manifest['rom_sha256'],
+        'auditor_source_commit':manifest['auditor_producer']['tool_source_commit'],'integrity_sha256':sha(encoded(manifest)),
+        'primary_sums_sha256':manifest['primary_sums_sha256'],
+        'failures':{n:{'stage':v['stage'],'cause':v['cause'],'receipt_sha256':sha(encoded(v))} for n,v in manifest['evidence']['failures'].items()}}
+
+
+def seal_integrity(frozen,destination):
+    files=read_frozen(frozen);build,suite,cpu,port2=[json.loads(files[n]) for n in ('build.json','suite.json','native.json','port2-negative.json')]
+    _audit_primary(build,suite,cpu,port2,files[ROM.name])
+    producer=snapshot_paths(('scripts/movement_delivery.py','scripts/movement_evidence.py'))
+    manifest={'schema':1,'runtime_source_commit':build['source_commit'],'rom_sha256':sha(files[ROM.name]),
+        'primary_sums_sha256':sha((Path(frozen)/'SHA256SUMS').read_bytes()),'auditor_producer':producer,
+        'evidence':integrity_evidence(build,suite,cpu,port2)}
+    require(snapshot_paths(('scripts/movement_delivery.py','scripts/movement_evidence.py'))==producer,'integrity auditor changed')
+    result={'integrity.json':encoded(manifest),'movement-integrity.json':encoded(integrity_summary(manifest))}
+    result.update({f'failure-{n}.json':encoded(record) for n,record in manifest['evidence']['failures'].items()})
+    write_immutable(destination,with_sums(result));return integrity_summary(manifest)
+
+
+def audit(build,suite,cpu,port2,rom,integrity=None,primary=None):
+    _audit_primary(build,suite,cpu,port2,rom)
+    require(integrity is not None and primary is not None,'separate frozen integrity supplement required')
+    files=read_frozen(integrity);manifest=json.loads(files['integrity.json'])
+    require(manifest['schema']==1 and manifest['runtime_source_commit']==build['source_commit'] and manifest['rom_sha256']==sha(rom)
+        and manifest['primary_sums_sha256']==sha((Path(primary)/'SHA256SUMS').read_bytes()),'integrity supplement targets different evidence')
+    audit_manifest(manifest['auditor_producer'],('scripts/movement_delivery.py','scripts/movement_evidence.py'))
+    require(manifest['evidence']==integrity_evidence(build,suite,cpu,port2),'sealed raw evidence differs')
+    require(encoded(integrity_summary(manifest))==files['movement-integrity.json'],'integrity summary differs')
+    for name,record in manifest['evidence']['failures'].items():require(files[f'failure-{name}.json']==encoded(record),'failure receipt differs')
 
 
 def compact(build,suite,cpu,port2):
@@ -206,7 +286,7 @@ Seaquest deletion remains issue17 after replacement acceptance.
 '''
 
 
-def capture_bundle(destination):
+def capture_bundle(destination,integrity):
     require(not subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip(),'commit producers before canonical capture')
     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();driver=sha(Path(__file__).read_bytes())
     print('Canonical movement build',flush=True);build=build_api.build();artifact=ROM.read_bytes()
@@ -227,26 +307,31 @@ def capture_bundle(destination):
     suite['counts']=capture(catalog='counts');suite['negative_controls']=negative_controls()
     require(head==subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip() and driver==sha(Path(__file__).read_bytes())
         and not subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip(),'canonical orchestration/checkout changed')
-    audit(build,suite,cpu,port2,artifact);report=compact(build,suite,cpu,port2)
+    _audit_primary(build,suite,cpu,port2,artifact);report=compact(build,suite,cpu,port2)
     files={ROM.name:artifact,'build.json':encoded(build),'suite.json':encoded(suite),'native.json':encoded(cpu),
         'port2-negative.json':encoded(port2),'movement-result.json':encoded(report),'release-notes.md':notes(build,report).encode()}
     write_immutable(destination,with_sums(files));print(f'Frozen exact movement evidence: {destination}',flush=True)
+    seal_integrity(destination,integrity)
+    audit(build,suite,cpu,port2,artifact,integrity,destination)
     return report
 
 
-def package(frozen,destination):
+def package(frozen,destination,integrity):
     files=read_frozen(frozen);build=json.loads(files['build.json']);suite=json.loads(files['suite.json']);cpu=json.loads(files['native.json']);port2=json.loads(files['port2-negative.json'])
-    audit(build,suite,cpu,port2,files[ROM.name]);report=compact(build,suite,cpu,port2)
+    audit(build,suite,cpu,port2,files[ROM.name],integrity,frozen);report=compact(build,suite,cpu,port2)
     require(encoded(report)==files['movement-result.json'] and notes(build,report).encode()==files['release-notes.md'],'frozen summary/notes differs')
     public={name:files[name] for name in (ROM.name,'build.json','movement-result.json','release-notes.md')}
+    public['movement-integrity.json']=read_frozen(integrity)['movement-integrity.json']
     write_immutable(destination,with_sums(public));return report
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('command',choices=('capture','package','audit'))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('command',choices=('capture','package','audit','integrity'))
     parser.add_argument('--frozen',type=Path,default=OUT/'issue10-final');parser.add_argument('--out',type=Path)
+    parser.add_argument('--integrity',type=Path,default=OUT/'issue10-integrity')
     args=parser.parse_args()
-    if args.command=='capture':capture_bundle(args.out or args.frozen)
-    elif args.command=='package':package(args.frozen,args.out or ROOT/f'outputs/releases/v{VERSION}-reviewed')
+    if args.command=='capture':capture_bundle(args.out or args.frozen,args.integrity)
+    elif args.command=='integrity':seal_integrity(args.frozen,args.out or args.integrity)
+    elif args.command=='package':package(args.frozen,args.out or ROOT/f'outputs/releases/v{VERSION}-verified',args.integrity)
     else:
-        files=read_frozen(args.frozen);audit(json.loads(files['build.json']),json.loads(files['suite.json']),json.loads(files['native.json']),json.loads(files['port2-negative.json']),files[ROM.name]);print('Frozen movement evidence audited')
+        files=read_frozen(args.frozen);audit(json.loads(files['build.json']),json.loads(files['suite.json']),json.loads(files['native.json']),json.loads(files['port2-negative.json']),files[ROM.name],args.integrity,args.frozen);print('Frozen movement evidence audited')
