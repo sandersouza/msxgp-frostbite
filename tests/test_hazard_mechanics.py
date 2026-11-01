@@ -28,3 +28,12 @@ class HazardMechanicsTests(unittest.TestCase):
         contacts={'rows':bytes([7]*5+[135,7,7]),'shore':7}
         api.validate_effect('threat',before,after,contacts,2)
         with self.assertRaises(ValueError):api.validate_effect('threat',before,after,contacts,3)
+
+    def test_water_and_temperature_boundary_gates_keep_distinct_causes(self):
+        api=importlib.import_module('hazard_mechanics');before=bytearray(128);before[0x64]=79;before[0x65]=1
+        water=bytearray(before);water[0x71]=128;temp=bytearray(before);temp[0x65]=0;temp[0x71]=16
+        contacts={'rows':bytes([7]*8),'shore':7}
+        api.validate_effect('water',before,water,contacts,3)
+        api.validate_effect('temperature',before,temp,contacts,3)
+        with self.assertRaises(ValueError):api.validate_effect('temperature',before,water,contacts,3)
+        with self.assertRaises(ValueError):api.validate_effect('water',before,temp,contacts,3)

@@ -66,7 +66,8 @@ def validate_receipt(report,period,layout,width,transitions):
         raise ValueError('unsafe VRAM/SAT/stack observation')
 
 
-def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,inject='none',catalog='dense',source_catalog=None):
+def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,inject='none',catalog='dense',source_catalog=None,
+            source_reader=None,source_identity=None,initial_override=None,additional_helpers=()):
     if family not in ('ntsc','pal') or type(layout) is not int or layout not in (0,1) or type(width) is not int or width not in (0,1) or type(transitions) is not bool:
         raise ValueError('explicit bounded movement mode required')
     data=ROM.read_bytes();metadata=json.loads((OUT/'build.json').read_text())
@@ -74,7 +75,7 @@ def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,injec
     validate_source_files(metadata)
     dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
     if not explore and (dirty or metadata['source_dirty']):raise ValueError('canonical movement capture requires clean committed producers; use --explore for WIP')
-    helpers=tuple(dict.fromkeys((*HELPERS,*FILES,'scripts/floe_bench.py','scripts/floe_bench.tcl','scripts/floe_query.py','scripts/floe_reference.py','scripts/floe_model.py','scripts/floe_catalog.py','scripts/stella_floe.py','scripts/floe_truth.py','scripts/render_bench.py','references/native-contract.json')))
+    helpers=tuple(dict.fromkeys((*HELPERS,*FILES,'scripts/floe_bench.py','scripts/floe_bench.tcl','scripts/floe_query.py','scripts/floe_reference.py','scripts/floe_model.py','scripts/floe_catalog.py','scripts/stella_floe.py','scripts/floe_truth.py','scripts/render_bench.py','references/native-contract.json',*additional_helpers)))
     producer=snapshot_paths(helpers) if not explore else {'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'utility_fingerprints':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in helpers}}
     if not explore:audit_manifest({'tool_source_commit':metadata['source_commit'],'utility_fingerprints':metadata['source_files']},FILES)
@@ -83,6 +84,7 @@ def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,injec
     (directory/ROM.name).write_bytes(data);(directory/'build.json').write_text(json.dumps(metadata,indent=2)+'\n')
     original=(ROOT/'references/roms/frostbite.bin').read_bytes()
     initial=reference(original,{'id':'init','start':'FB3B','stops':['FB94'],'registers':{},'ram':{'80':'03','82':'01','81':'FC','C5':'00'}})
+    if initial_override is not None:initial=initial_override(initial)
     regs=initial['registers'];p=regs['p'];af=regs['a']*256+(p&128)+(64 if p&2 else 0)
     (directory/'initial.bin').write_bytes(bytes(initial['ram'])+struct.pack('<HHBBBB',af,regs['x']*256+regs['y'],p&1,p&64,p&0x3C,regs['sp']))
     selected=[{**model.scene(i%160),'player_y':(48,80,95,119,127,158,175,191)[i%8],
@@ -113,8 +115,11 @@ def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,injec
     report=json.loads((directory/'complete.json').read_text());report['directory']=str(directory.relative_to(ROOT));report['rom_sha256']=metadata['rom']['sha256']
     records=(directory/'states.bin').read_bytes()
     if len(records)!=report['source_steps']*404:raise ValueError('truncated native source-step records')
-    reader=RawContacts(source_catalog)
-    if digest_catalog(reader)!=metadata['tables']['catalog_sha256']:raise ValueError('timing source catalog differs from build')
+    reader=RawContacts(source_catalog) if source_reader is None else source_reader
+    if source_reader is None:
+        if digest_catalog(reader)!=metadata['tables']['catalog_sha256']:raise ValueError('timing source catalog differs from build')
+    elif source_identity is None:raise ValueError('explicit source-reader build binding required')
+    else:source_identity(reader,metadata)
     previous=None
     for index in range(report['source_steps']):
         row=records[index*404:(index+1)*404]
@@ -168,6 +173,7 @@ def capture(family='ntsc',layout=0,width=0,transitions=False,explore=False,injec
         max_busy_cycles=max(report['busy_cycles']),frame_budget=period,pixel_errors=0,
         artifacts={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in directory.iterdir() if p.is_file()},
         scope='Automated complete native visible+post-visible/input/mapper/render proof with original-clock floes; seeded benchmark and synthetic presentation. Full hazard/shore acquisition, natural-route and manual/physical acceptance are separate.')
+    if source_reader is not None:reader.verify_consumed()
     (directory/'verified.json').write_text(json.dumps(report,indent=2)+'\n')
     return report
 

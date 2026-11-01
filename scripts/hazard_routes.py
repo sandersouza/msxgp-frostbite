@@ -250,7 +250,7 @@ def replay(original,out,stella='stella'):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True)
-    parser.add_argument('--kind',choices=('bear-refuge','bear-chase','fish-envelope'));parser.add_argument('--replay',type=Path);args=parser.parse_args()
+    parser.add_argument('--kind',choices=('bear-refuge','bear-chase','fish-envelope','threat-push'));parser.add_argument('--replay',type=Path);args=parser.parse_args()
     if not args.replay and not args.kind:parser.error('select a named source route or an existing replay')
     result=replay(args.replay,args.out) if args.replay else capture(args.out,args.kind)
     print(json.dumps({key:result[key] for key in ('steps','assessment') if key in result},indent=2))

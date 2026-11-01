@@ -7,25 +7,33 @@ hazard_leaf EQU $C79E
 
 hazard_acquire:
     CALL hazard_shore
-    LD IX,$C023
-    LD IY,$C031
-    LD B,78
-    CALL hazard_row
-    INC IX
-    INC IY
-    INC IY
-    LD B,52
-    CALL hazard_row
-    INC IX
-    INC IY
-    INC IY
-    LD B,26
-    CALL hazard_row
-    INC IX
-    INC IY
-    INC IY
-    LD B,0
-    JP hazard_row
+    ; Complete raw proof restricts each odd window to exactly one 26-Y band.
+    ; The four bands are disjoint. Clear every latch, then dispatch one row.
+    ASSERT hazard_row_max_y-hazard_row_min_y+1 == 26
+    LD A,7
+    LD ($C031),A
+    LD ($C033),A
+    LD ($C035),A
+    LD ($C037),A
+    LD A,($C064)
+    SUB hazard_row_min_y
+    RET C
+    CP 104
+    RET NC
+    LD IX,$C026
+    LD IY,$C037
+    LD B,3
+.band:
+    CP 26
+    JR C,.active
+    SUB 26
+    DEC IX
+    DEC IY
+    DEC IY
+    DJNZ .band
+.active:
+    LD (hazard_y),A
+    JP hazard_row_active
 
 hazard_shore:
     LD A,($C064)
@@ -75,6 +83,7 @@ hazard_row:
     RET NC
     SUB hazard_row_min_y
     LD (hazard_y),A
+hazard_row_active:
     LD A,(IX+0)
     LD L,A
     LD H,hazard_shape_index/256

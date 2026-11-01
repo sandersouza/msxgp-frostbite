@@ -19,6 +19,16 @@ from stella_floe import fixture,digest
 
 
 def validate_effect(kind,before,after,contacts,row):
+    if kind=='differential':return
+    if kind in ('water','temperature'):
+        valid=(after[0x71]&128 and before[0x64]>27 and before[0x6A]==0) if kind=='water' else (after[0x71]&16 and before[0x65]==1 and after[0x65]==0)
+        if not valid:raise ValueError('distinct original water/temperature death cause required')
+        return
+    if kind in ('bear-push','bear-safe'):
+        if not contacts['shore']&128:raise ValueError('actual fresh bear contact required')
+        expected=before[0x66]-1 if kind=='bear-push' else before[0x66]
+        if after[0x66]!=expected:raise ValueError('bear stage/airborne movement boundary differs')
+        return
     if not contacts['rows'][row*2+1]&128:raise ValueError('actual odd-window contact required')
     if kind=='fish':
         old,new=before[0x5C+row],after[0x5C+row]
@@ -71,10 +81,41 @@ def interaction_cases(base,rom,reader):
     return result
 
 
+def boundary_cases(base,rom,reader,template):
+    result=[]
+    for player in (0,1):
+        for stage in (2,3):
+            for airborne in (0,1):
+                r=bytearray(template)
+                for address,value in {0x80:2+player,0xC7:player,0xCB:stage,0xE4:27,0xEA:airborne,0xEF:0,0xEC:0}.items():r[address-128]=value
+                for x in range(55,74):
+                    r[0x68]=x
+                    if reader.contacts(r)['shore']&128:break
+                else:raise ValueError('bear boundary has no original shore hit')
+                kind='bear-push' if stage==3 and airborne==0 else 'bear-safe'
+                result.append((f'{kind}-stage{stage}-air{airborne}-p{player}',bytes(r),kind,3))
+        for kind in ('water','temperature'):
+            r=bytearray(template);r[0x47]=player;r[0]=2+player;r[1]=255;r[0x65]=1
+            if kind=='water':
+                r[0x64]=79
+                for x in range(160):
+                    r[0x1F:0x23]=bytes([x])*4
+                    if not any(v&128 for v in reader.contacts(r)['rows'][::2]):break
+                else:raise ValueError('water boundary must have no actual source floe contact')
+                r[0x11:0x15]=bytes(4);r[0x23:0x27]=bytes(4);r[0x54:0x58]=bytes(4)
+            result.append((f'{kind}-p{player}',bytes(r),kind,3))
+    for seed in range(256):
+        r=bytearray(template);r[2]=seed;r[1]=0
+        result.append((f'full-phase-rng-seed{seed:02x}',bytes(r),'differential',3))
+    return result
+
+
 def check(out,build_dir,reader,initial_path,explore=False,inject='none'):
     base=decode_state(Path(initial_path).read_bytes());rom=(ROOT/'references/roms/frostbite.bin').read_bytes()
     records=bytearray();expected=[];summary=[]
-    for name,ram,effect,row in interaction_cases(base,rom,reader):
+    cases=interaction_cases(base,rom,reader)
+    cases.extend(boundary_cases(base,rom,reader,cases[0][1]))
+    for name,ram,effect,row in cases:
         want,contacts=original_step(rom,ram,base['cpu'],reader)
         try:validate_effect(effect,ram,want['ram'],contacts,row)
         except ValueError as error:
@@ -86,7 +127,7 @@ def check(out,build_dir,reader,initial_path,explore=False,inject='none'):
     report,_=run_target(out,build_dir,bytes(records),expected,step_fixture=True,explore=explore,inject=inject,
                          additional_helpers=('scripts/hazard_mechanics.py','scripts/floe_reference.py','scripts/floe_model.py'))
     report.update(scenarios=summary,initial_sha256=digest(initial_path),
-                  scope='Controlled declared initial RAM per case, actual native acquisition and physical keyboard sampling, complete original-instruction CPU/all128RAM equality. Both players, all rows/kinds, grounded/airborne, three RNG seeds/six stages. Continuous reward/push/death routes and paced/manual/physical acceptance are separate.')
+                  scope='Controlled declared initial RAM per case, actual native acquisition and physical keyboard sampling, complete original-instruction CPU/all128RAM equality. Both players, all rows/kinds, grounded/airborne, three seeds/six stages, bear2/3, water/temperature and all256 RNG phase seeds. Continuous reward/push/death routes and paced/manual/physical acceptance are separate.')
     (Path(out)/'mechanics.json').write_text(json.dumps(report,indent=2)+'\n');return report
 
 
