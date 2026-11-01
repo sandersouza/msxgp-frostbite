@@ -1,0 +1,437 @@
+diff --git a/src/debugger/Debugger.cxx b/src/debugger/Debugger.cxx
+index 3095e0ac..56dacd4b 100644
+--- a/src/debugger/Debugger.cxx
++++ b/src/debugger/Debugger.cxx
+@@ -46,6 +46,8 @@
+ #include "Expression.hxx"
+ #include "YaccParser.hxx"
+ 
++#include <fstream>
++#include "Serializer.hxx"
+ #include "TIA.hxx"
+ #include "Debugger.hxx"
+ #include "DispatchResult.hxx"
+@@ -977,3 +979,69 @@ std::array<Debugger::PseudoRegister, 18> Debugger::ourPseudoRegisters = {{
+   { "__lastBaseWrite", "last CPU write base address" }*/
+ } };
+ //
++
++
++// Original ROM, CPU and TIA behavior are unchanged; literal-view probes are sidecars.
++void Debugger::fbProbe()
++{
++  const char* input=std::getenv("FROSTBITE_PROBE_INPUT");
++  const char* output=std::getenv("FROSTBITE_PROBE_OUTPUT");
++  if(!input || !output)throw std::runtime_error("probe paths absent");
++  std::ifstream in(input,std::ios::binary);std::ofstream out(output,std::ios::binary);
++  if(!in || !out)throw std::runtime_error("probe file open failed");
++  if(myCpuDebug->pc()!=0xF019)throw std::runtime_error("probe requires F019");
++  Serializer initial;if(!mySystem.save(initial))throw std::runtime_error("probe save failed");
++  std::array<uInt8,128> ram{};unsigned count=0;
++  auto until=[this](int pc) {
++    int limit=0;unlockSystem();
++    while(myCpuDebug->pc()!=pc){mySystem.m6502().execute(1);if(++limit>15000){lockSystem();throw std::runtime_error("probe instruction watchdog");}}
++    lockSystem();
++  };
++  auto writeBits=[&out](const TIA::FbBits& bits) {
++    for(int byte=0;byte<29;++byte){uInt8 value=0;for(int bit=0;bit<8;++bit)if(byte*8+bit<228 && bits.test(byte*8+bit))value|=1<<bit;out.put(value);}
++  };
++  const bool roiMode=std::getenv("FROSTBITE_PROBE_ROI")!=nullptr;
++  std::unique_ptr<Serializer> roi;int cachedX=-1,cachedY=-1,cachedBase=0;
++  std::array<uInt8,128> cachedHeader{};TIA::FbPrefix cachedVirtual{};
++  while(in.read(reinterpret_cast<char*>(ram.data()),ram.size())) {
++    if(roiMode) {
++      if(ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || ram[0x6C]!=0)
++        throw std::runtime_error("ROI fixed-header contract violated");
++      auto header=ram;
++      for(int i=0x1C;i<=0x22;++i)header[i]=0;header[0x64]=header[0x66]=0;
++      if(cachedX!=ram[0x66] || cachedY!=ram[0x64] || cachedHeader!=header) {
++        myConsole.tia().fbEnabled=false;initial.rewind();if(!mySystem.load(initial))throw std::runtime_error("ROI initial restore failed");
++        for(int i=0;i<128;++i)mySystem.pokeOob(0x80+i,ram[i]);
++        until(0xF0DF);cachedBase=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
++        myConsole.tia().fbBegin(cachedBase);until(0xF263);
++        unlockSystem();mySystem.m6502().execute(1);lockSystem();until(0xF263);
++        roi=std::make_unique<Serializer>();if(!mySystem.save(*roi))throw std::runtime_error("ROI save failed");
++        cachedX=ram[0x66];cachedY=ram[0x64];cachedHeader=header;cachedVirtual=myConsole.tia().fbSavePrefix();
++      }
++      myConsole.tia().fbEnabled=false;roi->rewind();if(!mySystem.load(*roi))throw std::runtime_error("ROI restore failed");
++      for(int a=0x9C;a<=0xA2;++a)mySystem.pokeOob(a,ram[a-128]);
++      myConsole.tia().fbRestorePrefix(cachedVirtual);until(0xF3C4);
++      writeBits(myConsole.tia().fbTruthResponses[3]);writeBits(myConsole.tia().fbTruthBaseResponses[3]);
++      out.put(mySystem.peek(0xB6));for(int i=0;i<19;++i)out.put(mySystem.peek(cachedBase+i));
++      if(!out)throw std::runtime_error("ROI write failed");++count;continue;
++    }
++    myConsole.tia().fbEnabled=false;initial.rewind();
++    if(!mySystem.load(initial))throw std::runtime_error("probe restore failed");
++    for(int i=0;i<128;++i)mySystem.pokeOob(0x80+i,ram[i]);
++    for(int i=0;i<128;++i)if(mySystem.peek(0x80+i)!=ram[i])throw std::runtime_error("probe RAM identity failed");
++    until(0xF0DF);
++    const auto base=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
++    myConsole.tia().fbBegin(base);until(0xF476);
++    for(int row=0;row<4;++row){writeBits(myConsole.tia().fbTruthResponses[row]);writeBits(myConsole.tia().fbTruthBaseResponses[row]);}
++    for(int i=0;i<128;++i)out.put(mySystem.peek(0x80+i));
++    out.put(myCpuDebug->a());out.put(myCpuDebug->x());out.put(myCpuDebug->y());
++    out.put(0x20|(myCpuDebug->n()<<7)|(myCpuDebug->v()<<6)|(myCpuDebug->b()<<4)|(myCpuDebug->d()<<3)|(myCpuDebug->i()<<2)|(myCpuDebug->z()<<1)|myCpuDebug->c());out.put(myCpuDebug->sp());
++    for(int i=0;i<19;++i)out.put(mySystem.peek(base+i));
++    if(!out)throw std::runtime_error("probe output write failed");
++    ++count;
++  }
++  myConsole.tia().fbEnabled=false;
++  if(in.gcount()!=0 || count==0)throw std::runtime_error("probe input must contain complete nonempty128-byte records");
++  out.flush();if(!out)throw std::runtime_error("probe final output write failed");
++  std::cout<<"FROSTBITE_PROBE_COMPLETE "<<count<<std::endl;
++}
+diff --git a/src/debugger/Debugger.hxx b/src/debugger/Debugger.hxx
+index 62c1ab2f..0a2b46d6 100644
+--- a/src/debugger/Debugger.hxx
++++ b/src/debugger/Debugger.hxx
+@@ -328,6 +328,7 @@ class Debugger : public DialogContainer
+ 
+     void reset();
+ 
++    void fbProbe();
+     void saveState(int state);
+     void saveAllStates();
+     void loadState(int state);
+diff --git a/src/debugger/DebuggerParser.cxx b/src/debugger/DebuggerParser.cxx
+index 42ac0eaf..7ee646aa 100644
+--- a/src/debugger/DebuggerParser.cxx
++++ b/src/debugger/DebuggerParser.cxx
+@@ -103,6 +103,7 @@ string DebuggerParser::run(string_view command)
+   }
+ #endif
+ 
++  if(command=="floeProbe"){debugger.fbProbe();return "FROSTBITE_PROBE_COMPLETE";}
+   string verb;
+   getArgs(command, verb);
+   commandResult.str("");
+diff --git a/src/emucore/tia/Player.cxx b/src/emucore/tia/Player.cxx
+index 5698d0c3..45bb1170 100644
+--- a/src/emucore/tia/Player.cxx
++++ b/src/emucore/tia/Player.cxx
+@@ -56,6 +56,10 @@ void Player::reset()
+ // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ void Player::grp(uInt8 pattern)
+ {
++  if(fbTruthActive && myTIA->fbEnabled) {
++    if(!myIsDelaying)fbTruthApply(fbNewTag,pattern,fbVNewTag,fbVNewConst);
++    fbVNewTag=fbNewTag;fbVNewConst=pattern;
++  }
+   const uInt8 oldPatternNew = myPatternNew;
+ 
+   myPatternNew = pattern;
+@@ -276,6 +280,7 @@ void Player::startMovement()
+ // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ void Player::nextLine()
+ {
++  fbTruthTick();
+   if (!myIsRendering || myRenderCounter < myRenderCounterTripPoint)
+     collision = myCollisionMaskDisabled;
+   else
+@@ -285,6 +290,10 @@ void Player::nextLine()
+ // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ void Player::shufflePatterns()
+ {
++  if(fbTruthActive && myTIA->fbEnabled) {
++    if(myIsDelaying)fbTruthApply(fbVNewTag,fbVNewConst,fbVOldTag,fbVOldConst);
++    fbVOldTag=fbVNewTag;fbVOldConst=fbVNewConst;
++  }
+   const uInt8 oldPatternOld = myPatternOld;
+ 
+   myPatternOld = myPatternNew;
+@@ -348,7 +357,7 @@ void Player::updatePattern()
+ 
+   if (myIsRendering && myRenderCounter >= myRenderCounterTripPoint) {
+     collision = (myPattern & (1 << mySampleCounter)) ? myCollisionMaskEnabled : myCollisionMaskDisabled;
+-    myTIA->scheduleCollisionUpdate();
++    myTIA->scheduleCollisionUpdate(fbTruthActive);
+   }
+ }
+ 
+@@ -515,3 +524,23 @@ bool Player::load(Serializer& in)
+ 
+   return true;
+ }
++
++void Player::fbTruthReset()
++{
++  fbTruthActive=true;fbNewTag=fbVNewTag=fbVOldTag=-1;
++  fbVNewConst=myPatternNew;fbVOldConst=myPatternOld;fbVOn.reset();
++}
++void Player::fbTruthTick()
++{
++  if(!fbTruthActive || !myTIA->fbEnabled)return;
++  if(!myIsRendering || myRenderCounter<myRenderCounterTripPoint || mySampleCounter>7)fbVOn.reset();
++  else fbVOn=myTIA->fbTruthPixels(myIsDelaying?fbVOldTag:fbVNewTag,
++    myIsDelaying?fbVOldConst:fbVNewConst,mySampleCounter);
++}
++void Player::fbTruthApply(int tag,uInt8 value,int oldTag,uInt8 oldValue)
++{
++  if(!myIsRendering || myRenderCounter<myRenderCounterTripPoint || mySampleCounter>7)return;
++  const auto changed=~myTIA->fbTruthEquals(tag,value,oldTag,oldValue);
++  fbVOn=(fbVOn&~changed)|(myTIA->fbTruthPixels(tag,value,mySampleCounter)&changed);
++  myTIA->fbTruthScheduled|=changed;
++}
+diff --git a/src/emucore/tia/Player.hxx b/src/emucore/tia/Player.hxx
+index 823d627e..596d039c 100644
+--- a/src/emucore/tia/Player.hxx
++++ b/src/emucore/tia/Player.hxx
+@@ -21,6 +21,7 @@
+ class TIA;
+ 
+ #include "bspf.hxx"
++#include <bitset>
+ #include "Serializable.hxx"
+ #include "TIAConstants.hxx"
+ 
+@@ -95,6 +96,13 @@ class Player : public Serializable
+ 
+   public:
+ 
++    bool fbTruthActive{false};
++    int fbVNewTag{-1},fbVOldTag{-1};uInt8 fbVNewConst{0},fbVOldConst{0};
++    std::bitset<228> fbVOn{};
++    void fbTruthTick();
++    void fbTruthApply(int tag,uInt8 value,int oldTag,uInt8 oldValue);
++    void fbTruthReset();
++    int fbNewTag{-1};
+     uInt32 collision{0};
+     bool isMoving{false};
+ 
+@@ -190,6 +198,7 @@ void Player::tick()
+     return;
+   }
+ 
++  fbTruthTick();
+   if (!myIsRendering || myRenderCounter < myRenderCounterTripPoint)
+     collision = myCollisionMaskDisabled;
+   else
+diff --git a/src/emucore/tia/TIA.cxx b/src/emucore/tia/TIA.cxx
+index 98ed5ffa..12aa7340 100644
+--- a/src/emucore/tia/TIA.cxx
++++ b/src/emucore/tia/TIA.cxx
+@@ -15,6 +15,7 @@
+ // this file, and for a DISCLAIMER OF ALL WARRANTIES.
+ //============================================================================
+ 
++#include "M6532.hxx"
+ #include "TIA.hxx"
+ #include "M6502.hxx"
+ #include "M6532.hxx"
+@@ -473,6 +474,11 @@ uInt8 TIA::peek(uInt16 address)
+ {
+   updateEmulation();
+ 
++  if(fbEnabled) {
++    const auto band=mySystem->m6532().getRAM()[0x3A];
++    if((address&15)==7)fbTruthP1Sample=fbTruthP1;
++    if((address&15)==1 && band<8 && !(band&1)){fbTruthResponses[band/2]=fbTruthP1Sample|fbTruthM1;fbTruthBaseResponses[band/2]=fbTruthM1P1;if(band==0){fbTruthCapturing=false;myPlayer0.fbTruthActive=false;}}
++  }
+   // Start with all bits disabled
+   // In some cases both D7 and D6 are used; in other cases only D7 is used
+   uInt8 result = 0b0000000;
+@@ -830,6 +836,11 @@ bool TIA::poke(uInt16 address, uInt8 value)
+ 
+     case GRP0:
+     {
++      if(fbEnabled) {
++        const auto address=mySystem->m6502().lastDataAddressForPoke();
++        const int tag=(address&0x1FFF)-(fbGlyphBase&0x1FFF);
++        fbPendingTag=tag>=0 && tag<19 ? tag : -1;
++      }
+       myDelayQueue.push(GRP0, value, Delay::grp);
+       myDelayQueue.push(DummyRegisters::shuffleP1, 0, myPlSwapDelay);
+     #ifdef DEBUGGER_SUPPORT
+@@ -913,6 +924,8 @@ bool TIA::poke(uInt16 address, uInt8 value)
+     case CXCLR:
+       flushLineCache();
+       myCollisionMask = 0;
++      if(fbEnabled){
++        fbTruthP1.reset();fbTruthM1.reset();fbTruthP1Sample.reset();fbTruthM1P1.reset();const auto band=mySystem->m6532().getRAM()[0x3A];fbTruthWindow=band<8 && !(band&1);}
+       myShadowRegisters[address] = value;
+       break;
+ 
+@@ -1527,9 +1540,14 @@ void TIA::cycle(uInt32 colorClocks)
+       [this] (uInt8 address, uInt8 value) {delayedWrite(address, value);}
+     );
+ 
++    if(fbEnabled) {
++      fbTruthEvents=fbTruthScheduled;fbTruthScheduled.reset();
++      fbTruthAllEvents=fbTruthAllScheduled;fbTruthAllScheduled=false;
++    }
+     myCollisionUpdateRequired = myCollisionUpdateScheduled;
+     myCollisionUpdateScheduled = false;
+ 
++    if (fbEnabled) myLinesSinceChange=0;
+     if (myLinesSinceChange < 2) {
+       tickMovement();
+ 
+@@ -1538,6 +1556,7 @@ void TIA::cycle(uInt32 colorClocks)
+       else
+         tickHframe();
+ 
++      if(fbEnabled && !myFrameManager->vblank())fbTruthObserve();
+       if (myCollisionUpdateRequired && !myFrameManager->vblank()) updateCollision();
+     }
+ 
+@@ -1575,6 +1594,7 @@ FORCE_INLINE void TIA::tickMovement()
+       myBall.isMoving;
+ 
+     myCollisionUpdateRequired = myCollisionUpdateRequired || myMovementInProgress;
++    if(fbEnabled && myMovementInProgress)fbTruthAllEvents=true;
+ 
+     ++myMovementClock;
+   }
+@@ -1611,6 +1631,7 @@ void TIA::tickHframe()
+   const uInt32 x = myHctr - TIAConstants::H_BLANK_CLOCKS - myHctrDelta;
+ 
+   myCollisionUpdateRequired = true;
++  if(fbEnabled)fbTruthAllEvents=true;
+ 
+   myPlayfield.tick(x);
+   myMissile0.tick(myHctr);
+@@ -1740,9 +1761,10 @@ void TIA::cloneLastLine()
+ }
+ 
+ // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+-void TIA::scheduleCollisionUpdate()
++void TIA::scheduleCollisionUpdate(bool fromP0)
+ {
+   myCollisionUpdateScheduled = true;
++  if(fbEnabled && !fromP0)fbTruthAllScheduled=true;
+ }
+ 
+ // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@@ -1996,6 +2018,7 @@ void TIA::delayedWrite(uInt8 address, uInt8 value)
+       break;
+ 
+     case GRP0:
++      if(fbEnabled)myPlayer0.fbNewTag=fbPendingTag;
+       myPlayer0.grp(value);
+       break;
+ 
+@@ -2333,3 +2356,76 @@ string TIA::getAccessCounters() const
+   return out.str();
+ }
+ #endif // DEBUGGER_SUPPORT
++
++void TIA::fbTruthStart()
++{
++  if(!fbTruthReady) {
++    for(int pose=0;pose<6;++pose)for(int shift=0;shift<19;++shift)for(int reflect=0;reflect<2;++reflect) {
++      const int view=pose*38+shift*2+reflect;
++      const int low=(mySystem->peek(0xFCAA+pose)+shift)&255;
++      if(low+18>=256)throw std::runtime_error("virtual glyph page crossing");
++      for(int row=0;row<19;++row) {
++        uInt8 value=mySystem->peek(0xFC00+low+row);
++        if(reflect){uInt8 reversed=0;for(int i=0;i<8;++i)reversed|=((value>>i)&1)<<(7-i);value=reversed;}
++        fbTruthPlanes[view][row]=value;
++        for(int bit=0;bit<8;++bit)if(value&(128>>bit))fbTruthPixelBits[row][bit].set(view);
++      }
++      (reflect?fbTruthOdd:fbTruthEven).set(view);
++    }
++    for(int a=0;a<20;++a)for(int b=0;b<20;++b)for(int view=0;view<228;++view)
++      if((a==19?0:fbTruthPlanes[view][a])==(b==19?0:fbTruthPlanes[view][b]))fbTruthEq[a][b].set(view);
++    fbTruthReady=true;
++  }
++  fbTruthCapturing=true;fbTruthWindow=false;
++  myPlayer0.fbTruthReset();fbTruthScheduled.reset();fbTruthEvents.reset();
++  fbTruthAllScheduled=fbTruthAllEvents=false;fbTruthP1.reset();fbTruthM1.reset();fbTruthP1Sample.reset();fbTruthM1P1.reset();
++  for(auto& row:fbTruthResponses)row.reset();
++  for(auto& row:fbTruthBaseResponses)row.reset();
++}
++TIA::FbBits TIA::fbTruthPixels(int tag,uInt8 value,uInt8 sample)
++{
++  if(tag>=0 && tag<19)return fbTruthPixelBits[tag][sample];
++  FbBits bits;
++  if(value&(128>>sample))bits|=fbTruthEven;
++  if(value&(1<<sample))bits|=fbTruthOdd;
++  return bits;
++}
++TIA::FbBits TIA::fbTruthEquals(int tag,uInt8 value,int other,uInt8 otherValue)
++{
++  if((tag>=0 || value==0) && (other>=0 || otherValue==0))return fbTruthEq[tag>=0?tag:19][other>=0?other:19];
++  FbBits result;
++  for(int view=0;view<228;++view) {
++    const auto reverse=[](uInt8 v){uInt8 r=0;for(int i=0;i<8;++i)r|=((v>>i)&1)<<(7-i);return r;};
++    const auto a=tag>=0?fbTruthPlanes[view][tag]:view&1?reverse(value):value;
++    const auto b=other>=0?fbTruthPlanes[view][other]:view&1?reverse(otherValue):otherValue;
++    if(a==b)result.set(view);
++  }
++  return result;
++}
++void TIA::fbTruthObserve()
++{
++  if(!fbTruthCapturing || !fbTruthWindow)return;
++  const bool p1=myPlayer1.isOn(),m1=myMissile1.isOn();if(!p1 && !m1)return;
++  if(p1 && m1){if(fbTruthAllEvents)fbTruthM1P1.set();else fbTruthM1P1|=fbTruthEvents;}
++  if(myPlayer0.fbVOn.none())return;
++  auto bits=myPlayer0.fbVOn;if(!fbTruthAllEvents)bits&=fbTruthEvents;
++  if(p1)fbTruthP1|=bits;if(m1)fbTruthM1|=bits;
++}
++
++TIA::FbPrefix TIA::fbSavePrefix()
++{
++  return {fbGlyphBase,fbPendingTag,myPlayer0.fbNewTag,myPlayer0.fbVNewTag,myPlayer0.fbVOldTag,
++    myPlayer0.fbVNewConst,myPlayer0.fbVOldConst,myPlayer0.fbVOn,fbTruthScheduled,fbTruthEvents,
++    fbTruthP1,fbTruthM1,fbTruthP1Sample,fbTruthM1P1,fbTruthAllScheduled,fbTruthAllEvents,
++    fbTruthCapturing,fbTruthWindow,fbTruthResponses,fbTruthBaseResponses};
++}
++void TIA::fbRestorePrefix(const FbPrefix& s)
++{
++  fbEnabled=true;fbGlyphBase=s.glyphBase;fbPendingTag=s.pendingTag;
++  myPlayer0.fbTruthActive=true;myPlayer0.fbNewTag=s.incomingTag;
++  myPlayer0.fbVNewTag=s.newTag;myPlayer0.fbVOldTag=s.oldTag;
++  myPlayer0.fbVNewConst=s.newConst;myPlayer0.fbVOldConst=s.oldConst;myPlayer0.fbVOn=s.on;
++  fbTruthScheduled=s.scheduled;fbTruthEvents=s.events;fbTruthP1=s.p1;fbTruthM1=s.m1;
++  fbTruthP1Sample=s.p1sample;fbTruthM1P1=s.m1p1;fbTruthAllScheduled=s.allScheduled;fbTruthAllEvents=s.allEvents;
++  fbTruthCapturing=s.capturing;fbTruthWindow=s.window;fbTruthResponses=s.responses;fbTruthBaseResponses=s.baseResponses;
++}
+diff --git a/src/emucore/tia/TIA.hxx b/src/emucore/tia/TIA.hxx
+index bcc87cb1..026a34b4 100644
+--- a/src/emucore/tia/TIA.hxx
++++ b/src/emucore/tia/TIA.hxx
+@@ -60,6 +60,34 @@ class DispatchResult;
+ */
+ class TIA : public Device
+ {
++  public:
++    using FbBits=std::bitset<228>;
++    std::array<std::array<uInt8,19>,228> fbTruthPlanes{};
++    std::array<std::array<FbBits,8>,20> fbTruthPixelBits{};
++    std::array<std::array<FbBits,20>,20> fbTruthEq{};
++    FbBits fbTruthEven{},fbTruthOdd{},fbTruthScheduled{},fbTruthEvents{};
++    FbBits fbTruthP1{},fbTruthM1{},fbTruthP1Sample{},fbTruthM1P1{};
++    std::array<FbBits,4> fbTruthResponses{},fbTruthBaseResponses{};
++    bool fbTruthReady{false},fbTruthAllScheduled{false},fbTruthAllEvents{false},fbTruthCapturing{false},fbTruthWindow{false};
++    void fbTruthStart();
++    void fbTruthObserve();
++    FbBits fbTruthPixels(int tag,uInt8 value,uInt8 sample);
++    FbBits fbTruthEquals(int tag,uInt8 value,int other,uInt8 otherValue);
++    bool fbEnabled{false};
++    int fbGlyphBase{0}, fbPendingTag{-1};
++    void fbBegin(int base) {
++      fbEnabled=true;fbGlyphBase=base;fbPendingTag=-1;fbTruthStart();
++    }
++    struct FbPrefix {
++      int glyphBase,pendingTag,incomingTag,newTag,oldTag;
++      uInt8 newConst,oldConst;
++      FbBits on,scheduled,events,p1,m1,p1sample,m1p1;
++      bool allScheduled,allEvents,capturing,window;
++      std::array<FbBits,4> responses,baseResponses;
++    };
++    FbPrefix fbSavePrefix();
++    void fbRestorePrefix(const FbPrefix& state);
++
+   public:
+     /**
+      * These dummy register addresses are used to represent the delayed
+@@ -578,7 +606,7 @@ class TIA : public Device
+     /**
+       Schedule a collision update
+      */
+-    void scheduleCollisionUpdate();
++    void scheduleCollisionUpdate(bool fromP0=false);
+ 
+     /**
+       Create a new delayQueueIterator for the debugger.

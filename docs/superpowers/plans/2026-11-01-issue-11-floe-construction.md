@@ -4,7 +4,7 @@
 
 **Goal:** Deliver exact floe activation/reversal/construction/temperature behavior and a continuous natural construction→entry→next-level route.
 
-**Architecture:** Retain the audited native post-visible core and real input. Add an explicit visible-phase adapter: original-raster floe collision masks, exact palette/sticky-state and final scratch/CPU effects. Compare that reduction against unmodified original instruction execution and an independent Atari backend. Keep synthetic presentation separate; measure the complete real pipeline again.
+**Architecture:** Retain the audited native post-visible core and real input. Add an explicit visible-phase adapter: original-clock literal-view floe collision tables, exact palette/sticky-state and final scratch/CPU effects. Compare that reduction against unmodified original instruction execution and an independent Atari backend. Keep synthetic presentation separate; measure the complete real pipeline again.
 
 **Tech Stack:** Existing pinned Python/py65/ALE/Stella, sjasmplus Z80, openMSX, SCREEN2/ASCII16.
 
@@ -21,7 +21,7 @@
 
 ## Review focus
 
-1. Left/right edges, copy overlap, shape phase and reflected/shifted player masks: collision is original raster overlap, including clipping/early positioning, not a bounding box.
+1. Left/right edges, copy overlap, shape phase and reflected/shifted player patterns: collision is the actual original TIA latch, including hidden clocks and data-dependent update events. Visible raster overlap alone was experimentally rejected.
 2. Sticky ED and every128-byte phase effect: a visually successful landing must not hide omitted palette/scratch/return-byte changes or forged target continuity.
 3. Landing with fire/timeout, completed-igloo cost, rearm and low-index priority: preserve the actual native source dispatch and before/after order.
 4. PAL catch-up with real contacts and crowded layout/width transitions: no dropped source steps, visible preparation writes, late commit, extra sprites or stale timing margin.
@@ -31,10 +31,11 @@
 
 **Files:** scripts/floe_reference.py, scripts/floe_model.py, tests/test_floe_model.py, references/floe-contract.json, ignored outputs/floes/.
 
-**Interfaces:** `visible_reference(rom,ram,registers,contacts)->CPU/RAM` executes original F019→F476 with declared per-window electrical samples. `visible_state(rom,ram,registers,contacts)->CPU/RAM` is its explicit native-adapter specification. `floe_contacts(rom,ram,catalog)->bytes[8]` intersects original player bits with exact original-raster floe masks; inactive object bytes retain the source electrical low bits. `capture_catalog(...)` freezes original-derived raster masks and source identity locally.
+**Interfaces:** `visible_reference(rom,ram,registers,contacts)->CPU/RAM` executes original F019→F476 with declared per-window electrical samples. `visible_state(rom,ram,registers,contacts)->CPU/RAM` is its explicit native-adapter specification. `floe_contacts(rom,ram,catalog)->bytes[8]` will query complete original-clock truth for all228 literal player views; inactive object bytes retain the source electrical low bits. `floe_catalog.capture(...)` freezes the complete controlled domain and source identity locally. scripts/stella_floe.py builds the pinned observation-only backend; scripts/floe_observer_check.py compares unchanged original CPU/RAM/latches and cached/full execution.
 
 - [ ] RED→GREEN host tests: mask clipping/wrap/empty/reflection, exact phase write set/CPU return, shape domain and complete case/manifest requirements. No original bytes enter unit fixtures.
-- [ ] Capture all160 floe positions ×16 shaping phases ×7 lines in independent ALE executions; compare all four row windows. Deduplicate row masks only losslessly. Validate player positioning against actual original rasters, including edge positions and shifted/reflected poses.
+- [x] Capture all160 floe positions ×16 shaping phases ×7 lines in independent ALE executions; compare all four row windows. Raster-only collision inference rejected by electrical edge probes.
+- [ ] Capture all160 player positions ×160 floe positions ×10 legal control pairs ×34 vertical samples ×228 literal views, with both original latch channels. Deduplicate complete records/profiles only byte-exactly. Validate all four windows, outside-Y sentinel, blanking, header/view invariance and cached/full equivalence against unchanged original execution.
 - [ ] Compare exact full visible CPU/RAM reduction against original py65 instruction execution, plus independent Stella phase checkpoints and actual per-window contacts for seeded boundary/landing cases. Keep unsupported full hazard acquisition explicit.
 - [ ] Full suite; commit clean helpers and capture canonical evidence with exact backend/tool/provenance identities.
 
