@@ -76,6 +76,15 @@ def native_maximum(raw, count, maximum, natural=False):
     return maximum
 
 
+def positive_log(directory):
+    """A success receipt cannot erase a previously reported fatal guard."""
+    log = (Path(directory) / 'emulator.log').read_text(errors='replace')
+    markers = ('FLOE_NATIVE_FAIL ', 'FLOE_PACED_FAIL ', 'FLOE_FAIL ',
+               'SHIFT_FAIL ', 'WRITE_LOOP_FAIL ', 'NATIVE_FAIL ')
+    if any(marker in log for marker in markers):
+        raise ValueError('positive evidence contains a fatal harness marker')
+
+
 def validate_negative(name, report, sha):
     if (name not in CAUSES or report.get('detected') is not True or report.get('harness_dirty') is not False
             or report.get('rom_sha256') != sha or CAUSES[name] not in report.get('detail', '')):
@@ -222,6 +231,7 @@ def seal(config_path, out):
         if report.get('complete') is not True or report.get('exploratory') is not False: raise ValueError('clean complete actual-Z80 microproof required')
         if digest(path.parent / 'unit.rom') != report['rom_sha256']: raise ValueError('microproof ROM changed')
         stats = audit(path.parent)
+        positive_log(path.parent)
         if key == 'loop_unit':
             if any(report.get(k) != v for k, v in stats.items()) or report['cases'] != 135168: raise ValueError('complete original/actual-Z80 loop proof differs')
             checks[key] = stats
@@ -235,6 +245,7 @@ def seal(config_path, out):
         hazard.validate_target('geometry' if kind == 'geometry' else 'mechanics', r, sha, count)
         audit_manifest(r, tuple(r['utility_fingerprints'])); directory = path.parent / 'native' if kind == 'geometry' else path.parent
         audit_artifacts(directory, r['artifacts']); cpu_rows(directory); hazard.audit_binary(directory, r, build); hazard.audit_profile(directory, r, 'Frostbite_Floes.xml')
+        positive_log(directory)
         if kind == 'geometry': hazard.audit_geometry(path, r)
         elif kind == 'mechanics': hazard.audit_mechanics(path, reader, root / 'initial.state')
         else: audit_phases(path, r, reader, root / 'initial.state')
@@ -249,6 +260,7 @@ def seal(config_path, out):
                 or r.get('assessment') != route['assessment']): raise ValueError('complete exact-ROM native natural route required')
         audit_manifest(r, tuple(r['utility_fingerprints'])); audit_artifacts(directory, r['artifacts']); cpu_rows(directory)
         hazard.audit_binary(directory, r, build); hazard.audit_profile(directory, r, 'Frostbite_Floes.xml')
+        positive_log(directory)
         expected = json.loads((directory / 'expected.json').read_text())
         if (directory / 'cases.bin').read_bytes() != input_records(json.loads((source / 'inputs.json').read_text()), trace['steps']): raise ValueError('native natural raw inputs differ')
         if len(expected) != len(trace['steps']): raise ValueError('native route checkpoint count differs')
@@ -260,6 +272,7 @@ def seal(config_path, out):
             mode = VIEWS[view]; path = ROOT / relative; r = json.loads(path.read_text()); validate_paced(r, sha, digest(source / 'route.json'), route['steps'], mode)
             audit_manifest(r, tuple(r['utility_fingerprints'])); audit_artifacts(path.parent, r['artifacts'])
             hazard.audit_binary(path.parent, r, build); hazard.audit_profile(path.parent, r, 'Frostbite_Paced.xml', mode[0])
+            positive_log(path.parent)
             _, busy, cycles = __import__('hazard_paced').verify_saved(path.parent, source, mode[0], r,
                 assessor=assess_receipt, pixels=build_profile.expected_pixels, scene_builder=build_profile.presentation)
             if (r['max_busy_cycles'], r['max_native_cycles']) != (max(busy), max(cycles)): raise ValueError('raw paced maxima differ')
@@ -275,6 +288,7 @@ def seal(config_path, out):
             floe_bench.validate_receipt(r, r['frame_budget'], r['layout'], r['width'], r['transitions'])
             audit_manifest(r, tuple(r['utility_fingerprints'])); audit_artifacts(directory, r['artifacts'])
             hazard.audit_binary(directory, r, build); hazard.audit_profile(directory, r, 'Frostbite_Movement.xml', r['family'])
+            positive_log(directory)
             floe_bench.verify_data(directory, r, reader, (ROOT / 'references/roms/frostbite.bin').read_bytes())
             roots['stress-' + name] = directory; checks['stress-' + name] = {'max_busy_cycles': maximum, 'frame_budget': r['frame_budget'], 'canonical_nusiz_codes': r['canonical_nusiz_codes']}
     negatives = json.loads((ROOT / config['negatives']).read_text())
