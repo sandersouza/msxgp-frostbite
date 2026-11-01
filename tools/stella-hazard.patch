@@ -1,0 +1,205 @@
+--- a/src/debugger/Debugger.cxx
++++ b/src/debugger/Debugger.cxx
+@@ -982,7 +982,7 @@
+ 
+ 
+ // Original ROM, CPU and TIA behavior are unchanged; literal-view probes are sidecars.
+-void Debugger::fbProbe()
++void Debugger::fbProbe(bool hazardMode, bool hazardRoi, bool shoreRoi)
+ {
+   const char* input=std::getenv("FROSTBITE_PROBE_INPUT");
+   const char* output=std::getenv("FROSTBITE_PROBE_OUTPUT");
+@@ -1001,9 +1001,56 @@
+     for(int byte=0;byte<29;++byte){uInt8 value=0;for(int bit=0;bit<8;++bit)if(byte*8+bit<228 && bits.test(byte*8+bit))value|=1<<bit;out.put(value);}
+   };
+   const bool roiMode=std::getenv("FROSTBITE_PROBE_ROI")!=nullptr;
++  if(hazardMode && roiMode)throw std::runtime_error("hazard ROI not enabled");
++  myConsole.tia().fbHazards=hazardMode;
+   std::unique_ptr<Serializer> roi;int cachedX=-1,cachedY=-1,cachedBase=0;
+   std::array<uInt8,128> cachedHeader{};TIA::FbPrefix cachedVirtual{};
+   while(in.read(reinterpret_cast<char*>(ram.data()),ram.size())) {
++    if(shoreRoi) {
++      if(!hazardMode || hazardRoi || ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || (ram[0x6C]!=0 && ram[0x6C]!=16) || ram[0x6F]>7)
++        throw std::runtime_error("shore ROI fixed-header contract violated");
++      auto header=ram;header[0x07]=header[0x68]=header[0x6F]=header[0x64]=header[0x66]=0;
++      if(cachedX!=ram[0x66] || cachedY!=ram[0x64] || cachedHeader!=header) {
++        myConsole.tia().fbEnabled=false;initial.rewind();if(!mySystem.load(initial))throw std::runtime_error("shore ROI initial restore failed");
++        for(int i=0;i<128;++i)mySystem.pokeOob(0x80+i,ram[i]);
++        until(0xF0DF);cachedBase=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
++        myConsole.tia().fbBegin(cachedBase);until(0xF1E9);
++        roi=std::make_unique<Serializer>();if(!mySystem.save(*roi))throw std::runtime_error("shore ROI prefix save failed");
++        cachedX=ram[0x66];cachedY=ram[0x64];cachedHeader=header;cachedVirtual=myConsole.tia().fbSavePrefix();
++      }
++      myConsole.tia().fbEnabled=false;roi->rewind();if(!mySystem.load(*roi))throw std::runtime_error("shore ROI prefix restore failed");
++      mySystem.pokeOob(0xE8,ram[0x68]);mySystem.pokeOob(0xEF,ram[0x6F]);
++      mySystem.pokeOob(0x87,mySystem.peek(0xFEE7+ram[0x6F]));
++      myConsole.tia().fbRestorePrefix(cachedVirtual);until(0xF246);
++      writeBits(myConsole.tia().fbHazardResponses[8]);writeBits(myConsole.tia().fbHazardBaseResponses[8]);
++      out.put(myCpuDebug->a());for(int i=0;i<19;++i)out.put(mySystem.peek(cachedBase+i));
++      if(!out)throw std::runtime_error("shore ROI write failed");++count;continue;
++    }
++    if(hazardRoi) {
++      if(!hazardMode || ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || ram[0x6C]!=0)
++        throw std::runtime_error("hazard ROI fixed-header contract violated");
++      auto header=ram;
++      for(int i=0x11;i<=0x14;++i)header[i]=0;
++      for(int i=0x1C;i<=0x26;++i)header[i]=0;
++      for(int i=0x54;i<=0x5B;++i)header[i]=0;
++      header[0x64]=header[0x66]=0;
++      if(cachedX!=ram[0x66] || cachedY!=ram[0x64] || cachedHeader!=header) {
++        myConsole.tia().fbEnabled=false;initial.rewind();if(!mySystem.load(initial))throw std::runtime_error("hazard ROI initial restore failed");
++        for(int i=0;i<128;++i)mySystem.pokeOob(0x80+i,ram[i]);
++        until(0xF0DF);cachedBase=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
++        myConsole.tia().fbBegin(cachedBase);until(0xF263);
++        roi=std::make_unique<Serializer>();if(!mySystem.save(*roi))throw std::runtime_error("hazard ROI prefix save failed");
++        cachedX=ram[0x66];cachedY=ram[0x64];cachedHeader=header;cachedVirtual=myConsole.tia().fbSavePrefix();
++      }
++      myConsole.tia().fbEnabled=false;roi->rewind();if(!mySystem.load(*roi))throw std::runtime_error("hazard ROI prefix restore failed");
++      for(int a=0x91;a<=0x94;++a)mySystem.pokeOob(a,ram[a-128]);
++      for(int a=0x9C;a<=0xA6;++a)mySystem.pokeOob(a,ram[a-128]);
++      for(int a=0xD4;a<=0xDB;++a)mySystem.pokeOob(a,ram[a-128]);
++      myConsole.tia().fbRestorePrefix(cachedVirtual);until(0xF335);
++      writeBits(myConsole.tia().fbHazardResponses[7]);writeBits(myConsole.tia().fbHazardBaseResponses[7]);
++      out.put(mySystem.peek(0xB7));for(int i=0;i<19;++i)out.put(mySystem.peek(cachedBase+i));
++      if(!out)throw std::runtime_error("hazard ROI write failed");++count;continue;
++    }
+     if(roiMode) {
+       if(ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || ram[0x6C]!=0)
+         throw std::runtime_error("ROI fixed-header contract violated");
+@@ -1032,7 +1079,11 @@
+     until(0xF0DF);
+     const auto base=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
+     myConsole.tia().fbBegin(base);until(0xF476);
+-    for(int row=0;row<4;++row){writeBits(myConsole.tia().fbTruthResponses[row]);writeBits(myConsole.tia().fbTruthBaseResponses[row]);}
++    if(hazardMode) {
++      for(int row=0;row<9;++row){writeBits(myConsole.tia().fbHazardResponses[row]);writeBits(myConsole.tia().fbHazardBaseResponses[row]);}
++    } else {
++      for(int row=0;row<4;++row){writeBits(myConsole.tia().fbTruthResponses[row]);writeBits(myConsole.tia().fbTruthBaseResponses[row]);}
++    }
+     for(int i=0;i<128;++i)out.put(mySystem.peek(0x80+i));
+     out.put(myCpuDebug->a());out.put(myCpuDebug->x());out.put(myCpuDebug->y());
+     out.put(0x20|(myCpuDebug->n()<<7)|(myCpuDebug->v()<<6)|(myCpuDebug->b()<<4)|(myCpuDebug->d()<<3)|(myCpuDebug->i()<<2)|(myCpuDebug->z()<<1)|myCpuDebug->c());out.put(myCpuDebug->sp());
+@@ -1043,5 +1094,5 @@
+   myConsole.tia().fbEnabled=false;
+   if(in.gcount()!=0 || count==0)throw std::runtime_error("probe input must contain complete nonempty128-byte records");
+   out.flush();if(!out)throw std::runtime_error("probe final output write failed");
+-  std::cout<<"FROSTBITE_PROBE_COMPLETE "<<count<<std::endl;
+-}
++  std::cout<<(hazardMode?"FROSTBITE_HAZARDS_COMPLETE ":"FROSTBITE_PROBE_COMPLETE ")<<count<<std::endl;
++}
+--- a/src/debugger/Debugger.hxx
++++ b/src/debugger/Debugger.hxx
+@@ -328,7 +328,7 @@
+ 
+     void reset();
+ 
+-    void fbProbe();
++    void fbProbe(bool hazardMode=false, bool hazardRoi=false, bool shoreRoi=false);
+     void saveState(int state);
+     void saveAllStates();
+     void loadState(int state);
+--- a/src/debugger/DebuggerParser.cxx
++++ b/src/debugger/DebuggerParser.cxx
+@@ -104,6 +104,9 @@
+ #endif
+ 
+   if(command=="floeProbe"){debugger.fbProbe();return "FROSTBITE_PROBE_COMPLETE";}
++  if(command=="hazardProbe"){debugger.fbProbe(true);return "FROSTBITE_HAZARDS_COMPLETE";}
++  if(command=="hazardRoiProbe"){debugger.fbProbe(true,true);return "FROSTBITE_HAZARDS_COMPLETE";}
++  if(command=="shoreRoiProbe"){debugger.fbProbe(true,false,true);return "FROSTBITE_HAZARDS_COMPLETE";}
+   string verb;
+   getArgs(command, verb);
+   commandResult.str("");
+--- a/src/emucore/tia/TIA.cxx
++++ b/src/emucore/tia/TIA.cxx
+@@ -476,8 +476,21 @@
+ 
+   if(fbEnabled) {
+     const auto band=mySystem->m6532().getRAM()[0x3A];
+-    if((address&15)==7)fbTruthP1Sample=fbTruthP1;
+-    if((address&15)==1 && band<8 && !(band&1)){fbTruthResponses[band/2]=fbTruthP1Sample|fbTruthM1;fbTruthBaseResponses[band/2]=fbTruthM1P1;if(band==0){fbTruthCapturing=false;myPlayer0.fbTruthActive=false;}}
++    if((address&15)==7) {
++      fbTruthP1Sample=fbTruthP1;fbTruthM0M1Sample=fbTruthM0M1;
++      if(fbHazards) {
++        if(!fbHazardShoreRead) {
++          fbHazardResponses[8]=fbTruthP1;fbHazardBaseResponses[8]=fbTruthM0M1;fbHazardShoreRead=true;
++        } else if(band<8 && (band&1)) {
++          fbHazardResponses[band]=fbTruthP1;fbHazardBaseResponses[band]=fbTruthM0M1;
++        }
++      }
++    }
++    if((address&15)==1 && band<8 && !(band&1)) {
++      fbTruthResponses[band/2]=fbTruthP1Sample|fbTruthM1;fbTruthBaseResponses[band/2]=fbTruthM1P1;
++      if(fbHazards){fbHazardResponses[band]=fbTruthResponses[band/2];fbHazardBaseResponses[band]=fbTruthM1P1|fbTruthM0M1Sample;}
++      if(band==0){fbTruthCapturing=false;myPlayer0.fbTruthActive=false;}
++    }
+   }
+   // Start with all bits disabled
+   // In some cases both D7 and D6 are used; in other cases only D7 is used
+@@ -925,7 +938,7 @@
+       flushLineCache();
+       myCollisionMask = 0;
+       if(fbEnabled){
+-        fbTruthP1.reset();fbTruthM1.reset();fbTruthP1Sample.reset();fbTruthM1P1.reset();const auto band=mySystem->m6532().getRAM()[0x3A];fbTruthWindow=band<8 && !(band&1);}
++        fbTruthP1.reset();fbTruthM1.reset();fbTruthP1Sample.reset();fbTruthM1P1.reset();fbTruthM0M1.reset();fbTruthM0M1Sample.reset();const auto band=mySystem->m6532().getRAM()[0x3A];fbTruthWindow=fbHazards || (band<8 && !(band&1));}
+       myShadowRegisters[address] = value;
+       break;
+ 
+@@ -2381,6 +2394,9 @@
+   fbTruthAllScheduled=fbTruthAllEvents=false;fbTruthP1.reset();fbTruthM1.reset();fbTruthP1Sample.reset();fbTruthM1P1.reset();
+   for(auto& row:fbTruthResponses)row.reset();
+   for(auto& row:fbTruthBaseResponses)row.reset();
++  fbHazardShoreRead=false;fbTruthM0M1.reset();fbTruthM0M1Sample.reset();
++  for(auto& row:fbHazardResponses)row.reset();
++  for(auto& row:fbHazardBaseResponses)row.reset();
+ }
+ TIA::FbBits TIA::fbTruthPixels(int tag,uInt8 value,uInt8 sample)
+ {
+@@ -2407,6 +2423,7 @@
+   if(!fbTruthCapturing || !fbTruthWindow)return;
+   const bool p1=myPlayer1.isOn(),m1=myMissile1.isOn();if(!p1 && !m1)return;
+   if(p1 && m1){if(fbTruthAllEvents)fbTruthM1P1.set();else fbTruthM1P1|=fbTruthEvents;}
++  if(fbHazards && m1 && myMissile0.isOn()){if(fbTruthAllEvents)fbTruthM0M1.set();else fbTruthM0M1|=fbTruthEvents;}
+   if(myPlayer0.fbVOn.none())return;
+   auto bits=myPlayer0.fbVOn;if(!fbTruthAllEvents)bits&=fbTruthEvents;
+   if(p1)fbTruthP1|=bits;if(m1)fbTruthM1|=bits;
+@@ -2417,7 +2434,8 @@
+   return {fbGlyphBase,fbPendingTag,myPlayer0.fbNewTag,myPlayer0.fbVNewTag,myPlayer0.fbVOldTag,
+     myPlayer0.fbVNewConst,myPlayer0.fbVOldConst,myPlayer0.fbVOn,fbTruthScheduled,fbTruthEvents,
+     fbTruthP1,fbTruthM1,fbTruthP1Sample,fbTruthM1P1,fbTruthAllScheduled,fbTruthAllEvents,
+-    fbTruthCapturing,fbTruthWindow,fbTruthResponses,fbTruthBaseResponses};
++    fbTruthCapturing,fbTruthWindow,fbTruthResponses,fbTruthBaseResponses,
++    fbHazards,fbHazardShoreRead,fbTruthM0M1,fbTruthM0M1Sample,fbHazardResponses,fbHazardBaseResponses};
+ }
+ void TIA::fbRestorePrefix(const FbPrefix& s)
+ {
+@@ -2428,4 +2446,6 @@
+   fbTruthScheduled=s.scheduled;fbTruthEvents=s.events;fbTruthP1=s.p1;fbTruthM1=s.m1;
+   fbTruthP1Sample=s.p1sample;fbTruthM1P1=s.m1p1;fbTruthAllScheduled=s.allScheduled;fbTruthAllEvents=s.allEvents;
+   fbTruthCapturing=s.capturing;fbTruthWindow=s.window;fbTruthResponses=s.responses;fbTruthBaseResponses=s.baseResponses;
+-}
++  fbHazards=s.hazardMode;fbHazardShoreRead=s.shoreRead;fbTruthM0M1=s.m0m1;fbTruthM0M1Sample=s.m0m1sample;
++  fbHazardResponses=s.hazardResponses;fbHazardBaseResponses=s.hazardBaseResponses;
++}
+--- a/src/emucore/tia/TIA.hxx
++++ b/src/emucore/tia/TIA.hxx
+@@ -68,6 +68,9 @@
+     FbBits fbTruthEven{},fbTruthOdd{},fbTruthScheduled{},fbTruthEvents{};
+     FbBits fbTruthP1{},fbTruthM1{},fbTruthP1Sample{},fbTruthM1P1{};
+     std::array<FbBits,4> fbTruthResponses{},fbTruthBaseResponses{};
++    bool fbHazards{false},fbHazardShoreRead{false};
++    FbBits fbTruthM0M1{},fbTruthM0M1Sample{};
++    std::array<FbBits,9> fbHazardResponses{},fbHazardBaseResponses{};
+     bool fbTruthReady{false},fbTruthAllScheduled{false},fbTruthAllEvents{false},fbTruthCapturing{false},fbTruthWindow{false};
+     void fbTruthStart();
+     void fbTruthObserve();
+@@ -84,6 +87,9 @@
+       FbBits on,scheduled,events,p1,m1,p1sample,m1p1;
+       bool allScheduled,allEvents,capturing,window;
+       std::array<FbBits,4> responses,baseResponses;
++      bool hazardMode,shoreRead;
++      FbBits m0m1,m0m1sample;
++      std::array<FbBits,9> hazardResponses,hazardBaseResponses;
+     };
+     FbPrefix fbSavePrefix();
+     void fbRestorePrefix(const FbPrefix& state);

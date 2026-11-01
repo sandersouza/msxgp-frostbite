@@ -1,0 +1,177 @@
+"""Compare nine-window sidecars with real latches and unchanged original CPU.
+
+This controlled source check is not a natural route, MSX acceptance or a
+complete geometry catalog. Raw original bytes remain in the ignored output.
+"""
+import argparse
+import json
+from pathlib import Path
+import random
+import subprocess
+
+from environment import ROOT
+from floe_model import visible_state
+from hazard_domain import shapes
+from hazard_truth import FULL_BYTES,compare_roi,contacts,full_record,validate_invariants
+from native_contract import compare
+from reference_inventory import verified_input
+from reference_state import decode_state
+from reference_traces import private_output,run_debugger
+from stella_floe import control_pairs,observe as observe_floes
+from stella_hazard import HELPERS,digest,fixture,helper_identity,observe
+
+CHECK_HELPERS=(*HELPERS,'scripts/hazard_domain.py','scripts/hazard_observer_check.py','scripts/floe_model.py','scripts/native_contract.py')
+
+
+def cases_for(base,domain):
+    rng=random.Random(1201);cases=[]
+    positions=(0,1,7,8,64,151,158,159)
+    def add(px,y,ox,shape,copies,reflection,view):
+        ram=bytearray(fixture(base,px,y,ox,shape,copies,reflection,bear_x=rng.choice((0,15,16,64,151,159))))
+        ram[0x6E]=view//38;ram[0x6B]=view%38//2;ram[0x6C]=(view%2)*8+(16 if len(cases)&1 else 0)
+        ram[0x6F]=len(cases)%8;ram[0x70]=len(cases)%4
+        ram[0x6D]=135 if len(cases)%7==0 else 0
+        if len(cases)%31==0:ram[0x3F]=128
+        cases.append(bytes(ram))
+    for view in range(228):
+        add(positions[view%8],rng.randrange(256),rng.randrange(160),domain[view%len(domain)],view%4,bool(view&1),view)
+    for y in range(256):
+        for px in positions:
+            for copies in range(4):
+                index=len(cases)
+                add(px,y,rng.randrange(160),domain[index%len(domain)],copies,bool(index&1),index%228)
+    for shape in domain:
+        for copies in range(4):
+            for reflection in (False,True):
+                for ox in (0,8,64,159):
+                    index=len(cases)
+                    add(positions[index%8],34+index%46,ox,shape,copies,reflection,index%228)
+    return cases
+
+
+def invariant_cases(base,domain,controls):
+    rng=random.Random(1202);cases=[];links=[]
+    for group in range(48):
+        px=(0,1,7,8,9,24,25,64,151,152,158,159)[group%12]
+        ox=rng.randrange(160);shape=domain[group%len(domain)];copies=group%4;reflection=bool(group&1);dy=rng.randrange(-8,20)
+        start=len(cases)
+        for row in (3,2,1,0):
+            cases.append(fixture(base,px,43+(3-row)*26+dy,ox,shape,copies,reflection,bear_x=64))
+            if row!=3:links.append((start,len(cases)-1,7,row*2+1,'vertical-row'))
+        for c5,cb,cd,ef in ((0,0,15,0),(128,0,255,0),(0,4,15,7),(0,20,255,3)):
+            ram=bytearray(cases[start]);ram[0x45]=c5;ram[0x4B]=cb;ram[0x4D]=cd;ram[0x6F]=ef
+            cases.append(bytes(ram));links.append((start,len(cases)-1,7,7,'header'))
+        for bear_x,fade in ((0,1),(15,2),(159,3)):
+            ram=bytearray(cases[start]);ram[0x68]=bear_x;ram[0x70]=fade
+            cases.append(bytes(ram));links.append((start,len(cases)-1,7,7,'bear-position/color'))
+        ram=bytearray(cases[start+3])
+        for row in (1,2,3):
+            ram[0x54+row]=rng.randrange(160);ram[0x58+row]=rng.randrange(4)
+            ram[0x23+row]=rng.choice(domain);ram[0x11+row]=rng.randrange(256)
+        for row in range(4):ram[0x1F+row]=rng.randrange(160)
+        ram[0x1C],ram[0x1D]=rng.choice(controls)
+        cases.append(bytes(ram));links.append((start+3,len(cases)-1,1,1,'other-windows'))
+    for group in range(48):
+        px=(0,1,7,8,9,24,25,64,151,152,158,159)[group%12]
+        y=(4,11,12,27,30,48,49,56)[group%8]
+        ram=bytearray(fixture(base,px,y,64,domain[group%len(domain)],group%4,bear_x=(0,15,16,64,139,159)[group%6]))
+        ram[0x6F]=group%8;ram[0x6C]=16 if group&1 else 0
+        start=len(cases);cases.append(bytes(ram))
+        for c5,cb,cd in ((0,0,15),(128,0,255),(0,4,15),(0,20,255)):
+            variant=bytearray(ram);variant[0x45]=c5;variant[0x4B]=cb;variant[0x4D]=cd
+            cases.append(bytes(variant));links.append((start,len(cases)-1,8,8,'shore-header'))
+        variant=bytearray(ram);variant[0x6D]=135
+        cases.append(bytes(variant));links.append((start,len(cases)-1,8,8,'shore-sticky-input'))
+    return cases,links
+
+
+def check(out,binary,initial_path,original_binary='stella',old_binary=None):
+    out=private_output(out);out.mkdir(parents=True,exist_ok=False)
+    source=verified_input(ROOT/'references/roms/frostbite.bin');rom=(ROOT/'references/roms/frostbite.bin').read_bytes()
+    initial=Path(initial_path).read_bytes();base=decode_state(initial)
+    helpers={name:digest(ROOT/name) for name in CHECK_HELPERS}
+    commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
+    domain=shapes(rom);cases=cases_for(base['ram'],domain)
+    chunks=[];observations=[]
+    for offset in range(0,len(cases),1024):
+        data,receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,cases[offset:offset+1024],out/f'full-{offset:05d}')
+        chunks.append(data);observations.append({'start':offset,'stop':min(offset+1024,len(cases)),'receipt':receipt})
+    data=b''.join(chunks)
+    records=[full_record(data[i*FULL_BYTES:(i+1)*FULL_BYTES]) for i in range(len(cases))]
+    for index,(ram,record) in enumerate(zip(cases,records)):
+        acquired=contacts(record,ram)
+        if acquired['rows']!=record['ram'][0x30:0x38]:raise ValueError(f'actual row latch differs at case{index}')
+        compare(visible_state(rom,ram,base['cpu'],acquired),record)
+        if ram[0x3F]&128 and (any(row!=7 for row in acquired['rows']) or acquired['shore']!=7):
+            raise ValueError('blanked source acquired new collisions')
+    invariant,links=invariant_cases(base['ram'],domain,control_pairs(rom))
+    invariant_data,invariant_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,invariant,out/'invariants')
+    invariant_records=[full_record(invariant_data[i*FULL_BYTES:(i+1)*FULL_BYTES]) for i in range(len(invariant))]
+    invariant_count=validate_invariants(invariant_records,links)
+    for ram,record in zip(invariant,invariant_records):compare(visible_state(rom,ram,base['cpu'],contacts(record,ram)),record)
+    (out/'invariant-links.json').write_text(json.dumps(links,indent=2)+'\n')
+    roi_rng=random.Random(1203)
+    roi_cases=[fixture(base['ram'],px,y,roi_rng.randrange(160),domain[(px*4+copy)%len(domain)],copy,bool(px&1))
+               for px in range(160) for y in (35,43,53,61) for copy in range(4)]
+    full_chunks=[];roi_chunks=[];roi_receipts=[]
+    for offset in range(0,len(roi_cases),1024):
+        batch=roi_cases[offset:offset+1024]
+        full,full_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'roi-full-{offset:05d}')
+        roi,roi_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'roi-cached-{offset:05d}',roi=True)
+        full_chunks.append(full);roi_chunks.append(roi)
+        roi_receipts.append({'start':offset,'stop':offset+len(batch),'full':full_receipt,'roi':roi_receipt})
+    roi_count=compare_roi(b''.join(full_chunks),b''.join(roi_chunks))
+    shore_cases=[];shore_receipts=[];shore_count=0
+    for px in range(160):
+        for y in (4,12,27,30,48,56):
+            for dx in (-16,0,16):
+                ram=bytearray(fixture(base['ram'],px,y,64,domain[0],0,bear_x=(px+dx)%160))
+                ram[0x6F]=len(shore_cases)%8;ram[0x6C]=16 if px&1 else 0
+                ram[0x6D]=135 if len(shore_cases)%7==0 else 0
+                shore_cases.append(bytes(ram))
+    for offset in range(0,len(shore_cases),960):
+        batch=shore_cases[offset:offset+960]
+        full,full_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'shore-full-{offset:05d}')
+        roi,roi_receipt=observe(ROOT/'references/roms/frostbite.bin',binary,initial,batch,out/f'shore-cached-{offset:05d}',shore=True)
+        shore_count+=compare_roi(full,roi,window=8)
+        for i,ram in enumerate(batch):
+            record=full_record(full[i*FULL_BYTES:(i+1)*FULL_BYTES])
+            compare(visible_state(rom,ram,base['cpu'],contacts(record,ram)),record)
+        shore_receipts.append({'start':offset,'stop':offset+len(batch),'full':full_receipt,'roi':roi_receipt})
+    unmodified=[]
+    for index in range(0,224,7):
+        ram=cases[index];capsule=bytearray(initial);offset=base['_offsets']['ram'];capsule[offset:offset+128]=ram
+        states,backend=run_debugger(ROOT/'references/roms/frostbite.bin',
+            'loadState 0\nsaveState 1\nrunToPc $f476\nsaveState 2\nexitRom\n',out/f'original-{index:04d}',bytes(capsule),stella=original_binary)
+        before=decode_state(states[1]);after=decode_state(states[2])
+        if bytes(before['ram'])!=ram:raise ValueError('independent original before-RAM mismatch')
+        compare(records[index],{'ram':after['ram'],'registers':{key:after['cpu'][key] for key in ('a','x','y','p','sp')}})
+        unmodified.append({'case':index,'backend':backend,'before_sha256':digest(out/f'original-{index:04d}'/'settings/state/Frostbite (1983) (Activision).st1'),
+                           'after_sha256':digest(out/f'original-{index:04d}'/'settings/state/Frostbite (1983) (Activision).st2')})
+    old_count=0
+    if old_binary is not None:
+        old,old_receipt=observe_floes(ROOT/'references/roms/frostbite.bin',old_binary,initial,cases[:64],out/'old-floe')
+        for index,record in enumerate(records[:64]):
+            reduced=b''.join(record['truth'][row] for row in (0,2,4,6))+record['ram']+bytes(record['registers'].values())+record['glyph']
+            if reduced!=old[index*384:(index+1)*384]:raise ValueError('old floe observation protocol changed')
+        old_count=64
+    if helpers!={name:digest(ROOT/name) for name in CHECK_HELPERS}:raise ValueError('hazard checker helpers changed')
+    result={'schema_version':1,'complete':True,'source':source,'producer_commit':commit,'producer_dirty':dirty,
+            'helpers':helpers,'binary_sha256':digest(binary),'initial_sha256':digest(initial_path),
+            'cases':len(cases),'actual_views':228,'object_shapes':len(domain),'nusiz_values':[0,1,2,3],
+            'invariant_links':invariant_count,'invariant_observation':invariant_receipt,'roi_comparisons':roi_count,'roi_observations':roi_receipts,
+            'shore_roi_comparisons':shore_count,'shore_roi_observations':shore_receipts,
+            'independent_unmodified_phases':unmodified,'old_floe_compatibility_cases':old_count,'observations':observations,
+            'scope':'Controlled all-window source verification only; complete catalog/natural routes/native target/hardware remain pending'}
+    (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')
+    return result
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True)
+    parser.add_argument('--binary',type=Path,default=ROOT/'outputs/hazards/observer-source/stella')
+    parser.add_argument('--initial',type=Path,default=ROOT/'outputs/floes/catalog-issue11-b/initial.state')
+    parser.add_argument('--old-binary',type=Path,default=ROOT/'outputs/floes/catalog-issue11-b/stella')
+    args=parser.parse_args();result=check(args.out,args.binary,args.initial,old_binary=args.old_binary)
+    print(json.dumps({key:result[key] for key in ('complete','cases','actual_views','object_shapes','old_floe_compatibility_cases')}))

@@ -1,0 +1,861 @@
+{
+  "schema_version": 1,
+  "version": "0.0.5-hazards",
+  "diagnostic": true,
+  "rom": {
+    "filename": "frostbite-0.0.5-hazards.rom",
+    "size": 4194304,
+    "sha256": "37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93",
+    "mapper": "ASCII16"
+  },
+  "source_commit": "e83569dfde46f9bb6f39ea05817d6e3204333a54",
+  "source": {
+    "size": 4096,
+    "sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+    "md5": "4ca73eb959299471788f0b685c3ba0b5",
+    "layout": "4K",
+    "trailing_words": {
+      "unused_nmi_word": 60090,
+      "reset": 61440,
+      "irq_word": 61440
+    }
+  },
+  "source_cells": 50289350,
+  "physical_leaf_queries": {
+    "floe": 881120,
+    "edge": 10987680,
+    "ordinary": 956160,
+    "shore": 3951520
+  },
+  "observer_acceptance": {
+    "cases": 9476,
+    "actual_views": 228,
+    "object_shapes": 33,
+    "invariant_links": 768,
+    "roi_comparisons": 2560,
+    "shore_roi_comparisons": 2880,
+    "old_floe_compatibility_cases": 64
+  },
+  "checks": {
+    "shift-unit": {
+      "cases": 65536,
+      "variants": 64,
+      "max_cycles_including_rpc": 102
+    },
+    "geometry": {
+      "cases": 14828,
+      "report_sha256": "8deeb5b53d132d40d65ef0a7ff70a8994b66ecafb9d3f8c966a7bed48128a784",
+      "max_native_cycles": 6679
+    },
+    "mechanics": {
+      "cases": 652,
+      "report_sha256": "b44855744086610adbdef2fc8987b05ea200082854cba18a218cb4a86be94d48",
+      "max_native_cycles": 33563
+    },
+    "paced-bear-chase-ntsc-layout0-width0": {
+      "source_steps": 702,
+      "frames": 701,
+      "max_busy_cycles": 39106,
+      "frame_budget": 59736,
+      "min_margin_cycles": 20630,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-bear-chase-ntsc-layout0-width1": {
+      "source_steps": 702,
+      "frames": 701,
+      "max_busy_cycles": 39106,
+      "frame_budget": 59736,
+      "min_margin_cycles": 20630,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-bear-chase-ntsc-layout1-width0": {
+      "source_steps": 702,
+      "frames": 701,
+      "max_busy_cycles": 40817,
+      "frame_budget": 59736,
+      "min_margin_cycles": 18919,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-bear-chase-ntsc-layout1-width1": {
+      "source_steps": 702,
+      "frames": 701,
+      "max_busy_cycles": 40817,
+      "frame_budget": 59736,
+      "min_margin_cycles": 18919,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-bear-chase-pal-layout0-width0": {
+      "source_steps": 702,
+      "frames": 587,
+      "max_busy_cycles": 59340,
+      "frame_budget": 71364,
+      "min_margin_cycles": 12024,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-bear-chase-pal-layout0-width1": {
+      "source_steps": 702,
+      "frames": 587,
+      "max_busy_cycles": 59340,
+      "frame_budget": 71364,
+      "min_margin_cycles": 12024,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-bear-chase-pal-layout1-width0": {
+      "source_steps": 702,
+      "frames": 587,
+      "max_busy_cycles": 61051,
+      "frame_budget": 71364,
+      "min_margin_cycles": 10313,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-bear-chase-pal-layout1-width1": {
+      "source_steps": 702,
+      "frames": 587,
+      "max_busy_cycles": 61051,
+      "frame_budget": 71364,
+      "min_margin_cycles": 10313,
+      "assessment": {
+        "kind": "bear-chase",
+        "contact_step": 362,
+        "push_step": 363,
+        "death_step": 426,
+        "recovery_step": 693,
+        "initial_reserves_total": 7,
+        "final_reserves_total": 6,
+        "player_changed": true
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-bear-refuge-ntsc-layout0-width0": {
+      "source_steps": 1235,
+      "frames": 1234,
+      "max_busy_cycles": 43405,
+      "frame_budget": 59736,
+      "min_margin_cycles": 16331,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-bear-refuge-ntsc-layout0-width1": {
+      "source_steps": 1235,
+      "frames": 1234,
+      "max_busy_cycles": 43405,
+      "frame_budget": 59736,
+      "min_margin_cycles": 16331,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-bear-refuge-ntsc-layout1-width0": {
+      "source_steps": 1235,
+      "frames": 1234,
+      "max_busy_cycles": 45116,
+      "frame_budget": 59736,
+      "min_margin_cycles": 14620,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-bear-refuge-ntsc-layout1-width1": {
+      "source_steps": 1235,
+      "frames": 1234,
+      "max_busy_cycles": 45116,
+      "frame_budget": 59736,
+      "min_margin_cycles": 14620,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-bear-refuge-pal-layout0-width0": {
+      "source_steps": 1235,
+      "frames": 1033,
+      "max_busy_cycles": 65154,
+      "frame_budget": 71364,
+      "min_margin_cycles": 6210,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-bear-refuge-pal-layout0-width1": {
+      "source_steps": 1235,
+      "frames": 1033,
+      "max_busy_cycles": 65154,
+      "frame_budget": 71364,
+      "min_margin_cycles": 6210,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-bear-refuge-pal-layout1-width0": {
+      "source_steps": 1235,
+      "frames": 1033,
+      "max_busy_cycles": 66865,
+      "frame_budget": 71364,
+      "min_margin_cycles": 4499,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-bear-refuge-pal-layout1-width1": {
+      "source_steps": 1235,
+      "frames": 1033,
+      "max_busy_cycles": 66865,
+      "frame_budget": 71364,
+      "min_margin_cycles": 4499,
+      "assessment": {
+        "kind": "bear-refuge",
+        "refuge_x": 9,
+        "bear_min": 15,
+        "bear_max": 133,
+        "bear_direction_reversals": 0,
+        "bear_blocked_at_edge": true,
+        "reserve": 3,
+        "grounded_shore": true,
+        "effective_bear_hits": 0,
+        "approach_end": 467,
+        "observed_steps": 1056
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-fish-envelope-ntsc-layout0-width0": {
+      "source_steps": 812,
+      "frames": 811,
+      "max_busy_cycles": 43659,
+      "frame_budget": 59736,
+      "min_margin_cycles": 16077,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-fish-envelope-ntsc-layout0-width1": {
+      "source_steps": 812,
+      "frames": 811,
+      "max_busy_cycles": 43659,
+      "frame_budget": 59736,
+      "min_margin_cycles": 16077,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-fish-envelope-ntsc-layout1-width0": {
+      "source_steps": 812,
+      "frames": 811,
+      "max_busy_cycles": 46431,
+      "frame_budget": 59736,
+      "min_margin_cycles": 13305,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-fish-envelope-ntsc-layout1-width1": {
+      "source_steps": 812,
+      "frames": 811,
+      "max_busy_cycles": 47558,
+      "frame_budget": 59736,
+      "min_margin_cycles": 12178,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-fish-envelope-pal-layout0-width0": {
+      "source_steps": 812,
+      "frames": 679,
+      "max_busy_cycles": 66749,
+      "frame_budget": 71364,
+      "min_margin_cycles": 4615,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-fish-envelope-pal-layout0-width1": {
+      "source_steps": 812,
+      "frames": 679,
+      "max_busy_cycles": 66749,
+      "frame_budget": 71364,
+      "min_margin_cycles": 4615,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-fish-envelope-pal-layout1-width0": {
+      "source_steps": 812,
+      "frames": 679,
+      "max_busy_cycles": 69213,
+      "frame_budget": 71364,
+      "min_margin_cycles": 2151,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-fish-envelope-pal-layout1-width1": {
+      "source_steps": 812,
+      "frames": 679,
+      "max_busy_cycles": 70719,
+      "frame_budget": 71364,
+      "min_margin_cycles": 645,
+      "assessment": {
+        "kind": "fish-envelope",
+        "collection_step": 771,
+        "reward_end_step": 798,
+        "fish_row": 3,
+        "awards": 20,
+        "reward_points": 200
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-threat-push-ntsc-layout0-width0": {
+      "source_steps": 603,
+      "frames": 602,
+      "max_busy_cycles": 43659,
+      "frame_budget": 59736,
+      "min_margin_cycles": 16077,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-threat-push-ntsc-layout0-width1": {
+      "source_steps": 603,
+      "frames": 602,
+      "max_busy_cycles": 43659,
+      "frame_budget": 59736,
+      "min_margin_cycles": 16077,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-threat-push-ntsc-layout1-width0": {
+      "source_steps": 603,
+      "frames": 602,
+      "max_busy_cycles": 45370,
+      "frame_budget": 59736,
+      "min_margin_cycles": 14366,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-threat-push-ntsc-layout1-width1": {
+      "source_steps": 603,
+      "frames": 602,
+      "max_busy_cycles": 45370,
+      "frame_budget": 59736,
+      "min_margin_cycles": 14366,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "paced-threat-push-pal-layout0-width0": {
+      "source_steps": 603,
+      "frames": 504,
+      "max_busy_cycles": 65944,
+      "frame_budget": 71364,
+      "min_margin_cycles": 5420,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 0,
+      "width": 0
+    },
+    "paced-threat-push-pal-layout0-width1": {
+      "source_steps": 603,
+      "frames": 504,
+      "max_busy_cycles": 65944,
+      "frame_budget": 71364,
+      "min_margin_cycles": 5420,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 0,
+      "width": 1
+    },
+    "paced-threat-push-pal-layout1-width0": {
+      "source_steps": 603,
+      "frames": 504,
+      "max_busy_cycles": 67655,
+      "frame_budget": 71364,
+      "min_margin_cycles": 3709,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 1,
+      "width": 0
+    },
+    "paced-threat-push-pal-layout1-width1": {
+      "source_steps": 603,
+      "frames": 504,
+      "max_busy_cycles": 67655,
+      "frame_budget": 71364,
+      "min_margin_cycles": 3709,
+      "assessment": {
+        "kind": "threat-push",
+        "attachment_step": 304,
+        "row": 3,
+        "push_step": 306,
+        "completion_step": 602,
+        "exit": "death/recovery"
+      },
+      "layout": 1,
+      "width": 1
+    },
+    "stress-ntsc": {
+      "max_busy_cycles": 44400,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-ntsc_layout0_width1": {
+      "max_busy_cycles": 44400,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-ntsc_layout1_width0": {
+      "max_busy_cycles": 48370,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-ntsc_layout1_width1": {
+      "max_busy_cycles": 48370,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-pal": {
+      "max_busy_cycles": 60138,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-pal_layout0_width1": {
+      "max_busy_cycles": 60138,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-pal_layout1_width0": {
+      "max_busy_cycles": 63627,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-pal_layout1_width1": {
+      "max_busy_cycles": 63627,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-ntsc_transitions": {
+      "max_busy_cycles": 46514,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-pal_transitions": {
+      "max_busy_cycles": 63408,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-ntsc_transitions_inverted": {
+      "max_busy_cycles": 49545,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-pal_transitions_inverted": {
+      "max_busy_cycles": 64802,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-counts": {
+      "max_busy_cycles": 44400,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        3
+      ]
+    },
+    "stress-mixed_ntsc": {
+      "max_busy_cycles": 44400,
+      "frame_budget": 59736,
+      "canonical_nusiz_codes": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "stress-mixed_pal": {
+      "max_busy_cycles": 60138,
+      "frame_budget": 71364,
+      "canonical_nusiz_codes": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "negative_controls": [
+    "collision",
+    "rng",
+    "row_priority",
+    "sticky",
+    "spacing",
+    "sprite",
+    "guard",
+    "state",
+    "pixel",
+    "contact",
+    "cache"
+  ],
+  "private_evidence_manifest_sha256": "00cefa3234cae61fea28a591da3d6f0711b0860579b47739c8bada2ba0e65184",
+  "manual_emulator": "Pending owner feedback",
+  "physical_hardware": "Pending owner feedback",
+  "limitations": "Native source mechanics, actual floe/hazard/shore acquisition; synthetic presentation/no audio. Automated acceptance must accompany this build; manual emulator and physical acceptance remain separate.",
+  "packager": {
+    "tool_source_commit": "e83569dfde46f9bb6f39ea05817d6e3204333a54",
+    "utility_fingerprints": {
+      "scripts/movement_build.py": "3fe09e213e9edc0bf3b56858eb76c0522d81e8941798bf1a26bb07aa3187a917",
+      "scripts/movement_atlas.py": "5f9596f52ead318845fee6e56f96a45f9e3dfe0d822d46cb6ac8d6b5309500f6",
+      "scripts/render_build.py": "88605eeff2a76088a2b399435af0b770aa8d1a6a13bb963bdebd3a43dfed4c86",
+      "scripts/render_model.py": "db22ca179647a41e49910665c46a424f8bd4385dbe2eca8a24b29a9b1d56271c",
+      "scripts/native_codegen.py": "ea1fd932e46761d91d6a1baba3d089d4457f7cf68175bee73125167799b9a18f",
+      "scripts/native_fast.py": "3dd9bc1c986cb1940a262d5449e1b7d8cb75d9164f1e2ae49776110e114bb0e3",
+      "scripts/native_analysis.py": "b89718c014e9fc88de12c64738060f4baea6b3ce8444aa9ee7bf411755f870f9",
+      "src/movement_rows.asm": "d41ffcfdfd025d9d8d5a46c9f3f0ac020eeac6694a3077bda47d97f925a14367",
+      "src/movement_cache.asm": "a67f798b0d199eed841e8fac9aaec02f32963d44ad70a1cca908288941e21055",
+      "src/movement.asm": "3433078ad7ee0b228bae0f72370eaabe01fb44da98330c4c02aa0983e14cd668",
+      "src/native_input.asm": "77ce07717864986c51794645debe1cec0aee3d405bd3b04c39c35ac30c42f3d8",
+      "src/native_cpu.asm": "dad5dc5795c53a4df74888f7e507e49234e10b12dc6008ea5896c2f10009fadd",
+      "src/render.asm": "1064faa41de4c96858283175c9d5ce02cc5f2850f981f9be1e096821ac859584",
+      "references/mechanics-cases.json": "3d49b157e889683b9afd862bd1f6dde3f34ef23ac7eab5e54dbc7fff03d8d652",
+      "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+      "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+      "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+      "references/tools-lock.json": "950c34d20162b83cfeff8a5aa642c100e9fef9f20239cbad1da46ac08bc5c7c3",
+      "src/floe_visible.asm": "c23bff3c3772bb248e77ae0637067a5697969e5fe9cf0bc2da2b1cb07b125c81",
+      "scripts/floe_tables.py": "ffe90c72f5745649579eff0b2a0a06850d2a6fdbb9dfca0b7167636611521368",
+      "scripts/floe_build.py": "23709f14a65618cb553d103116d8f0c689ebe5f9c022243e27b55ddb5299ae02",
+      "scripts/stella_floe.py": "3e10ff50b26c6878c897f4fc91216a18f01ef66e6151cec2a44f6c6ab2c5fa37",
+      "scripts/floe_truth.py": "d84896841773e47a315eefb4664deb3f21aedc9c97f29def3808aa1ea3c5443a",
+      "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+      "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+      "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+      "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+      "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+      "tools/stella-floe.patch": "b3c70688d28a3ada16a6e0607d2360bf00e658e1a9cc25d9d9896e8241b76eab",
+      "scripts/stella_hazard.py": "da2929c79b7bd5875f3b5054db54ef9f9f836010bf41588993be44d92cb209f5",
+      "scripts/hazard_truth.py": "e813168fe9b7b0708416d8d3e9987719637375b5f65c4141c14f51c6fe5e0b83",
+      "tools/stella-hazard.patch": "d8779904a7f3ea13728a7210bc2a699e4684dede0f25d51f83b963c0c38726e5",
+      "scripts/hazard_domain.py": "34cc48ea37b4bab78eacf981b52e3a2115a393c5c1673be4fcd50eeb3620165b",
+      "scripts/hazard_catalog.py": "fd0a04b44f4742e64887c8700ad656ba7cdb14075631aa6a526d6d2e8d4d98ec",
+      "scripts/reference_routes.py": "14b1859c2d415adb80dab12cf3015d46a9fd29cb736c13779ae62ff0a656994a",
+      "src/hazard_contacts.asm": "4eb4b90fd734efff14ddc4e2d5065aa76c5e722b94324e1c9ee3b5d4937b5322",
+      "scripts/hazard_build.py": "123ae6d1b547c5d11613fcb3a79d5b5aacf440908f9b2dd09f928e89b5639c02",
+      "scripts/hazard_tables.py": "2a39f394fb9be6366abe323d1f79cb7ffefce7cf3aa5d1ac1f4fc2807bbd5a34",
+      "scripts/collision_compact.py": "d5a2b9306ad0d50719554c1199d4d35240ab97dc989a3776068e892427092061",
+      "scripts/floe_catalog.py": "f740818334aadc20c8ea435a468956d4a0d44f7fc493120bc2af003244d88613",
+      "scripts/native_shifts.py": "f2c148a6475163b932a0c803465e2645459a1df3aeafe38c801617fe01cccc20",
+      "scripts/hazard_check.py": "5353de91d24caecda201ca488915e0ee2d058e206a58064861ca428900dc1961",
+      "scripts/hazard_native.tcl": "cb9df6d5ad96128b0098f9ea7473e975980048e97533db1dace425c7dce6b854",
+      "scripts/hazard_query.py": "5a29f7c87fc0609a31badcd65f9c6331be6846da099c356b2d2bc7996e81824b",
+      "scripts/hazard_observer_check.py": "15a266ca089042467be5aa3dca6c5784a33049407a55ba0292d1a6004891f727",
+      "scripts/floe_check.py": "cd31a2015a63e7da6caa7b9022025e485cc2fdc68e45096b093bb1e1cb7f5628",
+      "scripts/hazard_routes.py": "e4e4f1a8057c701c5d302b796a29073075588a118b79fe7d1bbd0533ff3724bc",
+      "references/hazard-routes.json": "3c43dd544a06874a3943967325b5452e8b7c258ceaaf289074887f5f3e87cb17",
+      "scripts/floe_model.py": "b1afef01c62659561307812a5b157b973dfac9d8acb2f80281c8d2657d86c6a6",
+      "scripts/native_contract.py": "56d4a62c10ef365c9513470064b83303c7b1b77b3a2475812fedb815499e51df",
+      "scripts/hazard_delivery.py": "74d85605ad05833b228a59b724c50d0e12c6df104700223feadbe224243e1326",
+      "scripts/hazard_mechanics.py": "3f57860eccdbdadefa66cda0e4f92df9d14b02ae502049e711325617e0c40346",
+      "scripts/hazard_paced.py": "526ded49f0a196978320f9ced22e03f25d22f5837fb29734ad161ffb5c3318ba",
+      "scripts/hazard_play.py": "c1e95342da36394703112ea972b543eec5847abe0fcc976f93cfe953c4612c91",
+      "scripts/hazard_bench.py": "4163041b5c3dc363261d4824b15e85fcd49869aa972b2f22c8d9ff787eba19d6",
+      "scripts/floe_delivery.py": "7d02fd034c260059c3588ee9ee7f5e965af6090fa3b6dba3b490fd8d3a2bdce8",
+      "scripts/floe_bench.py": "fc0f08603f3900be0bbe8eca4c35ab05a9f34de05764906579fb3f8a8bc6c371",
+      "scripts/native_shift_check.py": "a18c3d30bfb1cc460bdb51701706496e7de5237a7023a10d4b606789379a56fc",
+      "scripts/smoke.py": "b650b8453dd987d46a7e8a6f5868f9de9edef29763646ea4b949e66b26bb7d01"
+    }
+  }
+}

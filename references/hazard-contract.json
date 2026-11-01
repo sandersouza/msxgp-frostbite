@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
+  "status": "Complete expanded automated matrix, immutable package and independent review accepted; release integration pending",
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "original_phase": {"entry": "F019", "exit": "F476", "ram_bytes": 128},
+  "local_protocol": {
+    "bytes": 674,
+    "windows": 9,
+    "window_order": "B0..B7, shore",
+    "literal_player_views": 228,
+    "window_bytes": 58,
+    "electrical_high_bits": [7, 6],
+    "row_electrical_low_bits": 7,
+    "ram_offset": 522,
+    "cpu_offset": 650,
+    "glyph_offset": 655
+  },
+  "ordering": {
+    "shore_clear": "F1FC",
+    "shore_read": "F244",
+    "row_clear": "F307",
+    "odd_read": "F331",
+    "even_reads": ["F3BE", "F3C0"],
+    "shore_lifetime": "Only a negative acquired sample overwrites sticky ED",
+    "count_zero": "NUSIZ zero still permits an original single-copy/edge ghost contact"
+  },
+  "source_foundation": {
+    "producer_commit": "fe4814081bb7ecadb45a9dec048f5bd81d284d91",
+    "clean": true,
+    "controlled_cases": 9476,
+    "object_pointers_including_cold_zero": 33,
+    "shape_reflection_nusiz_modes": 264,
+    "invariant_links": 768,
+    "object_full_roi_pairs": 2560,
+    "shore_full_roi_pairs": 2880,
+    "unchanged_stella_phases": 32,
+    "old_floe_compatibility_cases": 64,
+    "host_tests": 221,
+    "local_report": "outputs/hazards/observer-check-clean-d/check.json"
+  },
+  "acceptance": {
+    "complete_source_domain": "50,289,350 audited source cells including floes and independent copy aliases; 239 contact banks",
+    "native_cpu_ram_equivalence": "14,828 actual complete visible phases, zero neutral substitutions; 652 controlled whole phases including all256 RNG seeds; four complete cold real-key routes, 3,352 source checkpoints per clock family",
+    "crowded_paced_ntsc_pal": "All32 route/family/layout/width pairs and fifteen stress modes passed; worst named PAL70719/71364 (margin645), crowded NTSC49545/59736 and PAL64802/71364",
+    "rom_sha256": "37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93",
+    "source_commit": "e83569dfde46f9bb6f39ea05817d6e3204333a54",
+    "clean_z80_shift_matrix": 65536,
+    "compact_result": "references/hazard-result.json",
+    "manual_emulator": "Pending owner feedback",
+    "physical_hardware": "Pending owner feedback"
+  }
+}
