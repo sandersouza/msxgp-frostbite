@@ -74,6 +74,7 @@ class ProgressionCaseTests(unittest.TestCase):
         after[0x4C] -= 1
         after[0x71] = 0
         api.validate_phase('recover-v1-p0-1-1', ram, after)
+        api.validate_phase('recover-v1-p0-1-1', ram, list(after))
         after[0x4F] ^= 1
         with self.assertRaises(ValueError):
             api.validate_phase('recover-v1-p0-1-1', ram, after)

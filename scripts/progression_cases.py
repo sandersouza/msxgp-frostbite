@@ -90,6 +90,7 @@ def phase_cases(base):
 def validate_phase(name, before, after):
     if len(before) != 128 or len(after) != 128:
         raise ValueError('complete before/after RAM required')
+    before, after = bytes(before), bytes(after)
     if name.startswith('level-'):
         if after[0x4B] != (before[0x4B] + 1) % 256 or after[0x71] != 0:
             raise ValueError('uncapped byte level increment required')
