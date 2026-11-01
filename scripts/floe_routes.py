@@ -80,6 +80,7 @@ def capture(out,stella='stella'):
 
 
 def replay(original,out,stella='stella'):
+    producer=snapshot_paths(HELPERS)
     original=Path(original);out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     receipt=json.loads((original/'route.json').read_text());audit_manifest(receipt,HELPERS)
     if any(digest(original/name)!=sha for name,sha in receipt['files'].items()):raise ValueError('original route evidence changed')
@@ -87,7 +88,9 @@ def replay(original,out,stella='stella'):
     expected=json.loads((original/'trace.json').read_text());trace,final=capture_steps(ROOT/'references/roms/frostbite.bin',initial,inputs,out/'raw',stella,expected['policy'])
     differences=compare_traces(expected,trace)
     if differences or final!=(original/'final.state').read_bytes():raise ValueError(f'natural original replay differs: {differences[:3]}')
-    report={'steps':len(inputs),'assessment':assess(trace['steps'],expected['policy']['preparation_intervals']-1),'identical_full_cpu_ram_tia_riot_inputs':True,
+    if snapshot_paths(HELPERS)!=producer:raise ValueError('original replay producer changed')
+    if any(digest(original/name)!=sha for name,sha in receipt['files'].items()):raise ValueError('original evidence changed during replay')
+    report={**producer,'steps':len(inputs),'assessment':assess(trace['steps'],expected['policy']['preparation_intervals']-1),'identical_full_cpu_ram_tia_riot_inputs':True,
             'original_route_sha256':digest(original/'route.json'),'replay_trace_sha256':digest(out/'raw/trace.json')}
     (out/'replay.json').write_text(json.dumps(report,indent=2)+'\n');return report
 
