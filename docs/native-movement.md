@@ -7,7 +7,8 @@ original frame: visible-kernel preparation/acquisition, natural collisions,
 original graphics/audio and whole-game acceptance remain pending.
 
 The [CPU contract](../references/native-contract.json),
-[compact frozen result](../references/native-result.json) and
+[compact frozen result](../references/native-result.json),
+[post-review integrity audit](../references/native-integrity-result.json) and
 [release instructions](releases/v0.0.3-movement.md) distinguish these scopes.
 Old Seaquest evidence is never an acceptance input.
 
@@ -92,6 +93,7 @@ make native-phase-check
 make native-input-check
 make movement-check
 .venv/bin/python -B scripts/movement_delivery.py capture --out outputs/movement/issue10-final
+.venv/bin/python -B scripts/movement_delivery.py integrity --frozen outputs/movement/issue10-final
 .venv/bin/python -B scripts/movement_delivery.py audit --frozen outputs/movement/issue10-final
 .venv/bin/python -B scripts/movement_delivery.py package --frozen outputs/movement/issue10-final
 ```
@@ -100,6 +102,19 @@ The individual commands support investigation; the final capture driver repeats
 the complete canonical sequence, binds clean source/build/helper/backend/profile
 identities and freezes exact bytes. Later documentation/tag commits do not relabel
 that producer. Existing version packages refuse changed files or contents.
+
+For this frozen delivery the runtime/proof producer is `64c2cec6d37e5b988b0b86bc1d57836dbe43498a`.
+The separate auditor producer is `fa128da6a0fe8babf6c6644ad84acf2050baff89`.
+`outputs/movement/issue10-integrity/` seals complete raw artifact sets, including
+machine profiles, OMR/device mirrors and structured receipts for all six injected
+failures. Each failure is checked against its actual log or raw comparison and
+expected stage/cause. Empty/subset manifests, missing files and fabricated
+failure details reject. This audits the unchanged original captures, rather than
+claiming a new runtime capture. The immutable primary bundle remains untouched.
+The public six-file package is `outputs/releases/v0.0.3-movement-verified/`;
+its `movement-integrity.json` links this audit to the original producer and ROM.
+To inspect an existing seal, run `audit`; `integrity` creates a new immutable seal
+and will refuse a changed producer or changed evidence at an existing path.
 
 The generic CPU proof has 4497 cases including all 101 published mechanics cases;
 the specialized phase proof has 1793. Both generic and specialized input paths

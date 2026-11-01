@@ -4,8 +4,8 @@ Issue:https://github.com/sandersouza/msxgp-frostbite/issues/10.
 Branch:`codex/feat/10-native-movement`; base
 `94bdfb6373be06ab241fcd2adfccc80c76d0f8f7`.
 Issue10 retains exclusive checkout ownership until its explicit transfer.
-Independent review, exact-head CI, merge, release/download and Done readbacks
-remain pending at this checkpoint; those steps are required before transfer.
+Independent review and its material auditor fix are complete. Final-head CI,
+merge, release/download and Done readbacks remain required before transfer.
 
 ## Frozen bytes and evidence
 
@@ -13,8 +13,12 @@ ROM producer:`64c2cec6d37e5b988b0b86bc1d57836dbe43498a`.
 ROM:`frostbite-0.0.3-movement.rom`,262144bytes,ASCII16,
 SHA-256`31bb62e4886c8baf361584ce6a140fc05e34c77be15642780e23ad5d5fdb9f82`.
 Frozen private evidence:`outputs/movement/issue10-final/`.
-Prepared immutable release package:`outputs/releases/v0.0.3-movement-reviewed/`.
-Neither directory may be overwritten with changed bytes. A later auditor/docs
+Prepared immutable release package:`outputs/releases/v0.0.3-movement-verified/`.
+Neither directory may be overwritten with changed bytes. The earlier five-file
+`-reviewed` package is also preserved. The separate integrity seal is
+`outputs/movement/issue10-integrity/`; its auditor producer is
+`fa128da6a0fe8babf6c6644ad84acf2050baff89`. Public summary:
+[references/native-integrity-result.json](../../references/native-integrity-result.json). A later auditor/docs
 commit does not relabel the tested producer. Public compact evidence is
 [references/native-result.json](../../references/native-result.json); operations
 and required human checks are in [native movement](../native-movement.md) and
@@ -49,7 +53,7 @@ The original4096-byte ROM remains ignored under references/roms/frostbite.bin,
 SHA-256`cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834`.
 Full source disassembly, source-derived native assembly/data, CPU proof ROMs,
 OMR snapshots and raw source/capture states remain local/ignored. Package only
-the five explicit human release files. Old v0.0.1/v0.0.2 binaries are unchanged.
+the six explicit human release files, including movement-integrity.json. Old v0.0.1/v0.0.2 binaries are unchanged.
 
 ## Contracts and limitations
 

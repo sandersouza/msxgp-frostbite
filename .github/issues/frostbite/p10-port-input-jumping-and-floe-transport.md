@@ -1,6 +1,6 @@
 # Port native input, jumping, air control and floe transport
 
-Planning ID: P10. Status: In review; canonical automated evidence frozen; independent review, CI, integration and release readbacks remain pending.
+Planning ID: P10. Status: In review; canonical automated evidence frozen; independent review and its material auditor fix complete; final CI, integration and release readbacks remain pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/10
 
 ## Goal
@@ -44,3 +44,5 @@ Native post-visible phase, raw MSX input and the256KiB ASCII16 movement diagnost
 Exact ROM producer:64c2cec6d37e5b988b0b86bc1d57836dbe43498a. ROM SHA-256:31bb62e4886c8baf361584ce6a140fc05e34c77be15642780e23ad5d5fdb9f82. Frozen private package:outputs/movement/issue10-final. Generic4497/specialized1793 CPU cases,1354 genuine-device cases per path, eleven240-frame pixel/native/guard/cadence captures and six targeted faults passed. Minimum measured margins:NTSC10736/PAL1227cycles. These finite fixtures do not certify all future states.
 
 Public CI remains original-free. Manual emulator, subjective audio/palette, expanded-slot and physical acceptance remain pending. Close/Done only after the reviewed delivery is integrated and its exact release assets are downloaded and verified.
+
+Independent review found one material delivery-auditor gap, now fixed in fa128da: complete required raw-file sets and hashes, OMR/mirror/profile binding, and actual failure stage/cause verification. All three review reproductions reject; 174 host tests pass. The separate immutable integrity supplement leaves original runtime/capture producer and ROM bytes unchanged; public summary:references/native-integrity-result.json.

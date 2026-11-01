@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "scope": "Separate post-review integrity audit of unchanged original captures; no runtime or producer relabeling",
+  "runtime_source_commit": "64c2cec6d37e5b988b0b86bc1d57836dbe43498a",
+  "rom_sha256": "31bb62e4886c8baf361584ce6a140fc05e34c77be15642780e23ad5d5fdb9f82",
+  "auditor_source_commit": "fa128da6a0fe8babf6c6644ad84acf2050baff89",
+  "integrity_sha256": "92ac953c78174e5ac676f25a07282a58375d78c0e0f74c22b1a90cacc53b498a",
+  "primary_sums_sha256": "82596fb7ff1893bca0f428d804cd9eb6333bf21f5b6c9054a0af0d534cae0dbf",
+  "failures": {
+    "spacing": {
+      "stage": "emulator",
+      "cause": "fast-io-spacing",
+      "receipt_sha256": "0ea7d08be36170b3c0a2f9c02bd807c7c581f9c97e903d2ba62d7d7882c5fa54"
+    },
+    "sprite": {
+      "stage": "emulator",
+      "cause": "fifth-sprite-slot",
+      "receipt_sha256": "09b894de07c51c18ca5f324b310512dbc7d396e2303f963ba39477a86c626113"
+    },
+    "guard": {
+      "stage": "emulator",
+      "cause": "heap-guard",
+      "receipt_sha256": "14cad2a25bbc9f111617a1b796319539c734669735bf7bae91ede20420c0f5fe"
+    },
+    "state": {
+      "stage": "comparison",
+      "cause": "RAM AA",
+      "receipt_sha256": "94e86fba7fc031d84814226c41d2fba15ab43dcec58071e3ae252ddfabe4f5f6"
+    },
+    "pixel": {
+      "stage": "comparison",
+      "cause": "pixel mismatch",
+      "receipt_sha256": "d6713469ae20d75cd7feff24debcaff8a9116b2d63d6cc5fad9971cd36f0478f"
+    },
+    "port2_fire": {
+      "stage": "comparison",
+      "cause": "RAM AF",
+      "receipt_sha256": "002e2238f20bd8f3c8210e8605f37c0db1a76713b26a1a58652dc37b45459781"
+    }
+  }
+}
