@@ -30,10 +30,10 @@ def target_scope():
     finally:floe_check.FILES=previous
 
 
-def run_target(out,build_dir,records,expected,**options):
+def run_target(out,build_dir,records,expected,additional_helpers=(),**options):
     with target_scope():
-        return floe_check.run_target(out,build_dir,records,expected,extra_helpers=HELPERS,
-                                     target_script='scripts/hazard_native.tcl',**options)
+        return floe_check.run_target(out,build_dir,records,expected,extra_helpers=(*HELPERS,*additional_helpers),
+                                     target_script='scripts/hazard_native.tcl',extra_symbols=('native_call',),**options)
 
 
 def geometry_cases(base,rom):

@@ -10,6 +10,15 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class HazardTableTests(unittest.TestCase):
+    def test_resident_common_profiles_require_byte_exact_source_equivalence(self):
+        api=importlib.import_module('hazard_tables');codec=importlib.import_module('collision_compact')
+        plan={'kind':'ordinary','player_x':[25,26],'ys':[0,53],'modes':[{}],'coordinates':list(range(-7,8)),'cases_per_player':30}
+        raw=bytes(15*58)+b'\x01'+bytes(15*58-1);pool=codec.CompactRows()
+        compiled=api.compile_component(pool,plan,{25:raw,26:raw});packed=pool.emit()
+        directory=api.ordinary_common(packed,compiled,25,26);self.assertEqual(len(directory),3)
+        compiled['profiles'][26][0][1]=compiled['profiles'][26][0][0]
+        with self.assertRaisesRegex(ValueError,'ordinary profiles differ'):api.ordinary_common(packed,compiled,25,26)
+
     def test_compiler_keeps_the_264th_mode_and_last_source_coordinate(self):
         api=importlib.import_module('hazard_tables');codec=importlib.import_module('collision_compact')
         plan={'kind':'edge','player_x':[159],'ys':[0,53],'modes':[{}]*264,'coordinates':list(range(160)),'cases_per_player':2*264*160}

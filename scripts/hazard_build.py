@@ -50,6 +50,9 @@ def expected_pixels(scene):
 
 
 def build(floes,edge,ordinary,shore,aliases,out=OUT):
+    producer_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    producer_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
+    source_files={name:digest(ROOT/name) for name in FILES}
     out=private_output(out);out.mkdir(parents=True,exist_ok=True);rom=out/f'frostbite-{VERSION}.rom'
     source=verified_input(ROOT/'references/roms/frostbite.bin');original=(ROOT/'references/roms/frostbite.bin').read_bytes()
     if (out/'tables').exists():raise ValueError('fresh immutable table build directory required')
@@ -69,12 +72,16 @@ def build(floes,edge,ordinary,shore,aliases,out=OUT):
     if result.returncode:raise ValueError('hazard assembler failed: '+'\n'.join((result.stdout+result.stderr).splitlines()[-18:]))
     artifact=rom.read_bytes();syms=symbols(out/'floes.sym')
     if len(artifact)!=cartridge_banks*16384 or artifact[:2]!=b'AB' or artifact[16:20]!=b'FBF0':raise ValueError('hazard cartridge header/capacity mismatch')
-    metadata={'version':VERSION,'diagnostic':True,'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-        'source_dirty':bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip()),'original':source,
+    if (subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()!=producer_commit
+            or any(digest(ROOT/name)!=sha for name,sha in source_files.items())
+            or verified_input(ROOT/'references/roms/frostbite.bin')!=source):raise ValueError('hazard build producer changed during compilation')
+    final_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
+    metadata={'version':VERSION,'diagnostic':True,'source_commit':producer_commit,
+        'source_dirty':producer_dirty or final_dirty,'source_dirty_at_start':producer_dirty,'source_dirty_at_finish':final_dirty,'original':source,
         'rom':{'filename':rom.name,'size':len(artifact),'sha256':hashlib.sha256(artifact).hexdigest(),'mapper':'ASCII16'},
         'banks':{'resident_used':syms['resident_end']-0x4000,'assets_used':syms['assets_end']-0x8000,'native_used':syms['native_end']-0x8000,
                  'row_banks':11,'contact_banks':tables['banks'],'cartridge_banks':cartridge_banks},
-        'source_files':{name:digest(ROOT/name) for name in FILES},'atlas':atlas,'tables':tables,'assembler_sha256':digest(assembler),
+        'source_files':source_files,'atlas':atlas,'tables':tables,'assembler_sha256':digest(assembler),
         'limitations':'Native source mechanics, actual floe/hazard/shore acquisition; synthetic presentation/no audio. Automated acceptance must accompany this build; manual emulator and physical acceptance remain separate.'}
     (out/'build.json').write_text(json.dumps(metadata,indent=2)+'\n');return metadata
 

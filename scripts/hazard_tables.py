@@ -182,6 +182,13 @@ def emit_component(packed,compiled):
     return bytes(modes)
 
 
+def ordinary_common(packed,compiled,minimum=25,maximum=151):
+    profiles=compiled['profiles'];reference=profiles[minimum]
+    if compiled['plan']['kind']!='ordinary' or any(profiles[px]!=reference for px in range(minimum,maximum+1)):
+        raise ValueError('complete source ordinary profiles differ; resident common lookup forbidden')
+    return b''.join(pointer(packed.put(b''.join(pointer(packed.rows[row]) for row in ys))) for ys in reference)
+
+
 def verify_aliases(ordinary,aliases):
     """Compare the candidate to independently executed real NUSIZ source cases."""
     normal_plan,normal_paths,_=ordinary;alias_plan,alias_paths,_=aliases
@@ -207,11 +214,11 @@ def verify_aliases(ordinary,aliases):
 
 
 def verify_packed_component(packed,compiled,profiles,directory):
-    p=compiled['plan'];columns=len(p['coordinates']);checked=0
+    p=compiled['plan'];columns=len(p['coordinates']);checked=0;banks=packed.banks
     for mode in range(len(p['modes'])):
-        ptr=directory[mode*3:mode*3+3];players=read_bytes(packed.banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(p['player_x'])*3)
+        ptr=directory[mode*3:mode*3+3];players=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(p['player_x'])*3)
         for xi,px in enumerate(p['player_x']):
-            ptr=players[xi*3:xi*3+3];ys=read_bytes(packed.banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(p['ys'])*3)
+            ptr=players[xi*3:xi*3+3];ys=read_bytes(banks,14,(ptr[2],int.from_bytes(ptr[:2],'little')),len(p['ys'])*3)
             expected=b''.join(pointer(packed.rows[row]) for row in compiled['profiles'][px][mode])
             if ys!=expected:raise ValueError('compiled profile directory differs from complete source rows')
     last_px=None;source=None
@@ -222,7 +229,7 @@ def verify_packed_component(packed,compiled,profiles,directory):
         for x in range(160):
             coordinate=(px+x)%160 if p['kind']=='floe' else x
             want=source[offset+coordinate*58:offset+(coordinate+1)*58] if x<columns else bytes(58)
-            if read_row(packed.banks,packed.metadata,packed.rows[row],x)!=want:
+            if read_row(banks,packed.metadata,packed.rows[row],x)!=want:
                 raise ValueError('physical compact bank decoder differs from raw original source')
             checked+=1
     return checked
@@ -243,6 +250,7 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
         plan,paths,_=components[kind];profiles[kind]=paths;compiled[kind]=compile_component(pool,plan,paths)
         if 0 in compiled[kind]['active_y']:raise ValueError('outside hazard sentinel is not zero; early zero return forbidden')
     packed=pool.emit(14);directories={kind:emit_component(packed,component) for kind,component in compiled.items()}
+    common=ordinary_common(packed,compiled['ordinary'])
     queries={kind:verify_packed_component(packed,component,profiles[kind],directories[kind]) for kind,component in compiled.items()}
     controls=floe_manifest['controls'];floe_roots=bytearray();base=bytearray()
     for control in range(len(controls)):
@@ -268,6 +276,7 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
     for index in range(len(controls)):resident.append(f'    DW floe_roots+{index*480},floe_base+{index*160}')
     for kind in ('edge','ordinary','shore'):
         resident.extend((f'hazard_{kind}_modes:',blob(f'{kind}-modes.bin',directories[kind])))
+    resident.extend(('hazard_ordinary_common_modes:',blob('ordinary-common.bin',common)))
     resident.append('    ALIGN 256');resident.append('hazard_shape_index:');shape_index=bytearray([255]*256)
     for index,shape in enumerate(components['edge'][0]['shapes']):shape_index[shape]=index
     resident.append(blob('hazard-shapes.bin',shape_index));resident.append('hazard_bear_index:')
@@ -280,8 +289,9 @@ def compile_catalog(floes,edge,ordinary,shore,aliases,out):
             'components':audits,'floe_catalog_sha256':digest(Path(floes)/'catalog.json'),'aliases':alias,
             'codec':packed.metadata,'unique_records':len(pool.records),'unique_blocks':len(pool.blocks),'unique_rows':len(pool.rows),
             'active_y':{kind:sorted(value['active_y']) for kind,value in compiled.items()},
+            'ordinary_common':{'player_x_min':25,'player_x_max':151,'profiles':127,'source_cells':127*components['ordinary'][0]['cases_per_player'],'resident_bytes':len(common)},
             'physical_leaf_queries':queries,'banks':len(packed.banks),'used_bytes':sum(len(data) for data in packed.banks),
-            'resident_data_bytes':len(floe_roots)+len(base)+256+40+sum(len(directories[k]) for k in ('edge','ordinary','shore'))+264,
+            'resident_data_bytes':len(floe_roots)+len(base)+256+40+sum(len(directories[k]) for k in ('edge','ordinary','shore'))+264+len(common),
             'files':{path.name:digest(path) for path in out.iterdir() if path.is_file()}}
     (out/'tables.json').write_text(json.dumps(result,indent=2)+'\n');return result
 

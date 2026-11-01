@@ -111,7 +111,7 @@ def assess(points,route_kind,active_start=0,approach_end=None):
         return {'kind':route_kind,'attachment_step':attach,'row':row,'push_step':push,'completion_step':end,'exit':exit_kind}
     if route_kind in ('water-death','temperature-death'):
         water=route_kind=='water-death'
-        death=next((i for i in range(active_start,len(rows)) if (rows[i][0x71]&128 and rows[i][0x64]>=145 if water
+        death=next((i for i in range(active_start,len(rows)) if (rows[i][0x71]&128 and rows[i][0x64]>27 and rows[i][0x6A]==0 if water
                    else rows[i][0x71]&16 and rows[i][0x65]==0)),None)
         if death is None:raise ValueError('distinct source water/temperature death entry required')
         end=recovery(rows,death,initial)

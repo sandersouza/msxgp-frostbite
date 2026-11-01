@@ -83,7 +83,7 @@ class HazardRouteTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.api().assess(bad,'threat-push')
 
     def test_water_and_temperature_deaths_keep_distinct_entry_flags(self):
-        for kind,entry in (('water-death',{0xE4:159,0xF1:128}),('temperature-death',{0xE5:0,0xF1:16})):
+        for kind,entry in (('water-death',{0xE4:79,0xF1:128}),('temperature-death',{0xE5:0,0xF1:16})):
             route=points([{},entry,{0xF1:32},{0xCC:2}]);self.assertEqual(self.api().assess(route,kind)['death_step'],1)
             with self.assertRaises(ValueError):self.api().assess(route[:-1],kind)
 

@@ -17,7 +17,7 @@ from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 from stella_hazard import digest
 from reference_traces import private_output
-from hazard_tables import compile_component,emit_component
+from hazard_tables import compile_component,emit_component,read_bytes
 
 
 def check(out):
@@ -43,6 +43,8 @@ def check(out):
         offset=((264+mode)*160+159)*58;data[offset:offset+2]=(mode+1).to_bytes(2,'little')
     compiled=compile_component(pool,plan,{0:bytes(data)})
     packed=pool.emit(14);directory=emit_component(packed,compiled);(out/'directory.bin').write_bytes(directory);cases=[]
+    common=b''.join(read_bytes(packed.banks,14,(directory[i+2],int.from_bytes(directory[i:i+2],'little')),3) for i in range(0,len(directory),3))
+    (out/'common.bin').write_bytes(common)
     for n in (0,1,2,3,42,510,511,512,519):
         for x in (0,15,16,159):
             for view in (0,1,7,8,9,15,16,227):
@@ -59,6 +61,8 @@ def check(out):
             for view in (0,8):
                 raw=(mode+1).to_bytes(2,'little')+bytes(56) if y else bytes(58)
                 cases.append({'entry':'hazard_lookup','bank':2,'hl':mode,'de':0,'bc':0x6200,'a':0,'x':159,'y':y,
+                              'byte':view//8,'mask':1<<(view%8),'want':sample(raw,view)})
+                cases.append({'entry':'hazard_lookup_common','bank':2,'hl':mode,'de':0,'bc':0x6700,'a':0,'x':159,'y':y,
                               'byte':view//8,'mask':1<<(view%8),'want':sample(raw,view)})
     for distance in range(160):
         cases.append({'entry':'hazard_copy_distance','bank':2,'hl':0x5333,'de':0x5A21,'bc':0x1303,'a':distance,
@@ -123,9 +127,10 @@ hazard_bear_index EQU $6100
 hazard_edge_modes EQU $6200
 hazard_ordinary_modes EQU $6500
 hazard_shore_modes EQU $6600
+hazard_ordinary_common_modes EQU $6700
 '''
     assembly+=f'contact_record_bank EQU {packed.metadata["record_bank"]}\ncontact_block_bank EQU {packed.metadata["block_bank"]}\n'
-    assembly+=f'    INCLUDE "hazard_contacts.asm"\n    ASSERT $ <= $6200\n    DS $6200-$,$FF\n    INCBIN "{out/"directory.bin"}"\n    ASSERT $ <= $8000\n    DS $8000-$,$FF\n'
+    assembly+=f'    INCLUDE "hazard_contacts.asm"\n    ASSERT $ <= $6200\n    DS $6200-$,$FF\n    INCBIN "{out/"directory.bin"}"\n    DS $6700-$,$FF\n    INCBIN "{out/"common.bin"}"\n    ASSERT $ <= $8000\n    DS $8000-$,$FF\n'
     assembly+=''.join('    ORG $8000\n    DS $4000,$FF\n' for _ in range(13))+'\n'.join(banks)+'\n'
     total=14+len(packed.banks);capacity=1<<(total-1).bit_length()
     assembly+=''.join('    ORG $8000\n    DS $4000,$FF\n' for _ in range(capacity-total))
@@ -191,9 +196,9 @@ after time 30 {{fail_decoder watchdog}}
         elif a!=c['want']:raise ValueError(f'physical native decoder differs at case{i}: {a} != {c["want"]}')
     if any(digest(ROOT/name)!=sha for name,sha in helpers.items()):raise ValueError('decoder fixture producer changed')
     report={'complete':True,'cases':len(cases),'decoder_cases':sum(c['entry']=='contact_compact' for c in cases),
-            'all_ten_nibble_ranks':True,'profile_directory_cases':16,'all_160_copy_distances':True,'helpers':helpers,
+            'all_ten_nibble_ranks':True,'profile_directory_cases':32,'all_160_copy_distances':True,'helpers':helpers,
             'producer_commit':producer_commit,'producer_dirty':producer_dirty,
-            'max_cycles_including_rpc_call_return':{entry:max(r[-1] for c,r in zip(cases,actual) if c['entry']==entry) for entry in ('contact_compact','hazard_lookup','hazard_copy_distance')},
+            'max_cycles_including_rpc_call_return':{entry:max(r[-1] for c,r in zip(cases,actual) if c['entry']==entry) for entry in ('contact_compact','hazard_lookup','hazard_lookup_common','hazard_copy_distance')},
             'fixture_sha256':digest(rom),'emulator_sha256':digest(emulator),'profile_sha256':digest(user/'machines/Frostbite_Decoder.xml'),
             'scope':'Original-free synthetic unit cartridge only; actual standard MSX1 Z80. No gameplay, full-ROM timing, human or physical claim.'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');return report

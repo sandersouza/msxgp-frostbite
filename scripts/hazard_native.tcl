@@ -35,13 +35,18 @@ proc devices_floe {swcha swchb fire} {
     set console [expr {(($swchb&1) ? 0 : 32)|(($swchb&2) ? 0 : 64)}]
     keymatrixup 6 96;keymatrixdown 6 $console
 }
+proc devices_raw {swcha swchb fire0 fire1} {
+    set player [debug read memory 0xC007]
+    if {$player==0} {set keys $swcha;set fire $fire0} else {set keys [expr {(($swcha&15)<<4)|15}];set fire $fire1}
+    devices_floe $keys $swchb $fire
+}
 proc dispatch_floe {} {
     if {$::natural} {
-        set input [read $::source_file 3]
+        set input [read $::source_file 4]
         if {[string length $input]==0} {finish_floe;return}
-        if {[string length $input]!=3} {fail_floe truncated-input}
+        if {[string length $input]!=4} {fail_floe truncated-input}
         binary scan $input cu* values
-        devices_floe {*}$values
+        devices_raw {*}$values
     } else {
         set record [read $::source_file 133]
         if {[string length $record]==0} {finish_floe;return}
@@ -85,8 +90,8 @@ set boot_bp [debug set_bp $symbols(native_reset_done) {} {
         debug write_block memory 0xD000 [string repeat [binary format c 165] 0x2300]
         debug write_block memory 0xF300 [string repeat [binary format c 165] 128]
         if {$::natural} {
-            set input [read $::source_file 3]
-            if {$input ne [binary format ccc 255 63 0]} {fail_floe first-cold-input}
+            set input [read $::source_file 4]
+            if {$input ne [binary format cccc 255 63 0 0]} {fail_floe first-cold-input}
             puts -nonewline $::actual [saved_floe_cpu][debug read_block memory 0xC000 128][binary format i 0]
             incr ::count
         }
@@ -95,6 +100,18 @@ set boot_bp [debug set_bp $symbols(native_reset_done) {} {
         debug set_bp 0xC6D6 {} {debug break;after break capture_floe}
         if {$::inject eq "port2_fire"} {
             debug set_bp $::symbols(sample_native_return) {} {debug write memory 0xC30D [expr {128^[debug read memory 0xC30D]}]}
+        }
+        if {$::inject eq "rng"} {
+            debug set_bp $::symbols(native_call) {} {debug write memory 0xC002 [expr {1^[debug read memory 0xC002]}]}
+        }
+        if {$::inject eq "row_priority"} {
+            debug set_bp $::symbols(native_call) {} {
+                set first [debug read memory 0xC031];set last [debug read memory 0xC037]
+                debug write memory 0xC031 $last;debug write memory 0xC037 $first
+            }
+        }
+        if {$::inject eq "sticky"} {
+            debug set_bp $::symbols(native_call) {} {debug write memory 0xC06D [expr {128^[debug read memory 0xC06D]}]}
         }
         dispatch_floe
     }

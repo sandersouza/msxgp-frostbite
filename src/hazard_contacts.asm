@@ -133,8 +133,15 @@ hazard_row:
     RET
 .ordinary_hit:
     LD (hazard_x),A
-    LD BC,hazard_ordinary_modes
     POP AF
+    CP 25
+    JR C,.ordinary_exception
+    LD BC,hazard_ordinary_common_modes
+    CALL hazard_lookup_common
+    LD (IY+0),A
+    RET
+.ordinary_exception:
+    LD BC,hazard_ordinary_modes
     SUB 9
     CALL hazard_lookup
     LD (IY+0),A
@@ -192,6 +199,7 @@ hazard_lookup:
     RL D
     ADD HL,DE
     CALL floe_deref
+hazard_lookup_y:
     LD A,(hazard_y)
     LD E,A
     LD D,0
@@ -203,6 +211,17 @@ hazard_lookup:
     LD A,(hazard_x)
     LD E,A
     JP contact_compact
+
+; Compiler proves the complete raw profiles at PX25..151 byte-identical.
+; Resident mode pointers skip the banked player directory for that range.
+hazard_lookup_common:
+    LD D,H
+    LD E,L
+    ADD HL,HL
+    ADD HL,DE
+    ADD HL,BC
+    CALL floe_deref
+    JP hazard_lookup_y
 
 ; HL=mapped five-byte nibble-rank row root, E=source coordinate0..159.
 ; The immutable verified tables keep every record/block in a bank-local32B slot.
