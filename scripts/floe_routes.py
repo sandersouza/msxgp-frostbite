@@ -79,19 +79,44 @@ def capture(out,stella='stella'):
     (out/'route.json').write_text(json.dumps(report,indent=2)+'\n');return report
 
 
+def replay_segments(trace,inputs):
+    """Preserve the original save/load journal as well as the exact input pins.
+
+    Stella7 JitterEmulation::load calls setSensitivity, resetting its display
+    instability counter even when jitter is disabled. Regrouping identical
+    inputs therefore changes serialized display metadata. Keep every byte in
+    the comparison and repeat the same bounded restore boundaries instead.
+    """
+    prepared=trace['policy']['preparation_intervals']
+    if len(inputs)!=len(trace['steps']) or not 1<=prepared<=len(inputs):raise ValueError('complete original restore journal required')
+    result=[inputs[:prepared]];cursor=prepared;stage='build';elapsed=0
+    while cursor<len(inputs):
+        stage,steps=route_policy(trace['steps'][cursor-1]['ram'],stage,elapsed)
+        if inputs[cursor:cursor+len(steps)]!=steps:raise ValueError('original input pins differ from frozen restore journal')
+        result.append(steps);cursor+=len(steps);elapsed+=len(steps)
+    return result
+
+
 def replay(original,out,stella='stella'):
     producer=snapshot_paths(HELPERS)
     original=Path(original);out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     receipt=json.loads((original/'route.json').read_text());audit_manifest(receipt,HELPERS)
     if any(digest(original/name)!=sha for name,sha in receipt['files'].items()):raise ValueError('original route evidence changed')
     initial=(original/'initial.state').read_bytes();inputs=json.loads((original/'inputs.json').read_text())
-    expected=json.loads((original/'trace.json').read_text());trace,final=capture_steps(ROOT/'references/roms/frostbite.bin',initial,inputs,out/'raw',stella,expected['policy'])
+    expected=json.loads((original/'trace.json').read_text());points=[];trace=None;final=initial;segments=replay_segments(expected,inputs)
+    for index,steps in enumerate(segments):
+        segment,final=capture_steps(ROOT/'references/roms/frostbite.bin',final,steps,out/f'segment-{index:03d}',stella,expected['policy'])
+        if trace is None:trace=segment
+        for point in segment['steps']:point['index']=len(points);points.append(point)
+    trace={**trace,'steps':points}
+    (out/'trace.json').write_text(json.dumps(trace,indent=2)+'\n');(out/'final.state').write_bytes(final)
     differences=compare_traces(expected,trace)
-    if differences or final!=(original/'final.state').read_bytes():raise ValueError(f'natural original replay differs: {differences[:3]}')
+    if differences or final!=(original/'final.state').read_bytes():raise ValueError('natural original replay differs: '+str([entry.split(':',1)[0] for entry in differences[:3]]))
     if snapshot_paths(HELPERS)!=producer:raise ValueError('original replay producer changed')
     if any(digest(original/name)!=sha for name,sha in receipt['files'].items()):raise ValueError('original evidence changed during replay')
     report={**producer,'steps':len(inputs),'assessment':assess(trace['steps'],expected['policy']['preparation_intervals']-1),'identical_full_cpu_ram_tia_riot_inputs':True,
-            'original_route_sha256':digest(original/'route.json'),'replay_trace_sha256':digest(out/'raw/trace.json')}
+            'restore_segment_lengths':[len(steps) for steps in segments],
+            'original_route_sha256':digest(original/'route.json'),'replay_trace_sha256':digest(out/'trace.json')}
     (out/'replay.json').write_text(json.dumps(report,indent=2)+'\n');return report
 
 
