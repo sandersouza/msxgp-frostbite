@@ -34,6 +34,19 @@ rpc_start:
     LD HL,($C6FE)
     JP (HL)
 rpc_done:
+    IFDEF WITH_NATIVE_INPUT
+    PUSH AF
+    POP HL
+    LD ($C6F0),HL
+    LD ($C6F2),BC
+    LD A,E
+    LD ($C6F4),A
+    PUSH IX
+    POP HL
+    LD A,(core_stack_high)
+    OR L
+    LD (core_sp),A
+    ENDIF
     JP idle
 map_native_page2:
     CALL $0138
@@ -59,6 +72,9 @@ map_native_page2:
 .enable:
     LD H,$80
     JP $0024
+    IFDEF WITH_NATIVE_INPUT
+    INCLUDE "native_input.asm"
+    ENDIF
     DS $8000-$,$FF
     INCLUDE "native_cpu.asm"
     INCLUDE "core.inc"

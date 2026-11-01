@@ -24,6 +24,14 @@
     "Complete records, stack/heap guards, 64 KiB RAM, 3579545 Hz, source/binary/helper/backend identity"
   ],
   "contacts": "Declared scripted B0..B9 and ED inputs; these are fixtures, not implemented collision acquisition",
+  "input": {
+    "hooks": ["F5AD fire", "F630 directions/console"],
+    "sampler": "Direct standard MSX1 PSG/PPI ports; raw opposing states retained; keyboard joins only C7-selected port0/1",
+    "preservation": "AF/BC/DE/HL/IX/IY/SP, source V/mode, full PSG15, PPI-C and slots; DI retained",
+    "port_setup": "Release PSG15 bits0..3 and lower both common/strobe bits4/5 while sampling; restore exact prior outputs afterward",
+    "console": "Held F1 Reset/F2 Select; F3 and other keys do not toggle original difficulty bits",
+    "tests": "1354 actual-device cases, all16raw combinations, both ports, mixed keyboard/joysticks,768continuous steps with declared contacts; poisoned hardware mirrors and deliberately inverted port2 fire"
+  },
   "artifacts": "outputs/native/ is ignored; native-contract.rom is an internal RPC CPU proof, not an offered human diagnostic",
   "timing": "Raw CPU proof cycles do not certify integrated input/mapper/render/PAL capacity"
 }

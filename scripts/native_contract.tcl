@@ -12,18 +12,23 @@ set trace_file [open $native_dir/profile.bin wb]
 fconfigure $trace_file -translation binary
 set last_source -1
 set last_time 0
+set input_samples 0
+set max_sample_cycles 0
+set mirrors [open $native_dir/mirrors.bin wb]
+fconfigure $mirrors -translation binary
 proc trace_source {source} {
     set now [machine_info time]
     if {$::last_source!=-1} {puts -nonewline $::trace_file [binary format ii $::last_source [expr {round(($now-$::last_time)*3579545)}]]}
     set ::last_source $source
     set ::last_time $now
 }
-proc fail_native {detail} {puts stderr "NATIVE_FAIL $detail";exit 1}
+proc fail_native {detail} {puts stderr "NATIVE_FAIL $detail count=$::count pc=[reg PC] time=[machine_info time] samples=$::input_samples fault=[debug read memory 0xC6FD]";exit 1}
 proc dispatch_native {} {
     set header [read $::cases 13]
     if {[string length $header]==0} {
         close $::actual
         close $::trace_file
+        close $::mirrors
         set heap_ok [expr {[debug read_block memory 0xD000 0x2300] eq [string repeat [binary format c 165] 0x2300]}]
         set heap_json [expr {$heap_ok ? "true" : "false"}]
         set stack_min 0xF380
@@ -32,7 +37,7 @@ proc dispatch_native {} {
             if {[lindex $stack $index]!=165} {set stack_min [expr {0xF300+$index}];break}
         }
         set f [open $::native_dir/complete.json w]
-        puts $f "\{\"cases\":$::count,\"complete\":true,\"stack_min\":$stack_min,\"heap_guard\":$heap_json,\"clock_hz\":[machine_info z80_freq],\"ram_bytes\":[debug size {Main RAM}]\}"
+        puts $f "\{\"cases\":$::count,\"complete\":true,\"stack_min\":$stack_min,\"heap_guard\":$heap_json,\"clock_hz\":[machine_info z80_freq],\"ram_bytes\":[debug size {Main RAM}],\"input_samples\":$::input_samples,\"max_sample_cycles\":$::max_sample_cycles\}"
         close $f
         exit
         return
@@ -41,6 +46,13 @@ proc dispatch_native {} {
     binary scan $header cu* h
     set entry [expr {[lindex $h 0]+256*[lindex $h 1]}]
     set stop [expr {[lindex $h 2]+256*[lindex $h 3]}]
+    if {$::input_mode} {
+        read $::cases 152
+        if {$::stop_bp!=-1} {debug remove_bp $::stop_bp}
+        set ::stop_bp [debug set_bp $stop {} {debug break;after break capture_native}]
+        debug cont
+        return
+    }
     set keep [lindex $h 12]
     if {$keep} {
         debug write_block memory 0xC6F0 [binary format ssc $::last_af $::last_bc $::last_carry]
@@ -82,17 +94,40 @@ proc capture_native {} {
     append row [debug read_block memory 0xC700 96]
     append row [binary format i [expr {round(([machine_info time]-$::started)*3579545)}]]
     puts -nonewline $::actual $row
+    if {$::input_mode} {
+        foreach address {0xC340 0xC342 0xC30C 0xC30D} {puts -nonewline $::mirrors [binary format c [debug read memory $address]]}
+    }
     incr ::count
     dispatch_native
 }
 after time 5 {
     if {[debug read memory 0xC6FC]!=83} {fail_native "not-booted pc=[reg PC] marker=[debug read memory 0xC6FC] first=[debug read memory 0x4000]"}
     debug break
-    debug write_block memory 0xD000 [string repeat [binary format c 165] 0x2300]
-    debug write_block memory 0xF300 [string repeat [binary format c 165] 128]
+    if {!$::input_mode} {
+        debug write_block memory 0xD000 [string repeat [binary format c 165] 0x2300]
+        debug write_block memory 0xF300 [string repeat [binary format c 165] 128]
+    }
     foreach pc [array names source_labels] {
         debug set_bp $pc {} [list trace_source $source_labels($pc)]
+    }
+    if {$::input_mode} {
+        debug set_bp $::rpc_start {} {set ::started [machine_info time]}
+        debug set_bp $::input_entry {} {
+            set ::input_regs [list [reg AF] [reg BC] [reg DE] [reg HL] [reg IX] [reg IY] [reg SP]]
+            set ::psg15 [debug read {PSG regs} 15]
+            set ::ppi [debug read ioports 170]
+            set ::slots [debug read ioports 168]
+            set ::input_time [machine_info time]
+        }
+        debug set_bp $::input_return {} {
+            if {$::input_regs ne [list [reg AF] [reg BC] [reg DE] [reg HL] [reg IX] [reg IY] [reg SP]]} {fail_native clobbered-input-registers}
+            if {$::psg15!=[debug read {PSG regs} 15] || $::ppi!=[debug read ioports 170] || $::slots!=[debug read ioports 168]} {fail_native peripheral-or-slot-not-restored}
+            if {[reg IFF]&3} {fail_native input-left-interrupts-enabled}
+            set ::max_sample_cycles [expr {max($::max_sample_cycles,round(([machine_info time]-$::input_time)*3579545)+11)}]
+            incr ::input_samples
+        }
     }
     after break dispatch_native
 }
 after time 600 {fail_native watchdog}
+if {$input_mode} {after time 6.1 {if {$::count==0} {fail_native first-input-case-stuck}}}

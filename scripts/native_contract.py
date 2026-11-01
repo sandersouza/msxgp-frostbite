@@ -118,13 +118,14 @@ def cases(rom,syms):
     return [c for c in source if 'core_'+c['start'] in syms and all('core_'+s in syms for s in c['stops'])]
 
 
-def run_contract(selected=None,profile=False,explore=False):
-    build=build_contract();rom=(ROOT/'references/roms/frostbite.bin').read_bytes();syms=symbols(OUT/'native.sym')
+def run_contract(selected=None,profile=False,explore=False,input_controls=None,corrupt_port2=False):
+    build=build_contract(input_controls is not None,corrupt_port2);rom=(ROOT/'references/roms/frostbite.bin').read_bytes();syms=symbols(OUT/'native.sym')
     if build['source_dirty'] and not explore:raise ValueError('canonical native proof requires clean committed producers; use --explore for WIP')
     if version('py65')!='1.2.0' or sys.byteorder!='little':raise ValueError('reviewed py65/little-endian host required')
     cpu_path=Path(inspect.getfile(MPU));cpu_hash=hashlib.sha256(cpu_path.read_bytes()).hexdigest()
-    producer=snapshot_paths(HELPERS) if not explore else {'tool_source_commit':build['source_commit'],
-        'utility_fingerprints':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in HELPERS}}
+    helpers=HELPERS+('scripts/device_replay.py','scripts/native_input_check.py','src/native_input.asm') if input_controls is not None else HELPERS
+    producer=snapshot_paths(helpers) if not explore else {'tool_source_commit':build['source_commit'],
+        'utility_fingerprints':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in helpers}}
     selected=cases(rom,syms) if selected is None else selected
     if any(int(stop,16) not in observable_stops() for case in selected for stop in case['stops']):
         raise ValueError('native CPU stop not pinned for observable flags')
@@ -150,15 +151,43 @@ def run_contract(selected=None,profile=False,explore=False):
     user=directory/'user-data';(user/'machines').mkdir(parents=True);(user/'machines/Frostbite_Native.xml').write_bytes(profile_data)
     settings=directory/'settings.xml';settings.write_text('<?xml version="1.0"?><!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
     trace={address:int(name[5:],16) for name,address in syms.items() if re.fullmatch('core_[0-9A-F]{4}',name) and name[5:]!='F019'} if profile else {}
-    launcher=directory/'launch.tcl';launcher.write_text(f'set native_dir {{{directory}}}\nset rpc_start {syms["rpc_start"]}\n'
+    command=[emulator,'-setting',str(settings),'-machine','Frostbite_Native','-cart',str(ROM),'-romtype','Normal']
+    environment={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'}
+    device_setup=''
+    if input_controls is not None:
+        from device_replay import device_events,replay
+        if len(input_controls)!=len(selected):raise ValueError('device event count mismatch')
+        seed_script=directory/'seed.tcl';seed=directory/'seed.omr'
+        seed_script.write_text(f'set renderer none\nset throttle off\nset power true\nplug joyporta msxjoystick1\nplug joyportb msxjoystick2\nreverse start\nafter time 1 {{reverse savereplay {{{seed}}};exit}}\n')
+        seed_result=subprocess.run(command+['-script',str(seed_script)],cwd=ROOT,env=environment,capture_output=True,text=True,timeout=30)
+        if seed_result.returncode or not seed.is_file():raise ValueError('device replay seed failed: '+seed_result.stderr)
+        events=[]
+        def event(time,tokens):events.append((time,'MSXCommandEvent',{'tokens':tokens}))
+        def write(time,address,data):event(time,['debug','write_block','memory',str(address),data])
+        write(5.001,0xD000,bytes([165])*0x2300);write(5.001,0xF300,bytes([165])*128)
+        for i,(case,controls) in enumerate(zip(selected,input_controls)):
+            time=6+i*.03;events+=device_events(time,controls);time+=.0002
+            packet=packed[i*165:(i+1)*165];ram=packet[13:141]
+            if case.get('chain'):
+                write(time,0xC030,ram[48:58]);write(time,0xC06D,ram[109:110])
+            else:
+                write(time,0xC000,ram);write(time,0xC6F0,packet[4:9]);write(time,0xC600,bytes((packet[10],packet[9],packet[11])))
+            write(time,0xC6FE,packet[:2]);write(time,0xC300,packet[141:157]);write(time,0xC340,packet[157:165]);write(time,0xC700,bytes(96))
+            for address,byte in ((0xC340,packet[157]),(0xC342,packet[159]),(0xC30C,packet[153]),(0xC30D,packet[154])):write(time,address,bytes((255^byte,)))
+            write(time,0xC6FD,b'\0');event(time,['debug','write','PSG regs','15',str((i*37)&255)])
+            event(time,['debug','write_block','CPU regs','20',struct.pack('>H',syms['rpc_start'])])
+        replay(seed,events,7+len(selected)*.03,directory/'devices.omr')
+        device_setup=(f'set input_mode 1\nset input_entry {syms["sample_native_input"]}\nset input_return {syms["sample_native_return"]}\n'
+            +f'reverse loadreplay -goto begin -viewonly {{{directory/"devices.omr"}}}\n')
+    launcher=directory/'launch.tcl';launcher.write_text(f'set native_dir {{{directory}}}\nset rpc_start {syms["rpc_start"]}\nset idle {syms["idle"]}\nset input_mode 0\n'
+        +device_setup
         +'array set source_labels {'+' '.join(f'{pc} {source}' for pc,source in trace.items())+'}\n'
         +f'source {{{ROOT/"scripts/native_contract.tcl"}}}\n')
-    environment={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'}
-    result=subprocess.run([emulator,'-setting',str(settings),'-machine','Frostbite_Native','-cart',str(ROM),'-romtype','Normal','-script',str(launcher)],
+    result=subprocess.run(command+['-script',str(launcher)],
                           cwd=ROOT,env=environment,capture_output=True,text=True,timeout=120)
     (directory/'emulator.log').write_text(result.stdout+result.stderr)
     if result.returncode or not (directory/'complete.json').is_file():raise ValueError(f'native capture incomplete: {directory}; '+(result.stdout+result.stderr)[-600:])
-    validate_receipt(json.loads((directory/'complete.json').read_text()),len(selected))
+    receipt=json.loads((directory/'complete.json').read_text());validate_receipt(receipt,len(selected))
     data=(directory/'actual.bin').read_bytes();record_size=233
     if len(data)!=len(selected)*record_size:raise ValueError('incomplete native result records')
     max_cycles=0
@@ -176,7 +205,7 @@ def run_contract(selected=None,profile=False,explore=False):
     if hashlib.sha256(ROM.read_bytes()).hexdigest()!=build['rom_sha256'] or verified_input(ROOT/'references/roms/frostbite.bin')!=build['source']:
         raise ValueError('source/native binary changed during capture')
     if any(hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h for p,h in producer['utility_fingerprints'].items()):raise ValueError('capture helper changed')
-    if not explore and snapshot_paths(HELPERS)!=producer:raise ValueError('capture producer changed')
+    if not explore and snapshot_paths(helpers)!=producer:raise ValueError('capture producer changed')
     if hashlib.sha256(cpu_path.read_bytes()).hexdigest()!=cpu_hash or hashlib.sha256(Path(emulator).read_bytes()).hexdigest()!=emulator_hash:
         raise ValueError('independent CPU/emulator binary changed')
     report={'cases':len(selected),'max_cycles':max_cycles,'rom_sha256':build['rom_sha256'],'build_source_commit':build['source_commit'],
@@ -184,7 +213,16 @@ def run_contract(selected=None,profile=False,explore=False):
             **producer,'harness_dirty':build['source_dirty'],'backend':{'py65':'1.2.0','cpu_source_sha256':cpu_hash,'emulator_sha256':emulator_hash,
                 'profile_sha256':hashlib.sha256(profile_data).hexdigest()},
             'input_sha256':hashlib.sha256(packed).hexdigest(),'actual_sha256':hashlib.sha256(data).hexdigest(),
-            'expected_sha256':hashlib.sha256((directory/'expected.json').read_bytes()).hexdigest()}
+            'expected_sha256':hashlib.sha256((directory/'expected.json').read_bytes()).hexdigest(),'receipt':receipt}
+    if input_controls is not None:
+        from native_input_check import hardware
+        mirrors=(directory/'mirrors.bin').read_bytes()
+        if len(mirrors)!=4*len(selected) or receipt.get('input_samples',0)<len(selected):raise ValueError('missing genuine input samples')
+        for i,(case,controls) in enumerate(zip(selected,input_controls)):
+            player=int(case['ram'].get('C7','00'),16)
+            if tuple(mirrors[i*4:i*4+4])!=hardware(controls,player):raise ValueError(f'{case["id"]}: stale/incorrect hardware mirrors')
+        report['device_replay_sha256']=hashlib.sha256((directory/'devices.omr').read_bytes()).hexdigest()
+        report['mirrors_sha256']=hashlib.sha256(mirrors).hexdigest()
     (directory/'verified.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2));return report
 
 
