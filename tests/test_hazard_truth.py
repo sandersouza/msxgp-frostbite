@@ -68,5 +68,15 @@ class HazardTruthTests(unittest.TestCase):
         with self.assertRaises(ValueError):api.validate_invariants([a,b],[(0,1,7,9,'bad window')])
         with self.assertRaises(ValueError):api.validate_invariants([a,b],[(0,2,7,1,'missing case')])
 
+    def test_shore_roi_compares_fresh_read_instead_of_prior_sticky_ed(self):
+        api=self.api();raw=self.fixture()
+        raw[632]=raw[629]=raw[630]=0  # source pose/shift/reflection
+        raw[522+0x6D]=135          # an old hit stays sticky despite a fresh miss
+        roi=raw[8*58:9*58]+b'\x07'+raw[655:674]
+        self.assertEqual(api.compare_roi(raw,roi,window=8),1)
+        corrupt=bytearray(roi);corrupt[58]=135
+        with self.assertRaises(ValueError):api.compare_roi(raw,corrupt,window=8)
+        with self.assertRaises(ValueError):api.compare_roi(raw,roi,window=9)
+
 
 if __name__=='__main__':unittest.main()

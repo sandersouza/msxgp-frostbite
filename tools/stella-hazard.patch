@@ -5,11 +5,11 @@
  
  // Original ROM, CPU and TIA behavior are unchanged; literal-view probes are sidecars.
 -void Debugger::fbProbe()
-+void Debugger::fbProbe(bool hazardMode, bool hazardRoi)
++void Debugger::fbProbe(bool hazardMode, bool hazardRoi, bool shoreRoi)
  {
    const char* input=std::getenv("FROSTBITE_PROBE_INPUT");
    const char* output=std::getenv("FROSTBITE_PROBE_OUTPUT");
-@@ -1001,9 +1001,36 @@
+@@ -1001,9 +1001,56 @@
      for(int byte=0;byte<29;++byte){uInt8 value=0;for(int bit=0;bit<8;++bit)if(byte*8+bit<228 && bits.test(byte*8+bit))value|=1<<bit;out.put(value);}
    };
    const bool roiMode=std::getenv("FROSTBITE_PROBE_ROI")!=nullptr;
@@ -18,6 +18,26 @@
    std::unique_ptr<Serializer> roi;int cachedX=-1,cachedY=-1,cachedBase=0;
    std::array<uInt8,128> cachedHeader{};TIA::FbPrefix cachedVirtual{};
    while(in.read(reinterpret_cast<char*>(ram.data()),ram.size())) {
++    if(shoreRoi) {
++      if(!hazardMode || hazardRoi || ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || (ram[0x6C]!=0 && ram[0x6C]!=16) || ram[0x6F]>7)
++        throw std::runtime_error("shore ROI fixed-header contract violated");
++      auto header=ram;header[0x07]=header[0x68]=header[0x6F]=header[0x64]=header[0x66]=0;
++      if(cachedX!=ram[0x66] || cachedY!=ram[0x64] || cachedHeader!=header) {
++        myConsole.tia().fbEnabled=false;initial.rewind();if(!mySystem.load(initial))throw std::runtime_error("shore ROI initial restore failed");
++        for(int i=0;i<128;++i)mySystem.pokeOob(0x80+i,ram[i]);
++        until(0xF0DF);cachedBase=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
++        myConsole.tia().fbBegin(cachedBase);until(0xF1E9);
++        roi=std::make_unique<Serializer>();if(!mySystem.save(*roi))throw std::runtime_error("shore ROI prefix save failed");
++        cachedX=ram[0x66];cachedY=ram[0x64];cachedHeader=header;cachedVirtual=myConsole.tia().fbSavePrefix();
++      }
++      myConsole.tia().fbEnabled=false;roi->rewind();if(!mySystem.load(*roi))throw std::runtime_error("shore ROI prefix restore failed");
++      mySystem.pokeOob(0xE8,ram[0x68]);mySystem.pokeOob(0xEF,ram[0x6F]);
++      mySystem.pokeOob(0x87,mySystem.peek(0xFEE7+ram[0x6F]));
++      myConsole.tia().fbRestorePrefix(cachedVirtual);until(0xF246);
++      writeBits(myConsole.tia().fbHazardResponses[8]);writeBits(myConsole.tia().fbHazardBaseResponses[8]);
++      out.put(myCpuDebug->a());for(int i=0;i<19;++i)out.put(mySystem.peek(cachedBase+i));
++      if(!out)throw std::runtime_error("shore ROI write failed");++count;continue;
++    }
 +    if(hazardRoi) {
 +      if(!hazardMode || ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || ram[0x6C]!=0)
 +        throw std::runtime_error("hazard ROI fixed-header contract violated");
@@ -46,7 +66,7 @@
      if(roiMode) {
        if(ram[0x45]!=0 || ram[0x4B]!=0 || ram[0x4D]!=255 || ram[0x6E]!=0 || ram[0x6B]!=0 || ram[0x6C]!=0)
          throw std::runtime_error("ROI fixed-header contract violated");
-@@ -1032,7 +1059,11 @@
+@@ -1032,7 +1079,11 @@
      until(0xF0DF);
      const auto base=mySystem.peek(0x89)|(mySystem.peek(0x8A)<<8);
      myConsole.tia().fbBegin(base);until(0xF476);
@@ -59,7 +79,7 @@
      for(int i=0;i<128;++i)out.put(mySystem.peek(0x80+i));
      out.put(myCpuDebug->a());out.put(myCpuDebug->x());out.put(myCpuDebug->y());
      out.put(0x20|(myCpuDebug->n()<<7)|(myCpuDebug->v()<<6)|(myCpuDebug->b()<<4)|(myCpuDebug->d()<<3)|(myCpuDebug->i()<<2)|(myCpuDebug->z()<<1)|myCpuDebug->c());out.put(myCpuDebug->sp());
-@@ -1043,5 +1074,5 @@
+@@ -1043,5 +1094,5 @@
    myConsole.tia().fbEnabled=false;
    if(in.gcount()!=0 || count==0)throw std::runtime_error("probe input must contain complete nonempty128-byte records");
    out.flush();if(!out)throw std::runtime_error("probe final output write failed");
@@ -74,18 +94,19 @@
      void reset();
  
 -    void fbProbe();
-+    void fbProbe(bool hazardMode=false, bool hazardRoi=false);
++    void fbProbe(bool hazardMode=false, bool hazardRoi=false, bool shoreRoi=false);
      void saveState(int state);
      void saveAllStates();
      void loadState(int state);
 --- a/src/debugger/DebuggerParser.cxx
 +++ b/src/debugger/DebuggerParser.cxx
-@@ -104,6 +104,8 @@
+@@ -104,6 +104,9 @@
  #endif
  
    if(command=="floeProbe"){debugger.fbProbe();return "FROSTBITE_PROBE_COMPLETE";}
 +  if(command=="hazardProbe"){debugger.fbProbe(true);return "FROSTBITE_HAZARDS_COMPLETE";}
 +  if(command=="hazardRoiProbe"){debugger.fbProbe(true,true);return "FROSTBITE_HAZARDS_COMPLETE";}
++  if(command=="shoreRoiProbe"){debugger.fbProbe(true,false,true);return "FROSTBITE_HAZARDS_COMPLETE";}
    string verb;
    getArgs(command, verb);
    commandResult.str("");

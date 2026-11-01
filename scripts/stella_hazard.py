@@ -84,8 +84,9 @@ def build(directory):
     return result
 
 
-def observe(rom,binary,initial,cases,out,roi=False):
+def observe(rom,binary,initial,cases,out,roi=False,shore=False):
     if not cases or any(len(case)!=128 for case in cases):raise ValueError('complete nonempty128-byte hazard fixtures required')
+    if roi and shore:raise ValueError('select one original source ROI window')
     decode_state(initial);before=helper_identity();backend_build=verified_backend(binary);binary_hash=digest(binary)
     build_path=Path(binary).parent/'frostbite-hazard-observer.json';build_hash=digest(build_path)
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
@@ -94,17 +95,18 @@ def observe(rom,binary,initial,cases,out,roi=False):
     previous={name:os.environ.get(name) for name in names}
     try:
         os.environ[names[0]]=str(out/'cases.bin');os.environ[names[1]]=str(out/'results.bin');os.environ.pop(names[2],None)
-        command='hazardRoiProbe' if roi else 'hazardProbe'
+        command='shoreRoiProbe' if shore else 'hazardRoiProbe' if roi else 'hazardProbe'
         _,backend=run_debugger(rom,f'loadState 0\n{command}\nexitRom\n',out/'raw',initial,stella=str(binary))
     finally:
         for name,value in previous.items():
             if value is None:os.environ.pop(name,None)
             else:os.environ[name]=value
     data=(out/'results.bin').read_bytes()
-    validate_observation(data,(out/'raw/stella.log').read_text(),len(cases),roi)
+    validate_observation(data,(out/'raw/stella.log').read_text(),len(cases),roi or shore)
     if before!=helper_identity() or binary_hash!=digest(binary) or build_hash!=digest(build_path):
         raise ValueError('hazard observation producer changed')
-    result={'schema_version':1,'mode':'top-object ROI' if roi else 'complete nine-window visible phase','cases':len(cases),'backend':backend,
+    mode='shore ROI' if shore else 'top-object ROI' if roi else 'complete nine-window visible phase'
+    result={'schema_version':1,'mode':mode,'cases':len(cases),'backend':backend,
             'upstream_revision':REVISION,'helpers':before,
             'backend_build_sha256':build_hash,
             'backend_build':backend_build,

@@ -29,14 +29,15 @@ def contacts(record,ram):
             'shore':sample(record['truth'][8],view)}
 
 
-def compare_roi(full,roi):
-    if not full or len(full)%FULL_BYTES or len(roi)!=(len(full)//FULL_BYTES)*ROI_BYTES:
+def compare_roi(full,roi,window=7):
+    if window not in (7,8) or not full or len(full)%FULL_BYTES or len(roi)!=(len(full)//FULL_BYTES)*ROI_BYTES:
         raise ValueError('complete paired full/ROI hazard observations required')
     count=len(full)//FULL_BYTES
     for index in range(count):
         a=full_record(full[index*FULL_BYTES:(index+1)*FULL_BYTES])
         b=roi_record(roi[index*ROI_BYTES:(index+1)*ROI_BYTES])
-        if a['truth'][7]!=b['truth'] or a['ram'][0x37]!=b['actual'] or a['glyph']!=b['glyph']:
+        actual=a['ram'][0x37] if window==7 else sample(a['truth'][8],view_index(a['ram'][0x6E],a['ram'][0x6B],bool(a['ram'][0x6C]&8)))
+        if a['truth'][window]!=b['truth'] or actual!=b['actual'] or a['glyph']!=b['glyph']:
             raise ValueError(f'cached hazard window differs from complete execution at case{index}')
     return count
 
