@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/12",
-  "status": "Source/native mechanics and NTSC/PAL paced automated gates passed; immutable packaging, independent review and release integration pending",
+  "status": "Complete expanded automated matrix and immutable package accepted; independent review and release integration pending",
   "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
   "original_phase": {"entry": "F019", "exit": "F476", "ram_bytes": 128},
   "local_protocol": {
@@ -42,7 +42,11 @@
   "acceptance": {
     "complete_source_domain": "50,289,350 audited source cells including floes and independent copy aliases; 239 contact banks",
     "native_cpu_ram_equivalence": "14,828 actual complete visible phases, zero neutral substitutions; 652 controlled whole phases including all256 RNG seeds; four complete cold real-key routes, 3,352 source checkpoints per clock family",
-    "crowded_paced_ntsc_pal": "All eight route/family pairs and fifteen stress modes passed; worst named PAL70846/71364 (margin518), crowded NTSC51321/59736 and PAL68018/71364",
+    "crowded_paced_ntsc_pal": "All32 route/family/layout/width pairs and fifteen stress modes passed; worst named PAL70719/71364 (margin645), crowded NTSC49545/59736 and PAL64802/71364",
+    "rom_sha256": "37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93",
+    "source_commit": "e83569dfde46f9bb6f39ea05817d6e3204333a54",
+    "clean_z80_shift_matrix": 65536,
+    "compact_result": "references/hazard-result.json",
     "manual_emulator": "Pending owner feedback",
     "physical_hardware": "Pending owner feedback"
   }

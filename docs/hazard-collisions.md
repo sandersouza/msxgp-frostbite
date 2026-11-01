@@ -4,7 +4,57 @@ Issue #12 extends the original-clock boundary used by the native MSX1 port.
 The source ROM and unchanged original execution remain authoritative; a VDP
 collision flag or synthetic display geometry cannot supply gameplay contacts.
 
-## Current automated checkpoint
+## Sealed automated acceptance
+
+The current candidate is source `e83569dfde46f9bb6f39ea05817d6e3204333a54`,
+ROM SHA-256 `37beb4d58bfc6566ba064ff59d48118ce6bc70655f92dcc9695cb534a88bfd93`,
+4,194,304 bytes, ASCII16. The clean immutable package is
+`outputs/hazards/issue12-final-e/`; its public compact result is
+[hazard-result.json](../references/hazard-result.json).
+
+All 14,828 actual visible phases and 652 controlled full-native phases pass.
+An original-free actual-Z80 matrix checks all 65,536 combinations of shift,
+operand mode, value, observed N/Z/C flags, input carry and overflow. The new
+lowering omits only outputs proved dead by the existing contextual liveness;
+RAM80..FF shifts preserve A directly and all hardware/indexed aliases retain
+their original path. Transfer/comparison operand and IY paths are unchanged.
+The shared baseline generator and published 0.0.4 ROM remain unchanged.
+
+All four input-only original interaction routes and independent full-state
+replays pass in **32 route × NTSC/PAL × layout × width combinations**: 26,816
+complete CPU/all-128-RAM checkpoints and 24,604 completed pixel-checked frames.
+No active canonical/contact injection or skipped source interval is accepted.
+The worst route/view costs are:
+
+| Route | Source checkpoints per run | NTSC busiest cycles | PAL busiest cycles |
+| --- | ---: | ---: | ---: |
+| Bear chase / death / recovery | 702 | 40,817 | 61,051 |
+| Bear refuge | 1,235 | 45,116 | 66,865 |
+| Fish and all delayed awards | 812 | 47,558 | 70,719 |
+| Threat attachment / push / death / recovery | 603 | 45,370 | 67,655 |
+
+Fifteen dense/cache/toggle/mixed-count stress modes add 3,600 completed frames,
+peaking at 49,545/64,802 NTSC/PAL cycles. Budgets remain 59,736/71,364;
+the minimum named PAL margin is 645. All pixels, minimum 29-cycle VRAM spacing,
+four sprite slots, VBlank commits, heap/stack guards, slots and interrupts pass.
+All eleven intentional faults are rejected by their actual raw witnesses.
+Maximum visible/control-phase costs are 6,679/33,563 cycles.
+
+The packager independently rechecked the complete source catalogs and observer,
+exact native fixture/CPU streams, every saved natural frame/state, original
+replays, copied ROM/build/profile identities, named matrix coverage and negative
+witnesses before sealing. Full original/private evidence stays local; only
+ROM/build/compact-validation/SHA files belong in the prerelease.
+
+The first alternate-view PAL test failed at 74,816 cycles. Compact flag lowering
+reduced that exact complete original route/view to 70,719, then the clean ROM
+received the entire expanded matrix and all other gates again. Earlier
+candidates/seals below are historical and are not publication candidates.
+Independent review and release integration are pending. See
+[human test instructions](releases/v0.0.5-hazards.md); original presentation,
+progression/whole-game and manual/physical acceptance remain later work.
+
+## Earlier candidate C (superseded)
 
 The clean candidate at `025bc66683d612aeb88b817e28b316bcab723769` is a
 4,194,304-byte ASCII16 ROM, SHA-256

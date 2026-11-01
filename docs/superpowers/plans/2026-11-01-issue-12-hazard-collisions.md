@@ -27,6 +27,7 @@
 3. Fish removal/delayed points, attached-row pushing, low-index simultaneous contacts, bear refuge and RNG calls preserve the actual source dispatch and ordering across seeds/stages.
 4. Dense PAL catch-up and transitions include real hazard acquisition/rendering without dropped simulation, stale caches, changed device state or relaxed timing budgets.
 5. Observation/lookup/replay provenance and negative controls reject incomplete domains, mixed backends, changed raw bytes, altered RNG/collision/state and stale release artifacts.
+6. Compact native shifts/flag lowering preserve all observable CPU/RAM, source call order and operand/IY paths. The expanded natural matrix crosses every clock/layout/width; a default-view timing pass cannot accept another view.
 
 ### Task 1: Complete original-clock observation and bounded representation proof
 
@@ -74,9 +75,9 @@ The smaller candidate `collision_compact.CompactRows.intern_row(records) -> row_
 
 **Interfaces:** paced capture consumes the tested build and frozen input-only original routes; checks every source state and every completed frame/pixel. Stress suite includes NTSC/PAL, both layouts/widths/toggle orientations, real count 0/1/2/3 and nonempty→empty cache transitions. `seal(config,out)` enforces all source/backend/helper/raw-replay/target identities before writing a new immutable bundle.
 
-- [ ] RED→GREEN acceptance tests reject wrong ROM, incomplete observer/catalog/replay, missing scenario, dirty producers and stale negative controls. Reuse audited gates rather than weakening them for the new workload.
-- [ ] Run whole-ROM paced routes and crowded stress with actual new acquisition/core work. Expected: no dropped source steps, budget overrun, pixel mismatch, visible preparation writes, unsafe VDP spacing, fifth sprite or guard/device failure. Optimize only measured bottlenecks and re-run affected full gates.
-- [ ] Freeze a clean exact 0.0.5-hazards ROM and compact validation/SHA/build files. Keep full original/private evidence local. Verify prior published ROM identities and all host tests.
+- [x] RED→GREEN acceptance tests reject wrong ROM, incomplete observer/catalog/replay, missing scenario, dirty producers and stale negative controls. Reuse audited gates rather than weakening them for the new workload.
+- [x] Run whole-ROM paced routes and crowded stress with actual new acquisition/core work. Expected: no dropped source steps, budget overrun, pixel mismatch, visible preparation writes, unsafe VDP spacing, fifth sprite or guard/device failure. Optimize only measured bottlenecks and re-run affected full gates. The discovered alternative-view overrun expanded acceptance to all32 route/family/layout/width combinations plus a65,536-case actual-Z80 unit proof.
+- [x] Freeze a clean exact 0.0.5-hazards ROM and compact validation/SHA/build files. Keep full original/private evidence local. Verify prior published ROM identities and all host tests.
 
 ### Task 5: Independent review, release and dedicated successor
 

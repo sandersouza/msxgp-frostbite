@@ -32,6 +32,18 @@ complete-game acceptance remain pending. See the [technical evidence](docs/floe-
 and [human test instructions](docs/releases/v0.0.4-buildloop.md). The tightest
 measured PAL stress margin is 232 cycles; physical testing remains pending.
 
+The v0.0.5-hazards diagnostic adds actual threat/fish/bear/shore contacts and
+original interaction ordering in the same 4 MiB ASCII16 hardware target.
+Its sealed automated evidence covers 14,828 visible phases, 652 controlled
+native cases, 65,536 Z80 shift/flag cases, all 32 natural route/clock/view
+combinations and 15 crowded stress modes. The tightest measured PAL margin is
+645 cycles. [Technical evidence](docs/hazard-collisions.md),
+[compact validation](references/hazard-result.json) and
+[release notes/human tests](docs/releases/v0.0.5-hazards.md) describe the exact
+ROM and its synthetic, silent presentation. Independent review and release
+integration are pending at this checkpoint; whole-game, progression and
+manual/physical acceptance remain separate.
+
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
 byte-identically and has a reviewed routine/state/hardware map. Commercial
@@ -54,6 +66,7 @@ results are not Frostbite evidence.
 - [Original graphics, coordinate/palette mapping and asset fit](docs/original-graphics.md)
 - [Native movement, input, mapper, timing and reproduction](docs/native-movement.md)
 - [Floe contacts, natural build loop and timing](docs/floe-loop.md)
+- [Original hazard/fish/bear contacts, complete interaction routes and timing](docs/hazard-collisions.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 
