@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "issue": 13,
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "native_architecture": "Existing static Z80 whole-phase lowering; no runtime Atari interpreter or high-level replacement gameplay",
+  "boundaries": {
+    "primitive_cases": 816,
+    "whole_phase_cases": 728,
+    "score": "Valid packed BCD awards, low-byte carry gates, 5000/10000 thresholds, six-digit overflow, reserve0/1/8/9 and attract inhibition; saved six-byte record unchanged",
+    "level": "Every CB byte and both active players; FF wraps to00, source initialization and CPU flags retained",
+    "recovery": "All four variations, both C7 values, own/other reserves0/1/8/9, exact six-byte swap or double-swap skip; both empty sets C6=FF/F1=00",
+    "dispatch": "Each F1 priority bit plus combined flags; bonus/envelope/initialization-delay boundaries",
+    "console": "Reset/Select combinations with color/difficulty bit variants; exact source CPU/RAM comparison"
+  },
+  "evidence_policy": "Controlled fixtures are distinct from continuous input-only source routes, independent replay, paced target, human emulator and physical evidence",
+  "status": "Issue13 in progress; exploratory boundaries pass, clean final-ROM and continuous/paced acceptance pending"
+}
