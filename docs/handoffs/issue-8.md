@@ -3,10 +3,9 @@
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/8.
 Branch: `codex/feat/8-screen2-renderer-benchmark`; base
 `fd1ee97a557f5642f1f845364f1ca41279781375`. Delivery PR [#27](https://github.com/sandersouza/msxgp-frostbite/pull/27), exact-head
-CI, merge and release readbacks are linked from the issue. Independent review and
-the one correction pass are complete; integration/publication are pending at
-this documentation checkpoint. The dedicated issue8 chat owns the checkout until
-explicit transfer; no successor implementation starts here.
+CI, merge and release readbacks are linked from the issue. Independent review, the one correction pass, integration and publication are
+complete. This handoff receipt records the delivered bytes; the dedicated issue8
+chat owns the checkout until its explicit transfer to the prepared issue9 fork.
 
 ## Frozen artifact and reproduction
 
@@ -142,3 +141,37 @@ issue URL, source/ROM identities, limitations and pending human checks. No pendi
 implementation files should transfer. Original ROM/disassembly/derived assets,
 .legacy/seaquest and the verified external snapshot stay local/intact; final legacy
 cleanup is17 after functional replacement acceptance.
+
+
+## Verified delivery receipt
+
+- Implementation PR27 merged as `0e17316b2c98898cf13d0b05ff9afe996d65bda8`.
+  [Exact-head CI41257975158](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41257975158)
+  and [merged CI41258059183](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41258059183)
+  passed; all129host tests pass locally after merge. The downloaded PR CI artifact
+  contains only the three allowed reports,129tests and zero skipped results.
+  CI built the same renderer ROM hash. Source-policy and repeated older diagnostic
+  byte-identity checks also pass. Integrated build/helper blobs equal frozen b249373.
+- [Published prerelease v0.0.2-renderer](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.2-renderer),
+  not draft; annotated tag targets integration0e17316, including evidence/docs.
+  Frozen ROM/capture source remains b249373. Six assets were downloaded into
+  `outputs/issue8/published-v0.0.2-renderer` and compared byte-for-byte with the
+  reviewed immutable package: ROM, build.json, renderer-result.json,
+  release-notes.md, preview-vram.png and SHA256SUMS. All five manifest checks pass.
+  ROM SHA-256 remains111ded95de3c91ff92093abe5fcee4b436150a99ee96a5a9634dfc9ebeffd4c7.
+- The previous v0.0.1-diagnostic ROM was downloaded again; its SHA-256 remains
+  d46320aec4b148c3b885d54de051bc078539b65a7a8bf739bb4e9e956c2028ca.
+  No existing published asset was replaced. No manual/physical verdict is inferred.
+- The final documentation receipt PR is linked from issue8. Close/Done follows
+  that receipt's integration; issue9 start follows the explicit ownership transfer.
+
+Prepared successor: `Frostbite — ISSUE #9`, thread
+`01a19491-87f2-7130-94b8-d51d96adcfc5`, Frostbite project
+`0fd5a899-599e-40d4-988e-46b3d31433dd`, same workspace. Goal: original graphic
+extraction, deterministic source frames and coordinate/palette mapping, dependencies
+3 and8 delivered. It must verify the clean main branch/commit, read this handoff,
+its own local issue copy and approved design, move9 In progress, and take a scoped
+branch before edits. No implementation files are pending. Only ignored original
+inputs, generated outputs, legacy and private evidence remain local. Issue8 stops
+all checkout edits after the transfer message. Future changed testable ROM bytes
+require a new version/release; never reuse0.0.2-renderer for changed bytes.
