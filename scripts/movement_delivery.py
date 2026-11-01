@@ -9,14 +9,26 @@ import tempfile
 import movement_build as build_api
 from movement_build import ROOT,OUT,ROM,VERSION,FILES,validate_rom
 from movement_bench import capture,negative_controls,validate_receipt
-from native_contract import run_contract
+from native_contract import HELPERS,run_contract
 from native_input_check import run as input_check
 from reference_provenance import audit_manifest
 from render_bench import PACED_MODES
-from native_build import OUT as CPU_OUT
+from native_build import OUT as CPU_OUT,BUILD_FILES as CPU_BUILD_FILES
 
 POSITIVES=tuple(n for n,*_ in PACED_MODES)+('counts',)
 CPU_COUNTS={'generic':4497,'phase':1793,'devices_generic':1354,'devices_phase':1354}
+
+
+def producer_paths(kind):
+    inputs=('scripts/device_replay.py','scripts/native_input_check.py','src/native_input.asm')
+    if kind=='generic':return HELPERS
+    if kind=='devices':return HELPERS+inputs
+    if kind=='movement':return tuple(dict.fromkeys((*HELPERS,*FILES,'scripts/movement_bench.py','scripts/movement_bench.tcl','scripts/render_bench.py','references/native-contract.json')))
+    if kind=='mutant_build':return CPU_BUILD_FILES+('scripts/native_fast.py','scripts/native_analysis.py','src/native_input.asm')
+    raise ValueError('unknown producer scope')
+
+
+def audit_producer(part,kind):audit_manifest(part,producer_paths(kind))
 
 
 def encoded(value):return (json.dumps(value,indent=2)+'\n').encode()
@@ -68,7 +80,7 @@ def audit(build,suite,cpu,port2,rom):
         require(part['rom_sha256']==build['rom']['sha256'] and part['build_source_commit']==build['source_commit']
             and part['build_dirty'] is False and part['harness_dirty'] is False and part['pixel_errors']==0,'capture differs from clean tested build')
         validate_receipt(part,59736 if family=='ntsc' else 71364,layout,width,transitions)
-        audit_manifest(part,tuple(part['utility_fingerprints']))
+        audit_producer(part,'movement')
         directory=(ROOT/part['directory']).resolve();require(directory.is_relative_to(OUT.resolve()),'movement capture outside owned outputs')
         require(json.loads((directory/'verified.json').read_text())==part,'suite differs from verified capture')
         for filename,digest in part['artifacts'].items():
@@ -80,7 +92,7 @@ def audit(build,suite,cpu,port2,rom):
             and part['build_source_commit']==build['source_commit'],'CPU proof coverage/producer differs')
         require(part['fast_phase']==(name in ('phase','devices_phase')) and part['input_adapter']==name.startswith('devices_'),'CPU proof kind differs')
         if name.startswith('devices_'):require(part['receipt']['input_samples']==2*count,'missing per-phase genuine input reads')
-        audit_manifest(part,tuple(part['utility_fingerprints']))
+        audit_producer(part,'devices' if name.startswith('devices_') else 'generic')
         directory=(ROOT/part['directory']).resolve();require(directory.is_relative_to((ROOT/'outputs/native').resolve()),'CPU capture outside owned outputs')
         require(json.loads((directory/'verified.json').read_text())==part and sha((directory/'native-contract.rom').read_bytes())==part['rom_sha256'],'CPU receipt/binary differs')
         for filename,key in (('cases.bin','input_sha256'),('expected.json','expected_sha256'),('actual.bin','actual_sha256')):
@@ -89,11 +101,11 @@ def audit(build,suite,cpu,port2,rom):
     for part in faults.values():
         require(part['detected'] is True and part['harness_dirty'] is False and part['rom_sha256']==sha(rom)
             and part['build_source_commit']==build['source_commit'],'negative-control binary/producer differs')
-        audit_manifest(part['producer'],tuple(part['producer']['utility_fingerprints']))
+        audit_producer(part['producer'],'movement')
     require(port2['detected'] is True and 'RAM AF' in port2['detail'],'actual port2 fire inversion must fail source comparison')
     mutant=port2['build'];require(mutant['source_dirty'] is False and mutant['source_commit']==build['source_commit']
         and mutant['corrupt_port2'] is True and mutant['input_adapter'] is True and mutant['fast_phase'] is True,'port2 mutant producer differs')
-    audit_manifest({'tool_source_commit':mutant['source_commit'],'utility_fingerprints':mutant['source_files']},tuple(mutant['source_files']))
+    audit_producer({'tool_source_commit':mutant['source_commit'],'utility_fingerprints':mutant['source_files']},'mutant_build')
     directory=(ROOT/port2['directory']).resolve();require(directory.is_relative_to(CPU_OUT.resolve()),'port2 capture outside owned outputs')
     require(json.loads((directory/'build.json').read_text())==mutant and sha((directory/'native-contract.rom').read_bytes())==mutant['rom_sha256'],'port2 mutant binary differs')
     for filename,digest in port2['artifacts'].items():require(sha((directory/filename).read_bytes())==digest,'port2 mutant records differ')

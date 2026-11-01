@@ -32,28 +32,28 @@
 **Files:** scripts/native_codegen.py, scripts/native_build.py, scripts/native_contract.py/.tcl, src/native_contract.asm, src/native_cpu.asm, tests/test_native_codegen.py, references/native-contract.json.
 **Interfaces:** `decode(rom,pc)->dict`, `reachable(rom,roots,stops)->dict`, `generate(rom)->str` emit source-addressed native labels and needed local data; `build_contract()->dict` produces exact cartridge/symbol/hash metadata; `reference(case)->dict` consumes canonical RAM/register/MMIO stimuli and executes independent py65; `run_contract(cases)->dict` compares native A/X/Y/P/SP and all128RAM bytes.
 
-- [ ] Synthetic tests RED→GREEN for CFG/unsupported flow, addressing/stack/flag semantics, source identity and required local-only generated outputs. Audit legacy generic decode/translation/input patterns and credit selected reuse; discard every source-address specialization.
-- [ ] Implement native carry/V/D/I/SP representation, real source return-byte writes and NMOS decimal semantics. Assemble the contract; compare all applicable mechanics/CPU cases plus seeded flag/arithmetic/index boundary cases and continuous movement chains. Deliberate flag/coordinate/order corruption must fail.
-- [ ] Run full original-free host suite and actual openMSX native contract with bounded watchdogs. Commit helpers clean before canonical captures. Expected exact CPU/RAM agreement and explicit data/code footprint.
+- [x] Synthetic tests RED→GREEN for CFG/unsupported flow, addressing/stack/flag semantics, source identity and required local-only generated outputs. Audit legacy generic decode/translation/input patterns and credit selected reuse; discard every source-address specialization.
+- [x] Implement native carry/V/D/I/SP representation, real source return-byte writes and NMOS decimal semantics. Assemble the contract; compare all applicable mechanics/CPU cases plus seeded flag/arithmetic/index boundary cases and continuous movement chains. Deliberate flag/coordinate/order corruption must fail.
+- [x] Run full original-free host suite and actual openMSX native contract with bounded watchdogs. Commit helpers clean before canonical captures. Expected exact CPU/RAM agreement and explicit data/code footprint.
 
 ### Task 2: Native MSX input at source boundaries
 
 **Files:** src/native_input.asm, scripts/native_input_check.py/.tcl, tests/test_native_input.py and contract hooks.
 **Interfaces:** `sample_native_input` preserves virtual CPU/IX/IY/DI and PSG15, populates source hardware read mirrors for SWCHA/SWCHB/INPT4/5; `input_init` initializes released console controls. Hooks respect fire/source direction timing and selected C7=0/1; sample again per logical step, including PAL catch-up.
 
-- [ ] RED→GREEN raw mapping tests cover all direction combinations, active-player keyboard joining, both joysticks, fire edges/hold/release and F1/F2 Reset/Select. Difficulty switches remain source-owned/unused.
-- [ ] Implement audited BIOS SNSMAT/RDPSG/WRTPSG handling, restore PSG15, retain page0 BIOS and return DI. Actual emulated device schedules feed native/source comparisons; poison mirrors to catch stale samples and invert port2 as an expected negative.
-- [ ] Full host/native suites and genuine device cases pass with preserved CPU registers/flags/slots and bounded measured adapter cost. Commit and freeze exact producer identities.
+- [x] RED→GREEN raw mapping tests cover all direction combinations, active-player keyboard joining, both joysticks, fire edges/hold/release and F1/F2 Reset/Select. Difficulty switches remain source-owned/unused.
+- [x] Implement audited BIOS SNSMAT/RDPSG/WRTPSG handling, restore PSG15, retain page0 BIOS and return DI. Actual emulated device schedules feed native/source comparisons; poison mirrors to catch stale samples and invert port2 as an expected negative.
+- [x] Full host/native suites and genuine device cases pass with preserved CPU registers/flags/slots and bounded measured adapter cost. Commit and freeze exact producer identities.
 
 ### Task 3: Integrated movement diagnostic and active timing
 
 **Files:** scripts/movement_build.py, scripts/movement_bench.py/.tcl, src/movement.asm, renderer table banking only where necessary, tests/test_movement_build.py, local build/bench outputs.
 **Interfaces:** Native step consumes original logical RAM and named scripted contact inputs, not inferred collisions; scene adapter copies presentation values without altering logical simulation. Existing renderer prepare/commit uses its tested ABI. Real source-step cost and input calls replace every10k surrogate.
 
-- [ ] RED→GREEN tests for source-step scheduling, source-to-presentation mapping, ROM/header/mapper validation and immutable version identity. Build smallest measured layout; if >32KiB, explicitly bank core/data in a64KiB ASCII16 cartridge and verify bank transitions/BIOS mapping.
-- [ ] Provide clearly labeled movement diagnostic: real keyboard/joystick/Reset/Select and source jumps/air/floe transport; selectable scripted contact contexts/stress layouts are diagnostic selectors, not original mechanics. Keep natural collisions/audio/original graphics claims pending.
-- [ ] Differential frame/chain tests and full-density real-core/input/render benchmarks cover every layout/width/SPACE-equivalent transition on NTSC/PAL; require consecutive frames, source-step counts, pixels/SAT/invariance,29spacing,4slots,stack/RAM guards and negative controls. Profile/optimize proved bottlenecks if needed; never loosen gates or skip required source steps.
-- [ ] Freeze clean exact ROM/helper captures and a reproducible immutable release package. Expected genuine measured positive margins; a boot is insufficient.
+- [x] RED→GREEN tests for source-step scheduling, source-to-presentation mapping, ROM/header/mapper validation and immutable version identity. Build smallest measured layout; if >32KiB, explicitly bank core/data in a64KiB ASCII16 cartridge and verify bank transitions/BIOS mapping.
+- [x] Provide clearly labeled movement diagnostic: real keyboard/joystick/Reset/Select and source jumps/air/floe transport; selectable scripted contact contexts/stress layouts are diagnostic selectors, not original mechanics. Keep natural collisions/audio/original graphics claims pending.
+- [x] Differential frame/chain tests and full-density real-core/input/render benchmarks cover every layout/width/SPACE-equivalent transition on NTSC/PAL; require consecutive frames, source-step counts, pixels/SAT/invariance,29spacing,4slots,stack/RAM guards and negative controls. Profile/optimize proved bottlenecks if needed; never loosen gates or skip required source steps.
+- [x] Freeze clean exact ROM/helper captures and a reproducible immutable release package. Expected genuine measured positive margins; a boot is insufficient.
 
 ### Task 4: Review, release, integration and handoff
 

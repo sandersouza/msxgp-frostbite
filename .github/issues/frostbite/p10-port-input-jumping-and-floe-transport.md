@@ -1,6 +1,6 @@
 # Port native input, jumping, air control and floe transport
 
-Planning ID: P10. Status: implementation in progress; canonical freeze, independent review and delivery remain pending.
+Planning ID: P10. Status: In review; canonical automated evidence frozen; independent review, CI, integration and release readbacks remain pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/10
 
 ## Goal
@@ -36,3 +36,11 @@ Milestone: none, following existing project convention; no milestone was created
 Target: standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG, no expansions. The supplied Atari ROM is gameplay authority. Keep automated, manual-emulator and physical evidence distinct.
 
 Design: [Frostbite approved design](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/specs/2026-10-31-frostbite-design.md).
+
+## Frozen implementation evidence
+
+Native post-visible phase, raw MSX input and the256KiB ASCII16 movement diagnostic are implemented. Contacts and graphics remain explicitly diagnostic; natural/full-game proof is not claimed. See docs/native-movement.md, references/native-result.json and docs/releases/v0.0.3-movement.md.
+
+Exact ROM producer:64c2cec6d37e5b988b0b86bc1d57836dbe43498a. ROM SHA-256:31bb62e4886c8baf361584ce6a140fc05e34c77be15642780e23ad5d5fdb9f82. Frozen private package:outputs/movement/issue10-final. Generic4497/specialized1793 CPU cases,1354 genuine-device cases per path, eleven240-frame pixel/native/guard/cadence captures and six targeted faults passed. Minimum measured margins:NTSC10736/PAL1227cycles. These finite fixtures do not certify all future states.
+
+Public CI remains original-free. Manual emulator, subjective audio/palette, expanded-slot and physical acceptance remain pending. Close/Done only after the reviewed delivery is integrated and its exact release assets are downloaded and verified.
