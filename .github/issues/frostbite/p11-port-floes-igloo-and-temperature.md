@@ -1,6 +1,6 @@
 # Port ice floes, reversal costs, igloo construction and temperature
 
-Planning ID: P11. Status: approved backlog; implementation has not started.
+Planning ID: P11. Status: In progress in dedicated Frostbite issue11 fork; dependency10 is integrated, closed and released.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/11
 
 ## Goal
@@ -34,5 +34,7 @@ Size: L. Estimate: 14 hours, including implementation and validation; explorator
 Milestone: none, following existing project convention; no milestone was created.
 
 Target: standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG, no expansions. The supplied Atari ROM is gameplay authority. Keep automated, manual-emulator and physical evidence distinct.
+
+Execution plan: docs/superpowers/plans/2026-11-01-issue-11-floe-construction.md. Exclusive branch:codex/feat/11-floe-construction, base05c5f29507ee9cfa3d2c1ceb9964eb53beae9532. The visible-phase adapter will preserve original state effects and use original-raster floe masks; synthetic display geometry cannot determine contacts. Natural first-level construction/entry/next-level acceptance is distinct from the full hazard acquisition owned by12.
 
 Design: [Frostbite approved design](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/superpowers/specs/2026-10-31-frostbite-design.md).
