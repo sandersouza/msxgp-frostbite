@@ -1,15 +1,19 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "issue": 14,
   "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
   "drawing_phase": {"before": "F019", "visible_end": "F476", "after": "F019"},
   "source_clock": {"numerator": 3579545, "divisor": 3},
   "stream": {
-    "magic": "FBPR0001",
+    "magic": "FBPR0002",
     "header": "little-endian 8sIII: magic, record_count1..5000, clock_numerator, divisor",
-    "record_header": "little-endian IHHHIIIH: ordinal, beforePC, visiblePC, afterPC, source_frame, visible_cycles, interval_cycles, audio_write_count",
+    "record_header": "little-endian IHHHIIIIIHH: ordinal, beforePC, visiblePC, afterPC, before_frame, visible_frame, after_frame, visible_cycles, interval_cycles, audio_write_count, completed_frame_count",
     "snapshots": "before, visible_end, after: A/X/Y/P/SP bytes then all128 canonical RAM bytes each",
-    "raster": "160x210 original indexed pixels for the before-state visible phase",
+    "raster": "Explicitly partial visible_end viewport, then EVERY completed physical frame in timestamp/frame order; no implicit crop or frame loss",
+    "video_header": "little-endian IHHHH: source-cycle offset, width160, height1..320, start_line0..320, scanlines1..1024; followed by width*height raw indexed bytes",
+    "startup": "Seeded RIOT startup may span multiple physical frames; bounded interval <=524288 sourcecycles, not assumed steady cadence",
+    "normalization": "Native Stella viewport is retained. Mapping to the approved210-row graphics domain requires separately measured alignment and black-omission validation; partial/unstable startup video is explicitly identified",
+    "legacy_v1": "FBPR0001 parser retained for original-free protocol tests only; its210-row raster has strict nonblack-omission rejection",
     "audio_write": "little-endian IBB: normalized source-cycle offset, decoded TIA audio write address15..1A, unmodified bus value",
     "audio_order": "Retain every ordered write, including unchanged values and silent intervals; no deduplication",
     "terminator": "FBPRDONE then little-endian uint32 record_count; no trailing bytes"

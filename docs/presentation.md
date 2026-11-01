@@ -13,15 +13,23 @@ framebuffer cannot be assumed to show newly changed RAM. Post-visible audio
 writes and CPU/RAM transitions retain their actual source order.
 
 The bounded [observation protocol](../references/presentation-contract.json)
-retains complete phase snapshots,160x210 indexed rasters and ordered audio writes.
+retains complete phase snapshots, raw native viewports and ordered audio writes.
 Same-value writes and silent intervals remain meaningful. The parser rejects
-missing phases/records, bad clocks, invalid event order, truncated data and any
-nonblack pixels in rows omitted by the approved graphics mapping. Full source
+missing phases/records, lost physical frames, bad clocks, invalid event order and
+truncated data. Every physical completion is retained alongside the explicitly
+partial F476 buffer. The seeded cold RIOT wait can span multiple physical frames;
+Stella's160x228/start23 viewport is not assumed equivalent to ALE's160x210 view.
+Normalization and black omitted-row validation are separate mandatory gates.
+Full source
 serialized states/TIA/RIOT/input journals and producer/backend hashes accompany
 the raw stream locally; they are not public assets.
 
 This is protocol implementation, not a claim of a completed observer, dynamic
 renderer, listening review or new testable ROM. Task1 source acceptance is still
-pending. The published progression diagnostic is unchanged; original graphics
+pending. An exploratory sound-enabled observer using standard debugger
+step/checkpoint bookkeeping reproduced the complete1256-byte frozen initial
+interval capsule exactly. This establishes absence of source mutation for that
+probe; it does not qualify a renderer or the observer's whole domain.
+The published progression diagnostic is unchanged; original graphics
 from issue9 prove offline fit only. New live graphics/HUD/PSG need fresh combined
 NTSC/PAL timing, actual pixels/events and complete source/native state checks.

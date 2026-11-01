@@ -1,0 +1,187 @@
+diff --git a/src/debugger/Debugger.cxx b/src/debugger/Debugger.cxx
+index 3095e0ac..c0a1d522 100644
+--- a/src/debugger/Debugger.cxx
++++ b/src/debugger/Debugger.cxx
+@@ -45,6 +45,7 @@
+ #include "RomWidget.hxx"
+ #include "Expression.hxx"
+ #include "YaccParser.hxx"
++#include <fstream>
+ 
+ #include "TIA.hxx"
+ #include "Debugger.hxx"
+@@ -54,6 +55,91 @@ using Common::Base;
+ 
+ Debugger* Debugger::myStaticDebugger = nullptr;
+ 
++// Observe original execution only: no ROM, RAM, CPU or hardware-state writes.
++void Debugger::presentationProbe()
++{
++  auto& tia = myConsole.tia();
++  try {
++    const char* path = std::getenv("FROSTBITE_PRESENTATION_OUTPUT");
++    const char* countText = std::getenv("FROSTBITE_PRESENTATION_COUNT");
++    if(!path || !countText) throw std::runtime_error("presentation paths/count absent");
++    const auto count = std::stoul(countText);
++    if(count < 1 || count > 5000 || myPresentationCount >= count || myCpuDebug->pc() != 0xF019)
++      throw std::runtime_error("bounded presentation phase/count required");
++    if(myPresentationCount == 0 && std::ifstream(path, std::ios::binary).good())
++      throw std::runtime_error("fresh presentation output required");
++    saveOldState(); lockSystem();
++    auto snapshot = [this]() {
++      std::array<uInt8,133> bytes{};
++      bytes[0]=myCpuDebug->a(); bytes[1]=myCpuDebug->x(); bytes[2]=myCpuDebug->y();
++      bytes[3]=0x20|(myCpuDebug->n()<<7)|(myCpuDebug->v()<<6)|(myCpuDebug->b()<<4)
++        |(myCpuDebug->d()<<3)|(myCpuDebug->i()<<2)|(myCpuDebug->z()<<1)|myCpuDebug->c();
++      bytes[4]=myCpuDebug->sp();
++      for(int i=0;i<128;++i) bytes[i+5]=mySystem.peek(0x80+i);
++      return bytes;
++    };
++    auto until = [this](uInt16 pc) {
++      int instructions=0; const auto phaseStart=mySystem.cycles();
++      try {
++        while(myCpuDebug->pc()!=pc) {
++          step(false);
++          if(++instructions>262144 || mySystem.cycles()-phaseStart>524288) throw std::runtime_error("presentation instruction watchdog wanted="+std::to_string(pc)
++            +" actual="+std::to_string(myCpuDebug->pc())+" cycles="+std::to_string(mySystem.cycles()));
++        }
++      } catch(...) { lockSystem(); throw; }
++      lockSystem();
++    };
++    const auto start=tia.cycles(); const auto frame=tia.frameCount();
++    const auto before=snapshot(); tia.presentationWrites.clear(); tia.presentationFrames.clear(); tia.presentationObserve=true;
++    until(0xF476);
++    const auto visibleCycles=tia.cycles()-start; const auto visible=snapshot();
++    const auto visibleFrame=tia.frameCount();
++    const auto visibleHeight=tia.height(), visibleStart=tia.startLine(), visibleScanlines=tia.scanlines();
++    std::vector<uInt8> raster(tia.outputBuffer(),tia.outputBuffer()+tia.width()*visibleHeight);
++    until(0xF019);
++    tia.presentationObserve=false;
++    const auto cycles=tia.cycles()-start; const auto after=snapshot();
++    // Match runToPc's normal checkpoint/rewind bookkeeping, including audio.
++    addState("Presentation interval @ F019");
++    if(visibleCycles==0 || visibleCycles>=cycles || cycles>524288 || tia.presentationWrites.size()>65535
++      || tia.presentationFrames.empty() || tia.presentationFrames.size()!=tia.frameCount()-frame)
++      throw std::runtime_error("presentation timing/event bound exceeded");
++    std::ofstream out(path,std::ios::binary|std::ios::app);
++    if(!out) throw std::runtime_error("presentation output open failed");
++    auto u16 = [&out](uInt32 value) { for(int i=0;i<2;++i) out.put(static_cast<char>((value>>(i*8))&255)); };
++    auto u32 = [&out](uInt32 value) { for(int i=0;i<4;++i) out.put(static_cast<char>((value>>(i*8))&255)); };
++    auto video = [&out,&u16,&u32](uInt32 timestamp,uInt32 height,uInt32 ystart,uInt32 lines,const std::vector<uInt8>& pixels) {
++      u32(timestamp); u16(160); u16(height); u16(ystart); u16(lines);
++      out.write(reinterpret_cast<const char*>(pixels.data()),pixels.size());
++    };
++    if(myPresentationCount==0) { out.write("FBPR0002",8); u32(count); u32(3579545); u32(3); }
++    u32(myPresentationCount); u16(0xF019); u16(0xF476); u16(0xF019);
++    u32(frame); u32(visibleFrame); u32(tia.frameCount()); u32(visibleCycles); u32(cycles);
++    u16(tia.presentationWrites.size()); u16(tia.presentationFrames.size());
++    for(const auto* bytes : {&before,&visible,&after})
++      out.write(reinterpret_cast<const char*>(bytes->data()),bytes->size());
++    video(visibleCycles,visibleHeight,visibleStart,visibleScanlines,raster);
++    uInt32 expectedFrame=frame;
++    for(const auto& physical : tia.presentationFrames) {
++      if(physical.frame!=++expectedFrame || physical.cycle<=start || physical.cycle>start+cycles)
++        throw std::runtime_error("presentation physical frame sequence/timestamp");
++      video(physical.cycle-start,physical.height,physical.startLine,physical.scanlines,physical.pixels);
++    }
++    for(const auto& event : tia.presentationWrites) {
++      if(event.cycle<start || event.cycle>start+cycles) throw std::runtime_error("presentation event timestamp");
++      u32(event.cycle-start); out.put(event.address); out.put(event.value);
++    }
++    ++myPresentationCount;
++    if(myPresentationCount==count) { out.write("FBPRDONE",8); u32(count); }
++    out.flush(); if(!out) throw std::runtime_error("presentation write failed");
++    if(myPresentationCount==count) std::cout << "FROSTBITE_PRESENTATION_COMPLETE " << count << std::endl;
++  } catch(const std::exception& error) {
++    tia.presentationObserve=false;
++    std::cerr << "FROSTBITE_PRESENTATION_FAIL " << error.what() << std::endl;
++    throw;
++  }
++}
++
+ // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Debugger::Debugger(OSystem& osystem, Console& console)
+   : DialogContainer(osystem),
+diff --git a/src/debugger/Debugger.hxx b/src/debugger/Debugger.hxx
+index 62c1ab2f..056476de 100644
+--- a/src/debugger/Debugger.hxx
++++ b/src/debugger/Debugger.hxx
+@@ -328,6 +328,8 @@ class Debugger : public DialogContainer
+ 
+     void reset();
+ 
++    void presentationProbe();
++
+     void saveState(int state);
+     void saveAllStates();
+     void loadState(int state);
+@@ -335,6 +337,7 @@ class Debugger : public DialogContainer
+ 
+   private:
+     Console& myConsole;
++    uInt32 myPresentationCount{0};
+     System&  mySystem;
+ 
+     DebuggerDialog* myDialog{nullptr};
+diff --git a/src/debugger/DebuggerParser.cxx b/src/debugger/DebuggerParser.cxx
+index 42ac0eaf..9564eead 100644
+--- a/src/debugger/DebuggerParser.cxx
++++ b/src/debugger/DebuggerParser.cxx
+@@ -103,6 +103,8 @@ string DebuggerParser::run(string_view command)
+   }
+ #endif
+ 
++  if(command == "presentationProbe") { debugger.presentationProbe(); return "presentation observation"; }
++
+   string verb;
+   getArgs(command, verb);
+   commandResult.str("");
+diff --git a/src/emucore/tia/TIA.cxx b/src/emucore/tia/TIA.cxx
+index 98ed5ffa..8d877af0 100644
+--- a/src/emucore/tia/TIA.cxx
++++ b/src/emucore/tia/TIA.cxx
+@@ -557,6 +557,9 @@ bool TIA::poke(uInt16 address, uInt8 value)
+ 
+   address &= 0x3F;
+ 
++  if(presentationObserve && address >= 0x15 && address <= 0x1A)
++    presentationWrites.push_back({mySystem->cycles(), static_cast<uInt8>(address), value});
++
+   switch (address)
+   {
+     case WSYNC:
+@@ -1426,6 +1429,13 @@ void TIA::onFrameComplete()
+ 
+   myFrontBufferScanlines = scanlinesLastFrame();
+ 
++  if(presentationObserve) {
++    if(presentationFrames.size() >= 64 || height() > 320)
++      throw std::runtime_error("presentation physical frame bound exceeded");
++    presentationFrames.push_back({mySystem->cycles(), frameCount(), height(), startLine(), scanlinesLastFrame(),
++      std::vector<uInt8>(myFrontBuffer.begin(), myFrontBuffer.begin()+width()*height())});
++  }
++
+   if(myAutoPhosphorEnabled)
+   {
+     // Calculate difference to previous frames (with some margin).
+diff --git a/src/emucore/tia/TIA.hxx b/src/emucore/tia/TIA.hxx
+index bcc87cb1..ac4d1a44 100644
+--- a/src/emucore/tia/TIA.hxx
++++ b/src/emucore/tia/TIA.hxx
+@@ -251,6 +251,16 @@ class TIA : public Device
+     */
+     uInt8* frameBuffer() { return myFramebuffer.data(); }
+ 
++    // Read-only observation sidecars; not serialized and never part of TIA logic.
++    struct PresentationWrite { uInt64 cycle; uInt8 address; uInt8 value; };
++    struct PresentationFrame {
++      uInt64 cycle; uInt32 frame, height, startLine, scanlines;
++      std::vector<uInt8> pixels;
++    };
++    bool presentationObserve{false};
++    std::vector<PresentationWrite> presentationWrites;
++    std::vector<PresentationFrame> presentationFrames;
++
+     void clearFrameBuffer();
+ 
+     /**

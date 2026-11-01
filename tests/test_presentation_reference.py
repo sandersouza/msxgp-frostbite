@@ -11,12 +11,13 @@ RECORD = struct.Struct('<IHHHIIIH')
 EVENT = struct.Struct('<IBB')
 
 
-def fixture(ordinal=0, events=((18001, 0x19, 7), (18002, 0x19, 7)), phase=0xF019, cropped=False):
+def fixture(ordinal=0, events=((18001, 0x19, 7), (18002, 0x19, 7)), phase=0xF019, cropped=False,
+            visible_cycles=18000, interval_cycles=19912):
     snapshot = bytes((1, 2, 3, 0x30, 255)) + bytes(range(128))
     raster = bytearray(160 * 210)
     raster[20 * 160:21 * 160] = bytes([8]) * 160
     if cropped: raster[0] = 8
-    return RECORD.pack(ordinal, phase, 0xF476, 0xF019, 42, 18000, 19912, len(events)) + snapshot * 3 + raster + b''.join(EVENT.pack(*event) for event in events)
+    return RECORD.pack(ordinal, phase, 0xF476, 0xF019, 42, visible_cycles, interval_cycles, len(events)) + snapshot * 3 + raster + b''.join(EVENT.pack(*event) for event in events)
 
 
 def stream(*records):
@@ -43,6 +44,12 @@ class PresentationReferenceTests(unittest.TestCase):
     def test_silent_interval_is_a_complete_record_not_a_missing_record(self):
         api = self.api(); result = api.parse_records(stream(fixture(events=())))
         self.assertEqual(result[0]['audio'], [])
+
+    def test_seeded_cold_riot_interval_is_not_mislabeled_as_steady_frame_cadence(self):
+        api = self.api()
+        cold = stream(fixture(events=((140001, 0x19, 7),), visible_cycles=140000, interval_cycles=142059))
+        self.assertEqual(api.parse_records(cold)[0]['cycles'], 142059)
+        with self.assertRaises(ValueError): api.parse_records(stream(fixture(interval_cycles=524289)))
 
     def test_truncated_header_snapshot_raster_or_events_and_trailing_data_fail(self):
         api = self.api(); raw = stream(fixture())
