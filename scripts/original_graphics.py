@@ -34,6 +34,13 @@ def catalog(rom):
                 # following original bytes intentionally; these are table views.
                 item['colors']=list(rom[item['color_range'][0]-0xF000:item['color_range'][1]-0xF000+1][::-1])
                 assets[f'player-{pose}-{int(reflect)}-{displacement}']=item
+    for pose in (4,5):
+        for reflect in (False,True):
+            for fade in range(1,18):
+                item=view(rom,0xFC00+read(0xFCAA+pose),19,reflect)
+                start=0xFC00+read(0xFCB0+pose)+fade
+                item['color_range']=[start,start+18];item['colors']=list(rom[start-0xF000:start-0xF000+19][::-1])
+                assets[f'fade-{pose}-{int(reflect)}-{fade}']=item
     for frame in range(8):
         for reflect in (False,True):
             assets[f'bear-{frame}-{int(reflect)}']=view(rom,0xFD00+read(0xFEE7+frame),19,reflect,2)

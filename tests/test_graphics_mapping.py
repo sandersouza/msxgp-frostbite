@@ -12,10 +12,11 @@ class GraphicsMappingTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('graphics_mapping'),'mapping compiler missing')
         return importlib.import_module('graphics_mapping')
 
-    def test_mapping_retains_all_192_active_source_rows_and_right_edge(self):
+    def test_mapping_retains_edge_shifted_footer_without_scaling_game_rows(self):
         api=self.api()
         self.assertEqual([api.map_x(x) for x in (0,1,2,158,159,160)],[8,9,11,245,246,248])
-        self.assertEqual([api.map_y(y) for y in (0,6,7,70,134,198,199,209)],[None,None,0,63,127,191,None,None])
+        self.assertEqual([api.map_y(y) for y in (0,6,7,70,134,185,186,188,189,198,199,201,202,209)],
+                         [None,None,0,63,127,178,None,None,179,188,189,191,None,None])
         for x in (-1,161):
             with self.assertRaises(ValueError):api.map_x(x)
         source=bytes([0])*(160*210);mapped=api.map_frame(source,{0:(0,0,0)})
@@ -32,11 +33,25 @@ class GraphicsMappingTests(unittest.TestCase):
         self.assertLessEqual(max(compiled['tiles_per_bank']),192)
         self.assertEqual(compiled['vram'][0x1B00],208)
 
+    def test_dark_chromatic_water_keeps_blue_instead_of_collapsing_to_black(self):
+        colors=self.api().palette_map({0:(0,0,0),144:(0,24,124),12:(232,232,232)})
+        self.assertEqual(colors,{0:1,144:4,12:15})
+
     def test_overcolor_loss_is_explicit_and_deterministic(self):
         api=self.api();pixels=bytearray([1])*(256*192);pixels[:8]=bytes([1,1,1,2,2,2,3,4])
         a=api.compile_screen(bytes(pixels));b=api.compile_screen(bytes(pixels))
         self.assertEqual(a,b);self.assertEqual(a['changed_pixels'],2)
         self.assertEqual(api.decode_screen(a['vram'])[:6],bytes([1,1,1,2,2,2]))
+
+    def test_sprite_repairs_restore_every_lost_pixel_with_real_scanline_limits(self):
+        api=self.api();pixels=bytearray([1])*(256*192);pixels[:8]=bytes([1,1,1,2,2,2,3,4])
+        result=api.compile_screen(bytes(pixels),restore=True)
+        self.assertEqual(api.decode_screen(result['vram']),bytes(pixels))
+        self.assertEqual(result['changed_pixels'],0)
+        self.assertEqual(result['patched_pixels'],2)
+        self.assertEqual(result['sprites_per_line'],2)
+        for x in (32,64,96,128):pixels[x:x+8]=bytes([1,1,1,2,2,2,3,4])
+        with self.assertRaisesRegex(ValueError,'sprite'):api.compile_screen(bytes(pixels),restore=True)
 
     def test_invalid_pixels_palette_or_vram_are_rejected(self):
         api=self.api()
