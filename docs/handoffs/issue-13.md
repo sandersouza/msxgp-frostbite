@@ -15,10 +15,16 @@ Exclusive owner: `Frostbite — ISSUE #13`, thread
 `codex/feat/13-scoring-progression`, base
 `b0d8fe206f46106e20ba5b3df43297667b3c08f3`.
 
-Capture acceptance is complete. Final sealing, independent review, integration,
+Complete raw sealing and independent review/fix checks pass. Integration,
 release and asset-download verification are still pending. Issue13 is open and
 must remain In review until its delivery gates pass. No successor owns the
 checkout yet; this chat retains all pending source-file ownership.
+
+Prepared successor: `Frostbite — ISSUE #14`, fork thread
+`01a198a2-9ef4-77d2-b114-c5f107a205c4`, explicitly assigned to Frostbite project
+`0fd5a899-599e-40d4-988e-46b3d31433dd`. Its readback is idle with the correct
+shared checkout. No follow-up prompt or writing permission has been sent.
+Do not create a duplicate or start it before the final exclusive transfer.
 
 ## Exact candidate and original
 
@@ -67,12 +73,17 @@ local/ignored, with their committed producer identities.
   Existing shift/flag proof65536 cases remains valid with unchanged lowering.
 - Fifteen stress modes/3600 frames, max45789 NTSC/64802 PAL. Fourteen intended
   runtime faults fail at the named raw CPU/RAM/pixel/spacing/sprite/guard cause.
-- Host original-free suite299 tests and public staged-source policy pass.
+- Host original-free suite303 tests and public staged-source policy pass.
   Current pinned arm64 environment check passes; Intel/physical remain untested.
 
 Canonical private selections are in `outputs/progression/delivery-b-config.json`;
 full original route paths are also in `outputs/progression/source-index.json`.
-The raw-evidence seal is being produced at `outputs/progression/issue13-final-b`.
+The complete raw-evidence seal passed at `outputs/progression/issue13-final-c`.
+Its public validation is copied byte-identically to
+[progression-result.json](../../references/progression-result.json), packager
+`7cbcf7bdb31a6b83bd605da3b6688b5ef82cd489`. All128 selected positive proof reports
+pass, including96 paced combinations. All14 independent negative controls pass
+their expected detection checks separately.
 Do not publish its private manifest or transitive raw evidence. Public assets
 are only the exact ROM,build.json,validation.json,SHA256SUMS.
 
@@ -92,6 +103,20 @@ regression tests now require explicit success return and propagated fatal errors
 Exploratory WIP captures never satisfy canonical acceptance. Natural native row0
 is the cold checkpoint with zero timing; every later timed row must be positive,
 and maxima are recomputed from complete raw rows.
+
+The [single independent review](issue-13-review.md) found the same exit behavior
+in inherited native/paced final guard handlers. One RED→GREEN fix pass propagates
+their errors and rejects fatal markers in all128 selected positive logs. No
+selected log had such a marker. Fresh repaired-harness progression-v1 native,
+all818 phases, alternating NTSC11 and tight advanced-exhaustion PAL11 captures
+pass; PAL11 remains71081/71364. An explicit exploratory actual-openMSX heap-fault
+probe rejects the corrupt heap and writes no success receipt. Its private result
+is `outputs/progression/guard-probe-b/probe.json`; this controlled fault is not
+natural play or an additional human ROM. The unfinished prior seal was stopped
+before producer edits and is never promoted; the complete restarted audit passed
+with the repaired committed sealer. Original source/build inputs and ROM bytes did
+not change, so retained positive captures are re-audited under their recorded
+historical helper commits and mandatory fatal-log checks.
 
 Advanced route input proposals were private search only. Unchanged Stella and
 independent replays certify every actual checkpoint; predicted states never

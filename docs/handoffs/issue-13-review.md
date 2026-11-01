@@ -33,8 +33,17 @@ stack-min JSON representation; corrected RED results isolated the actual defect.
 
 No ROM build input, original catalog helper, target instruction or ROM byte
 changes in this fix. The previous unfinished serial seal was stopped; a fresh
-complete final audit must run with the repaired committed producer. Final
-integration/release still waits for that audit and all delivery checks.
+complete final audit ran successfully with the repaired committed producer
+`7cbcf7bdb31a6b83bd605da3b6688b5ef82cd489`. Final integration/release still waits
+for the remaining delivery checks.
+
+After the fix, all818 full phases, the regular alternating native route and
+NTSC/layout1/width1 route, and advanced one-player exhaustion/restart
+PAL/layout1/width1 route pass with freshly captured repaired-harness evidence.
+PAL peak remains71081/71364. A separate explicit exploratory heap-fault probe in
+actual openMSX reports `FLOE_NATIVE_FAIL heap-guard` and leaves no success receipt;
+all128 selected positive logs pass the new fatal-marker rejection. The negative
+probe changes only ignored instrumentation and retains the exact candidate ROM.
 
 ## Behaviors set aside and owner dispositions
 

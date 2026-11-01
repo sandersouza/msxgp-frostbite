@@ -1,6 +1,6 @@
 # Port scoring, progression, reserves and all game variations
 
-Planning ID: P13. Status: implementation and all capture matrices pass; raw-evidence sealing, independent review and delivery remain pending.
+Planning ID: P13. Status: complete raw-evidence acceptance and one independent review/fix pass are complete with303 passing host tests. Integration, prerelease publication and asset-download delivery gates remain pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/13
 
 ## Goal
@@ -35,6 +35,18 @@ The current diagnostic also passes12 native routes,818 progression phases,
 CPU/128RAM checkpoints,182308 pixel frames). Fifteen stress modes and14 named
 runtime faults pass. The minimum PAL margin is283 cycles; future presentation
 changes require fresh timing proof.
+
+[PR #37](https://github.com/sandersouza/msxgp-frostbite/pull/37) carries the
+implementation and sealed evidence. Independent review found that inherited native/paced
+guard handlers could return after requesting emulator shutdown, then write a
+false success. One RED→GREEN fix pass now propagates errors and rejects fatal
+markers in every selected positive log. All128 selected positive logs have no
+such marker. Fresh native/full-phase and NTSC/PAL captures pass; an actual
+controlled heap-corruption probe rejects the heap and writes no success receipt.
+Both CI events pass at fix commit7cbcf7b; no ROM byte changes from this repair.
+The complete restarted raw audit passed and is bound by
+[compact validation](https://github.com/sandersouza/msxgp-frostbite/blob/main/references/progression-result.json).
+Manual emulator and physical acceptance remain pending.
 
 Candidate:4194304-byte ASCII16 `0.0.6-progression`, build source
 `ac146a7c82bd5ab77a5dff2deb5d5452a0478c99`, ROM SHA-256

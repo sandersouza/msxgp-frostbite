@@ -39,5 +39,5 @@
     "source_commit": "ac146a7c82bd5ab77a5dff2deb5d5452a0478c99",
     "sha256": "1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6"
   },
-  "status": "All original/source replays,12 actual native routes,818 full phases,135168 guard/summary microcases,all96 clock/view routes,15stress modes and14 runtime controls pass. PAL minimum margin283 cycles. Final raw sealing, independent review and delivery remain pending."
+  "status": "Complete repaired-producer raw acceptance seal and independent review/fix pass;303 host tests. All source/native/96-view/stress/runtime-control proofs pass. PAL minimum margin283 cycles. Integration/release/download delivery remains pending."
 }

@@ -105,9 +105,12 @@ runtime faults detected and raw witnesses independently audited. Original
 catalog/helper inputs and published v0.0.5 ROM bytes remain unchanged.
 
 See the [reproduction checklist](progression-checklist.md) and
-[human tests and limits](releases/v0.0.6-progression.md). Final raw-evidence
-sealing, review, integration and public release delivery remain pending until
-recorded in the issue handoff; completed captures alone do not close the issue.
+[human tests and limits](releases/v0.0.6-progression.md). The
+[sealed validation](../references/progression-result.json) now binds the complete
+raw audit to the exact ROM. The single independent review's guard-error finding
+is fixed by303 passing tests and fresh actual-target checks. Integration and
+public release delivery remain pending until recorded in the issue handoff;
+completed captures alone do not close the issue.
 
 The approved S1/S2/V1/V2/V3/C1 contracts remain in
 [gameplay-contracts.md](gameplay-contracts.md). Definitive HUD/art/audio belongs

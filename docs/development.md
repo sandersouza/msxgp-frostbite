@@ -12,7 +12,9 @@ The current issue13 candidate and its accepted capture matrix are documented in
 [scoring-progression.md](scoring-progression.md); use the
 [dedicated reproduction checklist](progression-checklist.md) for source/native
 checks. It has all-four-mode progression/terminal/restart evidence on the
-standard MSX1 target. Final sealing/review/integration/release are pending;
+standard MSX1 target. Complete raw sealing and independent review/fix checks pass;
+integration and release delivery are pending. The
+[compact validation](../references/progression-result.json) binds the exact ROM;
 definitive HUD/art/audio and whole-game/manual/physical acceptance remain separate.
 The older reference/toolchain milestones below retain their own evidence scope.
 

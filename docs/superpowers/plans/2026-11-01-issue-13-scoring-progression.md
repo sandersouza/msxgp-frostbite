@@ -1,6 +1,6 @@
 # Scoring, progression and game variations Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Deliver issue #13 with original-backed scoring/life/progression boundaries and continuous acceptance for all four variations, including alternating turns, exhaustion and restart.
 
@@ -37,10 +37,10 @@
 
 **Interfaces:** Consumes `native_contract.reference(rom, case)`, `hazard_mechanics.original_step(rom, ram, registers, reader, keys)` and `hazard_check.run_target`. Produces `primitive_cases() -> list[dict]`, `phase_cases(base: bytes) -> list[tuple[str, bytes]]`, `check(out, build_dir, reader, initial_path, explore=False) -> dict` with exact source/native identities and complete CPU/all128RAM results.
 
-- [ ] Write original-free tests for case coverage: BCD carry/overflow/attract/cap, all256 level bytes, both records and all four variations, every F1 dispatch bit/priority, dead-other/both-empty recovery and console switch combinations.
-- [ ] Run `.venv/bin/python -B -m unittest discover -s tests -p 'test_progression_cases.py' -v`; require RED for the absent API, then implement deterministic fixture generation and strict finite-domain validation; rerun GREEN.
-- [ ] Run primitive source versus actual Z80 contract slices; run full visible+native phases using actual audited contacts, not fabricated neutral masks. Require complete registers/RAM, no mismatches and clean producer fingerprints. Record observed invariants rather than assuming mathematical score shortcuts.
-- [ ] Run whole original-free suite and source policy, record results and commit the focused task.
+- [x] Write original-free tests for case coverage: BCD carry/overflow/attract/cap, all256 level bytes, both records and all four variations, every F1 dispatch bit/priority, dead-other/both-empty recovery and console switch combinations.
+- [x] Run `.venv/bin/python -B -m unittest discover -s tests -p 'test_progression_cases.py' -v`; require RED for the absent API, then implement deterministic fixture generation and strict finite-domain validation; rerun GREEN.
+- [x] Run primitive source versus actual Z80 contract slices; run full visible+native phases using actual audited contacts, not fabricated neutral masks. Require complete registers/RAM, no mismatches and clean producer fingerprints. Record observed invariants rather than assuming mathematical score shortcuts.
+- [x] Run whole original-free suite and source policy, record results and commit the focused task.
 
 ### Task 2: Continuous source routes for modes, progression, turns and restart
 
@@ -48,10 +48,10 @@
 
 **Interfaces:** Consumes original `poweron_capsule`, `capture_steps`, `floe_routes.route_policy`, and `trace_compare.compare_traces`. Produces `assess(points, kind, active_start=0) -> dict`, `capture(out, kind, variation, stella='stella') -> dict`, `replay(original, out, stella='stella') -> dict`; routes contain complete inputs, trace, initial/final capsule, restore journal, hashes and explicit completion predicates.
 
-- [ ] Test RED then GREEN: require real construction→entry→bonus→initialized next level; regular/advanced starts; actual per-player swaps with the other record preserved; both-empty terminal followed by Reset/recovery; reject truncated/mislabeled/injected/disabled-hazard routes.
-- [ ] Capture all four variations from cold source power-on with real Select/Reset and active-controller inputs. Acquire progression routes and exhaustion/restart routes with declared bounds; classify exploratory failed routes honestly and refine input policy without changing source state.
-- [ ] Independently replay exact inputs and restore journal; require full CPU/RAM/TIA/RIOT/input equality and final capsule identity. Publish only compact route summaries.
-- [ ] Run route unit tests/full suite and commit.
+- [x] Test RED then GREEN: require real construction→entry→bonus→initialized next level; regular/advanced starts; actual per-player swaps with the other record preserved; both-empty terminal followed by Reset/recovery; reject truncated/mislabeled/injected/disabled-hazard routes.
+- [x] Capture all four variations from cold source power-on with real Select/Reset and active-controller inputs. Acquire progression routes and exhaustion/restart routes with declared bounds; classify exploratory failed routes honestly and refine input policy without changing source state.
+- [x] Independently replay exact inputs and restore journal; require full CPU/RAM/TIA/RIOT/input equality and final capsule identity. Publish only compact route summaries.
+- [x] Run route unit tests/full suite and commit.
 
 ### Task 3: Versioned progression diagnostic and reusable native/paced replay
 
@@ -59,9 +59,9 @@
 
 **Interfaces:** New build wraps audited contact tables and native core as `0.0.6-progression`, retaining default hazard build behavior. Replay passes the Task2 assessment/helper closure explicitly; old hazard callers continue using existing defaults. Metadata fingerprints every consumed builder/source file.
 
-- [ ] Write tests proving default compatibility, progression version/banner, immutable source dependency fingerprints, callback routing and real active-controller input mapping; observe RED, implement minimal API extensions and observe GREEN.
-- [ ] Build from a clean committed source with accepted source catalogs; run all Task1 boundary cases and Task2 native input-only replays against that exact ROM. Include intentional score/record/state corruption controls that must fail for the named reason.
-- [ ] Confirm original catalog/helper closure is unchanged, native ABI/bank restore intact, and previous release artifact remains byte-identical. Run full suite/source policy and commit.
+- [x] Write tests proving default compatibility, progression version/banner, immutable source dependency fingerprints, callback routing and real active-controller input mapping; observe RED, implement minimal API extensions and observe GREEN.
+- [x] Build from a clean committed source with accepted source catalogs; run all Task1 boundary cases and Task2 native input-only replays against that exact ROM. Include intentional score/record/state corruption controls that must fail for the named reason.
+- [x] Confirm original catalog/helper closure is unchanged, native ABI/bank restore intact, and previous release artifact remains byte-identical. Run full suite/source policy and commit.
 
 ### Task 4: Fresh paced, pixel and full-density acceptance package
 
@@ -69,10 +69,10 @@
 
 **Interfaces:** Consumes complete source replay receipts, current-ROM controlled/native receipts and every original/new route × NTSC/PAL × layout0/1 × width0/1. Produces a fail-closed immutable private manifest and public ROM/build/validation/SHA256SUMS bundle.
 
-- [ ] Test RED→GREEN rejection of missing variation/route/view/replay, mixed ROM/source, dirty producers, missing complete states/pixels, unsafe timing, incorrect maxima and ineffective negative witnesses.
-- [ ] Run all new natural routes plus existing four hazard routes in all eight views/clocks; compare every source CPU/all128RAM state and every completed presented pixel frame. Run the existing fifteen stress modes and intentional spacing/sprite/guard/cache/state failures on the exact current ROM.
-- [ ] Recompute cycle maxima from raw observations; require unchanged hard budgets, VRAM spacing, sprite and memory guards. If any transition overruns, derive a source-equivalent optimization, prove it and repeat affected acceptance; never relax budgets or skip source steps.
-- [ ] Seal exact clean-source ROM and raw evidence, derive compact public validation; run whole suite/source policy and commit.
+- [x] Test RED→GREEN rejection of missing variation/route/view/replay, mixed ROM/source, dirty producers, missing complete states/pixels, unsafe timing, incorrect maxima and ineffective negative witnesses.
+- [x] Run all new natural routes plus existing four hazard routes in all eight views/clocks; compare every source CPU/all128RAM state and every completed presented pixel frame. Run the existing fifteen stress modes and intentional spacing/sprite/guard/cache/state failures on the exact current ROM.
+- [x] Recompute cycle maxima from raw observations; require unchanged hard budgets, VRAM spacing, sprite and memory guards. If any transition overruns, derive a source-equivalent optimization, prove it and repeat affected acceptance; never relax budgets or skip source steps.
+- [x] Seal exact clean-source ROM and raw evidence, derive compact public validation; run whole suite/source policy and commit.
 
 ### Task 5: Review, integrate, release and transfer ownership
 

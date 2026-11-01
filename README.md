@@ -46,7 +46,7 @@ rebuild/CI and all four published asset downloads passed;
 [delivery receipt](references/hazard-delivery.json). Whole-game, progression and
 manual/physical acceptance remain separate.
 
-The `v0.0.6-progression` candidate adds all four original variations, score/reserve
+The sealed `v0.0.6-progression` candidate adds all four original variations, score/reserve
 boundaries, alternating records, progression, exhaustion and restart proof.
 All 96 new/retained route/clock/view combinations pass (198,560 complete state
 checkpoints and 182,308 pixel frames), plus controlled boundaries and dense
@@ -54,7 +54,9 @@ stress. The tightest PAL margin is 283 cycles. Its exact 4 MiB ASCII16 ROM
 retains the same unexpanded MSX1 target. See [technical evidence](docs/scoring-progression.md),
 [reproduction](docs/progression-checklist.md) and
 [human test instructions](docs/releases/v0.0.6-progression.md).
-Final evidence sealing, independent review, integration and release are pending.
+[Compact validation](references/progression-result.json) records the complete raw
+state/pixel/cycle audit. Independent review and its guard-error fix pass are
+complete; integration and release delivery remain pending.
 HUD/art remain synthetic and audio is absent; presentation belongs to #14.
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured

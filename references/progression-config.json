@@ -15,7 +15,7 @@
   },
   "geometry": "outputs/progression/geometry-matrix-b/geometry.json",
   "mechanics": "outputs/progression/mechanics-matrix-b/mechanics.json",
-  "phases": "outputs/progression/boundaries-issue13-b/progression.json",
+  "phases": "outputs/progression/boundaries-issue13-guards/progression.json",
   "loop_unit": "outputs/progression/write-loop-clean-a/check.json",
   "previous_rom": "outputs/hazards/release-download-v0.0.5/frostbite-0.0.5-hazards.rom",
   "suite": "outputs/progression/stress-b.json",
@@ -41,12 +41,12 @@
     "progression-v1": {
       "source": "outputs/progression/route-progression-v1-a",
       "replay": "outputs/progression/replay-progression-v1-a",
-      "native": "outputs/progression/native-progression-v1-b/natural.json",
+      "native": "outputs/progression/native-progression-v1-guards/natural.json",
       "paced": {
         "ntsc-layout0-width0": "outputs/progression/matrix-b/progression-v1/ntsc-layout0-width0/verified.json",
         "ntsc-layout0-width1": "outputs/progression/matrix-b/progression-v1/ntsc-layout0-width1/verified.json",
         "ntsc-layout1-width0": "outputs/progression/matrix-b/progression-v1/ntsc-layout1-width0/verified.json",
-        "ntsc-layout1-width1": "outputs/progression/matrix-b/progression-v1/ntsc-layout1-width1/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/paced-progression-v1-ntsc11-guards/verified.json",
         "pal-layout0-width0": "outputs/progression/matrix-b/progression-v1/pal-layout0-width0/verified.json",
         "pal-layout0-width1": "outputs/progression/matrix-b/progression-v1/pal-layout0-width1/verified.json",
         "pal-layout1-width0": "outputs/progression/matrix-b/progression-v1/pal-layout1-width0/verified.json",
@@ -125,7 +125,7 @@
         "pal-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout0-width0/verified.json",
         "pal-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout0-width1/verified.json",
         "pal-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout1-width0/verified.json",
-        "pal-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout1-width1/verified.json"
+        "pal-layout1-width1": "outputs/progression/paced-exhaustion-v2-pal11-guards/verified.json"
       }
     },
     "exhaustion-restart-v3": {
