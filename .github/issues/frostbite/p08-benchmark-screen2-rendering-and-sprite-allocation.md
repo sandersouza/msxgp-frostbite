@@ -1,6 +1,6 @@
 # Benchmark worst-case SCREEN 2 rendering and sprite allocation
 
-Planning ID: P08. Status: implemented; review, integration and release verification pending.
+Planning ID: P08. Status: implemented; review correction complete; integration and release verification pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/8
 
 ## Goal
@@ -26,9 +26,10 @@ Link reproducible checks, exact source/target artifact identities, limitations a
 ## Delivery evidence
 
 - [Measured renderer decision](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/docs/renderer-feasibility.md), [compact report](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/references/renderer-result.json) and [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/docs/handoffs/issue-8.md).
-- Original-free32KiB ROM source dd7c46563252b6c3910777458bae5e9ca87eef75, SHA-256 f311480240f5f6f52a1baea835264e4cb06e5aeb05795174564c059ea15155d4. Uses16000VRAM bytes and30674ROM bytes; no mapper/expansion.
+- Original-free32KiB ROM source b249373be1cc2382f87b5bb97caa865ae0c6641c, SHA-256 111ded95de3c91ff92093abe5fcee4b436150a99ee96a5a9634dfc9ebeffd4c7. Uses16000VRAM bytes and30848ROM bytes; no mapper/expansion.
 - 643 independent pixel/SAT cases, allX/phases, clipping/wrap/crowded landings/color/igloo and bank-crossing cases; actual maximum4sprites/line and29cycleminimum data spacing. Five deliberate fault classes fail for the intended reason.
-- 240NTSC consecutive frames max55455/59736cycles;240PAL max65426/71364,286source reservations. Worst crossingRPC58409leaves1327cycles including the10018cycle surrogate. Native gameplay/input/audio costs remain unmeasured and must fit later.
+- 129 host tests; ten streams of240consecutiveframes cover all fixed layouts/widths and actual SPACE transitions on NTSC/PAL. CrossingNTSC58989/59736(margin747);PAL68995/71364(margin2369). RPC57139(margin2597). PAL preserves286source reservations/stream, with10018cycle surrogate calls. Native gameplay/input/audio costs remain unmeasured and must fit later.
+- One fresh independent review found a SPACE-mode NTSC overrun in the unpublished candidate. Owned RED reproduction, one bulk-upload fix and the expanded strict all-mode/transition gates pass on clean b249373. Stack transcription corrected to F372. No second review.
 - Canonical RAM/input/heap/stack guards and actual keyboard direction/SPACE edge/held/repress checks pass. Grid presentation quantization is explicit; original mapping/assets are9. VRAM preview is a reconstruction, not an accepted live framebuffer/manual/hardware result.
 - [v0.0.2-renderer release notes and human tests](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/8-screen2-renderer-benchmark/docs/releases/v0.0.2-renderer.md). Publish/verify the actual prerelease and attached exact ROM before closing; previous diagnostic stays unchanged.
 

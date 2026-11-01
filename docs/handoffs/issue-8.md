@@ -2,17 +2,18 @@
 
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/8.
 Branch: `codex/feat/8-screen2-renderer-benchmark`; base
-`fd1ee97a557f5642f1f845364f1ca41279781375`. Delivery PR, exact-head CI, merge and
-release readbacks are linked from the issue. Review/publication remain pending at
+`fd1ee97a557f5642f1f845364f1ca41279781375`. Delivery PR [#27](https://github.com/sandersouza/msxgp-frostbite/pull/27), exact-head
+CI, merge and release readbacks are linked from the issue. Independent review and
+the one correction pass are complete; integration/publication are pending at
 this documentation checkpoint. The dedicated issue8 chat owns the checkout until
 explicit transfer; no successor implementation starts here.
 
 ## Frozen artifact and reproduction
 
-ROM and capture producer: `dd7c46563252b6c3910777458bae5e9ca87eef75`.
+ROM and capture producer: `b249373be1cc2382f87b5bb97caa865ae0c6641c`.
 ROM: `frostbite-0.0.2-renderer.rom`,32768bytes,Normal/plain32KiB.
-SHA-256 `f311480240f5f6f52a1baea835264e4cb06e5aeb05795174564c059ea15155d4`.
-Used30674/padding2094. It is original-free/synthetic, not a playable port.
+SHA-256 `111ded95de3c91ff92093abe5fcee4b436150a99ee96a5a9634dfc9ebeffd4c7`.
+Used30848/padding1920. It is original-free/synthetic, not a playable port.
 The [report](../../references/renderer-result.json), [operations/limits](../renderer-feasibility.md),
 [design](../renderer-design.md) and [human test notes](../releases/v0.0.2-renderer.md)
 carry exact identities and boundaries. Publisher/tool producer is separate from
@@ -24,33 +25,64 @@ make test
 make render-build
 .venv/bin/python -B scripts/render_bench.py --suite --preview
 .venv/bin/python -B scripts/render_delivery.py report
-.venv/bin/python -B scripts/render_delivery.py package
+.venv/bin/python -B scripts/render_delivery.py package --destination outputs/releases/v0.0.2-renderer-reviewed
 make ci-verify
 ```
 
-Canonical private suite/build metadata live under outputs/render/. Producerdd7c465
-has clean build and harness snapshots. Raw captures: rpc-ntsc-348ybpqy,
-pace-ntsc-81n2qsl3,pace-pal-1i8iggqc,controls-ntsc-qnq1vcgn. The preview under the
-NTSC directory is an actual-VRAM reconstruction, SHA-256
+Canonical private suite/build metadata live under outputs/render/. Producer
+b249373 has clean build and harness snapshots for all twelve captures:
+
+- `rpc`: `outputs/render/rpc-ntsc-rsthuzr4`.
+- `ntsc`: `outputs/render/pace-ntsc-y9efz1ii`.
+- `ntsc_layout0_width1`: `outputs/render/pace-ntsc-ufm8vqqy`.
+- `ntsc_layout1_width0`: `outputs/render/pace-ntsc-rbj3oy6v`.
+- `ntsc_layout1_width1`: `outputs/render/pace-ntsc-ggxtsi43`.
+- `pal`: `outputs/render/pace-pal-5fta98w9`.
+- `pal_layout0_width1`: `outputs/render/pace-pal-hi7hh_pc`.
+- `pal_layout1_width0`: `outputs/render/pace-pal-umguede8`.
+- `pal_layout1_width1`: `outputs/render/pace-pal-v541ir2w`.
+- `ntsc_transitions`: `outputs/render/pace-ntsc-w5tf60cu`.
+- `pal_transitions`: `outputs/render/pace-pal-pa2ursx1`.
+- `controls`: `outputs/render/controls-ntsc-4v3fkc8x`.
+
+The NTSC preview is an actual-VRAM reconstruction, SHA-256
 0925757d32708f9fbda30d2fd0cda73580154f441959aa31049c44f58a7d4a03, not a framebuffer
 capture. Original inputs were not used. Source files/helpers and binary/profile
 hashes are independently audited against producer Git commits before publication.
+The reviewed package is `outputs/releases/v0.0.2-renderer-reviewed`.
+The old default package with f3114802 bytes was rejected before publication;
+retain it only as local review history and never upload it.
 
 ## Verified evidence
 
-- 125 host tests at the capture checkpoint; delivery adds three more.
+- 129 host tests at the final capture checkpoint.
 - 643 full pixel/SAT scenes, both layouts/widths/all160X values, wrapping/right
  clipping, absent/partial/dense threats, color/igloo transitions and bank crossing.
  Visible state is unchanged through prepare; all sprite patterns/SAT are checked.
-- 597347 RPC data writes, minimum29cycles; actual peak4slots/line. Changed pixels,
+- 617827 RPC data writes, minimum29cycles; actual peak4slots/line. Changed pixels,
  SAT, fifth slot, heap guard and12cycleVRAMstream each fail for the expected cause.
-- RPC max58409/59736; normal layout max53555. NTSC240consecutiveframes max55455,
- margin4281. PAL240 max65426/71364,margin5938,286required reservations preserved.
+- RPC max57139/59736,margin2597; normal layout max53555. All ten paced streams
+ pass240consecutiveframes each. NormalNTSC55455/PAL65426; crossingNTSC58989
+ (margin747)/PAL68995(margin2369). SPACEtransitionsNTSC58971/PAL68786.
+ Each PAL stream preserves286required reservations; NTSC240.
  The charged step is a10000cycle body/10018withCALL, not native game performance.
-- Commitmax1205cycles insideVBlank; RAM/source/input guards and stacklowF374 pass.
+- Commitmax1205cycles insideVBlank; RAM/source/input guards and stacklowF372 pass.
  Controls exercise actual emulated matrix Left/Right and SPACE edge/hold/repress.
 - Public CI builds both original-free diagnostic cartridges; no original is
  downloaded. Existing uploaded reports remain a named allowlist, not ROM blobs.
+
+## Review disposition
+
+One fresh read-only reviewer independently checked the old 643 pixel cases,
+preparation invariance, provenance and 128 host tests. Important: SPACE crossing
+mode exceeded NTSC (60259/59736), skipped/repeated VDP frames and committed in
+active display. The old normal-only pace gate missed it. An owned probe reproduced
+RED; one fix pass uses bulk crossing halves and adds all eight fixed layout/width/
+standard combinations plus two actual SPACE-transition streams as strict gates.
+New mode-sample and publisher rejection tests passed RED to GREEN. The complete
+clean b249373 suite and 129 host tests pass without relaxing timing/VBlank gates.
+Minor stack transcription F374 was corrected to the overall F372. No material
+finding remains open; no second review was requested.
 
 ## Decisions and limits for issue9
 
@@ -69,8 +101,11 @@ hashes are independently audited against producer Git commits before publication
 - Separate layout/frame cache families preserve zero padding. Local band IDs share
  only distinct banks/upper-lower halves. Cost: arbitrary future Y layouts or larger
  masks require allocation/alias tests, not silent reuse.
-- Plain32KiB follows the20480byte table footprint and measured30674total. Cost:
- only2094bytes remain; full game mapper/capacity is still open. Expanded-slot path
+- Bulk crossing halves add64data bytes/frame to reduce CPU overhead. Cost:
+ the narrow747cycleNTSCmargin and higher VRAM traffic require fresh integration
+ measurements; this is not spare native game/audio capacity.
+- Plain32KiB follows the20480byte table footprint and measured30848total. Cost:
+ only1920bytes remain; full game mapper/capacity is still open. Expanded-slot path
  is implemented through BIOS but not physically accepted.
 - All2048sprite-pattern bytes are used. Three player colors plus bear occupy4
  scanline slots; 19pixel actors split into disjoint16line pieces. Cost: original
@@ -95,6 +130,10 @@ audio ordering and exact source time are later integration contracts.
 Independent review disposition, final-head CI and publication/readback are recorded
 with the delivery PR and issue after verification. Publish prereleasev0.0.2-renderer
 only with the exact tested ROM and source above; never overwrite v0.0.1 assets.
+The tag targets the integrated snapshot including later docs/report; verify all
+build/harness blobs match the frozen b249373 producer. Record both identities.
+Download all six published assets into a fresh directory and verify SHA256SUMS
+before declaring delivery. The reviewer did not certify future publication.
 Future changed testable ROMs need new versioned releases with human instructions.
 
 After accepted integration and verified release, close/Done8 and fork/reuse
