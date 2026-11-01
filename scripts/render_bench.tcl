@@ -1,5 +1,8 @@
 # Fresh synthetic renderer capture; never uses an original input/game backend.
+set renderer_script_dir [file dirname [info script]]
 set save_settings_on_exit false
+set pause_on_lost_focus false
+set pause false
 if {$capture_image} {
     set renderer SDLGL-PP
     set maxframeskip 0
@@ -27,6 +30,7 @@ set last_commit -1
 set step_counts {}
 set surrogate_cycles {}
 set max_slots 0
+set control_checks {}
 set signature [binary format cu* [lrange {0 1 2 3 4 5 6 7} 0 7]]
 set canonical {}
 for {set i 0} {$i<128} {incr i} {append canonical [binary format c $i]}
@@ -61,6 +65,7 @@ proc measure_slots {} {
 }
 
 proc finish {} {
+    measure_slots
     require {[debug read_block memory 0xC000 128] eq $::canonical} "canonical RAM changed"
     require {[debug read_block memory 0xD000 [string length $::guard]] eq $::guard} "RAM guard changed"
     set stack [debug read_block memory 0xF300 128]
@@ -71,8 +76,11 @@ proc finish {} {
     }
     require {$lowest>=0xF340} "stack reserve exhausted"
     if {$::capture_image} {screenshot -raw $::bench_dir/renderer.png}
+    set f [binary_file $::bench_dir/final-vram.bin];snapshot $f;close $f
+    set f [binary_file $::bench_dir/final-regs.bin];puts -nonewline $f [debug read_block {VDP regs} 0 8];close $f
+    set control_json [join [lmap item $::control_checks {format {"%s"} $item}] ,]
     set f [open $::bench_dir/complete.json w]
-    puts $f "\{\"complete\":true,\"cases\":$::count,\"min_spacing\":$::min_spacing,\"data_writes\":$::data_writes,\"stack_min\":$lowest,\"max_busy_cycles\":$::max_busy,\"max_sprites_per_line\":$::max_slots,\"frames\":\[[join $::frame_counts ,]\],\"busy_cycles\":\[[join $::busy_cycles ,]\],\"commit_cycles\":\[[join $::commit_cycles ,]\],\"commit_y\":\[[join $::commit_y ,]\],\"commit_start_y\":\[[join $::commit_start_y ,]\],\"period_cycles\":\[[join $::period_cycles ,]\],\"pal_flag\":[debug read memory 0xC21B],\"step_counts\":\[[join $::step_counts ,]\],\"surrogate_cycles\":\[[join $::surrogate_cycles ,]\]\}"
+    puts $f "\{\"complete\":true,\"cases\":$::count,\"min_spacing\":$::min_spacing,\"data_writes\":$::data_writes,\"stack_min\":$lowest,\"max_busy_cycles\":$::max_busy,\"max_sprites_per_line\":$::max_slots,\"control_checks\":\[$control_json\],\"frames\":\[[join $::frame_counts ,]\],\"busy_cycles\":\[[join $::busy_cycles ,]\],\"commit_cycles\":\[[join $::commit_cycles ,]\],\"commit_y\":\[[join $::commit_y ,]\],\"commit_start_y\":\[[join $::commit_start_y ,]\],\"period_cycles\":\[[join $::period_cycles ,]\],\"pal_flag\":[debug read memory 0xC21B],\"step_counts\":\[[join $::step_counts ,]\],\"surrogate_cycles\":\[[join $::surrogate_cycles ,]\]\}"
     close $f
     exit
 }
@@ -162,6 +170,10 @@ after time 5 {checked {
                 }
                 debug set_bp $::symbols(rpc_done) {} {debug break;after break {checked {complete_case}}}
                 dispatch_case
+            } elseif {$::bench_mode eq "controls"} {
+                source [file join $::renderer_script_dir render_controls.tcl]
+                start_controls
+                debug cont
             } else {
                 debug write memory 0xC212 0
                 debug write memory 0xC213 0

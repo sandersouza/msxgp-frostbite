@@ -8,6 +8,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import struct
+import zlib
 import xml.etree.ElementTree as ET
 
 from render_build import ROOT,OUT,ROM,validate_identity,symbols
@@ -50,6 +52,26 @@ def validate_paced(result,period):
         raise ValueError('actual SAT occupancy missing/overloaded')
 
 
+def validate_controls(result):
+    expected=['right','left','space-edge','space-held','space-repress']
+    if (result.get('complete') is not True or result.get('cases')!=1 or result.get('control_checks')!=expected
+            or result.get('max_sprites_per_line',99)>4 or result.get('min_spacing',0)<29):
+        raise ValueError('actual renderer controls incomplete/incorrect')
+
+
+def write_preview(directory):
+    pixels=model.decode_pixels((directory/'final-vram.bin').read_bytes(),list((directory/'final-regs.bin').read_bytes()))
+    palette=((0,0,0),(0,0,0),(62,184,73),(116,208,125),(89,85,224),(128,118,241),
+             (185,94,81),(101,219,239),(219,101,89),(255,137,125),(204,195,94),(222,208,135),
+             (58,162,65),(183,102,181),(204,204,204),(255,255,255))
+    def chunk(kind,data):return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data))
+    rows=b''.join(b'\0'+b''.join(bytes(palette[index]) for index in pixels[y*256:(y+1)*256]) for y in range(192))
+    data=b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',256,192,8,2,0,0,0))+chunk(b'IDAT',zlib.compress(rows))+chunk(b'IEND',b'')
+    (directory/'preview.png').write_bytes(data)
+    return {'path':str((directory/'preview.png').relative_to(ROOT)),'sha256':hashlib.sha256(data).hexdigest(),
+            'method':'Reconstructed from actual emulated VRAM/register dump; approximate RGB palette, not framebuffer capture'}
+
+
 def cases():
     result=[]
     for layout in (0,1):
@@ -78,6 +100,7 @@ def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inje
     selected=cases() if selected is None else selected
     emulator=shutil.which('openmsx')
     if not emulator:raise ValueError('openMSX unavailable')
+    emulator_hash=hashlib.sha256(Path(emulator).resolve().read_bytes()).hexdigest()
     profile=find_machine_profile(emulator);effective=ET.fromstring(isolated_profile(profile))
     effective.find('.//VDP/version').text='TMS9918A' if family=='ntsc' else 'TMS9929A'
     profile_data=b'<?xml version="1.0"?><!DOCTYPE msxconfig SYSTEM "msxconfig2.dtd">'+ET.tostring(effective)
@@ -98,24 +121,37 @@ def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inje
     env={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_AUDIODRIVER':'dummy'}
     if not screenshot:env['SDL_VIDEODRIVER']='dummy'
     else:env.pop('SDL_VIDEODRIVER',None)
-    tool_hashes={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest()
-        for path in (Path(__file__),ROOT/'scripts/render_bench.tcl',ROOT/'scripts/render_model.py')}
+    helper_paths=('scripts/render_bench.py','scripts/render_bench.tcl','scripts/render_controls.tcl',
+                  'scripts/render_model.py','scripts/render_build.py','scripts/smoke.py','scripts/rom.py',
+                  'scripts/environment.py','references/renderer-contract.json','references/tools-lock.json')
+    tool_hashes={path:hashlib.sha256((ROOT/path).read_bytes()).hexdigest() for path in helper_paths}
+    tool_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    tool_dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
     command=[emulator,'-setting',str(settings),'-machine','Frostbite_Renderer','-cart',str(ROM),'-romtype','Normal','-script',str(launcher)]
-    result=subprocess.run(command,cwd=ROOT,env=env,capture_output=True,text=True,timeout=120)
+    try:result=subprocess.run(command,cwd=ROOT,env=env,capture_output=True,text=True,timeout=60 if screenshot else 120)
+    except subprocess.TimeoutExpired as error:
+        fragments=[value.decode(errors='replace') if isinstance(value,bytes) else (value or '') for value in (error.stdout,error.stderr)]
+        (directory/'emulator.log').write_text('Host watchdog expired; no acceptance.\n'+''.join(fragments))
+        raise ValueError(f'bounded renderer host watchdog expired; see {directory}/emulator.log') from error
     (directory/'emulator.log').write_text(result.stdout+result.stderr)
     if result.returncode or not (directory/'complete.json').is_file():
         detail=(result.stdout+result.stderr).strip().splitlines()
         raise ValueError(f'fresh renderer capture failed: {detail[-1] if detail else "no result"}; see {directory}/emulator.log')
     if ROM.read_bytes()!=data:raise ValueError('ROM changed during capture')
+    if hashlib.sha256(Path(emulator).resolve().read_bytes()).hexdigest()!=emulator_hash:
+        raise ValueError('emulator binary changed during capture')
     validate_source_files(metadata)
     for name,digest in tool_hashes.items():
         if hashlib.sha256((ROOT/name).read_bytes()).hexdigest()!=digest:raise ValueError('harness changed during capture')
     observation=json.loads((directory/'complete.json').read_text())
-    if observation.get('complete') is not True or observation.get('cases')!=(len(selected) if mode=='rpc' else 240):
+    expected_cases=len(selected) if mode=='rpc' else 1 if mode=='controls' else 240
+    if observation.get('complete') is not True or observation.get('cases')!=expected_cases:
         raise ValueError('incomplete fresh capture count')
     observation.update({'rom_sha256':metadata['rom']['sha256'],'directory':str(directory.relative_to(ROOT)),
         'build_source_commit':metadata['source_commit'],'build_source_dirty':metadata['source_dirty'],
+        'harness_source_commit':tool_commit,'harness_source_dirty':tool_dirty,
         'harness_hashes':tool_hashes,'emulator':subprocess.check_output([emulator,'-v'],text=True).splitlines()[0],
+        'emulator_sha256':emulator_hash,
         'profile_sha256':hashlib.sha256(profile_data).hexdigest(),'family':family})
     if mode=='rpc':
         dumps=(directory/'vram.bin').read_bytes();prepared=(directory/'prepared.bin').read_bytes()
@@ -142,11 +178,12 @@ def execute_capture(mode='rpc',family='ntsc',selected=None,screenshot=False,inje
         observation.update(pixel_errors=errors,max_busy_cycles=max(cycles),frame_budget=59736)
         validate_observations(observation,len(selected),metadata['rom']['sha256'])
         observation['worst_case']=cycles.index(max(cycles))
-    else:
+    elif mode=='pace':
         period=59736 if family=='ntsc' else 71364
         validate_paced(observation,period)
         if observation['min_spacing']<29:raise ValueError('unsafe paced IO spacing')
         observation.update(frame_budget=period)
+    else:validate_controls(observation)
     if inject!='none':raise ValueError('negative fault escaped detection')
     (directory/'verified.json').write_text(json.dumps(observation,indent=2)+'\n')
     return observation
@@ -166,12 +203,14 @@ def negative_controls():
     return results
 
 
-def run_suite(screenshot=False):
+def run_suite(screenshot=False,preview=False):
     result={'schema_version':1,'rpc':execute_capture(),
             'ntsc':execute_capture('pace','ntsc',screenshot=screenshot),
-            'pal':execute_capture('pace','pal'), 'negative_controls':negative_controls()}
-    hashes={result[name]['rom_sha256'] for name in ('rpc','ntsc','pal')}
+            'pal':execute_capture('pace','pal'), 'controls':execute_capture('controls'),
+            'negative_controls':negative_controls()}
+    hashes={result[name]['rom_sha256'] for name in ('rpc','ntsc','pal','controls')}
     if len(hashes)!=1:raise ValueError('suite ROM identity differs')
+    if preview:result['preview']=write_preview(ROOT/result['ntsc']['directory'])
     (OUT/'suite.json').write_text(json.dumps(result,indent=2)+'\n')
     return result
 
@@ -179,13 +218,14 @@ def run_suite(screenshot=False):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--limit',type=int)
     parser.add_argument('--suite',action='store_true')
-    parser.add_argument('--mode',choices=('rpc','pace'),default='rpc');parser.add_argument('--family',choices=('ntsc','pal'),default='ntsc')
+    parser.add_argument('--mode',choices=('rpc','pace','controls'),default='rpc');parser.add_argument('--family',choices=('ntsc','pal'),default='ntsc')
+    parser.add_argument('--preview',action='store_true')
     parser.add_argument('--screenshot',action='store_true')
     parser.add_argument('--inject',choices=('none','pixel','sprite','overflow','guard','spacing'),default='none');args=parser.parse_args()
     try:
         if args.suite:
-            result=run_suite(args.screenshot)
-            print('Full renderer suite passed:643pixel cases,240NTSC/240PAL frames and five negative controls.')
+            result=run_suite(args.screenshot,args.preview)
+            print('Full renderer suite passed:643pixel cases,240NTSC/240PAL frames, controls and five negative faults.')
             print(f'Exact ROM {result["rpc"]["rom_sha256"]}; evidence {OUT/"suite.json"}')
         else:
             selected=cases()[:args.limit] if args.limit else None

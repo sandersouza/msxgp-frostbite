@@ -19,6 +19,14 @@ class RendererBenchTests(unittest.TestCase):
             api.validate_source_files(metadata,root)
             path.write_bytes(b'modified')
             with self.assertRaises(ValueError):api.validate_source_files(metadata,root)
+
+    def test_controls_require_actual_direction_and_fire_edge_checks(self):
+        api=importlib.import_module('render_bench')
+        result={'cases':1,'complete':True,'control_checks':['right','left','space-edge','space-held','space-repress'],
+                'max_sprites_per_line':4,'min_spacing':29}
+        api.validate_controls(result)
+        for field,value in (('cases',0),('complete',False),('control_checks',['right']),('min_spacing',12)):
+            with self.subTest(field=field),self.assertRaises(ValueError):api.validate_controls({**result,field:value})
     def test_generated_directives_are_not_parsed_as_labels(self):
         api=importlib.import_module('render_build')
         with tempfile.TemporaryDirectory() as tmp,patch.object(api,'OUT',Path(tmp)):
