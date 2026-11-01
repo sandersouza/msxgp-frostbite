@@ -1,6 +1,6 @@
 # Port scoring, progression, reserves and all game variations
 
-Planning ID: P13. Status: approved backlog; implementation has not started.
+Planning ID: P13. Status: implementation and all capture matrices pass; raw-evidence sealing, independent review and delivery remain pending.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/13
 
 ## Goal
@@ -25,7 +25,27 @@ Link reproducible checks, exact source/target artifact identities, limitations a
 
 If this issue delivers a new testable MSX ROM version, publish a versioned GitHub prerelease with the exact ROM attached, SHA-256/source commit, current state and limitations, next steps, and a concrete human test checklist (setup, controls, actions, expected results and feedback requested). Appropriate automated checks precede publication; manual/physical results remain separate. This requirement applies from diagnostic builds onward.
 
-## Tracking
+## Current evidence
+
+All four variations have cold input-only progression and exhaustion/restart
+routes with independent full original replays (21468 logical intervals).
+The current diagnostic also passes12 native routes,818 progression phases,
+14828 geometry phases,652 interaction phases,135168 guarded-loop microcases,
+65536 shift/flag cases and all96 route/clock/view combinations (198560 complete
+CPU/128RAM checkpoints,182308 pixel frames). Fifteen stress modes and14 named
+runtime faults pass. The minimum PAL margin is283 cycles; future presentation
+changes require fresh timing proof.
+
+Candidate:4194304-byte ASCII16 `0.0.6-progression`, build source
+`ac146a7c82bd5ab77a5dff2deb5d5452a0478c99`, ROM SHA-256
+`1223931972bd7e0ec02a8c66805cb30ac0defaad1abd71dd67c9c8a7746be5f6`.
+See [technical evidence](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/scoring-progression.md),
+[reproduction](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/progression-checklist.md)
+and [human test instructions](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/releases/v0.0.6-progression.md).
+Definitive HUD/art/audio remain #14; whole-game and manual/physical acceptance
+are separate. This issue remains open until integration/release/download gates pass.
+
+## Project metadata
 
 Project: [MSX Game Ports #7](https://github.com/users/sandersouza/projects/7).
 Type: Task (repository native issue types unavailable at planning inspection).

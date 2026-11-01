@@ -46,6 +46,17 @@ rebuild/CI and all four published asset downloads passed;
 [delivery receipt](references/hazard-delivery.json). Whole-game, progression and
 manual/physical acceptance remain separate.
 
+The `v0.0.6-progression` candidate adds all four original variations, score/reserve
+boundaries, alternating records, progression, exhaustion and restart proof.
+All 96 new/retained route/clock/view combinations pass (198,560 complete state
+checkpoints and 182,308 pixel frames), plus controlled boundaries and dense
+stress. The tightest PAL margin is 283 cycles. Its exact 4 MiB ASCII16 ROM
+retains the same unexpanded MSX1 target. See [technical evidence](docs/scoring-progression.md),
+[reproduction](docs/progression-checklist.md) and
+[human test instructions](docs/releases/v0.0.6-progression.md).
+Final evidence sealing, independent review, integration and release are pending.
+HUD/art remain synthetic and audio is absent; presentation belongs to #14.
+
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
 byte-identically and has a reviewed routine/state/hardware map. Commercial
@@ -69,6 +80,7 @@ results are not Frostbite evidence.
 - [Native movement, input, mapper, timing and reproduction](docs/native-movement.md)
 - [Floe contacts, natural build loop and timing](docs/floe-loop.md)
 - [Original hazard/fish/bear contacts, complete interaction routes and timing](docs/hazard-collisions.md)
+- [Scoring, progression, player records, all modes and complete timing matrix](docs/scoring-progression.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 

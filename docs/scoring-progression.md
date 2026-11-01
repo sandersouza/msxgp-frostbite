@@ -5,7 +5,7 @@ existing static native Z80 mechanics. The original ROM and complete CPU/all128RA
 comparisons define correctness. There is no replacement high-level score or
 progression model in the cartridge.
 
-`scripts/progression_cases.py` declares816 primitive and728 full-phase fixtures.
+`scripts/progression_cases.py` declares816 primitive and818 full-phase fixtures.
 The primitive arithmetic assertions cover valid BCD awards, low-byte carry,
 5000/10000 threshold gates, six-digit rollover, attract inhibition, reserves0/1/8/9
 and the saved player's complete six-byte record. Exact source flags and all
@@ -25,7 +25,7 @@ The initial exploratory checks passed816 actual-Z80 primitive cases (maximum3139
 cycles) and728 complete visible/native phases (maximum22609 cycles) against the
 unchanged v0.0.5 mechanics. These are controlled fixtures, not continuous gameplay
 or acceptance of a new release. Later sections record the clean source/native
-evidence; the full paced view/clock matrix and release delivery remain pending.
+evidence; subsequent sections record the new ROM's complete paced matrix.
 Manual emulator and physical tests are pending.
 
 ## Continuous original source acceptance
@@ -92,10 +92,19 @@ memory guards are verified. The existing native shift/flag lowering is unchanged
 The new core uses10240 of16384 bytes in its existing bank; cartridge size, RAM
 requirements, source contact catalogs and their helper closure remain unchanged.
 
-The formerly failing advanced PAL layout1/width1 route now passes2061 logical
-states and1725 completed pixel frames, maximum69464/71364 cycles (1900 margin).
-That is one matrix cell, not the full timing/release gate. Full new/old route
-views, dense stress, final review, integration and public release remain pending.
+The complete current-ROM matrix now passes all12 new/retained routes in all96
+clock/layout/width combinations:198560 complete CPU/all128RAM checkpoints and
+182308 completed pixel frames. Peaks are49732/59736 NTSC and71081/71364 PAL.
+The smallest margin is283 cycles on advanced one-player exhaustion/restart,
+PAL/layout1/width1; future HUD/art/audio changes require fresh full acceptance.
+Fifteen dense modes add3600 frames, max45789 NTSC/64802 PAL, with all14 named
+runtime faults detected and raw witnesses independently audited. Original
+catalog/helper inputs and published v0.0.5 ROM bytes remain unchanged.
+
+See the [reproduction checklist](progression-checklist.md) and
+[human tests and limits](releases/v0.0.6-progression.md). Final raw-evidence
+sealing, review, integration and public release delivery remain pending until
+recorded in the issue handoff; completed captures alone do not close the issue.
 
 The approved S1/S2/V1/V2/V3/C1 contracts remain in
 [gameplay-contracts.md](gameplay-contracts.md). Definitive HUD/art/audio belongs

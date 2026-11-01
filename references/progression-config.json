@@ -1,0 +1,207 @@
+{
+  "catalogs": {
+    "edge": "outputs/hazards/catalog-edge-b",
+    "ordinary": "outputs/hazards/catalog-ordinary-a",
+    "shore": "outputs/hazards/catalog-shore-a",
+    "aliases": "outputs/hazards/catalog-aliases-a"
+  },
+  "floe_catalog": "outputs/floes/catalog-issue11-b",
+  "observer": "outputs/hazards/observer-check-clean-d/check.json",
+  "shift_unit": "outputs/hazards/shifts-clean-b/check.json",
+  "build": "outputs/progression/build-issue13-b",
+  "baseline": {
+    "geometry": "outputs/hazards/geometry-issue12-d/geometry.json",
+    "mechanics": "outputs/hazards/mechanics-clean-d/mechanics.json"
+  },
+  "geometry": "outputs/progression/geometry-matrix-b/geometry.json",
+  "mechanics": "outputs/progression/mechanics-matrix-b/mechanics.json",
+  "phases": "outputs/progression/boundaries-issue13-b/progression.json",
+  "loop_unit": "outputs/progression/write-loop-clean-a/check.json",
+  "previous_rom": "outputs/hazards/release-download-v0.0.5/frostbite-0.0.5-hazards.rom",
+  "suite": "outputs/progression/stress-b.json",
+  "negatives": "outputs/progression/negatives-b.json",
+  "negative_root": "outputs/progression/negative-matrix-b",
+  "logs": "outputs/progression/matrix-b-logs",
+  "routes": {
+    "progression-v0": {
+      "source": "outputs/progression/route-progression-v0-a",
+      "replay": "outputs/progression/replay-progression-v0-a",
+      "native": "outputs/progression/native-progression-v0-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/progression-v0/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/progression-v0/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/progression-v0/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/progression-v0/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/progression-v0/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/progression-v0/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/progression-v0/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/progression-v0/pal-layout1-width1/verified.json"
+      }
+    },
+    "progression-v1": {
+      "source": "outputs/progression/route-progression-v1-a",
+      "replay": "outputs/progression/replay-progression-v1-a",
+      "native": "outputs/progression/native-progression-v1-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/progression-v1/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/progression-v1/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/progression-v1/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/progression-v1/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/progression-v1/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/progression-v1/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/progression-v1/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/progression-v1/pal-layout1-width1/verified.json"
+      }
+    },
+    "progression-v2": {
+      "source": "outputs/progression/route-progression-v2-b",
+      "replay": "outputs/progression/replay-progression-v2-b",
+      "native": "outputs/progression/native-progression-v2-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/progression-v2/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/progression-v2/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/progression-v2/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/progression-v2/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/progression-v2/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/progression-v2/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/progression-v2/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/paced-progression-v2-pal-layout1-width1-b/verified.json"
+      }
+    },
+    "progression-v3": {
+      "source": "outputs/progression/route-progression-v3-b",
+      "replay": "outputs/progression/replay-progression-v3-b",
+      "native": "outputs/progression/native-progression-v3-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/progression-v3/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/progression-v3/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/progression-v3/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/progression-v3/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/progression-v3/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/progression-v3/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/progression-v3/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/progression-v3/pal-layout1-width1/verified.json"
+      }
+    },
+    "exhaustion-restart-v0": {
+      "source": "outputs/progression/route-exhaustion-restart-v0-b",
+      "replay": "outputs/progression/replay-exhaustion-restart-v0-b",
+      "native": "outputs/progression/native-exhaustion-restart-v0-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v0/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v0/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v0/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v0/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v0/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v0/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v0/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v0/pal-layout1-width1/verified.json"
+      }
+    },
+    "exhaustion-restart-v1": {
+      "source": "outputs/progression/route-exhaustion-restart-v1-c",
+      "replay": "outputs/progression/replay-exhaustion-restart-v1-c",
+      "native": "outputs/progression/native-exhaustion-restart-v1-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v1/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v1/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v1/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v1/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v1/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v1/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v1/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v1/pal-layout1-width1/verified.json"
+      }
+    },
+    "exhaustion-restart-v2": {
+      "source": "outputs/progression/route-exhaustion-restart-v2-b",
+      "replay": "outputs/progression/replay-exhaustion-restart-v2-b",
+      "native": "outputs/progression/native-exhaustion-restart-v2-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v2/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v2/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v2/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v2/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v2/pal-layout1-width1/verified.json"
+      }
+    },
+    "exhaustion-restart-v3": {
+      "source": "outputs/progression/route-exhaustion-restart-v3-b",
+      "replay": "outputs/progression/replay-exhaustion-restart-v3-b",
+      "native": "outputs/progression/native-exhaustion-restart-v3-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v3/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v3/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v3/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v3/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/exhaustion-restart-v3/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/exhaustion-restart-v3/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/exhaustion-restart-v3/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/exhaustion-restart-v3/pal-layout1-width1/verified.json"
+      }
+    },
+    "bear-chase": {
+      "source": "outputs/hazards/route-bear-chase-a",
+      "replay": "outputs/hazards/replay-bear-chase-a",
+      "native": "outputs/progression/native-bear-chase-matrix-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/bear-chase/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/bear-chase/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/bear-chase/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/bear-chase/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/bear-chase/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/bear-chase/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/bear-chase/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/bear-chase/pal-layout1-width1/verified.json"
+      }
+    },
+    "bear-refuge": {
+      "source": "outputs/hazards/route-bear-refuge-a",
+      "replay": "outputs/hazards/replay-bear-refuge-a",
+      "native": "outputs/progression/native-bear-refuge-matrix-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/bear-refuge/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/bear-refuge/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/bear-refuge/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/bear-refuge/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/bear-refuge/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/bear-refuge/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/bear-refuge/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/bear-refuge/pal-layout1-width1/verified.json"
+      }
+    },
+    "fish-envelope": {
+      "source": "outputs/hazards/route-fish-envelope-c",
+      "replay": "outputs/hazards/replay-fish-envelope-c",
+      "native": "outputs/progression/native-fish-envelope-matrix-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/fish-envelope/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/fish-envelope/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/fish-envelope/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/fish-envelope/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/fish-envelope/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/fish-envelope/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/fish-envelope/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/fish-envelope/pal-layout1-width1/verified.json"
+      }
+    },
+    "threat-push": {
+      "source": "outputs/hazards/route-threat-push-a",
+      "replay": "outputs/hazards/replay-threat-push-a",
+      "native": "outputs/progression/native-threat-push-matrix-b/natural.json",
+      "paced": {
+        "ntsc-layout0-width0": "outputs/progression/matrix-b/threat-push/ntsc-layout0-width0/verified.json",
+        "ntsc-layout0-width1": "outputs/progression/matrix-b/threat-push/ntsc-layout0-width1/verified.json",
+        "ntsc-layout1-width0": "outputs/progression/matrix-b/threat-push/ntsc-layout1-width0/verified.json",
+        "ntsc-layout1-width1": "outputs/progression/matrix-b/threat-push/ntsc-layout1-width1/verified.json",
+        "pal-layout0-width0": "outputs/progression/matrix-b/threat-push/pal-layout0-width0/verified.json",
+        "pal-layout0-width1": "outputs/progression/matrix-b/threat-push/pal-layout0-width1/verified.json",
+        "pal-layout1-width0": "outputs/progression/matrix-b/threat-push/pal-layout1-width0/verified.json",
+        "pal-layout1-width1": "outputs/progression/matrix-b/threat-push/pal-layout1-width1/verified.json"
+      }
+    }
+  }
+}
