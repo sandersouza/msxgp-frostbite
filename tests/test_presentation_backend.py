@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 import copy
+import subprocess
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 
@@ -20,7 +21,7 @@ class PresentationBackendTests(unittest.TestCase):
         patch = root / 'observer.patch'; patch.write_bytes(b'original-free sidecar patch fixture')
         metadata = {'revision': api.REVISION, 'binary_sha256': hashlib.sha256(binary.read_bytes()).hexdigest(),
                     'patch_sha256': hashlib.sha256(patch.read_bytes()).hexdigest(),
-                    'producer_commit': 'a' * 40, 'producer_dirty': False}
+                    'producer_commit': 'a' * 40, 'producer_dirty': False, 'sound_core': True}
         receipt = root / 'frostbite-presentation-observer.json'; receipt.write_text(json.dumps(metadata))
         return binary, patch, metadata, receipt
 
@@ -30,7 +31,7 @@ class PresentationBackendTests(unittest.TestCase):
             binary, patch, metadata, receipt = self.fixture(Path(directory), api)
             self.assertEqual(api.verify_backend(binary, patch), metadata)
             for changes in ({'revision': 'b' * 40}, {'binary_sha256': 'b' * 64},
-                            {'patch_sha256': 'b' * 64}, {'producer_dirty': True}, {'producer_commit': 'main'}):
+                            {'patch_sha256': 'b' * 64}, {'producer_dirty': True}, {'producer_commit': 'main'}, {'sound_core': False}):
                 receipt.write_text(json.dumps({**metadata, **changes}))
                 with self.subTest(changes=changes), self.assertRaises(ValueError): api.verify_backend(binary, patch)
 
@@ -66,3 +67,19 @@ class PresentationBackendTests(unittest.TestCase):
                     api.validate_equivalence([wrong], before, [after], [b'complete capsule'], [b'complete capsule'])
         with self.assertRaises(ValueError):
             api.validate_equivalence([record], before, [after], [b'complete capsule'], [b'changed capsule'])
+
+    def test_source_identity_uses_full_blob_hashes_independent_of_git_abbreviation(self):
+        api = self.api()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            def git(*args):
+                return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.DEVNULL)
+            git('init'); git('config', 'user.name', 'Test'); git('config', 'user.email', 'test@example.invalid')
+            source = root / 'source.txt'; source.write_text('baseline\n'); git('add', 'source.txt'); git('commit', '-m', 'fixture')
+            source.write_text('observed\n')
+            patch = root / 'observer.patch'; patch.write_bytes(git('diff', '--binary', '--full-index', '--no-ext-diff'))
+            for abbreviation in (4, 12):
+                git('config', 'core.abbrev', str(abbreviation))
+                api.verify_source_tree(root, patch)
+            source.write_text('unrelated change\n')
+            with self.assertRaises(ValueError): api.verify_source_tree(root, patch)

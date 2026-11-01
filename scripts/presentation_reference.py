@@ -33,7 +33,7 @@ def verify_backend(binary, patch=PATCH):
     binary = Path(binary)
     report = json.loads((binary.parent / 'frostbite-presentation-observer.json').read_text())
     if (report.get('revision') != REVISION or report.get('binary_sha256') != digest(binary)
-            or report.get('patch_sha256') != digest(patch) or report.get('producer_dirty') is not False
+            or report.get('patch_sha256') != digest(patch) or report.get('producer_dirty') is not False or report.get('sound_core') is not True
             or not re.fullmatch('[0-9a-f]{40}', str(report.get('producer_commit', '')))):
         raise ValueError('exact clean presentation backend/revision/patch required')
     return report
@@ -66,6 +66,12 @@ def _producer():
     return snapshot_paths(HELPERS)
 
 
+def verify_source_tree(source, patch=PATCH):
+    actual = subprocess.check_output(['git', 'diff', '--binary', '--full-index', '--no-ext-diff'], cwd=source)
+    if actual != Path(patch).read_bytes():
+        raise ValueError('backend source differs from exact observer patch')
+
+
 def build_backend(out):
     """Fresh source build, with sound core enabled even when runtime output is muted."""
     producer = _producer(); out = private_output(out)
@@ -82,8 +88,7 @@ def build_backend(out):
     source = out / 'source'; binary = source / 'stella'
     if '-DSOUND_SUPPORT' not in (source / 'config.mak').read_text():
         raise ValueError('original audio oscillator core must be enabled')
-    actual = subprocess.check_output(['git', 'diff', '--binary', '--no-ext-diff'], cwd=source)
-    if actual != PATCH.read_bytes(): raise ValueError('backend source differs from exact observer patch')
+    verify_source_tree(source)
     if _producer() != producer: raise ValueError('observer producer changed while building')
     report = {'revision': REVISION, 'upstream': UPSTREAM, 'producer_commit': producer['tool_source_commit'],
               'producer_dirty': False, 'producer': producer, 'patch_sha256': digest(PATCH),
@@ -101,6 +106,8 @@ def observe(out, initial, inputs, backend):
     for sample in inputs: control_commands(sample)
     producer = _producer(); identity = verify_backend(backend)
     audit_manifest(identity['producer'], HELPERS)
+    if identity['producer']['tool_source_commit'] != identity['producer_commit']:
+        raise ValueError('backend receipt has inconsistent producer identity')
     initial_bytes = Path(initial).read_bytes(); start = decode_state(initial_bytes)
     if start['cpu']['pc'] != 0xF019: raise ValueError('complete F019 capsule required')
     out = private_output(out); out.mkdir(parents=True, exist_ok=False)

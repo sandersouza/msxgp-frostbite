@@ -1,5 +1,5 @@
 diff --git a/src/debugger/Debugger.cxx b/src/debugger/Debugger.cxx
-index 3095e0ac..c0a1d522 100644
+index 3095e0accf7213a53328a4031e065bdcb4d3ea78..c0a1d522a2c0232409a7a92be54888fcda085101 100644
 --- a/src/debugger/Debugger.cxx
 +++ b/src/debugger/Debugger.cxx
 @@ -45,6 +45,7 @@
@@ -103,7 +103,7 @@ index 3095e0ac..c0a1d522 100644
  Debugger::Debugger(OSystem& osystem, Console& console)
    : DialogContainer(osystem),
 diff --git a/src/debugger/Debugger.hxx b/src/debugger/Debugger.hxx
-index 62c1ab2f..056476de 100644
+index 62c1ab2f62065b5728c1537699ea488be744259e..056476de084d8d62a6a0a62972b1c37665e6ea58 100644
 --- a/src/debugger/Debugger.hxx
 +++ b/src/debugger/Debugger.hxx
 @@ -328,6 +328,8 @@ class Debugger : public DialogContainer
@@ -124,7 +124,7 @@ index 62c1ab2f..056476de 100644
  
      DebuggerDialog* myDialog{nullptr};
 diff --git a/src/debugger/DebuggerParser.cxx b/src/debugger/DebuggerParser.cxx
-index 42ac0eaf..9564eead 100644
+index 42ac0eafe4530881e04f0e65e06abebfb63a35b4..9564eead2f59951fb5fd3546a77ee832782a2a64 100644
 --- a/src/debugger/DebuggerParser.cxx
 +++ b/src/debugger/DebuggerParser.cxx
 @@ -103,6 +103,8 @@ string DebuggerParser::run(string_view command)
@@ -137,7 +137,7 @@ index 42ac0eaf..9564eead 100644
    getArgs(command, verb);
    commandResult.str("");
 diff --git a/src/emucore/tia/TIA.cxx b/src/emucore/tia/TIA.cxx
-index 98ed5ffa..8d877af0 100644
+index 98ed5ffa3b6d0c0f6c02a2357a678ae42e7c3726..8d877af08b58d8f2cd52a8c32c1d4a90f96625bc 100644
 --- a/src/emucore/tia/TIA.cxx
 +++ b/src/emucore/tia/TIA.cxx
 @@ -557,6 +557,9 @@ bool TIA::poke(uInt16 address, uInt8 value)
@@ -165,7 +165,7 @@ index 98ed5ffa..8d877af0 100644
    {
      // Calculate difference to previous frames (with some margin).
 diff --git a/src/emucore/tia/TIA.hxx b/src/emucore/tia/TIA.hxx
-index bcc87cb1..ac4d1a44 100644
+index bcc87cb194ecc8821a065df67d7e87f217edc654..ac4d1a44923f3b353c093e5a24b4198aefbc4c2d 100644
 --- a/src/emucore/tia/TIA.hxx
 +++ b/src/emucore/tia/TIA.hxx
 @@ -251,6 +251,16 @@ class TIA : public Device
