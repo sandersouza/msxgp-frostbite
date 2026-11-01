@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "checker_producer": {
+    "tool_source_commit": "5e82791cdca714f42bd700b8bcd270004be784a3",
+    "utility_fingerprints": {
+      "scripts/presentation_reference.py": "32be75eb47817b7a142fa1d4f3ee8f94a8ac514cd7ea89668e27bcad8ed1ed47",
+      "scripts/presentation_records.py": "5d77bb8392ee358e6f23555edf551aa87e31898e594eec7181e9f8f7ca433efe",
+      "tools/stella-presentation.patch": "dba4a2b3076ccfdaf838178a8c5ae68a45675507afcade617c3f1d9db733aefb",
+      "references/presentation-contract.json": "416d095eb0d5b6db21dbf3ce189274b7da8c5193612f23ecb7509ee578620aa1",
+      "scripts/reference_traces.py": "77c9ef893343ded30873520c1c9d4cbb0e75db2bf358ccbcb889168f94770199",
+      "scripts/reference_state.py": "6ecf362bad378919a03f9c4b596b464348e26fa83e695e56edd86505c70ff4f1",
+      "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+      "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+      "scripts/source_timing.py": "3de31f705dc8506d2c23845ff435b234ea8604285e15ca00cd74089edbb8bee1",
+      "scripts/trace_compare.py": "dd3b1afbf99668f76fff7c640af43077175f359d30361d72d3b726d3474be4ff",
+      "scripts/graphics_mapping.py": "f2282fe53363e8d8d90b852888e659096d2ee3151ca5498529ecdb623b5cfa85",
+      "scripts/environment.py": "df757bc19544337a63cf1f4f0dca1f16f78d6e19ac648267e1face46f9b83920",
+      "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+      "scripts/presentation_source_check.py": "0e2d391547fe34edcea863fabce8802f9510459d42b00e46722e83a145ba14d7",
+      "scripts/graphics_reference.py": "63f68b0a2fd2f8e02a1267480d83950ae978fad865f14f1bfd5f44ef2ff2857a",
+      "scripts/original_graphics.py": "41094856026c54f011de61ce12405f6893b31075d7d9b09ce7c2713a38f83fc1",
+      "scripts/render_model.py": "db22ca179647a41e49910665c46a424f8bd4385dbe2eca8a24b29a9b1d56271c",
+      "references/progression-config.json": "cd95b70aaac71bab9e2e394a75adb42c980265d2ac24c4d973be2636f7ddcde1",
+      "references/graphics-result.json": "1f2846a1879bfd6900c097dc6fa2a936825864328669e13cb2538cdd009f0efa",
+      "references/presentation-source-config.json": "684c63d41a8ec6710e44acc0c8b205418955ee845c7f896b786255e651b778f2"
+    }
+  },
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "source_clock": {
+    "numerator": 3579545,
+    "divisor": 3
+  },
+  "controlled_domains": {
+    "temperature": 256,
+    "footer": 256,
+    "daynight": 256,
+    "reserves": 10,
+    "bear-coordinate": 160,
+    "player-coordinate": 160,
+    "score_player_pairs": 16,
+    "attract_player_pairs": 32
+  },
+  "cross_backend": {
+    "cases": 544,
+    "exact_matches": 540,
+    "disagreements": [
+      {
+        "name": "edge-0",
+        "different_pixels": 109,
+        "bounds": [
+          8,
+          58,
+          21,
+          73
+        ]
+      },
+      {
+        "name": "edge-1",
+        "different_pixels": 123,
+        "bounds": [
+          8,
+          58,
+          22,
+          73
+        ]
+      },
+      {
+        "name": "edge-7",
+        "different_pixels": 126,
+        "bounds": [
+          13,
+          58,
+          28,
+          73
+        ]
+      },
+      {
+        "name": "edge-8",
+        "different_pixels": 126,
+        "bounds": [
+          14,
+          58,
+          29,
+          73
+        ]
+      }
+    ],
+    "authority": "Pinned Stella7 for rendering/contact geometry; no real-Atari hardware verdict inferred"
+  },
+  "bear_placement": {
+    "cases": 160,
+    "origin_x": "(E8+(6 if E8<15 else1)) mod160",
+    "origin_y": "58+(E8>=150)",
+    "limits": "Controlled pose0/reflection0/day bear; not the complete presentation model"
+  },
+  "limits": [
+    "Source evidence only; live native graphics/HUD/PSG, integrated timing and ROM acceptance remain pending",
+    "Window observations overlap; their sum is not a count of unique whole-game intervals",
+    "Seven seeded startup physical frames retained raw and explicitly excluded from mapped rendering proof",
+    "Controlled complete128RAM injections do not prove natural reachability; invalid BCD bytes are literal source-domain probes",
+    "Four old-ALE left-edge bear disagreements explicitly retained; pinned Stella7 selected consistently with contact authority",
+    "No manual visual/listening, real Atari or physical MSX verdict inferred"
+  ],
+  "backend": {
+    "revision": "d55b1aec0d067a4c901a6dcdf81cb8f579685659",
+    "producer_commit": "20f626007c4a2d51fe19846fecbf3ccdcc0342fa",
+    "patch_sha256": "dba4a2b3076ccfdaf838178a8c5ae68a45675507afcade617c3f1d9db733aefb",
+    "binary_sha256": "0f12e94642ff80a853cf86ab02c65a59d41cbdc4846094991574c75434d92c61",
+    "sound_core": true
+  },
+  "private_sha256": "874e8e309afa19ff0ba3bbf34532e3a8ed14887b7a53184d69410a5bd0ed0247",
+  "groups": {
+    "fixtures": {
+      "facts_per_repeat": {
+        "intervals": 1690,
+        "physical_frames": 1690,
+        "normalized_frames": 1690,
+        "unmapped_startup_frames": 0,
+        "audio_writes": 1704
+      },
+      "independent_repeats": 2,
+      "report_sha256": "f6d82ad11858634091448ceba1e51a598900f1557b4f374e24303632427502a0"
+    },
+    "cold_route": {
+      "facts_per_repeat": {
+        "intervals": 32,
+        "physical_frames": 38,
+        "normalized_frames": 31,
+        "unmapped_startup_frames": 7,
+        "audio_writes": 28
+      },
+      "independent_repeats": 2,
+      "report_sha256": "3b44b9173d04199487c86b2633867a6dfef9658a0ac253fde91ffba72de55f9f"
+    },
+    "natural_windows": {
+      "windows": 45,
+      "observations_per_repeat": {
+        "intervals": 394,
+        "physical_frames": 394,
+        "normalized_frames": 394,
+        "unmapped_startup_frames": 0,
+        "audio_writes": 1767
+      },
+      "independent_repeats": 2,
+      "manifest_sha256": "c94dc65ad0e6cf4d482c7e79635091d0cfc878ec8d8a7d793a037e0a4c0548c5"
+    }
+  }
+}

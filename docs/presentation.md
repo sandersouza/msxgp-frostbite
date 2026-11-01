@@ -41,12 +41,66 @@ misattribute that emulator bookkeeping to the observer. No serialized field is
 normalized away. Controlled fixtures disclose their full128-byte RAM injection,
 restore baseline and input pins; they do not establish natural reachability.
 
-This is protocol implementation, not a claim of a completed observer, dynamic
-renderer, listening review or new testable ROM. Task1 source acceptance is still
-pending. An exploratory sound-enabled observer using standard debugger
-step/checkpoint bookkeeping reproduced the complete1256-byte frozen initial
-interval capsule exactly. This establishes absence of source mutation for that
-probe; it does not qualify a renderer or the observer's whole domain.
-The published progression diagnostic is unchanged; original graphics
+## Verified independent source package
+
+The [source receipt](../references/presentation-source-result.json) binds the
+canonical checker commit, complete consumed-file hashes, exact backend/patch and
+private evidence digest. The clean sound-enabled backend uses standard debugger
+step/checkpoint bookkeeping. Its observation sidecars are not serialized and do
+not write original ROM, RAM, CPU or TIA/RIOT semantics.
+
+- 1690 controlled fixtures, independently repeated: all requested128-byte RAM
+  states, full plain/probe capsules, native viewports and normalized rasters agree.
+  Each run retains1690 physical frames and1704 ordered audio writes.
+- Literal temperature, footer and level byte domains0..255; reserves0..9; both
+  players/eight score values; sixteen blink phases; all160 player and bear X
+  coordinates; the complete544 original-graphics fixture set. Invalid BCD bytes
+  are explicit literal-domain probes, not reachable gameplay claims.
+- 32 cold-route intervals, independently repeated:38 physical frames,31 mapped
+  frames and28 audio writes. All seven irregular seeded startup frames remain
+  raw and excluded from mapped rendering proof.
+- 45 input-only windows, independently repeated:394 observations and1767 audio
+  writes across all four progression modes, real player swaps, construction,
+  igloo entry, bonus/next-level, death/restart, fish rewards and Select/Reset.
+  Overlapping windows do not constitute394 unique whole-game intervals.
+
+The independent checker reopens scripts, raw streams, complete checkpoint files,
+derived rasters and final capsules. It verifies actual bytes, source phases,
+CPU/all128RAM, raw inputs, restore chains, clocks/frame counters and event order,
+with historical Git provenance and frozen-route CPU/RAM comparisons. Tests reject
+changed or rehashed phase registers/RAM and modified scripts, capsules, images,
+streams or completion markers. All256 literal debugger byte values also underwent
+actual readback: decimal `#value` avoids Stella's hex-looking system labels.
+
+```sh
+.venv/bin/python -B -m unittest discover -s tests
+.venv/bin/python -B scripts/presentation_source_check.py --out outputs/presentation/source-check-local-1
+```
+
+The output must be fresh. The committed local-path config documents every input;
+raw captures, original ROM copies and generated pictures stay ignored. A later
+documentation commit does not relabel the frozen source/checker producers.
+
+## Explicit old-ALE edge disagreement
+
+540 of544 frozen ALE rasters match all33,600 pixels exactly. The four controlled
+`edge-0/1/7/8` cases differ only in the bear region:109/123/126/126 pixels. The
+older [ALE TIA implementation](https://github.com/Farama-Foundation/Arcade-Learning-Environment/blob/v0.12.1/src/ale/emucore/TIA.cxx#L2175)
+and [pinned Stella7 counter handling](https://github.com/stella-emu/stella/blob/d55b1aec0d067a4c901a6dcdf81cb8f579685659/src/emucore/tia/TIA.cxx#L2098)
+resolve the horizontal reset near blanking differently. This is retained as an
+explicit backend disagreement; it is not hidden by shifting mechanics.
+
+Stella7 remains the rendering authority, consistent with the frozen source
+contact geometry. Its actual bear pixels match the original glyph across all160
+controlled X coordinates: origin `(E8+(6 if E8<15 else1)) mod160`, vertical origin
+`58+(E8>=150)` for the measured pose/reflection/day fixture. Other poses, priority
+and combined scenes still need the general compositor proof. The extreme control
+fixtures are not evidence that normal play reaches those coordinates. Real Atari
+hardware has not adjudicated the emulator disagreement.
+
+## Remaining target work
+
+Source acquisition does not qualify a dynamic renderer, listening review or new
+testable MSX ROM. The published progression diagnostic is unchanged; graphics
 from issue9 prove offline fit only. New live graphics/HUD/PSG need fresh combined
 NTSC/PAL timing, actual pixels/events and complete source/native state checks.

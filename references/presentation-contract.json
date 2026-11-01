@@ -12,12 +12,19 @@
     "raster": "Explicitly partial visible_end viewport, then EVERY completed physical frame in timestamp/frame order; no implicit crop or frame loss",
     "video_header": "little-endian IHHHH: source-cycle offset, width160, height1..320, start_line0..320, scanlines1..1024; followed by width*height raw indexed bytes",
     "startup": "Seeded RIOT startup may span multiple physical frames; bounded interval <=524288 sourcecycles, not assumed steady cadence",
-    "normalization": "Native Stella viewport is retained. Mapping to the approved210-row graphics domain requires separately measured alignment and black-omission validation; partial/unstable startup video is explicitly identified",
+    "normalization": "Measured262/263-line160x228/start23 frames project rows11..220 to210rows; all excluded native margins and every approved mapping omission must be black. Partial/irregular seeded startup stays raw/unmapped",
     "legacy_v1": "FBPR0001 parser retained for original-free protocol tests only; its210-row raster has strict nonblack-omission rejection",
     "audio_write": "little-endian IBB: normalized source-cycle offset, decoded TIA audio write address15..1A, unmodified bus value",
     "audio_order": "Retain every ordered write, including unchanged values and silent intervals; no deduplication",
     "terminator": "FBPRDONE then little-endian uint32 record_count; no trailing bytes"
   },
   "evidence_policy": "Independent original raster/audio observations, controlled fixtures, natural input-only replay, target pixels/events/state, manual review and physical acceptance remain separate",
-  "status": "Source observation protocol/parser under implementation; backend and actual source acceptance pending"
+  "render_authority": {
+    "backend": "Stella7.0 d55b1aec0d067a4c901a6dcdf81cb8f579685659 with sidecar-only presentation patch",
+    "legacy_comparison": "540/544 frozen ALE0.12.1 rasters match exactly; four controlled left-edge bear disagreements are explicitly retained/adjudicated in presentation-source-result.json",
+    "choice": "Use pinned Stella7 consistently with the accepted electrical-contact authority; do not move gameplay coordinates to match older ALE rendering",
+    "hardware_limit": "Real Atari hardware not verified; controlled edge positions do not establish natural reachability"
+  },
+  "source_receipt": "presentation-source-result.json",
+  "status": "Independent original observer and repeated persisted acquisition verified; live MSX graphics/HUD/PSG and integrated acceptance pending"
 }
