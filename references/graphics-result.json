@@ -1,0 +1,75 @@
+{
+  "source_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "tool_source_commit": "82ac6a37447b65ef132c8d9b9370f85f95ae8e43",
+  "private_sha256": "10c41e91c7fea93b5c40997f7ab67ce3a23b2b9d71d7479f93cfd6ab4e75ec45",
+  "utility_fingerprints": {
+    "scripts/graphics_reference.py": "63f68b0a2fd2f8e02a1267480d83950ae978fad865f14f1bfd5f44ef2ff2857a",
+    "scripts/original_graphics.py": "41094856026c54f011de61ce12405f6893b31075d7d9b09ce7c2713a38f83fc1",
+    "scripts/graphics_mapping.py": "f2282fe53363e8d8d90b852888e659096d2ee3151ca5498529ecdb623b5cfa85",
+    "scripts/reference_inventory.py": "c0ce63665a2d28aece5a52656f0d7c0e8cc534bccf42e4e2ccaf190a254d6ed6",
+    "scripts/reference_provenance.py": "a95c569289999cdc16715e89073b94c21ffdf81d9e0b7ac23f760316592566b3",
+    "references/manifest.json": "463b6626b6bd22e20a92fec87d390deffa1bdf3f655363344ffe4a3b2f06fc10",
+    "references/graphics-contract.json": "fc1f73233f0fd8ee71831d5b0ae781248321d33dc64c17b14f946165344928ab",
+    "scripts/render_model.py": "ac29aea788a6e9d9c854f0e1ce0d3bd92372a06f9b566d8e08c2feb3d1539047"
+  },
+  "backend": {
+    "name": "ALE",
+    "version": "0.12.1",
+    "binary_sha256": "34ac656b5d24fc5b4e3978c9628b958f95a620ab9cf10e159a7198a3d5bec8dc",
+    "numpy": "2.5.4",
+    "seed": 1,
+    "frame_skip": 1,
+    "repeat_action_probability": 0
+  },
+  "schema_version": 1,
+  "facts": {
+    "cases": 544,
+    "table_views": 398,
+    "raw_matches": 382,
+    "blank_views": 4,
+    "repeat_equal": true,
+    "max_tiles_per_bank": [
+      45,
+      31,
+      47
+    ],
+    "max_changed_pixels": 0,
+    "total_changed_pixels": 0,
+    "overcolor_rows": 4287,
+    "crop_checked": true,
+    "source_state_unchanged_by_mapping": true,
+    "families": [
+      "bear",
+      "edge",
+      "hud",
+      "hud-scene",
+      "igloo",
+      "palette-floe",
+      "player",
+      "row",
+      "row-wrap"
+    ],
+    "palette_codes": 34,
+    "target_vram_bytes": 16384,
+    "runtime_changed": false,
+    "negative_controls": [
+      "source_sha256",
+      "actual",
+      "saved_pixels",
+      "table_pixels",
+      "target_pixels",
+      "fifth_sprite"
+    ],
+    "max_sprites_per_line": 3,
+    "max_sprite_patterns_bytes": 352,
+    "total_patched_pixels": 6032,
+    "igloo_distinct_states": 16,
+    "daynight_source_probe_verified": true
+  },
+  "limits": [
+    "Controlled presentation fixtures, not natural reachability or full-game proof",
+    "Offline background/sprite repair VRAM fit; native adapter/cache timing and ROM integration remain unimplemented",
+    "Measured emulator RGB nearest nominal TMS palette is approximate; physical colors/manual/hardware pending",
+    "Every dynamic renderer/ROM change must remeasure all layouts/widths/transitions/NTSC/PAL"
+  ]
+}

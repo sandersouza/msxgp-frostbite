@@ -13,7 +13,9 @@ The [v0.0.2 renderer benchmark](https://github.com/sandersouza/msxgp-frostbite/r
 adds a synthetic SCREEN2 workload in a plain32KiB cartridge. Its
 [measured limits and commands](docs/renderer-feasibility.md) and
 [human tests](docs/releases/v0.0.2-renderer.md) explain the current state.
-Original graphics and native gameplay remain later deliveries.
+[Original graphics extraction and SCREEN2 asset-fit evidence](docs/original-graphics.md)
+are prepared locally. They are not yet integrated into the cartridge; native
+gameplay remains later work.
 
 The supplied 4 KiB Atari ROM has a verified immutable identity and measured
 262-line / 19,912-CPU-cycle steady cadence. Disassembly reconstructs
@@ -34,6 +36,7 @@ results are not Frostbite evidence.
 - [Gameplay contracts and boundary routes](docs/gameplay-contracts.md)
 - [Independent original-execution oracles](docs/reference-traces.md)
 - [Renderer feasibility and synthetic benchmark](docs/renderer-feasibility.md)
+- [Original graphics, coordinate/palette mapping and asset fit](docs/original-graphics.md)
 - [Delivery workflow](docs/project-workflow.md)
 - [Preserved baseline and provenance](docs/baseline-preservation.md)
 
