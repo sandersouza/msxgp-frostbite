@@ -1,6 +1,6 @@
 # Port ice floes, reversal costs, igloo construction and temperature
 
-Planning ID: P11. Status: automated acceptance and independent review complete; final integration/release receipt is tracked in the live issue. Dependency #10 is integrated, closed and released.
+Planning ID: P11. Status: implemented, independently reviewed, integrated and released; all release downloads verified. Dependency #10 is integrated, closed and released.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/11
 
 ## Goal
@@ -71,3 +71,9 @@ and physical-hardware feedback remain pending. The live issue records the final
 merged commit/CI and downloaded release verification before close/Done; the
 prepared successor receives exclusive ownership only afterward. Legacy removal
 remains #17 after replacement acceptance.
+
+## Integration and release verification
+
+PR #33 merged at `93daa3bfd4d75b9b7f61bed9e1dc03c410219451`; final-head and merged-main CI pass. Clean merged-main tests pass (203) and rebuild the exact sealed ROM. The prerelease is public and all four downloaded assets are byte-identical to the immutable package. The tag resolves to the exact tested source. See [delivery receipt](https://github.com/sandersouza/msxgp-frostbite/blob/main/references/floe-delivery.json) for each asset hash, source/integration commit and CI identifiers. Manual/physical results remain pending.
+
+The dedicated issue #12 fork is prepared and verified in the Frostbite project/workspace. Its exclusive ownership starts only with the parent transfer after final documentation integration and issue closure.

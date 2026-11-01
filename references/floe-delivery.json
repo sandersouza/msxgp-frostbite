@@ -1,0 +1,43 @@
+{
+  "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop",
+  "prerelease": true,
+  "tag_source_commit": "81619c058e04a644564404ec4bd8582ac46cee41",
+  "merged_main": "93daa3bfd4d75b9b7f61bed9e1dc03c410219451",
+  "assets": {
+    "frostbite-0.0.4-buildloop.rom": {
+      "size": 4194304,
+      "sha256": "c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600"
+    },
+    "SHA256SUMS": {
+      "size": 96,
+      "sha256": "87786e5f39e419b45a70466aee4a61bc166cffbfcdc8726f24c1a91c6521e9a7"
+    },
+    "build.json": {
+      "size": 22691,
+      "sha256": "2a5f6b08d4b8d6e60374c0a280264ab40ec3fe9f8ee2c8bcef64848eae49bdb4"
+    },
+    "validation.json": {
+      "size": 6434,
+      "sha256": "9e4a73e22a3fd291b596cae5ab41f0980b2521a2eae57dc00d9a1f69fd8ed08b"
+    }
+  },
+  "schema_version": 1,
+  "pull_request": "https://github.com/sandersouza/msxgp-frostbite/pull/33",
+  "ci": {
+    "reviewed_head": "1ee581987452ef1008e96e43e1bd695c6859bd37",
+    "reviewed_head_runs": [
+      41290800207,
+      41290797357
+    ],
+    "merged_main_run": 41290843785,
+    "conclusion": "success"
+  },
+  "merged_main_rebuild": {
+    "source_commit": "93daa3bfd4d75b9b7f61bed9e1dc03c410219451",
+    "clean": true,
+    "rom_sha256": "c298a0311eb263b4e2fdc5ce490d29880ac27ebbc92f53e492f17b7f5747d600"
+  },
+  "host_tests": 203,
+  "manual_emulator": "Pending owner feedback",
+  "physical_hardware": "Pending owner feedback"
+}
