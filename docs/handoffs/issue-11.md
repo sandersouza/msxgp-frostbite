@@ -129,3 +129,25 @@ It remains idle until the parent explicitly transfers exclusive ownership after
 integration and release-download verification. No minor findings were deferred.
 All execution rulings and review dispositions are archived in
 [issue-11-execution-ledger.md](issue-11-execution-ledger.md).
+
+## Verified delivery receipt
+
+PR #33 is merged at `93daa3bfd4d75b9b7f61bed9e1dc03c410219451`.
+Both final-head CI runs (41290800207/41290797357) and merged-main CI
+[41290843785](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41290843785)
+succeeded. A clean merged-main rebuild has the exact canonical ROM hash;
+all 203 host tests and public-source policy pass on that merged source.
+
+The prerelease is published with exactly ROM/SHA256SUMS/build.json/validation.json.
+All four were downloaded afresh and compare byte for byte with the sealed v2
+bundle. The tag resolves to the tested source `81619c058e04a644564404ec4bd8582ac46cee41`.
+[The compact delivery receipt](../../references/floe-delivery.json) records
+every asset size/hash, integration/CI and unchanged merged-main ROM identity.
+Private original captures and private-evidence.json were not uploaded.
+
+Successor `Frostbite — ISSUE #12` is the prepared dedicated fork
+`01a19650-5f24-78c3-b4cf-3b2942a756ac`, explicitly placed in project
+`0fd5a899-599e-40d4-988e-46b3d31433dd`, with the correct shared checkout.
+The parent sends exclusive ownership only after the documentation receipt is
+integrated, issue #11 is closed/Done and the checkout is clean; its final prompt
+provides the exact current main commit. No pending source files transfer.

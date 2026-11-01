@@ -199,7 +199,7 @@
       "scripts/floe_delivery.py": "7d02fd034c260059c3588ee9ee7f5e965af6090fa3b6dba3b490fd8d3a2bdce8"
     }
   },
-  "status": "Automated issue11 acceptance passed; integration/release completion receipt is tracked in GitHub issue11.",
+  "status": "Delivered: PR33 integrated, versioned prerelease published, all four downloaded assets byte-identical; manual/physical feedback pending.",
   "pull_request": "https://github.com/sandersouza/msxgp-frostbite/pull/33",
   "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.4-buildloop",
   "validation_sha256": "9e4a73e22a3fd291b596cae5ab41f0980b2521a2eae57dc00d9a1f69fd8ed08b",
@@ -215,5 +215,6 @@
     "binary_sha256": "1b84b99fe8554405b1138fb63de4ef1aa56c7730a43a7e24f2349239f428e297",
     "source_commit": "07195b02711a24994facfd02307a084d78b3b13f"
   },
-  "host_tests": 203
+  "host_tests": 203,
+  "delivery_receipt": "references/floe-delivery.json"
 }

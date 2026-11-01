@@ -66,7 +66,7 @@
 **Files:** docs/floe-loop.md, references/floe-result.json, docs/releases/v0.0.4-buildloop.md, docs/handoffs/issue-11.md, local p11, README.
 
 - [x] One fresh read-only whole-branch review on the most capable reviewer, five focus classes and ledger rulings. Regrade material findings; one owned RED→GREEN fix pass/full suite, no review loop.
-- [ ] Exact-head CI, focused linked PR and clean merged-main checks. Publish prerelease with exact tested ROM/SHA/source/current/next/human tests; download and verify every asset before close/Done.
-- [ ] Durable handoff of hashes, limits and exclusive ownership to a separate Frostbite issue12 fork. Stop editing this checkout after transfer; keep legacy deletion for17.
+- [x] Exact-head CI, focused linked PR and clean merged-main checks. Publish prerelease with exact tested ROM/SHA/source/current/next/human tests; download and verify every asset before close/Done.
+- [x] Durable handoff of hashes, limits and exclusive ownership to a separate Frostbite issue12 fork. Stop editing this checkout after transfer; keep legacy deletion for17.
 
 Self-review: Tasks1/2 establish real floe acquisition plus original state effects and all11mechanics; Task2 owns the natural completion predicate; Task3 owns whole-pipeline timing; Task4 owns integration/release. Full hazards and original graphics/audio are not inferred from these checks. The approved autonomous method overrides redundant design/plan approval menus.
