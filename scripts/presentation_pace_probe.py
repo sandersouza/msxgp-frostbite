@@ -48,9 +48,10 @@ def verify_rows(text,count,family):
         'max_source_and_scheduler_cycles':max(row[2] for row in rows),'max_prepare_cycles':max(row[3] for row in rows)}
 
 
-def probe(build_dir,out,*,family='ntsc',frames=120,play=False):
+def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=0):
     if family not in ('ntsc','pal') or type(frames)is not int or not 2<=frames<=600 or type(play)is not bool:
         raise ValueError('bounded continuous profile and explicit clock/input mode required')
+    if type(last_world_budget)is not int or last_world_budget<0:raise ValueError('nonnegative last-world microbudget required')
     producer={name:sha((ROOT/name).read_bytes()) for name in HELPERS}
     build_dir=Path(build_dir).resolve();meta=json.loads((build_dir/'build.json').read_text())
     artifact=build_dir/meta['rom']['filename'];rom=artifact.read_bytes()
@@ -172,11 +173,15 @@ after time {60+frames} {{fail_probe watchdog}}
         family=family,play=play,canonical_ram_injections=0,source_equivalence_accepted=False,audio_accepted=False,
         scope='Private continuous clock/pixel-model profile with real scheduler and keyboard. Retains all missed deadlines; independent original-state/audio/full-route/human acceptance remains separate.',
         artifacts={p.name:sha(p.read_bytes()) for p in out.iterdir() if p.is_file()})
+    report['last_world_cycles']=next(int(row[2]) for row in phases[-len(labels):] if row[1]=='world')
+    report['last_world_microbudget']=last_world_budget or None
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n')
+    if last_world_budget and report['last_world_cycles']>last_world_budget:raise ValueError(f'last world component costs{report["last_world_cycles"]}>{last_world_budget}; no complete-frame acceptance implied')
     return report
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--frames',type=int,default=120);p.add_argument('--play',action='store_true')
+    p.add_argument('--last-world-budget',type=int,default=0)
     report=probe(**vars(p.parse_args()));print(json.dumps({k:report[k] for k in ('frames','max_busy_cycles','frame_budget','over_budget_frames','skipped_vdp_frames','max_source_and_scheduler_cycles','max_prepare_cycles')}))

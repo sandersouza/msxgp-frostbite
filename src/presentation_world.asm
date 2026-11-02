@@ -43,6 +43,8 @@ presentation_world_prepare:
     AND $3F
     OR B
     RET Z
+    XOR A
+    LD (pfw_geo_valid),A     ;native steps may reuse broad runtime scratch
     ENDIF
     LD A,($C068)
     CP 150
@@ -292,6 +294,15 @@ p_world_primitive:
 .fast_visible:
     CALL p_fast_primitive_dirty
     RET Z
+    LD A,(p_w_family)
+    CP 2
+    JR Z,.clear_memo
+    LD A,(p_w_copy)
+    OR A
+    JR NZ,.memo_ready
+.clear_memo:
+    CALL p_fast_clear_memo
+.memo_ready:
     ENDIF
     LD A,(p_w_family)
     CP 3
@@ -321,7 +332,11 @@ p_world_primitive:
     LD A,(p_w_group)
     LD B,A
     LD A,(p_w_family)
+    IFDEF WITH_PRESENTATION_FAST
+    CALL p_fast_geometry_lookup
+    ELSE
     CALL presentation_geometry_lookup
+    ENDIF
     JP C,p_world_fail
 .ready:
     LD A,(p_w_x)
@@ -442,6 +457,7 @@ p_world_primitive:
     LD A,(p_w_origin)
     LD (p_w_col),A
     JP .tile
+    IFNDEF WITH_PRESENTATION_FAST
 p_world_clip:
     LD HL,p_w_mask
     LD B,8
@@ -452,6 +468,7 @@ p_world_clip:
     INC HL
     DJNZ .row
     RET
+    ENDIF
 
 ; Load exact old tile; merge the new monochrome fragment row by row. A third
 ; actual color traps instead of approximating. New cache misses upload only
@@ -652,7 +669,9 @@ p_world_copies:
     DB 0,255,255,255,0,16,255,255,0,32,255,255,0,16,32,255
 p_world_row_offsets:
     DB 0,-26,-52,-78
+    IFNDEF WITH_PRESENTATION_FAST
 p_world_bg_roots:
     DW p_bg_patterns0_data,p_bg_colors0_data
     DW p_bg_patterns1_data,p_bg_colors1_data
     DW p_bg_patterns2_data,p_bg_colors2_data
+    ENDIF

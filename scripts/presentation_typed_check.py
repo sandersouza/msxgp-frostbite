@@ -9,6 +9,7 @@ import subprocess
 
 from environment import ROOT,verified_tool
 from presentation_assets import compile_assets
+from presentation_build import flat_water_ids
 from presentation_constructors import construct,literal_key,union_key,header_key,igloo_key,footer_key
 from presentation_fast_model import prepare,frame
 from presentation_fragments import background_tables,pack_background,pack_geometry_metadata
@@ -20,7 +21,7 @@ from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-HELPERS=tuple(dict.fromkeys((*SOURCE_FILES,'scripts/presentation_typed_check.py','src/presentation_typed.asm',
+HELPERS=tuple(dict.fromkeys((*SOURCE_FILES,'scripts/presentation_typed_check.py','src/presentation_typed.asm','scripts/presentation_build.py',
     'scripts/presentation_fast_model.py','scripts/presentation_constructors.py','scripts/presentation_static_assets.py',
     'scripts/presentation_fragments.py','scripts/presentation_assets.py','scripts/presentation_palette.py',
     'scripts/presentation_check.py','src/presentation_geometry.asm','src/movement.asm')))
@@ -86,6 +87,8 @@ def check(out,geometry,explore=False):
     (out/'presentation_static.inc').write_text((out/'static/presentation_static.inc').read_text())
     assets=compile_assets(rom,out/'assets',measured_palette=palette)
     boot=pack_background((out/'assets/fragments.bin').read_bytes(),assets['used_bytes'],background_tables(rom,palette))
+    water=flat_water_ids(background_tables(rom,palette))
+    (out/'presentation_simple.inc').write_text(''.join(f'pt_water_id{bank} EQU {identifier}\n' for bank,identifier in enumerate(water)))
     meta=pack_geometry_metadata(boot,geo,(geometry/'row-pointer-map.bin').read_bytes())
     (out/'boot.bin').write_bytes(meta['bank']);(out/'presentation_geometry.inc').write_text(meta['assembly'])
     (out/'presentation_background.inc').write_text(boot['assembly'])

@@ -48,16 +48,13 @@ p_fast_resolve:
     LD (pf_group),A
     XOR A
     LD (pf_miss),A
-    LD B,A
-    LD IX,pf_key
-    LD H,p_fast_crc_data/256
+    LD HL,pf_key
+    LD D,p_fast_crc_data/256
     DUP 6
-    LD A,(IX)
-    XOR B
-    LD L,A
-    LD A,(HL)
-    LD B,A
-    INC IX
+    XOR (HL)
+    LD E,A
+    LD A,(DE)
+    INC HL
     EDUP
     LD (pf_hash),A
     LD A,(pf_group)
@@ -277,16 +274,19 @@ p_fast_ref_address:
     JP NC,p_fast_fail
 .slot:
     AND 63
-    LD E,A
-    LD D,0
-    LD L,B
-    LD H,0
-    DUP 6
-    ADD HL,HL
-    EDUP
-    ADD HL,DE
-    LD DE,pf_refs
-    ADD HL,DE
+    LD D,A
+    LD A,B
+    ADD A,2                 ;C080 is the second aligned64-byte block in C000
+    RRCA
+    RRCA
+    AND $C0
+    OR D
+    LD L,A
+    LD A,B
+    CP 2
+    LD A,$C1
+    SBC A,0                 ;groups0/1 use C0xx; groups2..5 use C1xx
+    LD H,A
     OR A
     RET
 p_fast_ref_add:
@@ -327,10 +327,9 @@ p_fast_ref_drop:
 p_fast_bitmap_pointer:
     LD A,C
     AND 7
-    LD E,A
-    LD D,0
-    LD HL,p_fast_bits
-    ADD HL,DE
+    ADD A,p_fast_bits&255
+    LD L,A
+    LD H,p_fast_bits/256
     LD E,(HL)
     LD A,C
     DUP 3
@@ -355,6 +354,7 @@ p_fast_fail:
     RET
 p_fast_key_roots:
     DW $D000,$D180,$D300,$D480,$D600,$D780
+    ALIGN 8
 p_fast_bits:
     DB 1,2,4,8,16,32,64,128
     ALIGN 256

@@ -12,6 +12,14 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('presentation_build'), 'native presentation builder missing')
         return importlib.import_module('presentation_build')
 
+    def test_flat_water_identity_requires_exact_pattern_and_both_colour_nibbles(self):
+        api=self.api();self.assertTrue(hasattr(api,'flat_water_ids'),'finite flat-background identity missing')
+        tables={'patterns':[bytes([255])*16]*3,'colors':[bytes([17])*8+bytes([68])*8]*3}
+        self.assertEqual(api.flat_water_ids(tables),[129,129,129])
+        for field in ('patterns','colors'):
+            bad={k:list(v) for k,v in tables.items()};changed=bytearray(bad[field][1]);changed[-1]^=1;bad[field][1]=bytes(changed)
+            with self.assertRaises(ValueError):api.flat_water_ids(bad)
+
     def test_cartridge_identity_is_distinct_and_standard_msx1_requirements_are_explicit(self):
         api = self.api(); profile = api.profile()
         self.assertEqual(profile['version'], '0.0.7-presentation')

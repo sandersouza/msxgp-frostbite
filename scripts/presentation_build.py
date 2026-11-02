@@ -81,6 +81,16 @@ def validate_rom(data):
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def flat_water_ids(tables):
+    result=[]
+    for bank in range(3):
+        patterns=tables['patterns'][bank];colors=tables['colors'][bank]
+        candidates=[128+i for i in range(len(patterns)//8) if patterns[i*8:i*8+8]==bytes([255])*8 and colors[i*8:i*8+8]==bytes([68])*8]
+        if len(patterns)!=len(colors) or len(patterns)%8 or len(candidates)!=1:raise ValueError('one exact solid-water identity per SCREEN2 bank required')
+        result.append(candidates[0])
+    return result
+
+
 def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False):
     if type(fast)is not bool:raise ValueError('explicit sparse-profile selection required')
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -94,6 +104,8 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     tables = compile_catalog(floes, edge, ordinary, shore, aliases, out / 'tables'); banks = bank_layout(tables['banks'])
     fragments = compile_assets(rom, out / 'assets', measured_palette=measured)
     background = background_tables(rom, measured)
+    water=flat_water_ids(background)
+    (out/'presentation_simple.inc').write_text(''.join(f'pt_water_id{bank} EQU {identifier}\n' for bank,identifier in enumerate(water)))
     if background['gradient_profiles'] > 8: raise ValueError('native background profile exceeds its measured8-state gradient domain')
     boot = pack_background((out / 'assets/fragments.bin').read_bytes(), fragments['used_bytes'], background)
     geometry = compile_geometry(rom, out / 'geometry')
@@ -147,6 +159,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
                                'boot_used_bytes': geo_boot['used_bytes'], 'boot_sha256': digest(out / 'boot.bin'), 'sections': boot['sections']},
                 'geometry': geometry, 'geometry_metadata': {'sections': geo_boot['sections'], 'used_bytes': geo_boot['used_bytes']},
                 'static_presentation':static,
+                'flat_water_ids':water,
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
                 'limitations': 'Private renderer development profile; whole-frame timing, ordered PSG and integrated natural gameplay acceptance remain unqualified. Not a human-testable game delivery.'}

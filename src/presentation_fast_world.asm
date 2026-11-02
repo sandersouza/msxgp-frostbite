@@ -4,6 +4,54 @@ pfw_id EQU $C298
 pfw_old EQU $E500
 pfw_mask EQU $E510
 pfw_kind EQU $C29A
+pfw_memo EQU $E5A0
+pfw_geo_valid EQU $C2C4
+pfw_geo_family EQU $C2C5
+pfw_geo_group EQU $C2C6
+pfw_geo_variant EQU $C2C7
+
+; Copies are separated by16/32source pixels: phase and descriptor IDs are
+; identical even across the160pixel wrap. Pattern reads never modify IDs.
+p_fast_geometry_lookup:
+    LD D,A
+    LD A,(pfw_geo_valid)
+    OR A
+    JR Z,.miss
+    LD A,(pfw_geo_family)
+    CP D
+    JR NZ,.miss
+    LD A,(pfw_geo_group)
+    CP B
+    JR NZ,.miss
+    LD A,(pfw_geo_variant)
+    CP C
+    JR NZ,.miss
+    XOR A
+    RET
+.miss:
+    LD A,D
+    LD (pfw_geo_family),A
+    LD A,B
+    LD (pfw_geo_group),A
+    LD A,C
+    LD (pfw_geo_variant),A
+    XOR A
+    LD (pfw_geo_valid),A
+    LD A,D
+    CALL presentation_geometry_lookup
+    RET C
+    LD A,1
+    LD (pfw_geo_valid),A
+    OR A
+    RET
+
+p_fast_clear_memo:
+    LD HL,pfw_memo
+    LD DE,pfw_memo+1
+    LD BC,11
+    LD (HL),255
+    LDIR
+    RET
 
 p_fast_begin_page:
     LD HL,pf_refs
@@ -188,7 +236,7 @@ p_fast_world_tile:
     LD HL,(p_w_name)
     LD A,(HL)
     CP 128
-    JP NC,.mono
+    JP NC,.mono_lookup
     CALL p_fast_old_key
     LD A,(p_w_family)
     CP 1
@@ -289,6 +337,22 @@ p_fast_world_tile:
     LD A,($CC87)
     LD (pf_key+2),A
     JP p_fast_put
+.mono_lookup:
+    LD B,A                  ;current static background identity
+    LD A,(p_w_col)
+    CP 3
+    JR C,.not_retained       ;source left-edge mask has a separate constructor
+    LD A,(p_w_index)
+    ADD A,pfw_memo&255
+    LD L,A
+    LD H,pfw_memo/256
+    LD A,(HL)
+    CP 255
+    JR Z,.not_retained
+    LD (p_w_tile),A
+    JP p_fast_put.acquire   ;already pinned by a nonoverlapping earlier copy
+.not_retained:
+    LD A,B
 .mono:
     LD (pf_key+2),A
     LD DE,(pfw_id)
@@ -298,18 +362,23 @@ p_fast_world_tile:
     LD A,(p_w_col)
     CP 2
     LD A,0
-    ADC A,0
-    ; CP2 sets C only for excluded columns0/1. Equality needs explicit flag.
-    LD A,(p_w_col)
-    CP 2
-    LD A,0
     JR NZ,.clip_flag
     INC A
 .clip_flag:
     LD (pf_key+3),A
     LD A,(p_w_color)
     LD (pf_key+4),A
-    JP p_fast_put
+    CALL p_fast_put
+    LD A,(p_w_col)
+    CP 3
+    RET C
+    LD A,(p_w_index)
+    ADD A,pfw_memo&255
+    LD L,A
+    LD H,pfw_memo/256
+    LD A,(p_w_tile)
+    LD (HL),A
+    RET
 
 p_fast_read_mask:
     LD DE,(pfw_id)

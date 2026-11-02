@@ -2,6 +2,7 @@
 ; SCREEN2 bank A(0..2) -> complete16-byte tileC520, errorC53F.
 ; This component may change page2; it is not included in the game yet.
     INCLUDE "presentation_static.inc"
+    INCLUDE "presentation_simple.inc"
 pt_key EQU $CC90
 pt_tile EQU $C520
 pt_mask EQU $C530
@@ -102,11 +103,61 @@ pt_mono:
     LD A,(pt_key+3)
     OR A
     CALL NZ,pt_clip
+    LD A,(pt_bank)
+    LD L,A
+    LD H,0
+    LD DE,pt_water_ids
+    ADD HL,DE
+    LD A,(pt_key+2)
+    CP (HL)
+    JP Z,pt_water_mono
     LD A,(pt_key+2)
     CALL pt_background
     RET C
     LD A,(pt_key+4)
     JP pt_merge
+pt_water_ids:
+    DB pt_water_id0,pt_water_id1,pt_water_id2
+
+; Preserve the generic constructor's exact bytes, including FF/44 on empty
+; rows and when foreground equals water. No per-row general colour merge.
+pt_water_mono:
+    LD A,(pt_key+4)
+    CP 4
+    JR NZ,.foreground
+    LD HL,pt_tile
+    LD DE,pt_tile+1
+    LD BC,7
+    LD (HL),255
+    LDIR
+    LD A,$44
+    JP pt_fill_colors
+.foreground:
+    DUP 4
+    RLCA
+    EDUP
+    OR 4
+    LD C,A
+    LD HL,pt_mask
+    LD IY,pt_tile
+    LD B,8
+.row:
+    LD A,(HL)
+    INC HL
+    OR A
+    JR Z,.empty
+    LD (IY),A
+    LD A,C
+    JR .color
+.empty:
+    LD (IY),255
+    LD A,$44
+.color:
+    LD (IY+8),A
+    INC IY
+    DJNZ .row
+    OR A
+    RET
 pt_clip:
     LD HL,pt_mask
     LD B,8
