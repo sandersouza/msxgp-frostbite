@@ -126,46 +126,12 @@ p_fixed_floe_prepare:
     JP C,p_world_fail
     ; Expand the compiled local codes ONCE into this generation's immutable
     ; sixty-byte NAME template. Other roles never write its cache or tiles.
-    LD HL,p_tl_names
     LD DE,(p_tf_cache)
-    LD A,(p_tf_namebase)
-    DEC A
-    LD C,A
-    XOR A
-    LD (p_tf_cursor),A
-.cache_byte:
-    LD A,(HL)
+    LD A,(p_tf_water)
     LD B,A
-    AND 15
-    JR Z,.lower_background
-    ADD A,C
-    JR .lower
-.lower_background:
-    LD A,(p_tf_water)
-.lower:
-    LD (DE),A
-    INC DE
-    LD A,B
-    DUP 4
-    RRCA
-    EDUP
-    AND 15
-    JR Z,.upper_background
-    ADD A,C
-    JR .upper
-.upper_background:
-    LD A,(p_tf_water)
-.upper:
-    LD (DE),A
-    INC DE
-    INC HL
-    PUSH HL
-    LD HL,p_tf_cursor
-    INC (HL)
-    LD A,(HL)
-    POP HL
-    CP 30
-    JR NZ,.cache_byte
+    LD A,(p_tf_namebase)
+    CALL p_template_decode_names
+    JP C,p_world_fail
     LD HL,p_tf_tuple
     LD DE,(p_tf_identity)
     LD BC,4
@@ -292,4 +258,3 @@ p_template_object_fuse:
     XOR A
     LD (pf_key+4),A
     JP p_fixed_put
-

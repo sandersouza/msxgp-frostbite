@@ -19,6 +19,7 @@ class PresentationBuildTests(unittest.TestCase):
         regions={row['name']:(row['start'],row['end']) for row in profile['ram']['regions']}
         self.assertEqual(regions['floe_template_identities'],(0xE5C0,0xE5E0))
         self.assertEqual(regions['floe_name_cache'],(0xDE00,0xE000))
+        self.assertEqual(regions['floe_decode_codes'],(0xE600,0xE610))
         for name,(a,b) in regions.items():
             for other,(c,d) in regions.items():
                 if name!=other:self.assertTrue(b<=c or d<=a,f'{name}/{other} alias')

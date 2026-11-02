@@ -406,6 +406,7 @@ p_bg_roots:
     INCLUDE "presentation_template_strip.asm"
     INCLUDE "presentation_template_loader.asm"
     INCLUDE "presentation_name_rows.asm"
+    INCLUDE "presentation_name_decode.asm"
     INCLUDE "presentation_background_cover.asm"
     INCLUDE "presentation_template_floe.asm"
     ELSE

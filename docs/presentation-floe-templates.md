@@ -135,3 +135,29 @@ passes all 2,115 full-scene/ownership/active-byte cases (controlled prepare maxi
 cycles, 24 overruns and 64 skipped frames. The last world component is 155,406
 cycles, including four floe strips at 103,482 cycles. Host suite: 449 tests pass.
 This is measured progress inside Task 3; real-time acceptance and PSG remain open.
+
+The raw reader now uses its two proved physical banks directly, with assembly
+assertions on that layout, and an unrolled fixed-length copy. All 15,592 actual
+reader cases pass; the raw maximum falls from 603 to 442 cycles including RPC.
+The intermediate 488-cycle reader failed the 450-cycle component target and is
+retained separately. All 61,480 raw typed-constructor cases pass again, maximum
+1,296 cycles including RPC. Owned-strip publication passes again with this reader.
+
+A 16-byte code table at E600–E60F expands a packed program once per cache MISS.
+The pure decoder validates the destination owner and CID range before writes.
+Its 40,967-case actual Z80 proof crosses every packed-byte phase, all eight cache
+owners, ten CID bases and both water IDs, then invalid destinations/bases. Every
+cache/table byte, carry flag and canonical/C6/heap/program/VRAM/SP/IFF/slot guard
+passes; maximum 3,721 cycles including RPC. Compiler code grammar remains a
+separate proof.
+
+Private ROM `f3e25df1ba6fa8bc6a956a78f45c3bbcf17b27e40001ec56b9a2879e346ba5f9`
+passes all 2,115 original full-scene/ownership/active-byte cases (controlled
+prepare maximum 667,237 cycles). The fresh default control remains byte-identical
+`0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78`.
+The 120-frame keyboard probe still fails: maximum 689,076 busy cycles, 24 overruns
+and 58 skipped VDP frames. Added inclusive cost counters reproduce the same
+timing and identify the remaining work: last world 141,042 cycles, including
+four strips at 89,118, publication 41,902, decode 14,768 and seven NAME copies
+8,419. Nested costs must not be added together. Cold/header transitions and
+player MISSes also exceed the budget. These artifacts remain private research.

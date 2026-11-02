@@ -11,13 +11,16 @@ p_template_floe_pattern:
     CALL p_template_floe_address
     RET C
     LD DE,$CC80
-    LD BC,8
-    LDIR
+    DUP 8
+    LDI                    ;fixed length; BC is scratch, no repeat test required
+    EDUP
     OR A
     RET
 
 ; DE=raw floe ID -> mapped immutable eight-byte ROM mask at HL.
 p_template_floe_address:
+    ASSERT p_template_floe_patterns_offset/$4000 = 10
+    ASSERT (p_template_floe_patterns_offset+p_template_floe_count*8-1)/$4000 = 11
     XOR A
     LD (p_tr_error),A
     LD A,D
@@ -33,11 +36,17 @@ p_template_floe_address:
     DUP 3
     ADD HL,HL
     EDUP
-    LD DE,p_template_floe_patterns_offset&$FFFF
+    LD DE,$8000+(p_template_floe_patterns_offset&$3FFF)
     ADD HL,DE
-    LD A,p_template_floe_patterns_offset/65536
-    ADC A,0
-    JP p_template_address
+    LD A,13                ;logical asset bank10, physical bank13
+    BIT 6,H
+    JR Z,.mapped
+    RES 6,H                ;C000..CE87 wraps to8000..8E87 in logical bank11
+    LD A,253
+.mapped:
+    LD ($7000),A
+    OR A
+    RET
 
 p_template_pattern:
     XOR A
