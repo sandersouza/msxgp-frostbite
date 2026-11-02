@@ -272,3 +272,115 @@ presentation_glyph_prepare:
     RET
 p_h_solid:
     DB $F0,$F0,$F0,$F0
+
+p_h_footer_phase EQU $C244
+p_h_footer_index EQU $C245
+p_h_footer_row EQU $C246
+presentation_footer_prepare:
+    LD A,($C03F)
+    BIT 7,A
+    RET NZ
+    LD A,($C046)
+    AND 31
+    SUB 12
+    JR NC,.nonnegative
+    XOR A
+.nonnegative:
+    CP 8
+    JR C,.phase
+    LD A,7
+.phase:
+    LD (p_h_footer_phase),A
+    LD A,12
+    CALL p_world_color
+    XOR A
+    LD (p_h_footer_index),A
+.prefix:
+    LD A,(p_h_footer_phase)
+    LD B,A
+    INC A
+    LD (p_h_height),A
+    LD A,(p_h_footer_index)
+    DUP 3
+    ADD A,A
+    EDUP
+    ADD A,$90
+    ADD A,B
+    LD L,A
+    LD H,$B3
+    LD (p_h_src),HL
+    LD A,(p_h_footer_index)
+    DUP 3
+    ADD A,A
+    EDUP
+    ADD A,22
+    LD (p_w_x),A
+    LD A,(p_w_coarse)
+    ADD A,179
+    LD (p_w_y),A
+    CALL presentation_glyph_prepare
+    CALL p_world_primitive
+    LD HL,p_h_footer_index
+    INC (HL)
+    LD A,(HL)
+    CP 6
+    JR NZ,.prefix
+    XOR A
+    LD (p_h_footer_row),A
+.row:
+    LD A,1
+    LD ($7000),A
+    LD A,(p_h_footer_row)
+    LD B,A
+    LD A,$C7
+    SUB B
+    LD L,A
+    LD H,$B3
+    LD A,(HL)
+    CALL p_world_color
+    LD A,(p_h_footer_phase)
+    LD B,A
+    LD A,(p_h_footer_row)
+    ADD A,B
+    LD B,A
+    LD A,(p_w_coarse)
+    ADD A,B
+    ADD A,181
+    LD (p_w_y),A
+    XOR A
+    LD (p_h_footer_index),A
+.piece:
+    LD A,(p_h_footer_index)
+    OR A
+    LD A,20
+    JR Z,.x
+    LD A,(p_h_footer_index)
+    CP 1
+    LD A,28
+    JR Z,.x
+    LD A,(p_h_footer_row)
+    LD B,A
+    LD A,33
+    SUB B
+.x:
+    LD (p_w_x),A
+    LD HL,p_h_bar
+    LD (p_h_src),HL
+    LD A,1
+    LD (p_h_height),A
+    CALL presentation_glyph_prepare
+    CALL p_world_primitive
+    LD HL,p_h_footer_index
+    INC (HL)
+    LD A,(HL)
+    CP 3
+    JR NZ,.piece
+    LD HL,p_h_footer_row
+    INC (HL)
+    LD A,(p_h_footer_phase)
+    ADD A,(HL)
+    CP 8
+    JP NZ,.row
+    RET
+p_h_bar:
+    DB $FF

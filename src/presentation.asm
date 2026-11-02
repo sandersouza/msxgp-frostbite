@@ -64,17 +64,11 @@ presentation_prepare:
     CALL presentation_background_prepare
     CALL presentation_world_prepare
     CALL presentation_hud_prepare
+    CALL presentation_footer_prepare
+    LD A,2
+    LD ($7000),A
+    CALL presentation_sprites_prepare
     CALL p_bg_upload_names
-    CALL presentation_black_sat
-    LD A,(PAGE)
-    OR A
-    LD DE,$C500
-    JR Z,.snapshot
-    LD E,$80
-.snapshot:
-    LD HL,$C000
-    LD BC,128
-    LDIR
     RET
 
 commit:

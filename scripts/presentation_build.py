@@ -13,6 +13,7 @@ from original_graphics import SOURCE_SHA256
 from presentation_assets import compile_assets, memory_layout
 from presentation_fragments import background_tables, pack_background, compile_geometry, pack_geometry_metadata
 from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
+from presentation_sprites import tables as sprite_tables
 from reference_inventory import verified_input
 from reference_traces import private_output
 from render_build import symbols
@@ -22,7 +23,8 @@ ROM_BYTES = 4194304
 FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/presentation_build.py',
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',
     'src/presentation_cache.asm', 'src/presentation_geometry.asm', 'src/presentation_world.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
-FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py', 'src/presentation_hud.asm')))
+FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py', 'src/presentation_hud.asm',
+                            'scripts/presentation_sprites.py', 'src/presentation_sprites.asm')))
 
 
 def bank_layout(contact_banks):
@@ -35,6 +37,8 @@ def bank_layout(contact_banks):
 
 def profile():
     ram = memory_layout()
+    for region in ram['regions']:
+        if region['name'] == 'scene_snapshots': region['name'] = 'sprite_pattern_work'
     # Existing native acquisition scratch is retained separately from bus IO.
     ram['regions'].append({'name': 'native_contacts', 'start': 0xC780, 'end': 0xC7A0})
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
@@ -77,6 +81,12 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
     (out / 'presentation_background.inc').write_text(boot['assembly'] +
         f'p_world_color_data EQU ${0x8000 + fragments["sections"]["colors"]["offset"]:04X}\n')
     (out / 'presentation_background_init.inc').write_text(boot['initializers'])
+    sprite_data = sprite_tables(rom, measured)
+    sprite_includes = ['    ALIGN 256']
+    for name, data in sprite_data.items():
+        path = out / f'sprite-{name}.bin'; path.write_bytes(data)
+        sprite_includes += [f'p_sprite_{name}_data:', f'    INCBIN "{path}"']
+    (out / 'presentation_sprite_data.inc').write_text('\n'.join(sprite_includes) + '\n')
     (out / 'core.inc').write_text(generate(rom, carry_fusion=True)); (out / 'data.bin').write_bytes(rom[0xC00:])
     (out / 'boot_tables.inc').write_text(f'    INCBIN "{out / "boot.bin"}"\n')
     (out / 'resident_tables.inc').write_text('; Presentation metadata belongs to its explicit profile.\n')

@@ -34,3 +34,9 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertEqual(len(set([0, 1, 2] + banks['contacts'] + banks['available_assets'])), 256)
         with self.assertRaises(ValueError): api.bank_layout(243)
         with self.assertRaises(ValueError): api.bank_layout(-1)
+
+    def test_live_sprite_work_replaces_unconsumed_proposed_scene_snapshots(self):
+        regions={row['name']:(row['start'],row['end']) for row in self.api().profile()['ram']['regions']}
+        self.assertNotIn('scene_snapshots',regions)
+        self.assertEqual(regions['sprite_pattern_work'],(0xC500,0xC600))
+        self.assertEqual(regions['source_abi'],(0xC600,0xC700))

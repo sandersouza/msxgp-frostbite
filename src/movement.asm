@@ -676,6 +676,9 @@ assets_end:
     ALIGN 1024
 original_data:
     INCBIN "data.bin"
+    IFDEF WITH_PRESENTATION
+    INCLUDE "presentation_sprites.asm"
+    ENDIF
 native_end:
     ASSERT $ <= $C000
     DS $C000-$,$FF

@@ -32,7 +32,7 @@ def verify_timing(text,count):
     return max(row[1] for row in rows)
 
 def check(build_dir,out,*,component='full-scene',family='ntsc',limit=1690,explore=False):
-    if component not in ('world','world-hud','full-scene') or family not in ('ntsc','pal') or type(limit)is not int or not 1<=limit<=1690:
+    if component not in ('world','world-hud','without-player','full-scene') or family not in ('ntsc','pal') or type(limit)is not int or not 1<=limit<=1690:
         raise ValueError('declared controlled domain, component and TV family required')
     producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'utility_fingerprints':{name:sha((ROOT/name).read_bytes()) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
@@ -58,9 +58,10 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=1690,explor
         if component!='full-scene':
             model=describe(original,sample)
             if component=='world':model['hud']['score']=[];model['hud']['status']=[];model['igloo']=[]
-            model['door']=[]
+            if component!='without-player':model['door']=[]
             for row in model['player']['rows']:row['pattern']=row['prefix_pattern']=0
-            for key in ('prefix','logo','playfield','ball'):model['footer'][key]=[]
+            if component!='without-player':
+                for key in ('prefix','logo','playfield','ball'):model['footer'][key]=[]
             raw=pixels(original,model)
         cases.extend(bytes(sample['ram']));expected.extend(map_frame(raw,palette))
     out=private_output(out);out.mkdir(parents=True,exist_ok=False);(out/'cases.bin').write_bytes(cases);(out/'expected.tms').write_bytes(expected)
@@ -152,5 +153,5 @@ after time {60+limit*2} {{fail_matrix watchdog}}
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
-    p.add_argument('--component',choices=('world','world-hud','full-scene'),default='full-scene');p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--limit',type=int,default=1690);p.add_argument('--explore',action='store_true')
+    p.add_argument('--component',choices=('world','world-hud','without-player','full-scene'),default='full-scene');p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--limit',type=int,default=1690);p.add_argument('--explore',action='store_true')
     r=check(**vars(p.parse_args()));print(json.dumps({k:r[k] for k in ('complete','cases','component','different_frames','max_prepare_cycles_including_rpc')}))
