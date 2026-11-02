@@ -102,3 +102,19 @@ cycles, 24 overruns and 72 skipped VDP frames. Its last world component falls
 from 248,291 cycles before cached rows to 184,448; this smaller component is
 still not a complete-frame acceptance. PSG and final integrated delivery remain
 pending. This failed timing candidate is private research, not a human release.
+
+Complete floe NAME rows also make their earlier background fill redundant. A
+read-only predicate skips only those rows owned by a visible floe, using the
+actual palette mapping and coarse phase. Its actual Z80 proof covers 24,772
+operations: all rows, both phases, 256 synthetic color indices and blank states,
+plus independently visible floe rows and invalid selectors. Whole RAM/VRAM and
+stack/interrupt/slot invariance pass; maximum 277 cycles including RPC. The
+initial 24,580-case probe used equal colors for all floes, so the expanded proof
+adds isolated owners to distinguish a wrong source-row lookup.
+
+Private ROM `5b104b0d715073aceaeccef339a0786bdbaddfb9d2d27df468c3162fe0e12bd8`
+passes all 2,115 full-scene and physical-ownership cases; controlled maximum
+prepare is 705,448 cycles. The last measured background component drops from
+17,079 to 12,000 cycles while world content is unchanged. Its 120-frame keyboard
+run still fails timing (maximum 729,297 busy cycles, 24 overruns, 70 skipped VDP
+frames). This is another private optimization proof, not delivery acceptance.

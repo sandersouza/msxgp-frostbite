@@ -183,6 +183,11 @@ p_fast_background_rows:
     LD (p_fd_program),HL
 .row:
     CALL p_fast_list_row
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_template_background_covered
+    JP C,.next_row          ;the complete floe NAME row replaces this exact fill
+    LD A,(p_fd_loop)
+    ENDIF
     LD E,A
     LD D,0
     LD L,A
@@ -220,6 +225,7 @@ p_fast_background_rows:
     LD (p_fd_ids+2),A
 .fill:
     CALL p_fast_background_row
+.next_row:
     LD HL,p_fd_cursor
     INC (HL)
     LD A,(p_fd_count)
