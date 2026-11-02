@@ -232,14 +232,21 @@ p_p_bandcount EQU $C282
 p_p_planeaddr EQU $C28C
 p_p_segmask EQU $C28E
 p_p_last EQU $C291
+p_p_expansion_page EQU $C292
 p_p_planes EQU $C480
 p_p_colors EQU $C4E0
+p_p_color_planes EQU $C4F0 ;16 exact palette-index -> plane-byte-offset entries
 
 p_player_prepare:
     LD HL,p_p_planes
     LD DE,p_p_planes+1
     LD BC,95
     LD (HL),0
+    LDIR
+    LD HL,p_p_color_planes
+    LD DE,p_p_color_planes+1
+    LD BC,15
+    LD (HL),255
     LDIR
     XOR A
     LD (p_p_count),A
@@ -273,6 +280,20 @@ p_player_prepare:
     LD H,original_data/256
     LD (p_p_colorbase),HL
     CALL p_player_init_masks
+    ; Fully visible body, left of every source colour-race threshold.
+    ; The original19 table rows can be streamed directly; rare shoreline,
+    ; tail-colour, wrapped and clipped vertical cases retain the general path.
+    LD A,($C066)
+    CP 84
+    JR NC,.general
+    LD A,($C064)
+    CP 30
+    JR C,.general
+    CP 134
+    JR NC,.general
+    CALL p_player_body_stream
+    JP .rows_done
+.general:
     ; The visible active interval is E4+28..E4+46. E4=0 or>=154
     ; cannot intersect virtual47..181, including modulo256 wrap. After the
     ; last active row, only consecutive original GPR-hold rows can survive.
@@ -443,6 +464,73 @@ p_player_prepare:
     JR NC,.candidate
     JP p_world_fail
 
+; Exact ordinary body path. Reflection and source palette mapping remain
+; live; post-body rows follow the original hold table until its first clear.
+p_player_body_stream:
+    LD DE,18
+    LD HL,(p_p_patternbase)
+    ADD HL,DE
+    PUSH HL
+    POP IX
+    LD HL,(p_p_colorbase)
+    ADD HL,DE
+    PUSH HL
+    POP IY
+    LD A,($C064)
+    ADD A,21
+    LD B,A
+    LD A,(p_w_coarse)
+    ADD A,B
+    LD (p_p_target),A
+    LD B,19
+.row:
+    LD A,(IX)
+    DEC IX
+    LD C,A
+    LD A,($C06C)
+    AND 8
+    LD A,C
+    JR Z,.pattern
+    LD L,A
+    LD H,p_sprite_reverse_data/256
+    LD A,(HL)
+.pattern:
+    LD C,A
+    LD A,(p_p_clip)
+    AND C
+    LD (p_p_bit),A
+    LD A,(IY)
+    DEC IY
+    LD (p_p_color),A
+    PUSH BC
+    CALL p_player_store_mapped
+    POP BC
+    LD HL,p_p_target
+    INC (HL)
+    DJNZ .row
+    LD A,($C064)
+    ADD A,47
+    LD (p_p_virtual),A
+.tail:
+    LD A,(p_p_virtual)
+    CP 182
+    RET NC
+    SUB 47
+    LD E,A
+    LD D,0
+    LD HL,p_sprite_holds_data
+    ADD HL,DE
+    LD A,(HL)
+    OR A
+    RET Z
+    LD A,(p_p_color)
+    CALL p_player_store_mapped
+    LD HL,p_p_target
+    INC (HL)
+    LD HL,p_p_virtual
+    INC (HL)
+    JR .tail
+
 p_p_wholemask EQU $C273
 p_p_clip EQU $C28F
 p_p_zone EQU $C290
@@ -612,27 +700,37 @@ p_player_store_mapped:
 
 p_player_store:
     LD C,A
-    LD A,(p_p_count)
-    LD B,A
-    LD E,0
-    LD HL,p_p_colors
-    OR A
-    JR Z,.new
-.find:
+    OR p_p_color_planes&255
+    LD L,A
+    LD H,p_p_color_planes/256
     LD A,(HL)
-    CP C
-    JR Z,.plane
-    INC HL
-    INC E
-    DJNZ .find
-.new:
-    LD A,E
+    CP 255
+    JR NZ,.plane
+    LD A,(p_p_count)
     CP 4
     JP NC,p_world_fail
+    LD E,A
+    LD D,0
+    PUSH HL
+    LD HL,p_p_colors
+    ADD HL,DE
     LD (HL),C
     LD HL,p_p_count
     INC (HL)
+    LD A,E
+    ADD A,A
+    ADD A,E
+    DUP 3
+    ADD A,A
+    EDUP
+    POP HL
+    LD (HL),A
 .plane:
+    LD E,A
+    LD D,0
+    LD HL,p_p_planes
+    ADD HL,DE
+    PUSH HL
     LD A,(p_p_top)
     CP 255
     JR NZ,.origin
@@ -645,19 +743,11 @@ p_player_store:
     LD (p_p_bottom),A
     SUB B
     CP 24
-    JP NC,p_world_fail
-    PUSH AF
-    LD L,E
-    LD H,0
-    LD D,H
-    ADD HL,HL
-    ADD HL,DE
-    DUP 3
-    ADD HL,HL
-    EDUP
-    LD DE,p_p_planes
-    ADD HL,DE
-    POP AF
+    JR C,.valid_row
+    POP HL
+    JP p_world_fail
+.valid_row:
+    POP HL
     LD E,A
     LD D,0
     ADD HL,DE
@@ -870,42 +960,61 @@ p_player_emit_all:
 
 p_player_sprite_pattern:
     CALL p_sprite_clear
-    XOR A
-    LD (p_p_row),A
-.row:
-    LD A,(p_p_top)
-    LD B,A
-    LD A,(p_p_row)
-    LD C,A
-    LD A,(p_p_bandtop)
-    ADD A,C
-    SUB B
-    JR C,.zero
-    CP 24
-    JR NC,.zero
-    LD E,A
-    LD D,0
-    LD HL,(p_p_planeaddr)
-    ADD HL,DE
-    LD A,(p_p_segmask)
-    AND (HL)
-    JR NZ,.expand
-    JR .next
-.zero:
-    JR .next
-.expand:
-    LD L,A
-    LD H,0
-    ADD HL,HL
+    ; Intersect the 16-row output band with the 24-row source plane once.
+    ; The old inner loop recomputed this same intersection for every row.
     LD A,($C066)
     AND 1
     ADD A,A
     ADD A,p_sprite_expansion_data/256
-    ADD A,H
-    LD H,A
-    LD A,(p_p_row)
+    LD (p_p_expansion_page),A
+    LD A,(p_p_top)
+    LD B,A
+    LD A,(p_p_bandtop)
+    SUB B
+    JR C,.leading
+    CP 24
+    RET NC
+    LD E,A
+    LD D,0
+    LD HL,(p_p_planeaddr)
+    ADD HL,DE
+    PUSH HL
+    POP IX
+    LD B,A
+    LD A,24
+    SUB B
+    CP 16
+    JR C,.count
+    LD A,16
+.count:
+    LD B,A
+    LD DE,p_s_pattern
+    JR .mask
+.leading:
+    NEG
+    CP 16
+    RET NC
     LD E,A
     LD D,p_s_pattern/256
+    LD B,A
+    LD A,16
+    SUB B
+    LD B,A
+    LD IX,(p_p_planeaddr)
+.mask:
+    LD A,(p_p_segmask)
+    LD C,A
+.row:
+    LD A,(IX)
+    INC IX
+    AND C
+    JR Z,.next
+    LD L,A
+    LD H,0
+    ADD HL,HL
+    LD A,(p_p_expansion_page)
+    ADD A,H
+    LD H,A
     LD A,(HL)
     LD (DE),A
     INC HL
@@ -914,12 +1023,12 @@ p_player_sprite_pattern:
     LD E,A
     LD A,(HL)
     LD (DE),A
+    LD A,E
+    SUB 16
+    LD E,A
 .next:
-    LD HL,p_p_row
-    INC (HL)
-    LD A,(HL)
-    CP 16
-    JR NZ,.row
+    INC E
+    DJNZ .row
     RET
 p_player_zones:
     DB $00,$80,$C0,$E0,$F0,$F8,$FC,$FE,$FF

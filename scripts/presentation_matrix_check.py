@@ -15,12 +15,13 @@ from presentation_check import decode_target
 from presentation_model import describe,pixels
 from presentation_palette import audit_palette
 from presentation_reference import HELPERS as SOURCE_FILES
+from presentation_source_cases import FILES as CASE_FILES,collect as collect_source,verify_files
 from reference_provenance import audit_manifest,snapshot_paths
 from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py')))
+HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py')))
 CAPTURE_BYTES=16392
 
 def sha(data):return hashlib.sha256(data).hexdigest()
@@ -31,8 +32,10 @@ def verify_timing(text,count):
         raise ValueError('incomplete/unordered/visible graphics trace or missing positive cycle measurement')
     return max(row[1] for row in rows)
 
-def check(build_dir,out,*,component='full-scene',family='ntsc',limit=1690,explore=False):
-    if component not in ('world','world-hud','without-player','full-scene') or family not in ('ntsc','pal') or type(limit)is not int or not 1<=limit<=1690:
+def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explore=False,all_source=False):
+    maximum=2115 if all_source else 1690
+    if limit is None:limit=maximum
+    if component not in ('world','world-hud','without-player','full-scene') or family not in ('ntsc','pal') or type(limit)is not int or not 1<=limit<=maximum:
         raise ValueError('declared controlled domain, component and TV family required')
     producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'utility_fingerprints':{name:sha((ROOT/name).read_bytes()) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
@@ -42,19 +45,25 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=1690,explor
     if not explore:
         if meta['source_dirty'] or meta['exploratory'] or meta.get('private_contact_reuse'):raise ValueError('canonical matrix requires canonical clean build')
         audit_manifest({'tool_source_commit':meta['source_commit'],'utility_fingerprints':meta['source_files']},FILES)
-    config=json.loads((ROOT/'references/presentation-source-config.json').read_text());source=ROOT/config['fixtures'][0]
-    summary=json.loads((ROOT/'references/presentation-source-result.json').read_text());report_raw=(source/'report.json').read_bytes()
-    if sha(report_raw)!=summary['groups']['fixtures']['report_sha256']:raise ValueError('source fixture report changed')
-    report=json.loads(report_raw);audit_manifest(report['producer'],SOURCE_FILES)
-    fixtures_raw=(source/'fixtures.json').read_bytes()
-    if sha(fixtures_raw)!=report['fixture_sha256']:raise ValueError('source fixtures changed')
-    fixtures=json.loads(fixtures_raw)[:limit]
+    bundle=None;source_hashes={}
+    if all_source:
+        bundle=collect_source();fixtures=bundle['cases'][:limit];authority_sha=bundle['source_receipt_sha256']
+    else:
+        config=json.loads((ROOT/'references/presentation-source-config.json').read_text());source=ROOT/config['fixtures'][0]
+        summary=json.loads((ROOT/'references/presentation-source-result.json').read_text());report_raw=(source/'report.json').read_bytes()
+        if sha(report_raw)!=summary['groups']['fixtures']['report_sha256']:raise ValueError('source fixture report changed')
+        report=json.loads(report_raw);audit_manifest(report['producer'],SOURCE_FILES)
+        fixtures_raw=(source/'fixtures.json').read_bytes()
+        if sha(fixtures_raw)!=report['fixture_sha256']:raise ValueError('source fixtures changed')
+        fixtures=json.loads(fixtures_raw)[:limit];authority_sha=sha(report_raw)
     palette_config=json.loads((ROOT/'references/presentation-assets-config.json').read_text());palette=audit_palette(ROOT/palette_config['palette'])
-    original=(ROOT/'references/roms/frostbite.bin').read_bytes();cases=bytearray();expected=bytearray();source_hashes={}
+    original=(ROOT/'references/roms/frostbite.bin').read_bytes();cases=bytearray();expected=bytearray()
     for index,sample in enumerate(fixtures):
-        point=report['points'][index];raw=(source/f'{index:04d}-{sample["name"]}.tia').read_bytes()
-        if sha(raw)!=point['raster_sha256'] or sha(bytes(sample['ram']))!=point['before_ram_sha256']:raise ValueError('original fixture identity changed')
-        source_hashes[f'{index:04d}-{sample["name"]}.tia']=sha(raw)
+        if bundle is not None:raw=sample['raster']
+        else:
+            point=report['points'][index];raw=(source/f'{index:04d}-{sample["name"]}.tia').read_bytes()
+            if sha(raw)!=point['raster_sha256'] or sha(bytes(sample['ram']))!=point['before_ram_sha256']:raise ValueError('original fixture identity changed')
+            source_hashes[f'{index:04d}-{sample["name"]}.tia']=sha(raw)
         if component!='full-scene':
             model=describe(original,sample)
             if component=='world':model['hud']['score']=[];model['hud']['status']=[];model['igloo']=[]
@@ -141,9 +150,11 @@ after time {60+limit*2} {{fail_matrix watchdog}}
         previous,registers=presented,present_regs
         if (index+1)%100==0:print(json.dumps({'checked':index+1,'failures':len(failures)}),flush=True)
     if any(sha((ROOT/name).read_bytes())!=value for name,value in producer['utility_fingerprints'].items()) or sha(artifact.read_bytes())!=meta['rom']['sha256']:raise ValueError('matrix producer/ROM changed')
-    if sha((source/'report.json').read_bytes())!=sha(report_raw) or sha((source/'fixtures.json').read_bytes())!=sha(fixtures_raw) or any(sha((source/name).read_bytes())!=value for name,value in source_hashes.items()):raise ValueError('source matrix changed')
+    if bundle is not None:verify_files(bundle['files'])
+    elif sha((source/'report.json').read_bytes())!=sha(report_raw) or sha((source/'fixtures.json').read_bytes())!=sha(fixtures_raw) or any(sha((source/name).read_bytes())!=value for name,value in source_hashes.items()):raise ValueError('source matrix changed')
     result={'producer':producer,'exploratory':explore,'component':component,'family':family,'cases':limit,'complete':not failures,'different_frames':len(failures),
-            'rom_sha256':sha(romdata),'emulator_sha256':sha(emulator.read_bytes()),'profile_sha256':sha(profile_raw),'source_report_sha256':sha(report_raw),
+            'rom_sha256':sha(romdata),'emulator_sha256':sha(emulator.read_bytes()),'profile_sha256':sha(profile_raw),'source_report_sha256':authority_sha,'domain':'all-source' if all_source else 'controlled-fixtures',
+            'source_domain_families':bundle['families'] if bundle is not None else {'fixtures':1690},'unmapped_source_startup':bundle['unmapped_startup'] if bundle is not None else 0,
             'max_prepare_cycles_including_rpc':maximum,'frame_deadline_accepted':False,'full_source_pixels_accepted':component=='full-scene' and not failures,
             'rows':rows,'artifacts':{p.name:sha(p.read_bytes()) for p in out.iterdir() if p.is_file()},
             'scope':'Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance'}
@@ -153,5 +164,5 @@ after time {60+limit*2} {{fail_matrix watchdog}}
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
-    p.add_argument('--component',choices=('world','world-hud','without-player','full-scene'),default='full-scene');p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--limit',type=int,default=1690);p.add_argument('--explore',action='store_true')
+    p.add_argument('--component',choices=('world','world-hud','without-player','full-scene'),default='full-scene');p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--limit',type=int);p.add_argument('--explore',action='store_true');p.add_argument('--all-source',action='store_true')
     r=check(**vars(p.parse_args()));print(json.dumps({k:r[k] for k in ('complete','cases','component','different_frames','max_prepare_cycles_including_rpc')}))
