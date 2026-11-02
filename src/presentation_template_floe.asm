@@ -71,15 +71,6 @@ p_fixed_floe_prepare:
     LD (p_tl_y),A
     LD A,(p_w_delta)
     LD (p_tl_delta),A
-    LD A,(p_w_row)
-    LD E,A
-    LD D,0
-    LD HL,p_template_floe_bases
-    ADD HL,DE
-    LD A,(HL)
-    LD (p_tf_base),A
-    CALL p_fixed_dynamic_id
-    LD (p_tf_namebase),A
     LD A,(p_tl_root)
     AND 15
     LD (p_tf_tuple),A
@@ -131,51 +122,8 @@ p_fixed_floe_prepare:
     LD A,(p_tl_root)
     CALL p_template_load
     JP C,p_world_fail
-    LD A,(p_w_y)
-    DUP 3
-    SRL A
-    EDUP
-    LD (p_w_top),A
-    XOR A
-    LD (p_w_col),A
-    LD (p_tf_cursor),A
-    CALL p_fast_cell
-    LD A,(p_w_y)
-    CP 128
-    LD A,pt_water_id1
-    JR C,.water
-    LD A,pt_water_id2
-.water:
-    LD (pf_key+2),A
-    LD (p_tf_water),A
-    XOR A
-    LD (pf_key+3),A
-    LD A,(p_w_color)
-    LD (pf_key+4),A
-    LD A,9
-    LD (pf_key+5),A
-.mask:
-    LD A,(p_tf_cursor)
-    ADD A,A
-    ADD A,p_tl_keys&255
-    LD L,A
-    LD H,p_tl_keys/256
-    LD E,(HL)
-    INC L
-    LD D,(HL)
-    LD (pf_key),DE
-    LD A,(p_tf_cursor)
-    LD B,A
-    LD A,(p_tf_namebase)
-    ADD A,B
-    LD (p_fx_force),A
-    CALL p_fixed_resolve
+    CALL p_template_strip_publish
     JP C,p_world_fail
-    LD HL,p_tf_cursor
-    INC (HL)
-    LD A,(p_tl_count)
-    CP (HL)
-    JR NZ,.mask
     ; Expand the compiled local codes ONCE into this generation's immutable
     ; sixty-byte NAME template. Other roles never write its cache or tiles.
     LD HL,p_tl_names
@@ -345,5 +293,3 @@ p_template_object_fuse:
     LD (pf_key+4),A
     JP p_fixed_put
 
-p_template_floe_bases:
-    DB 25,9,35,19

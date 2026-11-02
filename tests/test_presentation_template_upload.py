@@ -7,6 +7,28 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class TemplateUploadTests(unittest.TestCase):
+    def test_strip_domain_covers_every_mask_per_role_and_both_generations(self):
+        api=importlib.import_module('presentation_template_upload_check');inputs,expected=api.strip_fixtures(bytes(range(24)))
+        seen={};lengths={}
+        for at in range(0,len(inputs),32):
+            page,row,color,count=inputs[at:at+4]
+            if page>=2 or row>=4 or not 1<=color<=15 or not 1<=count<=14:continue
+            keys=[int.from_bytes(inputs[pos:pos+2],'little') for pos in range(at+4,at+4+count*2,2)]
+            if any(index>=3 for index in keys):continue
+            seen.setdefault((page,row),set()).update(keys);lengths.setdefault((page,row),set()).add(count)
+        self.assertEqual(len(seen),8)
+        for values in seen.values():self.assertEqual(values,set(range(3)))
+        for values in lengths.values():self.assertEqual(values,set(range(1,15)))
+        self.assertEqual(len(expected),len(inputs)//32*api.ROW_BYTES)
+
+    def test_invalid_strip_bounds_preserve_all_metadata_and_vram(self):
+        api=importlib.import_module('presentation_template_upload_check');inputs,expected=api.strip_fixtures(bytes(range(24)))
+        for index in range(1,len(inputs)//32):
+            page,row,color,count=inputs[index*32:index*32+4]
+            if page<2 and row<4 and 1<=color<=15 and 1<=count<=14:continue
+            before=expected[(index-1)*api.ROW_BYTES:index*api.ROW_BYTES];after=expected[index*api.ROW_BYTES:(index+1)*api.ROW_BYTES]
+            self.assertEqual(after[:2],bytes((1,1)));self.assertEqual(after[2:],before[2:])
+
     def test_every_mask_and_all_page_bank_foregrounds_are_exercised(self):
         api=importlib.import_module('presentation_template_upload_check');inputs,expected=api.fixtures(bytes(range(24)))
         seen=set();colors={}

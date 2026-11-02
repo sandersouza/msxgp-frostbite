@@ -118,3 +118,20 @@ prepare is 705,448 cycles. The last measured background component drops from
 17,079 to 12,000 cycles while world content is unchanged. Its 120-frame keyboard
 run still fails timing (maximum 729,297 busy cycles, 24 overruns, 70 skipped VDP
 frames). This is another private optimization proof, not delivery acceptance.
+
+The owned-strip publisher validates page, source row, count and foreground once,
+then advances within that row's exclusive metadata and tile range. Individual
+MISS uploads still validate raw IDs; each six-byte key follows its completed IO.
+The standalone stateful proof passes 2,960 actual Z80 operations: every raw mask
+in every row role and both generations, lengths 1–14, all foregrounds, shortened
+and replaced strips and invalid bounds/IDs. It compares all metadata and VRAM,
+including untouched slots. A later invalid ID leaves earlier offscreen keys
+complete but returns failure; the driver cannot publish its strip identity.
+The individual checked uploader separately retains its 4,306-case pass.
+
+Private ROM `794dfdd2284567a1a23183f9c4830f082f3dc9f8bc2da2d8757c648a0cd3c2ed`
+passes all 2,115 full-scene/ownership/active-byte cases (controlled prepare maximum
+678,880 cycles). Its 120-frame keyboard run still fails: maximum 703,622 busy
+cycles, 24 overruns and 64 skipped frames. The last world component is 155,406
+cycles, including four floe strips at 103,482 cycles. Host suite: 449 tests pass.
+This is measured progress inside Task 3; real-time acceptance and PSG remain open.

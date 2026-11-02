@@ -8,7 +8,7 @@ p_template_floe_upload:
     LD A,(p_fx_bank)
     DEC A
     CP 2
-    JP NC,.fail
+    JP NC,p_template_upload_fail
     LD A,(p_fx_bank)
     CP 1
     LD A,pt_water_id1
@@ -17,24 +17,26 @@ p_template_floe_upload:
 .water:
     LD HL,pf_key+2
     CP (HL)
-    JP NZ,.fail
+    JP NZ,p_template_upload_fail
     INC HL
     LD A,(HL)
     OR A
-    JP NZ,.fail
+    JP NZ,p_template_upload_fail
     INC HL
     LD A,(HL)
     OR A
-    JP Z,.fail
+    JP Z,p_template_upload_fail
     CP 16
-    JP NC,.fail
+    JP NC,p_template_upload_fail
     INC HL
     LD A,(HL)
     CP 9
-    JP NZ,.fail
+    JP NZ,p_template_upload_fail
+; Only p_template_strip_publish may enter here after validating shared fields.
+p_template_floe_upload_checked:
     LD DE,(pf_key)
     CALL p_template_floe_address
-    JP C,.fail
+    JP C,p_template_upload_fail
     PUSH HL                 ;retain mapped ROM address while inspecting metadata
     LD HL,(p_fx_meta)
     INC HL
@@ -99,7 +101,7 @@ p_template_floe_upload:
     LDIR                    ;valid only after every required table write
     OR A
     RET
-.fail:
+p_template_upload_fail:
     LD A,1
     LD (pt_error),A
     SCF
