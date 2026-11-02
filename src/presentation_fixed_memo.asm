@@ -7,6 +7,12 @@ p_fast_try_memo:
     CP 3
     RET C
 .position:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD HL,(p_w_name)
+    LD A,(HL)
+    CP 128
+    RET C                   ;an object over a floe needs its own fused role
+    ENDIF
     LD A,(p_w_index)
     ADD A,pfw_memo&255
     LD L,A

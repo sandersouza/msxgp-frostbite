@@ -107,6 +107,17 @@ presentation_world_prepare:
     ; Objects and floes use canonical row selectors, copy modes and motion.
     XOR A
     LD (p_w_row),A
+    IFDEF WITH_PRESENTATION_TEMPLATES
+.template_floes:
+    CALL p_fixed_floe_prepare
+    LD HL,p_w_row
+    INC (HL)
+    LD A,(HL)
+    CP 4
+    JR NZ,.template_floes
+    XOR A
+    LD (p_w_row),A
+    ENDIF
 .row:
     LD A,1
     LD ($7000),A
@@ -177,7 +188,9 @@ presentation_world_prepare:
     JR .object
 .floes:
     IFDEF WITH_PRESENTATION_FIXED
+    IFNDEF WITH_PRESENTATION_TEMPLATES
     CALL p_fixed_floe_prepare
+    ENDIF
     JP .row_done
     ELSE
     LD A,($C01D)

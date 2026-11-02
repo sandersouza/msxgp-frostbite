@@ -402,7 +402,9 @@ p_bg_roots:
     INCLUDE "presentation_fixed_runtime.asm"
     IFDEF WITH_PRESENTATION_TEMPLATES
     INCLUDE "presentation_template_reader.asm"
+    INCLUDE "presentation_template_upload.asm"
     INCLUDE "presentation_template_loader.asm"
+    INCLUDE "presentation_name_rows.asm"
     INCLUDE "presentation_template_floe.asm"
     ELSE
     INCLUDE "presentation_fixed_pool.asm"

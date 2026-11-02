@@ -303,7 +303,11 @@ p_fast_world_tile:
     LD A,(HL)
     CP 128
     IFDEF WITH_PRESENTATION_FIXED
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    JP C,p_template_object_fuse
+    ELSE
     JP C,p_world_fail       ;fixed bear/object copies never share a NAME cell
+    ENDIF
     JP .mono
     ELSE
     JP NC,.mono

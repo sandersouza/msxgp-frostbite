@@ -73,3 +73,32 @@ passes all 24,820 checkpoints of twelve immutable original routes. A continuous
 120-frame keyboard run still records 24 overruns and 87 skipped VDP frames.
 These failures prevent real-time acceptance; CPU-only replay does not execute
 paced rendering or PSG.
+
+The next private checkpoint rotates cached complete NAME rows and draws floes
+before objects. Their source pixel rows are disjoint; shared SCREEN2 cells retain
+the exact two-color literal fusion. Cache identities are published only after
+all masks and sixty cached names are complete. The 512-byte cache is exclusive
+to the two generations at DE00–DFFF. A standalone Z80 check covers 7,691 rotations
+and invalid parameters, including both cached rows of every owner at every root
+and page; its maximum is 1,248 cycles including RPC. The original weaker probe
+did not cover every source-owner context and is not used for that claim.
+
+Tag 9 misses now stream the complete eight-byte mask directly from mapped ROM.
+They retain a previous CGT only when its published background, clip, foreground
+and type prove the same complete FG:4 color row. First publication and every
+foreground change write all eight color bytes before publishing the key. A
+stateful actual-Z80 component checks 4,306 operations against the whole 2,304-byte
+metadata pool and 16 KiB VRAM, including every mask, both pages/water banks,
+all fifteen foregrounds, repeated/replaced masks and invalid grammar. Its maximum
+is 2,030 cycles including RPC. The refactored reader again passes all 15,592 cases;
+its new raw-mask maximum is 603 cycles including RPC (dictionary maximum 1,389).
+
+The resulting private ROM SHA-256 is
+`022f2c9dc65cbdcd11c9fe32fdf4b6e1c616d34afcf262f3fd0db1595a027deb`.
+All 2,115 original full-scene cases and physical key/NAME/active-generation guards
+pass with no pixel differences. Its controlled maximum prepare cost is 707,553
+cycles. The 120-frame real-keyboard run still fails: maximum busy cost 732,155
+cycles, 24 overruns and 72 skipped VDP frames. Its last world component falls
+from 248,291 cycles before cached rows to 184,448; this smaller component is
+still not a complete-frame acceptance. PSG and final integrated delivery remain
+pending. This failed timing candidate is private research, not a human release.

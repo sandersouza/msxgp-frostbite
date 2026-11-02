@@ -35,7 +35,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm','src/presentation_fixed_emit.asm','src/presentation_fixed_memo.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fast_model.py','scripts/presentation_constructors.py','scripts/presentation_floe_templates.py',
-    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm')))
+    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_template_upload.asm')))
 
 
 def bank_layout(contact_banks):
@@ -77,8 +77,9 @@ def profile(*,fast=False,fixed=False,templates=False):
             ('fixed_reserved',0xDA08,0xDB00),('name_staging',0xDB00,0xDE00),('player_render_work',0xDE00,0xE100),
             ('primitive_staging',0xE200,0xE500))]
     if templates:
-        ram['regions']=[row for row in ram['regions'] if row['name']!='renderer_work']
+        ram['regions']=[row for row in ram['regions'] if row['name'] not in ('renderer_work','player_render_work')]
         ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
+            ('floe_name_cache',0xDE00,0xE000),('player_render_work',0xE000,0xE100),
             ('dirty_row_work',0xE580,0xE598),('world_memo',0xE5A0,0xE5AC),('floe_template_identities',0xE5C0,0xE5E0))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',

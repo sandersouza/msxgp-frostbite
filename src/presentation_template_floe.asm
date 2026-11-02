@@ -4,9 +4,9 @@ p_tf_cursor EQU $C2F2
 p_tf_row EQU $C2F3
 p_tf_column EQU $C2F4
 p_tf_identity EQU $C2F5
-p_tf_start EQU $C2F7
-p_tf_program_row EQU $C2F8
+p_tf_water EQU $C2F8
 p_tf_namebase EQU $C2F9
+p_tf_cache EQU $C2FA
 p_tf_base EQU $C2FC
 p_tf_slot EQU $C2FD
 p_tf_tuple EQU $E2E0
@@ -66,15 +66,11 @@ p_fixed_floe_prepare:
     JR C,.root
     SUB 160
 .root:
-    LD B,A
+    LD (p_tl_root),A
     LD A,(p_w_y)
-    LD C,A
+    LD (p_tl_y),A
     LD A,(p_w_delta)
-    LD D,A
-    LD A,B
-    LD B,D
-    CALL p_template_load
-    JP C,p_world_fail
+    LD (p_tl_delta),A
     LD A,(p_w_row)
     LD E,A
     LD D,0
@@ -84,15 +80,6 @@ p_fixed_floe_prepare:
     LD (p_tf_base),A
     CALL p_fixed_dynamic_id
     LD (p_tf_namebase),A
-    LD A,(p_tl_root)
-    DUP 4
-    SRL A
-    EDUP
-    LD B,A
-    ADD A,A
-    ADD A,B
-    INC A
-    LD (p_tf_start),A
     LD A,(p_tl_root)
     AND 15
     LD (p_tf_tuple),A
@@ -112,10 +99,20 @@ p_fixed_floe_prepare:
     ADD A,A
     ADD A,A
     ADD A,B
+    LD E,A
     ADD A,$C0
     LD L,A
     LD H,$E5
     LD (p_tf_identity),HL
+    LD L,E
+    LD H,0
+    DUP 4
+    ADD HL,HL
+    EDUP
+    LD DE,$DE00
+    ADD HL,DE
+    LD (p_tf_cache),HL
+    LD HL,(p_tf_identity)
     LD DE,p_tf_tuple
     LD B,4
 .identity:
@@ -127,8 +124,13 @@ p_fixed_floe_prepare:
     DJNZ .identity
     JP .draw
 .publish:
-    ; Publish every local mask, including a mask currently hidden by an object
-    ; or the left border. A later identity HIT can use any of its roles safely.
+    LD A,(p_tl_delta)
+    LD B,A
+    LD A,(p_tl_y)
+    LD C,A
+    LD A,(p_tl_root)
+    CALL p_template_load
+    JP C,p_world_fail
     LD A,(p_w_y)
     DUP 3
     SRL A
@@ -145,6 +147,7 @@ p_fixed_floe_prepare:
     LD A,pt_water_id2
 .water:
     LD (pf_key+2),A
+    LD (p_tf_water),A
     XOR A
     LD (pf_key+3),A
     LD A,(p_w_color)
@@ -173,11 +176,61 @@ p_fixed_floe_prepare:
     LD A,(p_tl_count)
     CP (HL)
     JR NZ,.mask
+    ; Expand the compiled local codes ONCE into this generation's immutable
+    ; sixty-byte NAME template. Other roles never write its cache or tiles.
+    LD HL,p_tl_names
+    LD DE,(p_tf_cache)
+    LD A,(p_tf_namebase)
+    DEC A
+    LD C,A
+    XOR A
+    LD (p_tf_cursor),A
+.cache_byte:
+    LD A,(HL)
+    LD B,A
+    AND 15
+    JR Z,.lower_background
+    ADD A,C
+    JR .lower
+.lower_background:
+    LD A,(p_tf_water)
+.lower:
+    LD (DE),A
+    INC DE
+    LD A,B
+    DUP 4
+    RRCA
+    EDUP
+    AND 15
+    JR Z,.upper_background
+    ADD A,C
+    JR .upper
+.upper_background:
+    LD A,(p_tf_water)
+.upper:
+    LD (DE),A
+    INC DE
+    INC HL
+    PUSH HL
+    LD HL,p_tf_cursor
+    INC (HL)
+    LD A,(HL)
+    POP HL
+    CP 30
+    JR NZ,.cache_byte
     LD HL,p_tf_tuple
     LD DE,(p_tf_identity)
     LD BC,4
-    LDIR                    ;identity validity follows ALL completed uploads
+    LDIR                    ;identity follows every tile AND completed NAME cache
 .draw:
+    LD A,(p_w_y)
+    AND 7
+    CP 2
+    LD A,1
+    JR C,.row_count
+    INC A
+.row_count:
+    LD (p_tf_column),A       ;seven source rows occupy one or two SCREEN2 rows
     XOR A
     LD (p_tf_row),A
 .row:
@@ -190,122 +243,63 @@ p_fixed_floe_prepare:
     ADD A,B
     LD (p_w_top),A
     CALL p_fast_row_dirty
-    JP Z,.next_row
-    LD A,(p_tf_row)
-    OR A
-    LD A,0
-    JR Z,.program_row
-    LD A,30
-.program_row:
-    LD (p_tf_program_row),A
+    JR Z,.next_row
     XOR A
-    LD (p_tf_column),A
-    LD A,(p_tf_start)
     LD (p_w_col),A
     CALL p_fast_cell
-.cell:
-    LD A,(p_tf_column)
-    LD B,A
-    LD A,(p_tf_program_row)
-    ADD A,B
-    LD C,A
-    SRL A
-    ADD A,p_tl_names&255
-    LD L,A
-    LD H,p_tl_names/256
-    LD A,(HL)
-    BIT 0,C
-    JR Z,.low
-    DUP 4
-    RRCA
-    EDUP
-.low:
-    AND 15
-    JR Z,.next_cell
-    LD B,A
-    LD A,(p_tl_count)
-    CP B
-    JP C,p_world_fail
-    LD A,B
-    DEC A
-    LD (p_tf_slot),A
-    LD A,(p_w_col)
-    CP 2
-    JR C,.next_cell
-    LD HL,(p_w_name)
-    LD A,(HL)
-    CP 128
-    JR C,.fused
-    LD A,(p_tf_namebase)
-    ADD A,B
-    DEC A
-    LD (HL),A
-    JR .next_cell
-.fused:
-    CALL p_fast_old_key
-    LD A,(pfw_old+5)
+    LD DE,(p_w_name)
+    LD HL,(p_tf_cache)
+    LD A,(p_tf_row)
     OR A
-    JP NZ,p_world_fail
-    LD A,(p_w_top)
-    CP 16
-    LD E,p_fx_fuse1&255
-    LD B,51
-    JR C,.fusion_map
-    LD E,p_fx_fuse2&255
-    LD B,41
-.fusion_map:
-    LD A,(p_w_col)
-    ADD A,E
-    LD L,A
-    LD H,p_fx_fuse1/256
-    LD A,(HL)
-    CP 9
-    JP NC,p_world_fail
-    ADD A,B
-    CALL p_fixed_dynamic_id
-    LD (p_fx_force),A
-    CALL p_template_fused_key
-    CALL p_fixed_put
-.next_cell:
-    LD HL,p_w_name
-    INC (HL)
-    LD HL,p_w_col
-    INC (HL)
-    LD A,(HL)
-    CP 31
-    JR C,.column_ready
-    LD (HL),1
-    CALL p_fast_cell
-.column_ready:
-    LD HL,p_tf_column
-    INC (HL)
-    LD A,(HL)
-    CP 30
-    JP C,.cell
+    JR Z,.copy
+    LD BC,30
+    ADD HL,BC
+.copy:
+    LD A,(p_tl_root)
+    CALL p_template_name_row
+    JP C,p_world_fail
 .next_row:
     LD HL,p_tf_row
     INC (HL)
-    LD A,(HL)
-    CP 2
-    JP C,.row
+    LD A,(p_tf_column)
+    CP (HL)
+    JR NZ,.row
     RET
 
-p_template_fused_key:
-    LD A,(p_tf_slot)
+; The shared scanline sets are disjoint. Objects can therefore be fused after
+; complete floes without changing a mapped pixel or source update ordering.
+p_template_object_fuse:
+    LD A,(p_w_family)
+    OR A
+    JP NZ,p_world_fail
+    CALL p_fast_old_key
+    LD A,(pfw_old+5)
+    CP 9
+    JP NZ,p_world_fail
+    LD A,(p_w_top)
+    CP 16
+    LD D,51
+    JR C,.base
+    LD D,41
+.base:
+    LD A,(p_w_copy)
+    LD B,A
     ADD A,A
-    ADD A,p_tl_keys&255
-    LD L,A
-    LD H,p_tl_keys/256
-    LD E,(HL)
-    INC L
-    LD D,(HL)
+    ADD A,B
+    LD B,A
+    LD A,(p_w_line)
+    ADD A,B
+    ADD A,D
+    CALL p_fixed_dynamic_id
+    LD (p_fx_force),A
+    LD DE,(pfw_old)
     CALL p_template_floe_pattern
     JP C,p_world_fail
     LD HL,$CC80
     LD DE,pfw_mask
     LD BC,8
     LDIR
-    LD DE,(pfw_old)
+    LD DE,(pfw_id)
     CALL presentation_geometry_pattern
     JP C,p_world_fail
     CALL p_fast_shared_kind
@@ -339,17 +333,17 @@ p_template_fused_key:
     LD A,($CC87)
     LD (pf_key+2),A
 .colour:
-    LD A,(pfw_old+4)
+    LD A,(p_w_color)
     DUP 4
     RLCA
     EDUP
     LD B,A
-    LD A,(p_w_color)
+    LD A,(pfw_old+4)
     OR B
     LD (pf_key+3),A
     XOR A
     LD (pf_key+4),A
-    RET
+    JP p_fixed_put
 
 p_template_floe_bases:
     DB 25,9,35,19

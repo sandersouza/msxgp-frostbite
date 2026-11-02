@@ -133,6 +133,15 @@ p_fixed_resolve:
     DJNZ .compare
     JR .name
 .miss:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(pf_key+5)
+    CP 9
+    JR NZ,.general
+    CALL p_template_floe_upload
+    JP C,p_fixed_fail
+    JR .name
+.general:
+    ENDIF
     LD A,(p_fx_bank)
     CALL presentation_typed_construct
     JP C,p_fixed_fail

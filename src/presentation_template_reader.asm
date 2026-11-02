@@ -8,6 +8,16 @@ p_tr_halves EQU $C2D4
 p_tr_error EQU $C2BC
 
 p_template_floe_pattern:
+    CALL p_template_floe_address
+    RET C
+    LD DE,$CC80
+    LD BC,8
+    LDIR
+    OR A
+    RET
+
+; DE=raw floe ID -> mapped immutable eight-byte ROM mask at HL.
+p_template_floe_address:
     XOR A
     LD (p_tr_error),A
     LD A,D
@@ -27,13 +37,7 @@ p_template_floe_pattern:
     ADD HL,DE
     LD A,p_template_floe_patterns_offset/65536
     ADC A,0
-    CALL p_template_address
-    RET C
-    LD DE,$CC80
-    LD BC,8
-    LDIR
-    OR A
-    RET
+    JP p_template_address
 
 p_template_pattern:
     XOR A
