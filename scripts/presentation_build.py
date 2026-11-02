@@ -14,6 +14,7 @@ from presentation_assets import compile_assets, memory_layout
 from presentation_fragments import background_tables, pack_background, compile_geometry, pack_geometry_metadata
 from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
 from presentation_sprites import tables as sprite_tables
+from presentation_static_assets import pack_static
 from reference_inventory import verified_input
 from reference_traces import private_output
 from render_build import symbols
@@ -24,7 +25,8 @@ FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/prese
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',
     'src/presentation_cache.asm', 'src/presentation_geometry.asm', 'src/presentation_world.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
 FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py', 'src/presentation_hud.asm',
-                            'scripts/presentation_sprites.py', 'src/presentation_sprites.asm', 'src/presentation_player_cache.asm')))
+                            'scripts/presentation_sprites.py', 'src/presentation_sprites.asm', 'src/presentation_player_cache.asm',
+                            'scripts/presentation_static_assets.py')))
 
 
 def bank_layout(contact_banks):
@@ -79,6 +81,9 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
     boot = pack_background((out / 'assets/fragments.bin').read_bytes(), fragments['used_bytes'], background)
     geometry = compile_geometry(rom, out / 'geometry')
     if not set(geometry['physical_banks']).issubset(banks['available_assets']): raise ValueError('geometry overlaps contact banks')
+    static=pack_static(rom,measured,out/'geometry',geometry,out/'static')
+    if not set(static['physical_banks']).issubset(banks['available_assets']):raise ValueError('static fragments overlap contact banks')
+    (out/'presentation_static.inc').write_text((out/'static/presentation_static.inc').read_text())
     geo_boot = pack_geometry_metadata(boot, geometry, (out / 'geometry/row-pointer-map.bin').read_bytes())
     (out / 'presentation_geometry.inc').write_text(geo_boot['assembly'])
     (out / 'boot.bin').write_bytes(geo_boot['bank'])
@@ -96,7 +101,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
     (out / 'resident_tables.inc').write_text('; Presentation metadata belongs to its explicit profile.\n')
     # Keep original fixed contact indices while reclaiming old synthetic-row banks.
     def asset_bank(bank):
-        return '    ORG $8000\n' + (f'    INCBIN "{out / "geometry" / f"geometry-{bank:03d}.bin"}\"\n' if bank in geometry['physical_banks'] else '    DS $4000,$FF\n')
+        return '    ORG $8000\n' + (f'    INCBIN "{out / "static" / f"assets-{bank:03d}.bin"}\"\n' if bank in static['physical_banks'] else '    DS $4000,$FF\n')
     (out / 'row_banks.inc').write_text(''.join(asset_bank(bank) for bank in range(3,14)))
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
     (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n    INCLUDE "movement.asm"\n')
@@ -122,6 +127,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
                 'background': {'tiles_per_bank': background['tiles_per_bank'], 'gradient_profiles': background['gradient_profiles'],
                                'boot_used_bytes': geo_boot['used_bytes'], 'boot_sha256': digest(out / 'boot.bin'), 'sections': boot['sections']},
                 'geometry': geometry, 'geometry_metadata': {'sections': geo_boot['sections'], 'used_bytes': geo_boot['used_bytes']},
+                'static_presentation':static,
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
                 'limitations': 'Private incomplete renderer bootstrap; full graphics/source pixels, live cache, PSG and integrated acceptance are not implemented or qualified. Not a human-testable game delivery.'}
