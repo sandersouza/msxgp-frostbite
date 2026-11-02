@@ -1,5 +1,6 @@
 """Ordered real-Z80 controlled graphics matrix; never full-frame acceptance."""
 import argparse
+from functools import lru_cache
 import hashlib
 import json
 import os
@@ -13,6 +14,9 @@ from graphics_mapping import map_frame
 from presentation_build import FILES,validate_rom
 from presentation_check import decode_target,crc_page
 from presentation_cache_ownership import audit_row,ROW_BYTES as OWNERSHIP_BYTES
+from presentation_fixed_ownership import audit_row as audit_fixed,audit_active,ROW_BYTES as FIXED_BYTES
+from presentation_fast_model import prepare as prepare_tiles
+from presentation_constructors import construct
 from presentation_dirty_audit import boot_histories,audit_scene,audit_list,audit_physical_names,ROW_BYTES as DIRTY_BYTES
 from presentation_fragments import background_tables
 from presentation_model import describe,pixels
@@ -24,7 +28,7 @@ from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py','scripts/presentation_cache_ownership.py','scripts/presentation_dirty.py','scripts/presentation_dirty_audit.py')))
+HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py','scripts/presentation_cache_ownership.py','scripts/presentation_fixed_ownership.py','scripts/presentation_dirty.py','scripts/presentation_dirty_audit.py')))
 CAPTURE_BYTES=16392
 
 def sha(data):return hashlib.sha256(data).hexdigest()
@@ -87,6 +91,8 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
     entries=[syms[name] for name in ('presentation_prepare','wait_vblank','presentation_commit')]
     rpc=[205,entries[0]&255,entries[0]>>8,219,153]+[byte for entry in entries[1:] for byte in (205,entry&255,entry>>8)]+[195,110,199,24,254]
     sparse=meta['profile'].get('sparse_profile',False)
+    fixed=meta['profile'].get('fixed_roles',False)
+    owner_bytes=FIXED_BYTES if fixed else OWNERSHIP_BYTES
     dirty=sparse and 'p_dirty_describe' in syms
     listed=dirty and 'p_fast_collect_rows' in syms
     scene_bytes=DIRTY_BYTES+25 if listed else DIRTY_BYTES
@@ -98,6 +104,7 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
     ownership_open=f'set owners [open {{{out/"ownership.bin"}}} wb]' if sparse else ''
     ownership_close='close $::owners;' if sparse else ''
     ownership_dump='puts -nonewline $::owners "[debug read_block memory 0xC800 768][debug read_block memory 0xCD00 768][debug read_block memory 0xC080 384][debug read_block memory 0xCCA0 6]"' if sparse else ''
+    if fixed:ownership_dump='puts -nonewline $::owners "[debug read_block memory 0xC800 768][debug read_block memory 0xCD00 768][debug read_block memory 0xD000 2304][debug read_block memory 0xD900 264][debug read_block memory 0xCCA0 6]"'
     script=f'''set save_settings_on_exit false
 set renderer none
 set throttle off
@@ -161,8 +168,14 @@ after time {60+limit*2} {{fail_matrix watchdog}}
     if len(captured)!=(1+2*limit)*CAPTURE_BYTES:raise ValueError('incomplete native captures')
     if (out/'cases.bin').read_bytes()!=cases or (out/'expected.tms').read_bytes()!=expected:raise ValueError('matrix fixture artifacts changed')
     owners=(out/'ownership.bin').read_bytes() if sparse else b''
-    if sparse and len(owners)!=limit*OWNERSHIP_BYTES:raise ValueError('incomplete live cache ownership matrix')
-    ownership=[audit_row(owners[i*OWNERSHIP_BYTES:(i+1)*OWNERSHIP_BYTES]) for i in range(limit)] if sparse else []
+    if sparse and len(owners)!=limit*owner_bytes:raise ValueError('incomplete native ownership matrix')
+    ownership=[audit_row(owners[i*owner_bytes:(i+1)*owner_bytes]) for i in range(limit)] if sparse and not fixed else []
+    if fixed:
+        tables=prepare_tiles(original,palette,build_dir/'geometry')
+        backgrounds=[{128+i:tables['background']['patterns'][bank][i*8:i*8+8]+tables['background']['colors'][bank][i*8:i*8+8]
+            for i in range(tables['background']['tiles_per_bank'][bank])} for bank in range(3)]
+        @lru_cache(maxsize=None)
+        def tile(bank,key):return construct(key,patterns=tables['patterns'],backgrounds=backgrounds[bank],header=tables['header'],footer=tables['footer']['tiles'])
     scenes=(out/'scenes.bin').read_bytes() if dirty else b''
     if dirty and len(scenes)!=limit*scene_bytes:raise ValueError('incomplete integrated dirty-scene matrix')
     rng=background_tables(original,palette)['rng_index'] if dirty else None
@@ -175,11 +188,14 @@ after time {60+limit*2} {{fail_matrix watchdog}}
     for index,sample in enumerate(fixtures):
         prepared,prep_regs=decode(index*2+1);presented,present_regs=decode(index*2+2)
         if prepared!=previous or prep_regs!=registers:raise ValueError(f'visible preparation changed at{index}')
+        if fixed:audit_active(captured[index*2*CAPTURE_BYTES:index*2*CAPTURE_BYTES+16384],captured[(index*2+1)*CAPTURE_BYTES:(index*2+1)*CAPTURE_BYTES+16384],registers)
         want=expected[index*49152:(index+1)*49152];different=sum(a!=b for a,b in zip(presented,want))
         row={'index':index,'name':sample['name'],'different_pixels':different,'actual_sha256':sha(presented),'expected_sha256':sha(want)}
         if sparse:
             vram=captured[(index*2+2)*CAPTURE_BYTES:(index*2+2)*CAPTURE_BYTES+16384]
-            audit_physical_names(vram,owners[index*OWNERSHIP_BYTES:index*OWNERSHIP_BYTES+1536])
+            raw=owners[index*owner_bytes:(index+1)*owner_bytes]
+            audit_physical_names(vram,raw[:1536])
+            if fixed:ownership.append(audit_fixed(raw,vram,tile))
         if dirty:row['dirty_rows']=audit_scene(scenes[index*scene_bytes:index*scene_bytes+DIRTY_BYTES],sample['ram'],rng,histories,boot_page^((index+1)&1))
         if listed:audit_list(scenes[index*scene_bytes+DIRTY_BYTES:(index+1)*scene_bytes],scenes[index*scene_bytes+64:index*scene_bytes+67])
         rows.append(row)
@@ -193,7 +209,7 @@ after time {60+limit*2} {{fail_matrix watchdog}}
             'rom_sha256':sha(romdata),'emulator_sha256':sha(emulator.read_bytes()),'profile_sha256':sha(profile_raw),'source_report_sha256':authority_sha,'domain':'all-source' if all_source else 'controlled-fixtures',
             'source_domain_families':bundle['families'] if bundle is not None else {'fixtures':1690},'unmapped_source_startup':bundle['unmapped_startup'] if bundle is not None else 0,
             'max_prepare_cycles_including_rpc':maximum,'frame_deadline_accepted':False,'full_source_pixels_accepted':component=='full-scene' and not failures,
-            'live_cache_ownership_accepted':sparse,'physical_name_pages_accepted':sparse,'integrated_dirty_states_accepted':dirty,'dirty_row_list_accepted':listed,'ownership':ownership,
+            'live_cache_ownership_accepted':sparse and not fixed,'fixed_role_ownership_accepted':fixed,'physical_name_pages_accepted':sparse,'integrated_dirty_states_accepted':dirty,'dirty_row_list_accepted':listed,'ownership':ownership,
             'rows':rows,'artifacts':{p.name:sha(p.read_bytes()) for p in out.iterdir() if p.is_file()},
             'scope':'Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')

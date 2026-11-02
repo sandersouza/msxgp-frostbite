@@ -37,14 +37,13 @@ p_fixed_floe_build:
     XOR A
     LD (p_ff_error),A
     LD (p_ff_copy),A
+    LD (p_ff_plane),A
     LD HL,p_ff_counts
     LD DE,p_ff_counts+1
     LD BC,63
     LD (HL),A
     LDIR
 .copy:
-    XOR A
-    LD (p_ff_plane),A
 .plane:
     ; Proper signed16-bit modular arithmetic: negative source positions
     ; wrap at160, never at256. No gameplay state is written.
@@ -160,21 +159,24 @@ p_fixed_floe_build:
     LD A,(p_geo_rows)
     CP B
     JR NZ,.grid_row
-    LD A,(p_ff_delta)
-    CP 9
-    JR C,.next_copy
-    LD A,(p_ff_plane)
-    OR A
-    JR NZ,.next_copy
-    INC A
-    LD (p_ff_plane),A
-    JP .plane
 .next_copy:
     LD A,(p_ff_copy)
     ADD A,32
     LD (p_ff_copy),A
     CP 96
     JP C,.copy
+    LD A,(p_ff_delta)
+    CP 9
+    JR C,.done
+    LD A,(p_ff_plane)
+    OR A
+    JR NZ,.done
+    INC A
+    LD (p_ff_plane),A
+    XOR A
+    LD (p_ff_copy),A
+    JP .copy
+.done:
     XOR A
     RET
 

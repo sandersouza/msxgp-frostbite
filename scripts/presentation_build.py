@@ -31,7 +31,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'scripts/presentation_static_assets.py','scripts/presentation_cache_hash.py',
                             'src/presentation_fast_cache.asm','src/presentation_typed.asm',
                             'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
-FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm')))
+FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm','src/presentation_fixed_emit.asm','src/presentation_fixed_memo.asm')))
 
 
 def bank_layout(contact_banks):
@@ -91,6 +91,34 @@ def validate_rom(data):
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def pack_contact_shadow(roots,base):
+    if len(roots)!=4800 or len(base)!=1600:raise ValueError('complete ten160-entry root/base directories required')
+    return bytes(roots)+bytes(base)+bytes([255])*(16384-6400)
+
+
+def contact_shadow(directory,out,tables):
+    directory=Path(directory);out=Path(out)
+    image=pack_contact_shadow((directory/'floe-roots.bin').read_bytes(),(directory/'floe-base.bin').read_bytes())
+    (out/'contact-shadow.bin').write_bytes(image)
+    lines=['floe_roots EQU $8000','floe_base EQU $92C0']
+    for name,key in (('hazard_row','edge'),('hazard_shore','shore')):
+        ys=tables['profile_ys'][key];lines.extend((f'{name}_min_y EQU {min(ys)}',f'{name}_max_y EQU {max(ys)}'))
+    lines.extend((f'contact_record_bank EQU {tables["codec"]["record_bank"]}',f'contact_block_bank EQU {tables["codec"]["block_bank"]}'))
+    def blob(label,name,aligned=False):
+        if aligned:lines.append('    ALIGN 256')
+        lines.extend((label+':',f'    INCBIN "{directory/name}"'))
+    blob('floe_control_index','floe-controls.bin',True)
+    lines.append('floe_control_pointers:')
+    for index in range(10):lines.append(f'    DW floe_roots+{index*480},floe_base+{index*160}')
+    for kind in ('edge','ordinary','shore'):blob(f'hazard_{kind}_modes',f'{kind}-modes.bin')
+    blob('hazard_ordinary_common_modes','ordinary-common.bin')
+    blob('hazard_shape_index','hazard-shapes.bin',True);blob('hazard_bear_index','hazard-bear.bin')
+    (out/'presentation_contact_resident.inc').write_text('\n'.join(lines)+'\n')
+    return {'bank':255,'root_address':0x8000,'root_bytes':4800,'base_address':0x92C0,'base_bytes':1600,
+        'sha256':digest(out/'contact-shadow.bin'),'resident_include_sha256':digest(out/'presentation_contact_resident.inc'),
+        'source_files':{name:digest(directory/name) for name in ('floe-roots.bin','floe-base.bin')}}
+
+
 def flat_water_ids(tables):
     result=[]
     for bank in range(3):
@@ -122,6 +150,10 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     measured = audit_palette(ROOT / config['palette'])
     out = private_output(out); out.mkdir(parents=True, exist_ok=False)
     tables = compile_catalog(floes, edge, ordinary, shore, aliases, out / 'tables'); banks = bank_layout(tables['banks'])
+    shadow=None
+    if fixed:
+        if 255 not in banks['available_assets']:raise ValueError('fixed root shadow requires free bank255')
+        shadow=contact_shadow(out/'tables',out,tables)
     fragments = compile_assets(rom, out / 'assets', measured_palette=measured)
     background = background_tables(rom, measured)
     water=flat_water_ids(background)
@@ -151,6 +183,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     (out / 'resident_tables.inc').write_text('; Presentation metadata belongs to its explicit profile.\n')
     # Keep original fixed contact indices while reclaiming old synthetic-row banks.
     def asset_bank(bank):
+        if fixed and bank==255:return '    ORG $8000\n'+f'    INCBIN "{out/"contact-shadow.bin"}"\n'
         return '    ORG $8000\n' + (f'    INCBIN "{out / "static" / f"assets-{bank:03d}.bin"}\"\n' if bank in static['physical_banks'] else '    DS $4000,$FF\n')
     (out / 'row_banks.inc').write_text(''.join(asset_bank(bank) for bank in range(3,14)))
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
@@ -182,6 +215,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
                 'static_presentation':static,
                 'flat_water_ids':water,
                 'cache_crc':geo_boot.get('cache_crc'),
+                'contact_shadow':shadow,
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
                 'limitations': 'Private renderer development profile; whole-frame timing, ordered PSG and integrated natural gameplay acceptance remain unqualified. Not a human-testable game delivery.'}

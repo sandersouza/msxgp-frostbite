@@ -398,7 +398,14 @@ p_bg_roots:
     INCLUDE "presentation_background_init.inc"
 
     IFDEF WITH_PRESENTATION_FAST
+    IFDEF WITH_PRESENTATION_FIXED
+    INCLUDE "presentation_fixed_runtime.asm"
+    INCLUDE "presentation_fixed_pool.asm"
+    INCLUDE "presentation_fixed_floe.asm"
+    INCLUDE "presentation_fixed_emit.asm"
+    ELSE
     INCLUDE "presentation_fast_cache.asm"
+    ENDIF
     INCLUDE "presentation_typed.asm"
     INCLUDE "presentation_fast_world.asm"
     INCLUDE "presentation_fast_hud.asm"

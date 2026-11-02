@@ -55,6 +55,9 @@ p_fast_clear_memo:
 
 ; Fast lane for a pinned nonoverlapping earlier copy. The semantic memo
 ; excludes clips/fused cells. Its ID already owns a nonzero live reference.
+    IFDEF WITH_PRESENTATION_FIXED
+    INCLUDE "presentation_fixed_memo.asm"
+    ELSE
 p_fast_try_memo:
     LD A,(p_w_col)
     CP 3
@@ -88,8 +91,12 @@ p_fast_try_memo:
 .miss:
     SCF
     RET
+    ENDIF
 
 p_fast_begin_page:
+    IFDEF WITH_PRESENTATION_FIXED
+    RET
+    ELSE
     LD HL,pf_refs
     LD A,(PAGE)
     OR A
@@ -115,6 +122,7 @@ p_fast_begin_page:
     LD (HL),0
     LDIR
     RET
+    ENDIF
 
 ; Derive the cell and cache group from the target row/column, never source
 ; coordinates. The group's generation owns every dynamic name reference.
@@ -148,6 +156,7 @@ p_fast_cell:
     ADD A,C
     ADD A,B
     LD (p_w_cachegroup),A
+    IFNDEF WITH_PRESENTATION_FIXED
     LD B,A
     ADD A,2
     RRCA
@@ -160,6 +169,7 @@ p_fast_cell:
     SBC A,0
     LD H,A
     LD (pf_owned_refs),HL
+    ENDIF
     RET
 
 ; All six bytes are retained before releasing the old cell owner.
@@ -194,6 +204,9 @@ p_fast_old_key:
 ; Construct/upload only on an exact-key MISS. Every intermediate fused cell
 ; drops its old owner before resolving, so an obsolete tile is safe to evict.
 p_fast_put:
+    IFDEF WITH_PRESENTATION_FIXED
+    JP p_fixed_put
+    ELSE
     LD HL,(p_w_name)
     LD A,(HL)
     CP 128
@@ -259,6 +272,7 @@ p_fast_put:
     LD A,(p_w_tile)
     LD (HL),A
     RET
+    ENDIF
 
 ; Input DE=PGT ID. The source grammar guarantees a zero atlas ID is empty.
 ; Nonshared interior cells need no PGT read on an exact cache hit.
@@ -270,6 +284,11 @@ p_fast_world_tile:
     LD A,(p_w_col)
     CP 2
     JR NZ,.old
+    IFDEF WITH_PRESENTATION_FIXED
+    LD A,(p_w_top)
+    CP 8
+    JR NC,.old
+    ENDIF
     CALL p_fast_read_mask
     LD HL,pfw_mask
     LD B,8
@@ -283,6 +302,10 @@ p_fast_world_tile:
     LD HL,(p_w_name)
     LD A,(HL)
     CP 128
+    IFDEF WITH_PRESENTATION_FIXED
+    JP C,p_world_fail       ;fixed bear/object copies never share a NAME cell
+    JP .mono
+    ELSE
     JP NC,.mono
     CALL p_fast_old_key
     LD A,(p_w_family)
@@ -384,12 +407,19 @@ p_fast_world_tile:
     LD A,($CC87)
     LD (pf_key+2),A
     JP p_fast_put
+    ENDIF
 .mono:
     LD (pf_key+2),A
     LD DE,(pfw_id)
     LD (pf_key),DE
     XOR A
     LD (pf_key+5),A
+    IFDEF WITH_PRESENTATION_FIXED
+    LD A,(p_w_top)
+    CP 8
+    LD A,0
+    JR NC,.clip_flag
+    ENDIF
     LD A,(p_w_col)
     CP 2
     LD A,0
@@ -400,9 +430,17 @@ p_fast_world_tile:
     LD A,(p_w_color)
     LD (pf_key+4),A
     CALL p_fast_put
+    IFDEF WITH_PRESENTATION_FIXED
+    LD A,(p_w_top)
+    CP 8
+    JR NC,.memo_position
+    ENDIF
     LD A,(p_w_col)
     CP 3
     RET C
+    IFDEF WITH_PRESENTATION_FIXED
+.memo_position:
+    ENDIF
     LD A,(p_w_index)
     ADD A,pfw_memo&255
     LD L,A
@@ -454,6 +492,7 @@ p_fast_shared_kind:
     XOR A
     RET
 
+    IFNDEF WITH_PRESENTATION_FIXED
 p_fast_union:
     LD A,(pfw_old+4)
     LD B,A
@@ -518,3 +557,4 @@ p_fast_extend_literal:
     OR (HL)
     LD (HL),A
     JP p_fast_put
+    ENDIF

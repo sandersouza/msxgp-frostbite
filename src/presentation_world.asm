@@ -45,6 +45,13 @@ presentation_world_prepare:
     RET Z
     XOR A
     LD (pfw_geo_valid),A     ;native steps may reuse broad runtime scratch
+    IFDEF WITH_PRESENTATION_FIXED
+    LD HL,p_fx_fuse1
+    LD DE,p_fx_fuse1+1
+    LD BC,63
+    LD (HL),255
+    LDIR
+    ENDIF
     ENDIF
     LD A,($C068)
     CP 150
@@ -169,6 +176,10 @@ presentation_world_prepare:
     INC (HL)
     JR .object
 .floes:
+    IFDEF WITH_PRESENTATION_FIXED
+    CALL p_fixed_floe_prepare
+    JP .row_done
+    ELSE
     LD A,($C01D)
     AND 2
     JP NZ,p_world_fail
@@ -246,6 +257,7 @@ presentation_world_prepare:
     XOR A
     LD (p_w_copy),A
     JP .floe
+    ENDIF
 .row_done:
     LD HL,p_w_row
     INC (HL)

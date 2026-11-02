@@ -68,6 +68,9 @@ def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=
     counters=(('p_fast_resolve','resolve'),('presentation_typed_construct','construct'),('p_fast_ref_add_core' if 'p_fast_ref_add_core' in syms else 'p_fast_ref_add','refadd'),
         ('p_fast_ref_drop_core' if 'p_fast_ref_drop_core' in syms else 'p_fast_ref_drop','refdrop'),('p_fast_cell','cell'),('presentation_geometry_lookup','geometry'),
         ('presentation_geometry_pattern','pattern'),('p_fast_world_tile','worldtile'),('p_world_primitive','primitive'))
+    if meta['profile'].get('fixed_roles'):
+        counters=tuple((name,label) for name,label in counters if label not in ('resolve','refadd','refdrop'))+(
+            ('p_fixed_put','fixed-put'),('p_fixed_floe_build','floe-grid'),('p_fixed_pool_resolve','floe-pool'))
     counter_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{if {{$::inprepare}} {{incr ::calls({label})}}}}' for name,label in counters)
     counter_zero=';'.join(f'set ::calls({label}) 0' for _,label in counters)
     counter_row=' '.join(f'$::calls({label})' for _,label in counters)

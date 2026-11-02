@@ -111,6 +111,9 @@ p_fast_primitive_dirty:
 
 p_fast_release_dirty:
     CALL p_fast_collect_rows
+    IFDEF WITH_PRESENTATION_FIXED
+    RET
+    ELSE
     OR A
     RET Z
     LD A,(p_fd_rows)
@@ -154,6 +157,7 @@ p_fast_release_dirty:
     CP (HL)
     JR NZ,.row
     RET
+    ENDIF
 
 p_fast_background_rows:
     LD A,(p_fd_count)

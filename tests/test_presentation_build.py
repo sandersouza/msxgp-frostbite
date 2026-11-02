@@ -12,6 +12,15 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('presentation_build'), 'native presentation builder missing')
         return importlib.import_module('presentation_build')
 
+    def test_far_contact_shadow_preserves_every_root_and_base_byte(self):
+        api=self.api();self.assertTrue(hasattr(api,'pack_contact_shadow'),'fixed-profile far shadow missing')
+        roots=bytes(range(256))*18+bytes(range(192));base=bytes(range(256))*6+bytes(range(64))
+        self.assertEqual(len(roots),4800);self.assertEqual(len(base),1600)
+        image=api.pack_contact_shadow(roots,base)
+        self.assertEqual(image[:6400],roots+base);self.assertEqual(image[6400:],bytes([255])*(16384-6400))
+        for a,b in ((roots[:-1],base),(roots,base[:-1])):
+            with self.assertRaises(ValueError):api.pack_contact_shadow(a,b)
+
     def test_flat_water_identity_requires_exact_pattern_and_both_colour_nibbles(self):
         api=self.api();self.assertTrue(hasattr(api,'flat_water_ids'),'finite flat-background identity missing')
         tables={'patterns':[bytes([255])*16]*3,'colors':[bytes([17])*8+bytes([68])*8]*3}

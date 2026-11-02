@@ -1,6 +1,7 @@
 ; Permanent physical roles. A valid key is published only after its complete
 ; offscreen PGT/CGT upload; active generations are never evicted or aliased.
 pf_key EQU $CC90
+p_fast_crc_data EQU $E100
 p_fx_force EQU $C2E2
 p_fx_meta EQU $C2E3
 p_fx_bank EQU $C2E5

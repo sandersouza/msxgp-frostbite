@@ -17,7 +17,7 @@ from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-FILES=('scripts/presentation_fixed_runtime_check.py','scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','scripts/environment.py','scripts/smoke.py','scripts/render_build.py')
+FILES=('scripts/presentation_fixed_runtime_check.py','scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_memo.asm','scripts/environment.py','scripts/smoke.py','scripts/render_build.py')
 INPUT_BYTES=34
 ROW_BYTES=20561
 
@@ -53,6 +53,12 @@ def fixtures():
                         for copy in range(3):add(page,(top+grid_row)//8,key=bytes((row,line,0,0,15,0)),top=top+grid_row,col=3+copy*6+line,family=0,row=row,line=line,copy=copy,coarse=coarse)
         for grid_row in range(3):
             for line in range(4):add(page,(6+grid_row)//8,key=bytes((line,grid_row,0,0,15,0)),top=6+grid_row,col=3+line,line=line)
+    for page in (0,1):
+        for coarse,top,row,grid_row in ((0,20,0,1),(0,15,1,0),(1,12,2,0)):
+            for line in range(3):
+                key=bytes((row,line,0,0,15,0));identifier=world_slot('object',row,grid_row,line,coarse)[1]+page*64
+                add(page,top//8,key=key,top=top,col=3+line,family=0,row=row,line=line,coarse=coarse)
+                for copy in (1,2):add(page,top//8,identifier,key,top=top,col=22+copy*3+line,family=0,row=row,line=line,copy=copy,coarse=coarse,op=3)
     key=bytes((1,2,3,4,5,0))
     for field in range(6):
         changed=bytearray(key);changed[field]^=1;add(0,0,0,changed,col=5)
@@ -87,7 +93,7 @@ def fixtures():
                 else:
                     if key[5]!=6 or bank!=2 or not 160+page*22<=identifier<182+page*22:raise ValueError('footer bounds')
                     address=2304+(identifier-160)*6
-                if metadata[address:address+6]!=key:
+                if op!=3 and metadata[address:address+6]!=key:
                     if op==2:raise ValueError('constructor fault')
                     base=bank*2048+identifier*8;vram[base:base+8]=tile[:8];vram[base+0x2000:base+0x2008]=tile[8:]
                     metadata[address:address+6]=key
@@ -120,6 +126,8 @@ p_w_family EQU $C227
 p_w_col EQU $C229
 p_w_top EQU $C22A
 p_w_line EQU $C22B
+p_w_index EQU $C22C
+pfw_memo EQU $E5A0
 p_w_name EQU $C22D
 p_w_tile EQU $C22F
 p_w_cachegroup EQU $C230
@@ -142,6 +150,8 @@ unit_run:
     LD A,($C2F0)
     OR A
     JP Z,p_fast_init
+    CP 3
+    JP Z,p_fast_try_memo
     JP p_fixed_put
 presentation_typed_construct:
     LD B,A
@@ -178,6 +188,7 @@ p_world_fail:
     LD (p_w_fault),A
     RET
     INCLUDE "presentation_fixed_runtime.asm"
+    INCLUDE "presentation_fixed_memo.asm"
     DS $C000-$,$FF
 '''
     (out/'unit.asm').write_text(entry);artifact=out/'unit.rom';assembler=verified_tool('sjasmplus')
@@ -202,6 +213,7 @@ proc dispatch_fixedput {{}} {{
     debug write memory 0xC2F0 $op;debug write memory 0xC2F1 $bank
     debug write memory 0xC200 $page;debug write memory 0xC230 [expr {{$page*3+$bank}}];debug write memory 0xC2E2 $force
     debug write memory 0xC22A $top;debug write memory 0xC229 $col;debug write memory 0xC227 $family;debug write memory 0xC224 $source
+    debug write memory 0xC22C $line;debug write memory [expr {{0xE5A0+$line}}] $force
     debug write memory 0xC22B $line;debug write memory 0xC225 $copy;debug write memory 0xC223 $coarse;debug write memory 0xC245 $footer
     set address [expr {{($page ? 0xCD00 : 0xC800)+$top*32+$col}}]
     debug write memory 0xC22D [expr {{$address&255}}];debug write memory 0xC22E [expr {{$address>>8}}]
