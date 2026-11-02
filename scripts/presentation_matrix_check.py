@@ -92,6 +92,7 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
     rpc=[205,entries[0]&255,entries[0]>>8,219,153]+[byte for entry in entries[1:] for byte in (205,entry&255,entry>>8)]+[195,110,199,24,254]
     sparse=meta['profile'].get('sparse_profile',False)
     fixed=meta['profile'].get('fixed_roles',False)
+    templates=meta['profile'].get('floe_templates',False)
     owner_bytes=FIXED_BYTES if fixed else OWNERSHIP_BYTES
     dirty=sparse and 'p_dirty_describe' in syms
     listed=dirty and 'p_fast_collect_rows' in syms
@@ -172,10 +173,17 @@ after time {60+limit*2} {{fail_matrix watchdog}}
     ownership=[audit_row(owners[i*owner_bytes:(i+1)*owner_bytes]) for i in range(limit)] if sparse and not fixed else []
     if fixed:
         tables=prepare_tiles(original,palette,build_dir/'geometry')
+        floe_patterns=None
+        if templates:
+            packed=meta['template_assets'];asset_data=b''.join(romdata[bank*16384:(bank+1)*16384] for bank in packed['physical_banks'])
+            if any(sha(romdata[bank*16384:(bank+1)*16384])!=packed['files'][f'assets-{bank:03d}.bin'] for bank in packed['physical_banks']):raise ValueError('actual ROM template banks differ from manifest')
+            section=packed['sections']['floe_patterns'];data=asset_data[section['offset']:section['offset']+section['size']]
+            if len(data)!=packed['floe_patterns']*8 or sha(data)!=packed['floe_patterns_sha256']:raise ValueError('actual ROM raw-floe namespace differs')
+            floe_patterns=[data[i:i+8] for i in range(0,len(data),8)]
         backgrounds=[{128+i:tables['background']['patterns'][bank][i*8:i*8+8]+tables['background']['colors'][bank][i*8:i*8+8]
             for i in range(tables['background']['tiles_per_bank'][bank])} for bank in range(3)]
         @lru_cache(maxsize=None)
-        def tile(bank,key):return construct(key,patterns=tables['patterns'],backgrounds=backgrounds[bank],header=tables['header'],footer=tables['footer']['tiles'])
+        def tile(bank,key):return construct(key,patterns=tables['patterns'],floe_patterns=floe_patterns,backgrounds=backgrounds[bank],header=tables['header'],footer=tables['footer']['tiles'])
     scenes=(out/'scenes.bin').read_bytes() if dirty else b''
     if dirty and len(scenes)!=limit*scene_bytes:raise ValueError('incomplete integrated dirty-scene matrix')
     rng=background_tables(original,palette)['rng_index'] if dirty else None
@@ -195,7 +203,7 @@ after time {60+limit*2} {{fail_matrix watchdog}}
             vram=captured[(index*2+2)*CAPTURE_BYTES:(index*2+2)*CAPTURE_BYTES+16384]
             raw=owners[index*owner_bytes:(index+1)*owner_bytes]
             audit_physical_names(vram,raw[:1536])
-            if fixed:ownership.append(audit_fixed(raw,vram,tile))
+            if fixed:ownership.append(audit_fixed(raw,vram,tile,templates=templates))
         if dirty:row['dirty_rows']=audit_scene(scenes[index*scene_bytes:index*scene_bytes+DIRTY_BYTES],sample['ram'],rng,histories,boot_page^((index+1)&1))
         if listed:audit_list(scenes[index*scene_bytes+DIRTY_BYTES:(index+1)*scene_bytes],scenes[index*scene_bytes+64:index*scene_bytes+67])
         rows.append(row)

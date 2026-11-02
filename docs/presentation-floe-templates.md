@@ -1,9 +1,8 @@
 # Finite floe templates
 
-Issue #14's fixed renderer is pixel-correct on the retained original observations
-and still exceeds the frame budget. This optional compiler and its native asset
-readers prepare a smaller amount of runtime work. Game integration and timing
-acceptance remain pending.
+Issue #14's private `--templates` profile integrates these tables with the fixed
+renderer. It matches all 2,115 retained original observations and still exceeds
+the frame budget. Ordered PSG and combined game acceptance remain pending.
 
 `presentation_floe_templates.py` constructs masks directly from the original ROM's
 seven-line motion pattern and ten accepted control pairs. It compiles all sixteen
@@ -34,7 +33,8 @@ logical eight-byte pattern. Floes additionally have a raw pool for faster reads.
 
 Packed template records reference the raw floe namespace. It must have its own
 typed constructor identity; these indices must never enter the logical reader.
-The existing game constructor has not yet been extended for these records.
+The profile's typed tag 9 identifies this namespace, including valid index zero.
+The ordinary logical-pattern constructor keeps its previous identity.
 
 The packer preserves all 8,960 original row/bear grids and the static constructor
 fragments. Complete floe programs replace the old primitive floe descriptors in
@@ -45,7 +45,8 @@ inside the 4 MiB ASCII16 cartridge. The prefix occupies 217,952 bytes and leaves
 5,024 bytes before the reserved far-contact directory. That exact 6,400-byte
 directory starts at bank 255:A700; its base table starts at B9C0 and ends at C000.
 A future builder must use those addresses and preserve the packed bank contents.
-The current fixed game uses a different, independently validated bank-255 layout.
+The older `--fixed` control uses a different, independently validated bank-255
+layout at 8000/92C0. The two profiles select their own complete layouts.
 
 ## Verification boundaries
 
@@ -63,3 +64,12 @@ floe reader. These are component timings, not a frame deadline verdict.
 
 Original-derived tables and proof artifacts remain ignored under `outputs/`.
 No new human-testable ROM or release follows from these component checks.
+
+The integrated checkpoint ROM SHA-256 is
+`b8d78dfa4803b111b5fed9c84d957fac55210c055c94fe79e4543f742d5b20fb`.
+Its 2,115 full-scene checks include published keys versus real PGT/CGT bytes,
+both NAME pages and unchanged active-generation bytes. Separate CPU-only replay
+passes all 24,820 checkpoints of twelve immutable original routes. A continuous
+120-frame keyboard run still records 24 overruns and 87 skipped VDP frames.
+These failures prevent real-time acceptance; CPU-only replay does not execute
+paced rendering or PSG.

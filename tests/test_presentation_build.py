@@ -12,6 +12,16 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('presentation_build'), 'native presentation builder missing')
         return importlib.import_module('presentation_build')
 
+    def test_template_profile_declares_raw_namespace_and_persistent_identity_ownership(self):
+        profile=self.api().profile(templates=True)
+        self.assertTrue(profile['fixed_roles']);self.assertTrue(profile['sparse_profile']);self.assertTrue(profile['floe_templates'])
+        self.assertEqual(profile['raw_floe_key_type'],9)
+        regions={row['name']:(row['start'],row['end']) for row in profile['ram']['regions']}
+        self.assertEqual(regions['floe_template_identities'],(0xE5C0,0xE5E0))
+        for name,(a,b) in regions.items():
+            for other,(c,d) in regions.items():
+                if name!=other:self.assertTrue(b<=c or d<=a,f'{name}/{other} alias')
+
     def test_far_contact_shadow_preserves_every_root_and_base_byte(self):
         api=self.api();self.assertTrue(hasattr(api,'pack_contact_shadow'),'fixed-profile far shadow missing')
         roots=bytes(range(256))*18+bytes(range(192));base=bytes(range(256))*6+bytes(range(64))

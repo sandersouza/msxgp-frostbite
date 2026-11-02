@@ -125,7 +125,7 @@ def pack(geometry_dir,compiled,rom,palette,contact_dir,out):
     static=''.join(f'p_static_{name}_data EQU ${int.from_bytes(bytes(sections[name]["pointer"][:2]),"little"):04X}\np_static_{name}_bank EQU {sections[name]["pointer"][2]}\n' for name in ('header','footer_tiles','footer_names'))
     static+=f'p_static_footer_tile_count EQU {len(footer["tiles"])}\n';(out/'presentation_static.inc').write_text(static)
     assembly=''.join(f'p_template_{name}_offset EQU ${sections[name]["offset"]:06X}\n' for name in ('pattern_pairs','pattern_halves','floe_patterns','template_index','template_keys','template_names'))
-    assembly+=f'p_template_pattern_count EQU {compiled["patterns"]}\np_template_half_count EQU {len(blobs["pattern-halves.bin"])//4}\np_template_floe_count EQU {len(floe_ids)}\np_template_delta_count EQU {len(compiled["deltas"])}\np_template_deltas:\n    DB '+','.join(map(str,compiled['deltas']))+'\n'
+    assembly+=f'p_template_pattern_count EQU {compiled["patterns"]}\np_template_half_count EQU {len(blobs["pattern-halves.bin"])//4}\np_template_floe_count EQU {len(floe_ids)}\np_template_program_count EQU {compiled["program_count"]}\np_template_delta_count EQU {len(compiled["deltas"])}\np_template_deltas:\n    DB '+','.join(map(str,compiled['deltas']))+'\n'
     (out/'presentation_template.inc').write_text(assembly)
     result={'source_sha256':sha(rom),'patterns':compiled['patterns'],'logical_pattern_bytes':len(blobs['logical-patterns.bin']),
         'pattern_encoding':'two uint16 half indices, then four-byte halves','classes':encoded['classes'],'roots':roots,'sections':sections,

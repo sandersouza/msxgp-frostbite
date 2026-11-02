@@ -400,9 +400,15 @@ p_bg_roots:
     IFDEF WITH_PRESENTATION_FAST
     IFDEF WITH_PRESENTATION_FIXED
     INCLUDE "presentation_fixed_runtime.asm"
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    INCLUDE "presentation_template_reader.asm"
+    INCLUDE "presentation_template_loader.asm"
+    INCLUDE "presentation_template_floe.asm"
+    ELSE
     INCLUDE "presentation_fixed_pool.asm"
     INCLUDE "presentation_fixed_floe.asm"
     INCLUDE "presentation_fixed_emit.asm"
+    ENDIF
     ELSE
     INCLUDE "presentation_fast_cache.asm"
     ENDIF

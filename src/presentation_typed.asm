@@ -33,6 +33,10 @@ presentation_typed_construct:
     JP Z,pt_union
     CP 8
     JP Z,pt_union
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CP 9
+    JP Z,pt_template_floe
+    ENDIF
     SUB 16
     CP 3
     JP C,pt_header
@@ -118,6 +122,47 @@ pt_mono:
     JP pt_merge
 pt_water_ids:
     DB pt_water_id0,pt_water_id1,pt_water_id2
+
+    IFDEF WITH_PRESENTATION_TEMPLATES
+pt_template_floe:
+    LD A,(pt_bank)
+    OR A
+    JP Z,pt_fail            ;original floes belong only to SCREEN2 banks1/2
+    LD L,A
+    LD H,0
+    LD DE,pt_water_ids
+    ADD HL,DE
+    LD A,(pt_key+2)
+    CP (HL)
+    JP NZ,pt_fail
+    LD A,(pt_key+3)
+    OR A
+    JP NZ,pt_fail
+    LD A,(pt_key+4)
+    OR A
+    JP Z,pt_fail
+    CP 16
+    JP NC,pt_fail
+    LD DE,(pt_key)
+    CALL p_template_floe_pattern
+    JP C,pt_fail
+    LD HL,$CC80
+    LD DE,pt_tile
+    LD BC,8
+    LDIR
+    LD A,(pt_key+4)
+    DUP 4
+    RLCA
+    EDUP
+    OR 4
+    LD HL,pt_tile+8
+    DUP 8
+    LD (HL),A
+    INC HL
+    EDUP
+    XOR A
+    RET
+    ENDIF
 
 ; Solid-water pixels have one exact constant colour pair. Retain the literal
 ; geometry mask even on empty rows; decoded pixels equal the general merge.

@@ -25,10 +25,34 @@ p_fast_init:
     LD DE,$CCA0
     LD BC,6
     LDIR
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD HL,$E5C0
+    LD DE,$E5C1
+    LD BC,31
+    LD (HL),255
+    LDIR
+    ENDIF
     XOR A
     RET
 
 p_fixed_put:
+    CALL p_fixed_resolve
+    RET C
+    LD HL,(p_w_name)
+    LD A,(p_w_tile)
+    LD (HL),A
+    LD A,(pf_key+5)
+    OR A
+    JR NZ,.done
+    LD A,(p_w_family)
+    OR A
+    CALL Z,p_fixed_mark_object
+.done:
+    LD A,(p_w_tile)
+    OR A
+    RET
+
+p_fixed_resolve:
     LD A,(pf_key+5)
     CP 255
     JP Z,p_fixed_fail
@@ -145,16 +169,6 @@ p_fixed_put:
     LD BC,6
     LDIR                    ;key validity follows both completed table writes
 .name:
-    LD HL,(p_w_name)
-    LD A,(p_w_tile)
-    LD (HL),A
-    LD A,(pf_key+5)
-    OR A
-    JR NZ,.done
-    LD A,(p_w_family)
-    OR A
-    CALL Z,p_fixed_mark_object
-.done:
     LD A,(p_w_tile)
     OR A
     RET

@@ -7,6 +7,17 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class FixedOwnershipTests(unittest.TestCase):
+    def test_template_roles_require_the_raw_floe_namespace(self):
+        api=importlib.import_module('presentation_fixed_ownership')
+        raw=bytearray(bytes([128])*1536+bytes([255])*2568+bytes((56,60,50,56,60,50)))
+        vram=bytearray(16384);vram[0x1800:0x1B00]=vram[0x1C00:0x1F00]=bytes([128])*768
+        key=bytes((0,0,130,0,15,9));at=1536+(64+19)*6;raw[at:at+6]=key
+        raw[11*32+4]=19;vram[0x1800+11*32+4]=19
+        api.audit_row(bytes(raw),bytes(vram),lambda bank,key:bytes(16),templates=True)
+        with self.assertRaises(ValueError):api.audit_row(bytes(raw),bytes(vram),lambda bank,key:bytes(16))
+        raw[at+5]=7
+        with self.assertRaises(ValueError):api.audit_row(bytes(raw),bytes(vram),lambda bank,key:bytes(16),templates=True)
+
     def test_invisible_active_tile_bytes_are_immutable_during_prepare(self):
         self.assertIsNotNone(importlib.util.find_spec('presentation_fixed_ownership'))
         api=importlib.import_module('presentation_fixed_ownership')

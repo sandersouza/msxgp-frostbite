@@ -71,6 +71,9 @@ def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=
     if meta['profile'].get('fixed_roles'):
         counters=tuple((name,label) for name,label in counters if label not in ('resolve','refadd','refdrop'))+(
             ('p_fixed_put','fixed-put'),('p_fixed_floe_build','floe-grid'),('p_fixed_pool_resolve','floe-pool'))
+    if meta['profile'].get('floe_templates'):
+        counters=tuple((name,label) for name,label in counters if label not in ('floe-grid','floe-pool'))+(
+            ('p_fixed_resolve','fixed-resolve'),('p_template_load','template-load'),('p_fixed_floe_prepare','floe-prepare'),('p_template_floe_pattern','raw-floe-pattern'))
     counter_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{if {{$::inprepare}} {{incr ::calls({label})}}}}' for name,label in counters)
     counter_zero=';'.join(f'set ::calls({label}) 0' for _,label in counters)
     counter_row=' '.join(f'$::calls({label})' for _,label in counters)

@@ -43,6 +43,9 @@ presentation_geometry_lookup:
     LD HL,p_geo_row_roots_data
     JR .root
 .floe:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    JP p_geo_fail           ;complete templates own this family in this profile
+    ELSE
     LD A,B
     CP 9
     JP NC,p_geo_fail
@@ -50,6 +53,7 @@ presentation_geometry_lookup:
     CP 128
     JP NC,p_geo_fail
     LD HL,p_geo_floe_roots_data
+    ENDIF
 .root:
     LD E,B
     LD D,0
@@ -179,6 +183,9 @@ presentation_geometry_lookup:
 
 ; DE=pattern ID; exactly eight source-derived expanded bytes to scratchCC80.
 presentation_geometry_pattern:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    JP p_template_pattern
+    ELSE
     LD A,D
     CP p_geo_pattern_count/256
     JR C,.valid
@@ -208,6 +215,7 @@ presentation_geometry_pattern:
     LDIR
     OR A
     RET
+    ENDIF
 
 ; Logical assetbanks0..10 mapto3..13;11..13 mapto253..255.
 p_geo_map:

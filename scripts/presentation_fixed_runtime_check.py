@@ -35,6 +35,10 @@ def fixtures():
     add(op=0)
     add(force=0,key=bytes([255])*6)
     for page in (0,1):
+        for bank in range(3):
+            key=bytes((bank,page,128,0,15,0))
+            for _ in range(2):add(page,bank,page*64,key,col=30,family=1,op=4)
+    for page in (0,1):
         for bank,count in enumerate(COUNTS):
             for slot in range(count):
                 key=hashlib.sha256(f'fixed{page}:{bank}:{slot}'.encode()).digest()[:5]+bytes(1)
@@ -97,8 +101,9 @@ def fixtures():
                     if op==2:raise ValueError('constructor fault')
                     base=bank*2048+identifier*8;vram[base:base+8]=tile[:8];vram[base+0x2000:base+0x2008]=tile[8:]
                     metadata[address:address+6]=key
-                names[page*768+top*32+col]=identifier
-                if key[5]==0 and family==0 and ((coarse and top==12) or (not coarse and top in (15,20))):fused[(32 if top==20 else 0)+col]=copy*3+line
+                if op!=4:
+                    names[page*768+top*32+col]=identifier
+                    if key[5]==0 and family==0 and ((coarse and top==12) or (not coarse and top in (15,20))):fused[(32 if top==20 else 0)+col]=copy*3+line
                 result=identifier
             except ValueError:result=255;carry=fault=1
         expected.extend(bytes((result,carry,fault))+metadata+names+vram+fused+counts)
@@ -152,6 +157,8 @@ unit_run:
     JP Z,p_fast_init
     CP 3
     JP Z,p_fast_try_memo
+    CP 4
+    JP Z,p_fixed_resolve
     JP p_fixed_put
 presentation_typed_construct:
     LD B,A

@@ -18,16 +18,17 @@ def audit_active(before,prepared,registers):
     if any(before[start:start+size]!=prepared[start:start+size] for start,size in spans):raise ValueError('active NAME/PGT/CGT/SAT/full SGT bytes changed during prepare')
 
 
-def kinds(bank,slot):
+def kinds(bank,slot,templates=False):
     if bank==0:
         if slot<8:return (0,)
         if slot<38:return (16+(slot-8)//10,)
         return (5,)
-    if bank==1:return (0,) if slot<19 else (0,7) if slot<51 else (2,3)
-    return (0,) if slot<9 else (0,7) if slot<41 else (1,)
+    if bank==1:return (0,) if slot<19 else ((9,) if templates else (0,7)) if slot<51 else (2,3)
+    return (0,) if slot<9 else ((9,) if templates else (0,7)) if slot<41 else (1,)
 
 
-def audit_row(raw,vram,tile):
+def audit_row(raw,vram,tile,*,templates=False):
+    if type(templates)is not bool:raise ValueError('explicit fixed/template role selection required')
     if len(raw)!=ROW_BYTES or len(vram)!=16384:raise ValueError('complete fixed metadata, both NAME pages and16KiB VRAM required')
     names=raw[:1536];keys=raw[1536:3840];footer=raw[3840:4104];counts=raw[4104:]
     if counts!=bytes(COUNTS*2):raise ValueError('fixed role capacities changed')
@@ -46,7 +47,7 @@ def audit_row(raw,vram,tile):
         for slot in range(64):
             key=keys[(group*64+slot)*6:(group*64+slot+1)*6]
             if key==bytes([255])*6:continue
-            if slot>=COUNTS[bank] or key[5] not in kinds(bank,slot):raise ValueError('key belongs to another fixed primitive role')
+            if slot>=COUNTS[bank] or key[5] not in kinds(bank,slot,templates):raise ValueError('key belongs to another fixed primitive role')
             identifier=slot+page*64;check_tile(bank,identifier,key);valid[page,bank,identifier]=key
     for index in range(44):
         key=footer[index*6:(index+1)*6]

@@ -9,6 +9,21 @@ class PresentationConstructorTests(unittest.TestCase):
     def api(self):
         self.assertIsNotNone(importlib.util.find_spec('presentation_constructors'),'typed constructor grammar missing')
         return importlib.import_module('presentation_constructors')
+    def test_raw_floe_zero_is_a_valid_separate_pattern_namespace(self):
+        api=self.api();self.assertTrue(hasattr(api,'floe_key'))
+        mask=bytes((0,17,34,68,136,255,15,240));water=bytes([255])*8+bytes([68])*8
+        key=api.floe_key(0,130,15)
+        self.assertEqual(key,bytes((0,0,130,0,15,9)))
+        self.assertNotEqual(key,api.mono_key(0,130,15))
+        self.assertEqual(api.construct(key,patterns=[bytes(8)],floe_patterns=[mask],backgrounds={130:water},header=b'',footer=[]),mask+bytes([244])*8)
+        with self.assertRaises(ValueError):api.construct(key,patterns=[bytes(8)],backgrounds={130:water},header=b'',footer=[])
+
+    def test_raw_floe_constructor_rejects_pool_background_colour_and_clip_errors(self):
+        api=self.api();self.assertTrue(hasattr(api,'floe_key'))
+        water=bytes([255])*8+bytes([68])*8;key=api.floe_key(0,130,15)
+        for bad in (bytes((1,0))+key[2:],key[:3]+bytes((1,))+key[4:],key[:4]+bytes((0,9))):
+            with self.assertRaises(ValueError):api.construct(bad,patterns=[],floe_patterns=[bytes([17])*8],backgrounds={130:water},header=b'',footer=[])
+        with self.assertRaises(ValueError):api.construct(key,patterns=[],floe_patterns=[bytes([17])*8],backgrounds={130:bytes(16)},header=b'',footer=[])
     def test_pattern_palette_background_and_clip_fields_do_not_alias(self):
         api=self.api();keys=set()
         for pattern in (0,1,255,256,12097,16383):

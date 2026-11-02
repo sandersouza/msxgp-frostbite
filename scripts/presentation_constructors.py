@@ -19,6 +19,10 @@ def mono_key(pattern,background,color,clip=False):
     return word(pattern)+bytes((value(background,128,255),int(clip),value(color,1,15),0))
 
 
+def floe_key(pattern,background,color):
+    return word(pattern)+bytes((value(background,128,255),0,value(color,1,15),9))
+
+
 def union_key(first,second,color,clip=False):
     if type(clip)is not bool:raise ValueError('explicit source viewport clip required')
     return word(first)+word(second)+bytes((value(color,1,15)*16+4,8 if clip else 7))
@@ -70,9 +74,16 @@ def merge(background,mask,color):
     return bytes(result)
 
 
-def construct(key,*,patterns,backgrounds,header,footer):
+def construct(key,*,patterns,backgrounds,header,footer,floe_patterns=None):
     if len(key)!=6:raise ValueError('whole typed constructor key required')
     kind=key[5]
+    if kind==9:
+        index=int.from_bytes(key[:2],'little')
+        if (key[3] or not 1<=key[4]<=15 or index>=16384 or floe_patterns is None or index>=len(floe_patterns)
+            or backgrounds.get(key[2])!=bytes([255])*8+bytes([68])*8):raise ValueError('invalid raw floe constructor or namespace')
+        mask=floe_patterns[index]
+        if len(mask)!=8:raise ValueError('complete raw floe mask required')
+        return bytes(mask)+bytes([key[4]*16+4])*8
     def pattern(at):
         index=int.from_bytes(key[at:at+2],'little')
         if index>=16384:raise ValueError('unknown pattern')
