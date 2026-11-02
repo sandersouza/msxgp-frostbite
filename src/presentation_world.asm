@@ -409,6 +409,8 @@ p_world_primitive:
     OR A
     JR Z,.next
     IFDEF WITH_PRESENTATION_FAST
+    CALL p_fast_try_memo
+    JR NC,.next
     LD A,(p_w_index)
     ADD A,A
     LD E,A

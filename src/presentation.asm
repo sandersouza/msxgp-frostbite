@@ -61,6 +61,12 @@ presentation_init:
     LD BC,767
     LD (HL),128
     LDIR
+    LD A,1
+    LD ($7000),A
+    LD HL,p_fast_crc_rom_data
+    LD DE,p_fast_crc_data
+    LD BC,256
+    LDIR                    ;read-only CRC page replaces unused shadow storage
     ENDIF
     LD A,208
     LD (SAT),A

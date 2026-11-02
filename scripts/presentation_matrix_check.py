@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from environment import ROOT
 from graphics_mapping import map_frame
 from presentation_build import FILES,validate_rom
-from presentation_check import decode_target
+from presentation_check import decode_target,crc_page
 from presentation_cache_ownership import audit_row,ROW_BYTES as OWNERSHIP_BYTES
 from presentation_dirty_audit import boot_histories,audit_scene,audit_list,audit_physical_names,ROW_BYTES as DIRTY_BYTES
 from presentation_fragments import background_tables
@@ -44,6 +44,8 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
               'utility_fingerprints':{name:sha((ROOT/name).read_bytes()) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
     build_dir=Path(build_dir).resolve();meta=json.loads((build_dir/'build.json').read_text());artifact=build_dir/meta['rom']['filename'];romdata=artifact.read_bytes()
     if validate_rom(romdata) or sha(romdata)!=meta['rom']['sha256']:raise ValueError('matrix ROM identity changed')
+    crc=crc_page(meta,romdata)
+    crc_guard=f'if {{[debug read_block memory 0xE100 256] ne [binary format H* {{{crc.hex()}}}]}} {{fail_matrix crc-shadow}}' if crc is not None else ''
     if any(sha((ROOT/name).read_bytes())!=value for name,value in meta['source_files'].items()):raise ValueError('matrix build producer changed')
     if not explore:
         if meta['source_dirty'] or meta['exploratory'] or meta.get('private_contact_reuse'):raise ValueError('canonical matrix requires canonical clean build')
@@ -108,6 +110,7 @@ set timing [open {{{out/'timing.tsv'}}} w]
 proc fail_matrix {{message}} {{puts stderr "MATRIX_FAIL $message case=$::index";exit 1;return -code error $message}}
 proc capture_matrix {{}} {{puts -nonewline $::captures [debug read_block VRAM 0 16384];puts -nonewline $::captures [debug read_block {{VDP regs}} 0 8]}}
 proc guard_matrix {{}} {{
+    {crc_guard}
     if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_matrix source-state}}
     if {{[debug read_block memory 0xE800 0xB40] ne [string repeat [binary format c 165] 0xB40]}} {{fail_matrix heap-redzone}}
     if {{[reg SP]!=0xF380 || ([reg IFF]&3)!=0 || [debug read ioports 168]!=$::slot}} {{fail_matrix abi}}
@@ -121,6 +124,7 @@ proc dispatch_matrix {{}} {{
 }}
 set boot [debug set_bp {syms['paced_frame_start']} {{}} {{debug remove_bp $::boot;debug break;after break {{
     if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_matrix target}}
+    {crc_guard}
     set ::slot [debug read ioports 168];set ::abi [debug read_block memory 0xC600 256]
     {boot_dump}
     debug write_block memory 0xE800 [string repeat [binary format c 165] 0xB40]

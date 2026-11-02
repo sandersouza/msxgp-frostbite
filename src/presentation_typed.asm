@@ -97,12 +97,6 @@ pt_pattern:
     OR A
     RET
 pt_mono:
-    LD DE,(pt_key)
-    CALL pt_pattern
-    RET C
-    LD A,(pt_key+3)
-    OR A
-    CALL NZ,pt_clip
     LD A,(pt_bank)
     LD L,A
     LD H,0
@@ -111,6 +105,12 @@ pt_mono:
     LD A,(pt_key+2)
     CP (HL)
     JP Z,pt_water_mono
+    LD DE,(pt_key)
+    CALL pt_pattern
+    RET C
+    LD A,(pt_key+3)
+    OR A
+    CALL NZ,pt_clip
     LD A,(pt_key+2)
     CALL pt_background
     RET C
@@ -119,45 +119,34 @@ pt_mono:
 pt_water_ids:
     DB pt_water_id0,pt_water_id1,pt_water_id2
 
-; Preserve the generic constructor's exact bytes, including FF/44 on empty
-; rows and when foreground equals water. No per-row general colour merge.
+; Solid-water pixels have one exact constant colour pair. Retain the literal
+; geometry mask even on empty rows; decoded pixels equal the general merge.
 pt_water_mono:
-    LD A,(pt_key+4)
-    CP 4
-    JR NZ,.foreground
-    LD HL,pt_tile
-    LD DE,pt_tile+1
-    LD BC,7
-    LD (HL),255
+    LD DE,(pt_key)
+    CALL presentation_geometry_pattern
+    RET C
+    LD HL,$CC80
+    LD DE,pt_tile
+    LD BC,8
     LDIR
-    LD A,$44
-    JP pt_fill_colors
-.foreground:
+    LD A,(pt_key+3)
+    OR A
+    JR Z,.colors
+    LD HL,pt_tile
+    LD B,8
+.clip:
+    LD A,(HL)
+    AND 15
+    LD (HL),A
+    INC HL
+    DJNZ .clip
+.colors:
+    LD A,(pt_key+4)
     DUP 4
     RLCA
     EDUP
     OR 4
-    LD C,A
-    LD HL,pt_mask
-    LD IY,pt_tile
-    LD B,8
-.row:
-    LD A,(HL)
-    INC HL
-    OR A
-    JR Z,.empty
-    LD (IY),A
-    LD A,C
-    JR .color
-.empty:
-    LD (IY),255
-    LD A,$44
-.color:
-    LD (IY+8),A
-    INC IY
-    DJNZ .row
-    OR A
-    RET
+    JP pt_fill_colors
 pt_clip:
     LD HL,pt_mask
     LD B,8

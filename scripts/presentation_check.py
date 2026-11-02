@@ -12,6 +12,7 @@ from environment import ROOT
 from graphics_mapping import decode_screen, map_frame
 from presentation_build import FILES, validate_rom
 from presentation_cache_ownership import audit_row
+from presentation_cache_hash import table as crc_table
 from presentation_fragments import background_tables, background_vram
 from presentation_model import describe, pixels
 from presentation_palette import audit_palette
@@ -24,6 +25,16 @@ from smoke import find_machine_profile, isolated_profile, validate_machine_profi
 HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,'scripts/presentation_check.py','scripts/presentation_cache_ownership.py')))
 
 def sha(data): return hashlib.sha256(data).hexdigest()
+
+
+def crc_page(metadata,rom):
+    entry=metadata.get('cache_crc')
+    if entry is None:return None
+    offset=entry.get('offset');expected=crc_table()
+    if (entry.get('ram_start')!=0xE100 or entry.get('size')!=256 or type(offset)is not int or not 0<=offset<=16128
+        or entry.get('sha256')!=sha(expected) or rom[16384+offset:16384+offset+256]!=expected):
+        raise ValueError('CRC shadow ROM identity or RAM ownership differs')
+    return expected
 
 
 def decode_target(vram, registers):
@@ -52,6 +63,8 @@ def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, back
         'utility_fingerprints':{name:sha((ROOT/name).read_bytes()) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
     build_dir = Path(build_dir).resolve(); metadata = json.loads((build_dir / 'build.json').read_text())
     artifact = build_dir / metadata['rom']['filename']; rom = artifact.read_bytes()
+    crc=crc_page(metadata,rom)
+    crc_guard=f'if {{[debug read_block memory 0xE100 256] ne [binary format H* {{{crc.hex()}}}]}} {{fail_presentation crc-shadow}}' if crc is not None else ''
     if validate_rom(rom) or sha(rom) != metadata['rom']['sha256']: raise ValueError('presentation ROM identity mismatch')
     if not explore: audit_manifest({'tool_source_commit': metadata['source_commit'], 'utility_fingerprints': metadata['source_files']}, FILES)
     if any(sha((ROOT / name).read_bytes()) != value for name, value in metadata['source_files'].items()): raise ValueError('build source changed since artifact compilation')
@@ -121,6 +134,7 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
     debug remove_bp $::boot;debug break
     after break {{
         if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_presentation target}}
+        {crc_guard}
         set f [open {{{out/'source-ram.bin'}}} rb];set ::ram [read $f];close $f
         debug write_block memory 0xC000 $::ram
         set ::abi [debug read_block memory 0xC600 256]
@@ -145,6 +159,7 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
         }}
         debug set_bp 0xC763 {{}} {{debug break;after break {{
             {phase_record}
+            {crc_guard}
             set ::prepare_cycles [expr {{round(([machine_info time]-$::prepare_started)*3579545)}}]
             if {{[debug read memory 0xC231]!=0}} {{fail_presentation "world-compositor miss=[debug read memory 0xCCA6] group=[debug read memory 0xCCA7] family=[debug read memory 0xC227] col=[debug read memory 0xC229] top=[debug read memory 0xC22A]"}}
             if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_presentation prepare-source-state}}

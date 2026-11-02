@@ -60,7 +60,7 @@ def profile(*,fast=False):
             ('scene_a',0xC540,0xC5A0),('scene_b',0xC5A0,0xC600),
             ('tile_references',0xC080,0xC200),('graphics_rpc',0xC760,0xC780),
             ('constructor_keys',0xD000,0xD900),('constructor_links',0xD900,0xDA80),
-            ('constructor_buckets',0xDB00,0xE100),('sprite_shadow',0xE100,0xE500),('fusion_work',0xE500,0xE540),
+            ('constructor_buckets',0xDB00,0xE100),('cache_crc',0xE100,0xE200),('sprite_shadow',0xE200,0xE500),('fusion_work',0xE500,0xE540),
             ('visual_state_work',0xE540,0xE580),('renderer_work',0xE580,0xE800))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
@@ -91,6 +91,15 @@ def flat_water_ids(tables):
     return result
 
 
+def pack_crc_shadow(boot):
+    image=boot['bank'];offset=boot['used_bytes'];crc=cache_crc_table();end=offset+len(crc)
+    if len(image)!=16384 or not 0<=offset<=16384 or end>16384 or any(v!=255 for v in image[offset:end]):
+        raise ValueError('CRC page must fit the unused primitive-bank tail')
+    return {**boot,'bank':image[:offset]+crc+image[end:],'used_bytes':end,
+        'assembly':boot['assembly']+f'p_fast_crc_rom_data EQU ${0x8000+offset:04X}\n',
+        'cache_crc':{'offset':offset,'size':256,'ram_start':0xE100,'sha256':hashlib.sha256(crc).hexdigest()}}
+
+
 def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False):
     if type(fast)is not bool:raise ValueError('explicit sparse-profile selection required')
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -114,6 +123,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     if not set(static['physical_banks']).issubset(banks['available_assets']):raise ValueError('static fragments overlap contact banks')
     (out/'presentation_static.inc').write_text((out/'static/presentation_static.inc').read_text())
     geo_boot = pack_geometry_metadata(boot, geometry, (out / 'geometry/row-pointer-map.bin').read_bytes())
+    if fast:geo_boot=pack_crc_shadow(geo_boot)
     (out / 'presentation_geometry.inc').write_text(geo_boot['assembly'])
     (out / 'boot.bin').write_bytes(geo_boot['bank'])
     (out / 'presentation_background.inc').write_text(boot['assembly'] +
@@ -160,6 +170,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
                 'geometry': geometry, 'geometry_metadata': {'sections': geo_boot['sections'], 'used_bytes': geo_boot['used_bytes']},
                 'static_presentation':static,
                 'flat_water_ids':water,
+                'cache_crc':geo_boot.get('cache_crc'),
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
                 'limitations': 'Private renderer development profile; whole-frame timing, ordered PSG and integrated natural gameplay acceptance remain unqualified. Not a human-testable game delivery.'}

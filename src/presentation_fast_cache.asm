@@ -378,6 +378,10 @@ p_fast_key_roots:
     ALIGN 8
 p_fast_bits:
     DB 1,2,4,8,16,32,64,128
+    IFDEF WITH_PRESENTATION_FAST
+p_fast_crc_data EQU $E100
+    ELSE
     ALIGN 256
 p_fast_crc_data:
     INCBIN "cache-crc.bin"
+    ENDIF

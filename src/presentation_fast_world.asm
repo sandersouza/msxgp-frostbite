@@ -53,6 +53,42 @@ p_fast_clear_memo:
     LDIR
     RET
 
+; Fast lane for a pinned nonoverlapping earlier copy. The semantic memo
+; excludes clips/fused cells. Its ID already owns a nonzero live reference.
+p_fast_try_memo:
+    LD A,(p_w_col)
+    CP 3
+    RET C
+    LD HL,(p_w_name)
+    LD A,(HL)
+    CP 128
+    RET C
+    LD A,(p_w_index)
+    ADD A,pfw_memo&255
+    LD L,A
+    LD H,pfw_memo/256
+    LD A,(HL)
+    CP 255
+    JR Z,.miss
+    LD C,A
+    LD HL,(pf_owned_refs)
+    AND 63
+    OR L
+    LD L,A
+    LD A,(HL)
+    OR A
+    JP Z,p_world_fail
+    CP 255
+    JP Z,p_world_fail
+    INC (HL)
+    LD HL,(p_w_name)
+    LD (HL),C
+    OR A
+    RET
+.miss:
+    SCF
+    RET
+
 p_fast_begin_page:
     LD HL,pf_refs
     LD A,(PAGE)
@@ -247,7 +283,7 @@ p_fast_world_tile:
     LD HL,(p_w_name)
     LD A,(HL)
     CP 128
-    JP NC,.mono_lookup
+    JP NC,.mono
     CALL p_fast_old_key
     LD A,(p_w_family)
     CP 1
@@ -348,22 +384,6 @@ p_fast_world_tile:
     LD A,($CC87)
     LD (pf_key+2),A
     JP p_fast_put
-.mono_lookup:
-    LD B,A                  ;current static background identity
-    LD A,(p_w_col)
-    CP 3
-    JR C,.not_retained       ;source left-edge mask has a separate constructor
-    LD A,(p_w_index)
-    ADD A,pfw_memo&255
-    LD L,A
-    LD H,pfw_memo/256
-    LD A,(HL)
-    CP 255
-    JR Z,.not_retained
-    LD (p_w_tile),A
-    JP p_fast_put.acquire   ;already pinned by a nonoverlapping earlier copy
-.not_retained:
-    LD A,B
 .mono:
     LD (pf_key+2),A
     LD DE,(pfw_id)

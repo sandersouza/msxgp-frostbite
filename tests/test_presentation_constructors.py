@@ -55,3 +55,24 @@ class PresentationConstructorTests(unittest.TestCase):
         api=self.api();background=bytes((170,))*8+bytes((36,))*8;patterns=[bytes((240,))*8]
         for color in (2,4):api.construct(api.mono_key(0,128,color,False),patterns=patterns,backgrounds={128:background},header=b'',footer=[])
         with self.assertRaises(ValueError):api.construct(api.mono_key(0,128,15,False),patterns=patterns,backgrounds={128:background},header=b'',footer=[])
+
+    def test_flat_water_uses_literal_mask_and_a_constant_colour_pair(self):
+        api=self.api();mask=bytes((0,1,15,16,128,240,254,255))
+        water=bytes([255])*8+bytes([68])*8
+        for color in (1,4,15):
+            for clip in (False,True):
+                tile=api.construct(api.mono_key(0,128,color,clip),patterns=[mask],backgrounds={128:water},header=b'',footer=[])
+                expected=bytes(v&(15 if clip else 255) for v in mask)+bytes([color*16+4])*8
+                self.assertEqual(tile,expected)
+
+    def test_water_normalization_preserves_all_pixels_for_every_byte_mask_colour_and_clip(self):
+        api=self.api();water=bytes([255])*8+bytes([68])*8
+        for mask in range(256):
+            for color in range(1,16):
+                for clip in (False,True):
+                    tile=api.construct(api.mono_key(0,128,color,clip),patterns=[bytes([mask])*8],backgrounds={128:water},header=b'',footer=[])
+                    visible=mask&(15 if clip else 255)
+                    for y in range(8):
+                        actual=tuple(tile[y+8]>>4 if tile[y]&(128>>x) else tile[y+8]&15 for x in range(8))
+                        expected=tuple(color if visible&(128>>x) else 4 for x in range(8))
+                        self.assertEqual(actual,expected)

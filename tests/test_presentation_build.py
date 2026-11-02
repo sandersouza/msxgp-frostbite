@@ -20,6 +20,18 @@ class PresentationBuildTests(unittest.TestCase):
             bad={k:list(v) for k,v in tables.items()};changed=bytearray(bad[field][1]);changed[-1]^=1;bad[field][1]=bytes(changed)
             with self.assertRaises(ValueError):api.flat_water_ids(bad)
 
+    def test_crc_shadow_uses_only_unused_boot_tail_and_an_owned_ram_page(self):
+        api=self.api();self.assertTrue(hasattr(api,'pack_crc_shadow'),'bounded CRC shadow packer missing')
+        image=bytes([165])*15993+bytes([255])*(16384-15993)
+        packed=api.pack_crc_shadow({'bank':image,'used_bytes':15993,'assembly':''})
+        self.assertEqual(packed['bank'][:15993],image[:15993]);self.assertEqual(packed['used_bytes'],16249)
+        self.assertEqual(packed['cache_crc']['ram_start'],0xE100)
+        self.assertEqual(packed['cache_crc']['size'],256)
+        self.assertIn('p_fast_crc_rom_data',packed['assembly'])
+        self.assertEqual(packed['bank'][16249:],image[16249:])
+        for used,data in ((16129,bytes([255])*16384),(15993,bytes(16384))):
+            with self.assertRaises(ValueError):api.pack_crc_shadow({'bank':data,'used_bytes':used,'assembly':''})
+
     def test_cartridge_identity_is_distinct_and_standard_msx1_requirements_are_explicit(self):
         api = self.api(); profile = api.profile()
         self.assertEqual(profile['version'], '0.0.7-presentation')
@@ -58,7 +70,8 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertEqual(regions['constructor_keys'],(0xD000,0xD900))
         self.assertEqual(regions['constructor_links'],(0xD900,0xDA80))
         self.assertEqual(regions['constructor_buckets'],(0xDB00,0xE100))
-        self.assertEqual(regions['sprite_shadow'],(0xE100,0xE500))
+        self.assertEqual(regions['cache_crc'],(0xE100,0xE200))
+        self.assertEqual(regions['sprite_shadow'],(0xE200,0xE500))
         self.assertEqual(regions['fusion_work'],(0xE500,0xE540))
         self.assertEqual(regions['visual_state_work'],(0xE540,0xE580))
         self.assertEqual(regions['renderer_work'],(0xE580,0xE800))

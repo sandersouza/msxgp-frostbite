@@ -15,7 +15,7 @@ import xml.etree.ElementTree as ET
 from environment import ROOT
 from graphics_mapping import map_frame
 from presentation_build import FILES,validate_rom
-from presentation_check import decode_target
+from presentation_check import decode_target,crc_page
 from presentation_model import describe,pixels
 from presentation_palette import audit_palette
 from reference_traces import private_output
@@ -48,7 +48,7 @@ def verify_rows(text,count,family):
         'max_source_and_scheduler_cycles':max(row[2] for row in rows),'max_prepare_cycles':max(row[3] for row in rows)}
 
 
-def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=0):
+def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=0,costs=False):
     if family not in ('ntsc','pal') or type(frames)is not int or not 2<=frames<=600 or type(play)is not bool:
         raise ValueError('bounded continuous profile and explicit clock/input mode required')
     if type(last_world_budget)is not int or last_world_budget<0:raise ValueError('nonnegative last-world microbudget required')
@@ -56,6 +56,8 @@ def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=
     build_dir=Path(build_dir).resolve();meta=json.loads((build_dir/'build.json').read_text())
     artifact=build_dir/meta['rom']['filename'];rom=artifact.read_bytes()
     if validate_rom(rom) or sha(rom)!=meta['rom']['sha256']:raise ValueError('continuous profile ROM identity mismatch')
+    crc=crc_page(meta,rom)
+    crc_guard=f'if {{[debug read_block memory 0xE100 256] ne [binary format H* {{{crc.hex()}}}]}} {{fail_probe crc-shadow}}' if crc is not None else ''
     if any(sha((ROOT/name).read_bytes())!=value for name,value in meta['source_files'].items()):raise ValueError('continuous profile build producers changed')
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     syms=symbols(build_dir/'presentation.sym');emulator=Path(shutil.which('openmsx')).resolve()
@@ -63,12 +65,16 @@ def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=
         ('presentation_world_prepare','background'),('presentation_hud_prepare','world'),('presentation_footer_prepare','header'),
         ('presentation_sprites_prepare','footer'),('p_fast_upload_dirty','sprites'))
     phase_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{mark_probe_phase {label}}}' for name,label in stages)
-    counters=(('p_fast_resolve','resolve'),('presentation_typed_construct','construct'),('p_fast_ref_add','refadd'),
-        ('p_fast_ref_drop','refdrop'),('p_fast_cell','cell'),('presentation_geometry_lookup','geometry'),
+    counters=(('p_fast_resolve','resolve'),('presentation_typed_construct','construct'),('p_fast_ref_add_core' if 'p_fast_ref_add_core' in syms else 'p_fast_ref_add','refadd'),
+        ('p_fast_ref_drop_core' if 'p_fast_ref_drop_core' in syms else 'p_fast_ref_drop','refdrop'),('p_fast_cell','cell'),('presentation_geometry_lookup','geometry'),
         ('presentation_geometry_pattern','pattern'),('p_fast_world_tile','worldtile'),('p_world_primitive','primitive'))
     counter_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{if {{$::inprepare}} {{incr ::calls({label})}}}}' for name,label in counters)
     counter_zero=';'.join(f'set ::calls({label}) 0' for _,label in counters)
     counter_row=' '.join(f'$::calls({label})' for _,label in counters)
+    measured=counters+(('p_fast_try_memo','memo'),) if costs and 'p_fast_try_memo' in syms else counters if costs else ()
+    costs_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{begin_probe_cost {label}}}' for name,label in measured)
+    costs_zero=';'.join(f'set ::cost_count({label}) 0;set ::cost_sum({label}) 0' for _,label in measured)
+    costs_dump=';'.join(f'puts $::costfile "$::index {label} $::cost_count({label}) $::cost_sum({label})"' for _,label in measured)
     effective=ET.fromstring(isolated_profile(find_machine_profile(str(emulator))))
     effective.find('.//VDP/version').text='TMS9918A' if family=='ntsc' else 'TMS9929A'
     profile=b'<?xml version="1.0"?><!DOCTYPE msxconfig SYSTEM "msxconfig2.dtd">'+ET.tostring(effective)
@@ -85,9 +91,24 @@ set inprepare 0
 set timing [open {{{out/'cycles.tsv'}}} w]
 set phases [open {{{out/'phases.tsv'}}} w]
 set counts [open {{{out/'counts.tsv'}}} w]
+set costfile [open {{{out/'costs.tsv'}}} w]
 set captures [open {{{out/'captures.bin'}}} wb]
 proc fail_probe {{message}} {{puts stderr "PACE_PROBE_FAIL $message frame=$::index";exit 1;return -code error $message}}
 proc snapshot_probe {{}} {{return "[debug read_block VRAM 0 16384][debug read_block {{VDP regs}} 0 8]"}}
+proc begin_probe_cost {{label}} {{
+    if {{!$::inprepare}} {{return}}
+    if {{[info exists ::cost_bp($label)]}} {{fail_probe recursive-cost-measurement}}
+    set stack [reg SP]
+    set address [expr {{[debug read memory $stack]|([debug read memory [expr {{$stack+1}}]]<<8)}}]
+    set ::cost_start($label) [machine_info time]
+    set ::cost_bp($label) [debug set_bp $address {{}} [list finish_probe_cost $label [expr {{$stack+2}}]]]
+}}
+proc finish_probe_cost {{label stack}} {{
+    if {{[reg SP]!=$stack}} {{return}}
+    incr ::cost_count($label)
+    incr ::cost_sum($label) [expr {{round(([machine_info time]-$::cost_start($label))*3579545)}}]
+    debug remove_bp $::cost_bp($label);unset ::cost_bp($label)
+}}
 proc mark_probe_phase {{label}} {{
     if {{!$::inprepare}} {{return}}
     set now [machine_info time]
@@ -96,6 +117,7 @@ proc mark_probe_phase {{label}} {{
 }}
 {phase_setup}
 {counter_setup}
+{costs_setup}
 debug set_bp {syms['native_reset_done']} {{}} {{
     if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_probe target}}
     set ::slot [debug read ioports 168]
@@ -110,11 +132,13 @@ debug set_bp {syms['paced_frame_start']} {{}} {{
         set end_y [machine_info VDP_msx_y_pos]
         puts $::timing "$::index $::vdp_frame $::source_cycles $::prepare_cycles $commit [expr {{$::source_cycles+$::prepare_cycles+$commit}}] $::spacing $::steps $::commit_y $end_y"
         puts $::counts "$::index {counter_row}"
+        {costs_dump}
         puts -nonewline $::captures "$::ram$::before$::prepared[snapshot_probe]"
         incr ::index
-        if {{$::index=={frames}}} {{close $::timing;close $::captures;close $::phases;close $::counts;exit;return}}
+        if {{$::index=={frames}}} {{close $::timing;close $::captures;close $::phases;close $::counts;close $::costfile;exit;return}}
     }}
     if {{[debug read ioports 168]!=$::slot || ([reg IFF]&3)!=0 || [reg SP]!=0xF380}} {{fail_probe abi}}
+    {crc_guard}
     set ::tracking 1;set ::started $now;set ::steps 0
     if {{{int(play)} && $::index==4}} {{keymatrixdown 6 32}}
     if {{{int(play)} && $::index==6}} {{keymatrixup 6 32}}
@@ -133,10 +157,12 @@ debug set_bp {syms['prepare']} {{}} {{
     set ::prepare_started $now
     set ::inprepare 1;set ::previous_phase $now
     {counter_zero}
+    {costs_zero}
     set ::ram [debug read_block memory 0xC000 128];set ::abi [debug read_block memory 0xC600 256]
     set ::before [snapshot_probe]
 }}
 debug set_bp {syms['paced_wait']} {{}} {{
+    {crc_guard}
     mark_probe_phase prepared;set ::inprepare 0
     set ::prepare_cycles [expr {{round(([machine_info time]-$::prepare_started)*3579545)}}]
     if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_probe renderer-mutated-source}}
@@ -162,6 +188,11 @@ after time {60+frames} {{fail_probe watchdog}}
     counts=[list(map(int,line.split())) for line in (out/'counts.tsv').read_text().splitlines()]
     if len(counts)!=frames or any(len(row)!=len(counters)+1 or row[0]!=i or any(v<0 for v in row[1:]) for i,row in enumerate(counts)):
         raise ValueError('incomplete/unordered continuous operation counts')
+    cost_rows=[row.split() for row in (out/'costs.tsv').read_text().splitlines()]
+    if len(cost_rows)!=frames*len(measured):raise ValueError('incomplete inclusive cost profiles')
+    for index,row in enumerate(cost_rows):
+        if (len(row)!=4 or row[0]!=str(index//len(measured)) or row[1]!=measured[index%len(measured)][1]
+            or any(int(v)<0 for v in row[2:]) or bool(int(row[2]))!=bool(int(row[3]))):raise ValueError('invalid inclusive routine cost')
     phases=[line.split() for line in (out/'phases.tsv').read_text().splitlines()];labels=[label for _,label in stages]+['prepared']
     if len(phases)!=frames*len(labels):raise ValueError('incomplete continuous phase profiles')
     for index in range(frames):
@@ -189,6 +220,7 @@ after time {60+frames} {{fail_probe watchdog}}
     report['last_world_cycles']=next(int(row[2]) for row in phases[-len(labels):] if row[1]=='world')
     report['last_world_microbudget']=last_world_budget or None
     report['operation_count_columns']=['index']+[label for _,label in counters];report['operation_counts']=counts
+    report['inclusive_routine_costs']=cost_rows
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n')
     if last_world_budget and report['last_world_cycles']>last_world_budget:raise ValueError(f'last world component costs{report["last_world_cycles"]}>{last_world_budget}; no complete-frame acceptance implied')
     return report
@@ -198,4 +230,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--family',choices=('ntsc','pal'),default='ntsc');p.add_argument('--frames',type=int,default=120);p.add_argument('--play',action='store_true')
     p.add_argument('--last-world-budget',type=int,default=0)
+    p.add_argument('--costs',action='store_true',help='Private nested routine profiles; inclusive costs must not be added together')
     report=probe(**vars(p.parse_args()));print(json.dumps({k:report[k] for k in ('frames','max_busy_cycles','frame_budget','over_budget_frames','skipped_vdp_frames','max_source_and_scheduler_cycles','max_prepare_cycles')}))

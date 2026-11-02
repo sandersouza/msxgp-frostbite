@@ -83,6 +83,8 @@ def construct(key,*,patterns,backgrounds,header,footer):
         if key[3] not in (0,1) or not 1<=key[4]<=15:raise ValueError('invalid monochrome constructor')
         mask=pattern(0)
         if key[3]:mask=bytes(v&15 for v in mask)
+        if backgrounds[key[2]]==bytes([255])*8+bytes([68])*8:
+            return mask+bytes([key[4]*16+4])*8
         return merge(backgrounds[key[2]],mask,key[4])
     if kind in (7,8):
         if key[4]&15!=4:raise ValueError('union belongs to the original water background')
