@@ -45,6 +45,16 @@ def intern_floe(pool,key):
     return pool[key]
 
 
+def floe_pair(key,water,color):
+    if len(key)!=6:raise ValueError('whole floe constructor key required')
+    first=int.from_bytes(key[:2],'little')
+    if not 1<=first<16384:raise ValueError('nonempty finite floe pattern required')
+    if key[5]==0 and key[2:5]==bytes((water,0,color)):return bytes(key[:2])+bytes(2)
+    second=int.from_bytes(key[2:4],'little')
+    if key[5]==7 and key[4]==color*16+4 and first<second<16384:return bytes(key[:4])
+    raise ValueError('pair identity cannot omit varying colour, background, clip or type')
+
+
 def header_slot(row,column):
     integer(row,0,2);integer(column,5,14)
     return 0,8+row*10+column-5

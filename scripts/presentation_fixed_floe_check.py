@@ -26,7 +26,7 @@ def run(out,geometry):
     palette_inputs=sorted(p for p in palette_path.rglob('*') if p.is_file()) if palette_path.is_dir() else [palette_path]
     inputs={str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in (original,*palette_inputs,geometry/'geometry.json',*sorted(geometry.glob('geometry-*.bin')))}
     tables=prepare(original.read_bytes(),palette,geometry);out=private_output(out);out.mkdir(parents=True,exist_ok=False)
-    maximum=0;argmax=None;counts={};cases=0
+    maximum=0;argmax=None;counts={};cases=0;max_chain=0;chain_argmax=None
     for phase in range(8):
         for delta in range(-11,20):
             for root in range(160):
@@ -36,10 +36,14 @@ def run(out,geometry):
                     raise
                 count=len(rendered['keys']);cases+=1;counts[count]=counts.get(count,0)+1
                 if count>maximum:maximum=count;argmax={'phase':phase,'delta':delta,'root':root}
+                buckets=[0]*16
+                for pair in rendered['pairs']:buckets[(pair[0]^pair[1]^pair[2]^pair[3])&15]+=1
+                chain=max(buckets)
+                if chain>max_chain:max_chain=chain;chain_argmax={'phase':phase,'delta':delta,'root':root}
         print(f'phase{phase}: {cases} algebra cases, max{maximum}/16 slots',flush=True)
     verify_files(inputs)
     if any(sha((ROOT/name).read_bytes())!=value for name,value in producers.items()):raise ValueError('finite floe capacity producer changed')
-    result={'complete':True,'cases':cases,'max_slots':maximum,'argmax':argmax,'histogram':counts,'producer_files':producers,'input_files':inputs,
+    result={'complete':True,'cases':cases,'max_slots':maximum,'argmax':argmax,'histogram':counts,'max_xor_bucket_chain':max_chain,'chain_argmax':chain_argmax,'producer_files':producers,'input_files':inputs,
         'native_accepted':False,'frame_deadline_accepted':False,
         'scope':'39680 pure floe geometry/key-capacity cases: all160 roots, signed delta-11..19 and all8 Y phases. Not additional original rasters or native/frame acceptance.'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'complete':True,'cases':cases,'max_slots':maximum}));return result

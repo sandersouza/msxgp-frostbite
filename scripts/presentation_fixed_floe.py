@@ -4,7 +4,7 @@ from collections import defaultdict
 from graphics_mapping import map_x
 from presentation_build import flat_water_ids
 from presentation_fast_model import geometry,combine_cell
-from presentation_fixed import intern_floe,integer
+from presentation_fixed import intern_floe,integer,floe_pair
 
 
 def strip(tables,root,delta,y,color,source_row=0):
@@ -28,8 +28,11 @@ def strip(tables,root,delta,y,color,source_row=0):
                 if identifier is None:raise ValueError('floe strip pattern absent from the complete finite atlas')
                 layers[row,column].append({'role':'floe','id':identifier,'pattern':pattern,'color':color,
                     'source_row':source_row,'copy':copy,'grid_row':grid_row,'grid_col':grid_col,'plane':plane})
-    pool={};program={}
+    pool={};program={};pairs={}
     for (row,column),values in sorted(layers.items()):
         key=combine_cell(values,water[row//8],row=row,column=3,coarse=False)
+        pair=floe_pair(key,water[row//8],color)
+        if pair in pairs and pairs[pair]!=key:raise ValueError('pair identity aliases different complete floe keys')
+        pairs[pair]=key
         program[row,column]=(key,intern_floe(pool,key))
-    return {'layers':layers,'program':program,'keys':pool}
+    return {'layers':layers,'program':program,'keys':pool,'pairs':pairs}

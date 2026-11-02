@@ -32,6 +32,22 @@ class PresentationBuildTests(unittest.TestCase):
         for used,data in ((16129,bytes([255])*16384),(15993,bytes(16384))):
             with self.assertRaises(ValueError):api.pack_crc_shadow({'bank':data,'used_bytes':used,'assembly':''})
 
+    def test_fixed_profile_replaces_eviction_metadata_with_explicit_role_and_staging_ownership(self):
+        profile=self.api().profile(fixed=True)
+        self.assertTrue(profile['sparse_profile']);self.assertTrue(profile['fixed_roles'])
+        self.assertFalse(profile['live_cache_references'])
+        self.assertEqual(profile['fixed_slot_counts'],[56,60,50])
+        regions={row['name']:(row['start'],row['end']) for row in profile['ram']['regions']}
+        for old in ('tile_references','tile_hashes','constructor_links','constructor_buckets','sprite_shadow'):
+            self.assertNotIn(old,regions)
+        self.assertEqual(regions['footer_keys'],(0xD900,0xDA08))
+        self.assertEqual(regions['name_staging'],(0xDB00,0xDE00))
+        self.assertEqual(regions['primitive_staging'],(0xE200,0xE500))
+        self.assertEqual(regions['heap_guard'],(0xE800,0xF300))
+        for name,(a,b) in regions.items():
+            for other,(c,d) in regions.items():
+                if name!=other:self.assertTrue(b<=c or d<=a,f'{name}/{other} alias')
+
     def test_cartridge_identity_is_distinct_and_standard_msx1_requirements_are_explicit(self):
         api = self.api(); profile = api.profile()
         self.assertEqual(profile['version'], '0.0.7-presentation')

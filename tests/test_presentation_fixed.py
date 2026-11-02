@@ -66,6 +66,15 @@ class FixedPresentationTests(unittest.TestCase):
         with self.assertRaises(ValueError):api.intern_floe(pool,bytes((5,0,130,0,14,0)))
         self.assertEqual(pool,before)
 
+    def test_pair_identity_omits_only_validated_common_strip_colour_and_background(self):
+        api=self.api();self.assertTrue(hasattr(api,'floe_pair'),'validated floe pair identity missing')
+        from presentation_constructors import mono_key,union_key
+        mono=mono_key(257,130,15);union=union_key(1,257,15)
+        self.assertEqual(api.floe_pair(mono,130,15),bytes((1,1,0,0)))
+        self.assertEqual(api.floe_pair(union,130,15),bytes((1,0,1,1)))
+        for key,water,color in ((mono,129,15),(mono,130,14),(union,130,14),(mono_key(257,130,15,True),130,15),(mono_key(0,130,15),130,15)):
+            with self.assertRaises(ValueError):api.floe_pair(key,water,color)
+
     def test_role_boundaries_and_inapplicable_fusions_are_rejected(self):
         api=self.api()
         cases=(('object',4,0,0,0,None),('bear',0,3,0,0,None),('bear',0,0,4,0,None),
@@ -82,3 +91,13 @@ class FixedPresentationTests(unittest.TestCase):
         api=self.api();slots={}
         api.retain(slots,(1,5),bytes(16));api.retain(slots,(1,5),bytes(16))
         with self.assertRaises(ValueError):api.retain(slots,(1,5),bytes([1])*16)
+
+    def test_pair_pool_capture_rejects_changed_complete_payload_and_broken_links(self):
+        self.assertIsNotNone(importlib.util.find_spec('presentation_fixed_pool_check'),'native pair-pool proof missing')
+        api=importlib.import_module('presentation_fixed_pool_check');inputs,expected=api.fixtures()
+        row=expected[api.ROW_BYTES:api.ROW_BYTES*2]
+        api.verify_row(row,row)
+        with self.assertRaises(ValueError):api.verify_row(row[:-1],row)
+        for at in (0,1,2,3,67,83):
+            bad=bytearray(row);bad[at]^=1
+            with self.assertRaises(ValueError):api.verify_row(bad,row)

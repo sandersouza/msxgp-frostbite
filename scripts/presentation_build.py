@@ -16,6 +16,7 @@ from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
 from presentation_sprites import tables as sprite_tables
 from presentation_static_assets import pack_static
 from presentation_cache_hash import table as cache_crc_table
+from presentation_fixed import COUNTS as FIXED_COUNTS
 from reference_inventory import verified_input
 from reference_traces import private_output
 from render_build import symbols
@@ -30,6 +31,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'scripts/presentation_static_assets.py','scripts/presentation_cache_hash.py',
                             'src/presentation_fast_cache.asm','src/presentation_typed.asm',
                             'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
+FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm')))
 
 
 def bank_layout(contact_banks):
@@ -40,8 +42,9 @@ def bank_layout(contact_banks):
             'available_assets': list(range(3, 14)) + list(range(14 + contact_banks, 256))}
 
 
-def profile(*,fast=False):
-    if type(fast)is not bool:raise ValueError('explicit sparse-profile selection required')
+def profile(*,fast=False,fixed=False):
+    if type(fast)is not bool or type(fixed)is not bool:raise ValueError('explicit presentation-profile selection required')
+    fast=fast or fixed
     ram = memory_layout()
     for region in ram['regions']:
         if region['name'] == 'scene_snapshots': region['name'] = 'sprite_pattern_work'
@@ -62,9 +65,16 @@ def profile(*,fast=False):
             ('constructor_keys',0xD000,0xD900),('constructor_links',0xD900,0xDA80),
             ('constructor_buckets',0xDB00,0xE100),('cache_crc',0xE100,0xE200),('sprite_shadow',0xE200,0xE500),('fusion_work',0xE500,0xE540),
             ('visual_state_work',0xE540,0xE580),('renderer_work',0xE580,0xE800))]
+    if fixed:
+        ram['regions']=[row for row in ram['regions'] if row['name'] not in ('tile_references','tile_hashes','constructor_links','constructor_buckets','sprite_shadow')]
+        ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
+            ('player_render_reserved',0xC080,0xC200),('fixed_control',0xCB00,0xCC80),('footer_keys',0xD900,0xDA08),
+            ('fixed_reserved',0xDA08,0xDB00),('name_staging',0xDB00,0xDE00),('player_render_work',0xDE00,0xE100),
+            ('primitive_staging',0xE200,0xE500))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
-            'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],
+            'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'fixed_roles':fixed,'live_cache_references':fast and not fixed,
+            'fixed_slot_counts':list(FIXED_COUNTS) if fixed else None,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],
             'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3C00, 'end': 0x3C20}], 'runtime_qualified': False,
             'scope': 'New build profile; source/live target equivalence and timing gates remain pending'}
 
@@ -100,8 +110,9 @@ def pack_crc_shadow(boot):
         'cache_crc':{'offset':offset,'size':256,'ram_start':0xE100,'sha256':hashlib.sha256(crc).hexdigest()}}
 
 
-def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False):
-    if type(fast)is not bool:raise ValueError('explicit sparse-profile selection required')
+def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False,fixed=False):
+    if type(fast)is not bool or type(fixed)is not bool:raise ValueError('explicit presentation-profile selection required')
+    fast=fast or fixed
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
     if dirty and not explore: raise ValueError('commit presentation producers before canonical build')
@@ -145,7 +156,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
     (out/'cache-crc.bin').write_bytes(cache_crc_table())
     (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n'+
-        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+'    INCLUDE "movement.asm"\n')
+        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+'    INCLUDE "movement.asm"\n')
     artifact = out / f'frostbite-{VERSION}.rom'; assembler = verified_tool('sjasmplus')
     command = [str(assembler), '--nologo', f'--inc={ROOT/"src"}', f'--inc={out}', f'--inc={out/"tables"}',
                f'--raw={artifact}', f'--sym={out/"presentation.sym"}', f'--lst={out/"presentation.lst"}', str(out / 'entry.asm')]
@@ -161,7 +172,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
         raise ValueError('presentation build producer changed during compilation')
     final_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
     if not explore and final_dirty: raise ValueError('canonical presentation checkout changed')
-    metadata = {'version': VERSION, 'diagnostic': True, 'runtime_qualified': False, 'profile': profile(fast=fast),
+    metadata = {'version': VERSION, 'diagnostic': True, 'runtime_qualified': False, 'profile': profile(fast=fast,fixed=fixed),
                 'source_commit': commit, 'source_dirty': dirty or final_dirty, 'exploratory': explore,
                 'original': original, 'source_files': fingerprints, 'rom': {'filename': artifact.name, 'size': artifact.stat().st_size,
                 'sha256': digest(artifact), 'mapper': 'ASCII16'}, 'fragments': fragments, 'tables': tables,
@@ -181,5 +192,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('floes', 'edge', 'ordinary', 'shore', 'aliases', 'out'): parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--fast',action='store_true',help='Private sparse constructor profile; no runtime qualification implied')
+    parser.add_argument('--fixed',action='store_true',help='Private fixed-role profile; implies --fast, no runtime qualification implied')
     parser.add_argument('--explore', action='store_true'); args = parser.parse_args()
     result = build(**vars(args)); print(json.dumps({key: result[key] for key in ('version', 'rom', 'runtime_qualified')}))
