@@ -1,6 +1,10 @@
 ; Native background component. Foreground/HUD remain INCOMPLETE/private;
 ; full-source pixel acceptance must fail until their compositor is implemented.
+    IFDEF WITH_PRESENTATION_FAST
+INPUT       EQU $C2C0       ; only+30/+31 are live selector flags
+    ELSE
 INPUT       EQU $C100
+    ENDIF
 PAGE        EQU $C200
 ROWCOUNT    EQU $C21F
 PHASE       EQU $C212
@@ -46,6 +50,18 @@ presentation_init:
     LD BC,$1FFF             ;ends E7FF; E800-F33F remains guarded
     LD (HL),0
     LDIR
+    IFDEF WITH_PRESENTATION_FAST
+    LD HL,$C800
+    LD DE,$C801
+    LD BC,767
+    LD (HL),128
+    LDIR
+    LD HL,$CD00
+    LD DE,$CD01
+    LD BC,767
+    LD (HL),128
+    LDIR
+    ENDIF
     LD A,208
     LD (SAT),A
     LD HL,$FFFF
@@ -54,7 +70,11 @@ presentation_init:
     RET
 
 cache_init:
+    IFDEF WITH_PRESENTATION_FAST
+    JP p_fast_init
+    ELSE
     RET
+    ENDIF
 
 prepare:
 presentation_prepare:
@@ -63,7 +83,11 @@ presentation_prepare:
     LD A,(PAGE)
     XOR 1
     LD (PAGE),A
+    IFDEF WITH_PRESENTATION_FAST
+    CALL p_fast_begin_page
+    ELSE
     CALL presentation_cache_begin
+    ENDIF
     LD HL,$FFFF             ;private correctness candidate: reset both page rows
     LD (p_bg_previous),HL
     CALL presentation_background_prepare
@@ -189,7 +213,11 @@ presentation_background_prepare:
     LD D,$5C
 .gradient_address:
     LD B,29
+    IFDEF WITH_PRESENTATION_FAST
+    RET
+    ELSE
     JP vdp_write
+    ENDIF
 .full:
     LD A,2
     LD (p_bg_changed),A
@@ -230,7 +258,11 @@ presentation_background_prepare:
     POP BC
     DJNZ .row
     CALL p_bg_gradient_ram
+    IFDEF WITH_PRESENTATION_FAST
+    RET
+    ELSE
     JP p_bg_upload_names
+    ENDIF
 .blank:
     LD A,2
     LD (p_bg_changed),A
@@ -241,7 +273,11 @@ presentation_background_prepare:
     LD BC,767
     LD (HL),128
     LDIR
+    IFDEF WITH_PRESENTATION_FAST
+    RET
+    ELSE
     JP p_bg_upload_names
+    ENDIF
 
 p_bg_gradient_ram:
     LD A,(p_bg_profile)
@@ -300,7 +336,14 @@ p_bg_roots:
 
     INCLUDE "presentation_background_init.inc"
 
+    IFDEF WITH_PRESENTATION_FAST
+    INCLUDE "presentation_fast_cache.asm"
+    INCLUDE "presentation_typed.asm"
+    INCLUDE "presentation_fast_world.asm"
+    INCLUDE "presentation_fast_hud.asm"
+    ELSE
     INCLUDE "presentation_cache.asm"
+    ENDIF
     INCLUDE "presentation_geometry.asm"
     INCLUDE "presentation_world.asm"
     INCLUDE "presentation_hud.asm"

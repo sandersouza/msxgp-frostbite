@@ -15,6 +15,7 @@ from presentation_fragments import background_tables, pack_background, compile_g
 from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
 from presentation_sprites import tables as sprite_tables
 from presentation_static_assets import pack_static
+from presentation_cache_hash import table as cache_crc_table
 from reference_inventory import verified_input
 from reference_traces import private_output
 from render_build import symbols
@@ -26,7 +27,9 @@ FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/prese
     'src/presentation_cache.asm', 'src/presentation_geometry.asm', 'src/presentation_world.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
 FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py', 'src/presentation_hud.asm',
                             'scripts/presentation_sprites.py', 'src/presentation_sprites.asm', 'src/presentation_player_cache.asm',
-                            'scripts/presentation_static_assets.py')))
+                            'scripts/presentation_static_assets.py','scripts/presentation_cache_hash.py',
+                            'src/presentation_fast_cache.asm','src/presentation_typed.asm',
+                            'src/presentation_fast_world.asm','src/presentation_fast_hud.asm')))
 
 
 def bank_layout(contact_banks):
@@ -37,7 +40,8 @@ def bank_layout(contact_banks):
             'available_assets': list(range(3, 14)) + list(range(14 + contact_banks, 256))}
 
 
-def profile():
+def profile(*,fast=False):
+    if type(fast)is not bool:raise ValueError('explicit sparse-profile selection required')
     ram = memory_layout()
     for region in ram['regions']:
         if region['name'] == 'scene_snapshots': region['name'] = 'sprite_pattern_work'
@@ -47,9 +51,18 @@ def profile():
     ram['regions'].append({'name':'player_templates','start':0xC380,'end':0xC3C0})
     # Existing native acquisition scratch is retained separately from bus IO.
     ram['regions'].append({'name': 'native_contacts', 'start': 0xC780, 'end': 0xC7A0})
+    if fast:
+        ram['regions']=[row for row in ram['regions'] if row['name'] not in ('diagnostic_input','tile_bytes')]
+        for row in ram['regions']:
+            if row['name']=='tile_signatures':row['name']='tile_hashes'
+        ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
+            ('tile_references',0xC080,0xC200),('graphics_rpc',0xC760,0xC780),
+            ('constructor_keys',0xD000,0xD900),('constructor_links',0xD900,0xDA80),
+            ('constructor_buckets',0xDB00,0xE100),('sprite_shadow',0xE100,0xE500),('fusion_work',0xE500,0xE800))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
-            'rom_bytes': ROM_BYTES, 'ram': ram, 'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3C00, 'end': 0x3C20}], 'runtime_qualified': False,
+            'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],
+            'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3C00, 'end': 0x3C20}], 'runtime_qualified': False,
             'scope': 'New build profile; source/live target equivalence and timing gates remain pending'}
 
 
@@ -65,7 +78,8 @@ def validate_rom(data):
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
+def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False):
+    if type(fast)is not bool:raise ValueError('explicit sparse-profile selection required')
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
     if dirty and not explore: raise ValueError('commit presentation producers before canonical build')
@@ -104,7 +118,9 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
         return '    ORG $8000\n' + (f'    INCBIN "{out / "static" / f"assets-{bank:03d}.bin"}\"\n' if bank in static['physical_banks'] else '    DS $4000,$FF\n')
     (out / 'row_banks.inc').write_text(''.join(asset_bank(bank) for bank in range(3,14)))
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
-    (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n    INCLUDE "movement.asm"\n')
+    (out/'cache-crc.bin').write_bytes(cache_crc_table())
+    (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n'+
+        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+'    INCLUDE "movement.asm"\n')
     artifact = out / f'frostbite-{VERSION}.rom'; assembler = verified_tool('sjasmplus')
     command = [str(assembler), '--nologo', f'--inc={ROOT/"src"}', f'--inc={out}', f'--inc={out/"tables"}',
                f'--raw={artifact}', f'--sym={out/"presentation.sym"}', f'--lst={out/"presentation.lst"}', str(out / 'entry.asm')]
@@ -120,7 +136,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
         raise ValueError('presentation build producer changed during compilation')
     final_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
     if not explore and final_dirty: raise ValueError('canonical presentation checkout changed')
-    metadata = {'version': VERSION, 'diagnostic': True, 'runtime_qualified': False, 'profile': profile(),
+    metadata = {'version': VERSION, 'diagnostic': True, 'runtime_qualified': False, 'profile': profile(fast=fast),
                 'source_commit': commit, 'source_dirty': dirty or final_dirty, 'exploratory': explore,
                 'original': original, 'source_files': fingerprints, 'rom': {'filename': artifact.name, 'size': artifact.stat().st_size,
                 'sha256': digest(artifact), 'mapper': 'ASCII16'}, 'fragments': fragments, 'tables': tables,
@@ -130,12 +146,13 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
                 'static_presentation':static,
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
-                'limitations': 'Private incomplete renderer bootstrap; full graphics/source pixels, live cache, PSG and integrated acceptance are not implemented or qualified. Not a human-testable game delivery.'}
+                'limitations': 'Private renderer development profile; whole-frame timing, ordered PSG and integrated natural gameplay acceptance remain unqualified. Not a human-testable game delivery.'}
     (out / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n'); return metadata
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('floes', 'edge', 'ordinary', 'shore', 'aliases', 'out'): parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--fast',action='store_true',help='Private sparse constructor profile; no runtime qualification implied')
     parser.add_argument('--explore', action='store_true'); args = parser.parse_args()
     result = build(**vars(args)); print(json.dumps({key: result[key] for key in ('version', 'rom', 'runtime_qualified')}))

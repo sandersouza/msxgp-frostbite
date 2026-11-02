@@ -11,15 +11,17 @@ import xml.etree.ElementTree as ET
 from environment import ROOT
 from graphics_mapping import decode_screen, map_frame
 from presentation_build import FILES, validate_rom
+from presentation_cache_ownership import audit_row
 from presentation_fragments import background_tables, background_vram
 from presentation_model import describe, pixels
 from presentation_palette import audit_palette
 from presentation_reference import HELPERS as SOURCE_FILES
-from reference_provenance import audit_manifest
+from reference_provenance import audit_manifest,snapshot_paths
 from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile, isolated_profile, validate_machine_profile
 
+HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,'scripts/presentation_check.py','scripts/presentation_cache_ownership.py')))
 
 def sha(data): return hashlib.sha256(data).hexdigest()
 
@@ -45,6 +47,8 @@ def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, back
     if sum((background_only, world_only, hud_only)) > 1: raise ValueError('choose one component')
     if family not in ('ntsc', 'pal') or type(fixture) is not int or not 0 <= fixture < 1690: raise ValueError('declared source fixture and TV family required')
     if type(repeats)is not int or not 1<=repeats<=8:raise ValueError('one to eight controlled repeat RPCs required')
+    producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+        'utility_fingerprints':{name:sha((ROOT/name).read_bytes()) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
     build_dir = Path(build_dir).resolve(); metadata = json.loads((build_dir / 'build.json').read_text())
     artifact = build_dir / metadata['rom']['filename']; rom = artifact.read_bytes()
     if validate_rom(rom) or sha(rom) != metadata['rom']['sha256']: raise ValueError('presentation ROM identity mismatch')
@@ -88,7 +92,9 @@ def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, back
     # status before waiting for the next real edge; record preparation cost
     # explicitly, never promote this component RPC into a frame-deadline pass.
     rpc = [205, calls[0] & 255, calls[0] >> 8, 219, 153]
-    rpc += [byte for entry in calls[1:] for byte in (205, entry & 255, entry >> 8)] + [195, 142, 193, 24, 254]
+    rpc += [byte for entry in calls[1:] for byte in (205, entry & 255, entry >> 8)] + [195, 110, 199, 24, 254]
+    sparse=metadata['profile'].get('sparse_profile',False)
+    ownership_dump='dump_presentation ownership-$::repetition.bin "[debug read_block memory 0xC800 768][debug read_block memory 0xCD00 768][debug read_block memory 0xC080 384][debug read_block memory 0xCCA0 6]"' if sparse else ''
     script = f'''set save_settings_on_exit false
 set renderer none
 set throttle off
@@ -121,7 +127,7 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
                 unset ::player_started
             }}
         }}
-        debug set_bp 0xC183 {{}} {{debug break;after break {{
+        debug set_bp 0xC763 {{}} {{debug break;after break {{
             set ::prepare_cycles [expr {{round(([machine_info time]-$::prepare_started)*3579545)}}]
             if {{[debug read memory 0xC231]!=0}} {{fail_presentation "world-compositor miss=[debug read memory 0xCCA6] group=[debug read memory 0xCCA7] family=[debug read memory 0xC227] col=[debug read memory 0xC229] top=[debug read memory 0xC22A]"}}
             if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_presentation prepare-source-state}}
@@ -131,11 +137,11 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
             dump_presentation prepared-$::repetition.regs [debug read_block {{VDP regs}} 0 8]
             debug cont
         }}}}
-        debug set_bp 0xC188 {{}} {{
+        debug set_bp 0xC768 {{}} {{
             set ::commit_y [machine_info VDP_msx_y_pos]
             if {{$::commit_y>=0 && $::commit_y<192}} {{fail_presentation "commit-visible y=$::commit_y prepare_cycles=$::prepare_cycles"}}
         }}
-        debug set_bp 0xC18E {{}} {{debug break;after break {{
+        debug set_bp 0xC76E {{}} {{debug break;after break {{
             if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_presentation commit-source-state}}
             if {{[debug read_block memory 0xE800 0xB40] ne [string repeat [binary format c 165] 0xB40]}} {{fail_presentation heap-stack-redzone}}
             if {{[reg SP]!=0xF380 || ([reg IFF]&3)!=0 || [debug read ioports 168]!=$::slot}} {{fail_presentation abi}}
@@ -145,6 +151,7 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
             dump_presentation presented.regs [debug read_block {{VDP regs}} 0 8]
             dump_presentation presented-$::repetition.vram [debug read_block VRAM 0 16384]
             dump_presentation presented-$::repetition.regs [debug read_block {{VDP regs}} 0 8]
+            {ownership_dump}
             dump_presentation marker.txt "$::commit_y $end_y $::prepare_cycles $::player_cycles"
             append ::history "$::repetition $::prepare_cycles $::player_cycles\n"
             dump_presentation repeats.tsv $::history
@@ -155,12 +162,12 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
                 dump_presentation before.regs [debug read_block {{VDP regs}} 0 8]
                 dump_presentation before-$::repetition.vram [debug read_block VRAM 0 16384]
                 dump_presentation before-$::repetition.regs [debug read_block {{VDP regs}} 0 8]
-                reg PC 0xC180;set ::prepare_started [machine_info time];debug cont;return
+                reg PC 0xC760;set ::prepare_started [machine_info time];debug cont;return
             }}
             exit
         }}}}
-        debug write_block memory 0xC180 [binary format cu* {{{' '.join(str(v) for v in rpc)}}}]
-        reg SP 0xF380;reg PC 0xC180;set ::prepare_started [machine_info time];debug cont
+        debug write_block memory 0xC760 [binary format cu* {{{' '.join(str(v) for v in rpc)}}}]
+        reg SP 0xF380;reg PC 0xC760;set ::prepare_started [machine_info time];debug cont
     }}
 }}]
 after time 8 {{fail_presentation watchdog}}
@@ -180,10 +187,16 @@ after time 8 {{fail_presentation watchdog}}
         image=lambda phase:decode_target((out/f'{phase}-{i}.vram').read_bytes(),(out/f'{phase}-{i}.regs').read_bytes())
         if image('before')!=image('prepared') or (out/f'before-{i}.regs').read_bytes()!=(out/f'prepared-{i}.regs').read_bytes():raise ValueError('repeat preparation changed visible state')
         if image('presented')!=expected:raise ValueError(f'repeat{i} source pixels differ')
-    result = {'fixture': sample['name'], 'family': family, 'rom_sha256': sha(rom), 'different_pixels': different,
+    ownership=[audit_row((out/f'ownership-{i}.bin').read_bytes()) for i in range(repeats)] if sparse else []
+    if (any(sha((ROOT/name).read_bytes())!=value for name,value in producer['utility_fingerprints'].items())
+        or sha(artifact.read_bytes())!=metadata['rom']['sha256'] or (source/f'{fixture:04d}-{sample["name"]}.tia').read_bytes()!=original
+        or (source/'fixtures.json').read_bytes()!=fixtures_raw or (source/'report.json').read_bytes()!=raw_report):
+        raise ValueError('graphics RPC producer/ROM/source artifacts changed during capture')
+    result = {'producer':producer,'fixture': sample['name'], 'family': family, 'rom_sha256': sha(rom), 'different_pixels': different,
               'prepare_cycles_including_rpc': int((out / 'marker.txt').read_text().split()[2]), 'frame_deadline_accepted': False,
               'player_cycles': int((out / 'marker.txt').read_text().split()[3]), 'declared_player_microbudget': player_budget or None,
               'controlled_repeats':repeats,'repeat_cycle_history':history,
+              'live_cache_ownership_accepted':sparse,'ownership':ownership,
               'player_microbudget_scope':'Last controlled RPC only; cold-start and whole-frame budgets remain separate',
               'complete': different == 0, 'canonical_ram_injected': True, 'prepare_invariance': True,
               'component': 'background' if background_only else 'world' if world_only else 'world-hud' if hud_only else 'full-scene',

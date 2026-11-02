@@ -86,6 +86,9 @@ presentation_hud_prepare:
     CALL p_world_color
     LD A,(p_w_color)
     LD (p_h_color),A
+    IFDEF WITH_PRESENTATION_FAST
+    JP p_fast_header_prepare
+    ELSE
     XOR A
     LD (p_h_index),A
 .glyph:
@@ -272,6 +275,7 @@ presentation_glyph_prepare:
     RET
 p_h_solid:
     DB $F0,$F0,$F0,$F0
+    ENDIF
 
 p_h_footer_phase EQU $C244
 p_h_footer_index EQU $C245
@@ -291,6 +295,9 @@ presentation_footer_prepare:
     LD A,7
 .phase:
     LD (p_h_footer_phase),A
+    IFDEF WITH_PRESENTATION_FAST
+    JP p_fast_footer_prepare
+    ELSE
     LD A,12
     CALL p_world_color
     XOR A
@@ -384,3 +391,4 @@ presentation_footer_prepare:
     RET
 p_h_bar:
     DB $FF
+    ENDIF

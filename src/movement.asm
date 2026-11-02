@@ -401,6 +401,7 @@ diagnostic_selectors:
     RET
 
 ; Synthetic raster mapping only; canonical source coordinates stay read-only.
+    IFNDEF WITH_PRESENTATION_FAST
 adapt_scene:
     LD A,($C022)
     CALL normalize_x
@@ -620,6 +621,7 @@ adapt_scene:
     LD (INPUT+29),A
 adapt_done:
     RET
+    ENDIF
 normalize_x:
     CP 160
     RET C

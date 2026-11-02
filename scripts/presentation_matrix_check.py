@@ -12,6 +12,7 @@ from environment import ROOT
 from graphics_mapping import map_frame
 from presentation_build import FILES,validate_rom
 from presentation_check import decode_target
+from presentation_cache_ownership import audit_row,ROW_BYTES as OWNERSHIP_BYTES
 from presentation_model import describe,pixels
 from presentation_palette import audit_palette
 from presentation_reference import HELPERS as SOURCE_FILES
@@ -21,7 +22,7 @@ from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py')))
+HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py','scripts/presentation_cache_ownership.py')))
 CAPTURE_BYTES=16392
 
 def sha(data):return hashlib.sha256(data).hexdigest()
@@ -80,7 +81,11 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
     user=out/'user-data';(user/'machines').mkdir(parents=True);(user/'machines/Frostbite_Matrix.xml').write_bytes(profile_raw)
     settings=out/'settings.xml';settings.write_text('<?xml version="1.0"?><!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
     entries=[syms[name] for name in ('presentation_prepare','wait_vblank','presentation_commit')]
-    rpc=[205,entries[0]&255,entries[0]>>8,219,153]+[byte for entry in entries[1:] for byte in (205,entry&255,entry>>8)]+[195,142,193,24,254]
+    rpc=[205,entries[0]&255,entries[0]>>8,219,153]+[byte for entry in entries[1:] for byte in (205,entry&255,entry>>8)]+[195,110,199,24,254]
+    sparse=meta['profile'].get('sparse_profile',False)
+    ownership_open=f'set owners [open {{{out/"ownership.bin"}}} wb]' if sparse else ''
+    ownership_close='close $::owners;' if sparse else ''
+    ownership_dump='puts -nonewline $::owners "[debug read_block memory 0xC800 768][debug read_block memory 0xCD00 768][debug read_block memory 0xC080 384][debug read_block memory 0xCCA0 6]"' if sparse else ''
     script=f'''set save_settings_on_exit false
 set renderer none
 set throttle off
@@ -88,6 +93,7 @@ set index 0
 set f [open {{{out/'cases.bin'}}} rb];set cases [read $f];close $f
 set captures [open {{{out/'captures.bin'}}} wb]
 set timing [open {{{out/'timing.tsv'}}} w]
+{ownership_open}
 proc fail_matrix {{message}} {{puts stderr "MATRIX_FAIL $message case=$::index";exit 1;return -code error $message}}
 proc capture_matrix {{}} {{puts -nonewline $::captures [debug read_block VRAM 0 16384];puts -nonewline $::captures [debug read_block {{VDP regs}} 0 8]}}
 proc guard_matrix {{}} {{
@@ -97,28 +103,29 @@ proc guard_matrix {{}} {{
     if {{[debug read memory 0xC231]!=0}} {{fail_matrix "compositor miss=[debug read memory 0xCCA6] group=[debug read memory 0xCCA7] family=[debug read memory 0xC227] col=[debug read memory 0xC229] top=[debug read memory 0xC22A] counts=[debug read_block memory 0xCCA0 6]"}}
 }}
 proc dispatch_matrix {{}} {{
-    if {{$::index=={limit}}} {{close $::captures;close $::timing;exit;return}}
+    if {{$::index=={limit}}} {{close $::captures;close $::timing;{ownership_close}exit;return}}
     set ::ram [string range $::cases [expr {{$::index*128}}] [expr {{$::index*128+127}}]]
     debug write_block memory 0xC000 $::ram
-    reg PC 0xC180;set ::started [machine_info time];debug cont
+    reg PC 0xC760;set ::started [machine_info time];debug cont
 }}
 set boot [debug set_bp {syms['paced_frame_start']} {{}} {{debug remove_bp $::boot;debug break;after break {{
     if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_matrix target}}
     set ::slot [debug read ioports 168];set ::abi [debug read_block memory 0xC600 256]
     debug write_block memory 0xE800 [string repeat [binary format c 165] 0xB40]
-    debug write_block memory 0xC180 [binary format cu* {{{' '.join(map(str,rpc))}}}]
+    debug write_block memory 0xC760 [binary format cu* {{{' '.join(map(str,rpc))}}}]
     reg SP 0xF380
     capture_matrix
     set VDP.too_fast_vram_access_callback {{fail_matrix fast-vram}}
-    debug set_bp 0xC183 {{}} {{debug break;after break {{
+    debug set_bp 0xC763 {{}} {{debug break;after break {{
         set ::cycles [expr {{round(([machine_info time]-$::started)*3579545)}}]
         guard_matrix;capture_matrix;debug cont
     }}}}
-    debug set_bp 0xC188 {{}} {{set ::commit_y [machine_info VDP_msx_y_pos];if {{$::commit_y>=0 && $::commit_y<192}} {{fail_matrix commit-visible}}}}
-    debug set_bp 0xC18E {{}} {{debug break;after break {{
+    debug set_bp 0xC768 {{}} {{set ::commit_y [machine_info VDP_msx_y_pos];if {{$::commit_y>=0 && $::commit_y<192}} {{fail_matrix commit-visible}}}}
+    debug set_bp 0xC76E {{}} {{debug break;after break {{
         guard_matrix
         set end_y [machine_info VDP_msx_y_pos];if {{$end_y>=0 && $end_y<192}} {{fail_matrix commit-end-visible}}
         capture_matrix
+        {ownership_dump}
         puts $::timing "$::index $::cycles $::commit_y $end_y"
         incr ::index
         if {{$::index%100==0}} {{puts "MATRIX_CAPTURED $::index"}}
@@ -136,6 +143,9 @@ after time {60+limit*2} {{fail_matrix watchdog}}
     maximum=verify_timing((out/'timing.tsv').read_text(),limit);captured=(out/'captures.bin').read_bytes()
     if len(captured)!=(1+2*limit)*CAPTURE_BYTES:raise ValueError('incomplete native captures')
     if (out/'cases.bin').read_bytes()!=cases or (out/'expected.tms').read_bytes()!=expected:raise ValueError('matrix fixture artifacts changed')
+    owners=(out/'ownership.bin').read_bytes() if sparse else b''
+    if sparse and len(owners)!=limit*OWNERSHIP_BYTES:raise ValueError('incomplete live cache ownership matrix')
+    ownership=[audit_row(owners[i*OWNERSHIP_BYTES:(i+1)*OWNERSHIP_BYTES]) for i in range(limit)] if sparse else []
     def decode(index):
         row=captured[index*CAPTURE_BYTES:(index+1)*CAPTURE_BYTES]
         return decode_target(row[:16384],row[16384:]),row[16384:]
@@ -156,6 +166,7 @@ after time {60+limit*2} {{fail_matrix watchdog}}
             'rom_sha256':sha(romdata),'emulator_sha256':sha(emulator.read_bytes()),'profile_sha256':sha(profile_raw),'source_report_sha256':authority_sha,'domain':'all-source' if all_source else 'controlled-fixtures',
             'source_domain_families':bundle['families'] if bundle is not None else {'fixtures':1690},'unmapped_source_startup':bundle['unmapped_startup'] if bundle is not None else 0,
             'max_prepare_cycles_including_rpc':maximum,'frame_deadline_accepted':False,'full_source_pixels_accepted':component=='full-scene' and not failures,
+            'live_cache_ownership_accepted':sparse,'ownership':ownership,
             'rows':rows,'artifacts':{p.name:sha(p.read_bytes()) for p in out.iterdir() if p.is_file()},
             'scope':'Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')

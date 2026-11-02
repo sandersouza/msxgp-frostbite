@@ -265,6 +265,17 @@ p_world_color:
     RET
 
 p_world_primitive:
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_w_family)
+    CP 3
+    JP Z,p_world_fail
+    CP 2
+    JR NC,.fast_visible
+    LD A,(p_w_color)
+    CP 4
+    RET Z
+.fast_visible:
+    ENDIF
     LD A,(p_w_family)
     CP 3
     JR Z,.ready
@@ -333,6 +344,19 @@ p_world_primitive:
     JR Z,.next
     OR A
     JR Z,.next
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_w_index)
+    ADD A,A
+    LD E,A
+    LD D,0
+    LD HL,p_geo_ids
+    ADD HL,DE
+    LD E,(HL)
+    INC HL
+    LD D,(HL)
+    CALL p_fast_world_tile
+    JP .next
+    ELSE
     LD A,(p_w_family)
     CP 3
     JR Z,.glyph
@@ -373,6 +397,7 @@ p_world_primitive:
     INC HL
     DJNZ .nonzero
     CALL NZ,p_world_merge
+    ENDIF
 .next:
     LD HL,p_w_index
     INC (HL)
@@ -410,6 +435,9 @@ p_world_clip:
 ; actual color traps instead of approximating. New cache misses upload only
 ; this inactive generation's8pattern+8color bytes.
 p_world_merge:
+    IFDEF WITH_PRESENTATION_FAST
+    JP p_world_fail
+    ELSE
     LD A,(p_w_top)
     CP 24
     RET NC
@@ -593,6 +621,7 @@ p_world_merge:
     LD B,8
     JP vdp_write
 
+    ENDIF
 p_world_fail:
     LD A,1
     LD (p_w_fault),A

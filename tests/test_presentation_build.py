@@ -40,3 +40,20 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertNotIn('scene_snapshots',regions)
         self.assertEqual(regions['sprite_pattern_work'],(0xC500,0xC600))
         self.assertEqual(regions['source_abi'],(0xC600,0xC700))
+
+    def test_sparse_profile_cannot_alias_references_with_input_or_graphics_rpc(self):
+        profile=self.api().profile(fast=True)
+        regions={row['name']:(row['start'],row['end']) for row in profile['ram']['regions']}
+        self.assertNotIn('diagnostic_input',regions);self.assertNotIn('tile_bytes',regions)
+        self.assertEqual(regions['tile_references'],(0xC080,0xC200))
+        self.assertEqual(regions['graphics_rpc'],(0xC760,0xC780))
+        self.assertEqual(regions['constructor_keys'],(0xD000,0xD900))
+        self.assertEqual(regions['constructor_links'],(0xD900,0xDA80))
+        self.assertEqual(regions['constructor_buckets'],(0xDB00,0xE100))
+        self.assertEqual(regions['sprite_shadow'],(0xE100,0xE500))
+        self.assertEqual(regions['fusion_work'],(0xE500,0xE800))
+        self.assertEqual(regions['heap_guard'],(0xE800,0xF300))
+        for name,(start,end) in regions.items():
+            for other,(a,b) in regions.items():
+                if name!=other:self.assertTrue(end<=a or b<=start,f'{name}/{other} alias')
+        self.assertEqual(profile['diagnostic_flags'],[0xC2DE,0xC2DF])
