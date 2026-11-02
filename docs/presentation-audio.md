@@ -1,0 +1,80 @@
+# Ordered source audio and the PSG adaptation under development
+
+The source CPU owns F3/F4 arithmetic, envelopes, priorities and every AUDC,
+AUDF and AUDV store. Presentation observes those stores without changing
+canonical RAM or replacing any game rule. The native callbacks and combined
+ROM integration are still pending; the current evidence below is host/source
+component evidence.
+
+## Independent source observations
+
+The frozen original streams contain 2,116 logical intervals and 3,499 ordered
+writes, all after their visible-phase boundary. There are 1,553 writes whose
+masked hardware value is unchanged, 1,609 silent intervals and at most 34 writes
+in an interval. Every event and silent interval is retained. These interval
+counts differ from the graphics proof's 2,115 normalized physical images; seeded
+startup includes explicitly retained irregular physical frames.
+
+Initial sound latches are structurally decoded from each actual complete
+Stella capsule. Controlled fixtures restore their baseline independently;
+natural input-only intervals carry the actual previous capsule. Applying all
+observed writes reproduces the independent after-capsule's six hardware latches
+in every interval. Starting all fixtures from guessed zero registers is rejected.
+The PSG sequence generated alongside this audit remains a host projection.
+
+## Measured mode periods and chosen approximation
+
+The unmodified pinned [Stella oscillator](https://github.com/stella-emu/stella/blob/d55b1aec0d067a4c901a6dcdf81cb8f579685659/src/emucore/tia/AudioChannel.cxx)
+is compiled directly, with only unused serialization interfaces stubbed. Its
+source files must equal the upstream Git blobs. All 16 controls × 32 frequency
+values pass minimum repetition-period checks after 4,096 warm-up phase pairs,
+with 32,768 checked samples each. A full phase pair averages 114 color clocks
+under the pinned [audio clock schedule](https://github.com/stella-emu/stella/blob/d55b1aec0d067a4c901a6dcdf81cb8f579685659/src/emucore/tia/Audio.hxx).
+This proves oscillator periods, not target timbre, analog gain or phase.
+
+The actual source writes use controls 1, 8 and 12. Control 1's 15-tick polynomial
+uses an AY square carrier at the same repetition frequency; its timbre differs.
+Control 8 uses AY noise at the nearest representable source bit-clock rate.
+Control 12's six-tick square uses the closest AY tone period. General fallback
+carriers cover other finite chip modes, with explicit 12-bit period clamping;
+those controls are not additional observed Frostbite behavior.
+
+For a mode repeating after K phase pairs and divider D=AUDF+1, the square-carrier
+period is round(114×K×D/32), clamped to 1..4095. The built-in PSG clock is half
+the master clock. The [General Instrument data manual](https://pub.intvprime.com/ba4ef/ie/Programming/AY-3-8910-8912-Programmable-Sound-Generator-Data-Manual.pdf)
+defines its clock/16 tone and noise dividers, mixer and I/O registers. Noise
+period is round(114×D/32), clamped to 1..31. The observed control-8 frequency 2
+maps to noise period 11. AY and TIA polynomial sequences are different.
+
+Source channels 0/1 use PSG A/B; C remains silent. If both active channels request
+noise, source 0 owns the single AY noise clock before source 1. Both original
+frequency latches remain intact. Four-bit source volume codes are transferred;
+analog gain and perceptual envelope similarity still require listening evidence.
+Controls 0/11 retain DC output semantics through disabled tone/noise mixing.
+
+## Ordering, timing and peripheral ownership
+
+The host model is invoked after every raw original write, including repeated
+values. A physical PSG write is omitted when the desired register value is
+already present; the original event is still retained separately. This avoids
+confusing a register-write optimization with loss of source event order. Both
+logical updates of a PAL double-step must reach the observer independently.
+
+The planned native path handles each source write immediately. It needs no
+queue and cannot overwrite an earlier logical update with the final latches.
+Native write timing must be measured and documented against the original
+post-visible timestamps; identical oscillator phase or analog output is not
+claimed. Graphics timing remains failed and binding on the eventual release.
+
+Audio may select/write registers 0..3, 6..10. Register 7 keeps its current upper
+two peripheral-direction bits; registers 4/5 and 11..15 stay unowned. In
+particular audio never writes joystick registers 14/15. Real two-port sampling,
+CPU/ABI/slot/stack/interrupt guards and actual PSG histories still need native
+checks.
+
+The supplied Seaquest audio source was audited locally (SHA-256
+5add6015305ab458cdf5846c9fba51173897df86e2305cb45fe16ead85f775b9).
+Its alternate-register isolation and GPIO-preservation pattern is useful. Its
+C015 source mapping, C460 workspace, supported control set and old results do
+not apply to Frostbite; control 1 requires a new policy. No legacy result is
+Frostbite acceptance. The preserved legacy and external snapshot are unchanged.
