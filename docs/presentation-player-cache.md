@@ -79,3 +79,34 @@ The same candidate separately passes all twelve original input-only CPU routes:
 26,372 native-step cycles. That CPU-only RPC does not execute graphics, PSG or
 paced presentation. The original-free host suite passes 458 tests.
 This cache does not establish the cold or first-variant frame deadline by itself.
+
+## Shoreline body preparation
+
+The TEMPLATE profile streams the complete19 source rows directly for
+X24..83/Y19..29. The previously proved prefix<=22/tail>=91 bounds apply to every
+source bit. It retains reflection, all mapped colors, the coarse virtual56
+duplicate and the shift of later lines. In this Y interval, the body ends at
+virtual65..75 and the following hold-table row clears the pattern; no terminal
+held row is omitted. Other positions retain the general or ordinary body path.
+
+The component wrapper consumes the actual setup/store assembly spans. An
+independent source-space row model determines all96 plane bytes, four color
+slots (including unused retained bytes), top/bottom, count and fault. All148
+source-observed table-selector tuples are crossed with explicitly derived
+Y19..29/X24,83/coarse/reflection cases:13,024 actual Z80 operations. General body
+maximum36,482 cycles includes RPC; direct shoreline16,355. Byte plane addressing
+and direct color storage reduce this to14,133. A14,500-cycle component limit
+fails on16,355, and the first addressing optimization still fails at14,975;
+the final operation passes the same bound. These are derived component cases,
+not13,024 additional source raster observations or frame acceptance.
+
+The integrated private ROM
+195c8fdc44ee5539951964db703bfbfd2fc9b274de226ca7a830b2f8ad43a4cd
+passes all2,115 original full-scene/physical ownership/active-byte cases.
+Controlled preparation still reaches599,045 cycles. The120-frame keyboard probe
+still fails: maximum571,692 busy cycles,22 overruns and49 skipped frames.
+The default control remains exactly
+0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78;
+all468 original-free host tests pass. Source CPU cadence, IO volume, sprite
+rectangles, pixel mapping and hardware limits are unchanged. No PSG or newly
+qualified human-testable ROM is delivered by this optimization.

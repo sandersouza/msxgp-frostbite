@@ -455,7 +455,19 @@ p_player_prepare:
     JR NC,.general
     LD A,($C064)
     CP 30
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    JR NC,.ordinary
+    CP 19
     JR C,.general
+    LD A,($C066)
+    CP 24
+    JR C,.general
+    CALL p_player_shore_stream
+    JP .rows_done
+    ELSE
+    JR C,.general
+    ENDIF
+.ordinary:
     CP 134
     JR NC,.general
     CALL p_player_body_stream
@@ -903,6 +915,32 @@ p_player_store:
     POP HL
     LD (HL),A
 .plane:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    ; Four24-byte planes fit wholly within C480..C4DF. Keep the original
+    ; byte offset; form its row address only after validating the row delta.
+    ASSERT (p_p_planes&255)+4*24 <= 256
+    LD E,A
+    LD A,(p_p_top)
+    CP 255
+    JR NZ,.byte_origin
+    LD A,(p_p_target)
+    LD (p_p_top),A
+.byte_origin:
+    LD B,A
+    LD A,(p_p_target)
+    LD (p_p_bottom),A
+    SUB B
+    CP 24
+    JP NC,p_world_fail
+    ADD A,E
+    ADD A,p_p_planes&255
+    LD L,A
+    LD H,p_p_planes/256
+    LD A,(p_p_bit)
+    OR (HL)
+    LD (HL),A
+    RET
+    ELSE
     LD E,A
     LD D,0
     LD HL,p_p_planes
@@ -932,6 +970,7 @@ p_player_store:
     OR (HL)
     LD (HL),A
     RET
+    ENDIF
 
 p_player_bandtop:
     LD A,(p_p_side)
@@ -1220,5 +1259,8 @@ p_player_sprite_pattern:
 p_player_zones:
     DB $00,$80,$C0,$E0,$F0,$F8,$FC,$FE,$FF
 
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    INCLUDE "presentation_player_shore.asm"
+    ENDIF
     INCLUDE "presentation_player_cache.asm"
     INCLUDE "presentation_sprite_data.inc"
