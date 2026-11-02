@@ -35,7 +35,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm','src/presentation_fixed_emit.asm','src/presentation_fixed_memo.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fast_model.py','scripts/presentation_constructors.py','scripts/presentation_floe_templates.py',
-    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm')))
+    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm','src/presentation_player_variants.asm')))
 
 
 def bank_layout(contact_banks):
@@ -77,15 +77,17 @@ def profile(*,fast=False,fixed=False,templates=False):
             ('fixed_reserved',0xDA08,0xDB00),('name_staging',0xDB00,0xDE00),('player_render_work',0xDE00,0xE100),
             ('primitive_staging',0xE200,0xE500))]
     if templates:
-        ram['regions']=[row for row in ram['regions'] if row['name'] not in ('renderer_work','player_render_work')]
+        ram['regions']=[row for row in ram['regions'] if row['name'] not in ('renderer_work','player_render_work','player_render_reserved')]
         ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
             ('floe_name_cache',0xDE00,0xE000),('player_render_work',0xE000,0xE100),
-            ('dirty_row_work',0xE580,0xE598),('world_memo',0xE5A0,0xE5AC),('floe_template_identities',0xE5C0,0xE5E0),('floe_decode_codes',0xE600,0xE610))]
+            ('dirty_row_work',0xE580,0xE598),('world_memo',0xE5A0,0xE5AC),('floe_template_identities',0xE5C0,0xE5E0),('floe_decode_codes',0xE600,0xE610),
+            ('player_variant_templates',0xC080,0xC180),('player_render_reserved',0xC180,0xC200),('player_variant_control',0xE610,0xE614))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
             'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'fixed_roles':fixed,'floe_templates':templates,'raw_floe_key_type':9 if templates else None,'live_cache_references':fast and not fixed,
             'fixed_slot_counts':list(FIXED_COUNTS) if fixed else None,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],
-            'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3C00, 'end': 0x3C20}], 'runtime_qualified': False,
+            'player_variants_per_generation':4 if templates else 1,
+            'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3FE0 if templates else 0x3C00, 'end': 0x4000 if templates else 0x3C20}], 'runtime_qualified': False,
             'scope': 'New build profile; source/live target equivalence and timing gates remain pending'}
 
 
@@ -169,12 +171,12 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     if fixed and not templates:
         if 255 not in banks['available_assets']:raise ValueError('fixed root shadow requires free bank255')
         shadow=contact_shadow(out/'tables',out,tables)
-    fragments = compile_assets(rom, out / 'assets', measured_palette=measured)
+    fragments = compile_assets(rom, out / 'assets', measured_palette=measured,sprite_patterns_end=0x4000 if templates else 0x3C00)
     background = background_tables(rom, measured)
     water=flat_water_ids(background)
     (out/'presentation_simple.inc').write_text(''.join(f'pt_water_id{bank} EQU {identifier}\n' for bank,identifier in enumerate(water)))
     if background['gradient_profiles'] > 8: raise ValueError('native background profile exceeds its measured8-state gradient domain')
-    boot = pack_background((out / 'assets/fragments.bin').read_bytes(), fragments['used_bytes'], background)
+    boot = pack_background((out / 'assets/fragments.bin').read_bytes(), fragments['used_bytes'], background,black_sprite_address=0x3FE0 if templates else 0x3C00)
     geometry = compile_geometry(rom, out / 'geometry')
     if not set(geometry['physical_banks']).issubset(banks['available_assets']): raise ValueError('geometry overlaps contact banks')
     static=pack_static(rom,measured,out/'geometry',geometry,out/'static')

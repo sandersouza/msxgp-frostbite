@@ -137,7 +137,7 @@ def pack_frame(pixels, cache=None):
             'tiles_per_bank': compiled['tiles_per_bank'], 'runtime_qualified': False}
 
 
-def compile_assets(rom: bytes, out: Path, *, measured_palette: dict) -> dict:
+def compile_assets(rom: bytes, out: Path, *, measured_palette: dict,sprite_patterns_end=0x3C00) -> dict:
     """Emit one bank of lossless fragments; require explicit measured RGB input.
 
     This resource manifest reserves two generations of64 tile IDs per bank.
@@ -148,6 +148,7 @@ def compile_assets(rom: bytes, out: Path, *, measured_palette: dict) -> dict:
         raise ValueError('original-derived assets inside repository must stay under ignored outputs')
     if not isinstance(rom, bytes) or len(rom) != 4096: raise ValueError('complete original ROM required')
     if set(measured_palette) != set(range(0, 256, 2)): raise ValueError('all128 even source palette codes required')
+    if type(sprite_patterns_end)is not int or sprite_patterns_end not in (0x3C00,0x4000):raise ValueError('declared bounded sprite-pattern reservation required')
     colors = palette_map(measured_palette)
     sections = {}; bank = bytearray()
     def add(name, data):
@@ -161,7 +162,7 @@ def compile_assets(rom: bytes, out: Path, *, measured_palette: dict) -> dict:
     if used > 16384: raise ValueError('fragment bank capacity exceeded')
     bank.extend(bytes([255]) * (16384 - used))
     vram = [('patterns', 0, 0x1800), ('names_a', 0x1800, 0x1B00), ('sat', 0x1B00, 0x1B80),
-            ('names_b', 0x1C00, 0x1F00), ('colors', 0x2000, 0x3800), ('sprite_patterns', 0x3800, 0x3C00)]
+            ('names_b', 0x1C00, 0x1F00), ('colors', 0x2000, 0x3800), ('sprite_patterns', 0x3800, sprite_patterns_end)]
     manifest = {'schema_version': 1, 'source_sha256': hashlib.sha256(rom).hexdigest(),
                 'sha256': hashlib.sha256(bank).hexdigest(), 'used_bytes': used, 'bank_bytes': len(bank),
                 'sections': sections, 'tile_generations': {'slots_each': SLOTS, 'count': 2, 'banks': 3},

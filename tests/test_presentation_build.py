@@ -20,6 +20,10 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertEqual(regions['floe_template_identities'],(0xE5C0,0xE5E0))
         self.assertEqual(regions['floe_name_cache'],(0xDE00,0xE000))
         self.assertEqual(regions['floe_decode_codes'],(0xE600,0xE610))
+        self.assertEqual(regions['player_variant_templates'],(0xC080,0xC180))
+        self.assertEqual(regions['player_variant_control'],(0xE610,0xE614))
+        self.assertEqual(profile['player_variants_per_generation'],4)
+        self.assertEqual(profile['static_vram_regions'],[{'name':'hmove_sprite','start':0x3FE0,'end':0x4000}])
         for name,(a,b) in regions.items():
             for other,(c,d) in regions.items():
                 if name!=other:self.assertTrue(b<=c or d<=a,f'{name}/{other} alias')

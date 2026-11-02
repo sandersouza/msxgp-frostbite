@@ -14,6 +14,9 @@ p_s_upload EQU $C29B
 p_s_static_start EQU $C29C
 p_s_door EQU $C29D
 p_s_reflect EQU $C29E
+    IFDEF WITH_PRESENTATION_TEMPLATES
+p_s_pattern_id EQU $C29F
+    ENDIF
     ENDIF
 
 presentation_sprites_prepare:
@@ -34,6 +37,10 @@ presentation_sprites_prepare:
     IFDEF WITH_PRESENTATION_FAST
     LD A,1
     LD (p_s_upload),A         ;P0 always owns its own pattern upload decision
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,255
+    LD (p_s_static_start),A   ;P0 pattern IDs come from the selected cache way
+    ENDIF
     ENDIF
     CALL p_player_prepare
     IFDEF WITH_PRESENTATION_FAST
@@ -48,7 +55,11 @@ presentation_sprites_prepare:
     INC HL
     LD (HL),16
     INC HL
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD (HL),252              ;immutable mask at3FE0, outside every cache way
+    ELSE
     LD (HL),128
+    ENDIF
     INC HL
     LD (HL),1
     INC HL
@@ -178,13 +189,24 @@ p_static_lookup:
 .door:
     LD A,B
     LD (p_s_door),A
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD IX,$C380
+    LD A,(PAGE)
+    OR A
+    JR Z,.metadata
+    LD IX,$C3A0
+.metadata:
+    ELSE
     LD IX,(p_pc_pointer)
+    ENDIF
     LD A,(IX+22)
     CP 1
     JR NZ,.miss
+    IFNDEF WITH_PRESENTATION_TEMPLATES
     LD A,(p_s_static_start)
     CP (IX+23)
     JR NZ,.miss
+    ENDIF                   ;template static slots are independent of P0 count
     LD A,(p_s_door)
     CP (IX+24)
     JR NZ,.miss
@@ -205,7 +227,16 @@ p_static_store:
     LD A,(p_w_fault)
     OR A
     RET NZ
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD IX,$C380
+    LD A,(PAGE)
+    OR A
+    JR Z,.metadata
+    LD IX,$C3A0
+.metadata:
+    ELSE
     LD IX,(p_pc_pointer)
+    ENDIF
     LD A,(p_s_static_start)
     LD (IX+23),A
     LD A,(p_s_door)
@@ -249,6 +280,34 @@ p_sprite_emit:
 .positive:
     LD (HL),A
     INC HL
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(p_s_static_start)
+    CP 255
+    JR NZ,.static_id
+    LD A,B
+    ADD A,A
+    ADD A,A
+    LD C,A
+    LD A,(p_pc_patternbase)
+    ADD A,C
+    JR .pattern_id
+.static_id:
+    LD C,A
+    LD A,B
+    SUB C
+    ADD A,48
+    LD C,A
+    LD A,(PAGE)
+    LD D,A
+    ADD A,A
+    ADD A,A
+    ADD A,D
+    ADD A,C
+    ADD A,A
+    ADD A,A
+.pattern_id:
+    LD (p_s_pattern_id),A
+    ELSE
     LD A,B
     ADD A,A
     ADD A,A
@@ -258,6 +317,7 @@ p_sprite_emit:
     ADD A,A
     EDUP
     OR C
+    ENDIF
     LD (HL),A
     INC HL
     LD A,(p_s_x+1)
@@ -274,6 +334,17 @@ p_sprite_emit:
     OR A
     JR Z,.uploaded
     ENDIF
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(p_s_pattern_id)
+    LD L,A
+    LD H,0
+    DUP 3
+    ADD HL,HL
+    EDUP
+    LD DE,$7800
+    ADD HL,DE
+    EX DE,HL
+    ELSE
     LD L,B
     LD H,0
     DUP 5
@@ -285,6 +356,7 @@ p_sprite_emit:
     ADD A,H
     LD H,A
     EX DE,HL
+    ENDIF
     LD HL,p_s_pattern
     LD B,32
     CALL vdp_write
@@ -543,12 +615,22 @@ p_player_prepare:
     LD (p_p_side),A
     CALL p_player_bandtop
     CALL p_player_count_band
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD (p_pc_total),A
+    ENDIF
     CALL p_player_band_fits
     JR C,.advance
     LD A,1
     LD (p_p_side),A
     CALL p_player_bandtop
     CALL p_player_count_band
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD B,A
+    LD A,(p_pc_total)
+    ADD A,B
+    LD (p_pc_total),A
+    LD A,B
+    ENDIF
     CALL p_player_band_fits
     JP NC,p_player_emit_all
 .advance:
@@ -992,6 +1074,16 @@ p_player_band_fits:
     RET
 
 p_player_emit_all:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(p_pc_total)
+    CP 7
+    JR C,.cached
+    CALL p_player_variant_uncached
+    JP C,p_world_fail
+    XOR A
+    LD (p_pc_eligible),A     ;a large uncached frame cannot publish a six-slot way
+.cached:
+    ENDIF
     XOR A
     LD (p_p_side),A
 .band:

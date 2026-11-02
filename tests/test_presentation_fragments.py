@@ -99,6 +99,11 @@ class PresentationFragmentsTests(unittest.TestCase):
         self.assertEqual(packed['sections']['rng']['offset'] % 256, 0)
         self.assertIn('p_bg_rng_data EQU', packed['assembly'])
         self.assertIn('p_bg_upload_static:', packed['initializers'])
+        moved=api.pack_background(base,13984,tables,black_sprite_address=0x3FE0)
+        self.assertEqual(moved['bank'],packed['bank'])
+        self.assertIn('LD DE,$7FE0',moved['initializers'])
+        self.assertNotIn('LD DE,$7C00',moved['initializers'])
+        with self.assertRaises(ValueError):api.pack_background(base,13984,tables,black_sprite_address=0x3FF0)
         with self.assertRaises(ValueError): api.pack_background(base, 16380, tables)
 
     def test_fixed_grid_descriptor_classes_round_trip_every_record_and_split_at4096(self):

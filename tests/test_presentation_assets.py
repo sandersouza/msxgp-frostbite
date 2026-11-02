@@ -71,6 +71,10 @@ class PresentationAssetsTests(unittest.TestCase):
                 self.assertLessEqual(a['end'], 16384)
                 for b in regions[index + 1:]: self.assertFalse(a['start'] < b['end'] and b['start'] < a['end'])
             self.assertFalse(first['runtime_qualified'])
+            expanded=api.compile_assets(rom,Path(directory)/'expanded',measured_palette=palette,sprite_patterns_end=0x4000)
+            self.assertEqual(expanded['sha256'],first['sha256'])
+            self.assertEqual(next(r for r in expanded['vram_regions'] if r['name']=='sprite_patterns')['end'],0x4000)
+            with self.assertRaises(ValueError):api.compile_assets(rom,Path(directory)/'invalid',measured_palette=palette,sprite_patterns_end=0x4001)
             with self.assertRaises(FileExistsError): api.compile_assets(rom, Path(directory) / 'a', measured_palette=palette)
             with self.assertRaisesRegex(ValueError, '128'): api.compile_assets(rom, Path(directory) / 'c', measured_palette={0: (0, 0, 0)})
 

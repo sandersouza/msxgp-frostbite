@@ -35,6 +35,13 @@ vdp_stream:
     RET
 
 presentation_init:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD HL,$C080
+    LD DE,$C081
+    LD BC,255
+    LD (HL),0
+    LDIR                    ;all eight player ways begin unpublished
+    ENDIF
     LD HL,$C380
     LD DE,$C381
     LD BC,63

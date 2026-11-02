@@ -8,6 +8,10 @@ p_pc_key EQU $C4E4
 
 p_player_cache_lookup:
     CALL p_player_init_masks
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_player_variant_default
+    JP C,p_world_fail
+    ELSE
     LD A,(PAGE)
     DUP 5
     ADD A,A
@@ -18,6 +22,7 @@ p_player_cache_lookup:
     LD (p_pc_pointer),HL
     PUSH HL
     POP IX
+    ENDIF
     XOR A
     LD (p_pc_eligible),A
     LD A,($C066)
@@ -63,6 +68,12 @@ p_player_cache_lookup:
     OR B
     LD (p_pc_key+4),A
     LD A,($C066)             ;absolute X retains source prefix/colour races
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CP 24                   ;prefix<=22 and suffix>=91: all eight pixels are safe
+    JR C,.shore_key
+    LD A,(p_p_clip)          ;X<84 was checked above; parity remains in key+4
+.shore_key:
+    ENDIF
     JR .horizontal_key
 .ordinary_key:
     LD A,B
@@ -90,6 +101,10 @@ p_player_cache_lookup:
 .tail_ready:
     LD A,C
     LD (p_pc_key+6),A
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_player_variant_lookup
+    JP C,.miss
+    ELSE
     LD A,(IX)
     CP 1
     JP NZ,.miss
@@ -100,6 +115,7 @@ p_player_cache_lookup:
     JP NZ,.miss
     INC HL
     EDUP
+    ENDIF
     LD A,($C064)
     LD B,A
     LD A,(p_w_coarse)
@@ -126,18 +142,24 @@ p_player_cache_lookup:
     SRL A
     ADD A,8
     LD C,A
+    IFNDEF WITH_PRESENTATION_TEMPLATES
     LD A,(PAGE)
     DUP 6
     ADD A,A
     EDUP
     LD D,A
+    ENDIF
     LD HL,(p_pc_pointer)
     LD DE,10
     ADD HL,DE
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(p_pc_patternbase)
+    ELSE
     LD A,(PAGE)
     DUP 6
     ADD A,A
     EDUP
+    ENDIF
     LD D,A
     LD IY,SAT
 .entry:
@@ -238,3 +260,7 @@ p_player_cache_store:
     LDIR
     LD (IX),1              ; publish metadata only after all P0patterns exist
     RET
+
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    INCLUDE "presentation_player_variants.asm"
+    ENDIF

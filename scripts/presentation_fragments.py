@@ -207,10 +207,11 @@ def background_tables(rom, measured_palette):
             'profiles': records, 'gradient_profiles': len(options), 'black_sprite': bytes([240]) * 16 + bytes(16)}
 
 
-def pack_background(primitive_bank, used_bytes, tables):
+def pack_background(primitive_bank, used_bytes, tables,*,black_sprite_address=0x3C00):
     """Append small background programs into unused space of the primitive bank."""
     if len(primitive_bank) != 16384 or type(used_bytes) is not int or not 0 < used_bytes <= 16384:
         raise ValueError('complete primitive bank and bounded used prefix required')
+    if type(black_sprite_address)is not int or black_sprite_address not in (0x3C00,0x3FE0):raise ValueError('declared immutable sprite slot required')
     bank = bytearray(primitive_bank); position = used_bytes; sections = {}
     def add(name, data, alignment=1):
         nonlocal position
@@ -223,7 +224,7 @@ def pack_background(primitive_bank, used_bytes, tables):
     add('black_sprite', tables['black_sprite'])
     assembly = ''.join(f'p_bg_{name}_data EQU ${0x8000 + section["offset"]:04X}\n' for name, section in sections.items())
     initializers = ['p_bg_upload_static:']
-    for name, destination in [(f'patterns{i}', 0x4400 + i * 2048) for i in range(3)] + [(f'colors{i}', 0x6400 + i * 2048) for i in range(3)] + [('black_sprite', 0x7C00)]:
+    for name, destination in [(f'patterns{i}', 0x4400 + i * 2048) for i in range(3)] + [(f'colors{i}', 0x6400 + i * 2048) for i in range(3)] + [('black_sprite', 0x4000+black_sprite_address)]:
         length = sections[name]['size']; initializers += [f'    LD HL,p_bg_{name}_data', f'    LD DE,${destination:04X}']
         first = True
         while length:
