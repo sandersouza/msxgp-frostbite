@@ -11,6 +11,7 @@ from hazard_tables import compile_catalog
 from native_write_loop import generate
 from original_graphics import SOURCE_SHA256
 from presentation_assets import compile_assets, memory_layout
+from presentation_fragments import background_tables, pack_background
 from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
 from reference_inventory import verified_input
 from reference_traces import private_output
@@ -21,6 +22,7 @@ ROM_BYTES = 4194304
 FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/presentation_build.py',
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',
     'src/presentation_cache.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
+FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py')))
 
 
 def bank_layout(contact_banks):
@@ -37,7 +39,7 @@ def profile():
     ram['regions'].append({'name': 'native_contacts', 'start': 0xC780, 'end': 0xC7A0})
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
-            'rom_bytes': ROM_BYTES, 'ram': ram, 'runtime_qualified': False,
+            'rom_bytes': ROM_BYTES, 'ram': ram, 'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3C00, 'end': 0x3C20}], 'runtime_qualified': False,
             'scope': 'New build profile; source/live target equivalence and timing gates remain pending'}
 
 
@@ -64,8 +66,14 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
     out = private_output(out); out.mkdir(parents=True, exist_ok=False)
     tables = compile_catalog(floes, edge, ordinary, shore, aliases, out / 'tables'); banks = bank_layout(tables['banks'])
     fragments = compile_assets(rom, out / 'assets', measured_palette=measured)
+    background = background_tables(rom, measured)
+    if background['gradient_profiles'] > 8: raise ValueError('native background profile exceeds its measured8-state gradient domain')
+    boot = pack_background((out / 'assets/fragments.bin').read_bytes(), fragments['used_bytes'], background)
+    (out / 'boot.bin').write_bytes(boot['bank'])
+    (out / 'presentation_background.inc').write_text(boot['assembly'])
+    (out / 'presentation_background_init.inc').write_text(boot['initializers'])
     (out / 'core.inc').write_text(generate(rom, carry_fusion=True)); (out / 'data.bin').write_bytes(rom[0xC00:])
-    (out / 'boot_tables.inc').write_text(f'    INCBIN "{out / "assets/fragments.bin"}"\n')
+    (out / 'boot_tables.inc').write_text(f'    INCBIN "{out / "boot.bin"}"\n')
     (out / 'resident_tables.inc').write_text('; Presentation metadata belongs to its explicit profile.\n')
     # Keep original fixed contact indices while reclaiming old synthetic-row banks.
     (out / 'row_banks.inc').write_text('    ORG $8000\n    DS $4000,$FF\n' * 11)
@@ -90,6 +98,8 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
                 'source_commit': commit, 'source_dirty': dirty or final_dirty, 'exploratory': explore,
                 'original': original, 'source_files': fingerprints, 'rom': {'filename': artifact.name, 'size': artifact.stat().st_size,
                 'sha256': digest(artifact), 'mapper': 'ASCII16'}, 'fragments': fragments, 'tables': tables,
+                'background': {'tiles_per_bank': background['tiles_per_bank'], 'gradient_profiles': background['gradient_profiles'],
+                               'boot_used_bytes': boot['used_bytes'], 'boot_sha256': digest(out / 'boot.bin'), 'sections': boot['sections']},
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
                 'limitations': 'Private incomplete renderer bootstrap; full graphics/source pixels, live cache, PSG and integrated acceptance are not implemented or qualified. Not a human-testable game delivery.'}

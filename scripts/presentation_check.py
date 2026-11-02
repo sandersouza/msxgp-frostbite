@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 from environment import ROOT
 from graphics_mapping import decode_screen, map_frame
 from presentation_build import FILES, validate_rom
+from presentation_fragments import background_tables, background_vram
 from presentation_palette import audit_palette
 from presentation_reference import HELPERS as SOURCE_FILES
 from reference_provenance import audit_manifest
@@ -39,7 +40,7 @@ def decode_target(vram, registers):
     return bytes(color or (registers[7] & 15) for color in decode_screen(projected))
 
 
-def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False):
+def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False):
     if family not in ('ntsc', 'pal') or type(fixture) is not int or not 0 <= fixture < 1690: raise ValueError('declared source fixture and TV family required')
     build_dir = Path(build_dir).resolve(); metadata = json.loads((build_dir / 'build.json').read_text())
     artifact = build_dir / metadata['rom']['filename']; rom = artifact.read_bytes()
@@ -57,7 +58,11 @@ def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False):
     original = (source / f'{fixture:04d}-{sample["name"]}.tia').read_bytes()
     if sha(original) != point['raster_sha256'] or sha(bytes(sample['ram'])) != point['before_ram_sha256']: raise ValueError('source fixture pixels/RAM changed')
     palette_config = json.loads((ROOT / 'references/presentation-assets-config.json').read_text()); palette = audit_palette(ROOT / palette_config['palette'])
-    expected = map_frame(original, palette); out = private_output(out); out.mkdir(parents=True, exist_ok=False)
+    expected = map_frame(original, palette)
+    if background_only:
+        tables = background_tables((ROOT / 'references/roms/frostbite.bin').read_bytes(), palette)
+        expected = decode_target(background_vram(tables, sample['ram']), bytes((2, 0xC2, 6, 255, 3, 0x36, 7, 1)))
+    out = private_output(out); out.mkdir(parents=True, exist_ok=False)
     (out / 'source-ram.bin').write_bytes(bytes(sample['ram'])); (out / 'expected.tms').write_bytes(expected)
     syms = symbols(build_dir / 'presentation.sym'); emulator = Path(shutil.which('openmsx')).resolve()
     profile = ET.fromstring(isolated_profile(find_machine_profile(str(emulator))))
@@ -122,7 +127,8 @@ after time 8 {{fail_presentation watchdog}}
     different = sum(a != b for a, b in zip(actual, expected))
     result = {'fixture': sample['name'], 'family': family, 'rom_sha256': sha(rom), 'different_pixels': different,
               'complete': different == 0, 'canonical_ram_injected': True, 'prepare_invariance': True,
-              'scope': 'Controlled source-fixture graphics RPC; natural gameplay, all views and full-frame performance remain separate'}
+              'component': 'background' if background_only else 'full-scene', 'full_source_pixels_accepted': not background_only and different == 0,
+              'scope': 'Controlled graphics RPC; background-only compares the component constructor and cannot qualify full-source pixels; natural gameplay, all views and full-frame performance remain separate'}
     (out / 'check.json').write_text(json.dumps(result, indent=2) + '\n')
     if different: raise ValueError(f'actual native presentation differs at{different} mapped pixels')
     return result
@@ -131,4 +137,5 @@ after time 8 {{fail_presentation watchdog}}
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__); parser.add_argument('--build-dir', type=Path, required=True); parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--fixture', type=int, default=0); parser.add_argument('--family', choices=('ntsc', 'pal'), default='ntsc'); parser.add_argument('--explore', action='store_true')
+    parser.add_argument('--background-only', action='store_true')
     args = parser.parse_args(); print(json.dumps(check_frame(**vars(args))))
