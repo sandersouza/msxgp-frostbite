@@ -42,3 +42,10 @@ class DirtyAuditTests(unittest.TestCase):
             bad=vram.copy();bad[at]^=1
             with self.assertRaises(ValueError):api.audit_physical_names(bad,names)
         with self.assertRaises(ValueError):api.audit_physical_names(vram[:-1],names)
+
+    def test_native_row_list_contains_each_and_only_each_dirty_row_in_order(self):
+        api=self.api();self.assertTrue(hasattr(api,'audit_list'),'bounded native dirty-row list audit missing')
+        raw=bytes((3,0,8,23))+bytes(21)
+        api.audit_list(raw,bytes((1,1,128)))
+        for bad in (raw[:-1],bytes((4,))+raw[1:],bytes((3,0,8,8))+raw[4:],bytes((3,8,0,23))+raw[4:]):
+            with self.assertRaises(ValueError):api.audit_list(bad,bytes((1,1,128)))

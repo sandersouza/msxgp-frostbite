@@ -15,12 +15,26 @@ class PlayerTemplateTests(unittest.TestCase):
         api=self.api();holds=bytes(int(y in (80,81,92,93,106,107,118,119,132,133,144,145,158,159,170,171)) for y in range(47,182))
         ram=bytearray(128);ram[0x64]=60;ram[0x66]=32
         self.assertEqual(len(api.template_key(ram,holds)),7)
-        for y,x in ((29,32),(134,32),(60,84),(60,159)):
+        for y,x in ((18,32),(134,32),(60,84),(60,159)):
             ram[0x64]=y;ram[0x66]=x;self.assertIsNone(api.template_key(ram,holds))
         ram[0x64]=60;ram[0x66]=32;one=api.template_key(ram,holds)
         for offset,mask in ((0x6E,1),(0x6B,1),(0x70,1),(0x6C,8),(0x66,1)):
             changed=ram.copy();changed[offset]^=mask
             self.assertNotEqual(api.template_key(changed,holds),one)
+
+    def test_shoreline_templates_keep_absolute_topology_and_coarse_mapping_in_the_key(self):
+        api=self.api();ram=bytearray(128);ram[0x66]=64;holds=bytes(135);seen=set()
+        for y in range(19,30):
+            ram[0x64]=y
+            for coarse in (0,1):
+                ram[0x68]=150 if coarse else 140
+                key=api.template_key(ram,holds)
+                self.assertIsNotNone(key);self.assertNotIn(key,seen);seen.add(key)
+        ram[0x64]=27;ram[0x66]=8;near=api.template_key(ram,holds)
+        ram[0x66]=64;self.assertNotEqual(api.template_key(ram,holds),near)
+        ram[0x64]=30;ram[0x68]=140;regular=api.template_key(ram,holds)
+        ram[0x64]=60;ram[0x68]=150
+        self.assertEqual(api.template_key(ram,holds),regular)
 
     def test_matching_keys_have_identical_relative_pixels_in_independent_general_kernel(self):
         api=self.api()

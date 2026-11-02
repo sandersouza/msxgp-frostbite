@@ -18,6 +18,8 @@ presentation_hud_prepare:
     IFDEF WITH_PRESENTATION_FAST
     ; Glyph selectors are temporary: skip them when only the igloo changes.
     LD A,(p_fd_rows)
+    AND $3F
+    RET Z
     AND 7
     JP Z,p_fast_igloo_prepare
     ENDIF

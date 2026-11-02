@@ -24,7 +24,11 @@ p_player_cache_lookup:
     CP 84
     JP NC,.miss
     LD A,($C064)
+    IFDEF WITH_PRESENTATION_FAST
+    CP 19
+    ELSE
     CP 30
+    ENDIF
     JP C,.miss
     CP 134
     JP NC,.miss
@@ -41,8 +45,31 @@ p_player_cache_lookup:
     LD (p_pc_key+3),A
     LD A,($C066)
     AND 1
+    IFDEF WITH_PRESENTATION_FAST
+    LD B,A
+    LD A,($C064)
+    CP 30
+    JR NC,.ordinary_key
+    LD C,A
+    LD A,30
+    SUB C
+    ADD A,A
+    OR B
+    LD B,A
+    LD A,(p_w_coarse)
+    DUP 6
+    RLCA
+    EDUP
+    OR B
+    LD (p_pc_key+4),A
+    LD A,($C066)             ;absolute X retains source prefix/colour races
+    JR .horizontal_key
+.ordinary_key:
+    LD A,B
+    ENDIF
     LD (p_pc_key+4),A
     LD A,(p_p_clip)
+.horizontal_key:
     LD (p_pc_key+5),A
     LD A,($C064)
     LD E,A

@@ -2,7 +2,39 @@
 ; every dirty row releases its old owners before the background is replaced.
 p_fd_loop EQU $C2CB
 p_fd_program EQU $C2CC
+p_fd_count EQU $C2CE
+p_fd_cursor EQU $C2CF
 p_fd_ids EQU $C2D0
+p_fd_list EQU $E580
+
+; Build the bounded sorted row list once. Three consumers then visit only
+; set bits, rather than rescanning all24 rows for every transaction phase.
+p_fast_collect_rows:
+    LD DE,p_fd_list
+    DUP 3,group_index
+    LD A,(p_fd_rows+group_index)
+    LD B,A
+    DUP 8,bit_index
+    BIT bit_index,B
+    JR Z,$+6                ;skip LD A,n / LD(DE),A / INC DE (four bytes)
+    LD A,group_index*8+bit_index
+    LD (DE),A
+    INC DE
+    EDUP
+    EDUP
+    LD A,E
+    SUB p_fd_list&255
+    LD (p_fd_count),A
+    RET
+
+p_fast_list_row:
+    LD A,(p_fd_cursor)
+    ADD A,p_fd_list&255
+    LD L,A
+    LD H,p_fd_list/256
+    LD A,(HL)
+    LD (p_fd_loop),A
+    RET
 
 p_fast_rows_any:
     LD A,(p_fd_rows)
@@ -78,7 +110,8 @@ p_fast_primitive_dirty:
     RET
 
 p_fast_release_dirty:
-    CALL p_fast_rows_any
+    CALL p_fast_collect_rows
+    OR A
     RET Z
     LD A,(p_fd_rows)
     CP 255
@@ -91,12 +124,9 @@ p_fast_release_dirty:
     JP Z,p_fast_begin_page
 .scan:
     XOR A
-    LD (p_fd_loop),A
+    LD (p_fd_cursor),A
 .row:
-    LD A,(p_fd_loop)
-    CALL p_fast_row_dirty
-    JR Z,.next
-    LD A,(p_fd_loop)
+    CALL p_fast_list_row
     LD (p_w_top),A
     XOR A
     LD (p_w_col),A
@@ -118,21 +148,21 @@ p_fast_release_dirty:
 .advance:
     INC HL
     DJNZ .cell
-.next:
-    LD HL,p_fd_loop
+    LD HL,p_fd_cursor
     INC (HL)
-    LD A,(HL)
-    CP 24
+    LD A,(p_fd_count)
+    CP (HL)
     JR NZ,.row
     RET
 
 p_fast_background_rows:
-    CALL p_fast_rows_any
+    LD A,(p_fd_count)
+    OR A
     RET Z
     LD A,1
     LD ($7000),A
     XOR A
-    LD (p_fd_loop),A
+    LD (p_fd_cursor),A
     LD A,(p_bg_profile)
     CP 32
     JR Z,.blank
@@ -146,10 +176,17 @@ p_fast_background_rows:
     INC HL
     LD D,(HL)
     EX DE,HL
+    LD (p_fd_program),HL
 .row:
-    LD A,(p_fd_loop)
-    CALL p_fast_row_dirty
-    JR Z,.skip
+    CALL p_fast_list_row
+    LD E,A
+    LD D,0
+    LD L,A
+    LD H,D
+    ADD HL,HL
+    ADD HL,DE
+    LD DE,(p_fd_program)
+    ADD HL,DE
     LD A,(HL)
     LD (p_fd_ids),A
     INC HL
@@ -158,8 +195,6 @@ p_fast_background_rows:
     INC HL
     LD A,(HL)
     LD (p_fd_ids+2),A
-    INC HL
-    LD (p_fd_program),HL
     LD A,(p_fd_loop)
     CP 3
     JR NZ,.fill
@@ -181,17 +216,10 @@ p_fast_background_rows:
     LD (p_fd_ids+2),A
 .fill:
     CALL p_fast_background_row
-    LD HL,(p_fd_program)
-    JR .advance
-.skip:
-    INC HL
-    INC HL
-    INC HL
-.advance:
-    LD A,(p_fd_loop)
-    INC A
-    LD (p_fd_loop),A
-    CP 24
+    LD HL,p_fd_cursor
+    INC (HL)
+    LD A,(p_fd_count)
+    CP (HL)
     JR NZ,.row
     RET
 .blank:
@@ -200,13 +228,12 @@ p_fast_background_rows:
     LD (p_fd_ids+1),A
     LD (p_fd_ids+2),A
 .blank_row:
-    LD A,(p_fd_loop)
-    CALL p_fast_row_dirty
-    CALL NZ,p_fast_background_row
-    LD A,(p_fd_loop)
-    INC A
-    LD (p_fd_loop),A
-    CP 24
+    CALL p_fast_list_row
+    CALL p_fast_background_row
+    LD HL,p_fd_cursor
+    INC (HL)
+    LD A,(p_fd_count)
+    CP (HL)
     JR NZ,.blank_row
     RET
 
@@ -236,15 +263,13 @@ p_fast_background_row:
     RET
 
 p_fast_upload_dirty:
-    CALL p_fast_rows_any
+    LD A,(p_fd_count)
+    OR A
     RET Z
     XOR A
-    LD (p_fd_loop),A
+    LD (p_fd_cursor),A
 .row:
-    LD A,(p_fd_loop)
-    CALL p_fast_row_dirty
-    JR Z,.next
-    LD A,(p_fd_loop)
+    CALL p_fast_list_row
     LD (p_w_top),A
     LD L,A
     LD H,0
@@ -266,10 +291,9 @@ p_fast_upload_dirty:
     LD HL,(p_w_name)
     LD B,32
     CALL vdp_write
-.next:
-    LD HL,p_fd_loop
+    LD HL,p_fd_cursor
     INC (HL)
-    LD A,(HL)
-    CP 24
+    LD A,(p_fd_count)
+    CP (HL)
     JR NZ,.row
     RET

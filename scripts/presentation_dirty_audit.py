@@ -5,6 +5,12 @@ ROW_BYTES=70
 BOOT_BYTES=259
 
 
+def audit_list(raw,flags):
+    if len(raw)!=25 or len(flags)!=3:raise ValueError('whole bounded dirty list and flags required')
+    wanted=bytes(row for row in range(24) if flags[row//8]&(1<<(row&7)))
+    if raw[0]!=len(wanted) or raw[1:1+raw[0]]!=wanted:raise ValueError('dirty-row list misses, duplicates or reorders rows')
+
+
 def boot_histories(raw,rng):
     if len(raw)!=BOOT_BYTES or raw[256]not in (0,1):raise ValueError('complete boot histories/page required')
     page,layout,width=raw[256:259]

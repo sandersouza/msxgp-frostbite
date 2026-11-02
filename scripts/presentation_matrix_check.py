@@ -13,7 +13,7 @@ from graphics_mapping import map_frame
 from presentation_build import FILES,validate_rom
 from presentation_check import decode_target
 from presentation_cache_ownership import audit_row,ROW_BYTES as OWNERSHIP_BYTES
-from presentation_dirty_audit import boot_histories,audit_scene,audit_physical_names,ROW_BYTES as DIRTY_BYTES
+from presentation_dirty_audit import boot_histories,audit_scene,audit_list,audit_physical_names,ROW_BYTES as DIRTY_BYTES
 from presentation_fragments import background_tables
 from presentation_model import describe,pixels
 from presentation_palette import audit_palette
@@ -86,9 +86,12 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
     rpc=[205,entries[0]&255,entries[0]>>8,219,153]+[byte for entry in entries[1:] for byte in (205,entry&255,entry>>8)]+[195,110,199,24,254]
     sparse=meta['profile'].get('sparse_profile',False)
     dirty=sparse and 'p_dirty_describe' in syms
+    listed=dirty and 'p_fast_collect_rows' in syms
+    scene_bytes=DIRTY_BYTES+25 if listed else DIRTY_BYTES
     dirty_open=f'set scenes [open {{{out/"scenes.bin"}}} wb]' if dirty else ''
     dirty_close='close $::scenes;' if dirty else ''
     dirty_dump='puts -nonewline $::scenes "[debug read_block memory 0xE540 64][debug read_block memory 0xC2D8 3][debug read_block memory 0xC200 1][debug read_block memory 0xC2DE 2]"' if dirty else ''
+    if listed:dirty_dump+=';puts -nonewline $::scenes "[debug read_block memory 0xC2CE 1][debug read_block memory 0xE580 24]"'
     boot_dump=f'set bootfile [open {{{out/"boot.bin"}}} wb];puts -nonewline $bootfile "[debug read_block memory 0xC000 128][debug read_block memory 0xC540 64][debug read_block memory 0xC5A0 64][debug read_block memory 0xC200 1][debug read_block memory 0xC2DE 2]";close $bootfile' if dirty else ''
     ownership_open=f'set owners [open {{{out/"ownership.bin"}}} wb]' if sparse else ''
     ownership_close='close $::owners;' if sparse else ''
@@ -157,7 +160,7 @@ after time {60+limit*2} {{fail_matrix watchdog}}
     if sparse and len(owners)!=limit*OWNERSHIP_BYTES:raise ValueError('incomplete live cache ownership matrix')
     ownership=[audit_row(owners[i*OWNERSHIP_BYTES:(i+1)*OWNERSHIP_BYTES]) for i in range(limit)] if sparse else []
     scenes=(out/'scenes.bin').read_bytes() if dirty else b''
-    if dirty and len(scenes)!=limit*DIRTY_BYTES:raise ValueError('incomplete integrated dirty-scene matrix')
+    if dirty and len(scenes)!=limit*scene_bytes:raise ValueError('incomplete integrated dirty-scene matrix')
     rng=background_tables(original,palette)['rng_index'] if dirty else None
     histories=boot_histories((out/'boot.bin').read_bytes(),rng) if dirty else None
     boot_page=(out/'boot.bin').read_bytes()[256] if dirty else None
@@ -173,7 +176,8 @@ after time {60+limit*2} {{fail_matrix watchdog}}
         if sparse:
             vram=captured[(index*2+2)*CAPTURE_BYTES:(index*2+2)*CAPTURE_BYTES+16384]
             audit_physical_names(vram,owners[index*OWNERSHIP_BYTES:index*OWNERSHIP_BYTES+1536])
-        if dirty:row['dirty_rows']=audit_scene(scenes[index*DIRTY_BYTES:(index+1)*DIRTY_BYTES],sample['ram'],rng,histories,boot_page^((index+1)&1))
+        if dirty:row['dirty_rows']=audit_scene(scenes[index*scene_bytes:index*scene_bytes+DIRTY_BYTES],sample['ram'],rng,histories,boot_page^((index+1)&1))
+        if listed:audit_list(scenes[index*scene_bytes+DIRTY_BYTES:(index+1)*scene_bytes],scenes[index*scene_bytes+64:index*scene_bytes+67])
         rows.append(row)
         if different:failures.append(row)
         previous,registers=presented,present_regs
@@ -185,7 +189,7 @@ after time {60+limit*2} {{fail_matrix watchdog}}
             'rom_sha256':sha(romdata),'emulator_sha256':sha(emulator.read_bytes()),'profile_sha256':sha(profile_raw),'source_report_sha256':authority_sha,'domain':'all-source' if all_source else 'controlled-fixtures',
             'source_domain_families':bundle['families'] if bundle is not None else {'fixtures':1690},'unmapped_source_startup':bundle['unmapped_startup'] if bundle is not None else 0,
             'max_prepare_cycles_including_rpc':maximum,'frame_deadline_accepted':False,'full_source_pixels_accepted':component=='full-scene' and not failures,
-            'live_cache_ownership_accepted':sparse,'physical_name_pages_accepted':sparse,'integrated_dirty_states_accepted':dirty,'ownership':ownership,
+            'live_cache_ownership_accepted':sparse,'physical_name_pages_accepted':sparse,'integrated_dirty_states_accepted':dirty,'dirty_row_list_accepted':listed,'ownership':ownership,
             'rows':rows,'artifacts':{p.name:sha(p.read_bytes()) for p in out.iterdir() if p.is_file()},
             'scope':'Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')
