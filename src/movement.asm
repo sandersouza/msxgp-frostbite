@@ -681,6 +681,9 @@ original_data:
     IFDEF WITH_PRESENTATION
     INCLUDE "presentation_sprites.asm"
     ENDIF
+    IFDEF WITH_PRESENTATION_FAST
+    INCLUDE "presentation_dirty.asm"
+    ENDIF
 native_end:
     ASSERT $ <= $C000
     DS $C000-$,$FF

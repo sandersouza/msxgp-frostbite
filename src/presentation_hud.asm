@@ -15,6 +15,12 @@ presentation_hud_prepare:
     LD A,($C03F)
     BIT 7,A
     RET NZ
+    IFDEF WITH_PRESENTATION_FAST
+    ; Glyph selectors are temporary: skip them when only the igloo changes.
+    LD A,(p_fd_rows)
+    AND 7
+    JP Z,p_fast_igloo_prepare
+    ENDIF
     LD HL,$C048
     LD DE,p_h_codes
     LD B,3

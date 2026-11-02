@@ -84,12 +84,18 @@ presentation_prepare:
     XOR 1
     LD (PAGE),A
     IFDEF WITH_PRESENTATION_FAST
-    CALL p_fast_begin_page
+    XOR A
+    LD (p_w_fault),A
+    CALL p_bg_describe
+    LD A,2
+    LD ($7000),A
+    CALL p_dirty_describe
+    CALL p_fast_release_dirty
     ELSE
     CALL presentation_cache_begin
-    ENDIF
     LD HL,$FFFF             ;private correctness candidate: reset both page rows
     LD (p_bg_previous),HL
+    ENDIF
     CALL presentation_background_prepare
     CALL presentation_world_prepare
     CALL presentation_hud_prepare
@@ -97,7 +103,11 @@ presentation_prepare:
     LD A,2
     LD ($7000),A
     CALL presentation_sprites_prepare
+    IFDEF WITH_PRESENTATION_FAST
+    CALL p_fast_upload_dirty
+    ELSE
     CALL p_bg_upload_names
+    ENDIF
     RET
 
 commit:
@@ -147,6 +157,9 @@ presentation_black_sat:
     RET
 
 presentation_background_prepare:
+    IFDEF WITH_PRESENTATION_FAST
+    JP p_fast_background_rows
+    ELSE
     XOR A
     LD (p_bg_changed),A
     LD A,($C03F)
@@ -331,6 +344,46 @@ p_bg_upload_names:
     CALL vdp_stream
     LD B,0
     JP vdp_stream
+    ENDIF
+    IFDEF WITH_PRESENTATION_FAST
+p_bg_describe:
+    LD A,($C068)
+    CP 150
+    LD A,0
+    ADC A,0
+    XOR 1
+    LD (p_w_coarse),A
+    LD A,($C03F)
+    BIT 7,A
+    LD A,32
+    JR NZ,.profile
+    LD A,($C045)
+    OR A
+    JP M,.night
+    LD A,($C04B)
+    AND 4
+    JR NZ,.night
+    LD E,0
+    JR .coarse
+.night:
+    LD E,1
+.coarse:
+    LD A,(p_w_coarse)
+    ADD A,A
+    OR E
+    LD E,A
+    LD (p_bg_theme),A
+    LD A,($C002)
+    LD L,A
+    LD H,p_bg_rng_data/256
+    LD A,(HL)
+    ADD A,A
+    ADD A,A
+    OR E
+.profile:
+    LD (p_bg_profile),A
+    RET
+    ENDIF
 p_bg_roots:
     DW p_bg_rows_data,p_bg_rows_data+72,p_bg_rows_data+144,p_bg_rows_data+216
 
@@ -341,6 +394,7 @@ p_bg_roots:
     INCLUDE "presentation_typed.asm"
     INCLUDE "presentation_fast_world.asm"
     INCLUDE "presentation_fast_hud.asm"
+    INCLUDE "presentation_dirty_rows.asm"
     ELSE
     INCLUDE "presentation_cache.asm"
     ENDIF

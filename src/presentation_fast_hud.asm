@@ -6,6 +6,9 @@ pfh_bottom EQU $C24A
 pfh_footer_pointer EQU $C24B
 
 p_fast_header_prepare:
+    LD A,(p_fd_rows)
+    AND 7
+    JP Z,p_fast_igloo_prepare
     LD A,(p_h_color)
     LD (pfh_upper),A
     LD (pfh_lower),A
@@ -188,6 +191,10 @@ p_fast_igloo_prepare:
     LD (p_h_level),A
 .row:
     LD A,(p_h_level)
+    ADD A,3
+    CALL p_fast_row_dirty
+    JP Z,.next_row
+    LD A,(p_h_level)
     OR A
     JR NZ,.paired
     LD (p_h_bits),A
@@ -242,11 +249,12 @@ p_fast_igloo_prepare:
     LD A,(HL)
     CP 6
     JR NZ,.column
+.next_row:
     LD HL,p_h_level
     INC (HL)
     LD A,(HL)
     CP 3
-    JR NZ,.row
+    JP NZ,.row
     RET
 p_fast_igloo_mask:
     LD C,A
@@ -285,6 +293,9 @@ p_fast_igloo_masks:
     DB 0,$FC,$03,$FF,0,$F0,$0F,$FF,0,$C0,$3F,$FF
 
 p_fast_footer_prepare:
+    LD A,(p_fd_rows+2)
+    AND 192
+    RET Z
     LD A,(p_h_footer_phase)
     ADD A,A
     LD B,A

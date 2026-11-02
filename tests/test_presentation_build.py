@@ -51,7 +51,12 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertEqual(regions['constructor_links'],(0xD900,0xDA80))
         self.assertEqual(regions['constructor_buckets'],(0xDB00,0xE100))
         self.assertEqual(regions['sprite_shadow'],(0xE100,0xE500))
-        self.assertEqual(regions['fusion_work'],(0xE500,0xE800))
+        self.assertEqual(regions['fusion_work'],(0xE500,0xE540))
+        self.assertEqual(regions['visual_state_work'],(0xE540,0xE580))
+        self.assertEqual(regions['renderer_work'],(0xE580,0xE800))
+        self.assertEqual(regions['sprite_pattern_work'],(0xC500,0xC540))
+        self.assertEqual(regions['scene_a'],(0xC540,0xC5A0))
+        self.assertEqual(regions['scene_b'],(0xC5A0,0xC600))
         self.assertEqual(regions['heap_guard'],(0xE800,0xF300))
         for name,(start,end) in regions.items():
             for other,(a,b) in regions.items():

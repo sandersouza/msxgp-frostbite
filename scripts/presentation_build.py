@@ -29,7 +29,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'scripts/presentation_sprites.py', 'src/presentation_sprites.asm', 'src/presentation_player_cache.asm',
                             'scripts/presentation_static_assets.py','scripts/presentation_cache_hash.py',
                             'src/presentation_fast_cache.asm','src/presentation_typed.asm',
-                            'src/presentation_fast_world.asm','src/presentation_fast_hud.asm')))
+                            'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
 
 
 def bank_layout(contact_banks):
@@ -55,10 +55,13 @@ def profile(*,fast=False):
         ram['regions']=[row for row in ram['regions'] if row['name'] not in ('diagnostic_input','tile_bytes')]
         for row in ram['regions']:
             if row['name']=='tile_signatures':row['name']='tile_hashes'
+            if row['name']=='sprite_pattern_work':row['end']=0xC540
         ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
+            ('scene_a',0xC540,0xC5A0),('scene_b',0xC5A0,0xC600),
             ('tile_references',0xC080,0xC200),('graphics_rpc',0xC760,0xC780),
             ('constructor_keys',0xD000,0xD900),('constructor_links',0xD900,0xDA80),
-            ('constructor_buckets',0xDB00,0xE100),('sprite_shadow',0xE100,0xE500),('fusion_work',0xE500,0xE800))]
+            ('constructor_buckets',0xDB00,0xE100),('sprite_shadow',0xE100,0xE500),('fusion_work',0xE500,0xE540),
+            ('visual_state_work',0xE540,0xE580),('renderer_work',0xE580,0xE800))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
             'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],

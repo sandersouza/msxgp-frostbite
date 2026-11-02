@@ -9,6 +9,12 @@ p_s_color EQU $C257
 p_s_y EQU $C258
 p_s_column EQU $C259
 p_s_pattern EQU $C500
+    IFDEF WITH_PRESENTATION_FAST
+p_s_upload EQU $C29B
+p_s_static_start EQU $C29C
+p_s_door EQU $C29D
+p_s_reflect EQU $C29E
+    ENDIF
 
 presentation_sprites_prepare:
     XOR A
@@ -25,7 +31,14 @@ presentation_sprites_prepare:
     ADD A,B
     ADD A,181
     LD (p_s_logo_top),A
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,1
+    LD (p_s_upload),A         ;P0 always owns its own pattern upload decision
+    ENDIF
     CALL p_player_prepare
+    IFDEF WITH_PRESENTATION_FAST
+    CALL p_static_lookup
+    ENDIF
     ; The shared HMOVE mask uses one immutable pattern at3C00.
     LD HL,(p_s_sat)
     LD D,63
@@ -47,6 +60,11 @@ presentation_sprites_prepare:
     LD A,($C04D)
     CP 15
     JR NZ,.logo
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_s_upload)
+    OR A
+    JR Z,.door_ready
+    ENDIF
     LD A,($C06C)
     AND 16
     ADD A,A
@@ -57,6 +75,7 @@ presentation_sprites_prepare:
     LD DE,p_s_pattern
     LD BC,32
     LDIR
+.door_ready:
     LD HL,192
     LD (p_s_x),HL
     LD A,32
@@ -80,6 +99,11 @@ presentation_sprites_prepare:
     XOR A
     LD (p_s_column),A
 .part:
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_s_upload)
+    OR A
+    JR Z,.part_ready
+    ENDIF
     CALL p_sprite_clear
     LD A,(p_s_column)
     LD L,A
@@ -104,6 +128,7 @@ presentation_sprites_prepare:
     INC HL
     INC IX
     DJNZ .row
+.part_ready:
     LD A,(p_s_column)
     DUP 4
     ADD A,A
@@ -122,6 +147,9 @@ presentation_sprites_prepare:
     LD A,(HL)
     CP 4
     JR NZ,.part
+    IFDEF WITH_PRESENTATION_FAST
+    CALL p_static_store
+    ENDIF
 p_s_finish:
     LD HL,(p_s_sat)
     LD (HL),208
@@ -129,6 +157,66 @@ p_s_finish:
     INC A
     LD (p_sat_bytes),A
     RET
+
+    IFDEF WITH_PRESENTATION_FAST
+; The same page retains door/logo patterns iff P0's slot count and these
+; exact shape selectors are unchanged. Positions/colours remain live SAT data.
+; Bytes22..26 are independent of the P0 cache's valid byte and key.
+p_static_lookup:
+    LD A,(p_s_count)
+    LD (p_s_static_start),A
+    XOR A
+    LD (p_s_reflect),A
+    LD B,A
+    LD A,($C04D)
+    CP 15
+    JR NZ,.door
+    INC B
+    LD A,($C06C)
+    AND 16
+    LD (p_s_reflect),A
+.door:
+    LD A,B
+    LD (p_s_door),A
+    LD IX,(p_pc_pointer)
+    LD A,(IX+22)
+    CP 1
+    JR NZ,.miss
+    LD A,(p_s_static_start)
+    CP (IX+23)
+    JR NZ,.miss
+    LD A,(p_s_door)
+    CP (IX+24)
+    JR NZ,.miss
+    LD A,(p_s_reflect)
+    CP (IX+25)
+    JR NZ,.miss
+    LD A,(p_s_phase)
+    CP (IX+26)
+    JR NZ,.miss
+    XOR A
+    LD (p_s_upload),A
+    RET
+.miss:
+    LD (IX+22),0
+    RET
+
+p_static_store:
+    LD A,(p_w_fault)
+    OR A
+    RET NZ
+    LD IX,(p_pc_pointer)
+    LD A,(p_s_static_start)
+    LD (IX+23),A
+    LD A,(p_s_door)
+    LD (IX+24),A
+    LD A,(p_s_reflect)
+    LD (IX+25),A
+    LD A,(p_s_phase)
+    LD (IX+26),A
+    LD (IX+22),1             ;publish only after every pattern was uploaded
+    RET
+    ENDIF
 
 p_sprite_color:
     LD L,A
@@ -181,6 +269,11 @@ p_sprite_emit:
     LD (HL),A
     INC HL
     LD (p_s_sat),HL
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_s_upload)
+    OR A
+    JR Z,.uploaded
+    ENDIF
     LD L,B
     LD H,0
     DUP 5
@@ -195,6 +288,7 @@ p_sprite_emit:
     LD HL,p_s_pattern
     LD B,32
     CALL vdp_write
+.uploaded:
     LD HL,p_s_count
     INC (HL)
     RET

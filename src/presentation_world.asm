@@ -24,11 +24,26 @@ p_w_plane EQU $C243
 p_w_mask EQU $CC90
 
 presentation_world_prepare:
+    IFNDEF WITH_PRESENTATION_FAST
     XOR A
     LD (p_w_fault),A
+    ENDIF
     LD A,($C03F)
     BIT 7,A
     RET NZ
+    IFDEF WITH_PRESENTATION_FAST
+    ; World pixels occupy rows6..21. Dirty UI rows cannot change this layer.
+    LD A,(p_fd_rows)
+    AND $C0
+    LD B,A
+    LD A,(p_fd_rows+1)
+    OR B
+    LD B,A
+    LD A,(p_fd_rows+2)
+    AND $3F
+    OR B
+    RET Z
+    ENDIF
     LD A,($C068)
     CP 150
     LD A,0
@@ -275,6 +290,8 @@ p_world_primitive:
     CP 4
     RET Z
 .fast_visible:
+    CALL p_fast_primitive_dirty
+    RET Z
     ENDIF
     LD A,(p_w_family)
     CP 3
@@ -334,6 +351,11 @@ p_world_primitive:
     LD (p_w_index),A
     LD (p_w_line),A
 .tile:
+    IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_w_top)
+    CALL p_fast_row_dirty
+    JP Z,.next
+    ENDIF
     LD A,(p_w_col)
     CP 31
     JR C,.column
