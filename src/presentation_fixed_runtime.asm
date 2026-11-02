@@ -52,6 +52,20 @@ p_fixed_put:
     OR A
     RET
 
+    IFDEF WITH_PRESENTATION_TEMPLATES
+; Only the bounded header driver calls this wrapper. It has already selected
+; the inactive page's fixed bank0 role, physical ID and metadata address.
+p_fixed_put_header:
+    LD HL,(p_fx_meta)
+    CALL p_fixed_resolve_known
+    RET C
+    LD HL,(p_w_name)
+    LD A,(p_w_tile)
+    LD (HL),A
+    OR A
+    RET
+    ENDIF
+
 p_fixed_resolve:
     LD A,(pf_key+5)
     CP 255
@@ -121,6 +135,9 @@ p_fixed_resolve:
     JP NC,p_fixed_fail
 .metadata:
     CALL p_fixed_key_address
+; Internal entry for an already validated group/physical ID and metadata HL.
+; The public resolver above retains every original bounds/role check.
+p_fixed_resolve_known:
     LD (p_fx_meta),HL
     LD DE,pf_key
     LD B,6

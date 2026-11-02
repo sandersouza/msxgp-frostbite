@@ -9,6 +9,13 @@ p_fast_header_prepare:
     LD A,(p_fd_rows)
     AND 7
     JP Z,p_fast_igloo_prepare
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(PAGE)
+    CP 2
+    JP NC,p_fixed_fail
+    XOR A
+    LD (p_fx_bank),A        ;all header cells have fixed roles in SCREEN2 bank0
+    ENDIF
     LD A,(p_h_color)
     LD (pfh_upper),A
     LD (pfh_lower),A
@@ -38,6 +45,24 @@ p_fast_header_prepare:
 .band:
     XOR A
     LD (p_h_index),A
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    LD A,(p_h_y)
+    LD (p_w_top),A
+    LD A,5
+    LD (p_w_col),A
+    CALL p_fast_cell
+    LD A,(p_h_y)
+    ADD A,A
+    LD B,A
+    ADD A,A
+    ADD A,A
+    ADD A,B
+    ADD A,8
+    CALL p_fixed_dynamic_id
+    LD (p_w_tile),A
+    CALL p_fixed_key_address
+    LD (p_fx_meta),HL
+    ENDIF
 .column:
     LD A,(p_h_index)
     LD E,A
@@ -141,11 +166,25 @@ p_fast_header_prepare:
     LD (p_w_top),A
     ADD A,16
     LD (pf_key+5),A
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_fixed_put_header
+    JP C,p_world_fail
+    LD HL,(p_w_name)
+    INC HL
+    LD (p_w_name),HL
+    LD HL,(p_fx_meta)
+    LD DE,6
+    ADD HL,DE
+    LD (p_fx_meta),HL
+    LD HL,p_w_tile
+    INC (HL)
+    ELSE
     LD A,(p_h_index)
     ADD A,5
     LD (p_w_col),A
     CALL p_fast_cell
     CALL p_fast_put
+    ENDIF
     LD HL,p_h_index
     INC (HL)
     LD A,(HL)
@@ -293,6 +332,9 @@ p_fast_igloo_masks:
     DB 0,$FC,$03,$FF,0,$F0,$0F,$FF,0,$C0,$3F,$FF
 
 p_fast_footer_prepare:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    JP p_template_footer_prepare
+    ELSE
     LD A,(p_fd_rows+2)
     AND 192
     RET Z
@@ -357,3 +399,4 @@ p_fast_footer_prepare:
     CP 22
     JR NZ,.cell
     RET
+    ENDIF

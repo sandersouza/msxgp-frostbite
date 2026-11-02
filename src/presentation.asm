@@ -425,6 +425,9 @@ p_bg_roots:
     INCLUDE "presentation_fast_cache.asm"
     ENDIF
     INCLUDE "presentation_typed.asm"
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    INCLUDE "presentation_footer.asm"
+    ENDIF
     INCLUDE "presentation_fast_world.asm"
     INCLUDE "presentation_fast_hud.asm"
     INCLUDE "presentation_dirty_rows.asm"

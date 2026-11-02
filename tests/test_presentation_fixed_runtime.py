@@ -7,6 +7,17 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class FixedRuntimeTests(unittest.TestCase):
+    def test_prevalidated_resolver_checks_first_last_slots_without_writing_names(self):
+        api=importlib.import_module('presentation_fixed_runtime_check');inputs,expected=api.fixtures();seen=set()
+        for index in range(1,len(inputs)//api.INPUT_BYTES):
+            data=inputs[index*api.INPUT_BYTES:(index+1)*api.INPUT_BYTES]
+            if data[0]!=5:continue
+            page,bank,identifier=data[1:4];seen.add((page,bank,identifier&63))
+            before=expected[(index-1)*api.ROW_BYTES:index*api.ROW_BYTES]
+            after=expected[index*api.ROW_BYTES:(index+1)*api.ROW_BYTES]
+            self.assertEqual(after[2571:4107],before[2571:4107])
+        self.assertEqual(seen,{(page,bank,slot) for page in (0,1) for bank,count in enumerate(api.COUNTS) for slot in (0,count-1)})
+
     def test_memo_fixture_changes_previously_unwritten_fusion_cells(self):
         api=importlib.import_module('presentation_fixed_runtime_check');inputs,expected=api.fixtures();witnesses=0
         for index in range(1,len(inputs)//api.INPUT_BYTES):

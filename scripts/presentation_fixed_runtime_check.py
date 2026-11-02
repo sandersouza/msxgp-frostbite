@@ -38,6 +38,9 @@ def fixtures():
         for bank in range(3):
             key=bytes((bank,page,128,0,15,0))
             for _ in range(2):add(page,bank,page*64,key,col=30,family=1,op=4)
+            for slot in (0,COUNTS[bank]-1):
+                key=bytes((17+bank,page,129,0,14,0))
+                for _ in range(2):add(page,bank,page*64+slot,key,col=29,family=1,op=5)
     for page in (0,1):
         for bank,count in enumerate(COUNTS):
             for slot in range(count):
@@ -101,7 +104,7 @@ def fixtures():
                     if op==2:raise ValueError('constructor fault')
                     base=bank*2048+identifier*8;vram[base:base+8]=tile[:8];vram[base+0x2000:base+0x2008]=tile[8:]
                     metadata[address:address+6]=key
-                if op!=4:
+                if op not in (4,5):
                     names[page*768+top*32+col]=identifier
                     if key[5]==0 and family==0 and ((coarse and top==12) or (not coarse and top in (15,20))):fused[(32 if top==20 else 0)+col]=copy*3+line
                 result=identifier
@@ -159,7 +162,16 @@ unit_run:
     JP Z,p_fast_try_memo
     CP 4
     JP Z,p_fixed_resolve
+    CP 5
+    JP Z,unit_known
     JP p_fixed_put
+unit_known:
+    LD A,($C2F1)
+    LD (p_fx_bank),A
+    LD A,(p_fx_force)
+    LD (p_w_tile),A
+    CALL p_fixed_key_address
+    JP p_fixed_resolve_known
 presentation_typed_construct:
     LD B,A
     LD A,($C2F1)

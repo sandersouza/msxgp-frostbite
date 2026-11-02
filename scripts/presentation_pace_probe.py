@@ -77,6 +77,7 @@ def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=
         counters+=tuple((name,label) for name,label in (
             ('p_template_strip_publish','strip-publish'),('p_template_floe_upload_checked','raw-upload'),
             ('p_template_floe_address','raw-address'),('p_template_decode_names','name-decode'),('p_template_name_row','name-copy'),
+            ('p_fixed_put_header','header-put'),('p_fixed_resolve_known','known-resolve'),
             ('p_player_body_stream','player-raw'),('p_player_sprite_pattern','player-expand'),('p_player_emit_all','player-emit'),
             ('p_player_count_band','player-count'),('p_player_band_fits','player-fit'),('p_player_store','player-store')) if name in syms)
     counter_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{if {{$::inprepare}} {{incr ::calls({label})}}}}' for name,label in counters)
