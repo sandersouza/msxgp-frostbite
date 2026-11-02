@@ -31,7 +31,25 @@ def verify_row(actual,expected):
         raise ValueError('native whole normalized scene/dirty mask differs or is truncated')
 
 
-def check(build_dir,out,explore=False,steady_budget=0):
+def span_cases(base):
+    if len(base)!=128 or base[0x3F]&128:raise ValueError('complete visible base state required')
+    cases=[]
+    for coarse in (0,1):
+        ram=bytearray(base);ram[0x68]=150 if coarse else 0;ram=bytes(ram)
+        for combination in range(256):
+            changed=bytearray(ram);mask=0
+            for actor in range(8):
+                if not combination&(1<<actor):continue
+                row=actor%4;address=(0x54 if actor<4 else 0x1F)+row
+                changed[address]=(changed[address]+1)%160
+                y=(153 if actor<4 else 167)-row*26+coarse;height=8 if actor<4 else 7
+                mask|=sum(1<<r for r in range(y//8,(y+height-1)//8+1))
+            cases.extend(((ram,None),(ram,None),(bytes(changed),mask),(bytes(changed),mask)))
+    return cases
+
+
+def check(build_dir,out,explore=False,steady_budget=0,span_budget=0):
+    if any(type(value)is not int or value<0 for value in (steady_budget,span_budget)):raise ValueError('nonnegative component budgets required')
     producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'utility_fingerprints':{name:digest(ROOT/name) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
     build_dir=Path(build_dir).resolve();meta=json.loads((build_dir/'build.json').read_text());artifact=build_dir/meta['rom']['filename']
@@ -49,8 +67,14 @@ def check(build_dir,out,explore=False,steady_budget=0):
         for root in range(160):
             ram=bytearray(domain['cases'][0]['ram']);ram[0x1C]=nibble<<4;ram[0x1D]=((nibble+4)&15)<<4;ram[0x1F]=root
             cases.append((bytes(ram),0,0))
+    span_start=len(cases)
+    base=next(case['ram'] for case in domain['cases'] if not case['ram'][0x3F]&128)
+    spans=span_cases(base)
+    cases.extend((ram,0,0) for ram,_ in spans)
     for index,(ram,layout,width) in enumerate(cases):
         page=index&1;state=scene(ram,rng,layout=layout,width=width);dirty=dirty_rows(histories[page],state)
+        if index>=span_start and spans[index-span_start][1] is not None:
+            if sum(1<<row for row in dirty)!=spans[index-span_start][1]:raise ValueError('isolated actor-span oracle differs before native execution')
         inputs.extend(ram+bytes((state[1],int(ram[0x68]>=150),page,layout,width)))
         expected.extend(state+sum(1<<row for row in dirty).to_bytes(3,'little'));histories[page]=state
     count=len(cases);out=private_output(out);out.mkdir(parents=True,exist_ok=False)
@@ -122,16 +146,18 @@ after time 120 {{fail_dirty watchdog}}
     if any(digest(ROOT/name)!=value for name,value in producer['utility_fingerprints'].items()) or digest(artifact)!=meta['rom']['sha256'] or digest(original)!=original_sha:
         raise ValueError('dirty-state producer/ROM changed during comparison')
     steady=max(row[1] for i,row in enumerate(times) if not any(expected[i*67+64:i*67+67]))
-    result={'producer':producer,'cases':count,'original_observations':len(domain['cases']),'diagnostic_flag_cases':4,'arithmetic_boundary_cases':2560,
+    max_span=max(row[1] for i,row in enumerate(times) if i>=span_start and spans[i-span_start][1])
+    if span_budget and max_span>span_budget:raise ValueError(f'changed span microbudget exceeded: {max_span} > {span_budget}')
+    result={'producer':producer,'cases':count,'original_observations':len(domain['cases']),'diagnostic_flag_cases':4,'arithmetic_boundary_cases':2560,'derived_span_cases':len(spans),'max_span_cycles':max_span,'declared_span_microbudget':span_budget or None,
         'complete':True,'max_cycles_including_rpc':max(row[1] for row in times),'max_steady_cycles':steady,'declared_steady_microbudget':steady_budget or None,'rom_sha256':meta['rom']['sha256'],
         'actual_sha256':digest(out/'actual.bin'),'expected_sha256':digest(out/'expected.bin'),
         'source_receipt_sha256':domain['source_receipt_sha256'],'source_files':domain['files'],'frame_deadline_accepted':False,
-        'scope':'Actual-Z80 scene/dirty-bit microproof with supplied calibrated BG profile/coarse parameters. No live dirty-renderer integration, frame, audio or human-ROM acceptance.'}
+        'scope':'Actual-Z80 scene/dirty-bit microproof with supplied calibrated BG profile/coarse parameters: retained source observations/arithmetic boundaries plus all256 object/floe change combinations on both coarse positions, separately primed on both generations. Derived combinations are not new source raster captures. No live dirty-renderer, frame, audio or human-ROM acceptance.'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')
     if steady_budget and steady>steady_budget:raise ValueError(f'unchanged visual state costs{steady}cycles above{steady_budget}microbudget; not a frame verdict')
     print(json.dumps({k:result[k] for k in ('cases','complete','max_cycles_including_rpc')}));return result
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--explore',action='store_true');p.add_argument('--steady-budget',type=int,default=0)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build-dir',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--explore',action='store_true');p.add_argument('--steady-budget',type=int,default=0);p.add_argument('--span-budget',type=int,default=0)
     check(**vars(p.parse_args()))

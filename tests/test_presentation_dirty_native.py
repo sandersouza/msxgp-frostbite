@@ -13,3 +13,15 @@ class DirtyNativeTests(unittest.TestCase):
         api.verify_row(expected,expected)
         for actual in (expected[:-1],expected+b'\0',expected[:32]+b'\xff'+expected[33:],expected[:-1]+b'\x08'):
             with self.assertRaises(ValueError):api.verify_row(actual,expected)
+
+    def test_all_actor_span_combinations_have_both_generations_primed(self):
+        api=importlib.import_module('presentation_dirty_native_check');cases=api.span_cases(bytes(128))
+        self.assertEqual(len(cases),2048)
+        seen=set()
+        for start in range(0,len(cases),4):
+            base,first=cases[start];self.assertEqual(cases[start+1],(base,None));self.assertIsNone(first)
+            changed,mask=cases[start+2];self.assertEqual(cases[start+3],(changed,mask))
+            fields=[i for i,(a,b) in enumerate(zip(base,changed)) if a!=b]
+            self.assertTrue(set(fields)<=set(range(0x54,0x58))|set(range(0x1F,0x23)))
+            seen.add((base[0x68]>=150,tuple(fields)))
+        self.assertEqual(len(seen),512)

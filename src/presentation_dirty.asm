@@ -113,10 +113,14 @@ p_dirty_describe:
     LD B,5
     CALL p_dirty_compare
     JR Z,.next_object
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_template_dirty_object
+    ELSE
     CALL p_world_row_y
     ADD A,153
     LD B,8
     CALL p_dirty_span
+    ENDIF
 .next_object:
     LD HL,p_w_row
     INC (HL)
@@ -144,10 +148,14 @@ p_dirty_describe:
     CALL p_dirty_compare
     JR Z,.next_floe
 .floe_changed:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_template_dirty_floe
+    ELSE
     CALL p_world_row_y
     ADD A,167
     LD B,7
     CALL p_dirty_span
+    ENDIF
 .next_floe:
     LD HL,p_w_row
     INC (HL)

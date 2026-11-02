@@ -416,6 +416,7 @@ p_bg_roots:
     INCLUDE "presentation_name_upload.asm"
     INCLUDE "presentation_name_decode.asm"
     INCLUDE "presentation_background_cover.asm"
+    INCLUDE "presentation_dirty_masks.asm"
     INCLUDE "presentation_template_floe.asm"
     ELSE
     INCLUDE "presentation_fixed_pool.asm"
