@@ -273,6 +273,9 @@ p_fast_background_row:
     RET
 
 p_fast_upload_dirty:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    JP p_template_upload_names_known
+    ELSE
     LD A,(p_fd_count)
     OR A
     RET Z
@@ -307,3 +310,4 @@ p_fast_upload_dirty:
     CP (HL)
     JR NZ,.row
     RET
+    ENDIF

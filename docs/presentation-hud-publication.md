@@ -56,3 +56,27 @@ The host suite passes 464 original-free tests.
 
 These are private research artifacts. PSG, hard complete-frame budgets,
 combined route acceptance, final review and human-ROM release remain pending.
+
+The TEMPLATE NAME publisher now groups consecutive dirty rows into complete
+bursts of at most256 bytes, calculating the CPU/VDP origins directly. It still
+uploads all32 bytes of every declared dirty row; the row producer and pixel,
+source-state and VBlank contracts are unchanged. The public component entry
+validates an external list before IO; the game uses the private entry only with
+p_fast_collect_rows' sorted0..23 output and scheduler PAGE.
+
+Actual Z80 checks pass1,265 stateful operations: every contiguous interval on
+both generations through both entries, gapped/empty lists and invalid
+page/count/row/order. They compare whole16KiB VRAM, both CPU NAME pages, retained
+input list/count/page and carry, with source/ABI/heap/SP/IFF/slot/29-cycle IO
+guards. The first eight-row attempt sent one byte instead of256; that concrete
+negative is retained, and the corrected byte-count mask passes. The maximum
+28,768 cycles includes a full24-row public call and RPC, not a frame deadline.
+
+The integrated private ROM is
+15a57ed6ab4f7b54cb754f44396dcbe5c9f7513129251582ae6a46b5935be56e.
+All2,115 full-scene/ownership cases pass (maximum600,282 controlled preparation
+cycles). The120-frame keyboard probe still fails: maximum591,574 busy cycles,
+22 overruns and52 skipped frames. Last-frame NAME publication falls from21,927
+to14,580 cycles; unchanged world preparation is141,042. The source/default
+control remains exactly0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78.
+All466 host tests pass. This remains private timing-failed research.
