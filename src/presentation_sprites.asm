@@ -231,6 +231,7 @@ p_p_masks EQU $C280
 p_p_bandcount EQU $C282
 p_p_planeaddr EQU $C28C
 p_p_segmask EQU $C28E
+p_p_last EQU $C291
 p_p_planes EQU $C480
 p_p_colors EQU $C4E0
 
@@ -271,7 +272,27 @@ p_player_prepare:
     LD L,A
     LD H,original_data/256
     LD (p_p_colorbase),HL
+    CALL p_player_init_masks
+    ; The visible active interval is E4+28..E4+46. E4=0 or>=154
+    ; cannot intersect virtual47..181, including modulo256 wrap. After the
+    ; last active row, only consecutive original GPR-hold rows can survive.
+    LD A,($C064)
+    OR A
+    RET Z
+    CP 154
+    RET NC
+    ADD A,46
+    CP 182
+    JR C,.last
+    LD A,181
+.last:
+    LD (p_p_last),A
+    LD A,($C064)
+    ADD A,28
+    CP 47
+    JR NC,.first
     LD A,47
+.first:
     LD (p_p_virtual),A
 .row:
     LD A,(p_p_pattern)
@@ -377,29 +398,24 @@ p_player_prepare:
     INC (HL)
     LD A,(HL)
     CP 182
+    JR Z,.rows_done
+    LD B,A
+    LD A,(p_p_last)
+    CP B
+    JP NC,.row
+    LD A,B
+    SUB 47
+    LD E,A
+    LD D,0
+    LD HL,p_sprite_holds_data
+    ADD HL,DE
+    LD A,(HL)
+    OR A
     JP NZ,.row
+.rows_done:
     LD A,(p_p_count)
     OR A
     RET Z
-    ; Split only the wrap at source160; parity is unchanged by240targetpx.
-    LD A,($C066)
-    CP 153
-    LD A,255
-    JR C,.masks
-    LD A,($C066)
-    LD B,A
-    LD A,160
-    SUB B
-    LD B,A
-    XOR A
-.main_mask:
-    SCF
-    RRA
-    DJNZ .main_mask
-.masks:
-    LD (p_p_masks),A
-    CPL
-    LD (p_p_masks+1),A
     LD A,(p_p_top)
     ADD A,16
     LD (p_p_limit),A
@@ -427,6 +443,71 @@ p_player_prepare:
     JR NC,.candidate
     JP p_world_fail
 
+p_p_wholemask EQU $C273
+p_p_clip EQU $C28F
+p_p_zone EQU $C290
+p_player_init_masks:
+    ; Split only the wrap at source160; parity is unchanged by240targetpx.
+    LD A,($C066)
+    CP 153
+    LD A,255
+    JR C,.masks
+    LD A,($C066)
+    LD B,A
+    LD A,160
+    SUB B
+    LD B,A
+    XOR A
+.main_mask:
+    SCF
+    RRA
+    DJNZ .main_mask
+.masks:
+    LD (p_p_masks),A
+    CPL
+    LD (p_p_masks+1),A
+    LD A,8
+    CALL p_player_zone
+    CPL
+    LD (p_p_clip),A
+    RET
+
+; SourceX<cut as an exact8-bit mask. All source raster cutoffs are>=8;
+; wrapping bits near160 are therefore always in the low-X zone.
+p_player_zone:
+    PUSH BC
+    PUSH DE
+    PUSH HL
+    LD B,A
+    LD A,($C066)
+    CP 153
+    JR NC,.wrap
+    LD C,A
+    LD A,B
+    SUB C
+    JR C,.zero
+    CP 8
+    JR NC,.full
+    LD L,A
+    LD H,0
+    LD DE,p_player_zones
+    ADD HL,DE
+    LD A,(HL)
+    JR .done
+.wrap:
+    LD A,(p_p_masks+1)
+    JR .done
+.zero:
+    XOR A
+    JR .done
+.full:
+    LD A,255
+.done:
+    POP HL
+    POP DE
+    POP BC
+    RET
+
 ; Read source table at baseHL+indexE, retaining6502 page-cross color races.
 p_player_read:
     LD A,L
@@ -444,50 +525,34 @@ p_player_read:
 p_player_points:
     LD A,(p_p_pattern)
     LD B,A
-    LD A,(p_p_oldpattern)
-    OR B
-    RET Z
-    XOR A
-    LD (p_p_dx),A
-.point:
-    LD A,(p_p_dx)
-    LD E,A
-    LD D,0
-    LD HL,p_player_bits
-    ADD HL,DE
-    LD A,(HL)
-    LD (p_p_bit),A
-    LD A,($C066)
-    ADD A,E
-    CALL normalize_x
-    LD (p_p_x),A
-    CP 8
-    JR NC,.pattern
-    LD A,(p_p_unblank)
-    OR A
-    JP Z,.next
-.pattern:
-    LD A,(p_p_pattern)
-    LD B,A
     LD A,(p_p_index)
     CP 19
-    JR NC,.selected
+    JR NC,.clip
     LD A,(p_p_virtual)
     CP 55
-    JR NC,.selected
+    JR NC,.clip
     LD A,(p_p_prefix)
+    CALL p_player_zone
     LD C,A
-    LD A,(p_p_x)
-    CP C
-    JR NC,.selected
-    LD A,(p_p_oldpattern)
-    LD B,A
-.selected:
-    LD A,(p_p_bit)
+    CPL
     AND B
-    JP Z,.next
-    LD A,(p_p_color)
+    LD B,A
+    LD A,(p_p_oldpattern)
+    AND C
+    OR B
+    LD B,A
+.clip:
+    LD A,(p_p_unblank)
+    OR A
+    LD A,B
+    JR NZ,.whole
     LD C,A
+    LD A,(p_p_clip)
+    AND C
+.whole:
+    OR A
+    RET Z
+    LD (p_p_wholemask),A
     LD A,(p_p_virtual)
     CP 57
     JR NZ,.tail
@@ -495,33 +560,55 @@ p_player_points:
     CP 19
     JR NC,.tail
     LD A,(p_p_prefix)
+    CALL p_player_zone
+    LD (p_p_zone),A
     LD B,A
-    LD A,(p_p_x)
-    CP B
-    JR NC,.tail
+    LD A,(p_p_wholemask)
+    AND B
+    LD (p_p_bit),A
     LD A,(p_p_oldcolor)
-    LD C,A
+    CALL p_player_store_mapped
+    LD A,(p_p_zone)
+    CPL
+    LD B,A
+    LD A,(p_p_wholemask)
+    AND B
+    LD (p_p_bit),A
+    LD A,(p_p_color)
+    JP p_player_store_mapped
 .tail:
     LD A,(p_p_tail)
+    CP 160
+    JR NC,.single
+    CALL p_player_zone
+    LD (p_p_zone),A
     LD B,A
-    LD A,(p_p_x)
-    CP B
-    JR C,.color
+    LD A,(p_p_wholemask)
+    AND B
+    LD (p_p_bit),A
+    LD A,(p_p_color)
+    CALL p_player_store_mapped
+    LD A,(p_p_zone)
+    CPL
+    LD B,A
+    LD A,(p_p_wholemask)
+    AND B
+    LD (p_p_bit),A
     LD A,(p_p_nextcolor)
+    JP p_player_store_mapped
+.single:
+    LD A,(p_p_wholemask)
+    LD (p_p_bit),A
+    LD A,(p_p_color)
+p_player_store_mapped:
     LD C,A
-.color:
+    LD A,(p_p_bit)
+    OR A
+    RET Z
     LD L,C
     LD H,p_sprite_colors_data/256
     LD A,(HL)
-    LD (p_p_pointcolor),A
-    CALL p_player_store
-.next:
-    LD HL,p_p_dx
-    INC (HL)
-    LD A,(HL)
-    CP 8
-    JP NZ,.point
-    RET
+    JP p_player_store
 
 p_player_store:
     LD C,A
@@ -621,8 +708,8 @@ p_player_nonempty:
     LD A,(p_p_bandtop)
     ADD A,16
     SUB D
-    RET C
-    RET Z
+    JR C,.empty
+    JR Z,.empty
     CP 25
     JR C,.end
     LD A,24
@@ -802,9 +889,10 @@ p_player_sprite_pattern:
     ADD HL,DE
     LD A,(p_p_segmask)
     AND (HL)
-    JR .expand
+    JR NZ,.expand
+    JR .next
 .zero:
-    XOR A
+    JR .next
 .expand:
     LD L,A
     LD H,0
@@ -826,13 +914,14 @@ p_player_sprite_pattern:
     LD E,A
     LD A,(HL)
     LD (DE),A
+.next:
     LD HL,p_p_row
     INC (HL)
     LD A,(HL)
     CP 16
     JR NZ,.row
     RET
-p_player_bits:
-    DB $80,$40,$20,$10,$08,$04,$02,$01
+p_player_zones:
+    DB $00,$80,$C0,$E0,$F0,$F8,$FC,$FE,$FF
 
     INCLUDE "presentation_sprite_data.inc"

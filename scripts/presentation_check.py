@@ -41,7 +41,7 @@ def decode_target(vram, registers):
     return bytes(color or (registers[7] & 15) for color in decode_screen(projected))
 
 
-def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False, world_only=False, hud_only=False):
+def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False, world_only=False, hud_only=False, player_budget=0):
     if sum((background_only, world_only, hud_only)) > 1: raise ValueError('choose one component')
     if family not in ('ntsc', 'pal') or type(fixture) is not int or not 0 <= fixture < 1690: raise ValueError('declared source fixture and TV family required')
     build_dir = Path(build_dir).resolve(); metadata = json.loads((build_dir / 'build.json').read_text())
@@ -105,6 +105,17 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
         dump_presentation before.vram [debug read_block VRAM 0 16384]
         dump_presentation before.regs [debug read_block {{VDP regs}} 0 8]
         set VDP.too_fast_vram_access_callback {{fail_presentation fast-vram}}
+        set ::player_cycles 0
+        debug set_bp {syms['p_player_prepare']} {{}} {{set ::player_started [machine_info time]}}
+        debug set_bp {syms['p_player_prepare.candidate']} {{}} {{if {{![info exists ::player_candidate]}} {{set ::player_candidate [machine_info time]}}}}
+        debug set_bp {syms['p_player_emit_all']} {{}} {{set ::player_emit [machine_info time]}}
+        debug set_bp {syms['presentation_sprites_prepare.black']} {{}} {{
+            if {{[info exists ::player_started]}} {{
+                set ::player_cycles [expr {{round(([machine_info time]-$::player_started)*3579545)}}]
+                if {{[info exists ::player_candidate] && [info exists ::player_emit]}} {{dump_presentation player-phases.txt "[expr {{round(($::player_candidate-$::player_started)*3579545)}}] [expr {{round(($::player_emit-$::player_candidate)*3579545)}}] [expr {{round(([machine_info time]-$::player_emit)*3579545)}}]"}}
+                unset ::player_started
+            }}
+        }}
         debug set_bp 0xC183 {{}} {{debug break;after break {{
             set ::prepare_cycles [expr {{round(([machine_info time]-$::prepare_started)*3579545)}}]
             if {{[debug read memory 0xC231]!=0}} {{fail_presentation "world-compositor miss=[debug read memory 0xCCA6] group=[debug read memory 0xCCA7] family=[debug read memory 0xC227] col=[debug read memory 0xC229] top=[debug read memory 0xC22A]"}}
@@ -125,7 +136,7 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
             if {{$end_y>=0 && $end_y<192}} {{fail_presentation commit-end-visible}}
             dump_presentation presented.vram [debug read_block VRAM 0 16384]
             dump_presentation presented.regs [debug read_block {{VDP regs}} 0 8]
-            dump_presentation marker.txt "$::commit_y $end_y $::prepare_cycles"
+            dump_presentation marker.txt "$::commit_y $end_y $::prepare_cycles $::player_cycles"
             exit
         }}}}
         debug write_block memory 0xC180 [binary format cu* {{{' '.join(str(v) for v in rpc)}}}]
@@ -145,12 +156,14 @@ after time 8 {{fail_presentation watchdog}}
     different = sum(a != b for a, b in zip(actual, expected))
     result = {'fixture': sample['name'], 'family': family, 'rom_sha256': sha(rom), 'different_pixels': different,
               'prepare_cycles_including_rpc': int((out / 'marker.txt').read_text().split()[2]), 'frame_deadline_accepted': False,
+              'player_cycles': int((out / 'marker.txt').read_text().split()[3]), 'declared_player_microbudget': player_budget or None,
               'complete': different == 0, 'canonical_ram_injected': True, 'prepare_invariance': True,
               'component': 'background' if background_only else 'world' if world_only else 'world-hud' if hud_only else 'full-scene',
               'full_source_pixels_accepted': not (background_only or world_only or hud_only) and different == 0,
               'scope': 'Controlled graphics RPC; background-only compares the component constructor and cannot qualify full-source pixels; natural gameplay, all views and full-frame performance remain separate'}
     (out / 'check.json').write_text(json.dumps(result, indent=2) + '\n')
     if different: raise ValueError(f'actual native presentation differs at{different} mapped pixels')
+    if player_budget and result['player_cycles'] > player_budget: raise ValueError(f'player component costs{result["player_cycles"]} cycles, exceeds declared microbudget{player_budget}; no frame acceptance implied')
     return result
 
 
@@ -160,4 +173,5 @@ if __name__ == '__main__':
     parser.add_argument('--background-only', action='store_true')
     parser.add_argument('--world-only', action='store_true')
     parser.add_argument('--hud-only', action='store_true')
+    parser.add_argument('--player-budget', type=int, default=0)
     args = parser.parse_args(); print(json.dumps(check_frame(**vars(args))))
