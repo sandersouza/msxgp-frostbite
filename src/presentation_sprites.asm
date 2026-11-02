@@ -238,6 +238,8 @@ p_p_colors EQU $C4E0
 p_p_color_planes EQU $C4F0 ;16 exact palette-index -> plane-byte-offset entries
 
 p_player_prepare:
+    CALL p_player_cache_lookup
+    RET NC
     LD HL,p_p_planes
     LD DE,p_p_planes+1
     LD BC,95
@@ -279,7 +281,6 @@ p_player_prepare:
     LD L,A
     LD H,original_data/256
     LD (p_p_colorbase),HL
-    CALL p_player_init_masks
     ; Fully visible body, left of every source colour-race threshold.
     ; The original19 table rows can be streamed directly; rare shoreline,
     ; tail-colour, wrapped and clipped vertical cases retain the general path.
@@ -956,7 +957,7 @@ p_player_emit_all:
     LD A,(HL)
     CP 2
     JP NZ,.band
-    RET
+    JP p_player_cache_store
 
 p_player_sprite_pattern:
     CALL p_sprite_clear
@@ -1033,4 +1034,5 @@ p_player_sprite_pattern:
 p_player_zones:
     DB $00,$80,$C0,$E0,$F0,$F8,$FC,$FE,$FF
 
+    INCLUDE "presentation_player_cache.asm"
     INCLUDE "presentation_sprite_data.inc"

@@ -24,7 +24,7 @@ FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/prese
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',
     'src/presentation_cache.asm', 'src/presentation_geometry.asm', 'src/presentation_world.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
 FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py', 'src/presentation_hud.asm',
-                            'scripts/presentation_sprites.py', 'src/presentation_sprites.asm')))
+                            'scripts/presentation_sprites.py', 'src/presentation_sprites.asm', 'src/presentation_player_cache.asm')))
 
 
 def bank_layout(contact_banks):
@@ -39,6 +39,10 @@ def profile():
     ram = memory_layout()
     for region in ram['regions']:
         if region['name'] == 'scene_snapshots': region['name'] = 'sprite_pattern_work'
+        # TIA reads use C300..30F; RIOT reads use C340..347. Native code
+        # masks the ports before addressing them, so C380 is not bus state.
+        if region['name'] == 'source_io_read': region['end'] = 0xC348
+    ram['regions'].append({'name':'player_templates','start':0xC380,'end':0xC3C0})
     # Existing native acquisition scratch is retained separately from bus IO.
     ram['regions'].append({'name': 'native_contacts', 'start': 0xC780, 'end': 0xC7A0})
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,

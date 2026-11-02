@@ -31,6 +31,11 @@ vdp_stream:
     RET
 
 presentation_init:
+    LD HL,$C380
+    LD DE,$C381
+    LD BC,63
+    LD (HL),0
+    LDIR
     LD HL,$C400
     LD DE,$C401
     LD BC,$1FF

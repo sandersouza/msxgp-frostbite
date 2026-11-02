@@ -41,9 +41,10 @@ def decode_target(vram, registers):
     return bytes(color or (registers[7] & 15) for color in decode_screen(projected))
 
 
-def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False, world_only=False, hud_only=False, player_budget=0):
+def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False, world_only=False, hud_only=False, player_budget=0, repeats=1):
     if sum((background_only, world_only, hud_only)) > 1: raise ValueError('choose one component')
     if family not in ('ntsc', 'pal') or type(fixture) is not int or not 0 <= fixture < 1690: raise ValueError('declared source fixture and TV family required')
+    if type(repeats)is not int or not 1<=repeats<=8:raise ValueError('one to eight controlled repeat RPCs required')
     build_dir = Path(build_dir).resolve(); metadata = json.loads((build_dir / 'build.json').read_text())
     artifact = build_dir / metadata['rom']['filename']; rom = artifact.read_bytes()
     if validate_rom(rom) or sha(rom) != metadata['rom']['sha256']: raise ValueError('presentation ROM identity mismatch')
@@ -91,6 +92,8 @@ def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, back
     script = f'''set save_settings_on_exit false
 set renderer none
 set throttle off
+set repetition 0
+set history ""
 proc fail_presentation {{message}} {{puts stderr "PRESENTATION_FAIL $message";exit 1;return -code error $message}}
 proc dump_presentation {{name data}} {{set f [open [file join {{{out}}} $name] wb];puts -nonewline $f $data;close $f}}
 set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
@@ -104,6 +107,8 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
         set ::slot [debug read ioports 168]
         dump_presentation before.vram [debug read_block VRAM 0 16384]
         dump_presentation before.regs [debug read_block {{VDP regs}} 0 8]
+        dump_presentation before-0.vram [debug read_block VRAM 0 16384]
+        dump_presentation before-0.regs [debug read_block {{VDP regs}} 0 8]
         set VDP.too_fast_vram_access_callback {{fail_presentation fast-vram}}
         set ::player_cycles 0
         debug set_bp {syms['p_player_prepare']} {{}} {{set ::player_started [machine_info time]}}
@@ -122,6 +127,8 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
             if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_presentation prepare-source-state}}
             dump_presentation prepared.vram [debug read_block VRAM 0 16384]
             dump_presentation prepared.regs [debug read_block {{VDP regs}} 0 8]
+            dump_presentation prepared-$::repetition.vram [debug read_block VRAM 0 16384]
+            dump_presentation prepared-$::repetition.regs [debug read_block {{VDP regs}} 0 8]
             debug cont
         }}}}
         debug set_bp 0xC188 {{}} {{
@@ -136,7 +143,20 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
             if {{$end_y>=0 && $end_y<192}} {{fail_presentation commit-end-visible}}
             dump_presentation presented.vram [debug read_block VRAM 0 16384]
             dump_presentation presented.regs [debug read_block {{VDP regs}} 0 8]
+            dump_presentation presented-$::repetition.vram [debug read_block VRAM 0 16384]
+            dump_presentation presented-$::repetition.regs [debug read_block {{VDP regs}} 0 8]
             dump_presentation marker.txt "$::commit_y $end_y $::prepare_cycles $::player_cycles"
+            append ::history "$::repetition $::prepare_cycles $::player_cycles\n"
+            dump_presentation repeats.tsv $::history
+            incr ::repetition
+            if {{$::repetition<{repeats}}} {{
+                unset -nocomplain ::player_candidate ::player_emit
+                dump_presentation before.vram [debug read_block VRAM 0 16384]
+                dump_presentation before.regs [debug read_block {{VDP regs}} 0 8]
+                dump_presentation before-$::repetition.vram [debug read_block VRAM 0 16384]
+                dump_presentation before-$::repetition.regs [debug read_block {{VDP regs}} 0 8]
+                reg PC 0xC180;set ::prepare_started [machine_info time];debug cont;return
+            }}
             exit
         }}}}
         debug write_block memory 0xC180 [binary format cu* {{{' '.join(str(v) for v in rpc)}}}]
@@ -154,9 +174,17 @@ after time 8 {{fail_presentation watchdog}}
     if images['before'] != images['prepared'] or (out / 'before.regs').read_bytes() != (out / 'prepared.regs').read_bytes(): raise ValueError('preparation changed the visible page/registers')
     actual = images['presented']; (out / 'actual.tms').write_bytes(actual)
     different = sum(a != b for a, b in zip(actual, expected))
+    history=[list(map(int,line.split())) for line in (out/'repeats.tsv').read_text().splitlines()]
+    if len(history)!=repeats or any(len(row)!=3 or row[0]!=i or row[1]<=0 or row[2]<0 for i,row in enumerate(history)):raise ValueError('incomplete ordered controlled repeats')
+    for i in range(repeats):
+        image=lambda phase:decode_target((out/f'{phase}-{i}.vram').read_bytes(),(out/f'{phase}-{i}.regs').read_bytes())
+        if image('before')!=image('prepared') or (out/f'before-{i}.regs').read_bytes()!=(out/f'prepared-{i}.regs').read_bytes():raise ValueError('repeat preparation changed visible state')
+        if image('presented')!=expected:raise ValueError(f'repeat{i} source pixels differ')
     result = {'fixture': sample['name'], 'family': family, 'rom_sha256': sha(rom), 'different_pixels': different,
               'prepare_cycles_including_rpc': int((out / 'marker.txt').read_text().split()[2]), 'frame_deadline_accepted': False,
               'player_cycles': int((out / 'marker.txt').read_text().split()[3]), 'declared_player_microbudget': player_budget or None,
+              'controlled_repeats':repeats,'repeat_cycle_history':history,
+              'player_microbudget_scope':'Last controlled RPC only; cold-start and whole-frame budgets remain separate',
               'complete': different == 0, 'canonical_ram_injected': True, 'prepare_invariance': True,
               'component': 'background' if background_only else 'world' if world_only else 'world-hud' if hud_only else 'full-scene',
               'full_source_pixels_accepted': not (background_only or world_only or hud_only) and different == 0,
@@ -174,4 +202,5 @@ if __name__ == '__main__':
     parser.add_argument('--world-only', action='store_true')
     parser.add_argument('--hud-only', action='store_true')
     parser.add_argument('--player-budget', type=int, default=0)
+    parser.add_argument('--repeats',type=int,default=1)
     args = parser.parse_args(); print(json.dumps(check_frame(**vars(args))))
