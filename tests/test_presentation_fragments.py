@@ -114,3 +114,21 @@ class PresentationFragmentsTests(unittest.TestCase):
             encoded = image.data[offset:offset + cls['stride']]
             self.assertEqual((cls['columns'], cls['rows']), (original['columns'], original['rows']))
             self.assertEqual(tuple(int.from_bytes(encoded[n:n + 2], 'little') for n in range(0, len(encoded), 2)), original['patterns'])
+
+    def test_geometry_metadata_fits_boot_tail_with_relocated_native_roots(self):
+        api = importlib.import_module('presentation_fragments')
+        geometry = {'roots': {'row': [[0,128,3]] * 66, 'floe': [[2,128,4]] * 9, 'bear': [[4,128,5]] * 16},
+                    'classes': [{'columns':2,'rows':2,'stride':8,'count':4096,'offset':0x12340}] * 13,
+                    'patterns':12098}
+        base = {'bank': bytes([165]) * 15296 + bytes([255]) * 1088, 'used_bytes':15296}
+        packed = api.pack_geometry_metadata(base, geometry, bytes(range(256)))
+        self.assertEqual(len(packed['bank']),16384)
+        self.assertEqual(packed['bank'][:15296],base['bank'][:15296])
+        self.assertEqual(packed['sections']['row_map'],15360)
+        self.assertEqual(packed['bank'][15360:15616],bytes(range(256)))
+        self.assertEqual(packed['used_bytes'],15993)
+        self.assertIn('p_geo_row_map_data EQU $BC00',packed['assembly'])
+        self.assertIn('p_geo_class_count EQU 13',packed['assembly'])
+        at = packed['sections']['classes']
+        self.assertEqual(packed['bank'][at:at+8],bytes((2,2,8,0,16,64,35,1)))
+        with self.assertRaises(ValueError): api.pack_geometry_metadata({**base,'used_bytes':16130},geometry,bytes(256))

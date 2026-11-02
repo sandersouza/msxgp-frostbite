@@ -11,7 +11,7 @@ from hazard_tables import compile_catalog
 from native_write_loop import generate
 from original_graphics import SOURCE_SHA256
 from presentation_assets import compile_assets, memory_layout
-from presentation_fragments import background_tables, pack_background
+from presentation_fragments import background_tables, pack_background, compile_geometry, pack_geometry_metadata
 from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
 from reference_inventory import verified_input
 from reference_traces import private_output
@@ -21,7 +21,7 @@ VERSION = '0.0.7-presentation'
 ROM_BYTES = 4194304
 FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/presentation_build.py',
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',
-    'src/presentation_cache.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
+    'src/presentation_cache.asm', 'src/presentation_geometry.asm', 'src/presentation_world.asm', 'references/presentation-assets-config.json', 'references/presentation-assets-result.json')))
 FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scripts/presentation_model.py', 'scripts/graphics_mapping.py')))
 
 
@@ -69,15 +69,22 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
     background = background_tables(rom, measured)
     if background['gradient_profiles'] > 8: raise ValueError('native background profile exceeds its measured8-state gradient domain')
     boot = pack_background((out / 'assets/fragments.bin').read_bytes(), fragments['used_bytes'], background)
-    (out / 'boot.bin').write_bytes(boot['bank'])
-    (out / 'presentation_background.inc').write_text(boot['assembly'])
+    geometry = compile_geometry(rom, out / 'geometry')
+    if not set(geometry['physical_banks']).issubset(banks['available_assets']): raise ValueError('geometry overlaps contact banks')
+    geo_boot = pack_geometry_metadata(boot, geometry, (out / 'geometry/row-pointer-map.bin').read_bytes())
+    (out / 'presentation_geometry.inc').write_text(geo_boot['assembly'])
+    (out / 'boot.bin').write_bytes(geo_boot['bank'])
+    (out / 'presentation_background.inc').write_text(boot['assembly'] +
+        f'p_world_color_data EQU ${0x8000 + fragments["sections"]["colors"]["offset"]:04X}\n')
     (out / 'presentation_background_init.inc').write_text(boot['initializers'])
     (out / 'core.inc').write_text(generate(rom, carry_fusion=True)); (out / 'data.bin').write_bytes(rom[0xC00:])
     (out / 'boot_tables.inc').write_text(f'    INCBIN "{out / "boot.bin"}"\n')
     (out / 'resident_tables.inc').write_text('; Presentation metadata belongs to its explicit profile.\n')
     # Keep original fixed contact indices while reclaiming old synthetic-row banks.
-    (out / 'row_banks.inc').write_text('    ORG $8000\n    DS $4000,$FF\n' * 11)
-    (out / 'cartridge_padding.inc').write_text('    ORG $8000\n    DS $4000,$FF\n' * (256 - 14 - tables['banks']))
+    def asset_bank(bank):
+        return '    ORG $8000\n' + (f'    INCBIN "{out / "geometry" / f"geometry-{bank:03d}.bin"}\"\n' if bank in geometry['physical_banks'] else '    DS $4000,$FF\n')
+    (out / 'row_banks.inc').write_text(''.join(asset_bank(bank) for bank in range(3,14)))
+    (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
     (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n    INCLUDE "movement.asm"\n')
     artifact = out / f'frostbite-{VERSION}.rom'; assembler = verified_tool('sjasmplus')
     command = [str(assembler), '--nologo', f'--inc={ROOT/"src"}', f'--inc={out}', f'--inc={out/"tables"}',
@@ -99,7 +106,8 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False):
                 'original': original, 'source_files': fingerprints, 'rom': {'filename': artifact.name, 'size': artifact.stat().st_size,
                 'sha256': digest(artifact), 'mapper': 'ASCII16'}, 'fragments': fragments, 'tables': tables,
                 'background': {'tiles_per_bank': background['tiles_per_bank'], 'gradient_profiles': background['gradient_profiles'],
-                               'boot_used_bytes': boot['used_bytes'], 'boot_sha256': digest(out / 'boot.bin'), 'sections': boot['sections']},
+                               'boot_used_bytes': geo_boot['used_bytes'], 'boot_sha256': digest(out / 'boot.bin'), 'sections': boot['sections']},
+                'geometry': geometry, 'geometry_metadata': {'sections': geo_boot['sections'], 'used_bytes': geo_boot['used_bytes']},
                 'banks': {**banks, 'resident_used': syms['resident_end'] - 0x4000, 'native_used': syms['native_end'] - 0x8000,
                           'assets_used': syms['assets_end'] - 0x8000}, 'assembler_sha256': digest(assembler),
                 'limitations': 'Private incomplete renderer bootstrap; full graphics/source pixels, live cache, PSG and integrated acceptance are not implemented or qualified. Not a human-testable game delivery.'}

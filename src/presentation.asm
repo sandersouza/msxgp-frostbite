@@ -59,7 +59,11 @@ presentation_prepare:
     XOR 1
     LD (PAGE),A
     CALL presentation_cache_begin
+    LD HL,$FFFF             ;private correctness candidate: reset both page rows
+    LD (p_bg_previous),HL
     CALL presentation_background_prepare
+    CALL presentation_world_prepare
+    CALL p_bg_upload_names
     CALL presentation_black_sat
     LD A,(PAGE)
     OR A
@@ -297,3 +301,5 @@ p_bg_roots:
     INCLUDE "presentation_background_init.inc"
 
     INCLUDE "presentation_cache.asm"
+    INCLUDE "presentation_geometry.asm"
+    INCLUDE "presentation_world.asm"

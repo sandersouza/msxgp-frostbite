@@ -254,3 +254,24 @@ def background_vram(tables, ram):
         for index, y in enumerate(range(64, 176, 16)): vram[0x1B00 + index * 4:0x1B04 + index * 4] = bytes((y - 1, 16, 128, 1))
         vram[0x1B1C] = 208
     return bytes(vram)
+
+
+def pack_geometry_metadata(boot, geometry, pointer_map):
+    """Append relocated lookup roots to the unused boot bank, without overlap."""
+    if len(boot['bank']) != 16384 or len(pointer_map) != 256:
+        raise ValueError('complete boot bank and256-byte pointer map required')
+    position = (boot['used_bytes'] + 255) & -256
+    data = bytearray(pointer_map); sections = {'row_map':position}
+    for family in ('row', 'floe', 'bear'):
+        sections[f'{family}_roots'] = position + len(data)
+        data.extend(bytes(byte for root in geometry['roots'][family] for byte in root))
+    sections['classes'] = position + len(data)
+    for cls in geometry['classes']:
+        data.extend(bytes((cls['columns'],cls['rows'],cls['stride'])) + cls['count'].to_bytes(2,'little') + cls['offset'].to_bytes(3,'little'))
+    end = position + len(data)
+    if end > 16384 or any(value != 255 for value in boot['bank'][boot['used_bytes']:end]):
+        raise ValueError('geometry metadata exceeds unused boot bank tail')
+    bank = bytearray(boot['bank']); bank[position:end] = data
+    assembly = ''.join(f'p_geo_{name}_data EQU ${0x8000+offset:04X}\n' for name,offset in sections.items())
+    assembly += f'p_geo_class_count EQU {len(geometry["classes"])}\np_geo_pattern_count EQU {geometry["patterns"]}\n'
+    return {'bank':bytes(bank),'used_bytes':end,'sections':sections,'assembly':assembly}
