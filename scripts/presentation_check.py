@@ -41,8 +41,8 @@ def decode_target(vram, registers):
     return bytes(color or (registers[7] & 15) for color in decode_screen(projected))
 
 
-def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False, world_only=False):
-    if background_only and world_only: raise ValueError('choose one component')
+def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, background_only=False, world_only=False, hud_only=False):
+    if sum((background_only, world_only, hud_only)) > 1: raise ValueError('choose one component')
     if family not in ('ntsc', 'pal') or type(fixture) is not int or not 0 <= fixture < 1690: raise ValueError('declared source fixture and TV family required')
     build_dir = Path(build_dir).resolve(); metadata = json.loads((build_dir / 'build.json').read_text())
     artifact = build_dir / metadata['rom']['filename']; rom = artifact.read_bytes()
@@ -64,11 +64,12 @@ def check_frame(build_dir, out, *, fixture=0, family='ntsc', explore=False, back
     if background_only:
         tables = background_tables((ROOT / 'references/roms/frostbite.bin').read_bytes(), palette)
         expected = decode_target(background_vram(tables, sample['ram']), bytes((2, 0xC2, 6, 255, 3, 0x36, 7, 1)))
-    if world_only:
+    if world_only or hud_only:
         original_rom = (ROOT / 'references/roms/frostbite.bin').read_bytes()
         model = describe(original_rom, sample)
-        model['hud']['score'] = []; model['hud']['status'] = []
-        model['igloo'] = []; model['door'] = []
+        if world_only:
+            model['hud']['score'] = []; model['hud']['status'] = []; model['igloo'] = []
+        model['door'] = []
         for row in model['player']['rows']:
             row['pattern'] = row['prefix_pattern'] = 0
         for key in ('prefix', 'logo', 'playfield', 'ball'): model['footer'][key] = []
@@ -106,7 +107,7 @@ set boot [debug set_bp {syms['paced_frame_start']} {{}} {{
         set VDP.too_fast_vram_access_callback {{fail_presentation fast-vram}}
         debug set_bp 0xC183 {{}} {{debug break;after break {{
             set ::prepare_cycles [expr {{round(([machine_info time]-$::prepare_started)*3579545)}}]
-            if {{[debug read memory 0xC231]!=0}} {{fail_presentation world-compositor}}
+            if {{[debug read memory 0xC231]!=0}} {{fail_presentation "world-compositor miss=[debug read memory 0xCCA6] group=[debug read memory 0xCCA7] family=[debug read memory 0xC227] col=[debug read memory 0xC229] top=[debug read memory 0xC22A]"}}
             if {{[debug read_block memory 0xC000 128] ne $::ram || [debug read_block memory 0xC600 256] ne $::abi}} {{fail_presentation prepare-source-state}}
             dump_presentation prepared.vram [debug read_block VRAM 0 16384]
             dump_presentation prepared.regs [debug read_block {{VDP regs}} 0 8]
@@ -145,7 +146,8 @@ after time 8 {{fail_presentation watchdog}}
     result = {'fixture': sample['name'], 'family': family, 'rom_sha256': sha(rom), 'different_pixels': different,
               'prepare_cycles_including_rpc': int((out / 'marker.txt').read_text().split()[2]), 'frame_deadline_accepted': False,
               'complete': different == 0, 'canonical_ram_injected': True, 'prepare_invariance': True,
-              'component': 'background' if background_only else 'world' if world_only else 'full-scene', 'full_source_pixels_accepted': not (background_only or world_only) and different == 0,
+              'component': 'background' if background_only else 'world' if world_only else 'world-hud' if hud_only else 'full-scene',
+              'full_source_pixels_accepted': not (background_only or world_only or hud_only) and different == 0,
               'scope': 'Controlled graphics RPC; background-only compares the component constructor and cannot qualify full-source pixels; natural gameplay, all views and full-frame performance remain separate'}
     (out / 'check.json').write_text(json.dumps(result, indent=2) + '\n')
     if different: raise ValueError(f'actual native presentation differs at{different} mapped pixels')
@@ -157,4 +159,5 @@ if __name__ == '__main__':
     parser.add_argument('--fixture', type=int, default=0); parser.add_argument('--family', choices=('ntsc', 'pal'), default='ntsc'); parser.add_argument('--explore', action='store_true')
     parser.add_argument('--background-only', action='store_true')
     parser.add_argument('--world-only', action='store_true')
+    parser.add_argument('--hud-only', action='store_true')
     args = parser.parse_args(); print(json.dumps(check_frame(**vars(args))))

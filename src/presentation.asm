@@ -63,6 +63,7 @@ presentation_prepare:
     LD (p_bg_previous),HL
     CALL presentation_background_prepare
     CALL presentation_world_prepare
+    CALL presentation_hud_prepare
     CALL p_bg_upload_names
     CALL presentation_black_sat
     LD A,(PAGE)
@@ -303,3 +304,4 @@ p_bg_roots:
     INCLUDE "presentation_cache.asm"
     INCLUDE "presentation_geometry.asm"
     INCLUDE "presentation_world.asm"
+    INCLUDE "presentation_hud.asm"

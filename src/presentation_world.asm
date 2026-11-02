@@ -20,6 +20,7 @@ p_w_fault EQU $C231
 p_w_delta EQU $C232
 p_w_base EQU $C233
 p_w_mode EQU $C234
+p_w_plane EQU $C243
 p_w_mask EQU $CC90
 
 presentation_world_prepare:
@@ -163,9 +164,14 @@ presentation_world_prepare:
     LD A,B
     SUB C
     ADD A,4
+    LD (p_w_delta),A
     CP 9
-    JP NC,p_world_fail
+    JR C,.union
+    XOR A                   ;separated source segments retain their gap
+.union:
     LD (p_w_group),A
+    XOR A
+    LD (p_w_plane),A
     LD A,(p_w_row)
     LD E,A
     LD D,0
@@ -206,6 +212,24 @@ presentation_world_prepare:
     LD A,(HL)
     CP 3
     JR NZ,.floe
+    LD A,(p_w_delta)
+    CP 9
+    JR C,.row_done
+    LD A,(p_w_plane)
+    OR A
+    JR NZ,.row_done
+    INC A
+    LD (p_w_plane),A
+    LD A,(p_w_delta)
+    LD B,A
+    LD A,(p_w_base)
+    ADD A,B
+    CALL normalize_x
+    LD (p_w_base),A
+    XOR A
+    LD (p_w_copy),A
+    JP .floe
+.row_done:
     LD HL,p_w_row
     INC (HL)
     LD A,(HL)
@@ -241,6 +265,9 @@ p_world_color:
     RET
 
 p_world_primitive:
+    LD A,(p_w_family)
+    CP 3
+    JR Z,.ready
     LD A,(p_w_x)
     AND 15
     LD B,A
@@ -268,6 +295,7 @@ p_world_primitive:
     LD A,(p_w_family)
     CALL presentation_geometry_lookup
     JP C,p_world_fail
+.ready:
     LD A,(p_w_x)
     LD L,A
     LD H,0
@@ -305,6 +333,9 @@ p_world_primitive:
     JR Z,.next
     OR A
     JR Z,.next
+    LD A,(p_w_family)
+    CP 3
+    JR Z,.glyph
     LD A,(p_w_index)
     ADD A,A
     LD E,A
@@ -317,6 +348,17 @@ p_world_primitive:
     CALL presentation_geometry_pattern
     JP C,p_world_fail
     LD HL,$CC80
+    JR .copy
+.glyph:
+    LD A,(p_w_index)
+    LD L,A
+    LD H,0
+    ADD HL,HL
+    ADD HL,HL
+    ADD HL,HL
+    LD DE,$C480
+    ADD HL,DE
+.copy:
     LD DE,p_w_mask
     LD BC,8
     LDIR
@@ -346,13 +388,13 @@ p_world_primitive:
     INC (HL)
     LD A,(p_geo_columns)
     CP (HL)
-    JR NZ,.tile
+    JP NZ,.tile
     LD (HL),0
     LD HL,p_w_top
     INC (HL)
     LD A,(p_w_origin)
     LD (p_w_col),A
-    JR .tile
+    JP .tile
 p_world_clip:
     LD HL,p_w_mask
     LD B,8
