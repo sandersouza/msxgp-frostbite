@@ -103,7 +103,7 @@ def audit_saved(out):
     maxima={str(op):max(row[1] for i,row in enumerate(times) if inputs[i*25]==op) for op in range(4)}
     return count,max(row[1] for row in times),maxima
 
-def check(out,explore=False):
+def check(out,explore=False,owned=False):
     producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'utility_fingerprints':{name:digest(ROOT/name) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
     out=private_output(out);out.mkdir(parents=True,exist_ok=False);inputs,expected=fixtures();count=len(inputs)//25
@@ -154,6 +154,54 @@ unit_run:
     INCLUDE "presentation_fast_cache.asm"
     DS $C000-$,$FF
 '''
+    if owned:
+        # Establish the renderer-only entry's documented precondition using
+        # an independent six-shift group-root calculation. Invalid caller
+        # groups/generations retain the original fully checked entry.
+        entry=entry.replace('CALL p_fast_ref_add\n','CALL unit_add_owned\n').replace('JP p_fast_ref_add\n','JP unit_add_owned\n').replace('JP p_fast_ref_drop\n','JP unit_drop_owned\n')
+        wrapper='''unit_add_owned:
+    CALL unit_owned_base
+    JP C,p_fast_ref_add
+    JP p_fast_ref_add_owned
+unit_drop_owned:
+    CALL unit_owned_base
+    JP C,p_fast_ref_drop
+    JP p_fast_ref_drop_owned
+unit_owned_base:
+    LD B,A
+    CP 6
+    JR NC,.invalid
+    LD A,C
+    CP 128
+    JR NC,.invalid
+    LD A,B
+    CP 3
+    LD A,C
+    JR C,.first
+    CP 64
+    JR C,.invalid
+    JR .valid
+.first:
+    CP 64
+    JR NC,.invalid
+.valid:
+    LD L,B
+    LD H,0
+    DUP 6
+    ADD HL,HL
+    EDUP
+    LD DE,$C080
+    ADD HL,DE
+    LD (pf_owned_refs),HL
+    LD A,B
+    OR A
+    RET
+.invalid:
+    LD A,B
+    SCF
+    RET
+'''
+        entry=entry.replace('    INCLUDE "presentation_fast_cache.asm"',wrapper+'    INCLUDE "presentation_fast_cache.asm"')
     (out/'unit.asm').write_text(entry);artifact=out/'unit.rom';assembler=verified_tool('sjasmplus')
     compile=subprocess.run([str(assembler),'--nologo',f'--inc={ROOT/"src"}',f'--inc={out}',f'--raw={artifact}',f'--sym={out/"unit.sym"}',str(out/'unit.asm')],capture_output=True,text=True,timeout=60)
     (out/'assembler.log').write_text(compile.stdout+compile.stderr)
@@ -205,11 +253,11 @@ after time 60 {{fail_fast_cache watchdog}}
     n,maximum,maxima=audit_saved(out)
     if any(digest(ROOT/name)!=value for name,value in producer['utility_fingerprints'].items()):raise ValueError('constructor-cache producer changed')
     if not explore and snapshot_paths(HELPERS)!=producer:raise ValueError('constructor-cache revision changed')
-    report={'producer':producer,'exploratory':explore,'complete':True,'cases':n,'max_cycles_including_rpc':maximum,'operation_maxima_including_rpc':maxima,'operation_codes':{'0':'resolve+acquire','1':'acquire','2':'release','3':'cold init'},'rom_sha256':digest(artifact),
+    report={'producer':producer,'exploratory':explore,'complete':True,'owned_reference_entries':owned,'cases':n,'max_cycles_including_rpc':maximum,'operation_maxima_including_rpc':maxima,'operation_codes':{'0':'resolve+acquire','1':'acquire','2':'release','3':'cold init'},'rom_sha256':digest(artifact),
             'emulator_sha256':digest(emulator),'profile_sha256':hashlib.sha256(profile).hexdigest(),'artifacts':{str(p.relative_to(out)):digest(p) for p in out.rglob('*') if p.is_file()},
             'scope':'Exact six-byte keys, live refs/bitmap and independent bucket/link/hash structure validation. Metadata-only allocator, no pixel shadow; constructor injectivity and native full pixels/frame gates remain separate'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');return report
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--explore',action='store_true')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--explore',action='store_true');p.add_argument('--owned',action='store_true')
     r=check(**vars(p.parse_args()));print(json.dumps({k:r[k] for k in ('complete','cases','max_cycles_including_rpc')}))

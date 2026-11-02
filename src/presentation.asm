@@ -124,6 +124,7 @@ presentation_commit:
     OUT ($99),A
     RET
 
+    IFNDEF WITH_PRESENTATION_FAST
 presentation_black_sat:
     LD A,($C03F)
     BIT 7,A
@@ -155,6 +156,7 @@ presentation_black_sat:
     LD A,1
     LD (p_sat_bytes),A
     RET
+    ENDIF
 
 presentation_background_prepare:
     IFDEF WITH_PRESENTATION_FAST

@@ -63,6 +63,12 @@ def probe(build_dir,out,*,family='ntsc',frames=120,play=False,last_world_budget=
         ('presentation_world_prepare','background'),('presentation_hud_prepare','world'),('presentation_footer_prepare','header'),
         ('presentation_sprites_prepare','footer'),('p_fast_upload_dirty','sprites'))
     phase_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{mark_probe_phase {label}}}' for name,label in stages)
+    counters=(('p_fast_resolve','resolve'),('presentation_typed_construct','construct'),('p_fast_ref_add','refadd'),
+        ('p_fast_ref_drop','refdrop'),('p_fast_cell','cell'),('presentation_geometry_lookup','geometry'),
+        ('presentation_geometry_pattern','pattern'),('p_fast_world_tile','worldtile'),('p_world_primitive','primitive'))
+    counter_setup='\n'.join(f'debug set_bp {syms[name]} {{}} {{if {{$::inprepare}} {{incr ::calls({label})}}}}' for name,label in counters)
+    counter_zero=';'.join(f'set ::calls({label}) 0' for _,label in counters)
+    counter_row=' '.join(f'$::calls({label})' for _,label in counters)
     effective=ET.fromstring(isolated_profile(find_machine_profile(str(emulator))))
     effective.find('.//VDP/version').text='TMS9918A' if family=='ntsc' else 'TMS9929A'
     profile=b'<?xml version="1.0"?><!DOCTYPE msxconfig SYSTEM "msxconfig2.dtd">'+ET.tostring(effective)
@@ -78,6 +84,7 @@ set tracking 0
 set inprepare 0
 set timing [open {{{out/'cycles.tsv'}}} w]
 set phases [open {{{out/'phases.tsv'}}} w]
+set counts [open {{{out/'counts.tsv'}}} w]
 set captures [open {{{out/'captures.bin'}}} wb]
 proc fail_probe {{message}} {{puts stderr "PACE_PROBE_FAIL $message frame=$::index";exit 1;return -code error $message}}
 proc snapshot_probe {{}} {{return "[debug read_block VRAM 0 16384][debug read_block {{VDP regs}} 0 8]"}}
@@ -88,6 +95,7 @@ proc mark_probe_phase {{label}} {{
     set ::previous_phase $now
 }}
 {phase_setup}
+{counter_setup}
 debug set_bp {syms['native_reset_done']} {{}} {{
     if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_probe target}}
     set ::slot [debug read ioports 168]
@@ -101,9 +109,10 @@ debug set_bp {syms['paced_frame_start']} {{}} {{
         set commit [expr {{round(($now-$::commit_started)*3579545)}}]
         set end_y [machine_info VDP_msx_y_pos]
         puts $::timing "$::index $::vdp_frame $::source_cycles $::prepare_cycles $commit [expr {{$::source_cycles+$::prepare_cycles+$commit}}] $::spacing $::steps $::commit_y $end_y"
+        puts $::counts "$::index {counter_row}"
         puts -nonewline $::captures "$::ram$::before$::prepared[snapshot_probe]"
         incr ::index
-        if {{$::index=={frames}}} {{close $::timing;close $::captures;close $::phases;exit;return}}
+        if {{$::index=={frames}}} {{close $::timing;close $::captures;close $::phases;close $::counts;exit;return}}
     }}
     if {{[debug read ioports 168]!=$::slot || ([reg IFF]&3)!=0 || [reg SP]!=0xF380}} {{fail_probe abi}}
     set ::tracking 1;set ::started $now;set ::steps 0
@@ -123,6 +132,7 @@ debug set_bp {syms['prepare']} {{}} {{
     set now [machine_info time];set ::source_cycles [expr {{round(($now-$::started)*3579545)}}]
     set ::prepare_started $now
     set ::inprepare 1;set ::previous_phase $now
+    {counter_zero}
     set ::ram [debug read_block memory 0xC000 128];set ::abi [debug read_block memory 0xC600 256]
     set ::before [snapshot_probe]
 }}
@@ -149,6 +159,9 @@ after time {60+frames} {{fail_probe watchdog}}
     if result.returncode or 'PACE_PROBE_FAIL' in log:raise ValueError('continuous profile failed: '+log[-1500:])
     report=verify_rows((out/'cycles.tsv').read_text(),frames,family);captured=(out/'captures.bin').read_bytes()
     timings=[list(map(int,line.split())) for line in (out/'cycles.tsv').read_text().splitlines()]
+    counts=[list(map(int,line.split())) for line in (out/'counts.tsv').read_text().splitlines()]
+    if len(counts)!=frames or any(len(row)!=len(counters)+1 or row[0]!=i or any(v<0 for v in row[1:]) for i,row in enumerate(counts)):
+        raise ValueError('incomplete/unordered continuous operation counts')
     phases=[line.split() for line in (out/'phases.tsv').read_text().splitlines()];labels=[label for _,label in stages]+['prepared']
     if len(phases)!=frames*len(labels):raise ValueError('incomplete continuous phase profiles')
     for index in range(frames):
@@ -175,6 +188,7 @@ after time {60+frames} {{fail_probe watchdog}}
         artifacts={p.name:sha(p.read_bytes()) for p in out.iterdir() if p.is_file()})
     report['last_world_cycles']=next(int(row[2]) for row in phases[-len(labels):] if row[1]=='world')
     report['last_world_microbudget']=last_world_budget or None
+    report['operation_count_columns']=['index']+[label for _,label in counters];report['operation_counts']=counts
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n')
     if last_world_budget and report['last_world_cycles']>last_world_budget:raise ValueError(f'last world component costs{report["last_world_cycles"]}>{last_world_budget}; no complete-frame acceptance implied')
     return report

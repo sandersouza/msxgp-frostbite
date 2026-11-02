@@ -15,6 +15,7 @@ pf_nextbase EQU $CCE2
 pf_previous EQU $CCE4
 pf_key EQU $CC90
 pf_refs EQU $C080
+pf_owned_refs EQU $CCEA
 
 p_fast_init:
     XOR A
@@ -292,6 +293,7 @@ p_fast_ref_address:
 p_fast_ref_add:
     CALL p_fast_ref_address
     RET C
+p_fast_ref_add_core:
     LD A,(HL)
     CP 255
     JP Z,p_fast_fail
@@ -311,6 +313,7 @@ p_fast_ref_add:
 p_fast_ref_drop:
     CALL p_fast_ref_address
     RET C
+p_fast_ref_drop_core:
     LD A,(HL)
     OR A
     JP Z,p_fast_fail
@@ -324,6 +327,24 @@ p_fast_ref_drop:
 .done:
     XOR A
     RET
+
+; Renderer-only entries: p_fast_cell has already supplied the exact group
+; root; IDs come from validated resolve or a pinned earlier-copy memo.
+; Keep overflow/underflow and bitmap updates identical to the checked ABI.
+p_fast_owned_address:
+    LD B,A
+    LD HL,(pf_owned_refs)
+    LD A,C
+    AND 63
+    OR L
+    LD L,A
+    RET
+p_fast_ref_add_owned:
+    CALL p_fast_owned_address
+    JP p_fast_ref_add_core
+p_fast_ref_drop_owned:
+    CALL p_fast_owned_address
+    JP p_fast_ref_drop_core
 p_fast_bitmap_pointer:
     LD A,C
     AND 7

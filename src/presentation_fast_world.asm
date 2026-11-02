@@ -112,6 +112,18 @@ p_fast_cell:
     ADD A,C
     ADD A,B
     LD (p_w_cachegroup),A
+    LD B,A
+    ADD A,2
+    RRCA
+    RRCA
+    AND $C0
+    LD L,A
+    LD A,B
+    CP 2
+    LD A,$C1
+    SBC A,0
+    LD H,A
+    LD (pf_owned_refs),HL
     RET
 
 ; All six bytes are retained before releasing the old cell owner.
@@ -152,7 +164,7 @@ p_fast_put:
     JR NC,.resolve
     LD C,A
     LD A,(p_w_cachegroup)
-    CALL p_fast_ref_drop
+    CALL p_fast_ref_drop_owned
     JP C,p_world_fail
 .resolve:
     LD A,(p_w_cachegroup)
@@ -205,7 +217,7 @@ p_fast_put:
     LD A,(p_w_tile)
     LD C,A
     LD A,(p_w_cachegroup)
-    CALL p_fast_ref_add
+    CALL p_fast_ref_add_owned
     JP C,p_world_fail
     LD HL,(p_w_name)
     LD A,(p_w_tile)
@@ -219,7 +231,6 @@ p_fast_world_tile:
     LD A,D
     OR E
     RET Z
-    CALL p_fast_cell
     LD A,(p_w_col)
     CP 2
     JR NZ,.old

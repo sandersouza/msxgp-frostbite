@@ -141,7 +141,7 @@ p_fast_release_dirty:
     PUSH HL
     LD C,A
     LD A,(p_w_cachegroup)
-    CALL p_fast_ref_drop
+    CALL p_fast_ref_drop_owned
     POP HL
     POP BC
     JP C,p_world_fail

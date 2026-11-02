@@ -367,15 +367,42 @@ p_world_primitive:
     LD (p_w_line),A
 .tile:
     IFDEF WITH_PRESENTATION_FAST
+    LD A,(p_w_line)
+    OR A
+    JR NZ,.row_ready
     LD A,(p_w_top)
     CALL p_fast_row_dirty
-    JP Z,.next
+    JR NZ,.row_dirty
+    ; The entire descriptor row is outside the transaction. Skip its grid
+    ; cells without touching any retained NAME owner or composing old pixels.
+    LD A,(p_w_index)
+    LD B,A
+    LD A,(p_geo_columns)
+    ADD A,B
+    LD (p_w_index),A
+    LD B,A
+    LD A,(p_geo_stride)
+    SRL A
+    CP B
+    RET Z
+    LD HL,p_w_top
+    INC (HL)
+    LD A,(p_w_origin)
+    LD (p_w_col),A
+    JP .tile
+.row_dirty:
+    CALL p_fast_cell
+.row_ready:
     ENDIF
     LD A,(p_w_col)
     CP 31
     JR C,.column
     SUB 30
     LD (p_w_col),A
+    IFDEF WITH_PRESENTATION_FAST
+    CALL p_fast_cell
+    LD A,(p_w_col)
+    ENDIF
 .column:
     CP 1
     JR Z,.next
@@ -444,6 +471,12 @@ p_world_primitive:
     SRL A
     CP B
     RET Z
+    IFDEF WITH_PRESENTATION_FAST
+    ; A NAME row is32-byte aligned; columns0..30 advance without a page
+    ; carry. Column31 wraps to1 and recomputes the pointer above.
+    LD HL,p_w_name
+    INC (HL)
+    ENDIF
     LD HL,p_w_col
     INC (HL)
     LD HL,p_w_line
