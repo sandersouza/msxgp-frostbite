@@ -427,6 +427,7 @@ p_bg_roots:
     INCLUDE "presentation_typed.asm"
     IFDEF WITH_PRESENTATION_TEMPLATES
     INCLUDE "presentation_footer.asm"
+    INCLUDE "presentation_header_keys.asm"
     ENDIF
     INCLUDE "presentation_fast_world.asm"
     INCLUDE "presentation_fast_hud.asm"

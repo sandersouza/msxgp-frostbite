@@ -22,6 +22,8 @@ class PresentationBuildTests(unittest.TestCase):
         self.assertEqual(regions['floe_decode_codes'],(0xE600,0xE610))
         self.assertEqual(regions['player_variant_templates'],(0xC080,0xC180))
         self.assertEqual(regions['player_variant_control'],(0xE610,0xE614))
+        self.assertEqual(regions['header_key_work'],(0xE620,0xE64B))
+        self.assertTrue(profile['header_span_constructor'])
         self.assertEqual(profile['player_variants_per_generation'],4)
         self.assertEqual(profile['static_vram_regions'],[{'name':'hmove_sprite','start':0x3FE0,'end':0x4000}])
         for name,(a,b) in regions.items():

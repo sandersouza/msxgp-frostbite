@@ -35,7 +35,7 @@ def verify_row(actual,expected):
         raise ValueError('incomplete/different actual typed tile or error flag')
 
 
-def fixtures(tables,domain):
+def fixtures(tables,domain,*,header_fast=False):
     unique={}
     for case in domain['cases']:
         rendered=frame(tables,case['ram']);vram=rendered['vram']
@@ -69,18 +69,27 @@ def fixtures(tables,domain):
     # Unsupported output bank/type must reject before changing the tile.
     inputs+=bytes((3,))+bytes(6)+bytes((0,))+bytes(5)+bytes((255,))
     expected+=(bytes((165,))*16+bytes((1,)))*2
+    if header_fast:
+        invalid=[]
+        for band in range(3):
+            for field in range(4):
+                invalid.append((34<<(field*6)).to_bytes(3,'little')+bytes((0xF2,4,16+band)))
+        invalid.append(bytes((0,0,0,0xF2,0x54,16)))
+        for key in invalid:inputs+=bytes((0,))+key;expected+=bytes([165])*16+bytes((1,))
     return inputs,expected,kinds,observed
 
 
-def check(out,geometry,explore=False):
+def check(out,geometry,explore=False,header_fast=False):
+    if type(header_fast)is not bool:raise ValueError('explicit header constructor selection required')
+    helper_files=(*HELPERS,'src/presentation_header.asm') if header_fast else HELPERS
     producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-        'utility_fingerprints':{name:digest(ROOT/name) for name in HELPERS}} if explore else snapshot_paths(HELPERS)
+        'utility_fingerprints':{name:digest(ROOT/name) for name in helper_files}} if explore else snapshot_paths(helper_files)
     domain=collect();config=json.loads((ROOT/'references/presentation-assets-config.json').read_text())
     palette=audit_palette(ROOT/config['palette']);original=ROOT/'references/roms/frostbite.bin';rom=original.read_bytes()
     geometry=Path(geometry).resolve();geo=json.loads((geometry/'geometry.json').read_text())
     input_files={str(path.relative_to(ROOT)):digest(path) for path in
         (original,geometry/'geometry.json',geometry/'row-pointer-map.bin',*sorted(geometry.glob('geometry-*.bin')))}
-    tables=prepare(rom,palette,geometry);inputs,expected,kinds,observed=fixtures(tables,domain);count=len(inputs)//7
+    tables=prepare(rom,palette,geometry);inputs,expected,kinds,observed=fixtures(tables,domain,header_fast=header_fast);count=len(inputs)//7
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     (out/'cases.bin').write_bytes(inputs);(out/'expected.bin').write_bytes(expected)
     static=pack_static(rom,palette,geometry,geo,out/'static')
@@ -93,7 +102,7 @@ def check(out,geometry,explore=False):
     (out/'boot.bin').write_bytes(meta['bank']);(out/'presentation_geometry.inc').write_text(meta['assembly'])
     (out/'presentation_background.inc').write_text(boot['assembly'])
     movement=(ROOT/'src/movement.asm').read_text();mapper=movement[movement.index('map_page2:\n'):movement.index('set_address:\n')]
-    entry='''    ORG $4000
+    entry=('    DEFINE WITH_PRESENTATION_HEADER_FAST\n' if header_fast else '')+'''    ORG $4000
     DB "AB"
     DW start
     DS 12,0
@@ -185,7 +194,7 @@ after time 120 {{fail_typed watchdog}}
         'max_cycles_including_rpc':max(row[1] for row in times),'rom_sha256':digest(artifact),
         'actual_sha256':digest(out/'actual.bin'),'expected_sha256':digest(out/'expected.bin'),
         'source_receipt_sha256':domain['source_receipt_sha256'],'source_files':domain['files'],'input_files':input_files,
-        'complete':True,'frame_deadline_accepted':False,
+        'complete':True,'frame_deadline_accepted':False,'header_fast':header_fast,
         'scope':'Actual-Z80 whole-tile constructor microproof; no game integration, frame, audio or human-ROM acceptance'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({key:result[key] for key in ('cases','kinds','max_cycles_including_rpc','complete')}));return result
@@ -194,4 +203,5 @@ after time 120 {{fail_typed watchdog}}
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--geometry',type=Path,required=True);p.add_argument('--explore',action='store_true')
+    p.add_argument('--header-fast',action='store_true')
     check(**vars(p.parse_args()))

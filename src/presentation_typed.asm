@@ -39,7 +39,11 @@ presentation_typed_construct:
     ENDIF
     SUB 16
     CP 3
+    IFDEF WITH_PRESENTATION_HEADER_FAST
+    JP C,p_template_header_construct
+    ELSE
     JP C,pt_header
+    ENDIF
 pt_fail:
     LD A,1
     LD (pt_error),A
@@ -583,3 +587,6 @@ pt_header_fragment:
     RET
 pt_header_parts:
     DB 0,255,1,2,3,255,4,0,4,255
+    IFDEF WITH_PRESENTATION_HEADER_FAST
+    INCLUDE "presentation_header.asm"
+    ENDIF

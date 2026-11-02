@@ -35,7 +35,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm','src/presentation_fixed_emit.asm','src/presentation_fixed_memo.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fast_model.py','scripts/presentation_constructors.py','scripts/presentation_floe_templates.py',
-    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm','src/presentation_player_variants.asm','src/presentation_footer.asm')))
+    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm','src/presentation_player_variants.asm','src/presentation_footer.asm','src/presentation_header_keys.asm','src/presentation_header.asm')))
 
 
 def bank_layout(contact_banks):
@@ -81,12 +81,13 @@ def profile(*,fast=False,fixed=False,templates=False):
         ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
             ('floe_name_cache',0xDE00,0xE000),('player_render_work',0xE000,0xE100),
             ('dirty_row_work',0xE580,0xE598),('world_memo',0xE5A0,0xE5AC),('floe_template_identities',0xE5C0,0xE5E0),('floe_decode_codes',0xE600,0xE610),
-            ('player_variant_templates',0xC080,0xC180),('player_render_reserved',0xC180,0xC200),('player_variant_control',0xE610,0xE614))]
+            ('player_variant_templates',0xC080,0xC180),('player_render_reserved',0xC180,0xC200),('player_variant_control',0xE610,0xE614),('header_key_work',0xE620,0xE64B))]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
             'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'fixed_roles':fixed,'floe_templates':templates,'raw_floe_key_type':9 if templates else None,'live_cache_references':fast and not fixed,
             'fixed_slot_counts':list(FIXED_COUNTS) if fixed else None,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],
             'player_variants_per_generation':4 if templates else 1,
+            'header_span_constructor':templates,
             'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3FE0 if templates else 0x3C00, 'end': 0x4000 if templates else 0x3C20}], 'runtime_qualified': False,
             'scope': 'New build profile; source/live target equivalence and timing gates remain pending'}
 
@@ -218,7 +219,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
     (out/'cache-crc.bin').write_bytes(cache_crc_table())
     (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n'+
-        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+('    DEFINE WITH_PRESENTATION_TEMPLATES\n' if templates else '')+'    INCLUDE "movement.asm"\n')
+        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+('    DEFINE WITH_PRESENTATION_TEMPLATES\n    DEFINE WITH_PRESENTATION_HEADER_FAST\n' if templates else '')+'    INCLUDE "movement.asm"\n')
     artifact = out / f'frostbite-{VERSION}.rom'; assembler = verified_tool('sjasmplus')
     command = [str(assembler), '--nologo', f'--inc={ROOT/"src"}', f'--inc={out}', f'--inc={out/"tables"}',
                f'--raw={artifact}', f'--sym={out/"presentation.sym"}', f'--lst={out/"presentation.lst"}', str(out / 'entry.asm')]

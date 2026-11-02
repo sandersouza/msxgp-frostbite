@@ -40,6 +40,10 @@ p_fast_header_prepare:
     LD A,(pfh_sky)
     LD (pfh_lower),A
 .rows:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_template_header_keys
+    JP C,p_world_fail
+    ENDIF
     XOR A
     LD (p_h_y),A
 .band:
@@ -64,6 +68,10 @@ p_fast_header_prepare:
     LD (p_fx_meta),HL
     ENDIF
 .column:
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_template_header_key
+    JP C,p_world_fail
+    ELSE
     LD A,(p_h_index)
     LD E,A
     LD D,0
@@ -166,6 +174,7 @@ p_fast_header_prepare:
     LD (p_w_top),A
     ADD A,16
     LD (pf_key+5),A
+    ENDIF
     IFDEF WITH_PRESENTATION_TEMPLATES
     CALL p_fixed_put_header
     JP C,p_world_fail

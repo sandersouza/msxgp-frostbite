@@ -29,23 +29,30 @@ whole metadata/VRAM and unchanged NAME pages on the internal resolver path.
 Its constructor stub remains separate from the real constructor and full-scene
 proofs.
 
-Private ROM SHA-256:
-1a9af5e527faa6ac2200c0d635f6dc3eb0f12fbe210a6c102be230a946f594ce.
-It passes all 2,115 original full-scene/physical ownership/active-byte cases;
-controlled preparation still reaches 635,803 cycles. The 120-frame keyboard
-probe still fails: maximum 631,206 busy cycles, 22 overruns and 51 skipped frames.
-Cold header work falls from 230,140 to 195,959 cycles; the start transition from
-147,206 to 113,025. The new default control remains byte-identical at
-0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78.
-The host suite passes 461 original-free tests.
+The TEMPLATE profile now packs each header column's four glyph selectors once
+in a bounded 43-byte temporary table (E620..E64A), then derives the exact three
+six-byte band keys. It preserves every original selector, color and fragment
+phase. The independent actual-Z80 check passes 3,295 cases: every byte value of
+each selector, level boundaries, all colors, every column/band and invalid
+inputs. Guards cover the complete table, generated keys, source RAM, ABI, heap,
+VRAM, stack, interrupts and mapper/slot state.
 
-Further measured work remains: the header rebuilds the same full glyph tuple
-three times, then masks inactive pairs for each row band. A bounded temporary
-table can pack each column once and derive the three exact keys. At the start
-transition twelve keys change, while only six resulting PGTs change and all CGTs
-remain identical; fragment aliases and independent PGT/CGT publication may help
-after their equivalence is proved. The current header constructor also reads
-full glyph fragments before copying only the required row spans.
+A separate header constructor reads only the source glyph rows consumed by each
+band. It still validates all four glyph IDs and the fragment phase before
+writing. Its actual-Z80 typed-constructor check passes 4,718 cases across all
+existing kinds, including invalid unused glyph IDs; expected whole PGT/CGT bytes
+are unchanged. On identical valid keys, mean savings are 243, 508 and 440 cycles
+for bands 16, 17 and 18 respectively. These are component measurements, not
+complete-frame acceptance.
+
+Private ROM SHA-256:
+83799b853ff55fb17956746285b205bb5674e20dc110ff3ca22a2e99ffc6639b.
+It passes all 2,115 original full-scene/physical ownership/active-byte cases;
+controlled preparation still reaches 612,756 cycles. The 120-frame keyboard
+probe still fails: maximum 605,274 busy cycles, 22 overruns and 50 skipped frames.
+The new default control remains byte-identical at
+0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78.
+The host suite passes 464 original-free tests.
 
 These are private research artifacts. PSG, hard complete-frame budgets,
 combined route acceptance, final review and human-ROM release remain pending.
