@@ -1,0 +1,265 @@
+{
+  "scope": "Owner-video diagnosis and private active-play timing research; unchanged published ROM, not final runtime acceptance.",
+  "source_commit": "12e204e6ecf6403fed63fd0e2f8c602ef84099a4",
+  "original_rom_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+  "analysis_helper_sha256": "927ff0436e974c45bba7552de592b8d7a6cef8af8527007f03d2d09ccebaf316",
+  "video": {
+    "sha256": "ebed639dfab82a3f743671665646a5b4205f251d7068ce49cc98b6526d2d9579",
+    "duration_seconds": 66.456667,
+    "observed_window_title": "openMSX 21.0 \u2014 C-BIOS MSX2+",
+    "exact_rom_and_emulator_speed_setting_confirmed": false,
+    "owner_feedback": "Colors and graphics intact and close to the original; speed unacceptable.",
+    "temperature_sample_hz": 10,
+    "temperature_cluster_metadata_sha256": "632a8eced50fdb5689de836e59e2a19514c2962bab1e3092c601f844cee324f8",
+    "visually_read_temperature_start": 44,
+    "start_seconds": 12.1,
+    "visually_read_temperature_end": 27,
+    "end_seconds": 55.5,
+    "observed_elapsed_seconds": 43.4,
+    "original_normal_play_steps_per_decrement": 64,
+    "original_code_reference": "FA97..FA9D: frame counter & 0x3f gates FBC1 decimal decrement; bonus has a different gate.",
+    "original_nominal_source_hz": 59.922743404312314,
+    "conditional_original_elapsed_seconds": 18.156712096090423,
+    "conditional_speed_ratio": 0.41835742156890376,
+    "limit": "HUD timing estimate conditional on uninterrupted normal play; 0.1-second sampling. Not measured CPU or display FPS. Excludes entry/bonus countdown. No audio or physical-hardware verdict."
+  },
+  "selection": "Intervals i=1..N-1 with C6=E7=F1=0 in both captured preparation states i-1 and i. Rate=sum(logical_steps)*3579545/sum(commit_spacing_cycles). First unmeasured interval excluded.",
+  "selection_limit": "A conservative preparation-state filter, not a proof classifying every intermediate source update. PAL can contain two ordered source updates per preparation.",
+  "short_routes": {
+    "ntsc": {
+      "directory": "outputs/presentation/performance-route-ntsc-private-b",
+      "family": "ntsc",
+      "all_intervals": {
+        "intervals": 599,
+        "logical_steps": 599,
+        "commit_interval_cycles": 55284357,
+        "source_updates_per_second": 38.78398106357645
+      },
+      "adjacent_active_preparations": {
+        "intervals": 286,
+        "logical_steps": 286,
+        "commit_interval_cycles": 35841617,
+        "source_updates_per_second": 28.563160808286078,
+        "mean_cycles": {
+          "source_and_scheduler": 22340.153846153848,
+          "preparation": 97663.3951048951,
+          "commit": 1912.944055944056,
+          "busy": 121916.49300699301
+        },
+        "mean_preparation_phases": {
+          "description": 434.0,
+          "dirty-state": 9178.279720279721,
+          "release": 790.972027972028,
+          "background": 5115.241258741259,
+          "world": 54110.92657342657,
+          "header": 6944.832167832168,
+          "footer": 204.0,
+          "sprites": 15266.318181818182,
+          "prepared": 5618.825174825175
+        },
+        "mean_nested_call_cycles": {
+          "primitive": 26540.346153846152,
+          "floe-prepare": 24413.48951048951,
+          "strip-publish": 11650.783216783217,
+          "raw-upload": 8310.653846153846
+        }
+      },
+      "timing_failures": {
+        "frame_budget": 59736,
+        "max_busy_cycles": 507343,
+        "over_budget_frames": 189,
+        "skipped_vdp_frames": 365,
+        "visible_commits": 177,
+        "duplicate_vdp_frames": 39,
+        "incorrect_periods": 292,
+        "frame_deadline_accepted": false
+      },
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+      "receipt_sha256": "1a1c51e55cb968f32dfab26bd4568a708d242808b59a9d3d6903fa12c134a54b",
+      "raw_sha256": {
+        "route-cpu.bin": "22968865326d3574ef839d1e286fcc7e47717abc8f36cb2da45699b9cf94bb52",
+        "launch.tcl": "b0b7c24488b1961c6c0ca54dd0cf4d0d85297bcbe583df109dd6f64342f07b18",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "captures.bin": "8e6d20daac4e422addc78116631cc5242fede4112bc75f106598d94c701f7cb7",
+        "cycles.tsv": "c24525a2c08c00de40087f3f3ff4add2041023a442d36c262d90006f8f2dd837",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "costs.tsv": "89de137a860a0e2089cd201165d5acfea0d2d264c3570bf3d6b4c33f1bbe8233",
+        "counts.tsv": "0f2037467b2b04df770a6ef2e823df62b35250a9fdfaafb54ebf20840826d8f5",
+        "phases.tsv": "6864bfe2310db63a4a9d32d23e12e8df23dd99b8b5e84b7ae85275134d4281dd",
+        "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7"
+      }
+    },
+    "pal": {
+      "directory": "outputs/presentation/performance-route-pal-private-b",
+      "family": "pal",
+      "all_intervals": {
+        "intervals": 599,
+        "logical_steps": 715,
+        "commit_interval_cycles": 63692061,
+        "source_updates_per_second": 40.18357444894113
+      },
+      "adjacent_active_preparations": {
+        "intervals": 294,
+        "logical_steps": 351,
+        "commit_interval_cycles": 41270663,
+        "source_updates_per_second": 30.44342406129991,
+        "mean_cycles": {
+          "source_and_scheduler": 26420.72789115646,
+          "preparation": 106464.80612244898,
+          "commit": 1911.4761904761904,
+          "busy": 134797.01020408163
+        },
+        "mean_preparation_phases": {
+          "description": 434.0,
+          "dirty-state": 9222.880952380952,
+          "release": 801.9183673469388,
+          "background": 5703.017006802721,
+          "world": 58910.554421768706,
+          "header": 8525.680272108844,
+          "footer": 204.0,
+          "sprites": 16362.612244897959,
+          "prepared": 6300.142857142857
+        },
+        "mean_nested_call_cycles": {
+          "primitive": 27224.982993197278,
+          "floe-prepare": 28362.122448979593,
+          "strip-publish": 13743.07142857143,
+          "raw-upload": 9800.656462585033
+        }
+      },
+      "timing_failures": {
+        "frame_budget": 71364,
+        "max_busy_cycles": 507343,
+        "over_budget_frames": 189,
+        "skipped_vdp_frames": 326,
+        "visible_commits": 132,
+        "duplicate_vdp_frames": 33,
+        "incorrect_periods": 278,
+        "frame_deadline_accepted": false
+      },
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "22000e434ab1b70ecc7c1cc15ec2017c81c50e39bda1390d0357550d4cfbfe4c",
+      "receipt_sha256": "cd9540dcabc8c1880eacb5c3c80ef1b047e4391cee7045f74ef4e08a10636f1a",
+      "raw_sha256": {
+        "route-cpu.bin": "c5bae80c53f8bb6bd6e9d0d42c3d9fc15404f72a6cbcb70740d027779d22510d",
+        "launch.tcl": "311e65048e9977016eab3dff7a75fa46ca5d0a012797fc56f5760ecb57999d77",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "captures.bin": "24dd40d15fde408f1163f591b731e5b88c6bacea9d04b4f0ac9fbd38c9f67e46",
+        "cycles.tsv": "ed0cb192dd84e3dbbc5b39622978dd657bf551cba8cdac3691a19ee9d978e39a",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "costs.tsv": "546e73a6bb77b6da2da275e56a5bea0c8ceb64a1dc7a4e01c0f853831736e21e",
+        "counts.tsv": "f99bb8c77b6e9cf211d447998e8ae2a0ed54fd548c89badf5ac4387ce630a1f1",
+        "phases.tsv": "c093dfb8ea82f20f93c8f4f7c6917da3517e649d27b0472c43c983e91610f950",
+        "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7"
+      }
+    }
+  },
+  "extended_ntsc_route": {
+    "directory": "outputs/presentation/human-video-2026-11-03/full-route-ntsc-a",
+    "family": "ntsc",
+    "all_intervals": {
+      "intervals": 2252,
+      "logical_steps": 2252,
+      "commit_interval_cycles": 211298365,
+      "source_updates_per_second": 38.15048611474111
+    },
+    "adjacent_active_preparations": {
+      "intervals": 1008,
+      "logical_steps": 1008,
+      "commit_interval_cycles": 129342237,
+      "source_updates_per_second": 27.89638901946624,
+      "mean_cycles": {
+        "source_and_scheduler": 22059.271825396827,
+        "preparation": 100753.38591269842,
+        "commit": 1943.813492063492,
+        "busy": 124756.47123015873
+      },
+      "mean_preparation_phases": {
+        "description": 434.0,
+        "dirty-state": 9179.287698412698,
+        "release": 789.4821428571429,
+        "background": 5031.204365079365,
+        "world": 53624.880952380954,
+        "header": 6425.965277777777,
+        "footer": 204.0,
+        "sprites": 19551.318452380954,
+        "prepared": 5513.247023809524
+      },
+      "mean_nested_call_cycles": {
+        "primitive": 26595.91964285714,
+        "floe-prepare": 23906.01488095238,
+        "strip-publish": 11353.15376984127,
+        "raw-upload": 8066.250992063492
+      }
+    },
+    "timing_failures": {
+      "frame_budget": 59736,
+      "max_busy_cycles": 507343,
+      "over_budget_frames": 788,
+      "skipped_vdp_frames": 1433,
+      "visible_commits": 705,
+      "duplicate_vdp_frames": 148,
+      "incorrect_periods": 1160,
+      "frame_deadline_accepted": false
+    },
+    "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+    "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+    "receipt_sha256": "89124d2a565f4404fb25c5f0c7bf42cff3536961f525b5c4275c6c3fd3c980bf",
+    "raw_sha256": {
+      "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+      "launch.tcl": "14edfa98d4bbf8612ed97471c28973462d21235be0ca36ae1199d3b8fc7a37d5",
+      "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+      "captures.bin": "98d211f8430b1a761b8c6e63830a62f1feb69b6cbd7e551f72478950ac5104e1",
+      "cycles.tsv": "1bcad74cfee7d7d58bd1838558b443c705b1370bf1a5ebb79250e90f8e001d9f",
+      "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "costs.tsv": "c53933a69c543ebd3c19cab0dae05528eb5047ab9672627d56a263633f593744",
+      "counts.tsv": "ab51236ab2aa2860ac6a2d64d4c4c2c2819b5c095f87e93d144555b8ea3282f9",
+      "phases.tsv": "d70d397737057ba817d8bccd4f3a1589057e0ba694b1df59f188926a863691ab",
+      "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7"
+    }
+  },
+  "source_route": {
+    "receipt_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+    "checkpoints": 2254,
+    "all_cpu_and_128_ram_bytes_match": true,
+    "canonical_ram_injections": 0,
+    "assessment": {
+      "kind": "progression",
+      "variation": 0,
+      "start_level": 0,
+      "turn_players": [],
+      "turns": [],
+      "construction_step": 1733,
+      "entry_step": 1912,
+      "bonus_complete_step": 2203,
+      "next_level_step": 2252
+    },
+    "limit": "One complete retained variation-0 progression route through next level; not all variations/views, game over/restart, PSG, manual or physical acceptance."
+  },
+  "private_research": {
+    "complete": true,
+    "scope": "PRIVATE original-input-only continuous clock research adapter; independently compared every actual source CPU/all128RAM checkpoint. No canonical-state writes. Not full-view delivery acceptance.",
+    "rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+    "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+    "adapter_sha256": "34eeae04aed5c3ad5a96c49805edb0568d2a61f80a55fe5d0e1de60587a09d83",
+    "launch_sha256": "14edfa98d4bbf8612ed97471c28973462d21235be0ca36ae1199d3b8fc7a37d5",
+    "expanded_private_profiler_sha256": "bed697280f9f809795ea50f575ab0dd2e61eaab42b68c434b9a6dfbeb2bbae4b",
+    "native_checkpoints": 2254,
+    "frames_with_blue_floes": 1501,
+    "frames": 2253,
+    "max_busy_cycles": 507343,
+    "over_budget_frames": 788,
+    "skipped_vdp_frames": 1433,
+    "probe_receipt_sha256": "89124d2a565f4404fb25c5f0c7bf42cff3536961f525b5c4275c6c3fd3c980bf"
+  },
+  "frame_deadline_accepted": false,
+  "next_work": "Reduce equivalent world/floe and complete player preparation; remeasure active segments and transition/worst frames with unchanged source semantics, graphics, audio, visibility and standard hardware.",
+  "planning_only_mean_budget": {
+    "available_preparation_cycles": 35732.91468253968,
+    "current_preparation_cycles": 100753.38591269842,
+    "required_reduction_percent": 64.53427906283783,
+    "limit": "Mean cost estimate only. Acceptance still requires each complete frame to meet its deadline, including transitions and worst cases."
+  }
+}

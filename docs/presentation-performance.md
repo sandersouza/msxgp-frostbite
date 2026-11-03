@@ -14,6 +14,13 @@ existing exclusive branch/chat. It does not close the issue, transfer ownership,
 merge to main, qualify full gameplay or start #15. The original mechanics,
 complete graphics and standard MSX1 hardware requirements remain binding.
 
+**2026-11-03 owner-video follow-up:** the graphics are reported intact, but speed
+remains unacceptable. [Active-play analysis](presentation-active-speed.md) finds
+27.90 source updates/s across 1,008 selected NTSC intervals, versus approximately
+60 in the original. The earlier sequence averages below include lighter phases
+and must not be read as active-gameplay speed. No ROM bytes changed for this
+follow-up; the original release and its evidence remain unchanged.
+
 ## Changes and independent component checks
 
 - Retain ten complete 16-byte font-mask pairs with 60 bytes of validity/glyph/

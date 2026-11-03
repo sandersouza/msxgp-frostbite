@@ -9,7 +9,10 @@ The latest [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-fro
 reduces repeated font-mask, actor-role and igloo work while retaining complete
 graphics and source updates. The same measured blue-ice input sequence gains
 about 2–3%; **original-speed gameplay remains unfinished**, with slowdown and
-possible tearing. [Human tests](docs/releases/v0.0.9-performance-preview.md),
+possible tearing. [Owner-video follow-up and active-play measurements](docs/presentation-active-speed.md)
+show about 28 source updates/s during a measured MSX1 NTSC active route, versus
+approximately 60 in the original. Earlier averages included lighter phases.
+[Human tests](docs/releases/v0.0.9-performance-preview.md),
 [evidence and limits](docs/presentation-performance.md),
 [validation](references/presentation-performance-result.json) and
 [verified publication](references/presentation-performance-delivery.json)

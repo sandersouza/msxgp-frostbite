@@ -18,6 +18,17 @@ Approved native design; exclusive branch `codex/feat/14-hud-psg-attract` from
 main `f516b9e22b44644bafac222a5565287f8e80a949`.
 [Implementation plan](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/docs/superpowers/plans/2026-11-01-issue-14-presentation.md).
 
+## Owner video: active-play speed remains unacceptable
+
+The owner confirms intact colors/graphics close to the original in the supplied 2026-11-03 video, but rejects speed. This is feedback for the shown view, not all-view, sound, timing or physical acceptance. The video remains local-only. Its visible openMSX21.0/C-BIOS MSX2+ title does not establish exact ROM, TV mode or speed settings; slowdown is independently reproduced on standard MSX1.
+
+- Existing0.0.9 600-output averages38.78NTSC/40.18PAL mixed active and lighter phases. Selecting adjacent preparation states with C6=E7=F1=0 gives28.56NTSC/30.44PAL source updates/s. PAL intermediate updates are not independently classified by that filter.
+- A new private2,253-output NTSC route gives27.90updates/s over1,008 active intervals; the whole-route mixed average is38.15. Every2,254 CPU/all128RAM checkpoint and the complete original variation0 progression predicate match: construction1733,entry1912,bonus complete2203,next level2252. Zero canonical state injections. This proves route sequence, not original wall-clock cadence or final combined acceptance.
+- Active preparation averages100,753cycles; world/floes/objects53,625 and complete player/sprites19,551 dominate. With source/scheduling22,059 and commit1,944, approximately65% mean preparation reduction is needed against59,736 NTSCcycles. This is planning only; worst/transition deadlines remain mandatory. Full run still has788overruns/1433skippedVDPframes/705visiblecommits/148duplicates; max507343busycycles.
+- The video temperature44→27 takes43.4seconds; normal original cadence would take about18.16seconds. This conditional HUD estimate supports severe slowdown, but is not CPU/displayFPS measurement and excludes entry/bonus countdown.
+
+[Analysis and next targets](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/docs/presentation-active-speed.md) and [hashed research evidence](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/references/presentation-active-speed-result.json). No runtime/ROM change or new release in this investigation. Continue equivalent world/floe/player optimization at full quality; retain actual active-route and worst-frame measurements. Issue14/project7 remain In progress, same exclusive owner; no merge,15fork,final-review use or legacy cleanup.
+
 ## Latest performance diagnostic
 
 [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview) is published from source `12e204e6ecf6403fed63fd0e2f8c602ef84099a4`, with all four fresh downloads byte-identical to the seal. Exact 4MiB ASCII16 ROM SHA-256: `838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6`. Source is unmerged; issue14/project7 remain In progress.
