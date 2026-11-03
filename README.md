@@ -5,13 +5,24 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.8-ice-contrast-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.8-ice-contrast-preview)
+The latest [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
+reduces repeated font-mask, actor-role and igloo work while retaining complete
+graphics and source updates. The same measured blue-ice input sequence gains
+about 2–3%; **original-speed gameplay remains unfinished**, with slowdown and
+possible tearing. [Human tests](docs/releases/v0.0.9-performance-preview.md),
+[evidence and limits](docs/presentation-performance.md),
+[validation](references/presentation-performance-result.json) and
+[verified publication](references/presentation-performance-delivery.json)
+identify the exact ROM. Issue #14 remains In progress; final review and main
+integration are pending.
+
+The earlier [v0.0.8-ice-contrast-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.8-ice-contrast-preview)
 fixes landed ice disappearing into the sea: it stays light blue against darker
 water. [Human tests](docs/releases/v0.0.8-ice-contrast-preview.md),
 [independent contrast/validation](references/presentation-ice-contrast-result.json)
 and [verified publication](references/presentation-ice-contrast-delivery.json)
 identify the exact attached ROM. **Original-speed gameplay remains unfinished.**
-Issue14 stays In progress; this is a contrast diagnostic, not a performance fix.
+That contrast correction is retained in 0.0.9.
 
 The earlier [v0.0.7-presentation-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.7-presentation-preview)
 adds original-derived graphics/HUD and built-in PSG audio. **This is a visual/audio

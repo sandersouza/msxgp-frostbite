@@ -18,7 +18,22 @@ Approved native design; exclusive branch `codex/feat/14-hud-psg-attract` from
 main `f516b9e22b44644bafac222a5565287f8e80a949`.
 [Implementation plan](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/docs/superpowers/plans/2026-11-01-issue-14-presentation.md).
 
-## Latest diagnostic and owner feedback
+## Latest performance diagnostic
+
+[v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview) is published from source `12e204e6ecf6403fed63fd0e2f8c602ef84099a4`, with all four fresh downloads byte-identical to the seal. Exact 4MiB ASCII16 ROM SHA-256: `838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6`. Source is unmerged; issue14/project7 remain In progress.
+
+- Persistent complete font masks, private known actor contexts and a generated-background-certified igloo merge reduce equivalent rendering work. All full tiles/actors/source updates/audio remain; the 0.0.8 landed-ice contrast correction is retained. Public bounds and nonuniform-background fallback remain intact.
+- 501 original-free tests/source policy and [exact-source CI41646324578](https://github.com/sandersouza/msxgp-frostbite/actions/runs/41646324578) pass. Fresh canonical whole-source graphics/ownership: 2115 cases, zero differences,553107 peak preparation cycles. Independent contrast:164511 source98/31412979 source90 pixels. Native:24820 full CPU/all128RAM checkpoints across12 original input-only routes, zero state injection,max27047 cycles. Audio:3499 ordered source/2472 physical PSG writes; extra-event negative rejected.
+- Independent component proofs:17641 complete font-cache/tile cases,1488 fixed-role publication cases and10033 typed cases including5924 igloo cases. Component microbudgets pass, but do not qualify game timing.
+- Standard600-frame keyboard probes still FAIL cadence: peak507343 busy cycles in both clocks; NTSC252 overruns/550 skipped VDP frames/279 visible commits; PAL299/548/221. Those keyboard inputs never land on blue ice.
+- Separately hashed PRIVATE original-input-only600-frame blue-ice research matches every601/717 source CPU/all128RAM prefix checkpoint;430/390 blue frames and every logical-step count remain unchanged. NTSC37.91→38.78 updates/s (+2.30%); PAL39.20→40.18 (+2.51%). This is a modest bounded improvement, not original speed, universal ratio, completed game or combined full-view/PSG/manual/hardware acceptance. Both PAL updates remain ordered.
+- Previous0.0.8 fresh public ROM is unchanged; fresh source regression control still matches0.0.6. Only four sealed release assets were published; original raw evidence/derived assets/legacy remain local and untouched.
+
+[Human tests and limitations](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/docs/releases/v0.0.9-performance-preview.md), [current implementation/evidence/next work](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/docs/presentation-performance.md), [public validation](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/references/presentation-performance-result.json) and [publication receipt](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/references/presentation-performance-delivery.json) retain exact identities. Request same-setup comparison, several landed rows, igloo/HUD changes and20–30second video with sound. Authentic rhythm/difficulty/collision-timing acceptance remains pending.
+
+Continue full-quality floe/world/player performance work and all combined route/view/controller/PSG/NTSC/PAL acceptance. Tasks3/4 remain open; final Tasks5/6 review/integration are not waived. No14Done/main merge/15fork or ownership transfer. Cleanup17 only.
+
+## Previous contrast diagnostic and owner feedback
 
 [v0.0.8-ice-contrast-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.8-ice-contrast-preview) is published with the exact ROM/build.json/validation.json/SHA256SUMS; allfour fresh downloads are byte-identical to the seal. Source `2cffac7de2f726c1c380914ad5d04372e431fd75`; ROM4194304B,ASCII16,SHA-256 `141044d3c1d4db7544a2f1357bef90e7cc251b85de7cdd41e3378b4776adb88a`. Source remains unmerged; issue14/project7 remain In progress.
 

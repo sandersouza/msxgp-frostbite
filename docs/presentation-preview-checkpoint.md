@@ -1,5 +1,12 @@
 # Issue14 presentation/audio preview checkpoint
 
+Current continuation2026-11-03: [0.0.9 performance preview](releases/v0.0.9-performance-preview.md)
+is published and all four downloads match the exact tested source/ROM.
+[Current evidence/ownership/next work](presentation-performance.md) supersedes the
+earlier measurements below. The measured gain is only 2–3% in the bounded blue-ice
+sequence; original cadence, full combined acceptance and main integration remain
+unfinished. Issue14 keeps exclusive checkout ownership and In progress status.
+
 Update2026-11-03: owner feedback exposed landed-ice/sea color collapse. The
 separately tagged [0.0.8 contrast correction](releases/v0.0.8-ice-contrast-preview.md)
 is published and its four downloads verified; see
