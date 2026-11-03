@@ -5,7 +5,15 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.7-presentation-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.7-presentation-preview)
+The latest [v0.0.8-ice-contrast-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.8-ice-contrast-preview)
+fixes landed ice disappearing into the sea: it stays light blue against darker
+water. [Human tests](docs/releases/v0.0.8-ice-contrast-preview.md),
+[independent contrast/validation](references/presentation-ice-contrast-result.json)
+and [verified publication](references/presentation-ice-contrast-delivery.json)
+identify the exact attached ROM. **Original-speed gameplay remains unfinished.**
+Issue14 stays In progress; this is a contrast diagnostic, not a performance fix.
+
+The earlier [v0.0.7-presentation-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.7-presentation-preview)
 adds original-derived graphics/HUD and built-in PSG audio. **This is a visual/audio
 diagnostic with known severe slowdown and possible tearing.** It does not meet
 the original game's real-time cadence; issue #14 remains in progress. Use its

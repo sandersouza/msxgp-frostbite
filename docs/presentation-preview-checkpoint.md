@@ -1,5 +1,12 @@
 # Issue14 presentation/audio preview checkpoint
 
+Update2026-11-03: owner feedback exposed landed-ice/sea color collapse. The
+separately tagged [0.0.8 contrast correction](releases/v0.0.8-ice-contrast-preview.md)
+is published and its four downloads verified; see
+[root cause/current evidence](presentation-ice-contrast.md). The0.0.7 checkpoint
+below is preserved historically. Issue14 still owns this checkout; no transfer
+or main integration occurred, and original-speed gameplay remains unfinished.
+
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/14
 
 This is a continuing-work checkpoint, not an issue or checkout-ownership handoff.

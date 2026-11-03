@@ -1,0 +1,81 @@
+{
+  "version": "0.0.8-ice-contrast-preview",
+  "purpose": "presentation-audio-diagnostic",
+  "runtime_qualified": false,
+  "frame_deadline_accepted": false,
+  "manual_emulator_accepted": false,
+  "physical_hardware_accepted": false,
+  "source_commit": "2cffac7de2f726c1c380914ad5d04372e431fd75",
+  "rom_sha256": "141044d3c1d4db7544a2f1357bef90e7cc251b85de7cdd41e3378b4776adb88a",
+  "automated": {
+    "source_backed_images": 2115,
+    "native_input_only_checkpoints": 24820,
+    "maximum_native_step_cycles": 27047,
+    "ordered_source_audio_writes": 3499,
+    "physical_psg_writes": 2472,
+    "controlled_audio_intervals": 2115,
+    "independent_contrast": {
+      "cases": 2115,
+      "colors": {
+        "sea": {
+          "source": 144,
+          "tms": 4
+        },
+        "touched_ice": {
+          "source": 152,
+          "tms": 5
+        }
+      },
+      "touched_ice_source_pixels": 164511,
+      "sea_source_pixels": 31412979
+    },
+    "excluded_graphics_only_zero_audio_fixtures": [
+      {
+        "id": "outputs/presentation/fixture-suite-e/batch-00405/2",
+        "reason": "synthetic graphics-only player selector outside original 0/1 gameplay contract",
+        "ordered_writes": 0
+      }
+    ],
+    "timing": {
+      "ntsc": {
+        "frames": 600,
+        "max_busy_cycles": 537515,
+        "frame_budget": 59736,
+        "over_budget_frames": 252,
+        "skipped_vdp_frames": 580,
+        "incorrect_periods": 428,
+        "visible_commits": 259,
+        "duplicate_vdp_frames": 64,
+        "deadline_met": false,
+        "frame_deadline_accepted": false,
+        "max_source_and_scheduler_cycles": 23813,
+        "max_prepare_cycles": 524253
+      },
+      "pal": {
+        "frames": 600,
+        "max_busy_cycles": 537515,
+        "frame_budget": 71364,
+        "over_budget_frames": 300,
+        "skipped_vdp_frames": 584,
+        "incorrect_periods": 466,
+        "visible_commits": 203,
+        "duplicate_vdp_frames": 68,
+        "deadline_met": false,
+        "frame_deadline_accepted": false,
+        "max_source_and_scheduler_cycles": 46947,
+        "max_prepare_cycles": 524253
+      }
+    }
+  },
+  "evidence_receipts": {
+    "matrix": "9dcab006399093fc761a77d6b7206471e81c44bd3169c875e89c986084ff3627",
+    "audio": "edf454132191e426a87567973b17c42f1dcfd61db49aeb7197d808fe3acfb699",
+    "contrast": "0a7bda1baaaefee8a1ddde344650024eb704f5a2552a9667cb73974029f9a584"
+  },
+  "limitations": [
+    "Real-time frame budgets fail; slowdown, skipped/duplicated presentations and visible commits are measured.",
+    "Preview tests cover appearance, sound presence/mapping and input regressions; do not judge original rhythm, difficulty or collision timing.",
+    "Controlled source pixels/audio and unpaced native routes do not establish combined natural-play acceptance.",
+    "Manual emulator/listening and physical-hardware evidence remain pending; all views and final game qualification remain issue14 work."
+  ]
+}

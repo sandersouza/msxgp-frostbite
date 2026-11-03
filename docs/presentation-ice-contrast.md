@@ -40,7 +40,39 @@ the same deficient palette policy for expected and actual output, so it passed
 while the gameplay distinction disappeared. The preview sealer now requires this
 independent contrast receipt, bound to the exact ROM, matrix and captured bytes.
 
-Current target build/whole-image/contrast/audio/native/timing checks and any new
-release must be recorded before claiming that the game-level regression is fixed.
-Never replace the0.0.7 binary; changed ROM bytes require a new version. Issue14
-remains In progress for color validation and the original real-time cadence.
+The new ROM passes all2,115 complete source-backed images,164,511 source98 and
+31,412,979 source90 pixel checks on physical VDP data,24,820 original CPU/all128RAM
+checkpoints and all3,499 source/2,472 physical PSG writes. Counts for98 include
+other original uses of that same color. Independent natural-window floe-band
+coverage includes128,569 source98 pixels; a specific old-ROM landed-floe witness
+is matrix case1721/source(46,148), row1, original floe latch98 versus actual TMS4.
+
+[v0.0.8-ice-contrast-preview](releases/v0.0.8-ice-contrast-preview.md) is published
+from clean source2cffac7de2f726c1c380914ad5d04372e431fd75. ROM SHA-256:
+141044d3c1d4db7544a2f1357bef90e7cc251b85de7cdd41e3378b4776adb88a.
+All four fresh public downloads match the seal;0.0.7 remains unchanged.
+[Validation](../references/presentation-ice-contrast-result.json) and
+[publication receipt](../references/presentation-ice-contrast-delivery.json)
+preserve failed timing and pending final game/manual/hardware acceptance.
+
+The original600-frame scripted keyboard probe stays on white floes. To avoid
+calling it a blue-floe performance test, a separate private adapter applies
+only immutable original one-player route inputs at each native step and checks
+every actual CPU/all128RAM checkpoint. Its600-frame prefix reaches430 NTSC and
+390 PAL frames with blue floes, matching601/717 source checkpoints. Measured
+source updates are37.91/39.20 per second, about63%/65% of original in that
+particular prefix. These are bounded research observations, not a universal
+speed ratio or complete route/view qualification. Its adapter/scripts/raws are
+ignored under outputs/presentation/ice-contrast-route-*-private-b.
+
+The local nominal-TMS-RGB reconstruction of actual native frame202 was inspected:
+three blue rows remain visible above the white bottom row. This is decoded VDP
+data, not physical hardware or owner acceptance. Request fresh owner feedback
+on the corrected contrast. Issue14 remains In progress for original cadence.
+
+The next measured performance investigation can start at the original-input
+NTSC prefix's blue-floe frame263:367340 busy cycles, including180862 world,
+102269 header/igloo,17984 background and19540 final NAME preparation cycles.
+Its raw phase/cost/source checkpoints are retained locally. This identifies
+expensive equivalent work; it does not authorize reducing visibility, source
+updates, quality or required VDP transfers to meet the budget.
