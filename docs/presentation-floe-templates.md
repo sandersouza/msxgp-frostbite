@@ -161,3 +161,30 @@ timing and identify the remaining work: last world 141,042 cycles, including
 four strips at 89,118, publication 41,902, decode 14,768 and seven NAME copies
 8,419. Nested costs must not be added together. Cold/header transitions and
 player MISSes also exceed the budget. These artifacts remain private research.
+## Fixed-owner packed NAME lookup (issue14)
+
+The template profile now expands a packed byte with two immutable 256-byte
+pages for each of its eight fixed generation/row owners. The 4,096-byte table
+preserves every water/local-code result, original pattern ID, full strip and
+VRAM transfer. It occupies existing bank255 space before the unchanged contact
+shadow, leaving768 bytes. Cartridge size and the14 asset banks are unchanged.
+Other valid first-CID/water combinations retain the generic decoder.
+
+Actual Z80 checking passes40,967 complete cache/code-table/carry operations,
+including all256 packed bytes for every owner and invalid destinations. The
+2,048 fixed-role cases reach at most2,749 cycles including RPC against a
+3,000-cycle microbudget. The generic path's maximum is3,879; this microbudget
+does not apply to it or imply a complete-frame deadline. The checker requires
+the actual optimized entry to have been assembled; a missing-path negative
+rejects a table-only build. The isolated mapper unit maps page2 explicitly,
+matching the game's actual ASCII16 window rather than reading unmapped RAM.
+
+Combined private ROMe8661659cf383827d70a031e960db8c0b83a42a79d518535d742f3257715649d
+passes all2,115 source-backed full-scene/physical ownership cases with zero
+different images, maximum592,187 preparation cycles. Its actual source-audio
+integration also passes all3,499 ordered source writes and2,472 PSG writes.
+The120-frame keyboard probe improves571,692→567,804 maximum busy cycles and
+48→47 skipped frames;22 frames still exceed59,736 cycles. Last-frame world
+cost falls141,042→137,154. This remains private research that fails real-time
+acceptance. The default control remains byte-identical0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78;
+489 original-free host tests pass.
