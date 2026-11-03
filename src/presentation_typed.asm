@@ -306,6 +306,65 @@ pt_literal:
     RET
 
 pt_igloo:
+    IFDEF WITH_PRESENTATION_IGLOO_FAST
+    ; Generated flags certify every row: PGT=FF, identical color nibbles,
+    ; neither nibble14. Other backgrounds use the original general merge.
+    LD A,(pt_key+2)
+    SUB 128
+    JP C,pt_fail
+    LD E,A
+    LD D,0
+    LD A,(pt_bank)
+    LD H,A
+    LD L,0
+    SRL H
+    RR L
+    ADD HL,DE
+    LD DE,p_bg_igloo_uniform_flags
+    ADD HL,DE
+    LD A,(HL)
+    OR A
+    JR Z,.general
+    LD A,(pt_key+2)
+    CALL pt_background
+    RET C
+    LD HL,pt_tile+8
+    LD DE,pt_tile
+    LD A,(pt_key)
+    OR A
+    JR Z,.lower
+    LD C,A
+    DUP 4
+    LD A,(HL)
+    AND 15
+    OR $E0
+    LD (HL),A
+    INC L
+    LD A,C
+    LD (DE),A
+    INC E
+    EDUP
+.lower:
+    LD HL,pt_tile+12
+    LD DE,pt_tile+4
+    LD A,(pt_key+1)
+    OR A
+    RET Z
+    LD C,A
+    DUP 4
+    LD A,(HL)
+    AND 15
+    OR $E0
+    LD (HL),A
+    INC L
+    LD A,C
+    LD (DE),A
+    INC E
+    EDUP
+    OR A
+    RET
+.general:
+    ENDIF
     LD A,(pt_key)
     LD HL,pt_mask
     DUP 4

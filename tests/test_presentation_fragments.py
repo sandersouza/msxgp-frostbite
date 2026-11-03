@@ -8,6 +8,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 
 
 class PresentationFragmentsTests(unittest.TestCase):
+    def test_uniform_igloo_path_rejects_edge_patterns_mixed_colors_and_foreground14(self):
+        from presentation_fragments import igloo_uniform_flags
+        patterns=bytes([255])*32+bytes([15])*8
+        colors=bytes([68])*8+bytes([238])*8+bytes([65])*8+bytes([17,68,85,153,255,170,221,102])+bytes([68])*8
+        flags=igloo_uniform_flags({'patterns':[patterns]*3,'colors':[colors]*3})
+        self.assertEqual(len(flags),384)
+        for bank in range(3):self.assertEqual(flags[bank*128:(bank+1)*128],bytes([1,0,0,1,0])+bytes(123))
+
     def test_bit_masks_at_all_horizontal_and_vertical_phases_decode_exactly(self):
         self.assertIsNotNone(importlib.util.find_spec('presentation_fragments'), 'finite geometry compiler missing')
         api = importlib.import_module('presentation_fragments')

@@ -433,7 +433,11 @@ p_fast_world_tile:
     LD (pf_key+3),A
     LD A,(p_w_color)
     LD (pf_key+4),A
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    CALL p_fixed_put_actor
+    ELSE
     CALL p_fast_put
+    ENDIF
     IFDEF WITH_PRESENTATION_FIXED
     LD A,(p_w_top)
     CP 8

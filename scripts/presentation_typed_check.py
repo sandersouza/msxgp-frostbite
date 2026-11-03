@@ -35,7 +35,14 @@ def verify_row(actual,expected):
         raise ValueError('incomplete/different actual typed tile or error flag')
 
 
-def fixtures(tables,domain,*,header_fast=False):
+def verify_igloo_timing(inputs,times):
+    measured=[cycles for index,cycles in times if inputs[index*7+6]==5]
+    if len(measured)<1000 or max(measured)>2000:
+        raise ValueError('igloo constructor coverage/2000-cycle microbudget failed')
+    return {'cases':len(measured),'max_cycles_including_rpc':max(measured),'microbudget':2000}
+
+
+def fixtures(tables,domain,*,header_fast=False,igloo_fast=False):
     unique={}
     for case in domain['cases']:
         rendered=frame(tables,case['ram']);vram=rendered['vram']
@@ -45,9 +52,21 @@ def fixtures(tables,domain,*,header_fast=False):
             identity=(bank,key)
             if identity in unique and unique[identity]!=tile:raise ValueError('constructor key aliases different whole16-byte tiles')
             unique[identity]=tile
+    observed=len(unique)
+    if igloo_fast:
+        # Every byte mask on both halves of every uniform background tile.
+        # Nonuniform edge tiles remain covered by the observed whole-scene corpus.
+        for bank in range(3):
+            p=tables['background']['patterns'][bank];c=tables['background']['colors'][bank]
+            for at in range(0,len(p),8):
+                background=p[at:at+8]+c[at:at+8]
+                if p[at:at+8]!=bytes([255])*8 or any(v>>4!=v&15 for v in c[at:at+8]):continue
+                for bits in range(256):
+                    key=igloo_key(bits,(bits*37)&255,128+at//8)
+                    unique[(bank,key)]=construct(key,patterns=tables['patterns'],backgrounds={key[2]:background},
+                        header=tables['header'],footer=tables['footer']['tiles'])
     # The observed corpus does not naturally exercise every clipped union.
     # Add explicit algebra boundaries, separately identified from source cases.
-    observed=len(unique)
     for bank in range(3):
         backgrounds={128:tables['background']['patterns'][bank][:8]+tables['background']['colors'][bank][:8]}
         keys=[literal_key((170,204,0 if kind==1 else 85),2,15,kind) for kind in (1,2,3)]
@@ -79,7 +98,7 @@ def fixtures(tables,domain,*,header_fast=False):
     return inputs,expected,kinds,observed
 
 
-def check(out,geometry,explore=False,header_fast=False):
+def check(out,geometry,explore=False,header_fast=False,igloo_fast=False):
     if type(header_fast)is not bool:raise ValueError('explicit header constructor selection required')
     helper_files=(*HELPERS,'src/presentation_header.asm') if header_fast else HELPERS
     producer={'tool_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
@@ -89,7 +108,7 @@ def check(out,geometry,explore=False,header_fast=False):
     geometry=Path(geometry).resolve();geo=json.loads((geometry/'geometry.json').read_text())
     input_files={str(path.relative_to(ROOT)):digest(path) for path in
         (original,geometry/'geometry.json',geometry/'row-pointer-map.bin',*sorted(geometry.glob('geometry-*.bin')))}
-    tables=prepare(rom,palette,geometry);inputs,expected,kinds,observed=fixtures(tables,domain,header_fast=header_fast);count=len(inputs)//7
+    tables=prepare(rom,palette,geometry);inputs,expected,kinds,observed=fixtures(tables,domain,header_fast=header_fast,igloo_fast=igloo_fast);count=len(inputs)//7
     out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     (out/'cases.bin').write_bytes(inputs);(out/'expected.bin').write_bytes(expected)
     static=pack_static(rom,palette,geometry,geo,out/'static')
@@ -102,7 +121,7 @@ def check(out,geometry,explore=False,header_fast=False):
     (out/'boot.bin').write_bytes(meta['bank']);(out/'presentation_geometry.inc').write_text(meta['assembly'])
     (out/'presentation_background.inc').write_text(boot['assembly'])
     movement=(ROOT/'src/movement.asm').read_text();mapper=movement[movement.index('map_page2:\n'):movement.index('set_address:\n')]
-    entry=('    DEFINE WITH_PRESENTATION_HEADER_FAST\n' if header_fast else '')+'''    ORG $4000
+    entry=('    DEFINE WITH_PRESENTATION_HEADER_FAST\n' if header_fast else '')+('    DEFINE WITH_PRESENTATION_IGLOO_FAST\n' if igloo_fast else '')+'''    ORG $4000
     DB "AB"
     DW start
     DS 12,0
@@ -186,6 +205,7 @@ after time 120 {{fail_typed watchdog}}
         except ValueError as error:raise ValueError(f'case{index} input{list(inputs[index*7:index*7+7])}: {error}') from error
     times=[list(map(int,line.split())) for line in (out/'cycles.tsv').read_text().splitlines()]
     if len(times)!=count or any(len(row)!=2 or row[0]!=i or row[1]<=0 for i,row in enumerate(times)):raise ValueError('incomplete typed timing')
+    igloo_timing=verify_igloo_timing(inputs,times) if igloo_fast else None
     verify_files(domain['files'])
     verify_files(input_files)
     if any(digest(ROOT/name)!=value for name,value in producer['utility_fingerprints'].items()):raise ValueError('typed producer changed')
@@ -194,7 +214,7 @@ after time 120 {{fail_typed watchdog}}
         'max_cycles_including_rpc':max(row[1] for row in times),'rom_sha256':digest(artifact),
         'actual_sha256':digest(out/'actual.bin'),'expected_sha256':digest(out/'expected.bin'),
         'source_receipt_sha256':domain['source_receipt_sha256'],'source_files':domain['files'],'input_files':input_files,
-        'complete':True,'frame_deadline_accepted':False,'header_fast':header_fast,
+        'complete':True,'frame_deadline_accepted':False,'header_fast':header_fast,'igloo_fast':igloo_fast,'igloo_timing':igloo_timing,
         'scope':'Actual-Z80 whole-tile constructor microproof; no game integration, frame, audio or human-ROM acceptance'}
     (out/'check.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({key:result[key] for key in ('cases','kinds','max_cycles_including_rpc','complete')}));return result
@@ -204,4 +224,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--geometry',type=Path,required=True);p.add_argument('--explore',action='store_true')
     p.add_argument('--header-fast',action='store_true')
+    p.add_argument('--igloo-fast',action='store_true')
     check(**vars(p.parse_args()))

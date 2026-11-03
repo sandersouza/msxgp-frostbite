@@ -207,6 +207,19 @@ def background_tables(rom, measured_palette):
             'profiles': records, 'gradient_profiles': len(options), 'black_sprite': bytes([240]) * 16 + bytes(16)}
 
 
+def igloo_uniform_flags(tables):
+    """Only certify backgrounds whose exact merge can use the uniform path."""
+    flags=bytearray()
+    for bank in range(3):
+        patterns=tables['patterns'][bank];colors=tables['colors'][bank]
+        if len(patterns)!=len(colors) or len(patterns)%8 or len(patterns)>1024:
+            raise ValueError('bounded complete background bank required')
+        rows=[int(patterns[at:at+8]==bytes([255])*8 and
+            all(v>>4==v&15 and v&15!=14 for v in colors[at:at+8])) for at in range(0,len(patterns),8)]
+        flags.extend(bytes(rows).ljust(128,b'\0'))
+    return bytes(flags)
+
+
 def pack_background(primitive_bank, used_bytes, tables,*,black_sprite_address=0x3C00):
     """Append small background programs into unused space of the primitive bank."""
     if len(primitive_bank) != 16384 or type(used_bytes) is not int or not 0 < used_bytes <= 16384:
@@ -223,6 +236,9 @@ def pack_background(primitive_bank, used_bytes, tables,*,black_sprite_address=0x
         add(f'patterns{index}', tables['patterns'][index]); add(f'colors{index}', tables['colors'][index])
     add('black_sprite', tables['black_sprite'])
     assembly = ''.join(f'p_bg_{name}_data EQU ${0x8000 + section["offset"]:04X}\n' for name, section in sections.items())
+    flags=igloo_uniform_flags(tables)
+    assembly+='    IFDEF WITH_PRESENTATION_IGLOO_FAST\np_bg_igloo_uniform_flags:\n'
+    assembly+=''.join('    DB '+','.join(map(str,flags[at:at+32]))+'\n' for at in range(0,len(flags),32))+'    ENDIF\n'
     initializers = ['p_bg_upload_static:']
     for name, destination in [(f'patterns{i}', 0x4400 + i * 2048) for i in range(3)] + [(f'colors{i}', 0x6400 + i * 2048) for i in range(3)] + [('black_sprite', 0x4000+black_sprite_address)]:
         length = sections[name]['size']; initializers += [f'    LD HL,p_bg_{name}_data', f'    LD DE,${destination:04X}']

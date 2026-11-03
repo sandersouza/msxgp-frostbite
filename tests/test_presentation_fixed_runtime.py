@@ -7,6 +7,12 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class FixedRuntimeTests(unittest.TestCase):
+    def test_actor_cache_hit_budget_rejects_slow_full_dispatch(self):
+        api=importlib.import_module('presentation_fixed_runtime_check');inputs,_=api.fixtures();n=len(inputs)//api.INPUT_BYTES
+        with self.assertRaises(ValueError):api.verify_actor_timing(inputs,[(i,5000) for i in range(n)])
+        result=api.verify_actor_timing(inputs,[(i,700) for i in range(n)])
+        self.assertEqual(result['actor_cache_hits'],138)
+
     def test_prevalidated_resolver_checks_first_last_slots_without_writing_names(self):
         api=importlib.import_module('presentation_fixed_runtime_check');inputs,expected=api.fixtures();seen=set()
         for index in range(1,len(inputs)//api.INPUT_BYTES):

@@ -1,6 +1,7 @@
 ; Private live-header work: upper/lower eight-row masks for ten columns.
 ; Keys remain authoritative for residency; complete tiles/IO remain unchanged.
 p_th_masks EQU $E650
+p_th_mask_keys EQU $E700
 
 ; pt_glyphs[4], IX=current three-byte column command, p_h_index0..9.
 ; Preserve IX/IY and all four glyph selectors for the existing key packer.
@@ -8,6 +9,38 @@ p_template_header_mask_column:
     LD A,(p_h_index)
     CP 10
     JP NC,pt_fail
+    LD L,A
+    ADD A,A
+    ADD A,L
+    ADD A,A
+    LD L,A
+    LD H,p_th_mask_keys/256
+    LD A,(HL)
+    CP 1
+    JR NZ,.miss
+    PUSH HL
+    INC L
+    LD DE,pt_glyphs
+    LD B,4
+.compare:
+    LD A,(DE)
+    CP (HL)
+    JR NZ,.changed
+    INC E
+    INC L
+    DJNZ .compare
+    LD A,(IX+2)
+    CP (HL)
+    JR NZ,.changed
+    POP HL
+    OR A
+    RET
+.changed:
+    POP HL
+.miss:
+    LD (HL),0
+    PUSH HL                 ;validity follows all16 completed mask bytes
+    LD A,(p_h_index)
     LD L,A
     LD H,0
     DUP 4
@@ -22,10 +55,27 @@ p_template_header_mask_column:
     LD (pt_pair),A
     POP DE
     CALL p_template_header_mask_pair
-    RET C
+    JR C,.fail
     LD A,2
     LD (pt_pair),A
-    JP p_template_header_mask_pair
+    CALL p_template_header_mask_pair
+    JR C,.fail
+    POP DE
+    PUSH DE
+    INC DE
+    LD HL,pt_glyphs
+    LD BC,4
+    LDIR
+    LD A,(IX+2)
+    LD (DE),A
+    POP HL
+    LD (HL),1
+    OR A
+    RET
+.fail:
+    POP HL
+    SCF
+    RET
 
 ; DE=destination eight bytes, pt_pair=0/2, IX+2=fragment combination0..4.
 ; Return DE advanced8. Every first fragment and optional second is complete.

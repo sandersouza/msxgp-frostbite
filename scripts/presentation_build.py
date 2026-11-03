@@ -25,7 +25,7 @@ from render_build import symbols
 from native_audio_codegen import generate as generate_audio
 from presentation_audio import tables as audio_tables
 
-VERSION = '0.0.8-ice-contrast-preview'
+VERSION = '0.0.9-performance-preview'
 ROM_BYTES = 4194304
 FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/presentation_build.py',
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',
@@ -38,7 +38,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm','src/presentation_fixed_emit.asm','src/presentation_fixed_memo.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fast_model.py','scripts/presentation_constructors.py','scripts/presentation_floe_templates.py',
     'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_name_upload.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_dirty_masks.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm','src/presentation_player_variants.asm','src/presentation_player_shore.asm','src/presentation_footer.asm','src/presentation_header_keys.asm','src/presentation_header.asm','src/presentation_audio.asm','src/presentation_audio_clear.asm','scripts/presentation_audio.py','scripts/native_audio_codegen.py')))
-FILES=(*FILES,'src/presentation_header_batch.asm')
+FILES=(*FILES,'src/presentation_header_batch.asm','src/presentation_actor.asm')
 
 
 def bank_layout(contact_banks):
@@ -85,7 +85,7 @@ def profile(*,fast=False,fixed=False,templates=False,audio=False):
         ram['regions'] += [{'name':name,'start':start,'end':end} for name,start,end in (
             ('floe_name_cache',0xDE00,0xE000),('player_render_work',0xE000,0xE100),
             ('dirty_row_work',0xE580,0xE598),('world_memo',0xE5A0,0xE5AC),('floe_template_identities',0xE5C0,0xE5E0),('floe_decode_codes',0xE600,0xE610),
-            ('player_variant_templates',0xC080,0xC180),('player_render_reserved',0xC180,0xC200),('player_variant_control',0xE610,0xE614),('header_key_work',0xE620,0xE64B),('header_mask_work',0xE650,0xE6F0))]
+            ('player_variant_templates',0xC080,0xC180),('player_render_reserved',0xC180,0xC200),('player_variant_control',0xE610,0xE614),('header_key_work',0xE620,0xE64B),('header_mask_work',0xE650,0xE6F0),('header_mask_keys',0xE700,0xE73C))]
     if audio:
         ram['regions']=[row for row in ram['regions'] if row['name']!='player_render_work']
         ram['regions'] += [{'name':'audio_observation','start':0xE000,'end':0xE020},{'name':'player_render_work','start':0xE020,'end':0xE100}]
@@ -232,7 +232,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
     (out/'cache-crc.bin').write_bytes(cache_crc_table())
     (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n'+
-        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+('    DEFINE WITH_PRESENTATION_TEMPLATES\n    DEFINE WITH_PRESENTATION_HEADER_FAST\n    DEFINE WITH_PRESENTATION_HEADER_BATCH\n' if templates else '')+('    DEFINE WITH_PRESENTATION_AUDIO\n' if audio else '')+'    INCLUDE "movement.asm"\n')
+        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+('    DEFINE WITH_PRESENTATION_TEMPLATES\n    DEFINE WITH_PRESENTATION_HEADER_FAST\n    DEFINE WITH_PRESENTATION_HEADER_BATCH\n    DEFINE WITH_PRESENTATION_IGLOO_FAST\n' if templates else '')+('    DEFINE WITH_PRESENTATION_AUDIO\n' if audio else '')+'    INCLUDE "movement.asm"\n')
     artifact = out / f'frostbite-{VERSION}.rom'; assembler = verified_tool('sjasmplus')
     command = [str(assembler), '--nologo', f'--inc={ROOT/"src"}', f'--inc={out}', f'--inc={out/"tables"}',
                f'--raw={artifact}', f'--sym={out/"presentation.sym"}', f'--lst={out/"presentation.lst"}', str(out / 'entry.asm')]

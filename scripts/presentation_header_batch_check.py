@@ -16,34 +16,49 @@ from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 FILES=('scripts/presentation_header_batch_check.py','scripts/presentation_constructors.py','src/presentation_header_batch.asm',
     'src/presentation_header.asm','src/presentation_typed.asm','src/movement.asm','scripts/environment.py','scripts/render_build.py','scripts/smoke.py')
 INPUT_BYTES=10
-ROW_BYTES=178
+ROW_BYTES=238
 
 
 def fixtures():
     font=bytes(((glyph*71+part*39+row*17)^(glyph<<(row%3)))&255 for glyph in range(34) for part in range(5) for row in range(8))
-    inputs=bytearray();expected=bytearray();cache=bytearray([165])*160
+    inputs=bytearray();expected=bytearray();cache=bytearray([165])*160;keys=bytearray(60)
+    operations=[((0,0,0,0),0,0,0,1,2,3)]
     for first in range(34):
         for second in range(34):
             glyphs=(first,second,(first+17)%34,(second+11)%34)
             for part,(left,right) in enumerate(HEADER_PARTS):
-                masks=bytearray()
-                for pair in (0,2):
-                    for y in range(8):
-                        value=font[(glyphs[pair]*5+left)*8+y]
-                        if right is not None:value|=font[(glyphs[pair+1]*5+right)*8+y]
-                        masks.append(value)
                 for band in range(3):
-                    index=len(inputs)//INPUT_BYTES;column=index%10
+                    index=len(operations);column=index%10
                     upper=1+(first+part)%15;lower=1+(second+band)%15;sky=1+(column+part)%15
-                    inputs.extend(bytes((*glyphs,part,column,band,upper,lower,sky)))
-                    cache[column*16:column*16+16]=masks
-                    tile=bytearray(8)+bytearray([sky*17])*8
-                    if band==0:tile[3:8]=masks[:5];tile[11:16]=bytes([upper*16+sky])*5
-                    elif band==1:
-                        tile[:3]=masks[5:8];tile[7]=masks[8];tile[8:11]=bytes([upper*16+sky])*3;tile[15]=lower*16+sky
-                    else:tile[:7]=masks[9:16];tile[8:15]=bytes([lower*16+sky])*7
-                    expected.extend(cache+tile+bytes(2))
+                    operations.append((glyphs,part,column,band,upper,lower,sky))
+    for column in range(10):
+        for part in range(5):
+            for repeat in range(6):
+                operations.append(((1,8,17,29),part,column,repeat%3,1+repeat,2+repeat,3+repeat))
+    for glyphs,part,column,band,upper,lower,sky in operations:
+        left,right=HEADER_PARTS[part]
+        masks=bytes(font[(glyphs[pair]*5+left)*8+y]|(0 if right is None else font[(glyphs[pair+1]*5+right)*8+y]) for pair in (0,2) for y in range(8))
+        inputs.extend(bytes((*glyphs,part,column,band,upper,lower,sky)))
+        cache[column*16:column*16+16]=masks;keys[column*6:column*6+6]=bytes((1,*glyphs,part))
+        tile=bytearray(8)+bytearray([sky*17])*8
+        if band==0:tile[3:8]=masks[:5];tile[11:16]=bytes([upper*16+sky])*5
+        elif band==1:
+            tile[:3]=masks[5:8];tile[7]=masks[8];tile[8:11]=bytes([upper*16+sky])*3;tile[15]=lower*16+sky
+        else:tile[:7]=masks[9:16];tile[8:15]=bytes([lower*16+sky])*7
+        expected.extend(cache+tile+keys+bytes(2))
     return bytes(inputs),bytes(expected),font
+
+
+def verify_cache_timing(inputs,times):
+    keys={};hits=[]
+    if len(times)!=len(inputs)//INPUT_BYTES:raise ValueError('complete ordered timing required')
+    for index,row in enumerate(times):
+        data=inputs[index*INPUT_BYTES:(index+1)*INPUT_BYTES];key=bytes(data[:5]);column=data[5]
+        if row[0]!=index or row[1]<=0:raise ValueError('ordered positive timing required')
+        if keys.get(column)==key:hits.append(row[1])
+        keys[column]=key
+    if len(hits)<100 or max(hits)>1800:raise ValueError('repeated unchanged font masks must meet1800-cycle microbudget')
+    return {'mask_cache_hits':len(hits),'max_mask_cache_hit_cycles_including_rpc':max(hits),'mask_cache_hit_microbudget':1800}
 
 
 def verify_row(actual,expected):
@@ -108,7 +123,7 @@ pt_fail:
     user=out/'user-data';(user/'machines').mkdir(parents=True);(user/'machines/Frostbite_HeaderBatch.xml').write_bytes(profile)
     settings=out/'settings.xml';settings.write_text('<?xml version="1.0"?><!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
     guards=((0xC000,0xC238),(0xC239,0xC23A),(0xC23B,0xC2F0),(0xC2F1,0xC520),(0xC530,0xC538),(0xC540,0xC760),
-        (0xC768,0xCC90),(0xCC96,0xE630),(0xE633,0xE650),(0xE6F0,0xF340))
+        (0xC768,0xCC90),(0xCC96,0xE630),(0xE633,0xE650),(0xE6F0,0xE700),(0xE73C,0xF340))
     spans=' '.join(f'{a} {b-a}' for a,b in guards)
     script=f'''set save_settings_on_exit false
 set renderer none
@@ -133,13 +148,14 @@ proc dispatch_batch {{}} {{
 set boot [debug set_bp {syms['ready']} {{}} {{debug remove_bp $::boot;debug break;after break {{
     if {{[machine_info z80_freq]!=3579545 || [debug size {{Main RAM}}]!=65536}} {{fail_batch target}}
     debug write_block memory 0xC000 [string repeat [binary format c 165] 0x3340]
+    debug write_block memory 0xE700 [string repeat [binary format c 0] 60]
     set ::slot [debug read ioports 168];set ::vram [debug read_block VRAM 0 16384]
     debug write_block memory 0xC760 [binary format cu* {{205 {syms['unit_run']&255} {syms['unit_run']>>8} 195 102 199 24 254}}]
     debug set_bp 0xC766 {{}} {{debug break;after break {{
         foreach {{address size}} {{{spans}}} {{if {{[debug read_block memory $address $size] ne [string repeat [binary format c 165] $size]}} {{fail_batch "guard $address"}}}}
         if {{[debug read_block memory 0xCC90 6] ne $::key || [debug read_block memory 0xC538 4] ne $::glyphs}} {{fail_batch key-or-glyphs}}
         if {{[debug read_block VRAM 0 16384] ne $::vram || [reg SP]!=0xF380 || ([reg IFF]&3)!=0 || [debug read ioports 168]!=$::slot}} {{fail_batch abi-or-vram}}
-        puts -nonewline $::actual "[debug read_block memory 0xE650 160][debug read_block memory 0xC520 16][debug read_block memory 0xC2F0 1][debug read_block memory 0xC53F 1]"
+        puts -nonewline $::actual "[debug read_block memory 0xE650 160][debug read_block memory 0xC520 16][debug read_block memory 0xE700 60][debug read_block memory 0xC2F0 1][debug read_block memory 0xC53F 1]"
         puts $::timing "$::index [expr {{round(([machine_info time]-$::started)*3579545)}}]"
         incr ::index;dispatch_batch
     }}}}
@@ -159,8 +175,9 @@ after time 180 {{fail_batch watchdog}}
         except ValueError as error:raise ValueError(f'case{index}: {error}') from error
     times=[list(map(int,line.split())) for line in (out/'cycles.tsv').read_text().splitlines()]
     if len(times)!=count or any(len(row)!=2 or row[0]!=i or row[1]<=0 for i,row in enumerate(times)):raise ValueError('incomplete ordered batch timing')
+    timing=verify_cache_timing(inputs,times)
     if any(sha(ROOT/name)!=value for name,value in producer.items()):raise ValueError('batch producers changed')
-    report={'complete':True,'cases':count,'max_cycles_including_rpc':max(row[1] for row in times),'producer_files':producer,
+    report={'complete':True,'cases':count,**timing,'max_cycles_including_rpc':max(row[1] for row in times),'producer_files':producer,
         'rom_sha256':sha(artifact),'emulator_sha256':sha(emulator),'artifacts':{p.name:sha(p) for p in out.iterdir() if p.is_file()},
         'frame_deadline_accepted':False,'scope':'Actual Z80 complete160-byte live-mask cache/16-byte tile/carry/error against independent synthetic34-glyph/five-part font. Every upper/lower glyph pair and all three bands; source/key/glyph/ABI/heap/VRAM/slot guards. Not original-font/game integration or frame acceptance.'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:report[k] for k in ('complete','cases','max_cycles_including_rpc')}));return report

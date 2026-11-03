@@ -38,6 +38,7 @@ p_fast_init:
 p_fixed_put:
     CALL p_fixed_resolve
     RET C
+.publish:
     LD HL,(p_w_name)
     LD A,(p_w_tile)
     LD (HL),A
@@ -64,6 +65,10 @@ p_fixed_put_header:
     LD (HL),A
     OR A
     RET
+    ENDIF
+
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    INCLUDE "presentation_actor.asm"
     ENDIF
 
 p_fixed_resolve:
@@ -140,14 +145,13 @@ p_fixed_resolve:
 p_fixed_resolve_known:
     LD (p_fx_meta),HL
     LD DE,pf_key
-    LD B,6
-.compare:
+    DUP 6,i
     LD A,(DE)
     CP (HL)
     JR NZ,.miss
-    INC DE
+    INC E
     INC HL
-    DJNZ .compare
+    EDUP
     JR .name
 .miss:
     IFDEF WITH_PRESENTATION_TEMPLATES

@@ -17,7 +17,7 @@ from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-FILES=('scripts/presentation_fixed_runtime_check.py','scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_memo.asm','scripts/environment.py','scripts/smoke.py','scripts/render_build.py')
+FILES=('scripts/presentation_fixed_runtime_check.py','scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_actor.asm','src/presentation_fixed_memo.asm','scripts/environment.py','scripts/smoke.py','scripts/render_build.py')
 INPUT_BYTES=34
 ROW_BYTES=20561
 
@@ -49,6 +49,18 @@ def fixtures():
     for page in (0,1):
         for band in range(3):
             for col in range(5,15):add(page,0,key=bytes((col,band,0,0,0,16+band)),top=band,col=col)
+    for page in (0,1):
+        for coarse in (0,1):
+            for source_row in range(4):
+                first=(153-source_row*26+coarse)//8
+                for grid_row in range(((153-source_row*26+coarse)%8+15)//8):
+                    for column in range(3):
+                        bank,slot=world_slot('object',source_row,grid_row,column,coarse)
+                        for _ in range(2):add(page,bank,key=bytes((17+source_row,grid_row,129,0,5,0)),top=first+grid_row,col=8+column,family=0,row=source_row,line=column,coarse=coarse,op=6)
+            for grid_row in range(3):
+                for column in range(4):
+                    bank,slot=world_slot('bear',0,grid_row,column,coarse)
+                    for _ in range(2):add(page,bank,key=bytes((31,grid_row,128,0,15,0)),top=6+grid_row,col=4+column,family=2,line=column,coarse=coarse,op=6)
         for top in range(3,6):
             for col in range(22,28):add(page,0,key=bytes((col,top,128,14,0,5)),top=top,col=col)
         for index in range(22):add(page,2,key=index.to_bytes(2,'little')+bytes((0,0,0,6)),top=22+index//11,col=4+index%11,footer=index)
@@ -119,6 +131,17 @@ def verify_row(actual,expected):
         raise ValueError(f'fixed publication whole payload differs/truncates at{at}')
 
 
+def verify_actor_timing(inputs,times):
+    hits=[]
+    if len(times)!=len(inputs)//INPUT_BYTES:raise ValueError('whole actor timing required')
+    for index,row in enumerate(times):
+        data=inputs[index*INPUT_BYTES:(index+1)*INPUT_BYTES]
+        if row[0]!=index or row[1]<=0:raise ValueError('ordered actor timing required')
+        if index and data[0]==6 and data==inputs[(index-1)*INPUT_BYTES:index*INPUT_BYTES]:hits.append(row[1])
+    if len(hits)!=138 or max(hits)>1100:raise ValueError('all138 actor known-role cache hits must fit1100-cycle microbudget')
+    return {'actor_cache_hits':len(hits),'actor_cache_hit_max_cycles_including_rpc':max(hits),'actor_cache_hit_microbudget':1100}
+
+
 def check(out):
     producer={name:digest(ROOT/name) for name in FILES};out=private_output(out);out.mkdir(parents=True,exist_ok=False)
     inputs,expected=fixtures();count=len(inputs)//INPUT_BYTES;(out/'cases.bin').write_bytes(inputs);(out/'expected.bin').write_bytes(expected)
@@ -164,6 +187,8 @@ unit_run:
     JP Z,p_fixed_resolve
     CP 5
     JP Z,unit_known
+    CP 6
+    JP Z,p_fixed_put_actor
     JP p_fixed_put
 unit_known:
     LD A,($C2F1)
@@ -207,6 +232,7 @@ p_world_fail:
     LD (p_w_fault),A
     RET
     INCLUDE "presentation_fixed_runtime.asm"
+    INCLUDE "presentation_actor.asm"
     INCLUDE "presentation_fixed_memo.asm"
     DS $C000-$,$FF
 '''
@@ -275,8 +301,9 @@ after time 60 {{fail_fixedput watchdog}}
             raise
     times=[list(map(int,line.split())) for line in (out/'cycles.tsv').read_text().splitlines()]
     if len(times)!=count or any(len(row)!=2 or row[0]!=i or row[1]<=0 for i,row in enumerate(times)):raise ValueError('incomplete ordered fixed publication timing')
+    actor_timing=verify_actor_timing(inputs,times)
     if any(digest(ROOT/name)!=value for name,value in producer.items()):raise ValueError('fixed publication producers changed')
-    report={'complete':True,'cases':count,'max_cycles_including_rpc':max(row[1] for row in times),'producer_files':producer,'rom_sha256':digest(artifact),
+    report={'complete':True,'cases':count,**actor_timing,'max_cycles_including_rpc':max(row[1] for row in times),'producer_files':producer,'rom_sha256':digest(artifact),
         'artifacts':{p.name:digest(p) for p in out.iterdir() if p.is_file()},'frame_deadline_accepted':False,
         'scope':'Actual-Z80 fixed-role publication with deterministic constructor stub. Whole metadata,16KiB VRAM,both CPU NAME pages,fuse ordinals,all6groups/footer generations,cache hits/key changes/invalid bounds/constructor faults. Real typed constructor and game/frame acceptance separate.'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({key:report[key] for key in ('complete','cases','max_cycles_including_rpc')}));return report
