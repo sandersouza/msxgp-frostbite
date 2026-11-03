@@ -7,6 +7,16 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class TemplateAssetTests(unittest.TestCase):
+    def test_name_pairs_cover_every_packed_byte_for_all_eight_owners(self):
+        api=importlib.import_module('presentation_template_assets')
+        data=api.name_pairs()
+        self.assertEqual(len(data),4096)
+        for owner,(first,water) in enumerate(((25,129),(9,129),(35,130),(19,130),(89,129),(73,129),(99,130),(83,130))):
+            for packed in range(256):
+                codes=(water,*range(first,first+15))
+                self.assertEqual(data[owner*512+packed],codes[packed&15])
+                self.assertEqual(data[owner*512+256+packed],codes[packed>>4])
+
     def test_floe_pool_preserves_whole_masks_with_a_separate_zero_based_id_space(self):
         self.assertIsNotNone(importlib.util.find_spec('presentation_template_assets'))
         api=importlib.import_module('presentation_template_assets')

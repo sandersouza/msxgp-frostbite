@@ -11,10 +11,12 @@ from environment import ROOT,verified_tool
 from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from presentation_template_assets import name_pairs
 
-FILES=('scripts/presentation_name_decode_check.py','src/presentation_name_decode.asm','scripts/environment.py','scripts/render_build.py','scripts/smoke.py')
+FILES=('scripts/presentation_name_decode_check.py','src/presentation_name_decode.asm','src/movement.asm','scripts/presentation_template_assets.py','scripts/environment.py','scripts/render_build.py','scripts/smoke.py')
 ROW_BYTES=529
 INPUT_BYTES=34
+ROLES=((25,129),(9,129),(35,130),(19,130),(89,129),(73,129),(99,130),(83,130))
 
 
 def fixtures():
@@ -43,10 +45,22 @@ def verify_row(actual,expected):
     if len(actual)!=ROW_BYTES or len(expected)!=ROW_BYTES or actual!=expected:raise ValueError('whole cache/code-table/carry differs or truncates')
 
 
+def fast_timing(inputs,times):
+    selected=[]
+    for index,row in enumerate(times):
+        data=inputs[index*INPUT_BYTES:(index+1)*INPUT_BYTES]
+        owner=(int.from_bytes(data[2:4],'little')-0xDE00)//64
+        if 0<=owner<8 and tuple(data[:2])==ROLES[owner]:selected.append(row[1])
+    if len(selected)!=2048 or max(selected)>3000:raise ValueError('complete fixed-role decoder domain must meet 3000-cycle microbudget')
+    return {'fixed_role_cases':len(selected),'fixed_role_max_cycles_including_rpc':max(selected),'fixed_role_microbudget':3000}
+
+
 def check(out):
     digest=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
     producer={name:digest(ROOT/name) for name in FILES};inputs,expected=fixtures();count=len(inputs)//INPUT_BYTES
     out=private_output(out);out.mkdir(parents=True,exist_ok=False);(out/'cases.bin').write_bytes(inputs);(out/'expected.bin').write_bytes(expected)
+    (out/'pairs.bin').write_bytes(name_pairs())
+    movement=(ROOT/'src/movement.asm').read_text();mapper=movement[movement.index('map_page2:\n'):movement.index('set_address:\n')]
     entry='''    ORG $4000
     DB "AB"
     DW start
@@ -54,16 +68,23 @@ def check(out):
 start:
     DI
     LD SP,$F380
+    CALL map_page2
 ready:
     JP ready
+p_template_name_pairs_offset EQU 13*16384
+    DEFINE WITH_PRESENTATION_TEMPLATES
     INCLUDE "presentation_name_decode.asm"
-    DS $C000-$,$FF
-'''
+'''+mapper+'    DS $8000-$,$FF\n'
     (out/'unit.asm').write_text(entry);artifact=out/'unit.rom';assembler=verified_tool('sjasmplus')
     compiled=subprocess.run([str(assembler),'--nologo',f'--inc={ROOT/"src"}',f'--raw={artifact}',f'--sym={out/"unit.sym"}',str(out/'unit.asm')],capture_output=True,text=True,timeout=60)
     (out/'assembler.log').write_text(compiled.stdout+compiled.stderr)
     if compiled.returncode:raise ValueError('NAME decoder assembler failed: '+compiled.stderr[-1800:])
-    syms=symbols(out/'unit.sym');emulator=Path(shutil.which('openmsx')).resolve();profile=isolated_profile(find_machine_profile(str(emulator)));validate_machine_profile(profile)
+    resident=artifact.read_bytes()
+    if len(resident)!=16384:raise ValueError('complete resident unit bank required')
+    artifact.write_bytes(resident+bytes([255])*(254*16384)+name_pairs()+bytes([255])*(16384-4096))
+    syms=symbols(out/'unit.sym')
+    if 'p_td_roles'not in syms:raise ValueError('fixed-role decoder fast path was not assembled')
+    emulator=Path(shutil.which('openmsx')).resolve();profile=isolated_profile(find_machine_profile(str(emulator)));validate_machine_profile(profile)
     user=out/'user-data';(user/'machines').mkdir(parents=True);(user/'machines/Frostbite_Decode.xml').write_bytes(profile)
     settings=out/'settings.xml';settings.write_text('<?xml version="1.0"?><!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
     script=f'''set save_settings_on_exit false
@@ -101,7 +122,7 @@ set boot [debug set_bp {syms['ready']} {{}} {{debug remove_bp $::boot;debug brea
 after time 120 {{fail_decode watchdog}}
 '''
     (out/'launch.tcl').write_text(script)
-    result=subprocess.run([str(emulator),'-setting',str(settings),'-machine','Frostbite_Decode','-cart',str(artifact),'-script',str(out/'launch.tcl')],cwd=ROOT,
+    result=subprocess.run([str(emulator),'-setting',str(settings),'-machine','Frostbite_Decode','-cart',str(artifact),'-romtype','ASCII16','-script',str(out/'launch.tcl')],cwd=ROOT,
         env={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'},capture_output=True,text=True,timeout=180)
     log=result.stdout+result.stderr;(out/'emulator.log').write_text(log)
     if result.returncode or 'NAME_DECODE_FAIL' in log:raise ValueError('actual NAME decode failed: '+log[-1400:])
@@ -112,8 +133,9 @@ after time 120 {{fail_decode watchdog}}
         except ValueError as error:raise ValueError(f'case{index}: {error}') from error
     times=[list(map(int,line.split())) for line in (out/'cycles.tsv').read_text().splitlines()]
     if len(times)!=count or any(len(row)!=2 or row[0]!=i or row[1]<=0 for i,row in enumerate(times)):raise ValueError('incomplete ordered decoder timing')
+    fast=fast_timing(inputs,times)
     if any(digest(ROOT/name)!=value for name,value in producer.items()):raise ValueError('decoder producers changed')
-    report={'complete':True,'cases':count,'max_cycles_including_rpc':max(row[1] for row in times),'producer_files':producer,
+    report={'complete':True,'cases':count,**fast,'max_cycles_including_rpc':max(row[1] for row in times),'producer_files':producer,
         'rom_sha256':digest(artifact),'emulator_sha256':digest(emulator),'artifacts':{p.name:digest(p) for p in out.iterdir() if p.is_file()},'frame_deadline_accepted':False,
         'scope':'Actual Z80 complete60-byte nibble expansion, all256 packed-byte phases/eight destination owners/ten CID bases/two water IDs plus invalid base/destination bounds. Whole512-byte cache/16-byte code table/carry and canonical/C6/heap/program/VRAM/SP/IFF/slot invariance. Compiler grammar and frame acceptance separate.'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:report[k] for k in ('complete','cases','max_cycles_including_rpc')}));return report

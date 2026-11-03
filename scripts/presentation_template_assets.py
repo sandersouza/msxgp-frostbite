@@ -14,6 +14,17 @@ from reference_traces import private_output
 SHADOW_OFFSET=13*16384+0x2700
 
 
+def name_pairs():
+    """Two page-aligned byte lookups per complete fixed-role owner."""
+    result=bytearray()
+    for page in range(2):
+        for first,water in ((25,129),(9,129),(35,130),(19,130)):
+            codes=bytes((water,))+bytes(range(first+page*64,first+page*64+15))
+            result.extend(codes[value&15] for value in range(256))
+            result.extend(codes[value>>4] for value in range(256))
+    return bytes(result)
+
+
 def logical(pointer):
     if len(pointer)!=3 or pointer[2]not in GEOMETRY_BANKS:raise ValueError('invalid asset bank pointer')
     address=int.from_bytes(bytes(pointer[:2]),'little')
@@ -109,6 +120,7 @@ def pack(geometry_dir,compiled,rom,palette,contact_dir,out):
     programs=blobs['template-names.bin']
     if len(programs)!=compiled['program_count']*30:raise ValueError('complete program dictionary required')
     put('template_names',b''.join(programs[i:i+30]+bytes(2) for i in range(0,len(programs),30)),alignment=32)
+    put('name_pairs',name_pairs(),alignment=512)
     roots_data=(contact_dir/'floe-roots.bin').read_bytes();base_data=(contact_dir/'floe-base.bin').read_bytes()
     if len(roots_data)!=4800 or len(base_data)!=1600:raise ValueError('complete far root/base directory required')
     prefix_used=image.used_bytes;sealed=seal_shadow(image.data,roots_data+base_data);image.data=bytearray(sealed)
@@ -124,7 +136,7 @@ def pack(geometry_dir,compiled,rom,palette,contact_dir,out):
     (out/'floe-logical-ids.bin').write_bytes(b''.join(identifier.to_bytes(2,'little') for identifier in floe_ids))
     static=''.join(f'p_static_{name}_data EQU ${int.from_bytes(bytes(sections[name]["pointer"][:2]),"little"):04X}\np_static_{name}_bank EQU {sections[name]["pointer"][2]}\n' for name in ('header','footer_tiles','footer_names'))
     static+=f'p_static_footer_tile_count EQU {len(footer["tiles"])}\n';(out/'presentation_static.inc').write_text(static)
-    assembly=''.join(f'p_template_{name}_offset EQU ${sections[name]["offset"]:06X}\n' for name in ('pattern_pairs','pattern_halves','floe_patterns','template_index','template_keys','template_names'))
+    assembly=''.join(f'p_template_{name}_offset EQU ${sections[name]["offset"]:06X}\n' for name in ('pattern_pairs','pattern_halves','floe_patterns','template_index','template_keys','template_names','name_pairs'))
     assembly+=f'p_template_pattern_count EQU {compiled["patterns"]}\np_template_half_count EQU {len(blobs["pattern-halves.bin"])//4}\np_template_floe_count EQU {len(floe_ids)}\np_template_program_count EQU {compiled["program_count"]}\np_template_delta_count EQU {len(compiled["deltas"])}\np_template_deltas:\n    DB '+','.join(map(str,compiled['deltas']))+'\n'
     (out/'presentation_template.inc').write_text(assembly)
     result={'source_sha256':sha(rom),'patterns':compiled['patterns'],'logical_pattern_bytes':len(blobs['logical-patterns.bin']),

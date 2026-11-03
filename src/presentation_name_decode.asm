@@ -24,6 +24,57 @@ p_template_decode_names:
     INC L
     INC A
     EDUP
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    ; A complete fixed-role owner selects immutable low/high-byte pages.
+    ; Retain the generic contract for other valid first/water combinations.
+    PUSH BC
+    LD A,D
+    AND 1
+    RLCA
+    RLCA
+    LD L,A
+    LD A,E
+    RLCA
+    RLCA
+    AND 3
+    OR L
+    ADD A,A
+    OR p_td_roles&255
+    LD L,A
+    LD H,p_td_roles/256
+    LD A,(HL)
+    CP C
+    JP NZ,.generic
+    INC L
+    LD A,(HL)
+    CP B
+    JP NZ,.generic
+    LD A,L
+    AND 14
+    ADD A,($8000+(p_template_name_pairs_offset&$3FFF))/256
+    LD H,A
+    LD A,255
+    LD ($7000),A
+    POP BC
+    LD BC,$E2C0
+    DUP 30
+    LD A,(BC)
+    LD L,A
+    LD A,(HL)
+    LD (DE),A
+    INC E
+    INC H
+    LD A,(HL)
+    LD (DE),A
+    INC E
+    DEC H
+    INC C
+    EDUP
+    XOR A
+    RET
+.generic:
+    POP BC
+    ENDIF
     LD HL,$E2C0
     LD B,p_td_codes/256
     DUP 30
@@ -49,3 +100,11 @@ p_template_decode_names:
 .fail:
     SCF
     RET
+    IFDEF WITH_PRESENTATION_TEMPLATES
+    ASSERT (p_template_name_pairs_offset&511) = 0
+    ASSERT p_template_name_pairs_offset/$4000 = 13
+    ASSERT (p_template_name_pairs_offset+4095)/$4000 = 13
+    ALIGN 16
+p_td_roles:
+    DB 25,129,9,129,35,130,19,130,89,129,73,129,99,130,83,130
+    ENDIF

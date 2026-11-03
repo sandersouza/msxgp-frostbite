@@ -7,6 +7,14 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class NameDecodeTests(unittest.TestCase):
+    def test_fixed_role_microbudget_rejects_the_old_generic_timing(self):
+        api=importlib.import_module('presentation_name_decode_check');inputs,_=api.fixtures()
+        times=[(index,3721) for index in range(len(inputs)//34)]
+        with self.assertRaises(ValueError):api.fast_timing(inputs,times)
+        times=[(index,2735) for index in range(len(inputs)//34)]
+        self.assertEqual(api.fast_timing(inputs,times)['fixed_role_cases'],2048)
+        with self.assertRaises(ValueError):api.fast_timing(inputs,times[:100])
+
     def test_complete_cross_product_and_invalid_destinations(self):
         api=importlib.import_module('presentation_name_decode_check');inputs,expected=api.fixtures();seen={}
         for index in range(40960):
