@@ -80,3 +80,27 @@ cycles). The120-frame keyboard probe still fails: maximum591,574 busy cycles,
 to14,580 cycles; unchanged world preparation is141,042. The source/default
 control remains exactly0b98f3cb89e99f6e79ad9f1a3fb237c2cbfadebcd5759025a123ce33e09fcf78.
 All466 host tests pass. This remains private timing-failed research.
+
+## Batched live masks and the limited0.0.7 preview
+
+The live header now prepares its two eight-row glyph masks once per column,
+while generating the existing exact43-byte packed keys. Three typed bands reuse
+those masks. E650..E6EF holds all160 bytes; the generic typed constructor remains
+independent. Every full16-byte PGT/CGT publication and residency key is retained.
+
+An independent synthetic34-glyph/five-part font checks every upper/lower glyph
+pair across all three bands:17,340 actual Z80 cases pass, comparing the entire
+160-byte cache,16-byte tile, carry/error, glyph/key retention and memory/device
+guards. Maximum3,954 cycles includes mask generation and one tile plus RPC;
+it is not a frame budget. The original-font complete2,115-scene matrix also passes.
+In the identical keyboard probe the header stage falls170,027→139,007 cycles;
+maximum complete busy time falls567,804→537,515, still far above the NTSC limit.
+
+The separately sealed [presentation/audio preview](releases/v0.0.7-presentation-preview.md)
+uses sourcee12adf478a9cd713280c6edafe819e78b8de5537 and exact ROM SHA-256
+d3017f7cb01c71d50639fd4aac67cd3b12611fb9508c59f30cfe2a1b873752c9.
+It is a limited visual/audio/input diagnostic, with493 host tests,2,115 whole
+source-backed images,24,820 unpaced native CPU/all128RAM checkpoints and all3,499
+source/2,472 physical PSG writes checked. Its public metadata retains failed
+NTSC/PAL deadlines and pending manual/listening/physical acceptance. Four public
+asset downloads match the seal. Issue14 remains open; the source is unmerged.

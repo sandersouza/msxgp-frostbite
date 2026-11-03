@@ -5,6 +5,21 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
+The latest [v0.0.7-presentation-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.7-presentation-preview)
+adds original-derived graphics/HUD and built-in PSG audio. **This is a visual/audio
+diagnostic with known severe slowdown and possible tearing.** It does not meet
+the original game's real-time cadence; issue #14 remains in progress. Use its
+[human test instructions](docs/releases/v0.0.7-presentation-preview.md) for image,
+sound and control feedback. The exact4MiB ASCII16 ROM and three metadata/checksum
+files are attached; all four fresh downloads match the sealed package.
+[Validation and measured timing failures](references/presentation-preview-result.json)
+and the [publication receipt](references/presentation-preview-delivery.json)
+retain unaccepted game timing, manual-emulator and physical-hardware status.
+The preview is tagged from its tested feature-branch source; final review and
+main integration remain pending. The older v0.0.6 mechanics diagnostic is unchanged.
+
+### Earlier diagnostics
+
 The first [MSX1 diagnostic prerelease](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic)
 provides a 16 KiB cartridge for video, interrupts, controls and built-in PSG tests.
 

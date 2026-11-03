@@ -4,7 +4,8 @@ The source CPU owns F3/F4 arithmetic, envelopes, priorities and every AUDC,
 AUDF and AUDV store. Presentation observes those stores without changing
 canonical RAM or replacing any game rule. The native callbacks are integrated
 in an explicitly selected private cartridge profile. Combined frame timing
-still fails; there is no new qualified game release yet.
+still fails. The separately sealed [v0.0.7 presentation/audio preview](releases/v0.0.7-presentation-preview.md)
+is available for limited human feedback; it is not a qualified real-time game.
 
 ## Independent source observations
 
@@ -69,8 +70,8 @@ claimed. Graphics timing remains failed and binding on the eventual release.
 Audio may select/write registers 0..3, 6..10. Register 7 keeps its current upper
 two peripheral-direction bits; registers 4/5 and 11..15 stay unowned. In
 particular audio never writes joystick registers 14/15. Real two-port sampling,
-CPU/ABI/slot/stack/interrupt guards and actual PSG histories still need native
-checks.
+CPU/ABI/slot/stack/interrupt guards and actual PSG histories are checked below;
+physical controllers and listening still need human evidence.
 
 The supplied Seaquest audio source was audited locally (SHA-256
 5add6015305ab458cdf5846c9fba51173897df86e2305cb45fe16ead85f775b9).
