@@ -44,6 +44,14 @@ def audit_timing(report,raw,family):
     return measured
 
 
+def validate_contrast(report,rom_sha,matrix_sha,captures_sha):
+    if (report.get('complete')is not True or report.get('cases')!=2115
+        or report.get('touched_ice_source_pixels',0)<=0 or report.get('sea_source_pixels',0)<=0
+        or report.get('colors')!={'sea':{'source':144,'tms':4},'touched_ice':{'source':152,'tms':5}}
+        or report.get('rom_sha256')!=rom_sha or report.get('matrix_sha256')!=matrix_sha or report.get('captures_sha256')!=captures_sha):
+        raise ValueError('complete independent source/physical-VRAM ice contrast on the same ROM/matrix required')
+
+
 def checked_file(path,value,manifest):
     path=Path(path).resolve()
     if not path.is_file() or sha(path)!=value:raise ValueError(f'changed/missing evidence {path}')
@@ -96,6 +104,12 @@ def seal(config,out):
         if prepared!=previous or prep_regs!=registers or presented!=expected[index*49152:(index+1)*49152]:raise ValueError('raw source pixels or visible preparation differ')
         previous,registers=presented,registers_after
     if verify_timing((matrix_path.parent/'timing.tsv').read_text(),2115)!=matrix['max_prepare_cycles_including_rpc']:raise ValueError('raw graphics maximum differs')
+    if not selection.get('contrast'):raise ValueError('independent semantic ice/sea contrast receipt required')
+    contrast_path=ROOT/selection['contrast'];contrast=json.loads(contrast_path.read_text())
+    checked_file(contrast_path,sha(contrast_path),manifest)
+    validate_contrast(contrast,rom_sha,sha(matrix_path),matrix['artifacts']['captures.bin'])
+    if not contrast.get('producer_files'):raise ValueError('independent contrast checker producer closure required')
+    for name,value in contrast['producer_files'].items():checked_file(ROOT/name,value,manifest)
     audio_path=ROOT/selection['audio'];audio=receipt(audio_path,rom_sha,manifest)
     if (audio.get('complete')is not True or audio.get('cases')!=2115 or audio.get('ordered_source_writes')!=3499
         or audio.get('physical_psg_writes')!=2472 or len(audio.get('excluded_graphics_only_fixtures',[]))!=1
@@ -138,8 +152,9 @@ def seal(config,out):
     validation={'version':VERSION,**scope,'source_commit':commit,'rom_sha256':rom_sha,
         'automated':{'source_backed_images':2115,'native_input_only_checkpoints':native_cases,'maximum_native_step_cycles':native_max,
             'ordered_source_audio_writes':3499,'physical_psg_writes':2472,'controlled_audio_intervals':2115,
+            'independent_contrast':{key:contrast[key] for key in ('cases','colors','touched_ice_source_pixels','sea_source_pixels')},
             'excluded_graphics_only_zero_audio_fixtures':audio['excluded_graphics_only_fixtures'],'timing':timing},
-        'evidence_receipts':{name:sha(ROOT/selection[name]) for name in ('matrix','audio')},
+        'evidence_receipts':{name:sha(ROOT/selection[name]) for name in ('matrix','audio','contrast')},
         'limitations':['Real-time frame budgets fail; slowdown, skipped/duplicated presentations and visible commits are measured.',
             'Preview tests cover appearance, sound presence/mapping and input regressions; do not judge original rhythm, difficulty or collision timing.',
             'Controlled source pixels/audio and unpaced native routes do not establish combined natural-play acceptance.',

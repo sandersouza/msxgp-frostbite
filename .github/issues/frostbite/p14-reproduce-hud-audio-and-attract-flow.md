@@ -34,6 +34,24 @@ main `f516b9e22b44644bafac222a5565287f8e80a949`.
 
 Tasks1/2 complete; Tasks3/4 remain open. Continue renderer/world/header/igloo/player MISS optimizations to meet NTSC/PAL deadlines with unchanged source mechanics/quality; qualify both PAL audio updates and full combined natural-route/view/controller coverage. Task5 full acceptance and the one final Task6 whole-branch review/main integration remain pending. Only then close14/Done and fork15. No runtime Atari interpreter or prerecorded route/frame playback is used. Cleanup of preserved Seaquest material remains issue17.
 
+## Owner feedback and contrast regression —2026-11-03
+
+The owner reports v0.0.7 feels about half original speed. Graphics otherwise
+appear correct, except landed ice becomes the same blue as the sea. A screenshot
+is preserved locally; machine/VDP/emulator and listening/physical verdicts were
+not supplied. Keep this subjective feedback separate from measured timing.
+
+Root cause confirmed: original source floes change0C→98 while the sea stays90,
+but independent nearest-RGB choices map both to TMS blue4. The mapped-image
+oracle shared that policy and therefore missed loss of gameplay contrast.
+The fix preserves sea4 versus light-blue ice5 without changing source RAM,
+collisions or game cadence. A new independent physical-VDP/source-color check
+rejects the published capture at case6/source(65,88), expected5/actual4.
+497 host tests pass, including the new contrast and grayscale regressions.
+Fresh full-target/CPU/audio/NTSC/PAL checks and a NEW immutable0.0.8 diagnostic
+are being prepared. More floes now remain visible, so remeasure their full cost;
+the real-time performance issue is still open. [Root cause and proof boundaries](https://github.com/sandersouza/msxgp-frostbite/blob/codex/feat/14-hud-psg-attract/docs/presentation-ice-contrast.md).
+
 ## Acceptance / Definition of Done
 
 HUD, graphics and sound events agree with source state/time; automated checks

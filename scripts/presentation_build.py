@@ -25,7 +25,7 @@ from render_build import symbols
 from native_audio_codegen import generate as generate_audio
 from presentation_audio import tables as audio_tables
 
-VERSION = '0.0.7-presentation-preview'
+VERSION = '0.0.8-ice-contrast-preview'
 ROM_BYTES = 4194304
 FILES = tuple(dict.fromkeys((*hazard_build.FILES, *PALETTE_FILES, 'scripts/presentation_build.py',
     'scripts/presentation_assets.py', 'scripts/native_write_loop.py', 'src/presentation.asm',

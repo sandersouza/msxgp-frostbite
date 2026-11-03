@@ -77,7 +77,7 @@ class PresentationBuildTests(unittest.TestCase):
 
     def test_cartridge_identity_is_distinct_and_standard_msx1_requirements_are_explicit(self):
         api = self.api(); profile = api.profile()
-        self.assertEqual(profile['version'], '0.0.7-presentation-preview')
+        self.assertEqual(profile['version'], '0.0.8-ice-contrast-preview')
         self.assertEqual(profile['signature'], 'FBP0')
         self.assertEqual(profile['ram_bytes'], 65536); self.assertEqual(profile['vram_bytes'], 16384)
         self.assertEqual(profile['clock_hz'], 3579545); self.assertEqual(profile['mapper'], 'ASCII16')

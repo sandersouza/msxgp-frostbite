@@ -7,6 +7,16 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 
 class PreviewDeliveryTests(unittest.TestCase):
+    def test_independent_contrast_receipt_is_bound_to_the_same_rom_and_pixels(self):
+        api=importlib.import_module('presentation_preview_delivery')
+        report={'complete':True,'cases':2115,'touched_ice_source_pixels':1,'sea_source_pixels':2,
+            'colors':{'sea':{'source':144,'tms':4},'touched_ice':{'source':152,'tms':5}},
+            'rom_sha256':'rom','matrix_sha256':'matrix','captures_sha256':'captures'}
+        api.validate_contrast(report,'rom','matrix','captures')
+        for field,value in (('complete',False),('cases',2114),('touched_ice_source_pixels',0),('rom_sha256','old'),('captures_sha256','old'),('matrix_sha256','old')):
+            with self.assertRaises(ValueError):api.validate_contrast({**report,field:value},'rom','matrix','captures')
+        with self.assertRaises(ValueError):api.validate_contrast({**report,'colors':{'sea':{'source':144,'tms':4},'touched_ice':{'source':152,'tms':4}}},'rom','matrix','captures')
+
     def test_preview_retains_failed_timing_and_distinct_human_evidence(self):
         api=importlib.import_module('presentation_preview_delivery')
         value=api.preview_scope()

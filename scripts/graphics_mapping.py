@@ -37,6 +37,13 @@ def palette_map(palette):
             luminance=sum(rgb)//3
             result[code]=1 if luminance<128 else 14 if luminance<176 else 15
         else:result[code]=nearest(rgb,tuple(c for c in range(1,16) if c not in (1,14,15)))
+    # The original sea90 and touched-floe98 are distinct blues. Independent
+    # nearest-RGB choices merge them on TMS9918 and make landed floes vanish.
+    # Preserve that gameplay contrast with the nearest remaining chromatic color.
+    if (0x90 in palette and 0x98 in palette
+            and all(palette[code][2]>max(palette[code][:2]) for code in (0x90,0x98))
+            and result[0x90]==result[0x98]):
+        result[0x98]=nearest(palette[0x98],tuple(c for c in range(1,16) if c not in (1,14,15,result[0x90])))
     return result
 
 
