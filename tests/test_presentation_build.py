@@ -126,3 +126,15 @@ class PresentationBuildTests(unittest.TestCase):
             for other,(a,b) in regions.items():
                 if name!=other:self.assertTrue(end<=a or b<=start,f'{name}/{other} alias')
         self.assertEqual(profile['diagnostic_flags'],[0xC2DE,0xC2DF])
+
+    def test_audio_profile_owns_only_previously_unused_renderer_ram(self):
+        profile=self.api().profile(audio=True)
+        self.assertTrue(profile['ordered_psg']);self.assertTrue(profile['floe_templates'])
+        self.assertTrue(profile['fixed_roles']);self.assertTrue(profile['sparse_profile'])
+        regions={row['name']:(row['start'],row['end']) for row in profile['ram']['regions']}
+        self.assertEqual(regions['audio_observation'],(0xE000,0xE020))
+        self.assertEqual(regions['player_render_work'],(0xE020,0xE100))
+        self.assertFalse(self.api().profile()['ordered_psg'])
+        for name,(a,b) in regions.items():
+            for other,(c,d) in regions.items():
+                if name!=other:self.assertTrue(b<=c or d<=a,f'{name}/{other} alias')

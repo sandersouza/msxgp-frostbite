@@ -10,6 +10,7 @@ set actual [open $floe_dir/actual.bin wb]
 fconfigure $actual -translation binary
 set bp -1
 if {![info exists step_fixture]} {set step_fixture 0}
+if {![info exists heap_guard_spans]} {set heap_guard_spans {{0xD000 0x2300}}}
 proc fail_floe {message} {puts stderr "FLOE_NATIVE_FAIL $message case=$::count pc=[reg PC] fault=[debug read memory 0xC6FD]";exit 1;return -code error $message}
 proc saved_floe_cpu {} {
     binary scan [debug read_block memory 0xC6F0 5] cu* r
@@ -19,7 +20,10 @@ proc saved_floe_cpu {} {
 }
 proc finish_floe {} {
     close $::source_file;close $::actual
-    if {[debug read_block memory 0xD000 0x2300] ne [string repeat [binary format c 165] 0x2300]} {fail_floe heap-guard}
+    foreach span $::heap_guard_spans {
+        lassign $span address length
+        if {[debug read_block memory $address $length] ne [string repeat [binary format c 165] $length]} {fail_floe heap-guard}
+    }
     if {[debug read ioports 168]!=$::slot || [reg IFF]&3} {fail_floe slots-or-interrupts}
     set stack_min 0xF380
     binary scan [debug read_block memory 0xF300 128] cu* stack
@@ -88,7 +92,10 @@ set boot_bp [debug set_bp $symbols(native_reset_done) {} {
         if {[machine_info z80_freq]!=3579545 || [debug size {Main RAM}]!=65536} {fail_floe clock-or-ram}
         if {[dict get [machine_info device VDP] version] ni {TMS9918A TMS9929A} || [llength [machine_info extension]]!=1} {fail_floe vdp-or-expansion}
         set ::slot [debug read ioports 168]
-        debug write_block memory 0xD000 [string repeat [binary format c 165] 0x2300]
+        foreach span $::heap_guard_spans {
+            lassign $span address length
+            debug write_block memory $address [string repeat [binary format c 165] $length]
+        }
         debug write_block memory 0xF300 [string repeat [binary format c 165] 128]
         if {$::natural} {
             set input [read $::source_file 4]

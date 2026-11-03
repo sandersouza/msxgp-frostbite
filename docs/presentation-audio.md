@@ -2,9 +2,9 @@
 
 The source CPU owns F3/F4 arithmetic, envelopes, priorities and every AUDC,
 AUDF and AUDV store. Presentation observes those stores without changing
-canonical RAM or replacing any game rule. The native callbacks and combined
-ROM integration are still pending; the current evidence below is host/source
-component evidence.
+canonical RAM or replacing any game rule. The native callbacks are integrated
+in an explicitly selected private cartridge profile. Combined frame timing
+still fails; there is no new qualified game release yet.
 
 ## Independent source observations
 
@@ -60,7 +60,7 @@ already present; the original event is still retained separately. This avoids
 confusing a register-write optimization with loss of source event order. Both
 logical updates of a PAL double-step must reach the observer independently.
 
-The planned native path handles each source write immediately. It needs no
+The native path handles each source write immediately. It needs no
 queue and cannot overwrite an earlier logical update with the final latches.
 Native write timing must be measured and documented against the original
 post-visible timestamps; identical oscillator phase or analog output is not
@@ -86,7 +86,7 @@ complete expected sequence of 11,776 physical PSG writes. It covers fixed and
 decoded-indexed bus writes, all 16 controls/32 frequencies, every raw byte of all
 six registers, unchanged writes, noise-owner changes and four GPIO direction
 states. Maximum callback cost including RPC is 1,176 cycles. These are synthetic
-hardware-register streams; the original-game compiler hooks remain pending.
+hardware-register streams, separate from the original-game integration below.
 
 Every call checks AF/BC/DE/HL/IX/IY/SP/IFF, canonical/ABI/heap/VRAM/slot invariance,
 all 16 physical PSG registers and all 32 workspace bytes. The I/O trace rejects
@@ -105,3 +105,43 @@ change the application machine profile or claim four arbitrary direction states
 are suitable joystick configurations. An intentional bad GPIO write fails at
 the raw I/O guard. No listening, physical hardware or complete-frame acceptance
 is inferred from this component.
+
+## Original-game integration
+
+The opt-in compiler adapter observes direct source audio stores and decoded
+indexed stores whose addresses cannot be proved to stay in canonical RAM.
+It restores the shared generator on success and failure; default generation
+remains byte-identical. No original envelope arithmetic is replaced.
+
+The existing source clear-loop lowering needs twelve zero-valued audio events
+for its two TIA mirror passes, including repeated values. Its new wrapper emits
+the applicable ordered events **before** canonical RAM is cleared, preserving
+the current source frame epoch. All 256 entry-X values are checked against
+independent original 6502 loop execution. Another 512 actual Z80 emitter/full
+wrapper cases check the complete CPU/RAM/ABI and logged bus value/frame epoch.
+An intentionally late emitter fails the epoch witness. The synthetic logging
+stub's 9,179-cycle maximum is not the real PSG or game cost.
+
+The first integrated game cartridge reproduces every one of the 3,499 ordered
+raw original audio writes and all 2,472 expected physical PSG writes across
+2,115 controlled post-visible intervals. Whole CPU/all128RAM after-states also
+match. The remaining one of the 2,116 source intervals is the graphics-only
+`hud-player-2-level20` fixture, whose impossible player selector is 2 rather
+than 0/1; it has no audio writes and is explicitly accounted for, rather than
+accepted as gameplay. Source audio auditing still covers all 2,116 intervals.
+
+The integration trace observes the real joystick sampler separately: only that
+sampler may select 14/15 and write 15, and its peripheral latch must be restored.
+Sound writes remain restricted to their owned registers and retain register7
+GPIO bits. Heap, slot, VRAM, stack and interrupts are guarded. Independent fresh
+input-only replays on the same cartridge pass all 24,820 CPU/all128RAM checkpoints
+of the twelve retained routes, with zero canonical-state injections.
+
+These checks establish event ordering and register projection, not identical
+TIA/AY oscillator phase. Target callbacks run inline in translated source order;
+original instruction durations and analog timbres are not reproduced. Raw
+original timestamps and target callback timestamps are retained locally.
+The first combined 120-frame NTSC probe still reaches 571,692 busy cycles versus
+the 59,736-cycle budget, with 22 overruns and 48 skipped VDP frames. The complete
+2,115-scene graphics/ownership matrix passes with zero different images, but
+neither that result nor the audio register trace qualifies real-time gameplay.

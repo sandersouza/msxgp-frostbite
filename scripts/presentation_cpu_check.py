@@ -23,6 +23,16 @@ HELPERS=tuple(dict.fromkeys((*FILES,'scripts/presentation_cpu_check.py','scripts
     'scripts/progression_native.tcl','scripts/hazard_native.tcl','scripts/native_contract.py','scripts/render_build.py','scripts/smoke.py')))
 
 
+def guard_spans(metadata):
+    if metadata['profile'].get('ordered_psg') is True:
+        regions=metadata['profile']['ram']['regions']
+        audio=[row for row in regions if row['name']=='audio_observation']
+        if audio!=[{'name':'audio_observation','start':0xE000,'end':0xE020}]:
+            raise ValueError('exact declared audio workspace required')
+        return ((0xD000,0x1000),(0xE020,0x12E0))
+    return ((0xD000,0x2300),)
+
+
 def verify_capture(actual,expected,log):
     if 'FLOE_NATIVE_FAIL' in log or len(actual)!=len(expected)*137:raise ValueError('fatal or incomplete native CPU capture')
     points=[];cycles=[]
@@ -55,6 +65,7 @@ def check(source,out,build_dir):
     settings=out/'settings.xml';settings.write_text('<?xml version="1.0"?><!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
     syms=symbols(build_dir/'presentation.sym');launcher=out/'launch.tcl'
     launcher.write_text(f'set floe_dir {{{out}}}\nset natural 1\nset step_fixture 0\nset inject none\n'
+        +'set heap_guard_spans {'+' '.join('{'+f'{address} {length}'+'}' for address,length in guard_spans(metadata))+'}\n'
         +'array set symbols {'+' '.join(f'{name} {syms[name]}' for name in ('native_reset_done','native_step','visible_step','sample_native_return','native_call','native_return'))+'}\n'
         +f'source {{{ROOT/"scripts/progression_native.tcl"}}}\n')
     result=subprocess.run([str(emulator),'-setting',str(settings),'-machine','Frostbite_CpuReplay','-cart',str(artifact),'-romtype','ASCII16','-script',str(launcher)],cwd=ROOT,
@@ -71,7 +82,7 @@ def check(source,out,build_dir):
     report={**complete,'producer_files':producer,'source_files':consumed,'original_route_sha256':digest(source/'route.json'),'assessment':assessment,
         'rom_sha256':metadata['rom']['sha256'],'max_native_cycles':max(cycles),'emulator_sha256':digest(emulator),
         'artifacts':{p.name:digest(p) for p in out.iterdir() if p.is_file()},'frame_deadline_accepted':False,'graphics_accepted':False,'audio_accepted':False,
-        'scope':'Fresh exact presentation-cartridge CPU/all128RAM and native contact-bank replay against immutable independent original input-only route, with real controller/console sampling and zero state injections. This CPU-only RPC does not execute/promise paced rendering or PSG.'}
+        'scope':'Fresh exact presentation-cartridge CPU/all128RAM and native contact-bank replay against immutable independent original input-only route, with real controller/console sampling and zero state injections. Native step side effects execute; this RPC does not validate paced rendering, graphics or audio.'}
     (out/'check.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:report[k] for k in ('complete','cases','max_native_cycles')}));return report
 
 

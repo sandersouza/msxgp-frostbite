@@ -22,6 +22,8 @@ from presentation_template_assets import pack as pack_template_assets
 from reference_inventory import verified_input
 from reference_traces import private_output
 from render_build import symbols
+from native_audio_codegen import generate as generate_audio
+from presentation_audio import tables as audio_tables
 
 VERSION = '0.0.7-presentation'
 ROM_BYTES = 4194304
@@ -35,7 +37,7 @@ FILES = tuple(dict.fromkeys((*FILES, 'scripts/presentation_fragments.py', 'scrip
                             'src/presentation_fast_world.asm','src/presentation_fast_hud.asm','src/presentation_dirty.asm','src/presentation_dirty_rows.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fixed.py','src/presentation_fixed_runtime.asm','src/presentation_fixed_pool.asm','src/presentation_fixed_floe.asm','src/presentation_fixed_emit.asm','src/presentation_fixed_memo.asm')))
 FILES=tuple(dict.fromkeys((*FILES,'scripts/presentation_fast_model.py','scripts/presentation_constructors.py','scripts/presentation_floe_templates.py',
-    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_name_upload.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_dirty_masks.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm','src/presentation_player_variants.asm','src/presentation_player_shore.asm','src/presentation_footer.asm','src/presentation_header_keys.asm','src/presentation_header.asm')))
+    'scripts/presentation_template_assets.py','src/presentation_template_reader.asm','src/presentation_template_loader.asm','src/presentation_template_floe.asm','src/presentation_name_rows.asm','src/presentation_name_upload.asm','src/presentation_template_upload.asm','src/presentation_background_cover.asm','src/presentation_dirty_masks.asm','src/presentation_template_strip.asm','src/presentation_name_decode.asm','src/presentation_player_variants.asm','src/presentation_player_shore.asm','src/presentation_footer.asm','src/presentation_header_keys.asm','src/presentation_header.asm','src/presentation_audio.asm','src/presentation_audio_clear.asm','scripts/presentation_audio.py','scripts/native_audio_codegen.py')))
 
 
 def bank_layout(contact_banks):
@@ -46,8 +48,9 @@ def bank_layout(contact_banks):
             'available_assets': list(range(3, 14)) + list(range(14 + contact_banks, 256))}
 
 
-def profile(*,fast=False,fixed=False,templates=False):
-    if any(type(value)is not bool for value in (fast,fixed,templates)):raise ValueError('explicit presentation-profile selection required')
+def profile(*,fast=False,fixed=False,templates=False,audio=False):
+    if any(type(value)is not bool for value in (fast,fixed,templates,audio)):raise ValueError('explicit presentation-profile selection required')
+    templates=templates or audio
     fixed=fixed or templates
     fast=fast or fixed
     ram = memory_layout()
@@ -82,12 +85,15 @@ def profile(*,fast=False,fixed=False,templates=False):
             ('floe_name_cache',0xDE00,0xE000),('player_render_work',0xE000,0xE100),
             ('dirty_row_work',0xE580,0xE598),('world_memo',0xE5A0,0xE5AC),('floe_template_identities',0xE5C0,0xE5E0),('floe_decode_codes',0xE600,0xE610),
             ('player_variant_templates',0xC080,0xC180),('player_render_reserved',0xC180,0xC200),('player_variant_control',0xE610,0xE614),('header_key_work',0xE620,0xE64B))]
+    if audio:
+        ram['regions']=[row for row in ram['regions'] if row['name']!='player_render_work']
+        ram['regions'] += [{'name':'audio_observation','start':0xE000,'end':0xE020},{'name':'player_render_work','start':0xE020,'end':0xE100}]
     return {'version': VERSION, 'signature': 'FBP0', 'source_sha256': SOURCE_SHA256,
             'clock_hz': 3579545, 'ram_bytes': 65536, 'vram_bytes': 16384, 'mapper': 'ASCII16',
             'rom_bytes': ROM_BYTES, 'ram': ram,'sparse_profile':fast,'fixed_roles':fixed,'floe_templates':templates,'raw_floe_key_type':9 if templates else None,'live_cache_references':fast and not fixed,
             'fixed_slot_counts':list(FIXED_COUNTS) if fixed else None,'diagnostic_flags':[0xC2DE,0xC2DF] if fast else [0xC11E,0xC11F],
             'player_variants_per_generation':4 if templates else 1,
-            'header_span_constructor':templates,
+            'header_span_constructor':templates,'ordered_psg':audio,
             'static_vram_regions': [{'name': 'hmove_sprite', 'start': 0x3FE0 if templates else 0x3C00, 'end': 0x4000 if templates else 0x3C20}], 'runtime_qualified': False,
             'scope': 'New build profile; source/live target equivalence and timing gates remain pending'}
 
@@ -155,8 +161,9 @@ def pack_crc_shadow(boot):
         'cache_crc':{'offset':offset,'size':256,'ram_start':0xE100,'sha256':hashlib.sha256(crc).hexdigest()}}
 
 
-def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False,fixed=False,templates=False):
-    if any(type(value)is not bool for value in (fast,fixed,templates)):raise ValueError('explicit presentation-profile selection required')
+def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=False,fixed=False,templates=False,audio=False):
+    if any(type(value)is not bool for value in (fast,fixed,templates,audio)):raise ValueError('explicit presentation-profile selection required')
+    templates=templates or audio
     fixed=fixed or templates
     fast=fast or fixed
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -207,7 +214,12 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
         path = out / f'sprite-{name}.bin'; path.write_bytes(data)
         sprite_includes += [f'p_sprite_{name}_data:', f'    INCBIN "{path}"']
     (out / 'presentation_sprite_data.inc').write_text('\n'.join(sprite_includes) + '\n')
-    (out / 'core.inc').write_text(generate(rom, carry_fusion=True)); (out / 'data.bin').write_bytes(rom[0xC00:])
+    if audio:
+        tone=audio_tables();(out/'presentation-audio-tables.bin').write_bytes(tone['data'])
+        assembly='    ALIGN 256\np_audio_periods:\n'+f'    INCBIN "{out/"presentation-audio-tables.bin"}"\n'
+        assembly+='p_audio_noise_periods EQU p_audio_periods+384\np_audio_mixer_parts EQU p_audio_periods+416\np_audio_defaults EQU p_audio_periods+432\n    ALIGN 32\np_audio_tone_pointers:\n    DW '+','.join('0' if row is None else f'p_audio_periods+{row*64}' for row in tone['tone_rows'])+'\n'
+        (out/'presentation_audio_tables.inc').write_text(assembly)
+    (out / 'core.inc').write_text((generate_audio if audio else generate)(rom, carry_fusion=True)); (out / 'data.bin').write_bytes(rom[0xC00:])
     (out / 'boot_tables.inc').write_text(f'    INCBIN "{out / "boot.bin"}"\n')
     (out / 'resident_tables.inc').write_text('; Presentation metadata belongs to its explicit profile.\n')
     # Keep original fixed contact indices while reclaiming old synthetic-row banks.
@@ -219,7 +231,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
     (out / 'cartridge_padding.inc').write_text(''.join(asset_bank(bank) for bank in range(14 + tables['banks'],256)))
     (out/'cache-crc.bin').write_bytes(cache_crc_table())
     (out / 'entry.asm').write_text('    DEFINE WITH_HAZARDS\n    DEFINE WITH_FLOES\n    DEFINE WITH_PROGRESSION\n    DEFINE WITH_PRESENTATION\n'+
-        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+('    DEFINE WITH_PRESENTATION_TEMPLATES\n    DEFINE WITH_PRESENTATION_HEADER_FAST\n' if templates else '')+'    INCLUDE "movement.asm"\n')
+        ('    DEFINE WITH_PRESENTATION_FAST\n' if fast else '')+('    DEFINE WITH_PRESENTATION_FIXED\n' if fixed else '')+('    DEFINE WITH_PRESENTATION_TEMPLATES\n    DEFINE WITH_PRESENTATION_HEADER_FAST\n' if templates else '')+('    DEFINE WITH_PRESENTATION_AUDIO\n' if audio else '')+'    INCLUDE "movement.asm"\n')
     artifact = out / f'frostbite-{VERSION}.rom'; assembler = verified_tool('sjasmplus')
     command = [str(assembler), '--nologo', f'--inc={ROOT/"src"}', f'--inc={out}', f'--inc={out/"tables"}',
                f'--raw={artifact}', f'--sym={out/"presentation.sym"}', f'--lst={out/"presentation.lst"}', str(out / 'entry.asm')]
@@ -235,7 +247,7 @@ def build(floes, edge, ordinary, shore, aliases, out, *, explore=False,fast=Fals
         raise ValueError('presentation build producer changed during compilation')
     final_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
     if not explore and final_dirty: raise ValueError('canonical presentation checkout changed')
-    metadata = {'version': VERSION, 'diagnostic': True, 'runtime_qualified': False, 'profile': profile(fast=fast,fixed=fixed,templates=templates),
+    metadata = {'version': VERSION, 'diagnostic': True, 'runtime_qualified': False, 'profile': profile(fast=fast,fixed=fixed,templates=templates,audio=audio),
                 'source_commit': commit, 'source_dirty': dirty or final_dirty, 'exploratory': explore,
                 'original': original, 'source_files': fingerprints, 'rom': {'filename': artifact.name, 'size': artifact.stat().st_size,
                 'sha256': digest(artifact), 'mapper': 'ASCII16'}, 'fragments': fragments, 'tables': tables,
@@ -258,5 +270,6 @@ if __name__ == '__main__':
     parser.add_argument('--fast',action='store_true',help='Private sparse constructor profile; no runtime qualification implied')
     parser.add_argument('--fixed',action='store_true',help='Private fixed-role profile; implies --fast, no runtime qualification implied')
     parser.add_argument('--templates',action='store_true',help='Private complete-floe template profile; implies --fixed, no runtime qualification implied')
+    parser.add_argument('--audio',action='store_true',help='Private ordered PSG profile; implies --templates, no runtime qualification implied')
     parser.add_argument('--explore', action='store_true'); args = parser.parse_args()
     result = build(**vars(args)); print(json.dumps({key: result[key] for key in ('version', 'rom', 'runtime_qualified')}))
