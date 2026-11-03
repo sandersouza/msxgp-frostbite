@@ -37,6 +37,24 @@ class GraphicsMappingTests(unittest.TestCase):
         colors=self.api().palette_map({0:(0,0,0),144:(0,24,124),12:(232,232,232)})
         self.assertEqual(colors,{0:1,144:4,12:15})
 
+    def test_original_touched_ice_stays_blue_and_visible_against_water(self):
+        # Original natural routes change floe latches0C->98; sea remains90.
+        # Independent measured RGB values, not the mapper's own expectations.
+        api=self.api();palette={0:(0,0,0),12:(214,214,214),144:(0,28,136),152:(84,138,210)}
+        colors=api.palette_map(palette)
+        self.assertEqual(colors[144],4)
+        self.assertEqual(colors[152],5)
+        self.assertNotEqual(colors[152],colors[144])
+        source=bytearray([144])*(160*210)
+        source[100*160+40:100*160+48]=bytes([152])*8
+        mapped=api.map_frame(bytes(source),palette);y=api.map_y(100);left=api.map_x(40);right=api.map_x(48)
+        self.assertEqual(mapped[y*256+left:y*256+right],bytes([5])*(right-left))
+        self.assertEqual(mapped[y*256+left-1],4)
+
+    def test_floe_contrast_rule_does_not_invent_chroma_in_grayscale_palettes(self):
+        colors=self.api().palette_map({144:(20,20,20),152:(40,40,40)})
+        self.assertEqual(colors,{144:1,152:1})
+
     def test_achromatic_bear_igloo_shore_and_ice_keep_contrast_without_magenta(self):
         colors=self.api().palette_map({0:(0,0,0),4:(111,111,111),6:(142,142,142),
                                        10:(192,192,192),12:(214,214,214)})

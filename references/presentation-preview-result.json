@@ -1,0 +1,65 @@
+{
+  "version": "0.0.7-presentation-preview",
+  "purpose": "presentation-audio-diagnostic",
+  "runtime_qualified": false,
+  "frame_deadline_accepted": false,
+  "manual_emulator_accepted": false,
+  "physical_hardware_accepted": false,
+  "source_commit": "e12adf478a9cd713280c6edafe819e78b8de5537",
+  "rom_sha256": "d3017f7cb01c71d50639fd4aac67cd3b12611fb9508c59f30cfe2a1b873752c9",
+  "automated": {
+    "source_backed_images": 2115,
+    "native_input_only_checkpoints": 24820,
+    "maximum_native_step_cycles": 27047,
+    "ordered_source_audio_writes": 3499,
+    "physical_psg_writes": 2472,
+    "controlled_audio_intervals": 2115,
+    "excluded_graphics_only_zero_audio_fixtures": [
+      {
+        "id": "outputs/presentation/fixture-suite-e/batch-00405/2",
+        "reason": "synthetic graphics-only player selector outside original 0/1 gameplay contract",
+        "ordered_writes": 0
+      }
+    ],
+    "timing": {
+      "ntsc": {
+        "frames": 120,
+        "max_busy_cycles": 537515,
+        "frame_budget": 59736,
+        "over_budget_frames": 22,
+        "skipped_vdp_frames": 48,
+        "incorrect_periods": 39,
+        "visible_commits": 20,
+        "duplicate_vdp_frames": 7,
+        "deadline_met": false,
+        "frame_deadline_accepted": false,
+        "max_source_and_scheduler_cycles": 23813,
+        "max_prepare_cycles": 524253
+      },
+      "pal": {
+        "frames": 120,
+        "max_busy_cycles": 537515,
+        "frame_budget": 71364,
+        "over_budget_frames": 27,
+        "skipped_vdp_frames": 51,
+        "incorrect_periods": 43,
+        "visible_commits": 13,
+        "duplicate_vdp_frames": 8,
+        "deadline_met": false,
+        "frame_deadline_accepted": false,
+        "max_source_and_scheduler_cycles": 46947,
+        "max_prepare_cycles": 524253
+      }
+    }
+  },
+  "evidence_receipts": {
+    "matrix": "48d8f27a219b7c10a55d4b3bdabd4ecd240552839ce839b6d64b0013c310dad1",
+    "audio": "58558c455d2f99b64a611d360dd6bad937ec0f69e34ed753894e3f3d07668100"
+  },
+  "limitations": [
+    "Real-time frame budgets fail; slowdown, skipped/duplicated presentations and visible commits are measured.",
+    "Preview tests cover appearance, sound presence/mapping and input regressions; do not judge original rhythm, difficulty or collision timing.",
+    "Controlled source pixels/audio and unpaced native routes do not establish combined natural-play acceptance.",
+    "Manual emulator/listening and physical-hardware evidence remain pending; all views and final game qualification remain issue14 work."
+  ]
+}

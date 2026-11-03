@@ -1,0 +1,7 @@
+{
+  "backend": "outputs/presentation/backend-canonical-b/source/stella",
+  "fixtures": ["outputs/presentation/fixture-suite-e", "outputs/presentation/fixture-suite-f"],
+  "cold_route": ["outputs/presentation/original-route-a", "outputs/presentation/original-route-b"],
+  "windows": ["outputs/presentation/natural-windows-a", "outputs/presentation/natural-windows-b"],
+  "graphics": "outputs/graphics/issue9-final"
+}

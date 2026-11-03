@@ -90,6 +90,12 @@ The [machine-readable contract](../references/graphics-contract.json) specifies:
  disappearing into an equally mapped shore. These are deliberate adaptations,
  not identical Atari/TMS RGB or physical composite color acceptance.
 
+The current presentation profile additionally preserves touched-ice98 versus
+sea90 contrast: if the two blue source colors would both map to dark blue4,
+touched ice uses light blue5. The original captures and earlier fit results
+remain unchanged. See [the owner-reported contrast regression](presentation-ice-contrast.md)
+for its independent original/physical-VRAM witness and scope.
+
 The source and decoded target previews were inspected locally. Source RGB depends
 on emulator palette configuration; see [Stella palette documentation](https://stella-emu.github.io/docs/index.html#Palette).
 TMS constraints follow the [TI data manual](https://computers.baffa.tec.br/pages/datasheet/TMS9918A_TMS9928A_TMS9929A_Video_Display_Processors_Data_Manual_Nov82.pdf).

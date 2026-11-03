@@ -5,6 +5,47 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
+The latest [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
+reduces repeated font-mask, actor-role and igloo work while retaining complete
+graphics and source updates. The same measured blue-ice input sequence gains
+about 2–3%; **original-speed gameplay remains unfinished**, with slowdown and
+possible tearing. [Owner-video follow-up and active-play measurements](docs/presentation-active-speed.md)
+show about 28 source updates/s during a measured MSX1 NTSC active route, versus
+approximately 60 in the original. Earlier averages included lighter phases.
+[Human tests](docs/releases/v0.0.9-performance-preview.md),
+[evidence and limits](docs/presentation-performance.md),
+[validation](references/presentation-performance-result.json) and
+[verified publication](references/presentation-performance-delivery.json)
+identify the exact ROM. The owner authorized integrating this masked diagnostic
+baseline into main and transferring performance work to
+[#39](https://github.com/sandersouza/msxgp-frostbite/issues/39), using the supplied
+Atari 400/800 fan port as an implementation research reference. Local experiments
+A-D are excluded. [Integration scope and handoff](docs/handoffs/issue-14-to-39.md)
+record remaining acceptance gaps; integration does not certify original speed.
+
+The earlier [v0.0.8-ice-contrast-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.8-ice-contrast-preview)
+fixes landed ice disappearing into the sea: it stays light blue against darker
+water. [Human tests](docs/releases/v0.0.8-ice-contrast-preview.md),
+[independent contrast/validation](references/presentation-ice-contrast-result.json)
+and [verified publication](references/presentation-ice-contrast-delivery.json)
+identify the exact attached ROM. **Original-speed gameplay remains unfinished.**
+That contrast correction is retained in 0.0.9.
+
+The earlier [v0.0.7-presentation-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.7-presentation-preview)
+adds original-derived graphics/HUD and built-in PSG audio. **This is a visual/audio
+diagnostic with known severe slowdown and possible tearing.** It does not meet
+the original game's real-time cadence. Use its
+[human test instructions](docs/releases/v0.0.7-presentation-preview.md) for image,
+sound and control feedback. The exact4MiB ASCII16 ROM and three metadata/checksum
+files are attached; all four fresh downloads match the sealed package.
+[Validation and measured timing failures](references/presentation-preview-result.json)
+and the [publication receipt](references/presentation-preview-delivery.json)
+retain unaccepted game timing, manual-emulator and physical-hardware status.
+The preview retains its original tested source tag. The older v0.0.6 mechanics
+diagnostic is unchanged.
+
+### Earlier diagnostics
+
 The first [MSX1 diagnostic prerelease](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic)
 provides a 16 KiB cartridge for video, interrupts, controls and built-in PSG tests.
 

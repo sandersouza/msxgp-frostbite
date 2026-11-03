@@ -1,0 +1,108 @@
+{
+  "scope": "PRIVATE original-input-only continuous600-output-frame prefix research, not full-view/game/PSG/manual/hardware acceptance",
+  "current_source_commit": "12e204e6ecf6403fed63fd0e2f8c602ef84099a4",
+  "current_rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+  "rate_method": "sum(logical steps rows1..599)*3579545/sum(commit intervals rows1..599); first interval excluded",
+  "all_per_output_logical_step_counts_unchanged": true,
+  "frame_deadline_accepted": false,
+  "families": {
+    "ntsc": {
+      "series": {
+        "ice-contrast": {
+          "source_updates_per_second": 37.91029377573113,
+          "checkpoints": 601,
+          "blue_frames": 430,
+          "raw_timing_sha256": "0c72325db2a05230f9168b357802acd7fc642266b0912e47ea13f45a9fb6ff35",
+          "route_research_sha256": "3ebbfa66b040429dc7ca412f7433ccf74ebff20852e034273793bb2d4031d0f2",
+          "research": {
+            "complete": true,
+            "scope": "PRIVATE original-input-only continuous clock research adapter; independently compared every actual source CPU/all128RAM checkpoint. No canonical-state writes. Not full-view delivery acceptance.",
+            "rom_sha256": "141044d3c1d4db7544a2f1357bef90e7cc251b85de7cdd41e3378b4776adb88a",
+            "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+            "adapter_sha256": "380ebc92a507eaf3c51f8408a0dfba7b39c176d883b62126c079963087bbc3b0",
+            "launch_sha256": "5fe0c76fd1499be816f144551a01f39d311dba225cdc8cdfa52e154336b42a00",
+            "native_checkpoints": 601,
+            "frames_with_blue_floes": 430,
+            "frames": 600,
+            "max_busy_cycles": 537515,
+            "over_budget_frames": 189,
+            "skipped_vdp_frames": 382,
+            "probe_receipt_sha256": "5a32845619a4ba193396e33f6a0bce30689d403c53a13ddb997f0ce9c0419ba6"
+          }
+        },
+        "performance": {
+          "source_updates_per_second": 38.78398106357645,
+          "checkpoints": 601,
+          "blue_frames": 430,
+          "raw_timing_sha256": "c24525a2c08c00de40087f3f3ff4add2041023a442d36c262d90006f8f2dd837",
+          "route_research_sha256": "e1aab543879e3d639435b584fdff8db96ca6502f4a953d3ae2c431bf5053df48",
+          "research": {
+            "complete": true,
+            "scope": "PRIVATE original-input-only continuous clock research adapter; independently compared every actual source CPU/all128RAM checkpoint. No canonical-state writes. Not full-view delivery acceptance.",
+            "rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+            "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+            "adapter_sha256": "3d6fefdcdabc30bc80f998749381d3b78f7411dc221b8fa28504afaf49201cb7",
+            "launch_sha256": "b0b7c24488b1961c6c0ca54dd0cf4d0d85297bcbe583df109dd6f64342f07b18",
+            "native_checkpoints": 601,
+            "frames_with_blue_floes": 430,
+            "frames": 600,
+            "max_busy_cycles": 507343,
+            "over_budget_frames": 189,
+            "skipped_vdp_frames": 365,
+            "probe_receipt_sha256": "1a1c51e55cb968f32dfab26bd4568a708d242808b59a9d3d6903fa12c134a54b"
+          }
+        }
+      },
+      "relative_improvement_percent": 2.304617561166533
+    },
+    "pal": {
+      "series": {
+        "ice-contrast": {
+          "source_updates_per_second": 39.19810300684618,
+          "checkpoints": 717,
+          "blue_frames": 390,
+          "raw_timing_sha256": "b873360ddeb47e0c63795e6e10c791e4fb071cb7ecb9f8eabb353dec0f7524b3",
+          "route_research_sha256": "75e1379495c9af46f52cb331431980eda3b078a0739f340a03717044884e51b9",
+          "research": {
+            "complete": true,
+            "scope": "PRIVATE original-input-only continuous clock research adapter; independently compared every actual source CPU/all128RAM checkpoint. No canonical-state writes. Not full-view delivery acceptance.",
+            "rom_sha256": "141044d3c1d4db7544a2f1357bef90e7cc251b85de7cdd41e3378b4776adb88a",
+            "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+            "adapter_sha256": "380ebc92a507eaf3c51f8408a0dfba7b39c176d883b62126c079963087bbc3b0",
+            "launch_sha256": "85bf5e73f4f9fdfa801d331f4e506b2e9ffc1bd96bc62c737a0ac578328b3f8d",
+            "native_checkpoints": 717,
+            "frames_with_blue_floes": 390,
+            "frames": 600,
+            "max_busy_cycles": 537515,
+            "over_budget_frames": 189,
+            "skipped_vdp_frames": 348,
+            "probe_receipt_sha256": "06c3f6def143a5ac37f435cf00ad3b8f701efe6645e1596fb53011a931e9c55d"
+          }
+        },
+        "performance": {
+          "source_updates_per_second": 40.18357444894113,
+          "checkpoints": 717,
+          "blue_frames": 390,
+          "raw_timing_sha256": "ed0cb192dd84e3dbbc5b39622978dd657bf551cba8cdac3691a19ee9d978e39a",
+          "route_research_sha256": "054c149f1d9d38d3ed7f04ddaa17e78a2a8fb5a506229b1a1aa948863e43c71b",
+          "research": {
+            "complete": true,
+            "scope": "PRIVATE original-input-only continuous clock research adapter; independently compared every actual source CPU/all128RAM checkpoint. No canonical-state writes. Not full-view delivery acceptance.",
+            "rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+            "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+            "adapter_sha256": "3d6fefdcdabc30bc80f998749381d3b78f7411dc221b8fa28504afaf49201cb7",
+            "launch_sha256": "311e65048e9977016eab3dff7a75fa46ca5d0a012797fc56f5760ecb57999d77",
+            "native_checkpoints": 717,
+            "frames_with_blue_floes": 390,
+            "frames": 600,
+            "max_busy_cycles": 507343,
+            "over_budget_frames": 189,
+            "skipped_vdp_frames": 326,
+            "probe_receipt_sha256": "cd9540dcabc8c1880eacb5c3c80ef1b047e4391cee7045f74ef4e08a10636f1a"
+          }
+        }
+      },
+      "relative_improvement_percent": 2.514079423493598
+    }
+  }
+}

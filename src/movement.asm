@@ -3,10 +3,14 @@
     DB "AB"
     DW start
     DS 12,0
+    IFDEF WITH_PRESENTATION
+    DB "FBP0"
+    ELSE
     IFDEF WITH_FLOES
     DB "FBF0"
     ELSE
     DB "FBM0"
+    ENDIF
     ENDIF
 start:
     DI
@@ -39,6 +43,9 @@ start:
     OR C
     LD A,D
     JR NZ,.clear_vram
+    IFDEF WITH_PRESENTATION
+    CALL presentation_init
+    ELSE
     LD HL,font_patterns_data
     LD DE,$4000
     CALL copy_512
@@ -84,6 +91,7 @@ start:
     LD DE,INPUT
     LD BC,32
     LDIR
+    ENDIF
     IFDEF WITH_FLOES
     LD DE,$5B00              ; terminate SAT before enabling display/pacing
     CALL set_address
@@ -104,11 +112,16 @@ start:
     CALL detect_period
     CALL cache_init
     CALL input_init
+    IFDEF WITH_PRESENTATION_AUDIO
+    CALL p_audio_init
+    ENDIF
     XOR A
     LD ($C622),A
     CALL native_reset
 native_reset_done:
+    IFNDEF WITH_PRESENTATION
     CALL adapt_scene
+    ENDIF
     CALL prepare
     CALL wait_vblank
     CALL commit
@@ -118,7 +131,9 @@ paced_frame_start:
     CALL diagnostic_selectors
     CALL scheduler
     CALL charge_steps
+    IFNDEF WITH_PRESENTATION
     CALL adapt_scene
+    ENDIF
     CALL prepare
 paced_wait:
     CALL wait_vblank
@@ -389,6 +404,7 @@ diagnostic_selectors:
     RET
 
 ; Synthetic raster mapping only; canonical source coordinates stay read-only.
+    IFNDEF WITH_PRESENTATION_FAST
 adapt_scene:
     LD A,($C022)
     CALL normalize_x
@@ -608,6 +624,7 @@ adapt_scene:
     LD (INPUT+29),A
 adapt_done:
     RET
+    ENDIF
 normalize_x:
     CP 160
     RET C
@@ -617,16 +634,41 @@ normalize_x:
     DEFINE WITH_NATIVE_INPUT
     DEFINE FAST_PHASE
     INCLUDE "native_input.asm"
+    IFDEF WITH_PRESENTATION_AUDIO
+    INCLUDE "presentation_audio.asm"
+    INCLUDE "presentation_audio_clear.asm"
+    INCLUDE "presentation_audio_tables.inc"
+    ENDIF
+    IFDEF WITH_PRESENTATION
+    INCLUDE "presentation.asm"
+    ELSE
     INCLUDE "movement_render.inc"
     INCLUDE "movement_rows.asm"
     INCLUDE "movement_cache.asm"
+    ENDIF
 vdp_register_values:
+    IFDEF WITH_PRESENTATION
+    DB $02,$C2,$06,$FF,$03,$36,$07,$01
+    ELSE
     DB $02,$C2,$06,$FF,$03,$36,$07,$04
+    ENDIF
 identity:
     IFDEF WITH_FLOES
     IFDEF WITH_HAZARDS
     IFDEF WITH_PROGRESSION
+    IFDEF WITH_PRESENTATION
+    IFDEF WITH_PRESENTATION_AUDIO
+    DB "FROSTBITE 0.0.9 PERFORMANCE PREVIEW FRAME TIMING FAILED",0
+    ELSE
+    IFDEF WITH_PRESENTATION_FIXED
+    DB "FROSTBITE 0.0.7 FIXED PRIVATE NO AUDIO",0
+    ELSE
+    DB "FROSTBITE PRESENTATION 0.0.7 PRIVATE INCOMPLETE GRAPHICS NO AUDIO",0
+    ENDIF
+    ENDIF
+    ELSE
     DB "FROSTBITE PROGRESSION DIAGNOSTIC 0.0.6 REAL CONTACTS SYNTHETIC NO AUDIO",0
+    ENDIF
     ELSE
     DB "FROSTBITE HAZARD DIAGNOSTIC 0.0.5 REAL CONTACTS SYNTHETIC NO AUDIO",0
     ENDIF
@@ -652,6 +694,12 @@ assets_end:
     ALIGN 1024
 original_data:
     INCBIN "data.bin"
+    IFDEF WITH_PRESENTATION
+    INCLUDE "presentation_sprites.asm"
+    ENDIF
+    IFDEF WITH_PRESENTATION_FAST
+    INCLUDE "presentation_dirty.asm"
+    ENDIF
 native_end:
     ASSERT $ <= $C000
     DS $C000-$,$FF

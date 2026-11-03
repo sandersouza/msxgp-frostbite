@@ -150,6 +150,10 @@ floe_acquire:
     SLA E
     RL D
     ADD HL,DE
+    IFDEF WITH_PRESENTATION_FIXED
+    LD A,255
+    LD ($7000),A            ;byte-identical root directory in its explicit bank
+    ENDIF
     LD E,(HL)
     INC HL
     LD D,(HL)
@@ -225,6 +229,10 @@ floe_row:
     LD D,0
     LD HL,(floe_baseptr)
     ADD HL,DE
+    IFDEF WITH_PRESENTATION_FIXED
+    LD A,255
+    LD ($7000),A            ;every row may follow another banked contact read
+    ENDIF
     LD A,(HL)
     LD (IY+0),A
     LD A,($C064)
@@ -301,4 +309,8 @@ floe_bit_masks:
     IFDEF WITH_HAZARDS
     INCLUDE "hazard_contacts.asm"
     ENDIF
+    IFDEF WITH_PRESENTATION_FIXED
+    INCLUDE "presentation_contact_resident.inc"
+    ELSE
     INCLUDE "contact_resident.inc"
+    ENDIF

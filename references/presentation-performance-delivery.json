@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "purpose": "presentation-audio-diagnostic",
+  "runtime_qualified": false,
+  "frame_deadline_accepted": false,
+  "manual_emulator_accepted": false,
+  "physical_hardware_accepted": false,
+  "source_commit": "12e204e6ecf6403fed63fd0e2f8c602ef84099a4",
+  "rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+  "public_assets": {
+    "frostbite-0.0.9-performance-preview.rom": {
+      "size": 4194304,
+      "sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6"
+    },
+    "validation.json": {
+      "size": 2948,
+      "sha256": "ffac35e617cafbecc19a720337bfe73397062f50e03ad69fb5bc33bfc031c288"
+    },
+    "SHA256SUMS": {
+      "size": 265,
+      "sha256": "ebd29284c49d477ae73079fea9a771631ca0ed77d6b0f0e2785612dde9d17c9e"
+    },
+    "build.json": {
+      "size": 13878,
+      "sha256": "4b66fbb62871c9a537d777a7e6201b6de5635cf108d0f88c507932e1cfd41e09"
+    }
+  },
+  "private_manifest_sha256": "541df26b9824a6c680a0af04096985a67ad82aac41d443e5e732a36c59a7ab2e",
+  "release_url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview",
+  "tag": "v0.0.9-performance-preview",
+  "published_at": "2026-11-03T13:50:10Z",
+  "download_verified": true,
+  "is_prerelease": true,
+  "integrated_to_main": false,
+  "issue_status": "In progress",
+  "source_ci": {
+    "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41646324578",
+    "conclusion": "success",
+    "head_sha": "12e204e6ecf6403fed63fd0e2f8c602ef84099a4"
+  },
+  "previous_release_rom_unchanged": {
+    "version": "v0.0.8-ice-contrast-preview",
+    "sha256": "141044d3c1d4db7544a2f1357bef90e7cc251b85de7cdd41e3378b4776adb88a"
+  }
+}
