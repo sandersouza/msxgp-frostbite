@@ -78,3 +78,30 @@ Its alternate-register isolation and GPIO-preservation pattern is useful. Its
 C015 source mapping, C460 workspace, supported control set and old results do
 not apply to Frostbite; control 1 requires a new policy. No legacy result is
 Frostbite acceptance. The preserved legacy and external snapshot are unchanged.
+
+## Native callback component
+
+The resident callback component now passes 31,252 actual Z80 calls, with the
+complete expected sequence of 11,776 physical PSG writes. It covers fixed and
+decoded-indexed bus writes, all 16 controls/32 frequencies, every raw byte of all
+six registers, unchanged writes, noise-owner changes and four GPIO direction
+states. Maximum callback cost including RPC is 1,176 cycles. These are synthetic
+hardware-register streams; the original-game compiler hooks remain pending.
+
+Every call checks AF/BC/DE/HL/IX/IY/SP/IFF, canonical/ABI/heap/VRAM/slot invariance,
+all 16 physical PSG registers and all 32 workspace bytes. The I/O trace rejects
+selection or writes outside 0..3 and 6..10, including initialization. Registers
+4/5, 11..15 remain unchanged; initialization also preserves nonzero C tone
+periods. The workspace is E000..E01F, previously unused renderer work, with only
+E000..E014 currently populated. Cached slots for unowned PSG4/5 remain reserved
+zero bytes; they do not mirror or authorize changes to those physical registers.
+
+The isolated component profile sets ignorePortDirections=false. The standard
+openMSX [MSX PSG convenience setting](https://raw.githubusercontent.com/openMSX/openMSX/master/src/sound/MSXPSG.cc)
+otherwise repairs GPIO directions to the normal MSX arrangement, preventing four
+requested direction states from actually being exercised. The component uses
+the chip's real direction behavior and verifies raw I/O values too. It does not
+change the application machine profile or claim four arbitrary direction states
+are suitable joystick configurations. An intentional bad GPIO write fails at
+the raw I/O guard. No listening, physical hardware or complete-frame acceptance
+is inferred from this component.

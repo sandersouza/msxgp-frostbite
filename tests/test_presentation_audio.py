@@ -93,3 +93,17 @@ class PresentationAudioTests(unittest.TestCase):
                 state=api.psg_step(raw,{'psg':bytes(16)})
                 self.assertEqual(state['psg'][8+channel],value&15)
                 self.assertEqual(raw[4+channel],value)
+
+    def test_native_table_rows_match_each_control_and_both_frequency_boundaries(self):
+        api=importlib.import_module('presentation_audio');tables=api.tables()
+        self.assertEqual(len(tables['data']),443)
+        self.assertEqual(tables['offsets'],{'tone':0,'noise':384,'mixer':416,'defaults':432})
+        for control in range(16):
+            row=tables['tone_rows'][control]
+            for frequency in (0,1,31):
+                wanted=api.tone_period(control,frequency)
+                if wanted is None:self.assertIsNone(row)
+                else:
+                    at=row*64+frequency*2
+                    self.assertEqual(int.from_bytes(tables['data'][at:at+2],'little'),wanted)
+        self.assertEqual(tables['data'][384:416],bytes(api.noise_period(f) for f in range(32)))

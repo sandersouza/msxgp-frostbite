@@ -78,3 +78,15 @@ def psg_step(source_registers,previous):
     psg[8:11]=source[4:6]+bytes(1)
     writes=tuple((register,psg[register]) for register in OWNED_REGISTERS if psg[register]!=old[register])
     return {'source_registers':source,'psg':bytes(psg),'noise_owner':owner,'writes':writes}
+
+
+def tables():
+    """Finite, ROM-independent hardware tables; native pointers are assembled."""
+    carriers=tuple(sorted({MODE_CYCLES[c] for c in range(16) if c not in NO_TONE}))
+    rows=tuple(None if c in NO_TONE else carriers.index(MODE_CYCLES[c]) for c in range(16))
+    tones=b''.join(max(1,min(4095,(114*cycles*(frequency+1)+16)//32)).to_bytes(2,'little')
+                   for cycles in carriers for frequency in range(32))
+    noise=bytes(noise_period(frequency) for frequency in range(32))
+    mixer=bytes(9 if control in (0,11) else 1 if control==8 else 8 for control in range(16))
+    defaults=bytes((1,0,1,0,0,0,1,63,0,0,0))
+    return {'data':tones+noise+mixer+defaults,'tone_rows':rows,'offsets':{'tone':0,'noise':384,'mixer':416,'defaults':432}}
