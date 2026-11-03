@@ -51,6 +51,10 @@ p_template_header_keys:
     CALL p_fast_header_glyph
     LD (pt_glyphs+3),A
 .pack:
+    IFDEF WITH_PRESENTATION_HEADER_BATCH
+    CALL p_template_header_mask_column
+    JP C,p_template_header_key_fail
+    ENDIF
     LD A,(pt_glyphs+1)
     RRCA
     RRCA

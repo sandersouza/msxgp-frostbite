@@ -589,4 +589,7 @@ pt_header_parts:
     DB 0,255,1,2,3,255,4,0,4,255
     IFDEF WITH_PRESENTATION_HEADER_FAST
     INCLUDE "presentation_header.asm"
+    IFDEF WITH_PRESENTATION_HEADER_BATCH
+    INCLUDE "presentation_header_batch.asm"
+    ENDIF
     ENDIF

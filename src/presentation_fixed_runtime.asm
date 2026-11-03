@@ -159,8 +159,20 @@ p_fixed_resolve_known:
     JR .name
 .general:
     ENDIF
+    IFDEF WITH_PRESENTATION_HEADER_BATCH
+    LD A,(pf_key+5)
+    SUB 16
+    CP 3
+    JR NC,.typed
+    CALL p_template_header_live_construct
+    JR .constructed
+.typed:
+    ENDIF
     LD A,(p_fx_bank)
     CALL presentation_typed_construct
+    IFDEF WITH_PRESENTATION_HEADER_BATCH
+.constructed:
+    ENDIF
     JP C,p_fixed_fail
     LD A,(pt_error)
     OR A
