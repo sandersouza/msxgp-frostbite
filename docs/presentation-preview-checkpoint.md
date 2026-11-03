@@ -1,5 +1,11 @@
 # Issue14 presentation/audio preview checkpoint
 
+**Superseding owner decision, 2026-11-03:** integrate the pre-mask-removal
+v0.0.9 diagnostic and transfer performance implementation to issue #39.
+The [handoff](handoffs/issue-14-to-39.md) governs current ownership and pending
+acceptance. Historical no-merge/no-transfer instructions below no longer apply.
+Their measured failures and unaccepted qualification flags remain valid.
+
 Current continuation2026-11-03: [0.0.9 performance preview](releases/v0.0.9-performance-preview.md)
 is published and all four downloads match the exact tested source/ROM.
 [Current evidence/ownership/next work](presentation-performance.md) supersedes the

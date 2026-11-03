@@ -1,7 +1,22 @@
 # Reproduce Frostbite HUD, PSG event timing and attract flow
 
-Planning ID: P14. Status: In progress in the dedicated Frostbite — ISSUE #14 fork.
+Planning ID: P14. Status: In review; owner-authorized diagnostic integration.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/14
+
+## Current owner decision — 2026-11-03
+
+Integrate the pre-mask-removal v0.0.9 runtime into main, retaining the seven black
+left-edge sprites. Runtime at `266f272` is identical to `12e204e`; experiments
+A-D were private patches and are excluded/preserved. Performance corrections now
+belong to [#39](https://github.com/sandersouza/msxgp-frostbite/issues/39), beginning
+with the supplied Atari 400/800 fan port analysis. This explicitly supersedes the
+historical no-merge/no-handoff instructions below. #15 remains final timing
+qualification and #16 full-game/hardware acceptance. #14 stays open/In review:
+integration is not full original acceptance, listening or physical approval.
+See [handoff](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/handoffs/issue-14-to-39.md).
+
+The sections below retain historical measurements and decisions; their old
+ownership/status statements are superseded by this current decision.
 
 ## Goal and scope
 
