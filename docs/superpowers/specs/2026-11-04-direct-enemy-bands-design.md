@@ -51,3 +51,26 @@ counts; the measured MSX loop is33 cycles/byte plus55, including M1 waits.
 
 No original-cadence promise follows from a faster component. Review the whole
 frame and tails before a human-test candidate or release decision.
+
+## Measured revision: lazy actor keys
+
+Q-C preserves every tested image/state but is3.71% slower than P-C in active
+NTSC and3.56% slower in PAL. Per-tile typed metadata construction outweighs
+the generic traversal savings. Retain this rejected experiment as evidence.
+
+Ruling: Q-D/E retain only the complete per-owner group/variant/coarse/color
+identity, published after both required physical planes. The selected template
+profile draws floes before objects; its object fusion reads an old ice key,
+never an old mono-actor key. Actor roles stay exclusive and are not queried by
+the unchanged bear/header/footer paths. The old actor metadata remains FF.
+The independent auditor reconstructs all six keys from each physical owner's
+saved identity and the live immutable ROM directory, then verifies actual
+PGT/CGT bytes and strict NAME generation just as before. Active-page guards
+are unchanged. If a later renderer reads old actor keys, it must add a runtime
+decoder or restore their eager publication before using this representation.
+
+Coarse is encoded in identity variant bit7. This makes the Y128 bank split
+explicit even in component cases outside the live source Y127/128 pair. The
+archived complete geometry pool retains pre-compaction directory offsets;
+the lazy auditor must read the live ROM roots/classes rather than those old
+offsets. Original pixels remain an independent source-based oracle.

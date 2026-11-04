@@ -9,7 +9,8 @@ from presentation_band_spike import apply_patch,sha,verified_bytes,COMPANIONS
 from render_build import symbols
 
 
-def build(out):
+def build(out,*,direct_enemy=False,lazy_enemy=False):
+    if lazy_enemy and not direct_enemy:raise ValueError('lazy enemies require direct-band mode')
     if out.exists():raise ValueError('immutable output directory already exists')
     base=ROOT/'outputs/presentation/prepared-bands-p/codec-b'
     rawmeta=verified_bytes(base/'build.json','524a84378bdff9ab69346a444b5b8ba80daefb37791bbdcda148ee167e19d0fd')
@@ -25,6 +26,18 @@ def build(out):
     out.mkdir(parents=True)
     (out/'input-meta.json').write_bytes(rawmeta);(out/'input.sym').write_bytes(rawsyms)
     s=symbols(out/'input.sym')
+    extra_sources=[]
+    if direct_enemy:
+        from presentation_direct_enemy import segments
+        raw_i=verified_bytes(ROOT/'outputs/presentation/direct-playfield-i/patch.sym',COMPANIONS['i_symbols'])
+        (out/'input-i.sym').write_bytes(raw_i)
+        s.update({n:v for n,v in symbols(out/'input-i.sym').items() if n.startswith('i_')})
+        roles=bytearray()
+        for page in range(2):
+            for lane in range(4):
+                for role in segments(page,lane):
+                    roles.extend(role['pgt'].to_bytes(2,'little')+role['key'].to_bytes(2,'little')+bytes([role['tile'],role['water']]))
+        (out/'qe-roles.bin').write_bytes(roles)
     def logical(address,size):
         bank=address//16384;physical=bank+3 if bank<11 else bank+242
         if address%16384+size>16384:raise ValueError('cross-bank logical record')
@@ -39,8 +52,13 @@ def build(out):
     (out/'symbols.inc').write_text('\n'.join(f'{n} EQU ${v:04X}' for n,v in sorted(s.items()) if '.' not in n)
         +f'\npk_names_tail EQU ${names_tail:04X}\n')
     source=ROOT/'src/presentation_prepared_ice.asm'
-    run=subprocess.run([str(verified_tool('sjasmplus')),'--nologo',f'--inc={out}',
-        f'--raw={out/"patch.bin"}',f'--sym={out/"patch.sym"}',str(source)],cwd=ROOT,capture_output=True,text=True)
+    entry=source
+    if direct_enemy:
+        entry=out/'entry.asm'
+        entry.write_text('    DEFINE WITH_DIRECT_ENEMY\n'+('    DEFINE WITH_LAZY_ENEMY\n' if lazy_enemy else '')+'    INCLUDE "presentation_prepared_ice.asm"\n')
+        extra_sources=[ROOT/'src/presentation_direct_enemy_body.asm',ROOT/'src/presentation_direct_enemy_helpers.asm',ROOT/'scripts/presentation_direct_enemy.py']
+    run=subprocess.run([str(verified_tool('sjasmplus')),'--nologo',f'--inc={out}',f'--inc={ROOT/"src"}',
+        f'--raw={out/"patch.bin"}',f'--sym={out/"patch.sym"}',str(entry)],cwd=ROOT,capture_output=True,text=True)
     (out/'assembler.log').write_text(run.stdout+run.stderr)
     if run.returncode:raise ValueError(run.stdout+run.stderr)
     q=symbols(out/'patch.sym');code=(out/'patch.bin').read_bytes()
@@ -58,6 +76,13 @@ def build(out):
     patch(at,ins(205,s['p_template_load']),ins(205,q['pk_load_entry']))
     at=parent.index(ins(205,s['p_fast_old_key']),s['p_template_object_fuse']-0x4000,s['p_template_object_fuse']-0x4000+20)
     patch(at,ins(205,s['p_fast_old_key']),ins(205,q['pk_old_entry']))
+    if direct_enemy:
+        start=s['presentation_world_prepare.object']-0x4000
+        end=s['presentation_world_prepare.floes']-0x4000
+        old=ins(205,s['i_primitive'])
+        if parent.count(old,start,end)!=1:raise ValueError('unique original enemy hook required')
+        at=parent.index(old,start,end)
+        patch(at,old,ins(205,q['qe_entry']))
     packets=[]
     codec=meta['tables']['codec']
     if codec['block_bank']!=35 or codec['tree_bank']<=114:
@@ -89,8 +114,9 @@ def build(out):
         at=bank*16384+address-0x8000
         if rom[at:at+size]!=parent[at:at+size]:raise ValueError('prepared packets changed a live I allocation')
     (out/'geometry').symlink_to((base/'geometry').resolve(),target_is_directory=True)
-    name='frostbite-prepared-ice-p.rom';(out/name).write_bytes(rom)
-    (out/'presentation.sym').write_text(rawsyms.decode()+'\n'+'\n'.join(f'{n}: EQU 0x{v:08X}' for n,v in q.items() if n.startswith('pk_'))+'\n')
+    name='frostbite-direct-enemy-q.rom' if direct_enemy else 'frostbite-prepared-ice-p.rom'
+    (out/name).write_bytes(rom)
+    (out/'presentation.sym').write_text(rawsyms.decode()+'\n'+'\n'.join(f'{n}: EQU 0x{v:08X}' for n,v in q.items() if n.startswith(('pk_','qe_','i_')))+'\n')
     (out/'packets.json').write_text(json.dumps(packets,indent=2)+'\n')
     meta['version']='prepared-ice-p-internal';meta['rom'].update(filename=name,sha256=sha(rom))
     meta['prepared_ice']=dict(parent_rom_sha256=sha(parent),patches=patches,
@@ -98,10 +124,18 @@ def build(out):
         records=[0xC1D1,0xC1F1],colors=[0xC1F1,0xC1F9],scratch=[0xC1F9,0xC1FF],pending=[0xC1C1,0xC1C5],
         sources={str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in (Path(__file__).resolve(),source)},
         scope='Internal prepared ice packets, lossless contact14 prerequisite, lazy physical ice keys; unqualified for human delivery.')
+    if direct_enemy:
+        meta['version']='direct-enemy-q-internal'
+        meta['direct_enemy']=dict(ram=[0xE800,0xE880],heap_redzone=[0xE880,0xF340],
+            cache=[0xE800,0xE820],banked_end=q['qe_end'],lazy_keys=lazy_enemy,
+            sources={str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in extra_sources},
+            scope='Internal complete physical enemy bands with original geometry, copy/fusion, NAME and simulation semantics; unqualified for human delivery.')
     (out/'build.json').write_text(json.dumps(meta,indent=2)+'\n')
     print(dict(rom_sha256=sha(rom),resident_bytes=resident,banked_bytes=banked,packet_count=1280))
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True)
-    build(parser.parse_args().out.resolve())
+    parser.add_argument('--direct-enemy',action='store_true')
+    parser.add_argument('--lazy-enemy',action='store_true')
+    args=parser.parse_args();build(args.out.resolve(),direct_enemy=args.direct_enemy,lazy_enemy=args.lazy_enemy)

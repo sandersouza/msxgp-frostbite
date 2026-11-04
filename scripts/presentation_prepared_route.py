@@ -18,6 +18,10 @@ def check(build,out,family):
     meta=json.loads((build/'build.json').read_text());rom=(build/meta['rom']['filename']).read_bytes()
     if hashlib.sha256(rom).hexdigest()!=meta['rom']['sha256']:raise ValueError('ROM identity mismatch')
     s=symbols(build/'presentation.sym')
+    lazy=meta.get('direct_enemy',{}).get('lazy_keys',False)
+    width=4214 if lazy else 4182
+    from presentation_direct_enemy import resident_geometry
+    geometry=resident_geometry(rom,s) if lazy else None
     deltas=list(rom[s['p_template_deltas']-16384:s['p_template_deltas']-16384+10])
     adapter=ROOT/'outputs/presentation/architecture-review-f/route_probe.py'
     if hashlib.sha256(adapter.read_bytes()).hexdigest()!='db9229dc9464646569386f18d88cf493d5b3eb2401a9829030d084da87e0958f':
@@ -26,6 +30,13 @@ def check(build,out,family):
     def intercepted(args,*a,**kw):
         if isinstance(args,list) and '-script' in args and 'openmsx' in Path(args[0]).name.lower():
             script=Path(args[args.index('-script')+1]);text=script.read_text()
+            if 'direct_enemy' in meta:
+                from presentation_direct_enemy import declare_ram
+                text=declare_ram(text)
+                text+=f'''\ndebug set_bp {s['qe_entry']} {{}} {{
+ if {{$::tracking}} {{incr ::calls(primitive)}}
+ begin_probe_cost primitive
+}}\n'''
             text+=f'''
 set pkbands [open {{{out/'band-records.bin'}}} wb]
 set pkfills [open {{{out/'fill-events.tsv'}}} w]
@@ -42,6 +53,7 @@ debug set_bp {s['pk_load_entry']} {{}} {{
  begin_probe_cost template-load
 }}
 '''
+            if lazy:text=text.replace('[debug read_block memory 0xCCA0 6]','[debug read_block memory 0xCCA0 6][debug read_block memory 0xE800 32]')
             script.write_text(text)
         return original_run(args,*a,**kw)
     argv=sys.argv;sys.argv=[str(adapter),str(build),str(out),family]
@@ -50,13 +62,16 @@ debug set_bp {s['pk_load_entry']} {{}} {{
     finally:subprocess.run=original_run;sys.argv=argv
     frames=2253 if family=='ntsc' else 1886
     captures=(out/'captures.bin').read_bytes();bands=(out/'band-records.bin').read_bytes()
-    if len(captures)!=frames*49304 or len(bands)!=frames*4182:raise ValueError('incomplete prepared role captures')
+    if len(captures)!=frames*49304 or len(bands)!=frames*width:raise ValueError('incomplete prepared role captures')
     tile=constructor(build)
     for index in range(frames):
         row=captures[index*49304:(index+1)*49304]
         audit_active(row[128:16512],row[16520:32904],row[16512:16520])
-        band=bands[index*4182:(index+1)*4182]
-        decorated=decorate_owners(band[72:],band[:32],band[32:64],band[64:72],rom,deltas)
+        band=bands[index*width:(index+1)*width]
+        decorated=decorate_owners(band[72:4182],band[:32],band[32:64],band[64:72],rom,deltas)
+        if lazy:
+            from presentation_direct_enemy import decorate_actor_owners
+            decorated=decorate_actor_owners(decorated,band[4182:],rom,geometry)
         audit_row(decorated,row[32912:49296],tile,templates=True)
     result=dict(complete=True,frames=frames,rom_sha256=meta['rom']['sha256'],
         wrapper_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

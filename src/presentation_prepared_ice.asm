@@ -3,6 +3,9 @@
     ORG $7E5D              ;obsolete J strip, before preserved K initializer
 pk_init:
     CALL $7F5F
+    IFDEF WITH_DIRECT_ENEMY
+    CALL qe_init
+    ENDIF
     LD HL,$C1D1
     LD DE,$C1D2
     LD BC,31
@@ -78,6 +81,9 @@ pk_fill:
     DEC B
     JP NZ,.byte
     RET
+    IFDEF WITH_DIRECT_ENEMY
+    INCLUDE "presentation_direct_enemy_helpers.asm"
+    ENDIF
 pk_resident_end:
     ASSERT $ <= $7F5F
 
@@ -307,5 +313,8 @@ pk_old_key:
     LD (pfw_old+5),A
     OR A
     RET
+    IFDEF WITH_DIRECT_ENEMY
+    INCLUDE "presentation_direct_enemy_body.asm"
+    ENDIF
 pk_end:
     ASSERT $ <= $AA68

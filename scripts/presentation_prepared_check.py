@@ -17,21 +17,32 @@ MATRIX_CHECK=matrix.check
 def check(build,out,limit=2115):
     meta=json.loads((build/'build.json').read_text());rom=(build/meta['rom']['filename']).read_bytes()
     s=symbols(build/'presentation.sym')
+    lazy=meta.get('direct_enemy',{}).get('lazy_keys',False)
+    width=104 if lazy else 72
+    from presentation_direct_enemy import resident_geometry
+    geometry=resident_geometry(rom,s) if lazy else None
     deltas=list(rom[s['p_template_deltas']-16384:s['p_template_deltas']-16384+10])
     original_run=subprocess.run;old_fixed=matrix.audit_fixed;index=0
     def fixed(raw,vram,tile,**kw):
         nonlocal index
         bands=(out/'band-records.bin').read_bytes()
-        if len(bands)!=limit*72:raise ValueError('incomplete saved physical-owner snapshots')
-        at=index*72;record=bands[at:at+72];index+=1
-        decorated=decorate_owners(raw,record[:32],record[32:64],record[64:],rom,deltas)
+        if len(bands)!=limit*width:raise ValueError('incomplete saved physical-owner snapshots')
+        at=index*width;record=bands[at:at+width];index+=1
+        decorated=decorate_owners(raw,record[:32],record[32:64],record[64:72],rom,deltas)
+        if lazy:
+            from presentation_direct_enemy import decorate_actor_owners
+            decorated=decorate_actor_owners(decorated,record[72:],rom,geometry)
         return audit_row(decorated,vram,tile,**kw)
     def run(args,*a,**kw):
         if isinstance(args,list) and '-script' in args and 'openmsx' in Path(args[0]).name.lower():
             script=Path(args[args.index('-script')+1]);text=script.read_text()
+            if 'direct_enemy' in meta:
+                from presentation_direct_enemy import declare_ram
+                text=declare_ram(text)
             text=text.replace('set captures [open ',f'set pkbands [open {{{out/"band-records.bin"}}} wb]\nset captures [open ',1)
             text=text.replace('incr ::index','puts -nonewline $::pkbands "[debug read_block memory 0xC1D1 32][debug read_block memory 0xE5C0 32][debug read_block memory 0xC1F1 8]"\n        incr ::index')
             text=text.replace('close $::captures;close $::timing;','close $::pkbands;close $::captures;close $::timing;')
+            if lazy:text=text.replace('[debug read_block memory 0xC1F1 8]','[debug read_block memory 0xC1F1 8][debug read_block memory 0xE800 32]')
             script.write_text(text)
         return original_run(args,*a,**kw)
     subprocess.run=run;matrix.audit_fixed=fixed

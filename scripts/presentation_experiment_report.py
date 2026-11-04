@@ -12,10 +12,13 @@ from presentation_band_report import validate_sequence
 from presentation_band_spike import sha,verified_bytes
 
 
-def measured_io_cost(byte_count,calls,fill_calls):
-    if not 0<=fill_calls<=calls or byte_count<128*fill_calls:
+def measured_io_cost(byte_count,calls,fill_calls,fill_bytes=None):
+    if fill_bytes is None:fill_bytes=128*fill_calls
+    if (any(type(v)is not int or v<0 for v in (byte_count,calls,fill_calls,fill_bytes))
+            or not 0<=fill_calls<=calls or not fill_calls<=fill_bytes<=256*fill_calls
+            or byte_count<fill_bytes):
         raise ValueError('invalid direct-fill event count/bytes')
-    return 29*(byte_count-128*fill_calls)+53*(calls-fill_calls)+(33*128+55)*fill_calls
+    return 29*(byte_count-fill_bytes)+53*(calls-fill_calls)+33*fill_bytes+55*fill_calls
 
 
 def report(root,build,suffix,kind,scene_suffix=None):
@@ -30,18 +33,26 @@ def report(root,build,suffix,kind,scene_suffix=None):
     source=source.replace(old_assert,'assert vdp_cycles == io_cost(family,index,traffic[index][1],calls)')
     def io_cost(family,index,byte_count,calls):
         fills=collections.Counter()
+        filled=collections.Counter()
         if kind=='prepared':
             path=root/(family+'-'+suffix)/'fill-events.tsv'
             for line in path.read_text().splitlines():
                 frame,count,address=map(int,line.split())
-                if frame<0 or frame>=(2253 if family=='ntsc' else 1886) or count!=128 or not 0x6000<=address<0x7800:
+                if frame<0 or frame>=(2253 if family=='ntsc' else 1886) or count not in (24,128) or not 0x6000<=address<address+count<=0x7800:
                     raise ValueError('invalid direct-CGT transfer event')
                 fills[frame]+=1
-        return measured_io_cost(byte_count,calls,fills[index])
+                filled[frame]+=count
+        return measured_io_cost(byte_count,calls,fills[index],filled[index])
     module.io_cost=io_cost
     exec(compile(source,str(analyzer),'exec'),module.__dict__)
-    inputs=root/('report-inputs-v2-'+suffix);inputs.mkdir(exist_ok=False)
-    for family in ('ntsc','pal'):(inputs/(family+'-a')).symlink_to((root/(family+'-'+suffix)).resolve(),target_is_directory=True)
+    inputs=root/('report-inputs-v2-'+suffix);inputs.mkdir(exist_ok=True)
+    for family in ('ntsc','pal'):
+        link=inputs/(family+'-a');target=(root/(family+'-'+suffix)).resolve()
+        if link.is_symlink():
+            if link.resolve()!=target:raise ValueError('report input alias changed')
+        else:link.symlink_to(target,target_is_directory=True)
+    if any((root/(name+'-'+suffix+'.json')).exists() for name in ('analysis','comparison')):
+        raise ValueError('immutable report already exists')
     module.ROOT=inputs
     meta=json.loads((build/'build.json').read_text())
     candidate_sha=sha((build/meta['rom']['filename']).read_bytes())

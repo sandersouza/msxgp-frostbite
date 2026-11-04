@@ -16,12 +16,17 @@ no player tiles/mask changes, no simulation reduction. Bound partial dirty rows,
 zero descriptor cells, geometry-column padding, lane1Y127/128 bank split, wrapping
 copies, color changes and ice fusion ordinals. Source-derived artifacts ignored.
 
-- [ ] Synthetic owner/normalization and variable-length IO accounting negatives.
-- [ ] Add conditional resident wrappers and banked direct-band implementation;
+- [x] Synthetic owner/normalization and variable-length IO accounting negatives.
+- [x] Add conditional resident wrappers and banked direct-band implementation;
   authenticated builder retains all protected I/contact/template allocations.
-- [ ] Actual Z80 component checks, full source matrix, density/boundary/overlap
+- [x] Actual Z80 component checks, full source matrix, density/boundary/overlap
   cases, then paired original-input NTSC/PAL whole-frame CPU/RAM/pixel checks.
 - [ ] Update performance workbook and evidence seal, preserve P-C/M-C and all
   rejected experiments. Source/ROM/tool/input identities remain explicit.
 - [ ] Independent whole-branch review and meaningful checks, issue/PR updates,
   and versioned release with exact useful candidate and human tests when selected.
+
+Ruling: replace Q-C's eager actor keys with saved owner identities after its
+measured regression; see the design revision and docs/direct-enemy-progress.md.
+Q-E is correct on the bounded tests but gains only2.85%/3.10% over P-C. Keep it
+internal while the wider pipeline and source integration remain unresolved.
