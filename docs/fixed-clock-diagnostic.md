@@ -5,6 +5,12 @@ MSX1 interrupt-driven source clock and a separate coherent-picture renderer.
 This is a useful architecture diagnostic, not acceptance of original-speed
 presentation. The CPU still cannot draw every requested picture on time.
 
+Published as [v0.0.10-fixed-clock-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic),
+from clean source `854dcf462b56274f60f1f0cf978bc487d124e57a`.
+[Validation](../references/fixed-clock-result.json) binds all selected receipts
+and raw artifacts. [Publication](../references/fixed-clock-delivery.json) records
+the exact remote tag and byte-identical fresh downloads of all four attachments.
+
 ## Measured clocks
 
 | Measured rate | NTSC | PAL |
@@ -76,6 +82,15 @@ wait for the protected section. The test compares main/alternate/index registers
 I, SP, return PC, bank and unchanged VRAM/snapshot after RETI, while retaining the
 source and picture oracles. Its intentionally delayed picture timings are **not**
 performance evidence. A deliberate AF2 corruption must fail its register oracle.
+
+Final qualification passes545host tests, both exact-source original-free CI
+runs,2115source scenes,1920density scenes,4507natural CPU/allRAM checkpoints,
+1355natural pictures, eighteen directed boundary cases and the AF2 negative
+control. Clean-source replays reproduce all D measurement buffers byte-for-byte.
+M/N/O/P/Q seals remain unchanged (112/147/220/467/434files). The T workbook
+retains238600Qcells, formulas, styles, panes, widths and its native chart; its
+new formulas, sensitivity, independent aggregates, XML and views were checked.
+Native Excel itself was not exercised.
 
 The single independent review found no demonstrated kernel blocker, requested
 this directed test, and retracted a preliminary F3/F4 mixed-picture hypothesis:

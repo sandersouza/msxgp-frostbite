@@ -12,7 +12,9 @@ graphics checks. **Active drawing is only about9.8/9.7fps; this is not a final
 performance solution.** Coherent snapshots preserve colors, actors, player and
 the black mask, but visible motion and feedback are coarse. Read the
 [human tests](docs/releases/v0.0.10-fixed-clock-diagnostic.md) and
-[measured architecture limits](docs/fixed-clock-diagnostic.md). Issue42 remains
+[measured architecture limits](docs/fixed-clock-diagnostic.md),
+[validation](references/fixed-clock-result.json) and
+[verified downloads](references/fixed-clock-delivery.json). Issue42 remains
 open for a faster complete-picture pipeline; original-time simulation does not
 certify original-time presentation, all levels, audio listening or real hardware.
 

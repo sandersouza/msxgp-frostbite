@@ -18,6 +18,16 @@ actors, player and mask remain. R's marginal header/igloo path is preserved and
 rejected. See docs/fixed-clock-diagnostic.md and the0.0.10human tests. Do not close
 #42/#39/#15/#16 from the source-clock result.
 
+[v0.0.10](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
+is published from clean854dcf462b56274f60f1f0cf978bc487d124e57a, exact ROM
+`29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e`.
+All four attachments were downloaded again and verified byte-identical.545host
+tests, both exact-source CI runs and all natural/directed gates pass. The T
+workbook preserves all Q cells/features and clearly separates the two clocks.
+Issue status is In review for diagnostic/human feedback; original-time drawing
+and the implementation issue's full DoD remain open. See public fixed-clock
+validation/publication receipts and docs/handoffs/issue-42.md.
+
 Independent review found no demonstrated kernel blocker and required directed
 hardware-IRQ boundary alignment in addition to natural replay. The new harness
 checks nine mapper/VDP/stream/snapshot boundaries, complete main/alternate/index

@@ -1,5 +1,37 @@
 # Issue42 architectural checkpoint review
 
+## Fixed-clock continuation review
+
+The next independent read-only review covered the frozen staged continuation
+patch SHA `8cd32b0ee2280328474c49f08e65717bb6c26844d96c46a30100558c0e049c85`
+above0412fb2. Eight clock/inventory tests passed during review. No demonstrated
+kernel blocker was found in register/mapper/slot/VDP protection, but natural
+interrupts did not establish the directed boundary gate required by the spec.
+
+The correction pass adds actual VDP-pending alignment at nine foreground
+boundaries per TV family, main/alternate/index/I/SP/PC/bank restoration, unchanged
+IRQ VRAM/snapshot, source CPU/allRAM and coherent-picture oracles, plus an AF2
+corruption negative control. Both TV families pass, including expanded-slot RAM.
+The tests' parked CPU intentionally delays drawing; its rates are excluded from
+performance evidence. Atomic snapshot equality is checked under DI; after EI,
+live source may advance before its caller resumes. The earlier post-return
+live-state equality assumption was corrected by this adversarial test.
+
+A preliminary F3/F4 mixed-image finding was retracted after checking the active
+listing: render.asm was inactive, and only dirty identity reads those flags.
+Moving polling to the prepare gate is optional cleanup, not a proved mechanics
+or mixed-pixel repair. It is the small post-review runtime adjustment. The new
+test harness and correction pass were not sent through a second review loop.
+
+Clean committed-source ROM29b4588b… (854dcf4) reproduces the tested bytes.
+545host tests, both exact-source CI runs, source/density/natural/directed gates
+pass. Release0.0.10is a diagnostic; active drawing is still9.8/9.7fps. Review,
+source-clock and publication evidence do not complete original-time presentation,
+all-level, manual audio/controller or physical acceptance. See
+docs/fixed-clock-diagnostic.md and the public fixed-clock receipts.
+
+## Earlier O/P/Q review
+
 Independent read-only review covered3d75f48..1c25578, including O/P/Q builders,
 runtime paths, ownership and reports. The reviewer found no runtime/bank/RAM
 blocker in the selected bounded experiments.19 focused tests passed during the

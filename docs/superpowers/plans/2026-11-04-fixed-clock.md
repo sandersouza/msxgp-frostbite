@@ -24,7 +24,7 @@ accumulator remains exact; report actual render cadence independently.
  original CPU/allRAM/pixels, VBlank, IRQ/bank/control-latch/slot/stack proofs.
 - [x] Quantify real source and presentation rates, handler/prepare/commit tails;
  update workbook; independent whole-change review and material fixes.
-- [ ] Reproduce clean committed-source candidate and publish a useful diagnostic
+- [x] Reproduce clean committed-source candidate and publish a useful diagnostic
  prerelease with ROM/SHA/source, limitations/next work and concrete human tests.
 
 Ruling: R's measured marginal gain rejects it as a human candidate. It remains

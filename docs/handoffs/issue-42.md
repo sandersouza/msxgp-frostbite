@@ -15,6 +15,15 @@ chat/branch or resume predecessor edits.
 
 ## Current clock diagnostic checkpoint
 
+Published [v0.0.10-fixed-clock-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
+from clean source `854dcf462b56274f60f1f0cf978bc487d124e57a`. Four exact assets
+were downloaded again and verified. Public receipts:
+references/fixed-clock-{result,delivery}.json. PR43 remains draft/stacked on41;
+issue42 is In review in project7 for the diagnostic/human checks, not Done.
+The tracking helper's old catalog excludes42; its targeted dry-run made no
+writes. Status was changed through the verified existing item/Status IDs with
+gh and read back; P1/XL/40h and unrelated items were preserved.
+
 Public F→I/J/K/L/M/contact14/P/Q producers reproduce sealed Q byte-for-byte.
 R's native header/igloo/player-way path is correct but marginal and rejected
 as a human candidate. T separates the original scheduler/native/input/PSG clock
@@ -37,6 +46,15 @@ Current exclusive checkout owner remains this issue42chat/branch. Next work:
 reduce preparation/cache replacement tails across several source ticks and
 measure active complete-picture cadence separately from logical-step cadence.
 Manual audio, alternating controls and physical acceptance remain pending.
+
+Fresh clean-source measurements: ntsc-clean/pal-clean; directed gates:
+boundaries-clean-ntsc/boundaries-clean-pal; negative-clean; component scenes:
+matrix-d/density-d. The old natural D buffers and clean-source buffers are all
+byte-identical, so the T workbook's exact measured data remain valid. Source
+clock/visual timing are distinct. T workbook SHA
+`07fc8187d9c2a8f2e224ebde65495b49177d21d4484c42d61dedfa020a3220b3`.
+The final kernel is384bytes; observed stack64NTSC/62PAL of128bytes. Header/igloo
+R is not selected. No further source changes belong to the released854dcf4tag.
 
 ## Earlier Q checkpoint
 
