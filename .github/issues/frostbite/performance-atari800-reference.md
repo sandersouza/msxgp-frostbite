@@ -4,6 +4,20 @@ GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/39
 
 ## Research checkpoint — 2026-11-03
 
+Latest checkpoint: the owner authorized an architectural rewrite and resuming
+GitHub. The N-B native enemy-row walker preserves all tested state/pixels but
+improves active cadence only 1.49% NTSC / 1.99% PAL versus sealed private M-C.
+It remains an internal experiment, not a new human-test release. A model with
+shared ice residency across generations avoids about 60% of semantic misses
+at 56 slots/bank, but is not measured Z80/FPS evidence. Implementation continues
+in [#42](https://github.com/sandersouza/msxgp-frostbite/issues/42), in its own
+forked chat. #39 remains open/In progress for the original-speed objective.
+See [measured decision](https://github.com/sandersouza/msxgp-frostbite/blob/codex/fix/39-atari800-performance/docs/native-band-feasibility.md).
+All previous baselines are retained; all 112 M-C sealed files verified unchanged.
+
+The following research paragraph is the earlier Atari800 checkpoint; its
+roughly 10% model shared only within each generation, unlike the new model.
+
 In progress in `Frostbite — ISSUE #39`, branch
 `codex/fix/39-atari800-performance` from merged main `9c55090` (PR #40).
 The masked0.0.9 MSX runtime is unchanged. Local A-D remain retired.

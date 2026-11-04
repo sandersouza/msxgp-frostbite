@@ -1,5 +1,14 @@
 # Issue #39 continuation — Atari800 research checkpoint
 
+## Superseding native architecture handoff
+
+Current measured decision: `docs/native-band-feasibility.md`. Implementation
+continues in #42, `Frostbite — ISSUE #42`, with exclusive checkout transfer
+defined in `docs/handoffs/issue-42.md`. After that transfer this #39 chat stops
+mutating the checkout. #39 remains open/In progress: original cadence is unmet.
+The historical Atari800 checkpoint below does not describe the current private
+M-C/N-B artifacts. Main's public masked0.0.9 runtime is still unchanged.
+
 Exclusive owner: `Frostbite — ISSUE #39`, checkout
 `/Users/sandersouza/Developer/msx-gamePorts/frostbite`, branch
 `codex/fix/39-atari800-performance` from merged main
