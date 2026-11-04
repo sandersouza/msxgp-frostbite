@@ -15,6 +15,17 @@ chat/branch or resume predecessor edits.
 
 ## Current clock diagnostic checkpoint
 
+Owner feedback supersedes diagnostic-review status: perceived excessive speed
+and skipped pictures.42is now In progress; no cadence acceptance. Read
+docs/fixed-clock-cadence-feedback.md and its bound reference. Original counters
+confirm one update/frame after startup; active pictures skip2..9states(mean6.043).
+Actual owner emulator speed/binary hash remain unverified. World preparation is
+100566of201312mean foreground cycles per active snapshot in the new clocked
+pipeline. Read-only replay/instrumentation stays under outputs/presentation/cadence-u/;
+all original measurement buffers remain byte-identical. ROM0.0.10is unchanged.
+Next: world/preparation architecture and regular presentation, not an arbitrary
+simulation slowdown. The old Q ledger is not the clocked renderer's cost ledger.
+
 Published [v0.0.10-fixed-clock-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
 from clean source `854dcf462b56274f60f1f0cf978bc487d124e57a`. Four exact assets
 were downloaded again and verified. Public receipts:

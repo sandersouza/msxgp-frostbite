@@ -9,6 +9,22 @@ graphics, colors, actors, viewport, input order and audio event timing. The Atar
 
 ## Measured checkpoint — 2026-11-04
 
+### Owner cadence feedback
+
+After0.0.10delivery the owner reports excessive speed, cadence unlike the original
+and apparent picture skipping. Gameplay cadence is not accepted;42returns to
+In progress. Controlled replay confirms2..9original states between active
+pictures (mean6.043), with normal29-frame jumps shown in only4..5pictures.
+An original-frame-counter audit and2253CPU/allRAM recheck found one source update
+per original frame after startup, not a doubled update rate. Real acceleration
+has not been reproduced in the owner's setup. Do not halve simulation as an
+unmeasured workaround. New disjoint profiling puts world preparation at100566
+of201312mean foreground cycles per active snapshot. See
+docs/fixed-clock-cadence-feedback.md and references/fixed-clock-cadence-feedback.json.
+No ROM bytes or published attachments changed in this investigation.
+
+### Fixed-clock diagnostic delivery
+
 The public F→I/J/K/L/M/contact14/P/Q chain now reproduces sealed Q exactly.
 The T independent-clock diagnostic runs59.92275NTSC/59.92467PALlogical steps/s
 in input-only original routes, with4507CPU/allRAM and1355coherent-picture checks.
