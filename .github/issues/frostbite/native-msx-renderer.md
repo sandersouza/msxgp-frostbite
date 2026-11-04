@@ -9,6 +9,23 @@ graphics, colors, actors, viewport, input order and audio event timing. The Atar
 
 ## Measured checkpoint — 2026-11-04
 
+The public F→I/J/K/L/M/contact14/P/Q chain now reproduces sealed Q exactly.
+The T independent-clock diagnostic runs59.92275NTSC/59.92467PALlogical steps/s
+in input-only original routes, with4507CPU/allRAM and1355coherent-picture checks.
+Active drawing remains9.79790/9.69859fps: original-speed presentation is unmet.
+It is a diagnostic, not the final performance solution. All original colors,
+actors, player and mask remain. R's marginal header/igloo path is preserved and
+rejected. See docs/fixed-clock-diagnostic.md and the0.0.10human tests. Do not close
+#42/#39/#15/#16 from the source-clock result.
+
+Independent review found no demonstrated kernel blocker and required directed
+hardware-IRQ boundary alignment in addition to natural replay. The new harness
+checks nine mapper/VDP/stream/snapshot boundaries, complete main/alternate/index
+registers, SP and bank after RETI; an AF2 mutation must fail its oracle. Manual
+listening, alternating controllers, unseen levels and physical MSX remain pending.
+
+### Preserved Q measurements
+
 Shared residency O-B is correct but rejected(-6.91%/-6.90%). Prepared ice P-C
 improves4.87%/5.35% against M-C. Eager enemy bands Q-C regress against P-C;
 lazy-key bands Q-E improve2.85% NTSC /3.10% PAL over P-C, or7.85%/8.62% over M-C.
@@ -24,7 +41,8 @@ buffers. Fresh v2 owner receipts and bound reports preserve identical timings.
 The O/P and Q workbooks each contain8278 paired observations and424 cost rows;
 historical M and all previous artifacts are preserved. No manual/listening/
 physical or complete-game acceptance is claimed. Q-E remains an internal test;
-canonical source integration and a useful human ROM/release remain pending.
+At that checkpoint canonical source integration and a useful human ROM/release
+were pending; the current clock diagnostic above supersedes that source gap.
 
 Next: redesign the wider prepare pipeline and its tails. Even zero world work
 would leave66928 mean NTSC cycles, above59736. Further enemy-only changes cannot

@@ -10,11 +10,12 @@ from presentation_contact14 import read_field,repack_bank
 from render_build import symbols
 
 
-def build(out):
+def build(out, *, base=None, allocation=None):
     if out.exists():raise ValueError('immutable output already exists')
-    base=ROOT/'outputs/presentation/playfield-m-c/build'
-    metadata=verified_bytes(base/'build.json',COMPANIONS['build.json'])
-    symsraw=verified_bytes(base/'presentation.sym',COMPANIONS['presentation.sym'])
+    historical = base is None
+    base=ROOT/'outputs/presentation/playfield-m-c/build' if historical else Path(base)
+    metadata=verified_bytes(base/'build.json',COMPANIONS['build.json']) if historical else (base/'build.json').read_bytes()
+    symsraw=verified_bytes(base/'presentation.sym',COMPANIONS['presentation.sym']) if historical else (base/'presentation.sym').read_bytes()
     meta=json.loads(metadata)
     parent=verified_bytes(base/meta['rom']['filename'],PARENT_SHA)
     codec=meta['tables']['codec']
@@ -26,7 +27,7 @@ def build(out):
     (out/'symbols.inc').write_text('\n'.join(f'{n} EQU ${v:04X}' for n,v in sorted(s.items()) if '.' not in n)+'\n')
     source=ROOT/'src/presentation_contact14.asm'
     run=subprocess.run([str(verified_tool('sjasmplus')),'--nologo',f'--inc={out}',
-        f'--raw={out/"patch.bin"}',f'--sym={out/"patch.sym"}',str(source)],cwd=ROOT,capture_output=True,text=True)
+        f'--raw={out/"patch.bin"}',f'--sym={out/"patch.sym"}', f'--lst={out/"patch.lst"}',str(source)],cwd=ROOT,capture_output=True,text=True)
     (out/'assembler.log').write_text(run.stdout+run.stderr)
     if run.returncode:raise ValueError(run.stdout+run.stderr)
     q=symbols(out/'patch.sym');code=(out/'patch.bin').read_bytes()
@@ -60,7 +61,7 @@ def build(out):
             before.extend(raw);after.extend(decoded)
         rom[bank*16384:(bank+1)*16384]=data
         arena.append(dict(bank=bank,original_sha256=sha(parent[bank*16384:(bank+1)*16384]),packed_sha256=sha(data)))
-    allocation=json.loads(verified_bytes(ROOT/'outputs/presentation/direct-playfield-i/tables.json',COMPANIONS['i_allocation']))
+    allocation=json.loads(verified_bytes(ROOT/'outputs/presentation/direct-playfield-i/tables.json',COMPANIONS['i_allocation'])) if allocation is None else json.loads(Path(allocation).read_text())
     for bank,address,size in allocation['allocations']:
         at=bank*16384+address-0x8000
         if rom[at:at+size]!=parent[at:at+size]:

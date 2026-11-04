@@ -17,6 +17,8 @@ from presentation_experiment_evidence import owner_binding,validate_probe
 
 def check(build,out,family,*,audit_only=False):
     meta=json.loads((build/'build.json').read_text());rom=(build/meta['rom']['filename']).read_bytes()
+    if 'fixed_clock' in meta:
+        raise ValueError('fixed-clock ROM requires an interrupt-driven route, not render-driven F timing')
     if hashlib.sha256(rom).hexdigest()!=meta['rom']['sha256']:raise ValueError('ROM identity mismatch')
     s=symbols(build/'presentation.sym')
     lazy=meta.get('direct_enemy',{}).get('lazy_keys',False)
@@ -38,6 +40,9 @@ def check(build,out,family,*,audit_only=False):
  if {{$::tracking}} {{incr ::calls(primitive)}}
  begin_probe_cost primitive
 }}\n'''
+            if 'region_pipeline' in meta:
+                from presentation_region_pipeline import declare_ram,ram_code
+                text=declare_ram(text,ram_code(meta,rom),'fail_probe')
             text+=f'''
 set pkbands [open {{{out/'band-records.bin'}}} wb]
 set pkfills [open {{{out/'fill-events.tsv'}}} w]

@@ -13,6 +13,33 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## Current clock diagnostic checkpoint
+
+Public F→I/J/K/L/M/contact14/P/Q producers reproduce sealed Q byte-for-byte.
+R's native header/igloo/player-way path is correct but marginal and rejected
+as a human candidate. T separates the original scheduler/native/input/PSG clock
+from coherent full-picture preparation. Read docs/fixed-clock-diagnostic.md and
+the0.0.10human tests first. Selected ROM SHA
+`29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e`.
+
+Measured source59.92275NTSC/59.92467PALsteps/s; active pictures9.79790/9.69859fps.
+Do not call this smooth/original-speed graphics or close42/39/15/16. Default
+original sprites/player/mask, pixels and mechanics remain protected. Independent
+review requested real IRQ boundary alignment; the added harness tests nine
+mapper/address/stream/snapshot boundaries and actual register/bank/VRAM return
+invariants. F3/F4 mixed-pixel hypothesis was retracted; polling moved to the
+prepare boundary as optional cleanup. Source F1/F2 input is unchanged.
+
+Local artifacts: outputs/presentation/fixed-clock-t/. Preserve all previous
+immutable controls and trial failures. Workbook continuation in
+outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-T preserves all Q cells/features.
+Current exclusive checkout owner remains this issue42chat/branch. Next work:
+reduce preparation/cache replacement tails across several source ticks and
+measure active complete-picture cadence separately from logical-step cadence.
+Manual audio, alternating controls and physical acceptance remain pending.
+
+## Earlier Q checkpoint
+
 Latest implementation commit before review correction:1c25578. O-B rejected,
 P-C correct internal packet baseline, Q-C rejected versus P, Q-E lazy actor bands
 gain2.85% NTSC /3.10% PAL over P. Q-E ROM SHA

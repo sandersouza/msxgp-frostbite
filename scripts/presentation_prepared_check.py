@@ -39,6 +39,12 @@ def check(build,out,limit=2115):
             if 'direct_enemy' in meta:
                 from presentation_direct_enemy import declare_ram
                 text=declare_ram(text)
+            if 'region_pipeline' in meta:
+                from presentation_region_pipeline import declare_ram,ram_code
+                text=declare_ram(text,ram_code(meta,rom),'fail_matrix')
+            if 'fixed_clock' in meta:
+                from presentation_fixed_clock import declare_ram,ram_code
+                text=declare_ram(text,ram_code(meta,rom),'fail_matrix')
             text=text.replace('set captures [open ',f'set pkbands [open {{{out/"band-records.bin"}}} wb]\nset captures [open ',1)
             text=text.replace('incr ::index','puts -nonewline $::pkbands "[debug read_block memory 0xC1D1 32][debug read_block memory 0xE5C0 32][debug read_block memory 0xC1F1 8]"\n        incr ::index')
             text=text.replace('close $::captures;close $::timing;','close $::pkbands;close $::captures;close $::timing;')

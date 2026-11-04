@@ -9,14 +9,15 @@ from presentation_band_spike import apply_patch,sha,verified_bytes,COMPANIONS
 from render_build import symbols
 
 
-def build(out,*,direct_enemy=False,lazy_enemy=False):
+def build(out,*,direct_enemy=False,lazy_enemy=False,base=None,allocation=None,i_symbols=None):
     if lazy_enemy and not direct_enemy:raise ValueError('lazy enemies require direct-band mode')
     if out.exists():raise ValueError('immutable output directory already exists')
-    base=ROOT/'outputs/presentation/prepared-bands-p/codec-b'
-    rawmeta=verified_bytes(base/'build.json','524a84378bdff9ab69346a444b5b8ba80daefb37791bbdcda148ee167e19d0fd')
-    rawsyms=verified_bytes(base/'presentation.sym','233a80b450b3a143ae8dfd951ee35cd31490085a952962ae2481e1f3b39a2ff2')
+    historical = base is None
+    base=ROOT/'outputs/presentation/prepared-bands-p/codec-b' if historical else Path(base)
+    rawmeta=verified_bytes(base/'build.json','524a84378bdff9ab69346a444b5b8ba80daefb37791bbdcda148ee167e19d0fd') if historical else (base/'build.json').read_bytes()
+    rawsyms=verified_bytes(base/'presentation.sym','233a80b450b3a143ae8dfd951ee35cd31490085a952962ae2481e1f3b39a2ff2') if historical else (base/'presentation.sym').read_bytes()
     proof=ROOT/'outputs/presentation/direct-playfield-i/tables.json'
-    allocation=json.loads(verified_bytes(proof,COMPANIONS['i_allocation']))
+    allocation=json.loads(verified_bytes(proof,COMPANIONS['i_allocation'])) if allocation is None else json.loads(Path(allocation).read_text())
     if not any(b==7 and a<=0xA10C and z>=0xAA68 for b,a,z in allocation['regions']):
         raise ValueError('uncertified bank7 code range')
     if any(b==7 and a<0xAA68 and a+n>0xA10C for b,a,n in allocation['allocations']):
@@ -29,7 +30,7 @@ def build(out,*,direct_enemy=False,lazy_enemy=False):
     extra_sources=[]
     if direct_enemy:
         from presentation_direct_enemy import segments
-        raw_i=verified_bytes(ROOT/'outputs/presentation/direct-playfield-i/patch.sym',COMPANIONS['i_symbols'])
+        raw_i=verified_bytes(ROOT/'outputs/presentation/direct-playfield-i/patch.sym',COMPANIONS['i_symbols']) if i_symbols is None else Path(i_symbols).read_bytes()
         (out/'input-i.sym').write_bytes(raw_i)
         s.update({n:v for n,v in symbols(out/'input-i.sym').items() if n.startswith('i_')})
         roles=bytearray()
@@ -58,7 +59,7 @@ def build(out,*,direct_enemy=False,lazy_enemy=False):
         entry.write_text('    DEFINE WITH_DIRECT_ENEMY\n'+('    DEFINE WITH_LAZY_ENEMY\n' if lazy_enemy else '')+'    INCLUDE "presentation_prepared_ice.asm"\n')
         extra_sources=[ROOT/'src/presentation_direct_enemy_body.asm',ROOT/'src/presentation_direct_enemy_helpers.asm',ROOT/'scripts/presentation_direct_enemy.py']
     run=subprocess.run([str(verified_tool('sjasmplus')),'--nologo',f'--inc={out}',f'--inc={ROOT/"src"}',
-        f'--raw={out/"patch.bin"}',f'--sym={out/"patch.sym"}',str(entry)],cwd=ROOT,capture_output=True,text=True)
+        f'--raw={out/"patch.bin"}',f'--sym={out/"patch.sym"}', f'--lst={out/"patch.lst"}',str(entry)],cwd=ROOT,capture_output=True,text=True)
     (out/'assembler.log').write_text(run.stdout+run.stderr)
     if run.returncode:raise ValueError(run.stdout+run.stderr)
     q=symbols(out/'patch.sym');code=(out/'patch.bin').read_bytes()

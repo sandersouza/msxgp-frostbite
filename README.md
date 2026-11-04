@@ -5,7 +5,18 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
+The [v0.0.10 fixed-clock diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
+separates original gameplay timing from drawing. Input-only MSX1 NTSC/PAL routes
+run about59.92original logical steps/s, with exact source CPU/RAM and committed
+graphics checks. **Active drawing is only about9.8/9.7fps; this is not a final
+performance solution.** Coherent snapshots preserve colors, actors, player and
+the black mask, but visible motion and feedback are coarse. Read the
+[human tests](docs/releases/v0.0.10-fixed-clock-diagnostic.md) and
+[measured architecture limits](docs/fixed-clock-diagnostic.md). Issue42 remains
+open for a faster complete-picture pipeline; original-time simulation does not
+certify original-time presentation, all levels, audio listening or real hardware.
+
+The earlier [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
 reduces repeated font-mask, actor-role and igloo work while retaining complete
 graphics and source updates. The same measured blue-ice input sequence gains
 about 2–3%; **original-speed gameplay remains unfinished**, with slowdown and
