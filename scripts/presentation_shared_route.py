@@ -10,9 +10,13 @@ import sys
 from environment import ROOT
 from presentation_fixed_ownership import audit_row
 from presentation_shared_ownership import audit_active_references, audit_pool, constructor
+from presentation_experiment_evidence import owner_binding,validate_probe
 
 
 def check(build, out, family):
+    meta=json.loads((build/'build.json').read_text())
+    if hashlib.sha256((build/meta['rom']['filename']).read_bytes()).hexdigest()!=meta['rom']['sha256']:
+        raise ValueError('ROM identity mismatch')
     original_run = subprocess.run
     def intercepted(args,*a,**kw):
         if isinstance(args,list) and '-script' in args and 'openmsx' in Path(args[0]).name.lower():
@@ -46,6 +50,7 @@ debug set_bp {s['paced_wait']} {{}} {{
         subprocess.run = original_run
         sys.argv = argv
     frames = 2253 if family == 'ntsc' else 1886
+    validate_probe(out,meta['rom']['sha256'],frames)
     pools = (out/'residency.bin').read_bytes()
     captures = (out/'captures.bin').read_bytes()
     if len(pools) != frames*7246 or len(captures) != frames*49304:
@@ -62,7 +67,10 @@ debug set_bp {s['paced_wait']} {{}} {{
     result = dict(complete=True,frames=frames,physical_reference_protection=True,pool_audits=audits,
         wrapper_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         adapter_sha256=expected,scope='Same F timing/input adapter plus shared-RAM and independent physical audits; no human/physical acceptance.')
-    (out/'shared-check.json').write_text(json.dumps(result,indent=2)+'\n')
+    result.update(owner_binding(out,meta['rom']['sha256'],frames,'shared'))
+    target=out/'shared-check-v2.json'
+    if target.exists():raise ValueError('immutable physical audit receipt already exists')
+    target.write_text(json.dumps(result,indent=2)+'\n')
     print(dict(complete=True,frames=frames,shared_physical_checks=True))
 
 

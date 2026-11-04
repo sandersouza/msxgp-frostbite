@@ -10,6 +10,7 @@ import types
 from environment import ROOT
 from presentation_band_report import validate_sequence
 from presentation_band_spike import sha,verified_bytes
+from presentation_experiment_evidence import validate_probe,validate_owner_receipt,validate_scene_receipt
 
 
 def measured_io_cost(byte_count,calls,fill_calls,fill_bytes=None):
@@ -21,7 +22,8 @@ def measured_io_cost(byte_count,calls,fill_calls,fill_bytes=None):
     return 29*(byte_count-fill_bytes)+53*(calls-fill_calls)+33*fill_bytes+55*fill_calls
 
 
-def report(root,build,suffix,kind,scene_suffix=None):
+def report(root,build,suffix,kind,scene_suffix=None,output_suffix=None):
+    output_suffix=output_suffix or suffix
     base=ROOT/'outputs/presentation/playfield-m-c'
     old=json.loads(verified_bytes(base/'analysis.json','2679aa50049a9995e9329c61a225c94ba6bd55ccabb6dd31c3a4e648c7b0f485'))
     analyzer=base/'analyze.py'
@@ -51,7 +53,7 @@ def report(root,build,suffix,kind,scene_suffix=None):
         if link.is_symlink():
             if link.resolve()!=target:raise ValueError('report input alias changed')
         else:link.symlink_to(target,target_is_directory=True)
-    if any((root/(name+'-'+suffix+'.json')).exists() for name in ('analysis','comparison')):
+    if any((root/(name+'-'+output_suffix+'.json')).exists() for name in ('analysis','comparison')):
         raise ValueError('immutable report already exists')
     module.ROOT=inputs
     meta=json.loads((build/'build.json').read_text())
@@ -65,8 +67,8 @@ def report(root,build,suffix,kind,scene_suffix=None):
         validate_sequence(before,family,old['candidate_rom_sha256'],(base/(family+'-a')/'captures.bin').stat().st_size)
         if len(before['records'])!=len(after['records']):raise ValueError('paired frame count differs')
         receipt=json.loads((directory/'route-research.json').read_text())
-        probe=json.loads((directory/'check.json').read_text())
-        extra=json.loads((directory/(kind+'-check.json')).read_text())
+        probe=validate_probe(directory,candidate_sha,len(after['records']))
+        extra=validate_owner_receipt(directory,candidate_sha,len(after['records']),kind)
         if not extra['complete'] or extra['frames']!=len(after['records']):raise ValueError('missing physical ownership checks')
         if receipt['expanded_private_profiler_sha256']!='6ef44410eb45ad5f5aba995dfda913f9336a6354245931b949ca9e83c732b5ed':raise ValueError('unrecognized pixel/timing oracle')
         if probe['frames']!=len(after['records']) or probe['rom_sha256']!=candidate_sha:raise ValueError('pixel/timing receipt count or ROM differs')
@@ -92,19 +94,20 @@ def report(root,build,suffix,kind,scene_suffix=None):
     density=[]
     scene_suffix=scene_suffix or suffix
     for population,new,prior in [('all',root/('density-'+scene_suffix),base/'density-m')]:
-        check=json.loads((new/'check.json').read_text())
+        check=validate_scene_receipt(new,candidate_sha,1920,kind)
         if not check['complete'] or check['cases']!=1920:raise ValueError('incomplete dense scenes')
         a,b=[[int(l.split()[1]) for l in (p/'timing.tsv').read_text().splitlines()] for p in (prior,new)]
         if len(a)!=1920 or len(b)!=1920:raise ValueError('incomplete density timings')
         density.append(dict(population=population,frames=1920,baseline=statistics.mean(a),candidate=statistics.mean(b),reduction=1-statistics.mean(b)/statistics.mean(a)))
-    matrix=json.loads((root/('matrix-'+scene_suffix)/'check.json').read_text())
+    matrix=validate_scene_receipt(root/('matrix-'+scene_suffix),candidate_sha,2115,kind)
     if not matrix['complete'] or matrix['cases']!=2115:raise ValueError('incomplete original scene matrix')
     summary=dict(baseline_rom_sha256=old['candidate_rom_sha256'],candidate_rom_sha256=candidate_sha,
         rows=rows,checks=checks,density=density,matrix_cases=2115,matrix_different_frames=matrix['different_frames'],
         source_sha256=sha(Path(__file__).read_bytes()),
+        evidence_validator_sha256=sha((ROOT/'scripts/presentation_experiment_evidence.py').read_bytes()),
         scope='Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.')
-    (root/('comparison-'+suffix+'.json')).write_text(json.dumps(summary,indent=2)+'\n')
-    (root/('analysis-'+suffix+'.json')).write_text(json.dumps(dict(results=results,candidate_rom_sha256=candidate_sha,model_scope=summary['scope']),indent=2)+'\n')
+    (root/('comparison-'+output_suffix+'.json')).write_text(json.dumps(summary,indent=2)+'\n')
+    (root/('analysis-'+output_suffix+'.json')).write_text(json.dumps(dict(results=results,candidate_rom_sha256=candidate_sha,model_scope=summary['scope']),indent=2)+'\n')
     print(json.dumps([r for r in rows if r['population']=='active'],indent=2))
 
 
@@ -113,4 +116,5 @@ if __name__=='__main__':
     parser.add_argument('--root',type=Path,required=True);parser.add_argument('--build',type=Path,required=True)
     parser.add_argument('--suffix',required=True);parser.add_argument('--kind',choices=('shared','prepared'),required=True)
     parser.add_argument('--scene-suffix')
-    args=parser.parse_args();report(args.root.resolve(),args.build.resolve(),args.suffix,args.kind,args.scene_suffix)
+    parser.add_argument('--output-suffix')
+    args=parser.parse_args();report(args.root.resolve(),args.build.resolve(),args.suffix,args.kind,args.scene_suffix,args.output_suffix)

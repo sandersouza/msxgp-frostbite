@@ -9,23 +9,27 @@ graphics, colors, actors, viewport, input order and audio event timing. The Atar
 
 ## Measured checkpoint — 2026-11-04
 
-Shared residency O-B is correct but rejected: active cadence regresses6.91% NTSC
-and6.90% PAL. Prepared fixed ice packets P-C improve4.87%/5.35%, including the
-cost of a lossless contact-index codec. Active source cadence is32.70 NTSC /
-34.23 PAL updates/s; original speed remains unfinished. P-C stays an internal
-checkpoint, with canonical source integration and human delivery still pending.
+Shared residency O-B is correct but rejected(-6.91%/-6.90%). Prepared ice P-C
+improves4.87%/5.35% against M-C. Eager enemy bands Q-C regress against P-C;
+lazy-key bands Q-E improve2.85% NTSC /3.10% PAL over P-C, or7.85%/8.62% over M-C.
+Active source cadence33.6350 /35.2938 updates/s remains below the original goal.
+NTSC whole-frame mean102843 cycles, P95 219663; complete-route maximum484270.
 
-Validation:947936 actual Z80 packed-field queries,30720 complete strip cases,
-2115 original scenes,1920 density scenes,4139 original-model images and4508
-CPU/all-RAM route checkpoints. Fixed ownership/active-display/IO guards pass.
-The new local O/P workbook records8278 paired observations and424 cost rows;
-historical M workbook preserved. No manual/physical acceptance claimed.
+Q validation:209088 actual Z80 actor cases,2115 original scenes,1920 dense
+synthetic scenes,4139 source-model images,4508 source CPU/all-RAM checkpoints.
+The complete host suite passes531 tests. Independent review found an evidence
+binding gap; corrected reporters reject mixed-ROM proofs and altered audited
+buffers. Fresh v2 owner receipts and bound reports preserve identical timings.
 
-Next implementation: direct enemy bands, the largest remaining playfield cost
-(21499 NTSC cycles per active frame). Preserve geometry, copy/wrap behavior and
-the existing ice-overlap path while replacing generic mono-cell publication.
-See `docs/prepared-band-progress.md` and the direct-enemy design/plan. This
-checkpoint does not satisfy #39's original-speed goal or close #42.
+The O/P and Q workbooks each contain8278 paired observations and424 cost rows;
+historical M and all previous artifacts are preserved. No manual/listening/
+physical or complete-game acceptance is claimed. Q-E remains an internal test;
+canonical source integration and a useful human ROM/release remain pending.
+
+Next: redesign the wider prepare pipeline and its tails. Even zero world work
+would leave66928 mean NTSC cycles, above59736. Further enemy-only changes cannot
+solve the complete-frame target. See docs/direct-enemy-progress.md and
+docs/issue-42-review.md. Keep draft PR43 stacked on41; #39/#42 remain open.
 
 ## Goal and first implementation boundary
 

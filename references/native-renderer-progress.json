@@ -604,12 +604,15 @@
     ],
     "matrix_cases": 2115,
     "matrix_different_frames": 0,
-    "source_sha256": "c920632e98a5d4256c2b9777f18aa3342655d9821119add5bbe4cc53b22dec8f",
+    "source_sha256": "65476316f9b0bf48ecedf8669ffc88db2fa9ac5601168856aee394d1c8b48322",
+    "evidence_validator_sha256": "c0cc2a957a0defaf4a3c020f4aa5358fc960783b0100ec891b57a10cd688a625",
     "scope": "Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.",
     "evidence_sha256": {
       "matrix-c-full/check.json": "4ccc8ee3ee87fd7c9a4b8021ca4319a4b4981737e8a09c7f85e36af15d6d46df",
       "density-c/check.json": "f3f11a6dbd33d08925c038a74e1f0b7990db3fb01c4f2b7dd6eaa062eeb01322",
-      "native-c/check.json": "8bdfece20f4bce5bb7c781d903c9d643ecfb8a55437df415d058da083e1d4ebb"
+      "native-c/check.json": "8bdfece20f4bce5bb7c781d903c9d643ecfb8a55437df415d058da083e1d4ebb",
+      "ntsc-c/prepared-check-v2.json": "ab61fd831d0e7e14fdfc6dc48d6a6bd7cb45dd1ac2069f21e4e709917104d6a3",
+      "pal-c/prepared-check-v2.json": "4d93a45a940a9d1e0a50a6fa804830d8f482c1cc377c5495d34efa92772a4210"
     }
   },
   "direct_enemy_lazy": {
@@ -806,12 +809,15 @@
     ],
     "matrix_cases": 2115,
     "matrix_different_frames": 0,
-    "source_sha256": "c920632e98a5d4256c2b9777f18aa3342655d9821119add5bbe4cc53b22dec8f",
+    "source_sha256": "65476316f9b0bf48ecedf8669ffc88db2fa9ac5601168856aee394d1c8b48322",
+    "evidence_validator_sha256": "c0cc2a957a0defaf4a3c020f4aa5358fc960783b0100ec891b57a10cd688a625",
     "scope": "Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.",
     "evidence_sha256": {
       "matrix-e/check.json": "0f18ae0d63d945bec8877d4a4bff922ecb7a48ea8e32431e8237745a01e0b7f9",
       "density-e/check.json": "f19974e941dd6cbf09a3b51023f06bae098a2dd6dd1d6fa5a485701792e3ce53",
-      "native-e/check.json": "e6c4cf19585274a9e3c175c5106e43db14a660103a0c8ffe8f2770172f1936cd"
+      "native-e/check.json": "e6c4cf19585274a9e3c175c5106e43db14a660103a0c8ffe8f2770172f1936cd",
+      "ntsc-e/prepared-check-v2.json": "2d13e4deb0842328229bfd0b7b24dcc50c338e330688eff6bc8b6fa4ec78f82e",
+      "pal-e/prepared-check-v2.json": "7380b9bb2106c25053560e3cb6f8fb486b2d3e2e5efd50f24bca77c4353c434e"
     }
   }
 }

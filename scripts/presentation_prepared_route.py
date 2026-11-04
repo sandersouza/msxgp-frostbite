@@ -12,9 +12,10 @@ from presentation_fixed_ownership import audit_active,audit_row
 from presentation_prepared_ownership import decorate_owners
 from presentation_shared_ownership import constructor
 from render_build import symbols
+from presentation_experiment_evidence import owner_binding,validate_probe
 
 
-def check(build,out,family):
+def check(build,out,family,*,audit_only=False):
     meta=json.loads((build/'build.json').read_text());rom=(build/meta['rom']['filename']).read_bytes()
     if hashlib.sha256(rom).hexdigest()!=meta['rom']['sha256']:raise ValueError('ROM identity mismatch')
     s=symbols(build/'presentation.sym')
@@ -56,11 +57,13 @@ debug set_bp {s['pk_load_entry']} {{}} {{
             if lazy:text=text.replace('[debug read_block memory 0xCCA0 6]','[debug read_block memory 0xCCA0 6][debug read_block memory 0xE800 32]')
             script.write_text(text)
         return original_run(args,*a,**kw)
-    argv=sys.argv;sys.argv=[str(adapter),str(build),str(out),family]
-    subprocess.run=intercepted
-    try:runpy.run_path(str(adapter),run_name='__main__')
-    finally:subprocess.run=original_run;sys.argv=argv
+    if not audit_only:
+        argv=sys.argv;sys.argv=[str(adapter),str(build),str(out),family]
+        subprocess.run=intercepted
+        try:runpy.run_path(str(adapter),run_name='__main__')
+        finally:subprocess.run=original_run;sys.argv=argv
     frames=2253 if family=='ntsc' else 1886
+    validate_probe(out,meta['rom']['sha256'],frames)
     captures=(out/'captures.bin').read_bytes();bands=(out/'band-records.bin').read_bytes()
     if len(captures)!=frames*49304 or len(bands)!=frames*width:raise ValueError('incomplete prepared role captures')
     tile=constructor(build)
@@ -77,11 +80,15 @@ debug set_bp {s['pk_load_entry']} {{}} {{
         wrapper_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         physical_owner_audits=True,active_full_page_protection=True,direct_fill_io_instrumented=True,
         scope='Original F native input/timing/pixel oracle plus prepared-role audits; all added contact decoding and direct-CGT IO count in whole frame. No original-time/manual/physical acceptance.')
-    (out/'prepared-check.json').write_text(json.dumps(result,indent=2)+'\n');print(result)
+    result.update(owner_binding(out,meta['rom']['sha256'],frames,'prepared'))
+    target=out/'prepared-check-v2.json'
+    if target.exists():raise ValueError('immutable physical audit receipt already exists')
+    target.write_text(json.dumps(result,indent=2)+'\n');print(result)
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build',type=Path,required=True);parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--family',choices=('ntsc','pal'),required=True)
-    args=parser.parse_args();check(args.build.resolve(),args.out.resolve(),args.family)
+    parser.add_argument('--audit-only',action='store_true')
+    args=parser.parse_args();check(args.build.resolve(),args.out.resolve(),args.family,audit_only=args.audit_only)

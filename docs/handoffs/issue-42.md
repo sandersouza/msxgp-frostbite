@@ -7,6 +7,33 @@ autonomously; routine implementation does not require another approval.
 
 ## Ownership and source
 
+Current exclusive owner is the issue42 fork/thread
+`01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb`, branch
+`codex/feat/42-native-renderer`. Draft PR43 is stacked on PR41. The following
+starting instructions describe the original transfer; do not create a duplicate
+chat/branch or resume predecessor edits.
+
+Latest implementation commit before review correction:1c25578. O-B rejected,
+P-C correct internal packet baseline, Q-C rejected versus P, Q-E lazy actor bands
+gain2.85% NTSC /3.10% PAL over P. Q-E ROM SHA
+`2654da3abdb2fc2624f6485a9104327447e0493f64a864feb56b41212dc5ada9`.
+Active source cadence33.6350 /35.2938 updates/s; original speed remains unmet.
+Read docs/direct-enemy-progress.md and docs/issue-42-review.md first for current
+evidence/representation and review fix. Source canonical integration and useful
+human-ROM delivery remain pending; do not call inherited commits complete source.
+
+Local Q evidence is under outputs/presentation/direct-enemy-q. Use bound reports
+and v2 physical receipts.209088 native cases,2115 source scenes,1920 density
+scenes,4139 original images and4508 CPU/all-RAM points pass;531 host tests pass.
+The Q workbook is under outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-Q,
+SHA`c50df7aa188ff89a16d2ab16ae6c53238ecc32531449375170d220d639151767`.
+M/N/O/P evidence seals were freshly verified unchanged(112/147/220/467 files).
+
+Next: redesign the wider prepare pipeline and its tails. Even zero world work
+leaves66928 mean NTSC cycles, above59736; another enemy-only patch cannot solve
+the target. Source/input/audio, player/mask and original graphics remain protected.
+No human candidate/release was selected from these internal modest-gain tests.
+
 Start only in dedicated fork `Frostbite — ISSUE #42` within the Frostbite
 project, cwd `/Users/sandersouza/Developer/msx-gamePorts/frostbite`. Fork from
 the committed native-band checkpoint on `codex/fix/39-atari800-performance`

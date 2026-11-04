@@ -72,6 +72,10 @@ Local evidence: `outputs/presentation/direct-enemy-q/`, including rejected
 builds and failed checks. `analysis-c.json` and `analysis-e.json` use the same
 authenticated original F route/profiler and M-C analysis as the O/P checkpoint.
 Public aggregate measurements contain hashes, not original-derived assets.
+Bound reports `analysis-c-bound.json`/`analysis-e-bound.json` add strict ROM,
+probe-receipt and raw ownership/fill/scene artifact validation. Fresh v2 audits
+revalidate unchanged captures; every measured record is identical to the earlier
+report. See `docs/issue-42-review.md` for the independent review and correction.
 
 The Q workbook preserves the M and O/P workbooks. It contains8278 paired frame
 observations,424 stage/function rows, formula-backed summaries and an editable
@@ -88,8 +92,9 @@ video-frame budget. Further enemy-only work cannot solve the whole-frame target.
 The next design must address the wider prepare pipeline and its large tails;
 source cadence and correctness remain the acceptance criteria.
 
-Independent branch review and public canonical-build integration remain required
-before selecting a human ROM. The current builder authenticates a sealed local
+Independent branch review is complete and its evidence-binding finding is fixed;
+public canonical-build integration remains required before selecting a human ROM.
+The current builder authenticates a sealed local
 M-C/contact14 prerequisite; inherited source-commit fields identify ancestors,
 not a self-contained canonical release source. Keep #39/#15/#16 open, preserve
 all controls, and publish the selected useful candidate as a new prerelease
