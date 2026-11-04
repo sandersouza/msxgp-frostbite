@@ -21,8 +21,9 @@ also protects already prepared rows while later rows are allocated. A row's
 unchanged identity retains its slot list and decoded names. Source render failure
 is fatal and cannot present a partly prepared page.
 
-Keys are exact raw pattern ID plus color. Hash lookup is bounded to 64 slots;
-clock eviction is bounded to 64 probes and removes the old hash membership.
+Keys are exact raw pattern ID plus color and bank. A 2048-byte direct raw-ID
+head table selects linked physical variants, bounded to 128 probes. Clock
+eviction is bounded to 64 probes and removes the old raw-ID chain membership.
 Physical metadata still holds full six-byte tag9 keys for independent checking
 and enemy fusion. Old-key recovery must use the referenced physical ID's page
 bit, rather than the target generation. Decoded NAME programs map local codes
@@ -31,7 +32,12 @@ for these changed rows. Unchanged row identities retain their current cache.
 
 Use proven-unreachable bank7 A10C..AA68 for code and authenticated resident
 padding for mapper trampolines. Runtime book-keeping explicitly occupies a
-declared bounded portion of E800..EDFF; remaining EDFF/F33F gap stays guarded.
+declared E800..F23F region (2624 bytes); F240..F33F stays guarded. Builder review
+verified 2049 patterns. The full-template target test subsequently exposed a
+valid zero raw key, so F202 supplies its dedicated head alongside cursors.
+Slot links/refs/colors each consume128 bytes; eight
+16-byte row lists128 bytes; cursors/scratch64 bytes. Existing metadata supplies
+evicted raw IDs, avoiding duplicated key arrays.
 Page3 RAM remains selected and DI is retained. No low-page RAM assumptions.
 
 Independent validation follows actual displayed NAME references when protecting

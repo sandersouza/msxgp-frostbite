@@ -7,6 +7,26 @@ resuming GitHub. Original Atari 2600 mechanics remain authoritative; preserve
 graphics, colors, actors, viewport, input order and audio event timing. The Atari
 400/800 fan port and Seaquest are implementation references, not gameplay specs.
 
+## Measured checkpoint — 2026-11-04
+
+Shared residency O-B is correct but rejected: active cadence regresses6.91% NTSC
+and6.90% PAL. Prepared fixed ice packets P-C improve4.87%/5.35%, including the
+cost of a lossless contact-index codec. Active source cadence is32.70 NTSC /
+34.23 PAL updates/s; original speed remains unfinished. P-C stays an internal
+checkpoint, with canonical source integration and human delivery still pending.
+
+Validation:947936 actual Z80 packed-field queries,30720 complete strip cases,
+2115 original scenes,1920 density scenes,4139 original-model images and4508
+CPU/all-RAM route checkpoints. Fixed ownership/active-display/IO guards pass.
+The new local O/P workbook records8278 paired observations and424 cost rows;
+historical M workbook preserved. No manual/physical acceptance claimed.
+
+Next implementation: direct enemy bands, the largest remaining playfield cost
+(21499 NTSC cycles per active frame). Preserve geometry, copy/wrap behavior and
+the existing ice-overlap path while replacing generic mono-cell publication.
+See `docs/prepared-band-progress.md` and the direct-enemy design/plan. This
+checkpoint does not satisfy #39's original-speed goal or close #42.
+
 ## Goal and first implementation boundary
 
 Build an MSX1-oriented rendering pipeline with a credible complete-frame budget.

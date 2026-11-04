@@ -27,7 +27,7 @@ def kinds(bank,slot,templates=False):
     return (0,) if slot<9 else ((9,) if templates else (0,7)) if slot<41 else (1,)
 
 
-def audit_row(raw,vram,tile,*,templates=False):
+def audit_row(raw,vram,tile,*,templates=False,shared_ice=False):
     if type(templates)is not bool:raise ValueError('explicit fixed/template role selection required')
     if len(raw)!=ROW_BYTES or len(vram)!=16384:raise ValueError('complete fixed metadata, both NAME pages and16KiB VRAM required')
     names=raw[:1536];keys=raw[1536:3840];footer=raw[3840:4104];counts=raw[4104:]
@@ -58,7 +58,12 @@ def audit_row(raw,vram,tile,*,templates=False):
     for offset,identifier in enumerate(names):
         page=offset//768;row=offset%768//32;bank=row//8;column=offset%32
         if identifier<128:
-            if identifier//64!=page or (page,bank,identifier)not in valid:raise ValueError('NAME references another generation or an unpublished fixed role')
+            physical_page=identifier//64
+            physical_key=valid.get((physical_page,bank,identifier))
+            cross_ice=(shared_ice and templates and bank in (1,2)
+                       and physical_key is not None and physical_key[5]==9
+                       and (19 if bank==1 else 9)<=identifier%64<(51 if bank==1 else 41))
+            if physical_key is None or physical_page!=page and not cross_ice:raise ValueError('NAME references another generation or an unpublished fixed role')
             slot=identifier&63
             if bank==0:
                 if slot<8 and row not in (6,7) or 8<=slot<38 and (row!=(slot-8)//10 or column!=5+(slot-8)%10) or slot>=38 and (row!=3+(slot-38)//6 or column!=22+(slot-38)%6):
