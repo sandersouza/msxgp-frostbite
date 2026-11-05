@@ -134,4 +134,3 @@ manual-emulator and physical-hardware evidence remain separate.
 MSX Game Ports project #7. Type: Task (repository native types unavailable).
 Priority P1; size XL; estimate 40 hours, exploratory engineering and validation,
 not a deadline. No new labels, milestones or shared project settings required.
-
