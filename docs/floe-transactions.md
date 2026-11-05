@@ -26,7 +26,7 @@ approximately 59.92 Hz original simulation clock. PAL uses an expanded RAM slot.
 | Distinct jump Y positions presented | 162/234 | 170/234 |
 | Consecutive jump Y runs presented | 188/286 | 196/286 |
 | Grounded landings presented | 14/26 | 9/26 |
-| Endpoint Y presented | 19/26 | 19/26 |
+| Endpoint Y presented | 19/26 | 20/26 |
 | Entirely unpresented animation-pose runs | 3/84 | 2/84 |
 
 NTSC complete-picture throughput improves 6.70% (PAL 5.90%); observed mean foreground cost
