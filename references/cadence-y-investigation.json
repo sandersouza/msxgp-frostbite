@@ -1,0 +1,247 @@
+{
+  "version": "cadence-y-research",
+  "issue": 42,
+  "runtime_changed": false,
+  "selected_candidate": null,
+  "new_release": null,
+  "control": {
+    "source_commit": "2318fe1b5b96e528a1864d43ebca093dd60194ba",
+    "rom_sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+    "release": "v0.0.13-native-lanes-cadence-diagnostic"
+  },
+  "owner_feedback": "Improved, but still far from smooth; not acceptance.",
+  "isolated_candidates": [
+    {
+      "name": "static-sat-tail",
+      "rom_sha256": "449d1517d9d7bbe32315b53fa488fe83e1865b1338038c153e93919d78da4995",
+      "active_pictures_per_second": 18.44196714577659,
+      "active_gaps_ms": {
+        "count": 309,
+        "mean": 54.22415038999843,
+        "median": 50.064742865364664,
+        "p95": 83.44077250041337,
+        "maximum": 116.78495451237936
+      },
+      "decision": "Not selected; P95 unchanged and unseen pose runs increase."
+    },
+    {
+      "name": "empty-player-segment",
+      "rom_sha256": "786ebd324511b26c158622a4a57a2f1075e87bf7635ed4538de2feed5ee15f77",
+      "cold_complete_frame_savings": {
+        "minimum": 0,
+        "mean": 1502.72,
+        "maximum": 3168,
+        "histogram": {
+          "0": 35,
+          "352": 3,
+          "704": 13,
+          "1056": 28,
+          "2100": 112,
+          "2800": 8,
+          "3168": 1
+        }
+      },
+      "ntsc_route": {
+        "control": {
+          "active_pictures_per_second": 18.221384584007605,
+          "active_gaps_ms": {
+            "count": 305,
+            "mean": 54.88057152789979,
+            "median": 50.06474286536644,
+            "p95": 83.44077250041337,
+            "maximum": 116.81708150058157
+          },
+          "source_steps_between_active_pictures": {
+            "count": 305,
+            "mean": 3.265573770491803,
+            "median": 3,
+            "p95": 5,
+            "maximum": 7
+          },
+          "vblank_gap_histogram": {
+            "2": 53,
+            "3": 152,
+            "4": 66,
+            "5": 28,
+            "6": 5,
+            "7": 1
+          },
+          "active_pose_runs": 84,
+          "fully_unpresented_pose_runs": 3
+        },
+        "candidate": {
+          "active_pictures_per_second": 18.221382455216375,
+          "active_gaps_ms": {
+            "count": 305,
+            "mean": 54.88057793955816,
+            "median": 50.06474286536644,
+            "p95": 83.44077250041693,
+            "maximum": 116.81680213546741
+          },
+          "source_steps_between_active_pictures": {
+            "count": 305,
+            "mean": 3.265573770491803,
+            "median": 3,
+            "p95": 5,
+            "maximum": 7
+          },
+          "vblank_gap_histogram": {
+            "2": 53,
+            "3": 152,
+            "4": 66,
+            "5": 28,
+            "6": 5,
+            "7": 1
+          },
+          "active_pose_runs": 84,
+          "fully_unpresented_pose_runs": 3
+        }
+      },
+      "decision": "Retain privately; whole-route cadence unchanged."
+    },
+    {
+      "name": "direct-header-half-columns",
+      "rom_sha256": "dea5011ea8bb860791cd13de967fc33b9e4728dac0de7fbc6f36b8a210608d40",
+      "active_cadence": {
+        "parent": 18.221384584007605,
+        "candidate": 18.803600035182267
+      },
+      "candidate_gaps_ms": {
+        "count": 316,
+        "mean": 53.18130560791344,
+        "median": 50.06474286536289,
+        "p95": 83.40920424243592,
+        "maximum": 100.16105398870678
+      },
+      "headers": {
+        "parent": {
+          "total": {
+            "mean": 11471.05501618123,
+            "maximum": 74315,
+            "p95": 49669
+          },
+          "header_exclusive": {
+            "mean": 6465.860841423948,
+            "maximum": 51028,
+            "p95": 38289
+          },
+          "igloo": {
+            "mean": 5005.194174757282,
+            "maximum": 25043,
+            "p95": 23437
+          }
+        },
+        "candidate": {
+          "total": {
+            "mean": 8426.3875,
+            "maximum": 47819,
+            "p95": 37530
+          },
+          "header_exclusive": {
+            "mean": 3298.059375,
+            "maximum": 24508,
+            "p95": 18185
+          },
+          "igloo": {
+            "mean": 5128.328125,
+            "maximum": 25019,
+            "p95": 23437
+          }
+        },
+        "parent_active_population": 309,
+        "candidate_active_population": 320,
+        "limitation": "Different natural snapshot populations; component means are not paired-frame speedups."
+      },
+      "decision": "Retain privately; P95 unchanged and landing coverage not uniformly better."
+    }
+  ],
+  "combination_measured": false,
+  "ntsc_mean_two_field_budget": {
+    "foreground_plus_ack_cycles": 95808.40129449838,
+    "available_outside_irq_cycles": 72094.46031746031,
+    "deficit_cycles": 23713.940977038073,
+    "required_irq_reduction_per_field_for_mean_fit": 11856.970488519037,
+    "scope": "Arithmetic capacity comparison at observed active means, not a candidate speedup or sufficient tail/commit guarantee."
+  },
+  "ntsc_active_irq_disjoint_cycles": {
+    "native_core_except_input_audio_bodies": 14211.145833333334,
+    "input_sampler_bodies": 1937.8412698412699,
+    "audio_observer_bodies": 571.0,
+    "visible_step": 4764.271825396825,
+    "native_step_wrapper": 542.9999999999982,
+    "charge_steps_wrapper": 120.0,
+    "scheduler": 175.0,
+    "picture_commit": 680.0436507936508,
+    "irq_other": 686.4672619047626
+  },
+  "existing_commit_caps": {
+    "ntsc": 29.961371702156153,
+    "pal": 25.07948685611793
+  },
+  "evidence": [
+    {
+      "path": "outputs/presentation/world-y-research/world-profile.json",
+      "sha256": "5e08237e76ce01eabed942601cedf3a5cfcaabc58e323c3affeb6f7a0c6299a5"
+    },
+    {
+      "path": "outputs/presentation/world-y-research/profile-receipt.json",
+      "sha256": "0632781989c6d4feac4ad32aca30282dfd423ffff93f1e5809be6a6362450c4c"
+    },
+    {
+      "path": "outputs/presentation/world-y-research/SHA256SUMS.json",
+      "sha256": "b0b0a2ea389c09b06faa44139013f49408afc4255cbd601ca4588dfa32edbf5f"
+    },
+    {
+      "path": "outputs/presentation/source-y-research/source-profile.json",
+      "sha256": "68dc9f934cc489e4349a63965aa91825146e439a47352894c8ada5cbd2636d62"
+    },
+    {
+      "path": "outputs/presentation/source-y-research/profile-receipt.json",
+      "sha256": "ee2f6970b02853e10c7a0a9e5672cacb7331f3a0f1e2f271cd782074527f1d89"
+    },
+    {
+      "path": "outputs/presentation/source-y-research/SHA256SUMS.json",
+      "sha256": "5d600efaa5634a9010e942c9add2912b43c7f0344189bdf34220bf2ef20e1ed7"
+    },
+    {
+      "path": "outputs/presentation/player-y-research/receipt.json",
+      "sha256": "a309cc1abab07389022a32c03e5ddb5fbaffc7e2a72a3fc0b21459d5e3c10c18"
+    },
+    {
+      "path": "outputs/presentation/header-y-research/result.json",
+      "sha256": "a3484f8e59776a8b44c7266066cfedfb9d0c6291828202df0f960e6e67de0c69"
+    },
+    {
+      "path": "outputs/presentation/header-y-research/audit.json",
+      "sha256": "f5c491aea50be80414a12ab1e1c34814d493f87815c8c08c4cb0247b3b1b00c2"
+    },
+    {
+      "path": "outputs/presentation/header-y-research/seal.json",
+      "sha256": "655f9e5a8ec913e06011afe74a343a0845a7f04e06f84c2df26cbba7ba99dc24"
+    },
+    {
+      "path": "outputs/presentation/static-y-research/decision.md",
+      "sha256": "1e076a18d977b475527d2333c87f8d2871bce36c3d96e5c6e32215be2b1de93d"
+    },
+    {
+      "path": "outputs/presentation/static-y-research/cadence-b.json",
+      "sha256": "5cf2c9a6a272a93d3bf2bfefe1beb8b4eed1a951d1ba2540e75c47626780c0d1"
+    },
+    {
+      "path": "outputs/presentation/static-y-research/jumps-b.json",
+      "sha256": "2b8e922f4acf84d1685e4a2459ba5596f07a480ce61ea850c6c61870101963e6"
+    }
+  ],
+  "next_step": "Passively profile executed blocks in core_F476, then prove and measure the dominant lowering; continue native floe transaction work.",
+  "limits": [
+    "Private candidates have different validation coverage; see receipts.",
+    "No combined timing, new PAL candidate validation, human acceptance or physical-hardware claim.",
+    "Source CPU/all-RAM, ordered audio and both original input sampling points remain required.",
+    "Header prototype retires generic constructors; preserve sole producer invariant or relocate before canonical integration."
+  ],
+  "workbook": {
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-Y-research/Frostbite-performance-budget-Y-research.xlsx",
+    "sha256": "356167edc58a214cd08a6473fa986cddea8f29966e0ee81edb71175174d136a1",
+    "scope": "Research appendices only; no selected Y ROM."
+  }
+}

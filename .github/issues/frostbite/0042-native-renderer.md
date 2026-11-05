@@ -1,3 +1,19 @@
+<!-- Owner feedback after X, 2026-11-05 -->
+The owner reports noticeable improvement in v0.0.13, but gameplay remains far
+from smooth. Motion acceptance remains open. Status: **In progress**; preserve
+X as the public control. Follow-up measurements rejected three isolated changes
+as standalone delivery: static SAT +1.2%, player selector no cadence gain, direct
+header +3.2% with effectively unchanged P95. No candidate combination or new
+release is claimed. Judge the next candidate by complete-picture gaps and visible
+jump trajectory coverage, not average FPS alone.
+
+Passive profiles preserve all five natural X buffers. Two NTSC fields leave
+about 72,094 cycles outside IRQ service, against 95,808 foreground cycles; the
+mean deficit is 23,714. The translated core excluding input/audio is the largest
+measured source component at 14,211 cycles per active step. Next work profiles
+its executed blocks before proof-backed lowering, alongside native floe work.
+Original mechanics, input/audio sampling and coherent snapshots stay required.
+
 <!-- Native lane X delivery checkpoint, 2026-11-05 -->
 Published [v0.0.13](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic) measures18.2214NTSC/17.2158PAL active pictures/s, compared
 with W10.6131/10.5441. Whole foreground falls182,896→95,808cycles; NTSC gapP95
@@ -6,7 +22,7 @@ Original-speed/smooth-motion acceptance remains OPEN. See
 [the native lane report](https://github.com/sandersouza/msxgp-frostbite/blob/2318fe1b5b96e528a1864d43ebca093dd60194ba/docs/native-lanes-cadence.md) for exact scope,
 reproduction, guards and pending owner tests. Exact-source push/PR CI passed;
 all six release assets were downloaded and byte-verified. Source commit:
-`2318fe1b5b96e528a1864d43ebca093dd60194ba`. Status: In review; performance and
+`2318fe1b5b96e528a1864d43ebca093dd60194ba`. Publication status was In review; performance and
 owner acceptance remain open, with no automatic close or successor handoff.
 
 # Replace generic rendering with an MSX1-native residency and band pipeline

@@ -13,7 +13,43 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## Y bounded investigation — 2026-11-05
+
+Owner feedback on X is partial improvement, not acceptance. Issue #42 remains
+**In progress**. Root owns tracked files; no new runtime is selected or released.
+Read [the investigation](../cadence-y-investigation.md) and its bound reference.
+
+Three isolated candidates remain local: static SAT gains 1.2% with unchanged
+P95; the player selector saves cold-case work but no natural cadence; direct
+header halves header cost but gains only 3.2% overall, leaving P95 unchanged
+and some landing coverage worse. No combination is measured. Preserve the
+sealed world/source/header/player evidence and prior X/W artifacts.
+
+The new passive source profile is byte-identical to X. Per active NTSC source
+step, core excluding input/audio costs 14,211 cycles, visible/contact work 4,764,
+and complete ISR 23,689. Two fields leave about 72,094 cycles versus 95,808 for
+rendering; the 23,714-cycle deficit is arithmetic, not a promised speedup.
+Next: profile executed core_F476 blocks before lowering the dominant patterns;
+retain source CPU/all-RAM, audio order, input sampling points and coherent scenes.
+
+Header integration caveat: generic typed-header callers remain dormant; preserve
+the sole direct-header producer invariant or relocate its code. Full PAL/matrix/
+density/IRQ qualification and a combined whole-route benefit remain required
+before selecting that component for a release. No agent owns pending source.
+
+Workbook research appendices preserve all 21 X sheets and 761,109 cells:
+`outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-Y-research/Frostbite-performance-budget-Y-research.xlsx`,
+SHA256 `356167edc58a214cd08a6473fa986cddea8f29966e0ee81edb71175174d136a1`.
+Two new sheets record isolated candidates and disjoint costs. Formula/input-change,
+raw-aggregate and saved-file preservation audits pass; native Excel was not tested.
+
 ## X native lane diagnostic — 2026-11-05
+
+Owner playtest follow-up: v0.0.13 has noticeable improvement, but gameplay is
+still far from smooth. This is partial positive feedback, not motion acceptance.
+Issue42 returns to **In progress**. Preserve X as the measured/public control;
+the next investigation separates world lane costs and header spikes before
+selecting another candidate. Root retains exclusive tracked-file ownership.
 
 Owner slideshow feedback remains the acceptance priority. X is a substantial
 measured diagnostic improvement, not a claim that original fluidity is solved.
@@ -34,12 +70,12 @@ resolves to that source commit. Workbook X SHA256 is
 `a58b1f9f081986f0a351c927e39d982c6bc4955fef17e63bd077e2497a479059`;
 all14 W sheets are preserved. The316-file W seal and24-file passive-profile seal
 remain unchanged. See `references/native-lanes-delivery.json` for exact downloads.
-Issue42 is In review and remains open for owner feedback and further performance
+At publication Issue42 was In review for owner feedback and further performance
 work; PR43 remains a draft stacked on PR41. No successor owns the shared checkout.
 The next action is to reduce world cost and header/igloo spikes using the measured
 long-gap cases; do not infer owner or physical acceptance from these checks.
 
-## Current owner feedback: slideshow movement — 2026-11-05
+## Earlier W investigation checkpoint — 2026-11-05
 
 The owner rejected the movement fluidity after W. Issue42 is back **In progress**;
 do not describe fast input or small average frame-rate gains as smooth animation.
