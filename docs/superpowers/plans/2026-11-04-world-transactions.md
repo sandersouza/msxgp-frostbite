@@ -38,11 +38,13 @@
 ### Task 3: Evidence and delivery
 
 - [x] Independent whole-change review; fix material findings once, with regression proof.
-- [ ] Preserve prior workbook tabs/features; append whole-route and active-picture comparison with raw receipts and gap distributions.
-- [ ] Commit corresponding source, rebuild clean bytes and verify exact identity. Publish versioned diagnostic prerelease, verify downloaded bytes/tag, update issue/PR/handoff.
+- [x] Preserve prior workbook tabs/features; append whole-route and active-picture comparison with raw receipts and gap distributions.
+- [x] Commit corresponding source, rebuild clean bytes and verify exact identity. Publish versioned diagnostic prerelease, verify downloaded bytes/tag, update issue/PR/handoff.
 
 ## Execution ledger
 
 2026-11-04: Owner explicitly authorized continued native optimization and publication. Existing dedicated branch/chat reused; no new worktree or repeated approval required. T remains immutable. Baseline passive profiling: world100548, floes52148, enemies40251 foreground cycles per active snapshot; fusion is only1615. This bounds the selected changes.
 
 Review correction: forced geometry failure exposed an unbalanced stack in the new cursor. Moving the conditional jump after POP HL/DE/BC preserves carry, code size and valid-path timing. The directed target test rejects the former ROM and accepts the fixed candidate. All final verification is rebound to the corrected ROM before delivery. Compact immutable geometry occupancy was added after the first candidate yielded only3.25%active NTSC gain; normal fusion still uses original full geometry.
+
+Delivery complete: v0.0.11-world-transactions-diagnostic published froma43e2f1, four assets downloaded byte-identical and remote tag verified. Final V workbook preserves all six T tabs/296476cells and native features,180independent aggregates,9stage comparisons, zero errors. Human/physical acceptance and original presentation target remain open.

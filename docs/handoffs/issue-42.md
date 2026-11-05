@@ -13,6 +13,25 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## Latest world transaction diagnostic — 2026-11-05
+
+The latest selected ROM is [v0.0.11](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.11-world-transactions-diagnostic), built from clean `a43e2f1b265ef956ee154e82a198a17f9831a220`, SHA-256 `fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99`. Publication documentation follows that source commit. No other writer owns pending source files. This dedicated issue42 chat/branch and stacked draft PR43 remain the owner; do not start a duplicate.
+
+Read docs/world-transactions-diagnostic.md and references/world-transactions-result.json. V compiles final ice names and compact enemy occupancy in certified empty contact tails, with the original full-geometry fusion fallback. RAM image688bytes; E834/E835 scratch remains in Q region. Source IRQ/PSG/player/mask unchanged. Active picture rates10.3356NTSC/10.2829PAL, gains5.49%/6.02% versus T. World foreground−12.19%, complete foreground−6.48%; original presentation cadence remains unmet.
+
+Final build/proofs: outputs/presentation/world-transactions-v/build-final, ntsc-final/pal-final, matrix-final/density-final, irq-final-ntsc/irq-final-pal, negative-final/fault-final.4507CPU/allRAM,1379pictures,4035scenes,18directed IRQ boundaries pass; zero late VBlanks.548host tests and push/PR CI at a43e2f1 pass. Independent review found one Important stack-error path; forced-carry red/green proof verifies its correction. Review scope does not grant physical/manual/audio/all-level acceptance.
+
+Final passive disjoint stage profile: outputs/presentation/world-cost-v/final-a43e2f1/. Full NTSC2252step route,177active snapshots versus T168; do not treat them as same-frame microbenchmarks. All five raw buffers and phases are identical to the pre-fix valid-path control. Previous sealed T/R/Q/P/O/M remain immutable.
+
+The diagnostic awaits human A/B testing against0.0.10at standard100%MSX1 speed. Issue42is In review for delivery/human checks, not Done. Next work should reduce the remaining whole-world transaction cost and long gaps, then HUD/igloo/player work, using the complete fixed-clock profile. Do not halve source logic or claim smooth30/60fps. Existing original-speed target, owner too-fast observation and #39/#15/#16 acceptance stay open.
+
+Workbook: outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-V/Frostbite-performance-budget-V.xlsx,
+SHA-25658a48897b35e1e1bf07382d7a30373f75667a883491355f500eeaa3c88e588bc.
+All six T tabs/296476cells, formulas/styles/features and chart preserved.180independent
+aggregates and9stage comparisons pass, zero formula errors, rendered review done;
+native Excel not exercised. Delivery receipt binds workbook/audit hashes. Four release
+attachments downloaded again and byte-identical, remote tag matches source commit.
+
 ## Current clock diagnostic checkpoint
 
 Owner feedback supersedes diagnostic-review status: perceived excessive speed
