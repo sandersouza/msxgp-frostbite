@@ -27,17 +27,20 @@ exact retained header reuse, inspired by Seaquest's static-region approach.
 
 ## Execution
 
-- [ ] Add failing host contracts for palette isolation, source tag stripping,
+- [x] Add failing host contracts for palette isolation, source tag stripping,
   and header identity including the level19/20 transition.
-- [ ] Add a reproducible builder on exact V and a bounded RAM driver. Verify
+- [x] Add a reproducible builder on exact V and a bounded RAM driver. Verify
   parent source hashes, expected patched bytes and untouched live allocations.
-- [ ] Run the full source/density picture matrices, original CPU/RAM route in
+- [x] Run the full source/density picture matrices, original CPU/RAM route in
   NTSC/PAL, IRQ/guard checks and host tests. Measure full pictures and gaps;
   never substitute routine savings for whole-game improvement.
-- [ ] Update a new W workbook while retaining V. Independently review changes.
-- [ ] Commit clean source, repeat final identity-bound checks, publish exact
+- [x] Update a new W workbook while retaining V. Independently review changes.
+- [x] Commit clean source, repeat final identity-bound checks, publish exact
   ROM/SHA/source/validation and human tests; update issue/PR/handoff.
 
 Review focus: cold/blank transitions; level>=20 glyph override; player coarse
 shift and color races; death/night colors; IRQ stack/mapper invariants. No
 owner/physical acceptance is inferred from automated equivalence.
+
+Delivered v0.0.12 from48f570e. Active cadence gains2.69% NTSC/2.54% PAL;
+full foreground -2.85%. Long gaps remain; no original-fluidity acceptance.

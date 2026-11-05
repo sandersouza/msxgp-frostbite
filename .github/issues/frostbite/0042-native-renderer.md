@@ -7,7 +7,28 @@ resuming GitHub. Original Atari 2600 mechanics remain authoritative; preserve
 graphics, colors, actors, viewport, input order and audio event timing. The Atari
 400/800 fan port and Seaquest are implementation references, not gameplay specs.
 
-## World transaction diagnostic — 2026-11-05
+## Player palette and selective header diagnostic — 2026-11-05
+
+Published [v0.0.12](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.12-player-palette-header-diagnostic).
+Source `48f570ea2b4c3894b2a77cb6555c226fe0b11863`; ROM
+`98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4`.
+Normal player uses yellow hat, cream face/legs and gray torso; death colors remain
+unchanged. Header updates rebuild only affected columns. Mechanics/input/PSG
+remain unchanged in the complete controlled CPU/all-RAM comparison.
+
+Active picture rates10.3356->10.6131 NTSC (+2.69%) and10.2829->10.5441 PAL (+2.54%).
+Complete foreground preparation -2.85%; header -15.07%. Long active gaps remain
+~133ms p95/~150ms maximum: original-speed presentation and owner cadence
+acceptance are still open. Fast input does not establish smooth rendering.
+
+553 host tests,4089 source/density/directed scenes,4507 CPU/all-RAM checkpoints,
+1401 coherent pictures,18 directed IRQ boundaries and AF2 negative control pass.
+Independent review found no blockers; blank transitions and oracle fingerprint
+follow-ups passed. Source48f570e push/PR CI pass. See release notes and
+references/header-palette-result.json. In review for diagnostic/human checks;
+do not close this issue or parents from these bounded proofs.
+
+## Previous world transaction diagnostic — 2026-11-05
 
 Published [v0.0.11](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.11-world-transactions-diagnostic), exact source `a43e2f1b265ef956ee154e82a198a17f9831a220`, ROM `fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99`.
 

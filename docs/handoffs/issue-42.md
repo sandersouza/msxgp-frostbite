@@ -15,6 +15,51 @@ chat/branch or resume predecessor edits.
 
 ## Latest world transaction diagnostic — 2026-11-05
 
+### W palette/header follow-up delivered — 2026-11-05
+
+Published [v0.0.12](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.12-player-palette-header-diagnostic),
+source `48f570ea2b4c3894b2a77cb6555c226fe0b11863`, ROM SHA-256
+`98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4`.
+This supersedes V as the current human diagnostic, without changing its sealed
+control. Same issue42 chat/branch owns the checkout; PR43 remains draft/stacked.
+
+Normal player EB=F0=0: hat Atari24->TMS10, face36/legs16->11, torso06 remains14.
+Both ordinary and shore paths use a selected immutable color table. Terminal
+animation keeps its original palette/four-plane bound. Header identities occupy
+E840..E861, mask/pointer/palette-page scratch ends E866, and initialized RAM code
+ends EE00. Per-page raw selectors, mapped colors and level>=20 determine which
+columns need original packing/construction. Unchanged columns restore fixed NAME;
+validity follows all three successful bands. No logic/input/PSG changes.
+
+Active pictures: 10.61315 NTSC (+2.69% V), 10.54413 PAL (+2.54%). Full foreground
+182896 cycles (-2.85%); header -15.07%. Active p95 ~133ms and maximum ~150ms remain;
+owner cadence acceptance is still missing. No smooth30/60fps claim. First W-A
+was correct but only +2.01%; W-B reduces repeated per-row palette selection.
+
+553 host tests; 4089 source/density/directed scenes; 4507 CPU/all-RAM points;
+1401 coherent pictures; 18 directed IRQ boundaries and AF2 negative control pass.
+Source48f570e push42039267698/PR42039275961 CI pass. Independent review of
+42a9b15..d2cad7c found no blockers; its blank-coverage and producer-fingerprint
+recommendations were addressed in48f570e. Final NTSC/PAL raw buffers equal the
+d2 clean/profile buffers exactly; all130 build source files match release git blobs.
+
+Artifacts: outputs/presentation/header-palette-w/ (build-final, ntsc-final,
+pal-final, matrix-final, density-clean, transitions, irq-ntsc/irq-pal, negative,
+release-0.0.12). Disjoint profile is sealed separately under
+outputs/presentation/header-palette-w-research/final-d2cad7c/. Public compact
+receipt: references/header-palette-result.json. Release notes contain precise
+human palette/jump/header/death checks. Current delivery retains human review;
+do not close42/39/15/16 or merge from these bounded diagnostics alone.
+
+W workbook: outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-W/Frostbite-performance-budget-W.xlsx,
+SHA-25606737821c5a69b87da0994cb33adb40be9c9cb409a1ef828e2bebcdeccc61d5d.
+All10 V tabs/434766 cells and native features preserved;180 aggregates and
+stage comparisons independently checked, zero formula errors. Recalculation/
+restore and rendered previews pass; native Excel was not exercised. Public
+references/header-palette-delivery.json binds workbook/audit and downloaded
+release identities. Four downloaded assets equal the tested local files; remote
+tag points to48f570e. V and older controls remain untouched.
+
 ### Owner playtest feedback — 2026-11-05, after publication
 
 The owner reports fast control response but continued excessive perceived speed,
