@@ -13,7 +13,52 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
-## Y bounded investigation — 2026-11-05
+## Z core/header cadence delivery — 2026-11-05
+
+Published [v0.0.14](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.14-core-cadence-diagnostic)
+from clean runtime source `2c1891635553e07b6fd096a58cc0e34905acd568`, ROM SHA-256
+`e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5`.
+Maintained builder: `scripts/build_core_cadence.py`; final build/evidence under
+`outputs/presentation/core-cadence-z/`. Read [the report](../core-cadence.md),
+`references/core-cadence-result.json` and `references/core-cadence-delivery.json`.
+
+Z combines exact core effect/ice/actor summaries with direct header columns,
+mask-first player selection and cached static SAT work. NTSC/PAL active
+cadence is 20.1127/19.0708 pictures/s versus X18.2214/17.2158. NTSC P95 gap
+falls 83.44 to 66.79 ms; jumps show251/390 updates versus229/390 and14/26
+grounded landings versus10/26. It remains below stable30fps/original fluidity.
+Mean foreground86,984cycles and complete active ISR21,933 leave a two-field
+mean deficit11,378; world37,063cycles remains the largest foreground component.
+Changed snapshot populations prohibit adding isolated or inclusive savings.
+
+All557 host tests and exact-source push42106542332/PR42106551981 CI pass.
+Source/density/header4089scenes,4507CPU/allRAM and1785coherent pictures,
+18IRQboundaries+AF2negative,10560clipping and2115ordered-audio intervals
+(3499source/2472PSGwrites) pass. Clean final NTSC/PAL runs reproduce all five
+qualified measurement buffers. Independent review/rebuild found no blocker;
+all145source hashes match the source commit. All six downloaded release assets
+are identical; the remote tag points to that exact source commit.
+
+Workbook Z preserves all23Ytabs/762824cells, with two new cadence/cost tabs:
+`outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-Z/Frostbite-performance-budget-Z.xlsx`,
+SHA256 `f8cb7719502b1af6a882e38162fbd12d8de54fb3bcd8e17572fbd8d9c1dc9043`.
+17formula checks, two mutation/restore tests, raw aggregate and eight-region
+visual audits pass; native Excel was not exercised. Workbook is the sealed
+pre-publication measurement snapshot. All318X/316W sealed files remain unchanged.
+
+Important maintenance boundary: generic typed-header kinds16..18 are retired;
+only the direct-header producer may publish that metadata. Re-audit before
+introducing any new generic requester. Old core internal labels in replaced
+spans are retired; public source-return CPU/V/allRAM remains strict. No new RAM.
+
+Issue42 is **In review** for this diagnostic/owner test. PR43 remains draft,
+stacked on41; no merge/close or successor handoff. Root/current chat remains
+sole checkout owner. Next: continue remaining world/preparation and long-gap
+work, using Z as the new measured control and preserving X/Y. Owner motion,
+manual audio/controllers, all levels and physical hardware acceptance remain
+pending; keep42/39/15/16open. No agent owns pending tracked source.
+
+## Historical Y bounded investigation — 2026-11-05
 
 Owner feedback on X is partial improvement, not acceptance. Issue #42 remains
 **In progress**. Root owns tracked files; no new runtime is selected or released.

@@ -1,10 +1,31 @@
-<!-- Owner feedback after X, 2026-11-05 -->
+<!-- Z delivery checkpoint, 2026-11-05 -->
+Published [v0.0.14](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.14-core-cadence-diagnostic)
+from source `2c1891635553e07b6fd096a58cc0e34905acd568`; ROM SHA-256
+`e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5`.
+Exact source-core summaries plus direct header/player/static work improve
+active NTSC/PAL pictures from 18.22/17.22 to 20.11/19.07 per second.
+NTSC gap P95 falls 83.44 to 66.79 ms; jump updates shown rise 229/390 to
+251/390. Whole foreground falls 95,808 to 86,984 cycles; complete active ISR
+falls 23,689 to 21,933. The original source clock and tested CPU/RAM, graphics,
+input and ordered PSG contracts are preserved. **Original fluidity remains open.**
+
+557 host tests, all natural/directed/density/IRQ/audio/clipping gates and both
+exact-source CI runs pass. Independent review and clean rebuild reproduce the
+measured bytes; final NTSC/PAL reruns reproduce all five measurement buffers.
+All six downloaded release assets match the tested package. Workbook Z preserves
+all 23 Y tabs. See [the report](https://github.com/sandersouza/msxgp-frostbite/blob/2c1891635553e07b6fd096a58cc0e34905acd568/docs/core-cadence.md),
+`references/core-cadence-result.json` and `references/core-cadence-delivery.json`.
+Status: **In review** for owner diagnostic tests; PR43 stays draft/stacked on41.
+Next: remaining world/preparation cost and long gaps. No owner, all-level or
+physical acceptance; keep this issue and39/15/16 open.
+
+<!-- Historical Y investigation after X, superseded by Z delivery above -->
 The owner reports noticeable improvement in v0.0.13, but gameplay remains far
 from smooth. Motion acceptance remains open. Status: **In progress**; preserve
 X as the public control. Follow-up measurements rejected three isolated changes
 as standalone delivery: static SAT +1.2%, player selector no cadence gain, direct
-header +3.2% with effectively unchanged P95. No candidate combination or new
-release is claimed. Judge the next candidate by complete-picture gaps and visible
+header +3.2% with effectively unchanged P95. At that checkpoint no combination
+or new release was claimed. Judge the next candidate by complete-picture gaps and visible
 jump trajectory coverage, not average FPS alone.
 
 Passive profiles preserve all five natural X buffers. Two NTSC fields leave
