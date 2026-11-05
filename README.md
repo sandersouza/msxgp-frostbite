@@ -5,7 +5,21 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The [v0.0.10 fixed-clock diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
+The [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)
+raises active complete-picture cadence from10.61/10.54 to18.22/17.22fps on the
+same NTSC/PAL input route. The original source/input/PSG clock remains about59.92
+steps/s. Native lanes, bounded enemy sprites and prepared player/header paths
+retain coherent graphics and mechanics. **Motion is still uneven: original
+fluidity is not achieved.** NTSC picture-gap P95 is83.44ms, and229/390 original
+jump updates are presented versus132/390 previously. The release includes the
+exact ROM, source/hash, updated performance workbook and
+[human tests](docs/releases/v0.0.13-native-lanes-cadence-diagnostic.md).
+Read the [measured scope and reproduction](docs/native-lanes-cadence.md),
+[validation](references/native-lanes-result.json) and
+[verified downloads](references/native-lanes-delivery.json). Issue42 remains open;
+manual audio/controllers, all levels and physical MSX1 acceptance are pending.
+
+The earlier [v0.0.10 fixed-clock diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
 separates original gameplay timing from drawing. Input-only MSX1 NTSC/PAL routes
 run about59.92original logical steps/s, with exact source CPU/RAM and committed
 graphics checks. **Active drawing is only about9.8/9.7fps; this is not a final

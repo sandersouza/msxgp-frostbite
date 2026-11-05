@@ -1,10 +1,13 @@
 <!-- Native lane X delivery checkpoint, 2026-11-05 -->
-The next diagnostic X measures18.2214NTSC/17.2158PAL active pictures/s, compared
+Published [v0.0.13](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic) measures18.2214NTSC/17.2158PAL active pictures/s, compared
 with W10.6131/10.5441. Whole foreground falls182,896→95,808cycles; NTSC gapP95
 falls133.47→83.44ms. Jump-state coverage rises132/390→229/390, still incomplete.
 Original-speed/smooth-motion acceptance remains OPEN. See
-[the native lane report](../../../../docs/native-lanes-cadence.md) for exact scope,
-reproduction, guards and pending owner tests. Release/CI finalization is pending.
+[the native lane report](https://github.com/sandersouza/msxgp-frostbite/blob/2318fe1b5b96e528a1864d43ebca093dd60194ba/docs/native-lanes-cadence.md) for exact scope,
+reproduction, guards and pending owner tests. Exact-source push/PR CI passed;
+all six release assets were downloaded and byte-verified. Source commit:
+`2318fe1b5b96e528a1864d43ebca093dd60194ba`. Status: In review; performance and
+owner acceptance remain open, with no automatic close or successor handoff.
 
 # Replace generic rendering with an MSX1-native residency and band pipeline
 

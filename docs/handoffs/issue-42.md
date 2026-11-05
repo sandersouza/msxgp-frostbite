@@ -27,8 +27,17 @@ The source clock/controls and coherent pixels remain exact in the bounded route.
 Root owns all tracked changes; rejected prototype artifacts are ignored and
 preserved. HUD sprite variants regressed cadence and are excluded. All full
 source/density/directed, NTSC/expandedPAL, IRQ and clipping gates passed; independent
-review/rebuild found no blocker. Release/CI/commit finalization is pending in this
-checkpoint. Issue42 stays open; no successor owns the shared checkout.
+review/rebuild found no blocker. Published [v0.0.13](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic) from runtime/source commit
+`2318fe1b5b96e528a1864d43ebca093dd60194ba`. Both exact-source push/PR CI passed.
+All six published assets were downloaded and matched locally; the remote tag
+resolves to that source commit. Workbook X SHA256 is
+`a58b1f9f081986f0a351c927e39d982c6bc4955fef17e63bd077e2497a479059`;
+all14 W sheets are preserved. The316-file W seal and24-file passive-profile seal
+remain unchanged. See `references/native-lanes-delivery.json` for exact downloads.
+Issue42 is In review and remains open for owner feedback and further performance
+work; PR43 remains a draft stacked on PR41. No successor owns the shared checkout.
+The next action is to reduce world cost and header/igloo spikes using the measured
+long-gap cases; do not infer owner or physical acceptance from these checks.
 
 ## Current owner feedback: slideshow movement — 2026-11-05
 
