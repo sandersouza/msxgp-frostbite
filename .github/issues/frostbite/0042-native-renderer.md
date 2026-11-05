@@ -1,4 +1,15 @@
-<!-- Z delivery checkpoint, 2026-11-05 -->
+<!-- AA playfield continuation, 2026-11-05 -->
+The owner reports a large improvement in v0.0.14 and authorizes the next
+playfield optimization, preserving graphics/mechanics and publishing a useful
+testable ROM. Status: **In progress**. Z is the sealed comparison control.
+Fresh passive profiling preserves all five natural buffers: floes cost23,038
+of37,063 WORLD cycles per active picture, with11,382cycles in setup/addressing
+outside pattern/color transfers and NAME copying. Investigate resident lane
+descriptors/direct transactions and an independently measured circular-NAME
+layout; universal PGT atlases exceed SCREEN2 capacity. Compare the whole route,
+long gaps and jumps before selecting a release. Original fluidity remains open.
+
+<!-- Historical Z delivery checkpoint, 2026-11-05 -->
 Published [v0.0.14](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.14-core-cadence-diagnostic)
 from source `2c1891635553e07b6fd096a58cc0e34905acd568`; ROM SHA-256
 `e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5`.
