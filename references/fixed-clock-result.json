@@ -1,0 +1,210 @@
+{
+  "version": "0.0.10-fixed-clock-diagnostic",
+  "rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+  "source_commit": "854dcf462b56274f60f1f0cf978bc487d124e57a",
+  "diagnostic_ready": true,
+  "original_speed_presentation_accepted": false,
+  "full_game_accepted": false,
+  "manual_emulator_accepted": false,
+  "manual_audio_accepted": false,
+  "physical_hardware_accepted": false,
+  "automated_proofs": {
+    "matrix-d": {
+      "cases": 2115,
+      "rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+      "receipt_sha256": "11514a992daabe5d3ebf3569faea1743d2ea3f0f477bcd955282455fd792682e",
+      "raw": {
+        "timing.tsv": "f78e9a9cef4d5cb50a3ede5ad32afb3ceda13351b8244584922ffd51611d4480",
+        "launch.tcl": "2035fca54b7714d091cea96f026e397bd9b672aa07eca53952266e7220b642c8",
+        "scenes.bin": "fdff3e4f2dfdecef549cfcf7a562abec6b031c24ee587625f9ad5034fc532a83",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "expected.tms": "8c2dcd6411310c03aa1c64ee809fd7cb1a100ff49540964a9e8622f10b025c5c",
+        "captures.bin": "fd02d80da86b26188beea8e2e0df8eec5e4c5c9224ac15f55da4b55735ca648b",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "boot.bin": "92916f88a4759e7a7fce387fe899194f657fe4931afec446244ece26ccfaab73",
+        "cases.bin": "a5f22f7a4f87b6db07dbe318b3fc03f6749caa1ca9255795ae5618d91c9a8b68",
+        "ownership.bin": "b668fdf52a133e348899a22aab3c8ec6fd723b4ebaefdc6bd432e349d7ba1323",
+        "band-records.bin": "4cd3c3f219a1600b3191fbdeb8466719e1ed104e560e9b2d98c58cfb945de8f8"
+      }
+    },
+    "density-d": {
+      "cases": 1920,
+      "rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+      "receipt_sha256": "94c16aa6ee9238fe8a72124781f7eb8fe374654ff6cf99a1bcd41ef5924c8319",
+      "raw": {
+        "timing.tsv": "b62a98549167bc8790c095aeb32438164884dc9a88ee860b2615d0985ec839d3",
+        "launch.tcl": "fc36535c7b4ff6a93c465be76eab458277d9fb1c9f0413b5983576cb0dc96e58",
+        "scenes.bin": "1095c2f6051c56792a0122006b235b55143ccf8d336f631fdb30840ca49e3a6f",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "expected.tms": "650194e65f1e8240576f8494a14ddd4e50c6b99c45a69d6f85335f4b607cf8a2",
+        "captures.bin": "465b9d7b41196985b2cd14a41fd37a7d5e37d06c56118da55c0f1255b46a6be1",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "boot.bin": "92916f88a4759e7a7fce387fe899194f657fe4931afec446244ece26ccfaab73",
+        "cases.bin": "e903e001235852f1f2006cf88211ab8ff8e39e5c1c2e95675804da8814d49ef2",
+        "ownership.bin": "a9318593363f9620c95a6d175069de9a9cc69779300450dd264d97e42abe2bad",
+        "band-records.bin": "6c154e5f6ef73742ad6d61e2dc7ec26e1dd4c0d71eee9bac7e52cff42a9972ef"
+      }
+    },
+    "ntsc": {
+      "source_checkpoints": 2253,
+      "hardware_vblanks": 2252,
+      "committed_pictures": 720,
+      "source_steps_per_second": 59.92274563249129,
+      "committed_pictures_per_second": 19.234197712272778,
+      "active_pictures_per_second": 9.797900787616895,
+      "active_picture_intervals": 164,
+      "max_irq_cycles": 29810,
+      "mean_irq_cycles": 18227.1878330373,
+      "mean_prepare_elapsed_cycles": 119625.66944444444,
+      "max_prepare_elapsed_cycles": 617301,
+      "stack_bytes": 64,
+      "stack_min_sp": 62272,
+      "expanded_ram_slot": false,
+      "receipt_sha256": "55e98cfca95dc6afba9d90c6a0938673518129a3e04379a1bbeb1ee60e724c59",
+      "artifacts": {
+        "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+        "irq.tsv": "3d2dd955bf13473f0246a0f4c4fc3ed008bfb7e981c2c65ee20fc5511c481f0f",
+        "owners.bin": "53ed858f2d37424188f5d6492fa3d8b6612d1196845dbf3348f80d4cf700397d",
+        "launch.tcl": "4a055ce7ea02ac5599cedd42ae2ac77c8171e058e7531b6b5a714935fc8b92cd",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "complete.tsv": "9c85e28ed721ee98558b38eca1d91a27ddd6121802f9f3e5deb819ca9061c502",
+        "captures.bin": "84a446042f0ebf97d0f87244137eeb0eda915fe6faeb88195a95b560e4b244cd",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "producer.py": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+        "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7",
+        "pictures.tsv": "8b977c2c14c160a1a4f04f7da872d2cc743db9a4191e39e5ee6567323230bdc1"
+      },
+      "producer_sha256": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c"
+    },
+    "boundaries-ntsc": {
+      "boundaries": 9,
+      "receipt_sha256": "8921b796e4766bf29fbe836ca7a3f4e64ad1633c1b170b5220e42722c767bac9",
+      "probe_receipt_sha256": "26b0e63a4bd2efbf0e1391d3aa36d144c099afe9d1985a907794f4228ee06fb7",
+      "raw": {
+        "route-cpu.bin": "3d69fbad5a3a7d3bfb65e1545f77138d33b3ad7e9844eef2e4d934fdd7f8904c",
+        "irq.tsv": "3d644c93c4f6ad11f3313ade62222fa87182b24072451e4116ba6682b747d070",
+        "owners.bin": "62bf74ece1e22e307f77882c33a346e697107318eb33552cef2dc81f352e5395",
+        "launch.tcl": "c0d6cd06e2ac85f28269d1549eb3cdfd4f971bcc75d73d6820907b89f75f0564",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "complete.tsv": "dbe1f807ac9700a35e80bab6f8ae9a4cc1b5e4349e3955a508745f3569493647",
+        "captures.bin": "5d3692dcd416779345103db488b177289e4813054771317accbfc2ae7ebc6378",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "boundary-producer.py": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "boundary-rom.bin": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+        "producer.py": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+        "boundaries.tsv": "4797bd295140cc4ef010d8db958416e7137f1e2c5cfc29afb8b2fd8c8170d94d",
+        "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7",
+        "pictures.tsv": "7837312f0056dd5b8089cf8df60d6ac2b1e69f3cdd7b8227e7b6b913f1508251"
+      },
+      "timings_excluded_from_performance": true
+    },
+    "pal": {
+      "source_checkpoints": 2254,
+      "hardware_vblanks": 1886,
+      "committed_pictures": 635,
+      "source_steps_per_second": 59.92467399435768,
+      "committed_pictures_per_second": 16.942407826862613,
+      "active_pictures_per_second": 9.698591918031713,
+      "active_picture_intervals": 163,
+      "max_irq_cycles": 53268,
+      "mean_irq_cycles": 21523.317073170732,
+      "mean_prepare_elapsed_cycles": 128272.44724409448,
+      "max_prepare_elapsed_cycles": 604848,
+      "stack_bytes": 62,
+      "stack_min_sp": 62274,
+      "expanded_ram_slot": true,
+      "receipt_sha256": "0973c1edf2f6aafeeac94fee7f479e7d9a2895ab55c5ca2c74bcc556f971c606",
+      "artifacts": {
+        "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+        "irq.tsv": "be9617fcdc8c46a46afd48ce9e43b753fbf6d99f944a5cbc71b39aefc4867e6a",
+        "owners.bin": "61b73223a15f28c1accdd952f9fddded516eece12de407991fa1b75c3cc027b0",
+        "launch.tcl": "f1fb28f86a876ddaca8fe299dd236dc32c4b8e13e74cae89da8f32d658682a30",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "complete.tsv": "1a04276ba5b25fc0579f7e7c3781c0b74561df27ca8dfb9dddfe9869b594210f",
+        "captures.bin": "c44e514bb9bfdaf984347b5be70a978ecfe78c5b272a5b6a06a60a594788c68a",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "producer.py": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+        "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7",
+        "pictures.tsv": "c8f223883e32add0fb9919c15a5bc6b6d8eaa84788d6d05dc3db0dee2d207756"
+      },
+      "producer_sha256": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c"
+    },
+    "boundaries-pal": {
+      "boundaries": 9,
+      "receipt_sha256": "5e580d5d02ef183e7f7ab1ae6250908b45e3ca7834ca0aae7a618660c3b18c94",
+      "probe_receipt_sha256": "ac7d4eef6cdead9ad8c4620e7858850371c8e7a06050743545d43f80410a5e0f",
+      "raw": {
+        "route-cpu.bin": "3d69fbad5a3a7d3bfb65e1545f77138d33b3ad7e9844eef2e4d934fdd7f8904c",
+        "irq.tsv": "878296ea3dd57ebc155371e1a2053fbc04ef5c793a778f3913a65ea148ee1d4e",
+        "owners.bin": "02fae3f96c65b2f585e0cc3958280cc2809e7f323bb896ec2a0ac2afb4f47352",
+        "launch.tcl": "e6f6cf0b51a3f4d18e91e20a63f8959c3020121e23dbd6cabe551278d5002acc",
+        "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+        "complete.tsv": "dfe85d9d6eeb220a6f824a359197d0fb93e4b8b0e6d90f2d3f771f9895d3accf",
+        "captures.bin": "90762212388e2e6dce16f15699976e7123fb0688c1e8696f522dcc67315f70cd",
+        "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "boundary-producer.py": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "boundary-rom.bin": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+        "producer.py": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+        "boundaries.tsv": "607524bd6579b290a7a4af3c8d6ed665a4aa4429746c268917c1eb7767f90599",
+        "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7",
+        "pictures.tsv": "7965ebdd35f62e1d513bed7df5508b73c35ced75117021698ba06ea79a822eb3"
+      },
+      "timings_excluded_from_performance": true
+    },
+    "negative_register": {
+      "complete": true,
+      "negative_control": "AF2 mutation after RETI must fail register oracle",
+      "expected_failure": "boundary-register-restoration",
+      "rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+      "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+      "launch_sha256": "11f5a9711d060dadd98f27ada2ab48733e4380fd71d3e3e89a160fc707772a0a",
+      "log_sha256": "0c4aa516b74fad85ddbfb3dfe14d3e03b102727d4426348967e22392954b4acf"
+    }
+  },
+  "host_tests": {
+    "passed": 545,
+    "log_sha256": "43d8b6c66c6f89bb983d9ac9d48e969abf28adf073a6b07128b9f75f4777c62c"
+  },
+  "original_free_ci": [
+    {
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41844930906",
+      "head": "854dcf462b56274f60f1f0cf978bc487d124e57a",
+      "conclusion": "success"
+    },
+    {
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41844942631",
+      "head": "854dcf462b56274f60f1f0cf978bc487d124e57a",
+      "conclusion": "success"
+    }
+  ],
+  "parent_preservation": {
+    "playfield-m-c": {
+      "files": 112,
+      "failures": []
+    },
+    "native-bands-n": {
+      "files": 147,
+      "failures": []
+    },
+    "shared-ice-o": {
+      "files": 220,
+      "failures": []
+    },
+    "prepared-bands-p": {
+      "files": 467,
+      "failures": []
+    },
+    "direct-enemy-q": {
+      "files": 434,
+      "failures": []
+    }
+  },
+  "workbook": {
+    "filename": "Frostbite-performance-budget-T.xlsx",
+    "sha256": "07fc8187d9c2a8f2e224ebde65495b49177d21d4484c42d61dedfa020a3220b3",
+    "audit_sha256": "7a286c6c94f6e4de627fe872d995b7c10c0a269be0f38f0e68c8af152094d2a6",
+    "committed_measurements_identical": true
+  },
+  "scope": "Independent original logic clock diagnostic. Active committed pictures remain about9.8NTSC/9.7PALfps. IRQ and elapsed preparation costs overlap. Directed-IRQ timings are excluded from performance.",
+  "next": "Reduce complete preparation/cache replacement and sprite/ice tails under issue42; issues39/15/16 remain open."
+}

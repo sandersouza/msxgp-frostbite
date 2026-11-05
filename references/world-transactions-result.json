@@ -1,0 +1,1415 @@
+{
+  "version": "0.0.11-world-transactions-diagnostic",
+  "diagnostic_ready": true,
+  "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+  "source_commit": "a43e2f1b265ef956ee154e82a198a17f9831a220",
+  "original_speed_presentation_accepted": false,
+  "full_game_accepted": false,
+  "manual_emulator_accepted": false,
+  "manual_audio_accepted": false,
+  "physical_hardware_accepted": false,
+  "automated_proofs": {
+    "ntsc": {
+      "receipt_sha256": "3fa1e6d65f7796ed38e6d9e43abd6560a2536ed6bdaaffa947a15909f7e94236",
+      "report": {
+        "complete": true,
+        "family": "ntsc",
+        "expanded_ram_slot": false,
+        "stack_min_sp": 62266,
+        "stack_bytes": 70,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "source_checkpoints": 2253,
+        "hardware_vblanks": 2252,
+        "source_steps_per_second": 59.922746523762946,
+        "committed_pictures_per_second": 19.528461335685616,
+        "active_picture_intervals": 173,
+        "active_pictures_per_second": 10.335599090143376,
+        "committed_pictures": 731,
+        "max_irq_cycles": 29370,
+        "mean_irq_cycles": 18238.126110124333,
+        "mean_prepare_elapsed_cycles": 116810.93844049248,
+        "max_prepare_elapsed_cycles": 601239,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "physical_owners_equal": true,
+        "active_page_protected": true,
+        "late_vblanks": 0,
+        "canonical_source_writes": 0,
+        "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "producer_sha256": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+        "artifacts": {
+          "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+          "irq.tsv": "1631a39b2f31f37a17835d3a407d620812c2466b5af694992bd3a0d1545c8300",
+          "owners.bin": "44399c0b4357fe6b9daad276f79bf9a37f2feaa502e6ec5404400279dd34dbf8",
+          "launch.tcl": "e38bc1accd743d64ddc7f9afe9145a6b17a366a2b76477a8e4d9dc6b586459d8",
+          "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+          "complete.tsv": "e5eae890055f651731c71e85bb73c1b143d7b83d205da9849413da033fe6dc7f",
+          "captures.bin": "179375f1878b0d731382e6e31944c58eac7a734e1373850f746dafabe9e1eaa9",
+          "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "producer.py": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+          "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7",
+          "pictures.tsv": "2ee6d418887e3e7e947a3a87666dd470676c607b19b9e45de86a6cfac599021f"
+        },
+        "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+      }
+    },
+    "pal": {
+      "receipt_sha256": "8deffa3b1fda53a2eb8c2a4437dacc1667f3103692989d6e16d56a8e6f9a9945",
+      "report": {
+        "complete": true,
+        "family": "pal",
+        "expanded_ram_slot": true,
+        "stack_min_sp": 62270,
+        "stack_bytes": 66,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "source_checkpoints": 2254,
+        "hardware_vblanks": 1886,
+        "source_steps_per_second": 59.924675776224134,
+        "committed_pictures_per_second": 17.28980735643551,
+        "active_picture_intervals": 172,
+        "active_pictures_per_second": 10.282888016963646,
+        "committed_pictures": 648,
+        "max_irq_cycles": 52558,
+        "mean_irq_cycles": 21538.086426299047,
+        "mean_prepare_elapsed_cycles": 124676.67129629629,
+        "max_prepare_elapsed_cycles": 588786,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "physical_owners_equal": true,
+        "active_page_protected": true,
+        "late_vblanks": 0,
+        "canonical_source_writes": 0,
+        "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+        "producer_sha256": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+        "artifacts": {
+          "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+          "irq.tsv": "06ebfb8f653d283937c383d71b0ad71e4db67a1c5aea47579481b242fc22d59d",
+          "owners.bin": "8f18b70f656f36b2ab39ecaa0a5dfbef9c261ea51f36772decc6e06a0e1c7c1c",
+          "launch.tcl": "e7e2ad979dced307f0edbf5c79423485632c5c6318e377ee8d314664cc023d8a",
+          "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+          "complete.tsv": "0d28bbf226aff5a10097fad279435c29a9712423d95e16faebbc30ad0e7026ef",
+          "captures.bin": "d5edd0ad7d2465889a7546d3d0ff8dd59c5fa74e890c472e083a1f555a34b9d5",
+          "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "producer.py": "cc6d206a073dc935a1b4dcfa5043d85a51ff00ce32a0f7977905f592bf28836c",
+          "route-inputs.bin": "9d25ec772f1ce80aae86b851102c26b6ef74b1768716b455d6409f7d4c8885e7",
+          "pictures.tsv": "ece016612f5988759b7e0b4010f774013ac01165bb14ae850edc02add35692d9"
+        },
+        "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+      }
+    },
+    "matrix-final": {
+      "receipt_sha256": "6cc875dbb4385a1a8b2b84a2b3ab30933e8aad5986460c1deee6497fa9c518b3",
+      "report": {
+        "exploratory": true,
+        "component": "full-scene",
+        "family": "ntsc",
+        "cases": 2115,
+        "complete": true,
+        "different_frames": 0,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "source_report_sha256": "874e8e309afa19ff0ba3bbf34532e3a8ed14887b7a53184d69410a5bd0ed0247",
+        "domain": "all-source",
+        "source_domain_families": {
+          "fixtures": 1690,
+          "cold_route": 31,
+          "natural_window": 394
+        },
+        "unmapped_source_startup": 7,
+        "max_prepare_cycles_including_rpc": 505711,
+        "frame_deadline_accepted": false,
+        "full_source_pixels_accepted": true,
+        "live_cache_ownership_accepted": false,
+        "fixed_role_ownership_accepted": true,
+        "physical_name_pages_accepted": true,
+        "integrated_dirty_states_accepted": true,
+        "dirty_row_list_accepted": true,
+        "artifacts": {
+          "timing.tsv": "47453989cd3e6a1ead86ffaaed60b00c3298fe342792dc34c96b02ac5fe1dfb4",
+          "launch.tcl": "dad687285b44a4f0c3ce267c4b592f5a09837e78e1086b25265c5af3053b14f3",
+          "scenes.bin": "fdff3e4f2dfdecef549cfcf7a562abec6b031c24ee587625f9ad5034fc532a83",
+          "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+          "expected.tms": "8c2dcd6411310c03aa1c64ee809fd7cb1a100ff49540964a9e8622f10b025c5c",
+          "captures.bin": "fd02d80da86b26188beea8e2e0df8eec5e4c5c9224ac15f55da4b55735ca648b",
+          "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "boot.bin": "92916f88a4759e7a7fce387fe899194f657fe4931afec446244ece26ccfaab73",
+          "cases.bin": "a5f22f7a4f87b6db07dbe318b3fc03f6749caa1ca9255795ae5618d91c9a8b68",
+          "ownership.bin": "b668fdf52a133e348899a22aab3c8ec6fd723b4ebaefdc6bd432e349d7ba1323",
+          "band-records.bin": "4cd3c3f219a1600b3191fbdeb8466719e1ed104e560e9b2d98c58cfb945de8f8"
+        },
+        "scope": "Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance",
+        "prepared_band_ownership_accepted": true,
+        "prepared_checker_scope": "Fixed-generation roles and active full-page protection retained; source-packet keys independently reconstructed from saved owner/tuple, obsolete per-tile ice metadata required FF."
+      },
+      "abridged_fields": [
+        "ownership",
+        "rows",
+        "producer"
+      ]
+    },
+    "density-final": {
+      "receipt_sha256": "5e29315a4aa7a506e256c8028ec954ce9e1902754c912f760eed091ab7e8e51d",
+      "report": {
+        "exploratory": true,
+        "component": "full-scene",
+        "family": "ntsc",
+        "cases": 1920,
+        "complete": true,
+        "different_frames": 0,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "source_report_sha256": "e903e001235852f1f2006cf88211ab8ff8e39e5c1c2e95675804da8814d49ef2",
+        "domain": "derived full-density coordinates/copy modes from one original-route state",
+        "source_domain_families": {
+          "derived-density": 1920
+        },
+        "unmapped_source_startup": 0,
+        "max_prepare_cycles_including_rpc": 517545,
+        "frame_deadline_accepted": false,
+        "full_source_pixels_accepted": true,
+        "live_cache_ownership_accepted": false,
+        "fixed_role_ownership_accepted": true,
+        "physical_name_pages_accepted": true,
+        "integrated_dirty_states_accepted": true,
+        "dirty_row_list_accepted": true,
+        "artifacts": {
+          "timing.tsv": "bd7361ce718230edb435526a843224ca3fd8bc61b8fd4e06d5286ef44a4a6a8d",
+          "launch.tcl": "34056aff42f5e7b2f79af4813fd2d42f2eae0cb04f4841d0cdc532467a124162",
+          "scenes.bin": "1095c2f6051c56792a0122006b235b55143ccf8d336f631fdb30840ca49e3a6f",
+          "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+          "expected.tms": "650194e65f1e8240576f8494a14ddd4e50c6b99c45a69d6f85335f4b607cf8a2",
+          "captures.bin": "465b9d7b41196985b2cd14a41fd37a7d5e37d06c56118da55c0f1255b46a6be1",
+          "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "boot.bin": "92916f88a4759e7a7fce387fe899194f657fe4931afec446244ece26ccfaab73",
+          "cases.bin": "e903e001235852f1f2006cf88211ab8ff8e39e5c1c2e95675804da8814d49ef2",
+          "ownership.bin": "a9318593363f9620c95a6d175069de9a9cc69779300450dd264d97e42abe2bad",
+          "band-records.bin": "6c154e5f6ef73742ad6d61e2dc7ec26e1dd4c0d71eee9bac7e52cff42a9972ef"
+        },
+        "scope": "Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance; synthetic full-scene actor density/boundaries/cache repeats, NOT original observed high-level gameplay or native source timing.",
+        "prepared_band_ownership_accepted": true,
+        "prepared_checker_scope": "Fixed-generation roles and active full-page protection retained; source-packet keys independently reconstructed from saved owner/tuple, obsolete per-tile ice metadata required FF.",
+        "derivation": {
+          "unique_states": 640,
+          "copies_modes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "groups": 33,
+          "reflections": [
+            0,
+            128
+          ],
+          "coarse": [
+            0,
+            1
+          ],
+          "xs": [
+            0,
+            1,
+            7,
+            8,
+            15,
+            16,
+            31,
+            32,
+            143,
+            144,
+            151,
+            152,
+            153,
+            159
+          ],
+          "repeats": 3,
+          "base_ram": "006053000f90ff98ffa0ffa8ffb0ffb8ff105010501001010100000000c0081050105000000000000000000c0c0c0c8c0707070707070707ffff00840a0a0a0000000000000000000000000003ff0000000000ff000000000000000001010101a0c0b0d01b4540008c000000000000000000ff000000000004ffff00d4ff59f6",
+          "base_capture_sha256": "5fed4b7d2ed861d355e8caf726e92fe60039871109f93287e588efd08ec984ce",
+          "cases_sha256": "e903e001235852f1f2006cf88211ab8ff8e39e5c1c2e95675804da8814d49ef2"
+        }
+      },
+      "abridged_fields": [
+        "ownership",
+        "rows",
+        "producer"
+      ]
+    },
+    "irq-final-ntsc": {
+      "receipt_sha256": "2dcaddfdc19fbbf4c674d532829a69ae667ed97e8ebd0a047980019b8219ed40",
+      "report": {
+        "complete": true,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "family": "ntsc",
+        "expanded_ram_slot": false,
+        "boundaries": [
+          [
+            "address-low",
+            "59706",
+            "59701",
+            "2",
+            "62328",
+            "0",
+            "23560",
+            "8344",
+            "23648",
+            "52576",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "stream-byte",
+            "18794",
+            "18794",
+            "2",
+            "62330",
+            "7",
+            "23566",
+            "8088",
+            "23648",
+            "52577",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-before",
+            "59648",
+            "59648",
+            "2",
+            "62332",
+            "7",
+            "68",
+            "152",
+            "24160",
+            "49871",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-copy",
+            "59665",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "24160",
+            "49871",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "mapper-before",
+            "19390",
+            "19390",
+            "1",
+            "62332",
+            "7",
+            "512",
+            "152",
+            "24064",
+            "47006",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "mapper-shadow",
+            "19393",
+            "19393",
+            "2",
+            "62332",
+            "7",
+            "512",
+            "152",
+            "24064",
+            "47006",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-address-low",
+            "59722",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "28704",
+            "6228",
+            "28696",
+            "49560",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-byte",
+            "59731",
+            "59731",
+            "7",
+            "62320",
+            "7",
+            "21536",
+            "6228",
+            "28696",
+            "49560",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-complete",
+            "59667",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "23072",
+            "49871",
+            "50048",
+            "22728",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ]
+        ],
+        "main_alternate_index_sp_bank_restored": true,
+        "hardware_vblank_interrupts": true,
+        "irq_vram_and_snapshot_unchanged": true,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "canonical_source_writes": 0,
+        "probe_receipt_sha256": "56c71912a159632b6c1d3f4221124b0af60b9ad9e098ff609474b2beed624251",
+        "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "boundary_log_sha256": "1aa5e661d158e2de226b550b70b68476f14d93bf967ac5f72a4a3f7bacc6fee3",
+        "scope": "Directed real VDP interrupt alignment with temporary diagnostic PC/IFF parking. Timing deliberately perturbed; do not use these rates as performance evidence."
+      }
+    },
+    "irq-final-pal": {
+      "receipt_sha256": "62b2119ab21b2b89030e0255479459d52738d3cbb9567c2e4fabd91ea19a0b7e",
+      "report": {
+        "complete": true,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "family": "pal",
+        "expanded_ram_slot": true,
+        "boundaries": [
+          [
+            "mapper-before",
+            "19390",
+            "19390",
+            "7",
+            "62316",
+            "7",
+            "64588",
+            "773",
+            "40166",
+            "40358",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "mapper-shadow",
+            "19393",
+            "19393",
+            "252",
+            "62316",
+            "7",
+            "64588",
+            "773",
+            "40166",
+            "40358",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "address-low",
+            "59706",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "18500",
+            "6296",
+            "18512",
+            "49536",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "stream-byte",
+            "18794",
+            "18794",
+            "7",
+            "62320",
+            "7",
+            "18432",
+            "6040",
+            "18512",
+            "49537",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-address-low",
+            "59722",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "26664",
+            "6228",
+            "26704",
+            "49560",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-byte",
+            "59731",
+            "59731",
+            "7",
+            "62320",
+            "7",
+            "21544",
+            "6228",
+            "26704",
+            "49560",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-before",
+            "59648",
+            "59648",
+            "2",
+            "62332",
+            "7",
+            "68",
+            "152",
+            "23136",
+            "49871",
+            "50048",
+            "22728",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-copy",
+            "59665",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "23136",
+            "49871",
+            "50048",
+            "22728",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-complete",
+            "59667",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "24096",
+            "49871",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ]
+        ],
+        "main_alternate_index_sp_bank_restored": true,
+        "hardware_vblank_interrupts": true,
+        "irq_vram_and_snapshot_unchanged": true,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "canonical_source_writes": 0,
+        "probe_receipt_sha256": "708f907cd2cde773aa1fb0683455072f137649678e1add0d804637b4dd52057b",
+        "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "boundary_log_sha256": "3c3c4365a63e6ce63c9f5acfaf288675ddaf9f4c87ef08e2b54d632477d1d268",
+        "scope": "Directed real VDP interrupt alignment with temporary diagnostic PC/IFF parking. Timing deliberately perturbed; do not use these rates as performance evidence."
+      }
+    },
+    "negative-final": {
+      "receipt_sha256": "948ee06995496c0a2c60c7e708596b2c6aa93d2d5c509432a1c67047f3057427",
+      "report": {
+        "complete": true,
+        "negative_control": "AF2 mutation after RETI must fail register oracle",
+        "expected_failure": "boundary-register-restoration",
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "launch_sha256": "480585cbe965c14f6509f19ad6bebd88dd2bcd098a05aafb8239f66f64d7a180",
+        "log_sha256": "0c4aa516b74fad85ddbfb3dfe14d3e03b102727d4426348967e22392954b4acf"
+      }
+    },
+    "fault-final": {
+      "receipt_sha256": "52901335c170fe32fe7e2d8f96f7642633d7791422e073048ba67236e409b6e0",
+      "report": {
+        "complete": true,
+        "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+        "injected_return": 60182,
+        "expected_rejection": false,
+        "stack_balanced": true,
+        "producer_sha256": "ef3be03479e235dbf6ddd1d2cf0b2dbf075cec707926e8d1e37848202ce8c966",
+        "log_sha256": "5b469082611e3cb195cd990250f299abd7506280ba67956a46ffdb092b2a74a5",
+        "scope": "Carry deliberately forced after real full geometry lookup; failure must enter the existing handler with all three saved register pairs removed. Not timing evidence."
+      }
+    }
+  },
+  "comparison": {
+    "ntsc": {
+      "baseline_rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+      "baseline_receipt_sha256": "55e98cfca95dc6afba9d90c6a0938673518129a3e04379a1bbeb1ee60e724c59",
+      "baseline_active_fps": 9.797900787616895,
+      "candidate_active_fps": 10.335599090143376,
+      "active_gain_percent": 5.487892908714209,
+      "baseline_whole_route_fps": 19.234197712272778,
+      "candidate_whole_route_fps": 19.528461335685616,
+      "baseline_gaps": {
+        "active_intervals": 164,
+        "mean_gap_ms": 102.06267869785464,
+        "p95_gap_ms": 150.1609841474263,
+        "max_gap_ms": 150.1936698658639,
+        "vblank_gap_histogram": {
+          "2": 5,
+          "4": 7,
+          "5": 51,
+          "6": 37,
+          "7": 35,
+          "8": 18,
+          "9": 11
+        },
+        "source_frame_gap_histogram": {
+          "2": 7,
+          "3": 1,
+          "4": 8,
+          "5": 49,
+          "6": 36,
+          "7": 34,
+          "8": 18,
+          "9": 11
+        }
+      },
+      "candidate_gaps": {
+        "active_intervals": 173,
+        "mean_gap_ms": 96.75297883348222,
+        "p95_gap_ms": 133.5052360006621,
+        "max_gap_ms": 150.19450796120637,
+        "vblank_gap_histogram": {
+          "2": 3,
+          "3": 2,
+          "4": 19,
+          "5": 59,
+          "6": 38,
+          "7": 27,
+          "8": 22,
+          "9": 3
+        },
+        "source_frame_gap_histogram": {
+          "2": 6,
+          "3": 2,
+          "4": 20,
+          "5": 56,
+          "6": 37,
+          "7": 27,
+          "8": 22,
+          "9": 3
+        }
+      }
+    },
+    "pal": {
+      "baseline_rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+      "baseline_receipt_sha256": "0973c1edf2f6aafeeac94fee7f479e7d9a2895ab55c5ca2c74bcc556f971c606",
+      "baseline_active_fps": 9.698591918031713,
+      "candidate_active_fps": 10.282888016963646,
+      "active_gain_percent": 6.02454566467121,
+      "baseline_whole_route_fps": 16.942407826862613,
+      "candidate_whole_route_fps": 17.28980735643551,
+      "baseline_gaps": {
+        "active_intervals": 163,
+        "mean_gap_ms": 103.10775094483465,
+        "p95_gap_ms": 139.55628438809953,
+        "max_gap_ms": 159.49233771331706,
+        "vblank_gap_histogram": {
+          "2": 5,
+          "3": 3,
+          "4": 42,
+          "5": 53,
+          "6": 34,
+          "7": 21,
+          "8": 5
+        },
+        "source_frame_gap_histogram": {
+          "2": 5,
+          "3": 6,
+          "4": 6,
+          "5": 40,
+          "6": 47,
+          "7": 25,
+          "8": 23,
+          "9": 9,
+          "10": 2
+        }
+      },
+      "candidate_gaps": {
+        "active_intervals": 172,
+        "mean_gap_ms": 97.24894391053401,
+        "p95_gap_ms": 139.55572565787122,
+        "max_gap_ms": 139.55712248344554,
+        "vblank_gap_histogram": {
+          "2": 5,
+          "3": 5,
+          "4": 65,
+          "5": 43,
+          "6": 39,
+          "7": 15
+        },
+        "source_frame_gap_histogram": {
+          "2": 5,
+          "3": 5,
+          "4": 17,
+          "5": 52,
+          "6": 40,
+          "7": 32,
+          "8": 14,
+          "9": 7
+        }
+      }
+    }
+  },
+  "foreground_profile": {
+    "prepare_profile_sha256": "19cdb66918c303f5f96202d4e17c33c4011df720f909d12b9dd78707cb6a1b15",
+    "receipt_sha256": "efa69ae89add37c544084f11056145e26ec534014e17186ae3670ba386439805",
+    "comparison": {
+      "baseline_profile_sha256": "4f894bc3ea31271c0b00c4d0f1ae1ec288f808522a9a42ad6a3fca1f89056c03",
+      "baseline_groups": {
+        "all": {
+          "description": {
+            "elapsed": {
+              "mean": 4072,
+              "maximum": 4072
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 4072,
+              "maximum": 4072
+            }
+          },
+          "dirty-state": {
+            "elapsed": {
+              "mean": 9036.815277777778,
+              "maximum": 10541
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 9036.815277777778,
+              "maximum": 10541
+            }
+          },
+          "release": {
+            "elapsed": {
+              "mean": 777.7,
+              "maximum": 1137
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 777.7,
+              "maximum": 1137
+            }
+          },
+          "background": {
+            "elapsed": {
+              "mean": 4994.069444444444,
+              "maximum": 45600
+            },
+            "irq": {
+              "mean": 516.5916666666667,
+              "maximum": 25912
+            },
+            "foreground_plus_ack": {
+              "mean": 4477.477777777778,
+              "maximum": 28589
+            }
+          },
+          "world": {
+            "elapsed": {
+              "mean": 42002.57083333333,
+              "maximum": 271702
+            },
+            "irq": {
+              "mean": 16159.66111111111,
+              "maximum": 103368
+            },
+            "foreground_plus_ack": {
+              "mean": 25842.909722222223,
+              "maximum": 213397
+            }
+          },
+          "header": {
+            "elapsed": {
+              "mean": 26941.645833333332,
+              "maximum": 182416
+            },
+            "irq": {
+              "mean": 7674.461111111111,
+              "maximum": 77758
+            },
+            "foreground_plus_ack": {
+              "mean": 19267.18472222222,
+              "maximum": 130114
+            }
+          },
+          "footer": {
+            "elapsed": {
+              "mean": 389.6361111111111,
+              "maximum": 39106
+            },
+            "irq": {
+              "mean": 45.606944444444444,
+              "maximum": 21147
+            },
+            "foreground_plus_ack": {
+              "mean": 344.02916666666664,
+              "maximum": 27416
+            }
+          },
+          "sprites": {
+            "elapsed": {
+              "mean": 24238.67638888889,
+              "maximum": 106738
+            },
+            "irq": {
+              "mean": 5812.311111111111,
+              "maximum": 50222
+            },
+            "foreground_plus_ack": {
+              "mean": 18426.36527777778,
+              "maximum": 64843
+            }
+          },
+          "upload": {
+            "elapsed": {
+              "mean": 7172.555555555556,
+              "maximum": 45546
+            },
+            "irq": {
+              "mean": 2190.6111111111113,
+              "maximum": 25601
+            },
+            "foreground_plus_ack": {
+              "mean": 4981.944444444444,
+              "maximum": 27023
+            }
+          }
+        },
+        "active": {
+          "description": {
+            "elapsed": {
+              "mean": 4072,
+              "maximum": 4072
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 4072,
+              "maximum": 4072
+            }
+          },
+          "dirty-state": {
+            "elapsed": {
+              "mean": 9951.065476190477,
+              "maximum": 10541
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 9951.065476190477,
+              "maximum": 10541
+            }
+          },
+          "release": {
+            "elapsed": {
+              "mean": 940.5,
+              "maximum": 1029
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 940.5,
+              "maximum": 1029
+            }
+          },
+          "background": {
+            "elapsed": {
+              "mean": 14775.470238095239,
+              "maximum": 45600
+            },
+            "irq": {
+              "mean": 2071.7976190476193,
+              "maximum": 25912
+            },
+            "foreground_plus_ack": {
+              "mean": 12703.672619047618,
+              "maximum": 19688
+            }
+          },
+          "world": {
+            "elapsed": {
+              "mean": 167073.91666666666,
+              "maximum": 224285
+            },
+            "irq": {
+              "mean": 66507.97023809524,
+              "maximum": 103368
+            },
+            "foreground_plus_ack": {
+              "mean": 100565.94642857143,
+              "maximum": 130472
+            }
+          },
+          "header": {
+            "elapsed": {
+              "mean": 54487.88690476191,
+              "maximum": 182416
+            },
+            "irq": {
+              "mean": 21775.285714285714,
+              "maximum": 77758
+            },
+            "foreground_plus_ack": {
+              "mean": 32712.60119047619,
+              "maximum": 107129
+            }
+          },
+          "footer": {
+            "elapsed": {
+              "mean": 373.01785714285717,
+              "maximum": 21418
+            },
+            "irq": {
+              "mean": 125.875,
+              "maximum": 21147
+            },
+            "foreground_plus_ack": {
+              "mean": 247.14285714285714,
+              "maximum": 271
+            }
+          },
+          "sprites": {
+            "elapsed": {
+              "mean": 40586.916666666664,
+              "maximum": 106738
+            },
+            "irq": {
+              "mean": 16140.785714285714,
+              "maximum": 50222
+            },
+            "foreground_plus_ack": {
+              "mean": 24446.130952380954,
+              "maximum": 57863
+            }
+          },
+          "upload": {
+            "elapsed": {
+              "mean": 24211.60119047619,
+              "maximum": 45546
+            },
+            "irq": {
+              "mean": 8539.035714285714,
+              "maximum": 25601
+            },
+            "foreground_plus_ack": {
+              "mean": 15672.565476190477,
+              "maximum": 21168
+            }
+          }
+        }
+      },
+      "candidate_groups": {
+        "all": {
+          "description": {
+            "elapsed": {
+              "mean": 4072,
+              "maximum": 4072,
+              "p95": 4072
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 4072,
+              "maximum": 4072,
+              "p95": 4072
+            }
+          },
+          "dirty-state": {
+            "elapsed": {
+              "mean": 9051.538987688098,
+              "maximum": 10541,
+              "p95": 10167
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 9051.538987688098,
+              "maximum": 10541,
+              "p95": 10167
+            }
+          },
+          "release": {
+            "elapsed": {
+              "mean": 780.9398084815322,
+              "maximum": 1137,
+              "p95": 1011
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 780.9398084815322,
+              "maximum": 1137,
+              "p95": 1011
+            }
+          },
+          "background": {
+            "elapsed": {
+              "mean": 5354.428180574555,
+              "maximum": 45554,
+              "p95": 18027
+            },
+            "irq": {
+              "mean": 684.8194254445964,
+              "maximum": 27392,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 4669.608755129959,
+              "maximum": 28613,
+              "p95": 18021
+            }
+          },
+          "world": {
+            "elapsed": {
+              "mean": 38747.33926128591,
+              "maximum": 243608,
+              "p95": 167918
+            },
+            "irq": {
+              "mean": 15222.72366621067,
+              "maximum": 93813,
+              "p95": 70689
+            },
+            "foreground_plus_ack": {
+              "mean": 23524.61559507524,
+              "maximum": 197311,
+              "p95": 101077
+            }
+          },
+          "header": {
+            "elapsed": {
+              "mean": 26685.864569083446,
+              "maximum": 179891,
+              "p95": 125940
+            },
+            "irq": {
+              "mean": 7453.190150478797,
+              "maximum": 77429,
+              "p95": 46399
+            },
+            "foreground_plus_ack": {
+              "mean": 19232.674418604653,
+              "maximum": 130138,
+              "p95": 90288
+            }
+          },
+          "footer": {
+            "elapsed": {
+              "mean": 377.04103967168265,
+              "maximum": 27392,
+              "p95": 247
+            },
+            "irq": {
+              "mean": 34.50478796169631,
+              "maximum": 25223,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 342.53625170998635,
+              "maximum": 27392,
+              "p95": 247
+            }
+          },
+          "sprites": {
+            "elapsed": {
+              "mean": 23529.335157318743,
+              "maximum": 107183,
+              "p95": 78694
+            },
+            "irq": {
+              "mean": 5235.161422708618,
+              "maximum": 50667,
+              "p95": 23074
+            },
+            "foreground_plus_ack": {
+              "mean": 18294.17373461012,
+              "maximum": 64867,
+              "p95": 55917
+            }
+          },
+          "upload": {
+            "elapsed": {
+              "mean": 8212.451436388508,
+              "maximum": 46339,
+              "p95": 39664
+            },
+            "irq": {
+              "mean": 3016.5690834473326,
+              "maximum": 25808,
+              "p95": 23116
+            },
+            "foreground_plus_ack": {
+              "mean": 5195.882352941177,
+              "maximum": 26999,
+              "p95": 19589
+            }
+          },
+          "total": {
+            "elapsed": {
+              "mean": 116810.93844049248,
+              "maximum": 601239,
+              "p95": 380749
+            },
+            "irq": {
+              "mean": 31646.96853625171,
+              "maximum": 195851,
+              "p95": 144854
+            },
+            "foreground_plus_ack": {
+              "mean": 85163.96990424076,
+              "maximum": 484507,
+              "p95": 240422
+            }
+          }
+        },
+        "active": {
+          "description": {
+            "elapsed": {
+              "mean": 4072,
+              "maximum": 4072,
+              "p95": 4072
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 4072,
+              "maximum": 4072,
+              "p95": 4072
+            }
+          },
+          "dirty-state": {
+            "elapsed": {
+              "mean": 9964.265536723164,
+              "maximum": 10541,
+              "p95": 10538
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 9964.265536723164,
+              "maximum": 10541,
+              "p95": 10538
+            }
+          },
+          "release": {
+            "elapsed": {
+              "mean": 945.6101694915254,
+              "maximum": 1029,
+              "p95": 1011
+            },
+            "irq": {
+              "mean": 0,
+              "maximum": 0,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 945.6101694915254,
+              "maximum": 1029,
+              "p95": 1011
+            }
+          },
+          "background": {
+            "elapsed": {
+              "mean": 15755.079096045198,
+              "maximum": 45554,
+              "p95": 43597
+            },
+            "irq": {
+              "mean": 2692.954802259887,
+              "maximum": 27392,
+              "p95": 25147
+            },
+            "foreground_plus_ack": {
+              "mean": 13062.124293785311,
+              "maximum": 19688,
+              "p95": 18192
+            }
+          },
+          "world": {
+            "elapsed": {
+              "mean": 148833.89265536724,
+              "maximum": 207943,
+              "p95": 174130
+            },
+            "irq": {
+              "mean": 60528.43502824859,
+              "maximum": 93813,
+              "p95": 75250
+            },
+            "foreground_plus_ack": {
+              "mean": 88305.45762711864,
+              "maximum": 114669,
+              "p95": 104851
+            }
+          },
+          "header": {
+            "elapsed": {
+              "mean": 52146.745762711864,
+              "maximum": 179891,
+              "p95": 159605
+            },
+            "irq": {
+              "mean": 20212.53672316384,
+              "maximum": 77429,
+              "p95": 73126
+            },
+            "foreground_plus_ack": {
+              "mean": 31934.209039548023,
+              "maximum": 104223,
+              "p95": 91350
+            }
+          },
+          "footer": {
+            "elapsed": {
+              "mean": 389.638418079096,
+              "maximum": 25494,
+              "p95": 247
+            },
+            "irq": {
+              "mean": 142.50282485875707,
+              "maximum": 25223,
+              "p95": 0
+            },
+            "foreground_plus_ack": {
+              "mean": 247.135593220339,
+              "maximum": 271,
+              "p95": 247
+            }
+          },
+          "sprites": {
+            "elapsed": {
+              "mean": 36456.542372881355,
+              "maximum": 107183,
+              "p95": 97478
+            },
+            "irq": {
+              "mean": 12650.50847457627,
+              "maximum": 50667,
+              "p95": 45560
+            },
+            "foreground_plus_ack": {
+              "mean": 23806.033898305086,
+              "maximum": 57691,
+              "p95": 57149
+            }
+          },
+          "upload": {
+            "elapsed": {
+              "mean": 27876.53672316384,
+              "maximum": 46339,
+              "p95": 44904
+            },
+            "irq": {
+              "mean": 11953,
+              "maximum": 25808,
+              "p95": 24841
+            },
+            "foreground_plus_ack": {
+              "mean": 15923.536723163841,
+              "maximum": 21179,
+              "p95": 20584
+            }
+          },
+          "total": {
+            "elapsed": {
+              "mean": 296440.3107344633,
+              "maximum": 488533,
+              "p95": 432438
+            },
+            "irq": {
+              "mean": 108179.93785310735,
+              "maximum": 195851,
+              "p95": 174691
+            },
+            "foreground_plus_ack": {
+              "mean": 188260.37288135593,
+              "maximum": 312626,
+              "p95": 266289
+            }
+          }
+        }
+      }
+    }
+  },
+  "host_tests": {
+    "tests": 548,
+    "passed": true,
+    "log_sha256": "965a08519470fe22acf6aab88a1479150551f7253d72c025a725f5d99a209206",
+    "scope": "Original-free host tests, separate from target emulator validation."
+  },
+  "review": {
+    "scope": "ece5130..6ed206d with one verified correction pass in a43e2f1",
+    "name_contexts": 2560,
+    "occupancy_entries": 8448,
+    "material_findings_remaining": 0,
+    "fault_red_receipt_sha256": "bcd90d03def41a31ae26025dcc5306b7848f4a584f824509a4faf1af9bb8b0cd",
+    "fault_green_receipt_sha256": "52901335c170fe32fe7e2d8f96f7642633d7791422e073048ba67236e409b6e0",
+    "physical_acceptance": false
+  },
+  "original_free_ci": [
+    {
+      "event": "push",
+      "source_commit": "a43e2f1b265ef956ee154e82a198a17f9831a220",
+      "conclusion": "success",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41959943560"
+    },
+    {
+      "event": "pull_request",
+      "source_commit": "a43e2f1b265ef956ee154e82a198a17f9831a220",
+      "conclusion": "success",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/41959948658"
+    }
+  ],
+  "published_full_validation_sha256": "b02140f65170d28dc992965b05347173c1f13fbb56db2b3e912132183b675435",
+  "summary_scope": "Compact public summary; per-scene hashes/counts remain in the immutable published validation.json and local receipt. No ROM or published asset changed."
+}

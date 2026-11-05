@@ -1,0 +1,33 @@
+{
+  "version": "v0.0.11-world-transactions-diagnostic",
+  "release_url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.11-world-transactions-diagnostic",
+  "source_commit": "a43e2f1b265ef956ee154e82a198a17f9831a220",
+  "verified_at": "2026-11-05T03:16:11.815756+00:00",
+  "rom_sha256": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+  "prerelease": true,
+  "remote_tag_commit_verified": true,
+  "downloaded_all_assets_byte_identical": true,
+  "public_assets": {
+    "SHA256SUMS": "6648dab314993168414a1d8a97987466c5302e895c1e931b09493d710df37c93",
+    "build.json": "09bad6c135b0afccd5c2e6476d6a6fb63985e0e67a9aba3f943522bd0185fae1",
+    "frostbite-0.0.11-world-transactions-diagnostic.rom": "fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99",
+    "validation.json": "b02140f65170d28dc992965b05347173c1f13fbb56db2b3e912132183b675435"
+  },
+  "physical_hardware_accepted": false,
+  "manual_emulator_accepted": false,
+  "manual_audio_accepted": false,
+  "original_speed_presentation_accepted": false,
+  "issue_url": "https://github.com/sandersouza/msxgp-frostbite/issues/42",
+  "pr_url": "https://github.com/sandersouza/msxgp-frostbite/pull/43",
+  "performance_workbook": {
+    "filename": "Frostbite-performance-budget-V.xlsx",
+    "sha256": "58a48897b35e1e1bf07382d7a30373f75667a883491355f500eeaa3c88e588bc",
+    "preserved_T_sha256": "07fc8187d9c2a8f2e224ebde65495b49177d21d4484c42d61dedfa020a3220b3",
+    "preserved_T_tabs": 6,
+    "preserved_cells": 296476,
+    "audit_sha256": "6f85f0d5665faf77d12226b11cf7f00e96aeca4d39a7349626ff2be3c5098dc0",
+    "formula_errors": 0,
+    "rendered_review": true,
+    "native_excel_tested": false
+  }
+}

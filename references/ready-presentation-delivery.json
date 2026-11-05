@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "version": "v0.0.16-ready-presentation-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic",
+  "source_commit": "a9cf5ff3ea802b79a0e328e0a9de844e9749f8d3",
+  "prerelease": true,
+  "published_at": "2026-11-05T22:36:38Z",
+  "all_downloaded_assets_match_local": true,
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 16674,
+      "sha256": "7844641830cb7feb0be9ec8447a73c1c87a7287a9669df7ea5ba20b437076876",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.16-ready-presentation-diagnostic/BUILD.json"
+    },
+    {
+      "name": "frostbite-0.0.16-ready-presentation-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "9d2ee2926bc8de7fd0d22b05e7ad334e76078141bfde997720adfb62414cc77b",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.16-ready-presentation-diagnostic/frostbite-0.0.16-ready-presentation-diagnostic.rom"
+    },
+    {
+      "name": "Frostbite-performance-budget-AB.xlsx",
+      "bytes": 4609034,
+      "sha256": "a5d95a5a293e457f4b3e0fec5cee24980f05e1b6fdb9aaef0dcc436c9513b326",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.16-ready-presentation-diagnostic/Frostbite-performance-budget-AB.xlsx"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 456,
+      "sha256": "2b1932268772f9f3d34ce45116ea1476bd8462e70c70f69f37ffbdfd1d4c6045",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.16-ready-presentation-diagnostic/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 584,
+      "sha256": "f4b506d2bd3d3e449b78040760ebd49b86da71fd6de84fcc8313a9b4c7a52e2a",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.16-ready-presentation-diagnostic/SOURCE.txt"
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 62662,
+      "sha256": "a3b3051a4d43c028fe4c3cc51e1b1609aa85f80a33f3c3859635f483ea152a0c",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.16-ready-presentation-diagnostic/VALIDATION.json"
+    }
+  ],
+  "github_release_metadata_sha256": "24a70172146e54376fb691ca60d474931e3aca838854256131c35b34a0f687e3",
+  "github_tag_metadata_sha256": "3a8b3525afb02df59fb9cbfd61c3ab75dda510483715415ecf7de6903a6f09c5",
+  "evidence_scope": "Publication identity and checksum verification; known PAL landing regressions disclosed. Owner and physical acceptance remain pending."
+}

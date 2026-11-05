@@ -5,7 +5,48 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
+The latest [v0.0.16 ready-picture diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic)
+raises active NTSC complete-picture cadence from 21.46 to 25.45 fps against
+v0.0.15 on the same route. Grounded landings shown improve from 9/26 to 15/26;
+the original simulation/input/PSG clock remains approximately 59.92 steps/s.
+Current-picture enemy eligibility is reused and completed coherent scenes can
+appear at the next safe VBlank. Graphics and mechanics pass the bounded oracles.
+**Motion remains uneven. PAL throughput improves, but landing coverage and
+long-gap behavior regress; this is an NTSC-focused diagnostic.** The release
+includes the exact ROM, updated workbook, source/hash and human tests. Read the
+[results, limitations and reproduction](docs/ready-presentation.md),
+[validation](references/ready-presentation-result.json) and
+[verified downloads](references/ready-presentation-delivery.json).
+Issue #42 remains open; owner-fluidity, all-level and physical acceptance are pending.
+
+The earlier [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)
+raises active complete-picture cadence from10.61/10.54 to18.22/17.22fps on the
+same NTSC/PAL input route. The original source/input/PSG clock remains about59.92
+steps/s. Native lanes, bounded enemy sprites and prepared player/header paths
+retain coherent graphics and mechanics. **Motion is still uneven: original
+fluidity is not achieved.** NTSC picture-gap P95 is83.44ms, and229/390 original
+jump updates are presented versus132/390 previously. The release includes the
+exact ROM, source/hash, updated performance workbook and
+[human tests](docs/releases/v0.0.13-native-lanes-cadence-diagnostic.md).
+Read the [measured scope and reproduction](docs/native-lanes-cadence.md),
+[validation](references/native-lanes-result.json) and
+[verified downloads](references/native-lanes-delivery.json). Issue42 remains open;
+manual audio/controllers, all levels and physical MSX1 acceptance are pending.
+
+The earlier [v0.0.10 fixed-clock diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
+separates original gameplay timing from drawing. Input-only MSX1 NTSC/PAL routes
+run about59.92original logical steps/s, with exact source CPU/RAM and committed
+graphics checks. **Active drawing is only about9.8/9.7fps; this is not a final
+performance solution.** Coherent snapshots preserve colors, actors, player and
+the black mask, but visible motion and feedback are coarse. Read the
+[human tests](docs/releases/v0.0.10-fixed-clock-diagnostic.md) and
+[measured architecture limits](docs/fixed-clock-diagnostic.md),
+[validation](references/fixed-clock-result.json) and
+[verified downloads](references/fixed-clock-delivery.json). Issue42 remains
+open for a faster complete-picture pipeline; original-time simulation does not
+certify original-time presentation, all levels, audio listening or real hardware.
+
+The earlier [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
 reduces repeated font-mask, actor-role and igloo work while retaining complete
 graphics and source updates. The same measured blue-ice input sequence gains
 about 2–3%; **original-speed gameplay remains unfinished**, with slowdown and

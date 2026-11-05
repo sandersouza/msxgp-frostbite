@@ -1,0 +1,823 @@
+{
+  "shared": {
+    "baseline_rom_sha256": "0e43bd16a5219a2d2548580e581ee5e26c7f440e715c18d96e07dbe033351ad0",
+    "candidate_rom_sha256": "1d3fe5df31c8ecf4a29d43db4544307ece46820e13c04240d097f16f591a0d1d",
+    "rows": [
+      {
+        "family": "ntsc",
+        "population": "active",
+        "frames": 1008,
+        "baseline_rate": 31.185464577102405,
+        "candidate_rate": 29.0318465601775,
+        "rate_gain": -0.06905839134127179,
+        "baseline_busy": 111564.04464285714,
+        "candidate_busy": 119890.11309523809,
+        "candidate_p95": 284265,
+        "candidate_max": 421591,
+        "baseline_stages": {
+          "source": 22059.271825396827,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 44776.38591269841,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "candidate_stages": {
+          "source": 22059.271825396827,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 53102.454365079364,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "baseline_bytes": 319.0357142857143,
+        "candidate_bytes": 293.6468253968254
+      },
+      {
+        "family": "ntsc",
+        "population": "all",
+        "frames": 2253,
+        "baseline_rate": 40.78037494529825,
+        "candidate_rate": 39.02380688674249,
+        "rate_gain": -0.043073857484438816,
+        "baseline_busy": 77364.8557478917,
+        "candidate_busy": 81224.11229471816,
+        "candidate_p95": 260088,
+        "candidate_max": 509955,
+        "baseline_stages": {
+          "source": 16664.492232578785,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 20823.925432756325,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "candidate_stages": {
+          "source": 16664.492232578785,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 24683.18197958278,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "baseline_bytes": 195.70039946737683,
+        "candidate_bytes": 183.49622725255216
+      },
+      {
+        "family": "pal",
+        "population": "active",
+        "frames": 843,
+        "baseline_rate": 32.492598643891256,
+        "candidate_rate": 30.250645471542924,
+        "rate_gain": -0.0689988879288923,
+        "baseline_busy": 126630.78884934756,
+        "candidate_busy": 136514.90391459074,
+        "candidate_p95": 307368,
+        "candidate_max": 442361,
+        "baseline_stages": {
+          "source": 26248.037959667854,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 52204.29893238434,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "candidate_stages": {
+          "source": 26248.037959667854,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 62088.41399762752,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "baseline_bytes": 362.67497034400947,
+        "candidate_bytes": 332.2597864768683
+      },
+      {
+        "family": "pal",
+        "population": "all",
+        "frames": 1886,
+        "baseline_rate": 42.037115495460725,
+        "candidate_rate": 40.24180852327463,
+        "rate_gain": -0.04270766324059416,
+        "baseline_busy": 86747.04347826086,
+        "candidate_busy": 91290.51378579003,
+        "candidate_p95": 279050,
+        "candidate_max": 509955,
+        "baseline_stages": {
+          "source": 19802.79268292683,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 24192.851007423116,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "candidate_stages": {
+          "source": 19802.79268292683,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 28736.32131495228,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "baseline_bytes": 219.35843054082716,
+        "candidate_bytes": 204.77094379639448
+      }
+    ],
+    "checks": [
+      {
+        "family": "ntsc",
+        "frames": 2253,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      },
+      {
+        "family": "pal",
+        "frames": 1886,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      }
+    ],
+    "density": [
+      {
+        "population": "all",
+        "frames": 1920,
+        "baseline": 162251.60833333334,
+        "candidate": 162543.40416666667,
+        "reduction": -0.0017984156602866008
+      }
+    ],
+    "matrix_cases": 2115,
+    "matrix_different_frames": 0,
+    "source_sha256": "7b8e892dc349dbb689c30572efa7f7a6bcb1bbf385be082c18210aefa7932d5d",
+    "scope": "Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.",
+    "evidence_sha256": {
+      "matrix-b/check.json": "268b063c4a9f39378e119fbc7f1f14256d2ec40265a8c0e890e7c365aadc8c72",
+      "density-b/check.json": "703d3f36dd9eef463aad6eac222c30c65892e6099d1ff9005586df87ed8c18a3",
+      "native-b/check.json": "b67bf63e66be370f8c4153d633536f52eb87734b2c999d0341b5a8d8d4b41dcb"
+    }
+  },
+  "prepared": {
+    "baseline_rom_sha256": "0e43bd16a5219a2d2548580e581ee5e26c7f440e715c18d96e07dbe033351ad0",
+    "candidate_rom_sha256": "923219216c217c11b1eeed03d19c80e2c1a6702b369624c03cbda63b8269e0eb",
+    "rows": [
+      {
+        "family": "ntsc",
+        "population": "active",
+        "frames": 1008,
+        "baseline_rate": 31.185464577102405,
+        "candidate_rate": 32.702933139793906,
+        "rate_gain": 0.04865948233478257,
+        "baseline_busy": 111564.04464285714,
+        "candidate_busy": 106046.04265873016,
+        "candidate_p95": 227532,
+        "candidate_max": 321144,
+        "baseline_stages": {
+          "source": 22059.271825396827,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 44776.38591269841,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "candidate_stages": {
+          "source": 22199.914682539682,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 39117.74107142857,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "baseline_bytes": 319.0357142857143,
+        "candidate_bytes": 331.6388888888889
+      },
+      {
+        "family": "ntsc",
+        "population": "all",
+        "frames": 2253,
+        "baseline_rate": 40.78037494529825,
+        "candidate_rate": 41.973668304762974,
+        "rate_gain": 0.029261461206901096,
+        "baseline_busy": 77364.8557478917,
+        "candidate_busy": 74936.62405681313,
+        "candidate_p95": 197635,
+        "candidate_max": 481664,
+        "baseline_stages": {
+          "source": 16664.492232578785,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 20823.925432756325,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "candidate_stages": {
+          "source": 16858.07767421216,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 18202.108300044387,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "baseline_bytes": 195.70039946737683,
+        "candidate_bytes": 202.18064802485574
+      },
+      {
+        "family": "pal",
+        "population": "active",
+        "frames": 843,
+        "baseline_rate": 32.492598643891256,
+        "candidate_rate": 34.23213502212414,
+        "rate_gain": 0.053536388311001604,
+        "baseline_busy": 126630.78884934756,
+        "candidate_busy": 120045.55634638197,
+        "candidate_p95": 247099,
+        "candidate_max": 349974,
+        "baseline_stages": {
+          "source": 26248.037959667854,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 52204.29893238434,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "candidate_stages": {
+          "source": 26416.20877817319,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 45450.8956109134,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "baseline_bytes": 362.67497034400947,
+        "candidate_bytes": 377.4982206405694
+      },
+      {
+        "family": "pal",
+        "population": "all",
+        "frames": 1886,
+        "baseline_rate": 42.037115495460725,
+        "candidate_rate": 43.30805247844261,
+        "rate_gain": 0.030233686778987634,
+        "baseline_busy": 86747.04347826086,
+        "candidate_busy": 83859.8451749735,
+        "candidate_p95": 217346,
+        "candidate_max": 481664,
+        "baseline_stages": {
+          "source": 19802.79268292683,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 24192.851007423116,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "candidate_stages": {
+          "source": 20034.04825026511,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 21074.397136797455,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "baseline_bytes": 219.35843054082716,
+        "candidate_bytes": 226.86638388123012
+      }
+    ],
+    "checks": [
+      {
+        "family": "ntsc",
+        "frames": 2253,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      },
+      {
+        "family": "pal",
+        "frames": 1886,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      }
+    ],
+    "density": [
+      {
+        "population": "all",
+        "frames": 1920,
+        "baseline": 162251.60833333334,
+        "candidate": 157141.39010416667,
+        "reduction": 0.03149563989940929
+      }
+    ],
+    "matrix_cases": 2115,
+    "matrix_different_frames": 0,
+    "source_sha256": "83360167e8d0501179e8e7755834e962a22f646d21af8c88bc397343befa4ecc",
+    "scope": "Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.",
+    "evidence_sha256": {
+      "matrix-c/check.json": "6132611fb0267f9cbe19de8eaf4d7d4e270106273a2b4435a044e1a27cacae7e",
+      "density-c/check.json": "b5a92306bcbfc018c447cf2bd22150fa211011c30fb86e74778182c5eeadcdbb",
+      "native-c/check.json": "f617623273515b12204dcc65585a85e52d4d7748843b57a0f859afb4cf8524d6"
+    }
+  },
+  "workbook": {
+    "sha256": "d4fcfebf081de7643f3c0366b99c14d74d5a57c04c4954e5d6b2e61923b28462",
+    "paired_rows": 8278,
+    "cost_rows": 424,
+    "native_excel_tested": false
+  },
+  "status": "Internal architectural checkpoints. Shared residency rejected; direct enemies next. No original-speed/human/physical acceptance or new release.",
+  "direct_enemy_eager": {
+    "baseline_rom_sha256": "0e43bd16a5219a2d2548580e581ee5e26c7f440e715c18d96e07dbe033351ad0",
+    "candidate_rom_sha256": "5526c58698a06d5ef97462ef3c543350c3ba38530b4b21d871d821b353235379",
+    "rows": [
+      {
+        "family": "ntsc",
+        "population": "active",
+        "frames": 1008,
+        "baseline_rate": 31.185464577102405,
+        "candidate_rate": 31.489712584502495,
+        "rate_gain": 0.009756083852715092,
+        "baseline_busy": 111564.04464285714,
+        "candidate_busy": 110382.68551587302,
+        "candidate_p95": 239956,
+        "candidate_max": 339862,
+        "baseline_stages": {
+          "source": 22059.271825396827,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 44776.38591269841,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "candidate_stages": {
+          "source": 22199.914682539682,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 43454.38392857143,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "baseline_bytes": 319.0357142857143,
+        "candidate_bytes": 374.4642857142857
+      },
+      {
+        "family": "ntsc",
+        "population": "all",
+        "frames": 2253,
+        "baseline_rate": 40.78037494529825,
+        "candidate_rate": 41.04103811911729,
+        "rate_gain": 0.006391877813008984,
+        "baseline_busy": 77364.8557478917,
+        "candidate_busy": 76952.505548158,
+        "candidate_p95": 206144,
+        "candidate_max": 504384,
+        "baseline_stages": {
+          "source": 16664.492232578785,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 20823.925432756325,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "candidate_stages": {
+          "source": 16858.07767421216,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 20217.98979138926,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "baseline_bytes": 195.70039946737683,
+        "candidate_bytes": 221.9445184198846
+      },
+      {
+        "family": "pal",
+        "population": "active",
+        "frames": 843,
+        "baseline_rate": 32.492598643891256,
+        "candidate_rate": 33.014434671825,
+        "rate_gain": 0.016060150610079038,
+        "baseline_busy": 126630.78884934756,
+        "candidate_busy": 125153.18623962041,
+        "candidate_p95": 262176,
+        "candidate_max": 368692,
+        "baseline_stages": {
+          "source": 26248.037959667854,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 52204.29893238434,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "candidate_stages": {
+          "source": 26416.20877817319,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 50558.52550415184,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "baseline_bytes": 362.67497034400947,
+        "candidate_bytes": 427.491103202847
+      },
+      {
+        "family": "pal",
+        "population": "all",
+        "frames": 1886,
+        "baseline_rate": 42.037115495460725,
+        "candidate_rate": 42.41834752532379,
+        "rate_gain": 0.009068938850103292,
+        "baseline_busy": 86747.04347826086,
+        "candidate_busy": 86220.22428419936,
+        "candidate_p95": 226576,
+        "candidate_max": 504384,
+        "baseline_stages": {
+          "source": 19802.79268292683,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 24192.851007423116,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "candidate_stages": {
+          "source": 20034.04825026511,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 23434.776246023328,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "baseline_bytes": 219.35843054082716,
+        "candidate_bytes": 249.84835630965006
+      }
+    ],
+    "checks": [
+      {
+        "family": "ntsc",
+        "frames": 2253,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      },
+      {
+        "family": "pal",
+        "frames": 1886,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      }
+    ],
+    "density": [
+      {
+        "population": "all",
+        "frames": 1920,
+        "baseline": 162251.60833333334,
+        "candidate": 160993.34947916667,
+        "reduction": 0.007754985402558701
+      }
+    ],
+    "matrix_cases": 2115,
+    "matrix_different_frames": 0,
+    "source_sha256": "65476316f9b0bf48ecedf8669ffc88db2fa9ac5601168856aee394d1c8b48322",
+    "evidence_validator_sha256": "c0cc2a957a0defaf4a3c020f4aa5358fc960783b0100ec891b57a10cd688a625",
+    "scope": "Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.",
+    "evidence_sha256": {
+      "matrix-c-full/check.json": "4ccc8ee3ee87fd7c9a4b8021ca4319a4b4981737e8a09c7f85e36af15d6d46df",
+      "density-c/check.json": "f3f11a6dbd33d08925c038a74e1f0b7990db3fb01c4f2b7dd6eaa062eeb01322",
+      "native-c/check.json": "8bdfece20f4bce5bb7c781d903c9d643ecfb8a55437df415d058da083e1d4ebb",
+      "ntsc-c/prepared-check-v2.json": "ab61fd831d0e7e14fdfc6dc48d6a6bd7cb45dd1ac2069f21e4e709917104d6a3",
+      "pal-c/prepared-check-v2.json": "4d93a45a940a9d1e0a50a6fa804830d8f482c1cc377c5495d34efa92772a4210"
+    }
+  },
+  "direct_enemy_lazy": {
+    "baseline_rom_sha256": "0e43bd16a5219a2d2548580e581ee5e26c7f440e715c18d96e07dbe033351ad0",
+    "candidate_rom_sha256": "2654da3abdb2fc2624f6485a9104327447e0493f64a864feb56b41212dc5ada9",
+    "rows": [
+      {
+        "family": "ntsc",
+        "population": "active",
+        "frames": 1008,
+        "baseline_rate": 31.185464577102405,
+        "candidate_rate": 33.63501398994306,
+        "rate_gain": 0.0785477928919236,
+        "baseline_busy": 111564.04464285714,
+        "candidate_busy": 102843.40873015873,
+        "candidate_p95": 219663,
+        "candidate_max": 319748,
+        "baseline_stages": {
+          "source": 22059.271825396827,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 44776.38591269841,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "candidate_stages": {
+          "source": 22199.914682539682,
+          "description": 434,
+          "dirty-state": 9179.287698412698,
+          "release": 789.4821428571429,
+          "background": 5031.204365079365,
+          "world": 35915.107142857145,
+          "header": 6425.965277777777,
+          "footer": 204,
+          "sprites": 15207.386904761905,
+          "prepared": 5513.247023809524,
+          "commit": 1943.813492063492
+        },
+        "baseline_bytes": 319.0357142857143,
+        "candidate_bytes": 374.4642857142857
+      },
+      {
+        "family": "ntsc",
+        "population": "all",
+        "frames": 2253,
+        "baseline_rate": 40.78037494529825,
+        "candidate_rate": 42.662913374183866,
+        "rate_gain": 0.04616285238698281,
+        "baseline_busy": 77364.8557478917,
+        "candidate_busy": 73498.65867731912,
+        "candidate_p95": 186090,
+        "candidate_max": 484270,
+        "baseline_stages": {
+          "source": 16664.492232578785,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 20823.925432756325,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "candidate_stages": {
+          "source": 16858.07767421216,
+          "description": 434,
+          "dirty-state": 8938.89968930315,
+          "release": 749.2689747003994,
+          "background": 2826.695960940968,
+          "world": 16764.142920550377,
+          "header": 7751.373280071017,
+          "footer": 230.79094540612516,
+          "sprites": 14205.628495339548,
+          "prepared": 2949.2068353306704,
+          "commit": 1790.5739014647138
+        },
+        "baseline_bytes": 195.70039946737683,
+        "candidate_bytes": 221.9445184198846
+      },
+      {
+        "family": "pal",
+        "population": "active",
+        "frames": 843,
+        "baseline_rate": 32.492598643891256,
+        "candidate_rate": 35.2937550548835,
+        "rate_gain": 0.0862090607677164,
+        "baseline_busy": 126630.78884934756,
+        "candidate_busy": 116412.07354685647,
+        "candidate_p95": 242981,
+        "candidate_max": 348578,
+        "baseline_stages": {
+          "source": 26248.037959667854,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 52204.29893238434,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "candidate_stages": {
+          "source": 26416.20877817319,
+          "description": 434,
+          "dirty-state": 9251.37959667853,
+          "release": 803.9893238434164,
+          "background": 5855.340450771056,
+          "world": 41817.4128113879,
+          "header": 7658.26690391459,
+          "footer": 204,
+          "sprites": 15589.386714116252,
+          "prepared": 6438.187425860024,
+          "commit": 1943.9015421115066
+        },
+        "baseline_bytes": 362.67497034400947,
+        "candidate_bytes": 427.491103202847
+      },
+      {
+        "family": "pal",
+        "population": "all",
+        "frames": 1886,
+        "baseline_rate": 42.037115495460725,
+        "candidate_rate": 44.0685640238462,
+        "rate_gain": 0.04832511708860787,
+        "baseline_busy": 86747.04347826086,
+        "candidate_busy": 82227.3451749735,
+        "candidate_p95": 206462,
+        "candidate_max": 484270,
+        "baseline_stages": {
+          "source": 19802.79268292683,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 24192.851007423116,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "candidate_stages": {
+          "source": 20034.04825026511,
+          "description": 434,
+          "dirty-state": 8970.327677624602,
+          "release": 756.8239660657476,
+          "background": 3289.0174973488865,
+          "world": 19441.897136797455,
+          "header": 9199.788971367974,
+          "footer": 235.99628844114528,
+          "sprites": 14637.387062566278,
+          "prepared": 3437.698833510074,
+          "commit": 1790.3594909862143
+        },
+        "baseline_bytes": 219.35843054082716,
+        "candidate_bytes": 249.84835630965006
+      }
+    ],
+    "checks": [
+      {
+        "family": "ntsc",
+        "frames": 2253,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      },
+      {
+        "family": "pal",
+        "frames": 1886,
+        "native_points": 2254,
+        "native_cpu_all_ram_identical": true,
+        "source_pixel_oracle_complete": true,
+        "physical_ownership_complete": true
+      }
+    ],
+    "density": [
+      {
+        "population": "all",
+        "frames": 1920,
+        "baseline": 162251.60833333334,
+        "candidate": 147591.66875,
+        "reduction": 0.09035312336143764
+      }
+    ],
+    "matrix_cases": 2115,
+    "matrix_different_frames": 0,
+    "source_sha256": "65476316f9b0bf48ecedf8669ffc88db2fa9ac5601168856aee394d1c8b48322",
+    "evidence_validator_sha256": "c0cc2a957a0defaf4a3c020f4aa5358fc960783b0100ec891b57a10cd688a625",
+    "scope": "Measured complete frames including all added work; paired source state and original pixel oracles. Not stable30/60Hz, all-level, listening, owner or physical acceptance. Oracle/zero-stage fields in detailed analysis are hypothetical only.",
+    "evidence_sha256": {
+      "matrix-e/check.json": "0f18ae0d63d945bec8877d4a4bff922ecb7a48ea8e32431e8237745a01e0b7f9",
+      "density-e/check.json": "f19974e941dd6cbf09a3b51023f06bae098a2dd6dd1d6fa5a485701792e3ce53",
+      "native-e/check.json": "e6c4cf19585274a9e3c175c5106e43db14a660103a0c8ffe8f2770172f1936cd",
+      "ntsc-e/prepared-check-v2.json": "2d13e4deb0842328229bfd0b7b24dcc50c338e330688eff6bc8b6fa4ec78f82e",
+      "pal-e/prepared-check-v2.json": "7380b9bb2106c25053560e3cb6f8fb486b2d3e2e5efd50f24bca77c4353c434e"
+    }
+  }
+}

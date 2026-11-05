@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "version": "v0.0.14-core-cadence-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.14-core-cadence-diagnostic",
+  "source_commit": "2c1891635553e07b6fd096a58cc0e34905acd568",
+  "prerelease": true,
+  "published_at": "2026-11-05T20:52:57Z",
+  "all_downloaded_assets_match_local": true,
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 15938,
+      "sha256": "d72d9a47cc29a0b0631aafd206dafaa1c4012b40a01370049ab510ce34bd8c6f",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.14-core-cadence-diagnostic/BUILD.json"
+    },
+    {
+      "name": "frostbite-0.0.14-core-cadence-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.14-core-cadence-diagnostic/frostbite-0.0.14-core-cadence-diagnostic.rom"
+    },
+    {
+      "name": "Frostbite-performance-budget-Z.xlsx",
+      "bytes": 4567869,
+      "sha256": "f8cb7719502b1af6a882e38162fbd12d8de54fb3bcd8e17572fbd8d9c1dc9043",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.14-core-cadence-diagnostic/Frostbite-performance-budget-Z.xlsx"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 449,
+      "sha256": "8a82598c0620fbd8391936c0b2053edd32045104cec50bb3abfd33c380d6a182",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.14-core-cadence-diagnostic/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 513,
+      "sha256": "d27ab54498c8341c967df2b622fa17d2fb06aaeeddb1a5b149f22afd81ca7f90",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.14-core-cadence-diagnostic/SOURCE.txt"
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 46962,
+      "sha256": "2111a7bca7664fa69a47116311791c27987bad232f5f35ee1a20d0ad3dbd03f2",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.14-core-cadence-diagnostic/VALIDATION.json"
+    }
+  ],
+  "github_release_metadata_sha256": "24da2931a1cac52bcc26358326ca10ac78e5191b40e171b0bc7b9757363981d1",
+  "github_tag_metadata_sha256": "654b1eaa863534a919828a9d4bfd7dbb53ff8a300bdefdcc5099c77cba146e64",
+  "evidence_scope": "Publication identity and checksum verification; owner and physical acceptance remain pending."
+}

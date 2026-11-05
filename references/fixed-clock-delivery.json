@@ -1,0 +1,22 @@
+{
+  "version": "v0.0.10-fixed-clock-diagnostic",
+  "release_url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic",
+  "source_commit": "854dcf462b56274f60f1f0cf978bc487d124e57a",
+  "verified_at": "2026-11-04T14:18:36.546320+00:00",
+  "rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+  "prerelease": true,
+  "remote_tag_commit_verified": true,
+  "downloaded_all_assets_byte_identical": true,
+  "public_assets": {
+    "build.json": "f34ea77fd0dc2cba93febf982709824aa28936790bedb4c04547f2df9d7a91fa",
+    "frostbite-0.0.10-fixed-clock-diagnostic.rom": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+    "validation.json": "6a598f464433aebd2775f71dabca8965cb8f4ce512b47b1d5c13087c70c0d380",
+    "SHA256SUMS": "10f531e45e3d072d1d09fabfe3f517a41258c9c0ecb19feec51e1594cbf61e61"
+  },
+  "physical_hardware_accepted": false,
+  "manual_emulator_accepted": false,
+  "manual_audio_accepted": false,
+  "original_speed_presentation_accepted": false,
+  "issue_url": "https://github.com/sandersouza/msxgp-frostbite/issues/42",
+  "pr_url": "https://github.com/sandersouza/msxgp-frostbite/pull/43"
+}

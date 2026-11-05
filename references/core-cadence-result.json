@@ -1,0 +1,1377 @@
+{
+  "complete": true,
+  "version": "v0.0.14-core-cadence-diagnostic",
+  "source_commit": "2c1891635553e07b6fd096a58cc0e34905acd568",
+  "source_dirty": false,
+  "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "tracked_source_hashes_verified": 145,
+  "source_and_original_clock_preserved": true,
+  "natural": {
+    "ntsc": {
+      "complete": true,
+      "family": "ntsc",
+      "expanded_ram_slot": false,
+      "stack_min_sp": 62282,
+      "stack_bytes": 54,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "source_checkpoints": 2253,
+      "hardware_vblanks": 2252,
+      "source_steps_per_second": 59.92274474121968,
+      "committed_pictures_per_second": 25.288252418546033,
+      "active_picture_intervals": 338,
+      "active_pictures_per_second": 20.112706414841213,
+      "committed_pictures": 948,
+      "max_irq_cycles": 30042,
+      "mean_irq_cycles": 17707.017317939608,
+      "mean_prepare_elapsed_cycles": 82534.33860759494,
+      "max_prepare_elapsed_cycles": 402210,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate.",
+      "world_x_test_wrapper_sha256": "01b4073dafc2fd58d9a3636c0846343dfd470cea9d152c84b5d0a658740e3186",
+      "raw_sha256": {
+        "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+        "captures.bin": "bb492f26141bd04b6174bd2ab91538953771593f12feb88806b4aa383b68ff93",
+        "owners.bin": "2d695cf20e097f0b7306aea1e48de68d8088760e1aa3bf5dbbb8c704980aaab5",
+        "irq.tsv": "94b008bcb6a62dd49cf53fb02c3b0a01201be3d02c9eb6f283f6edcb725c4dbc",
+        "pictures.tsv": "a26e3fb2a3bdc9243c4748fab13a92944cdbf51b7c2f74ea394a449c5c1cc74f"
+      }
+    },
+    "pal": {
+      "complete": true,
+      "family": "pal",
+      "expanded_ram_slot": true,
+      "stack_min_sp": 62282,
+      "stack_bytes": 54,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "source_checkpoints": 2254,
+      "hardware_vblanks": 1886,
+      "source_steps_per_second": 59.92467755809069,
+      "committed_pictures_per_second": 22.304734453847807,
+      "active_picture_intervals": 319,
+      "active_pictures_per_second": 19.070800104904237,
+      "committed_pictures": 837,
+      "max_irq_cycles": 50125,
+      "mean_irq_cycles": 20864.276246023328,
+      "mean_prepare_elapsed_cycles": 84890.92234169654,
+      "max_prepare_elapsed_cycles": 379001,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate.",
+      "world_x_test_wrapper_sha256": "01b4073dafc2fd58d9a3636c0846343dfd470cea9d152c84b5d0a658740e3186",
+      "raw_sha256": {
+        "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+        "captures.bin": "4c46789c7adc9f8ee22efee49dc4803933b0794c601fdf73870122508088a5bc",
+        "owners.bin": "84e92c41f193d3a6d2e141b29c8724945f502d5f257c21dc419dd48101d46de8",
+        "irq.tsv": "add6efb42ecc286bdd1bda95a75627a17309f7c02da3ea525c3b9b8e2ea4e7e0",
+        "pictures.tsv": "e05a6f7a833cdb4ab8ec3b04548d9685c297df1b4eaffc4575bc950e48828492"
+      }
+    }
+  },
+  "cadence": {
+    "ntsc": {
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "family": "ntsc",
+      "active_pictures_per_second": 20.112706414841213,
+      "active_gaps_ms": {
+        "count": 338,
+        "mean": 49.719812907033614,
+        "median": 50.064463500248735,
+        "p95": 66.78530371877045,
+        "maximum": 100.09680001229171
+      },
+      "source_steps_between_active_pictures": {
+        "count": 338,
+        "mean": 2.967455621301775,
+        "median": 3.0,
+        "p95": 4,
+        "maximum": 6
+      },
+      "vblank_gap_histogram": {
+        "2": 107,
+        "3": 146,
+        "4": 71,
+        "5": 13,
+        "6": 1
+      },
+      "active_pose_runs": 84,
+      "fully_unpresented_pose_runs": 3,
+      "unpresented_duration_steps": {
+        "1": 2,
+        "4": 1
+      }
+    },
+    "pal": {
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "family": "pal",
+      "active_pictures_per_second": 19.070800104904237,
+      "active_gaps_ms": {
+        "count": 319,
+        "mean": 52.43618487421724,
+        "median": 59.77742981300693,
+        "p95": 79.74561012642667,
+        "maximum": 99.68333964233267
+      },
+      "source_steps_between_active_pictures": {
+        "count": 319,
+        "mean": 3.1253918495297808,
+        "median": 3,
+        "p95": 5,
+        "maximum": 6
+      },
+      "vblank_gap_histogram": {
+        "2": 154,
+        "3": 133,
+        "4": 28,
+        "5": 4
+      },
+      "active_pose_runs": 84,
+      "fully_unpresented_pose_runs": 3,
+      "unpresented_duration_steps": {
+        "1": 1,
+        "4": 2
+      }
+    }
+  },
+  "jumps": {
+    "ntsc": [
+      {
+        "active_pictures_per_second": 18.221384584007605,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 229,
+            "total": 390,
+            "fraction": 0.5871794871794872,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 6,
+              "mean": 8.807692307692308,
+              "median": 8.5,
+              "p95": 11,
+              "maximum": 12
+            }
+          },
+          "distinct_y": {
+            "presented": 152,
+            "total": 234,
+            "fraction": 0.6495726495726496,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 5.846153846153846,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 173,
+            "total": 286,
+            "fraction": 0.6048951048951049,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.653846153846154,
+              "median": 6.0,
+              "p95": 8,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 160,
+            "total": 258,
+            "fraction": 0.6201550387596899,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.153846153846154,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 10,
+            "missed_jumps": 16,
+            "source_steps_after_landing_at_commit": {
+              "count": 10,
+              "minimum": 1,
+              "mean": 2.3,
+              "median": 2.0,
+              "p95": 3,
+              "maximum": 6
+            },
+            "latency_ms_lower": {
+              "count": 10,
+              "minimum": 27.43588919820894,
+              "mean": 48.98513637906498,
+              "median": 43.802215085996025,
+              "p95": 60.355994965846094,
+              "maximum": 111.23760142699268
+            },
+            "latency_ms_upper": {
+              "count": 10,
+              "minimum": 34.07053131054383,
+              "mean": 55.81969216757976,
+              "median": 50.791231846504914,
+              "p95": 67.57674508911293,
+              "maximum": 117.67249748221786
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 18,
+            "missed_jumps": 8,
+            "source_steps_after_landing_at_commit": {
+              "count": 18,
+              "minimum": 1,
+              "mean": 3.111111111111111,
+              "median": 3.0,
+              "p95": 6,
+              "maximum": 7
+            },
+            "latency_ms_lower": {
+              "count": 18,
+              "minimum": 27.43588919820894,
+              "mean": 62.668781150179896,
+              "median": 60.650026749211605,
+              "p95": 111.23760142699268,
+              "maximum": 127.63046700069225
+            },
+            "latency_ms_upper": {
+              "count": 18,
+              "minimum": 34.07053131054383,
+              "mean": 69.34191356722661,
+              "median": 67.430497451491,
+              "p95": 117.67249748221786,
+              "maximum": 134.29555991054443
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.9615384615384617,
+            "median": 4.0,
+            "p95": 7,
+            "maximum": 8
+          }
+        }
+      },
+      {
+        "active_pictures_per_second": 20.112706414841213,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 251,
+            "total": 390,
+            "fraction": 0.6435897435897436,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 6,
+              "mean": 9.653846153846153,
+              "median": 10.0,
+              "p95": 12,
+              "maximum": 12
+            }
+          },
+          "distinct_y": {
+            "presented": 162,
+            "total": 234,
+            "fraction": 0.6923076923076923,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.230769230769231,
+              "median": 6.5,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 188,
+            "total": 286,
+            "fraction": 0.6573426573426573,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.230769230769231,
+              "median": 7.0,
+              "p95": 9,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 167,
+            "total": 258,
+            "fraction": 0.6472868217054264,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.423076923076923,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 14,
+            "missed_jumps": 12,
+            "source_steps_after_landing_at_commit": {
+              "count": 14,
+              "minimum": 1,
+              "mean": 1.7857142857142858,
+              "median": 2.0,
+              "p95": 2,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 14,
+              "minimum": 27.806327340488934,
+              "mean": 40.716727165842784,
+              "median": 44.011319874452504,
+              "p95": 44.51711041487094,
+              "maximum": 77.68808605563038
+            },
+            "latency_ms_upper": {
+              "count": 14,
+              "minimum": 34.070251945429675,
+              "mean": 47.231661326469485,
+              "median": 50.774888987286104,
+              "p95": 50.8564636008213,
+              "maximum": 84.2975853076311
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 19,
+            "missed_jumps": 7,
+            "source_steps_after_landing_at_commit": {
+              "count": 19,
+              "minimum": 1,
+              "mean": 2.3157894736842106,
+              "median": 2,
+              "p95": 4,
+              "maximum": 5
+            },
+            "latency_ms_lower": {
+              "count": 19,
+              "minimum": 27.806327340488934,
+              "mean": 49.70120063039479,
+              "median": 44.090799249625334,
+              "p95": 78.52282901877139,
+              "maximum": 95.08638667764302
+            },
+            "latency_ms_upper": {
+              "count": 19,
+              "minimum": 34.070251945429675,
+              "mean": 56.068137445578024,
+              "median": 50.82405724749961,
+              "p95": 84.2975853076311,
+              "maximum": 100.9203683708435
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.1923076923076925,
+            "median": 2.0,
+            "p95": 6,
+            "maximum": 9
+          }
+        }
+      }
+    ],
+    "pal": [
+      {
+        "active_pictures_per_second": 17.215785401427564,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 213,
+            "total": 390,
+            "fraction": 0.5461538461538461,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 8.192307692307692,
+              "median": 8.0,
+              "p95": 10,
+              "maximum": 11
+            }
+          },
+          "distinct_y": {
+            "presented": 147,
+            "total": 234,
+            "fraction": 0.6282051282051282,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 5.653846153846154,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 7
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 163,
+            "total": 286,
+            "fraction": 0.5699300699300699,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.269230769230769,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "unique_xy": {
+            "presented": 153,
+            "total": 258,
+            "fraction": 0.5930232558139535,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 5.884615384615385,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 7
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 9,
+            "missed_jumps": 17,
+            "source_steps_after_landing_at_commit": {
+              "count": 9,
+              "minimum": 1,
+              "mean": 2.888888888888889,
+              "median": 2,
+              "p95": 4,
+              "maximum": 8
+            },
+            "latency_ms_lower": {
+              "count": 9,
+              "minimum": 28.624867126967324,
+              "mean": 58.94880184182286,
+              "median": 53.24168295132381,
+              "p95": 73.33082835947025,
+              "maximum": 127.91346386202207
+            },
+            "latency_ms_upper": {
+              "count": 9,
+              "minimum": 40.567446421262865,
+              "mean": 67.19954010293932,
+              "median": 60.569709278691874,
+              "p95": 80.47223879012577,
+              "maximum": 140.41142100462167
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 14,
+            "missed_jumps": 12,
+            "source_steps_after_landing_at_commit": {
+              "count": 14,
+              "minimum": 1,
+              "mean": 3.357142857142857,
+              "median": 3.5,
+              "p95": 5,
+              "maximum": 8
+            },
+            "latency_ms_lower": {
+              "count": 14,
+              "minimum": 28.624867126967324,
+              "mean": 67.14907700759237,
+              "median": 73.2850124806368,
+              "p95": 93.77756111461188,
+              "maximum": 127.91346386202207
+            },
+            "latency_ms_upper": {
+              "count": 14,
+              "minimum": 40.567446421262865,
+              "mean": 74.78807661707984,
+              "median": 80.4408102147054,
+              "p95": 100.40996830602822,
+              "maximum": 140.41142100462167
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 4.423076923076923,
+            "median": 4.5,
+            "p95": 7,
+            "maximum": 11
+          }
+        }
+      },
+      {
+        "active_pictures_per_second": 19.070800104904237,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 241,
+            "total": 390,
+            "fraction": 0.617948717948718,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 7,
+              "mean": 9.26923076923077,
+              "median": 9.0,
+              "p95": 11,
+              "maximum": 11
+            }
+          },
+          "distinct_y": {
+            "presented": 162,
+            "total": 234,
+            "fraction": 0.6923076923076923,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.230769230769231,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 7
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 183,
+            "total": 286,
+            "fraction": 0.6398601398601399,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.038461538461538,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "unique_xy": {
+            "presented": 166,
+            "total": 258,
+            "fraction": 0.6434108527131783,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.384615384615385,
+              "median": 6.5,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 10,
+            "missed_jumps": 16,
+            "source_steps_after_landing_at_commit": {
+              "count": 10,
+              "minimum": 1,
+              "mean": 1.9,
+              "median": 1.5,
+              "p95": 3,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 10,
+              "minimum": 29.385578334676588,
+              "mean": 45.01544190672169,
+              "median": 44.037999242919845,
+              "p95": 54.98939110976053,
+              "maximum": 68.55228807012992
+            },
+            "latency_ms_upper": {
+              "count": 10,
+              "minimum": 40.56744642126198,
+              "mean": 52.59472921837754,
+              "median": 50.61760642763247,
+              "p95": 60.60071880643747,
+              "maximum": 80.60214356852669
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 14,
+            "missed_jumps": 12,
+            "source_steps_after_landing_at_commit": {
+              "count": 14,
+              "minimum": 1,
+              "mean": 2.357142857142857,
+              "median": 2.0,
+              "p95": 4,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 14,
+              "minimum": 29.385578334676588,
+              "mean": 51.51905778926759,
+              "median": 53.801390958907014,
+              "p95": 74.34017451939212,
+              "maximum": 74.37705071454559
+            },
+            "latency_ms_upper": {
+              "count": 14,
+              "minimum": 40.56744642126198,
+              "mean": 59.131278257032854,
+              "median": 60.56942991357861,
+              "p95": 80.47335625058594,
+              "maximum": 80.60214356852669
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.5,
+            "median": 3.5,
+            "p95": 6,
+            "maximum": 7
+          }
+        }
+      }
+    ]
+  },
+  "whole_frame_profile": {
+    "active_pictures": 342,
+    "active_source_steps": 1008,
+    "prepare_phase_comparison": [
+      {
+        "stage": "description",
+        "combined": {
+          "mean": 4072,
+          "maximum": 4072,
+          "p95": 4072
+        },
+        "baseline_X": {
+          "mean": 4072,
+          "maximum": 4072,
+          "p95": 4072
+        }
+      },
+      {
+        "stage": "sprites-preflight",
+        "combined": {
+          "mean": 12183.456140350878,
+          "maximum": 63372,
+          "p95": 23126
+        },
+        "baseline_X": {
+          "mean": 14391.886731391585,
+          "maximum": 68035,
+          "p95": 24307
+        }
+      },
+      {
+        "stage": "dirty-state",
+        "combined": {
+          "mean": 9826.192982456141,
+          "maximum": 10863,
+          "p95": 10456
+        },
+        "baseline_X": {
+          "mean": 9903.122977346278,
+          "maximum": 10942,
+          "p95": 10528
+        }
+      },
+      {
+        "stage": "release",
+        "combined": {
+          "mean": 2146.1403508771928,
+          "maximum": 2307,
+          "p95": 2235
+        },
+        "baseline_X": {
+          "mean": 2155.349514563107,
+          "maximum": 2307,
+          "p95": 2253
+        }
+      },
+      {
+        "stage": "background",
+        "combined": {
+          "mean": 4109.286549707603,
+          "maximum": 11894,
+          "p95": 7917
+        },
+        "baseline_X": {
+          "mean": 4368.462783171521,
+          "maximum": 11894,
+          "p95": 8502
+        }
+      },
+      {
+        "stage": "world",
+        "combined": {
+          "mean": 37063.1783625731,
+          "maximum": 73144,
+          "p95": 56948
+        },
+        "baseline_X": {
+          "mean": 39250.935275080905,
+          "maximum": 69291,
+          "p95": 58503
+        }
+      },
+      {
+        "stage": "header",
+        "combined": {
+          "mean": 8037.982456140351,
+          "maximum": 47869,
+          "p95": 37434
+        },
+        "baseline_X": {
+          "mean": 11471.05501618123,
+          "maximum": 74315,
+          "p95": 49669
+        }
+      },
+      {
+        "stage": "footer",
+        "combined": {
+          "mean": 262.280701754386,
+          "maximum": 286,
+          "p95": 262
+        },
+        "baseline_X": {
+          "mean": 262.2330097087379,
+          "maximum": 286,
+          "p95": 262
+        }
+      },
+      {
+        "stage": "upload",
+        "combined": {
+          "mean": 9283.25730994152,
+          "maximum": 19565,
+          "p95": 15324
+        },
+        "baseline_X": {
+          "mean": 9933.355987055016,
+          "maximum": 19565,
+          "p95": 15781
+        }
+      },
+      {
+        "stage": "total",
+        "combined": {
+          "mean": 86983.77485380117,
+          "maximum": 195167,
+          "p95": 142044
+        },
+        "baseline_X": {
+          "mean": 95808.40129449838,
+          "maximum": 207642,
+          "p95": 158545
+        }
+      }
+    ],
+    "source_irq_disjoint": {
+      "native_core_except_input_audio_bodies": 12379.16865079365,
+      "input_sampler_bodies": 1937.8412698412699,
+      "audio_observer_bodies": 571.0,
+      "visible_step": 4764.271825396825,
+      "native_step_wrapper": 543.0,
+      "charge_steps_wrapper": 120.0,
+      "scheduler": 175.0,
+      "picture_commit": 748.6190476190476,
+      "irq_other": 694.310515873016
+    },
+    "source_irq_baseline_X": {
+      "native_core_except_input_audio_bodies": 14211.145833333334,
+      "input_sampler_bodies": 1937.8412698412699,
+      "audio_observer_bodies": 571.0,
+      "visible_step": 4764.271825396825,
+      "native_step_wrapper": 542.9999999999982,
+      "charge_steps_wrapper": 120.0,
+      "scheduler": 175.0,
+      "picture_commit": 680.0436507936508,
+      "irq_other": 686.4672619047626
+    },
+    "complete_isr": {
+      "count": 1008,
+      "mean": 21933.21130952381,
+      "minimum": 19115,
+      "p95": 25055,
+      "maximum": 28156,
+      "mean_cycles_per_active_source_step": 21933.21130952381
+    },
+    "two_field_budget": {
+      "foreground_plus_ack_cycles": 86983.77485380117,
+      "available_outside_irq_cycles": 75605.57738095238,
+      "deficit_cycles": 11378.197472848784,
+      "required_irq_reduction_per_field_for_mean_fit": 5689.098736424392,
+      "scope": "Arithmetic capacity comparison at observed active means, not a candidate speedup or sufficient tail/commit guarantee."
+    },
+    "five_buffers_identical": {
+      "route-cpu.bin": true,
+      "captures.bin": true,
+      "owners.bin": true,
+      "irq.tsv": true,
+      "pictures.tsv": true
+    },
+    "checks": {
+      "disjoint_phase_sums_equal_total_within_rounding": true,
+      "disjoint_irq_sums_equal_total": true,
+      "total_elapsed_equals_canonical_picture_prepare_cycles": true,
+      "no_negative_foreground": true
+    },
+    "scope": "Passive measurement of the exact already-tested combined ROM. Complete foreground stages partition each committed preparation; their IRQ-subtracted sums equal direct total within rounding. Complete ISR is partitioned into source core, input/audio, contacts, wrappers and commit; no input-alias double count. No retired inner-core labels instrumented. Same source route but changed picture populations versus X; phase mean differences are not isolated component savings. No runtime modification, PAL profile, new cadence trial or acceptance claim."
+  },
+  "qualification": {
+    "matrix": {
+      "complete": true,
+      "cases": 2115,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "receipt_sha256": "5573d86a2fd841dfbe931845407e8d7760c0452f6a9d0cceb3fd54220fcca243"
+    },
+    "density": {
+      "complete": true,
+      "cases": 1920,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "receipt_sha256": "b35e2a946cab118a25338c4d217d5aa6d06fd11a54643dadee6e591a02acda7c"
+    },
+    "header": {
+      "complete": true,
+      "cases": 54,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "receipt_sha256": "0c0beada04c531ee6a108486b55d1e75895addd78e9c52ee66bdfeb5d397473b"
+    },
+    "audio": {
+      "complete": true,
+      "cases": 2115,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "receipt_sha256": "ed28d718c587b275fe18b610bb3fe01070979a4de51d721ac0fcd0d69edcbd25",
+      "ordered_source_writes": 3499,
+      "physical_psg_writes": 2472,
+      "manual_listening_accepted": false
+    },
+    "irq_ntsc": {
+      "complete": true,
+      "cases": 9,
+      "main_alternate_index_sp_bank_restored": true,
+      "irq_vram_and_snapshot_unchanged": true
+    },
+    "irq_pal": {
+      "complete": true,
+      "cases": 9,
+      "main_alternate_index_sp_bank_restored": true,
+      "irq_vram_and_snapshot_unchanged": true
+    },
+    "negative": {
+      "complete": true,
+      "negative_control": "AF2 mutation after RETI must fail register oracle",
+      "expected_failure": "boundary-register-restoration",
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+      "launch_sha256": "aa029734bbc611980abf02752a4437b48e732fb0574d732e7dd7be0c78d6efec",
+      "log_sha256": "8b317902f33dbe35e2227bf2244282a869fa50ae4735f63fd94fbb52abd145da"
+    },
+    "clipping": {
+      "complete": true,
+      "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+      "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+      "cases": 10560,
+      "edge_cases": 990,
+      "groups": 33,
+      "reflections": 2,
+      "x": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159
+      ],
+      "pool_patterns": 132,
+      "selector_aliases": 33,
+      "actual_pixels_sha256": "a7853e95e696dca8e2031cf3975a9e374476d9a0a826ddfb7212c32bf742b694",
+      "expected_pixels_sha256": "a7853e95e696dca8e2031cf3975a9e374476d9a0a826ddfb7212c32bf742b694",
+      "scope": "All original glyphs/reflections and mode0 X0..159, sixteen complete SGT rows, source160 wrap and HMOVE X<8 clip. Actual ROM pool/mask tables; independent original ROM glyph expansion and map_x. No runtime timing or owner acceptance claim.",
+      "sources": {
+        "/Users/sandersouza/Developer/msx-gamePorts/frostbite/scripts/presentation_native_clipping.py": "2bc748be58b094f86b3abe0446abcc82b39f199c98af65414f9d2a9d2894151d",
+        "scripts/original_graphics.py": "41094856026c54f011de61ce12405f6893b31075d7d9b09ce7c2713a38f83fc1",
+        "scripts/graphics_mapping.py": "cfdc137ed5db16d3a5dd2704c418362945b33478483c13fa002535e54f692143"
+      }
+    },
+    "host_tests": {
+      "passed": 557,
+      "original_free": true,
+      "log_sha256": "e1e79a6ad8c291bc47dc2bb8cc2c86d9d1312e0fa1f697c9887d792eb24bc750"
+    }
+  },
+  "component_proofs": [
+    {
+      "receipt": "outputs/presentation/core-z-design/feb8-receipt-v2.json",
+      "sha256": "180ae2a7fd932841fc5763c934780b47215a686e220567f77b6fee8e3a14c550"
+    },
+    {
+      "receipt": "outputs/presentation/ice-core-z-research/ice-receipt.json",
+      "sha256": "795699947571e25c82bef153687a9e679d16c1e900142c4922d3f1f3a3e97a77"
+    },
+    {
+      "receipt": "outputs/presentation/actor-core-z-research/result.json",
+      "sha256": "31d21a2068ba11cf3d0129c56f67ff07e0139e9b5be432c9d9d1cfdcc1f54052"
+    },
+    {
+      "receipt": "outputs/presentation/player-y-research/receipt.json",
+      "sha256": "a309cc1abab07389022a32c03e5ddb5fbaffc7e2a72a3fc0b21459d5e3c10c18"
+    },
+    {
+      "receipt": "outputs/presentation/header-y-research/result.json",
+      "sha256": "a3484f8e59776a8b44c7266066cfedfb9d0c6291828202df0f960e6e67de0c69"
+    }
+  ],
+  "review": {
+    "review_complete": true,
+    "blocking_findings": [],
+    "important_integration_condition": "Typed-header constructor API kinds 16..18 is retired; preserve the current direct-only header producer invariant and do not call dormant dispatcher edges.",
+    "scope": {
+      "independent": "Ice and actor decoded summaries, canonical producer, allocation/metadata closure; independent child review of header/static/player.",
+      "not_independent": "FEB8 and player selector were originally implemented by this reviewer. FEB8 requires root independent review; player selector also received independent child review.",
+      "runtime": "No emulator rerun by this review; existing tests remain separately attributed."
+    },
+    "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+    "private_directory": "outputs/presentation/core-z-combined/build-all-a",
+    "canonical_directory": "outputs/presentation/core-cadence-z/build-source-a",
+    "canonical_metadata_sha256": "8e1f0932462b5a132e941145e7b8a36ab8c580482ea41a72f68cae896b6d974d",
+    "private_source_entries": 153,
+    "canonical_source_entries": 145,
+    "all_declared_source_hashes_match": true,
+    "changed_bytes_from_X": 5800,
+    "full_patch_spans_nonoverlapping": true,
+    "patch_spans": [
+      {
+        "start": 7635,
+        "end_exclusive": 8374,
+        "size": 739
+      },
+      {
+        "start": 9872,
+        "end_exclusive": 9875,
+        "size": 3
+      },
+      {
+        "start": 9892,
+        "end_exclusive": 9895,
+        "size": 3
+      },
+      {
+        "start": 10576,
+        "end_exclusive": 10748,
+        "size": 172
+      },
+      {
+        "start": 35906,
+        "end_exclusive": 36039,
+        "size": 133
+      },
+      {
+        "start": 36825,
+        "end_exclusive": 36871,
+        "size": 46
+      },
+      {
+        "start": 38665,
+        "end_exclusive": 38800,
+        "size": 135
+      },
+      {
+        "start": 39460,
+        "end_exclusive": 39521,
+        "size": 61
+      },
+      {
+        "start": 43055,
+        "end_exclusive": 43058,
+        "size": 3
+      },
+      {
+        "start": 44505,
+        "end_exclusive": 44540,
+        "size": 35
+      },
+      {
+        "start": 1914880,
+        "end_exclusive": 1916928,
+        "size": 2048
+      },
+      {
+        "start": 1931264,
+        "end_exclusive": 1933312,
+        "size": 2048
+      },
+      {
+        "start": 1947648,
+        "end_exclusive": 1948880,
+        "size": 1232
+      },
+      {
+        "start": 2407936,
+        "end_exclusive": 2408075,
+        "size": 139
+      }
+    ],
+    "retired_core_labels": 82,
+    "new_ram_bytes": 0,
+    "reviewed_source_files": {
+      "scripts/build_core_cadence.py": "c6fcbee514d16041ac73409fd315e3dc08f48599ad4d48a91c000b7c04710fe1",
+      "scripts/presentation_header_dictionary.py": "61b9bf96849de89487932cf8709122605f1dc6191e1b885fd63afa726f3d5bd9",
+      "src/presentation_core_effect.asm": "c362eaff4b24e7116bc763629164530cd078788a59f805eebbd2284c748767b1",
+      "src/presentation_core_ice.asm": "57d673004fd0bcb8e44ac3923946a5a70dc30fd526b20acfdf60e2ce25fccda9",
+      "src/presentation_core_actors.asm": "889ed1735706d840f2218cbccf29dd0db7912584e021baf78ac4d3facd9bab94",
+      "src/presentation_direct_header.asm": "56ad3bc8a144932d8dd41f70d511a6d6aea9eec7235ab5abd41cf15d2f4e09e2",
+      "src/presentation_static_tail.asm": "00c240ece7eeb07b3a721cfd054194012e139bcf97ae3c2ca7b6719f756a805f",
+      "src/presentation_player_selector.asm": "e00177e7a02385fe9c4e377cca898674c486b6cc35405c50e3da8c846e155284",
+      "src/native_cpu.asm": "dad5dc5795c53a4df74888f7e507e49234e10b12dc6008ea5896c2f10009fadd",
+      "src/presentation_fixed_clock.asm": "dc0e5a63e17ecba80b68544d431decfc1ddbcd404819c8bd5185b0b53a3c9dfb"
+    },
+    "child_review": {
+      "path": "outputs/presentation/core-z-review/header-static/review.md",
+      "sha256": "414e31466adf08d01312103204f08503fb2c511fc529aec554872171b4224458"
+    },
+    "limitations": [
+      "Source/control-flow review, not exhaustive decoded-Z80 reachability proof.",
+      "No PAL, physical hardware, 30 FPS, or original-fluidity acceptance established by this review."
+    ]
+  },
+  "independent_effect_review": {
+    "result": "No blocking findings in the independently reviewed FEB8 component.",
+    "independence": "Reviewer did not author the FEB8 component; authored unrelated Ice lowering and passive profiles. This review only approves FEB8 semantic/allocation contract and source reproduction, not independent review of own Ice component.",
+    "scope": "Maintained src/presentation_core_effect.asm versus frozen FEB8 finite proof, fallback contract and directed actual-Z80 evidence; independent canonical rebuild of complete combined ROM. No runtime redesign or tracked edits.",
+    "checks": {
+      "maintained_source_byte_identical_to_frozen": true,
+      "assembled_effect_byte_identical_to_frozen": true,
+      "only_135_byte_body_replaced": true,
+      "new_ram_bytes": 0,
+      "guard_before_any_ram_or_v_write": true,
+      "guard_proves_nonwrapping_immutable_table_read": true,
+      "fallback_tail_jump_preserves_hardware_call_depth": true,
+      "fallback_reinitializes_changed_scratch_before_use": true,
+      "low_zero_preserves_incoming_v": true,
+      "high_zero_clears_v_and_preserves_fourth_shift_carry": true,
+      "nonzero_arithmetic_captures_actual_overflow": true,
+      "high_path_nested_source_return_bytes_preserved": true,
+      "source_decimal_zero_and_x_domain_proven": true,
+      "no_added_input_or_audio_observer": true,
+      "all_frozen_receipt_fingerprints_verified": true
+    },
+    "evidence_classes": {
+      "finite_original_cpu_cases": 622592,
+      "actual_z80_directed_cases": 1084,
+      "fast_cases": 824,
+      "fallback_cases": 260,
+      "guard_boundary": "55/56 unattainable under exact source mask table; directed greatest admitted49/least rejected64 and fallback128 with four I/O variants.",
+      "flag_contract": "Fast helper has full original P. Baseline/rejected helper only promise live V/mode, with direct original sibling equivalence; all logical P/CPU/all128RAM are strict at publicF019. No weakening of the public CPU contract."
+    },
+    "limitations": [
+      "No fresh exhaustive CPU or emulator test reruns: maintained and assembled FEB8 bytes exactly match the already-proven frozen candidate.",
+      "Root is independently running canonical fullNTSC/PAL qualification; this receipt does not claim those results.",
+      "No original-fluidity, human listening or physical-hardware acceptance."
+    ]
+  },
+  "final_source_natural_parity": [
+    {
+      "family": "ntsc",
+      "buffers_identical": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      },
+      "cpu": 2253,
+      "pictures": 948,
+      "fps": 20.112706414841213
+    },
+    {
+      "family": "pal",
+      "buffers_identical": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      },
+      "cpu": 2254,
+      "pictures": 837,
+      "fps": 19.070800104904237
+    }
+  ],
+  "ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 42106551981,
+      "event": "pull_request",
+      "status": "completed",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/42106551981"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42106542332,
+      "event": "push",
+      "status": "completed",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/42106542332"
+    }
+  ],
+  "controls_preserved": {
+    "native-lanes-x": {
+      "files": 318,
+      "manifest_sha256": "40f2095818b57fd7519e48b7b445b7fb411c03e64c4fc3325524f2e8e83f3a60",
+      "unchanged": true
+    },
+    "header-palette-w": {
+      "files": 316,
+      "manifest_sha256": "a51ae8666a2fa2e9ccb82cf5ac59975f53ac49971dba47e9297d0a5a2c58b37e",
+      "unchanged": true
+    }
+  },
+  "evidence": {
+    "outputs/presentation/core-cadence-z/build-final/build.json": "80d90d2d6f90240aee6d62bc481044d4e65cb87170830f210629e6edbc0814de",
+    "outputs/presentation/core-cadence-z/ntsc-final/check.json": "21a372f96bfd0789ef4338b417f94d83b66750871fc686e2057834a0e8b60890",
+    "outputs/presentation/core-cadence-z/pal-final/check.json": "bdfb0b5c9345e982fa7f9911b90ae8ea5ea93ac084a5fc4e35f70fe323c28bc1",
+    "outputs/presentation/core-z-validation/matrix-a/check.json": "5573d86a2fd841dfbe931845407e8d7760c0452f6a9d0cceb3fd54220fcca243",
+    "outputs/presentation/core-z-validation/density-a/check.json": "b35e2a946cab118a25338c4d217d5aa6d06fd11a54643dadee6e591a02acda7c",
+    "outputs/presentation/core-z-validation/header-a/check.json": "0c0beada04c531ee6a108486b55d1e75895addd78e9c52ee66bdfeb5d397473b",
+    "outputs/presentation/core-z-validation/audio-a/check.json": "ed28d718c587b275fe18b610bb3fe01070979a4de51d721ac0fcd0d69edcbd25",
+    "outputs/presentation/core-z-validation/boundary-ntsc-a/boundary-check.json": "b65bca82c69bf169434bf2337126c4586913fb2a9e87df5cc446c2ae313794fb",
+    "outputs/presentation/core-z-validation/boundary-pal-a/boundary-check.json": "d1cac0cbc33dc4ba74b126b702fdb87ac6eeb45dc12962295dccc015b3b79d9d",
+    "outputs/presentation/core-z-validation/boundary-negative-a/negative-check.json": "ac6f9daf3af7be4b894b32324fa54bc45c71f916e6a9b2337a6280c4b87a3733",
+    "outputs/presentation/core-z-validation/clipping.json": "fc594b47d2966e2614dd24148763c4a63e53c1c9687b01f6d66b1458e2336663",
+    "outputs/presentation/core-z-validation/host-tests.log": "e1e79a6ad8c291bc47dc2bb8cc2c86d9d1312e0fa1f697c9887d792eb24bc750",
+    "outputs/presentation/core-z-combined/cadence-all-a.json": "1a919ff4635249c975e74cbc7b4639b7961763a873200b7e6b9df12187b0b524",
+    "outputs/presentation/core-z-validation/cadence-pal-a.json": "c7d3d082c75d21028ba3a7552428051493ca550c0abc6714220ab833c7805dce",
+    "outputs/presentation/core-z-combined/jumps-all-a.json": "e4c56ccbb5b2bd6e5848f70a44144e10d4e51e2bd762f8b49b050cb4cb2d47a9",
+    "outputs/presentation/core-z-validation/jumps-pal-a.json": "684e57154e1987833e28fbfbebe760c2b2c1a34cf36fe63b2771cdecad127baa",
+    "outputs/presentation/core-z-profile-combined/combined-profile.json": "a770d88e99bd741c9233408469228d5a2c7e64b078e1e5d902484b4c0807a4d2",
+    "outputs/presentation/core-cadence-z/final-parity.json": "5cb187e57faaa9e36418fb32b0af7e084107af76e8da6467ad968f7473002035",
+    "outputs/presentation/core-z-review/review.json": "e3092dcc4fb746ea028dfebd1db8bafe13bd4e9d3dddb236e1abd0fc02c91d38",
+    "outputs/presentation/core-z-independent/review.json": "f21b08a06712cc2d0c41acc84cd22746b1db0aef12a01788dac5a6dc17e37b8b",
+    "outputs/presentation/core-z-review/review.md": "5995f1911ea6f8f85487d0bab35eb737256f36310211618e573a47e850a5b99b",
+    "outputs/presentation/core-z-review/header-static/review.md": "414e31466adf08d01312103204f08503fb2c511fc529aec554872171b4224458",
+    "outputs/presentation/core-z-design/feb8-receipt-v2.json": "180ae2a7fd932841fc5763c934780b47215a686e220567f77b6fee8e3a14c550",
+    "outputs/presentation/ice-core-z-research/ice-receipt.json": "795699947571e25c82bef153687a9e679d16c1e900142c4922d3f1f3a3e97a77",
+    "outputs/presentation/actor-core-z-research/result.json": "31d21a2068ba11cf3d0129c56f67ff07e0139e9b5be432c9d9d1cfdcc1f54052",
+    "outputs/presentation/player-y-research/receipt.json": "a309cc1abab07389022a32c03e5ddb5fbaffc7e2a72a3fc0b21459d5e3c10c18",
+    "outputs/presentation/header-y-research/result.json": "a3484f8e59776a8b44c7266066cfedfb9d0c6291828202df0f960e6e67de0c69",
+    "outputs/presentation/core-cadence-z/controls-preserved.json": "4b0772185ce870f3c031044ab5104d289879d469a2d9ea7d3e9d27bd03932219"
+  },
+  "original_fluidity_accepted": false,
+  "human_accepted": false,
+  "physical_hardware_accepted": false,
+  "scope": "Bounded original CPU/RAM, pixel and ordered-audio proof with measured coherent cadence. Not stable 30 FPS, all-level, owner or physical acceptance.",
+  "independent_rebuild": {
+    "command": "scripts/build_core_cadence.py --base outputs/presentation/native-lanes-x/build-final --out outputs/presentation/core-z-independent/build",
+    "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+    "source_commit": "2c1891635553e07b6fd096a58cc0e34905acd568",
+    "clean_worktree_at_build": true,
+    "later_worktree_status": "?? references/core-cadence-result.json\n",
+    "source_files_verified": 145,
+    "all_source_hashes_match_worktree_and_git_commit": true,
+    "complete_source_metadata_consistent": true,
+    "build_receipt_sha256": "80d90d2d6f90240aee6d62bc481044d4e65cb87170830f210629e6edbc0814de",
+    "effect_sha256": "8229c0fd9032fa5cf676c8c86a517cb7d644b258b7d1f3fe7904f480d3b51a2d"
+  },
+  "workbook": {
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-Z/Frostbite-performance-budget-Z.xlsx",
+    "sha256": "f8cb7719502b1af6a882e38162fbd12d8de54fb3bcd8e17572fbd8d9c1dc9043",
+    "audit_sha256": "92345d111704dca1b556514a27050eeb5bb743e361f81dff93e19841dea95b14",
+    "sheets": 25,
+    "preserved_Y_sheets": 23,
+    "preserved_cells": 762824,
+    "formula_checks": 17,
+    "mutation_restore_tests": 2,
+    "formula_errors": [],
+    "manual_visual_regions": 8,
+    "native_excel_exercised": false,
+    "scope": "Sealed pre-publication measurement snapshot; all Y cells/features preserved. Owner/physical acceptance pending."
+  }
+}

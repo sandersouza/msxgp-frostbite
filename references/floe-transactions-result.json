@@ -1,0 +1,1428 @@
+{
+  "complete": true,
+  "version": "v0.0.15-floe-transactions-diagnostic",
+  "source_commit": "e5dd710a910272150709f7b806fb3c62403fa009",
+  "source_dirty": false,
+  "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "tracked_source_hashes_verified": 147,
+  "source_and_original_clock_preserved": true,
+  "natural": {
+    "ntsc": {
+      "complete": true,
+      "family": "ntsc",
+      "expanded_ram_slot": false,
+      "stack_min_sp": 62278,
+      "stack_bytes": 58,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "source_checkpoints": 2253,
+      "hardware_vblanks": 2252,
+      "source_steps_per_second": 59.92274786067046,
+      "committed_pictures_per_second": 25.929137766387594,
+      "active_picture_intervals": 361,
+      "active_pictures_per_second": 21.460013533494152,
+      "committed_pictures": 972,
+      "max_irq_cycles": 29367,
+      "mean_irq_cycles": 17733.026642984016,
+      "mean_prepare_elapsed_cycles": 78448.49074074074,
+      "max_prepare_elapsed_cycles": 396137,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate.",
+      "world_x_test_wrapper_sha256": "01b4073dafc2fd58d9a3636c0846343dfd470cea9d152c84b5d0a658740e3186",
+      "raw_sha256": {
+        "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+        "captures.bin": "8ee5e653c5b46894b571d45cbe15deb9e2ac918c9f8cf033205c705f965383b0",
+        "owners.bin": "de38562eabded73ad325bac140ef72bcd04e9cb0370094652950fd16f82c307b",
+        "irq.tsv": "499cff80c183c7d65061526b37b7b27d8323a5d2a9cb97e473640accfb6daecd",
+        "pictures.tsv": "f023b6c57dfc2d4f5ab54b61a69dfde3f609837abf2a99ac4b2a0277341fa595"
+      }
+    },
+    "pal": {
+      "complete": true,
+      "family": "pal",
+      "expanded_ram_slot": true,
+      "stack_min_sp": 62280,
+      "stack_bytes": 56,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "source_checkpoints": 2254,
+      "hardware_vblanks": 1886,
+      "source_steps_per_second": 59.92467533075751,
+      "committed_pictures_per_second": 22.83834105194033,
+      "active_picture_intervals": 337,
+      "active_pictures_per_second": 20.195035537575052,
+      "committed_pictures": 857,
+      "max_irq_cycles": 49323,
+      "mean_irq_cycles": 20890.44750795334,
+      "mean_prepare_elapsed_cycles": 80564.33838973162,
+      "max_prepare_elapsed_cycles": 372928,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate.",
+      "world_x_test_wrapper_sha256": "01b4073dafc2fd58d9a3636c0846343dfd470cea9d152c84b5d0a658740e3186",
+      "raw_sha256": {
+        "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+        "captures.bin": "54a30c9b79e88c54884157c265ec65149996e4a5d4d8291ae84fd69612ebd7f4",
+        "owners.bin": "55658da680bc30772e977f210b11b50e4a058da375d16bf3c9bbb54f8129e2f5",
+        "irq.tsv": "51d6977f137e33058d16db80297c1eed3a74b62cf1ddb0ec943690e13f311794",
+        "pictures.tsv": "2839165ead69bdcb4000d7ca1c895a83292afa9ba81eada2fada02373206f481"
+      }
+    }
+  },
+  "cadence": {
+    "ntsc": {
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "family": "ntsc",
+      "active_pictures_per_second": 21.460013533494152,
+      "active_gaps_ms": {
+        "count": 361,
+        "mean": 46.59829307373128,
+        "median": 50.063904770016876,
+        "p95": 66.75345609567529,
+        "maximum": 83.44105186553108
+      },
+      "source_steps_between_active_pictures": {
+        "count": 361,
+        "mean": 2.78393351800554,
+        "median": 3,
+        "p95": 4,
+        "maximum": 5
+      },
+      "vblank_gap_histogram": {
+        "2": 142,
+        "3": 161,
+        "4": 49,
+        "5": 9
+      },
+      "active_pose_runs": 84,
+      "fully_unpresented_pose_runs": 2,
+      "unpresented_duration_steps": {
+        "1": 2
+      }
+    },
+    "pal": {
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "family": "pal",
+      "active_pictures_per_second": 20.195035537575052,
+      "active_gaps_ms": {
+        "count": 337,
+        "mean": 49.51712009317298,
+        "median": 39.87434157134828,
+        "p95": 59.90677586117599,
+        "maximum": 99.71546663053488
+      },
+      "source_steps_between_active_pictures": {
+        "count": 337,
+        "mean": 2.9525222551928785,
+        "median": 3,
+        "p95": 4,
+        "maximum": 6
+      },
+      "vblank_gap_histogram": {
+        "2": 193,
+        "3": 127,
+        "4": 15,
+        "5": 2
+      },
+      "active_pose_runs": 84,
+      "fully_unpresented_pose_runs": 1,
+      "unpresented_duration_steps": {
+        "1": 1
+      }
+    }
+  },
+  "jumps": {
+    "ntsc": [
+      {
+        "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+        "active_pictures_per_second": 20.112706414841213,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 251,
+            "total": 390,
+            "fraction": 0.6435897435897436,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 6,
+              "mean": 9.653846153846153,
+              "median": 10.0,
+              "p95": 12,
+              "maximum": 12
+            }
+          },
+          "distinct_y": {
+            "presented": 162,
+            "total": 234,
+            "fraction": 0.6923076923076923,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.230769230769231,
+              "median": 6.5,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 188,
+            "total": 286,
+            "fraction": 0.6573426573426573,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.230769230769231,
+              "median": 7.0,
+              "p95": 9,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 167,
+            "total": 258,
+            "fraction": 0.6472868217054264,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.423076923076923,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 14,
+            "missed_jumps": 12,
+            "source_steps_after_landing_at_commit": {
+              "count": 14,
+              "minimum": 1,
+              "mean": 1.7857142857142858,
+              "median": 2.0,
+              "p95": 2,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 14,
+              "minimum": 27.806327340488934,
+              "mean": 40.716727165842784,
+              "median": 44.011319874452504,
+              "p95": 44.51711041487094,
+              "maximum": 77.68808605563038
+            },
+            "latency_ms_upper": {
+              "count": 14,
+              "minimum": 34.070251945429675,
+              "mean": 47.231661326469485,
+              "median": 50.774888987286104,
+              "p95": 50.8564636008213,
+              "maximum": 84.2975853076311
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 19,
+            "missed_jumps": 7,
+            "source_steps_after_landing_at_commit": {
+              "count": 19,
+              "minimum": 1,
+              "mean": 2.3157894736842106,
+              "median": 2,
+              "p95": 4,
+              "maximum": 5
+            },
+            "latency_ms_lower": {
+              "count": 19,
+              "minimum": 27.806327340488934,
+              "mean": 49.70120063039479,
+              "median": 44.090799249625334,
+              "p95": 78.52282901877139,
+              "maximum": 95.08638667764302
+            },
+            "latency_ms_upper": {
+              "count": 19,
+              "minimum": 34.070251945429675,
+              "mean": 56.068137445578024,
+              "median": 50.82405724749961,
+              "p95": 84.2975853076311,
+              "maximum": 100.9203683708435
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.1923076923076925,
+            "median": 2.0,
+            "p95": 6,
+            "maximum": 9
+          }
+        }
+      },
+      {
+        "rom_sha256": "d2a870e2c1f402eee3ac411b3658bbf6d4208db642d294bf892528429c6bd3fc",
+        "active_pictures_per_second": 21.341122555002656,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 266,
+            "total": 390,
+            "fraction": 0.6820512820512821,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 7,
+              "mean": 10.23076923076923,
+              "median": 10.0,
+              "p95": 12,
+              "maximum": 13
+            }
+          },
+          "distinct_y": {
+            "presented": 168,
+            "total": 234,
+            "fraction": 0.717948717948718,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.461538461538462,
+              "median": 7.0,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 195,
+            "total": 286,
+            "fraction": 0.6818181818181818,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.5,
+              "median": 8.0,
+              "p95": 9,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 177,
+            "total": 258,
+            "fraction": 0.686046511627907,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.8076923076923075,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 9
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 9,
+            "missed_jumps": 17,
+            "source_steps_after_landing_at_commit": {
+              "count": 9,
+              "minimum": 1,
+              "mean": 2,
+              "median": 2,
+              "p95": 2,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 9,
+              "minimum": 27.824206707837362,
+              "mean": 44.32934601713099,
+              "median": 44.02514844763772,
+              "p95": 44.51711041487094,
+              "maximum": 78.48232107712505
+            },
+            "latency_ms_upper": {
+              "count": 9,
+              "minimum": 34.16775037050712,
+              "mean": 50.83787030040061,
+              "median": 50.823219152154486,
+              "p95": 50.8564636008213,
+              "maximum": 84.29451229137186
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 19,
+            "missed_jumps": 7,
+            "source_steps_after_landing_at_commit": {
+              "count": 19,
+              "minimum": 1,
+              "mean": 2.473684210526316,
+              "median": 2,
+              "p95": 4,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 19,
+              "minimum": 27.824206707837362,
+              "mean": 52.516745181742344,
+              "median": 44.69059615118631,
+              "p95": 77.9998575237908,
+              "maximum": 78.48232107712505
+            },
+            "latency_ms_upper": {
+              "count": 19,
+              "minimum": 34.16775037050712,
+              "mean": 58.69556635064888,
+              "median": 50.82405724749872,
+              "p95": 84.16600433854171,
+              "maximum": 84.29451229137186
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.1923076923076925,
+            "median": 3.0,
+            "p95": 6,
+            "maximum": 6
+          }
+        }
+      },
+      {
+        "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+        "active_pictures_per_second": 21.460013533494152,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 266,
+            "total": 390,
+            "fraction": 0.6820512820512821,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 7,
+              "mean": 10.23076923076923,
+              "median": 10.0,
+              "p95": 12,
+              "maximum": 13
+            }
+          },
+          "distinct_y": {
+            "presented": 170,
+            "total": 234,
+            "fraction": 0.7264957264957265,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.538461538461538,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 196,
+            "total": 286,
+            "fraction": 0.6853146853146853,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.538461538461538,
+              "median": 8.0,
+              "p95": 9,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 180,
+            "total": 258,
+            "fraction": 0.6976744186046512,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.923076923076923,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 9
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 9,
+            "missed_jumps": 17,
+            "source_steps_after_landing_at_commit": {
+              "count": 9,
+              "minimum": 1,
+              "mean": 2.111111111111111,
+              "median": 2,
+              "p95": 2,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 9,
+              "minimum": 27.84320353564418,
+              "mean": 46.264756492172964,
+              "median": 44.107840521630415,
+              "p95": 45.24373907856827,
+              "maximum": 78.48455599803827
+            },
+            "latency_ms_upper": {
+              "count": 9,
+              "minimum": 34.16747100539297,
+              "mean": 52.691892405319194,
+              "median": 50.823219152154486,
+              "p95": 50.85590487059122,
+              "maximum": 84.29674721228508
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 20,
+            "missed_jumps": 6,
+            "source_steps_after_landing_at_commit": {
+              "count": 20,
+              "minimum": 1,
+              "mean": 2.5,
+              "median": 2.0,
+              "p95": 4,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 20,
+              "minimum": 27.84320353564418,
+              "mean": 52.99843974583327,
+              "median": 45.202393041572364,
+              "p95": 77.9998575237908,
+              "maximum": 78.48455599803827
+            },
+            "latency_ms_upper": {
+              "count": 20,
+              "minimum": 34.16747100539297,
+              "mean": 59.133102112139866,
+              "median": 50.85548582291821,
+              "p95": 84.13387735033328,
+              "maximum": 84.29674721228508
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.076923076923077,
+            "median": 3.0,
+            "p95": 6,
+            "maximum": 6
+          }
+        }
+      }
+    ],
+    "pal": [
+      {
+        "rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+        "active_pictures_per_second": 19.070800104904237,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 241,
+            "total": 390,
+            "fraction": 0.617948717948718,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 7,
+              "mean": 9.26923076923077,
+              "median": 9.0,
+              "p95": 11,
+              "maximum": 11
+            }
+          },
+          "distinct_y": {
+            "presented": 162,
+            "total": 234,
+            "fraction": 0.6923076923076923,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.230769230769231,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 7
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 183,
+            "total": 286,
+            "fraction": 0.6398601398601399,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.038461538461538,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "unique_xy": {
+            "presented": 166,
+            "total": 258,
+            "fraction": 0.6434108527131783,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.384615384615385,
+              "median": 6.5,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 10,
+            "missed_jumps": 16,
+            "source_steps_after_landing_at_commit": {
+              "count": 10,
+              "minimum": 1,
+              "mean": 1.9,
+              "median": 1.5,
+              "p95": 3,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 10,
+              "minimum": 29.385578334676588,
+              "mean": 45.01544190672169,
+              "median": 44.037999242919845,
+              "p95": 54.98939110976053,
+              "maximum": 68.55228807012992
+            },
+            "latency_ms_upper": {
+              "count": 10,
+              "minimum": 40.56744642126198,
+              "mean": 52.59472921837754,
+              "median": 50.61760642763247,
+              "p95": 60.60071880643747,
+              "maximum": 80.60214356852669
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 14,
+            "missed_jumps": 12,
+            "source_steps_after_landing_at_commit": {
+              "count": 14,
+              "minimum": 1,
+              "mean": 2.357142857142857,
+              "median": 2.0,
+              "p95": 4,
+              "maximum": 4
+            },
+            "latency_ms_lower": {
+              "count": 14,
+              "minimum": 29.385578334676588,
+              "mean": 51.51905778926759,
+              "median": 53.801390958907014,
+              "p95": 74.34017451939212,
+              "maximum": 74.37705071454559
+            },
+            "latency_ms_upper": {
+              "count": 14,
+              "minimum": 40.56744642126198,
+              "mean": 59.131278257032854,
+              "median": 60.56942991357861,
+              "p95": 80.47335625058594,
+              "maximum": 80.60214356852669
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.5,
+            "median": 3.5,
+            "p95": 6,
+            "maximum": 7
+          }
+        }
+      },
+      {
+        "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+        "active_pictures_per_second": 20.195035537575052,
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 251,
+            "total": 390,
+            "fraction": 0.6435897435897436,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 7,
+              "mean": 9.653846153846153,
+              "median": 9.0,
+              "p95": 11,
+              "maximum": 12
+            }
+          },
+          "distinct_y": {
+            "presented": 167,
+            "total": 234,
+            "fraction": 0.7136752136752137,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.423076923076923,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 187,
+            "total": 286,
+            "fraction": 0.6538461538461539,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 7.1923076923076925,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 175,
+            "total": 258,
+            "fraction": 0.6782945736434108,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.730769230769231,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 13,
+            "missed_jumps": 13,
+            "source_steps_after_landing_at_commit": {
+              "count": 13,
+              "minimum": 1,
+              "mean": 1.8461538461538463,
+              "median": 2,
+              "p95": 3,
+              "maximum": 5
+            },
+            "latency_ms_lower": {
+              "count": 13,
+              "minimum": 29.385578334676588,
+              "mean": 43.70656476859951,
+              "median": 34.32475356504838,
+              "p95": 73.76133000143881,
+              "maximum": 89.28704625867567
+            },
+            "latency_ms_upper": {
+              "count": 13,
+              "minimum": 40.567725786377906,
+              "mean": 51.36488662020549,
+              "median": 40.6333765883673,
+              "p95": 80.53705149676915,
+              "maximum": 100.53959371931853
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 21,
+            "missed_jumps": 5,
+            "source_steps_after_landing_at_commit": {
+              "count": 21,
+              "minimum": 1,
+              "mean": 2.3333333333333335,
+              "median": 2,
+              "p95": 4,
+              "maximum": 5
+            },
+            "latency_ms_lower": {
+              "count": 21,
+              "minimum": 29.385578334676588,
+              "mean": 51.0076001279494,
+              "median": 48.378774397306756,
+              "p95": 74.37705071454559,
+              "maximum": 89.28704625867567
+            },
+            "latency_ms_upper": {
+              "count": 21,
+              "minimum": 40.567725786377906,
+              "mean": 58.6453891552726,
+              "median": 60.50489657205027,
+              "p95": 80.53705149676915,
+              "maximum": 100.53959371931853
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 2.6538461538461537,
+            "median": 2.0,
+            "p95": 5,
+            "maximum": 6
+          }
+        }
+      }
+    ]
+  },
+  "whole_frame_profile": {
+    "active_pictures": 365,
+    "baseline_active_pictures": 342,
+    "active_source_steps": 1008,
+    "disjoint_prepare": {
+      "description": {
+        "elapsed": {
+          "mean": 4072,
+          "maximum": 4072,
+          "p95": 4072
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 4072,
+          "maximum": 4072,
+          "p95": 4072
+        }
+      },
+      "sprites-preflight": {
+        "elapsed": {
+          "mean": 13075.534246575342,
+          "maximum": 83690,
+          "p95": 23336
+        },
+        "irq": {
+          "mean": 547.1342465753424,
+          "maximum": 20318,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 12528.4,
+          "maximum": 63372,
+          "p95": 23336
+        }
+      },
+      "dirty-state": {
+        "elapsed": {
+          "mean": 10399.61095890411,
+          "maximum": 33786,
+          "p95": 10628
+        },
+        "irq": {
+          "mean": 623.6712328767123,
+          "maximum": 23879,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 9775.939726027398,
+          "maximum": 10945,
+          "p95": 10488
+        }
+      },
+      "release": {
+        "elapsed": {
+          "mean": 2914.068493150685,
+          "maximum": 24790,
+          "p95": 2253
+        },
+        "irq": {
+          "mean": 775.2,
+          "maximum": 22585,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 2138.868493150685,
+          "maximum": 2307,
+          "p95": 2235
+        }
+      },
+      "background": {
+        "elapsed": {
+          "mean": 6955.339726027397,
+          "maximum": 34906,
+          "p95": 27056
+        },
+        "irq": {
+          "mean": 3079.6493150684933,
+          "maximum": 25882,
+          "p95": 21421
+        },
+        "foreground_plus_ack": {
+          "mean": 3875.690410958904,
+          "maximum": 11894,
+          "p95": 7893
+        }
+      },
+      "world": {
+        "elapsed": {
+          "mean": 51979.67945205479,
+          "maximum": 106673,
+          "p95": 93276
+        },
+        "irq": {
+          "mean": 20668.1397260274,
+          "maximum": 47834,
+          "p95": 45051
+        },
+        "foreground_plus_ack": {
+          "mean": 31311.539726027397,
+          "maximum": 63218,
+          "p95": 50890
+        }
+      },
+      "header": {
+        "elapsed": {
+          "mean": 10785.564383561645,
+          "maximum": 84291,
+          "p95": 59633
+        },
+        "irq": {
+          "mean": 3374.841095890411,
+          "maximum": 46737,
+          "p95": 22873
+        },
+        "foreground_plus_ack": {
+          "mean": 7410.723287671233,
+          "maximum": 47869,
+          "p95": 37082
+        }
+      },
+      "footer": {
+        "elapsed": {
+          "mean": 373.8027397260274,
+          "maximum": 21287,
+          "p95": 262
+        },
+        "irq": {
+          "mean": 111.67123287671232,
+          "maximum": 21001,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 262.1315068493151,
+          "maximum": 286,
+          "p95": 262
+        }
+      },
+      "upload": {
+        "elapsed": {
+          "mean": 13948.668493150684,
+          "maximum": 42061,
+          "p95": 34665
+        },
+        "irq": {
+          "mean": 5181.904109589041,
+          "maximum": 23888,
+          "p95": 22493
+        },
+        "foreground_plus_ack": {
+          "mean": 8766.764383561644,
+          "maximum": 19565,
+          "p95": 15289
+        }
+      },
+      "total": {
+        "elapsed": {
+          "mean": 114504.26849315068,
+          "maximum": 270088,
+          "p95": 200890
+        },
+        "irq": {
+          "mean": 34362.21095890411,
+          "maximum": 94627,
+          "p95": 69826
+        },
+        "foreground_plus_ack": {
+          "mean": 80142.05753424657,
+          "maximum": 175461,
+          "p95": 133683
+        }
+      }
+    },
+    "complete_isr": {
+      "count": 1008,
+      "mean": 21985.967261904763,
+      "minimum": 19115,
+      "p95": 25124,
+      "maximum": 26863,
+      "mean_cycles_per_active_source_step": 21985.967261904763
+    },
+    "baseline_foreground_cycles": 86983.77485380117,
+    "baseline_isr_cycles": 21933.21130952381,
+    "observed_foreground_reduction_percent": 7.865509781627522,
+    "two_field_budget": {
+      "cycles": 119472,
+      "outside_irq": 75500.06547619047,
+      "foreground": 80142.05753424657,
+      "mean_deficit": 4641.992058056101
+    },
+    "five_buffers_identical": {
+      "route-cpu.bin": true,
+      "captures.bin": true,
+      "owners.bin": true,
+      "irq.tsv": true,
+      "pictures.tsv": true
+    },
+    "scope": "Different picture populations on the same route; observed stage-mean deltas are not isolated component savings. ISR uses the same1008source steps. Capacity arithmetic is not a30FPS guarantee."
+  },
+  "qualification": {
+    "matrix": {
+      "complete": true,
+      "cases": 2115,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "receipt_sha256": "4faaf9c37fa53a3cd167c9361068c447ad7c9ec61f4063193e8909e2f9084cfa"
+    },
+    "density": {
+      "complete": true,
+      "cases": 1920,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "receipt_sha256": "7ed30ae4ffb8d17ebc31646a13ed1eee31557b425355d9dc38b38d076d8f22dc"
+    },
+    "header": {
+      "complete": true,
+      "cases": 54,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "receipt_sha256": "070f13e33f28f366d376a0e58f07131034dd9ef42f4dc95132d0db20a0a3253d"
+    },
+    "audio": {
+      "complete": true,
+      "cases": 2115,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "receipt_sha256": "dc25a9c8d978759614d5b755db76200471ea528065f1f15136b121a2921b98db",
+      "ordered_source_writes": 3499,
+      "physical_psg_writes": 2472,
+      "manual_listening_accepted": false
+    },
+    "irq_ntsc": {
+      "complete": true,
+      "cases": 9,
+      "main_alternate_index_sp_bank_restored": true,
+      "irq_vram_and_snapshot_unchanged": true
+    },
+    "irq_pal": {
+      "complete": true,
+      "cases": 9,
+      "main_alternate_index_sp_bank_restored": true,
+      "irq_vram_and_snapshot_unchanged": true
+    },
+    "negative": {
+      "complete": true,
+      "negative_control": "AF2 mutation after RETI must fail register oracle",
+      "expected_failure": "boundary-register-restoration",
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+      "launch_sha256": "1da743287d30db71222ab588361cd7f4c930b2ea3c60b2bf7610507c28d068da",
+      "log_sha256": "8b317902f33dbe35e2227bf2244282a869fa50ae4735f63fd94fbb52abd145da"
+    },
+    "clipping": {
+      "complete": true,
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+      "cases": 10560,
+      "edge_cases": 990,
+      "groups": 33,
+      "reflections": 2,
+      "x": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159
+      ],
+      "pool_patterns": 132,
+      "selector_aliases": 33,
+      "actual_pixels_sha256": "a7853e95e696dca8e2031cf3975a9e374476d9a0a826ddfb7212c32bf742b694",
+      "expected_pixels_sha256": "a7853e95e696dca8e2031cf3975a9e374476d9a0a826ddfb7212c32bf742b694",
+      "scope": "All original glyphs/reflections and mode0 X0..159, sixteen complete SGT rows, source160 wrap and HMOVE X<8 clip. Actual ROM pool/mask tables; independent original ROM glyph expansion and map_x. No runtime timing or owner acceptance claim.",
+      "sources": {
+        "/Users/sandersouza/Developer/msx-gamePorts/frostbite/scripts/presentation_native_clipping.py": "2bc748be58b094f86b3abe0446abcc82b39f199c98af65414f9d2a9d2894151d",
+        "scripts/original_graphics.py": "41094856026c54f011de61ce12405f6893b31075d7d9b09ce7c2713a38f83fc1",
+        "scripts/graphics_mapping.py": "cfdc137ed5db16d3a5dd2704c418362945b33478483c13fa002535e54f692143"
+      }
+    },
+    "host_tests": {
+      "passed": 557,
+      "original_free": true,
+      "log_sha256": "30748b12194a0f0af9b97be55c80e898b59a716d08a56ed675328fe83ba2fcdf"
+    }
+  },
+  "review": {
+    "complete": true,
+    "blocking_findings": [],
+    "important_runtime_findings": [],
+    "source_commit": "e5dd710a910272150709f7b806fb3c62403fa009",
+    "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+    "parent_rom_sha256": "e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5",
+    "rebuild": {
+      "complete": true,
+      "independent": true,
+      "source_dirty": false,
+      "source_files": 147,
+      "parent_sources_preserved": 145,
+      "all_sources_match_git_objects": true,
+      "rom_and_metadata_identical_to_root_release": true,
+      "build_path": "outputs/presentation/floe-aa-review/rebuild-final",
+      "build_receipt_sha256": "4295ee0a14c33d6e4f3308663735e177603612669b07b42579e808ac383d9098"
+    },
+    "docs": {
+      "complete": true,
+      "path": "docs/floe-transactions.md",
+      "sha256": "54f74ca6fcbb0a03b72e9ed2629299364cf17276547dfb1516aec4aa56b27497",
+      "endpoint_y_baseline": 19,
+      "endpoint_y_selected": 20,
+      "endpoint_y_total": 26,
+      "endpoint_selected_by_exact_C_ROM": true,
+      "grounded_landing_baseline": 14,
+      "grounded_landing_selected": 9,
+      "allocation_and_dead_scratch_contracts_reviewed": true,
+      "private_B_allocation_text_superseded": true
+    },
+    "final_natural_routes": [
+      {
+        "family": "ntsc",
+        "complete": true,
+        "all_five_buffers_identical": true,
+        "raw_sha256": {
+          "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+          "captures.bin": "8ee5e653c5b46894b571d45cbe15deb9e2ac918c9f8cf033205c705f965383b0",
+          "owners.bin": "de38562eabded73ad325bac140ef72bcd04e9cb0370094652950fd16f82c307b",
+          "irq.tsv": "499cff80c183c7d65061526b37b7b27d8323a5d2a9cb97e473640accfb6daecd",
+          "pictures.tsv": "f023b6c57dfc2d4f5ab54b61a69dfde3f609837abf2a99ac4b2a0277341fa595"
+        },
+        "final_check_sha256": "267bf046565661fbb181e10e408ae82d38fb77b5de7f9186660adecce3cb7ec7"
+      },
+      {
+        "family": "pal",
+        "complete": true,
+        "all_five_buffers_identical": true,
+        "raw_sha256": {
+          "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+          "captures.bin": "54a30c9b79e88c54884157c265ec65149996e4a5d4d8291ae84fd69612ebd7f4",
+          "owners.bin": "55658da680bc30772e977f210b11b50e4a058da375d16bf3c9bbb54f8129e2f5",
+          "irq.tsv": "51d6977f137e33058d16db80297c1eed3a74b62cf1ddb0ec943690e13f311794",
+          "pictures.tsv": "2839165ead69bdcb4000d7ca1c895a83292afa9ba81eada2fada02373206f481"
+        },
+        "final_check_sha256": "74b873614d9005bddc6b6616df1a8cfd7165e7474d68d97a84be051a988243ea"
+      }
+    ],
+    "final_parity_sha256": "036cf14494a2e875099255e145fc91ac431e0c64c435955f04d856097af89d78",
+    "prior_review": {
+      "receipt_path": "outputs/presentation/floe-aa-review/review-receipt.json",
+      "receipt_sha256": "085b5ebe188e8641a7ffec0b66aa87c7d532838d6d94c5a2f75e763dcfb91ee0",
+      "manifest_sha256": "3650c8cfc154cd21740dfef575978edd4fb199c05340d92275de0902ad03c595",
+      "all_prior_sealed_files_verified": true
+    },
+    "scope": "Independent static/ABI/allocation/reassembly/clean-source review plus exact final natural-buffer parity. Existing qualification receipts cross-checked in prior review; no duplicate emulator runs. CI belongs to root delivery evidence. No original-fluidity, stable30FPS, all-level, manual listening, owner or physical-hardware acceptance claim."
+  },
+  "final_source_natural_parity": [
+    {
+      "family": "ntsc",
+      "buffers_identical": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      },
+      "final_receipt_sha256": "267bf046565661fbb181e10e408ae82d38fb77b5de7f9186660adecce3cb7ec7",
+      "private_receipt_sha256": "64e3774a16ffad407ef9e1b38f514c7bc179f5eb5db835da0d6fbeca4cce30fc",
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "source_commit": "e5dd710a910272150709f7b806fb3c62403fa009"
+    },
+    {
+      "family": "pal",
+      "buffers_identical": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      },
+      "final_receipt_sha256": "74b873614d9005bddc6b6616df1a8cfd7165e7474d68d97a84be051a988243ea",
+      "private_receipt_sha256": "67f2a37a06189c1295e4be84524ce7353bfb454fdfdf640d4961f2264a8f801d",
+      "rom_sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "source_commit": "e5dd710a910272150709f7b806fb3c62403fa009"
+    }
+  ],
+  "ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 42113747190,
+      "event": "pull_request",
+      "status": "completed",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/42113747190"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42113733631,
+      "event": "push",
+      "status": "completed",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/actions/runs/42113733631"
+    }
+  ],
+  "controls_preserved": {
+    "core-z-combined": {
+      "files": 41,
+      "manifest_sha256": "ceabb96b96a9aeab658fd5fe7af682f6bbaad6411dfd80a5f18802b32d8f579c",
+      "unchanged": true
+    },
+    "core-z-validation": {
+      "files": 157,
+      "manifest_sha256": "c4d59f7223b0749ac0c63b779bc29e4cdbc846f4cf444b71b5a316bf9e55d3f2",
+      "unchanged": true
+    },
+    "core-z-review": {
+      "files": 3,
+      "manifest_sha256": "5a083a9f41422661dda99b97d2bf0c0936f11dbf53a030c28c9894cbd64b72de",
+      "unchanged": true
+    },
+    "core-cadence-z": {
+      "files": 144,
+      "manifest_sha256": "a49e3ae9f814b55545c1476e954064211a8c327aba0319bd6fe9ab4e339625dd",
+      "unchanged": true
+    }
+  },
+  "evidence": {
+    "outputs/presentation/floe-transactions-aa/build-release/build.json": "4295ee0a14c33d6e4f3308663735e177603612669b07b42579e808ac383d9098",
+    "outputs/presentation/floe-transactions-aa/ntsc-final/check.json": "267bf046565661fbb181e10e408ae82d38fb77b5de7f9186660adecce3cb7ec7",
+    "outputs/presentation/floe-aa-research/cadence-c.json": "3539d0b259ec8b01d01f8880a8f5597989d5f8571a67d2343874f65a070c1689",
+    "outputs/presentation/floe-aa-research/jumps-c.json": "d3f70b7e6091bb7985b21d30685963b1c3b42b19c7c53be61b6efd84e766f06f",
+    "outputs/presentation/floe-transactions-aa/pal-final/check.json": "74b873614d9005bddc6b6616df1a8cfd7165e7474d68d97a84be051a988243ea",
+    "outputs/presentation/floe-aa-research/cadence-pal-c.json": "800ae5c82bcbbfba1f2f8b5669bec9e2384f40cd7f3cae283fe103a35fdbe640",
+    "outputs/presentation/floe-aa-research/jumps-pal-c.json": "124d3713b68a850451621d7dfa8c5d4192c26f8d1547d06b68b62d1b82866e17",
+    "outputs/presentation/floe-aa-validation/matrix-a/check.json": "4faaf9c37fa53a3cd167c9361068c447ad7c9ec61f4063193e8909e2f9084cfa",
+    "outputs/presentation/floe-aa-validation/density-a/check.json": "7ed30ae4ffb8d17ebc31646a13ed1eee31557b425355d9dc38b38d076d8f22dc",
+    "outputs/presentation/floe-aa-validation/header-a/check.json": "070f13e33f28f366d376a0e58f07131034dd9ef42f4dc95132d0db20a0a3253d",
+    "outputs/presentation/floe-aa-validation/audio-a/check.json": "dc25a9c8d978759614d5b755db76200471ea528065f1f15136b121a2921b98db",
+    "outputs/presentation/floe-aa-validation/boundary-ntsc-a/boundary-check.json": "d2b737fc0b9fd67596bb2d414cadd59e59e192060a93ba5b774626564d103bf5",
+    "outputs/presentation/floe-aa-validation/boundary-pal-a/boundary-check.json": "96780d38ac2c8a3d594374d1c0f0a630539f93d440c3c26c7dba123b76011fcf",
+    "outputs/presentation/floe-aa-validation/boundary-negative-a/negative-check.json": "01051fa7aa1208cad394ac30cd1d8bc90002a76bf8c5afbc05343c7cf134e093",
+    "outputs/presentation/floe-aa-validation/clipping.json": "e720b87f5144afb0d3f658324e54e83fd44b7cb1479de8af652b6894e7559763",
+    "outputs/presentation/floe-aa-validation/host-tests.log": "30748b12194a0f0af9b97be55c80e898b59a716d08a56ed675328fe83ba2fcdf",
+    "outputs/presentation/floe-aa-research/receipt-c.json": "b01e56ecc84b312e9ce8087a7f276f235753c2e9d3a50980f128ba27f9902b47",
+    "outputs/presentation/floe-aa-research/profile-c/prepare-profile.json": "c8b68a4c166c76ba3121010c38e3434818ad8ad606ee87324627026780e52928",
+    "outputs/presentation/floe-aa-research/profile-c/profile-receipt.json": "b6e089d0d7c624fe25a628ee701143a3963be536fd84fcbfc62cd149954a7491",
+    "outputs/presentation/floe-aa-research/source-profile-c.json": "28c0aac72c8e4dbc34fe9cd015a5b24961d22b8dccd0a043656e969caf17944b",
+    "outputs/presentation/core-z-profile-combined/combined-profile.json": "a770d88e99bd741c9233408469228d5a2c7e64b078e1e5d902484b4c0807a4d2",
+    "outputs/presentation/world-aa-profile/world-profile.json": "c25fe07ac25965a137e3347cc080d5ae23435888458e79748c4f771721aab660",
+    "outputs/presentation/floe-transactions-aa/final-parity.json": "036cf14494a2e875099255e145fc91ac431e0c64c435955f04d856097af89d78",
+    "outputs/presentation/floe-aa-review-final/final-review.json": "bb385a58ecdb02100e1e5bb06212e278ae4b6e86bbf56d3ff3d42f2f3d3b1ced",
+    "outputs/presentation/floe-transactions-aa/controls-preserved.json": "a095f11040e179e66e610b1fd9c11972a71380615f0029420af1484c248f9c32"
+  },
+  "rejected_name_experiment": {
+    "byte_contexts": 51200,
+    "candidate_built": false,
+    "measured_speed_gain": null,
+    "scope": "Proposed repeated-row allocation rejected; does not rule out all layouts."
+  },
+  "known_limitations": [
+    "Not stable30FPS or original fluidity acceptance.",
+    "NTSC grounded landing presentation falls14/26 to9/26; endpointY increases19/26 to20/26.",
+    "Two short NTSC animation-pose runs remain unpresented.",
+    "Corrected detailed baseline CGT excludes12 actor calls to shared fill helper; previous whole-frame totals remain valid."
+  ],
+  "original_fluidity_accepted": false,
+  "human_accepted": false,
+  "physical_hardware_accepted": false,
+  "scope": "Bounded original CPU/128RAM, pixel/owner and ordered-audio proof with measured coherent cadence. No all-level, manual-listening, owner or physical acceptance.",
+  "workbook": {
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AA/Frostbite-performance-budget-AA.xlsx",
+    "sha256": "402065f30c2bb1df4c839e8a62206fc1b0fca5957410427f36a8e03a9c7e4424",
+    "audit_sha256": "f1c54364ce106e2a96ec9339b789f47203ac30b862dfa9838fe64196ee15fdc7",
+    "sheets": 27,
+    "preserved_Z_sheets": 25,
+    "preserved_cells": 765304,
+    "formula_checks": 18,
+    "mutation_restore_tests": 2,
+    "formula_errors": [],
+    "manual_visual_regions": 10,
+    "native_excel_exercised": false,
+    "scope": "Frozen prepublication measurement snapshot. Review pending in workbook caption at capture; completed independent review bound separately in this validation and export audit. Owner/physical acceptance remains pending."
+  }
+}
