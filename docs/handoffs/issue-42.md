@@ -13,7 +13,73 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
-## Z core/header cadence delivery — 2026-11-05
+## AA floe transaction delivery — 2026-11-05
+
+Published [v0.0.15](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.15-floe-transactions-diagnostic)
+from clean source `e5dd710a910272150709f7b806fb3c62403fa009`, ROM SHA-256
+`d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0`.
+Builder `scripts/build_floe_transactions.py` verifies v0.0.14 and all 145 parent
+source hashes, adds two maintained sources, and reproduces the measured image.
+Final build is `outputs/presentation/floe-transactions-aa/build-release/`.
+Read [the report](../floe-transactions.md), `references/floe-transactions-result.json`
+and `references/floe-transactions-delivery.json` before continuing.
+
+Measured against Z: active NTSC/PAL pictures 20.1127/19.0708 to21.4600/20.1950
+(+6.70%/+5.90%). Complete foreground86,984 to80,142 cycles (−7.87%); WORLD37,063
+to31,312. Complete active ISR21,986 cycles leaves a two-field mean foreground
+deficit4,642. Different committed-picture populations prohibit treating stage
+mean deltas as isolated savings. The original source clock remains approximately
+59.92 steps/s. NTSC P95 remains four fields; maximum improves six tofive fields.
+
+Jump updates shown251/390 to266/390 and distinct Y162/234 to170/234; grounded
+landings regress14/26 to9/26. Endpoint Y is **20/26** versus Z19/26 (an initial
+private message confused C with B19; raw JSON and final documentation are correct).
+PAL landings improve10/26 to13/26. No simulation state is removed. Continue to
+measure landing visibility separately from total jump coverage and endpoint Y.
+
+All557 host tests, source/density/header4089 scenes,4507 original CPU/all128-RAM
+checkpoints,1829 coherent images,18 IRQ boundaries plus AF2 negative control,
+10560 clipping cases and2115 audio intervals (3499 original/2472 PSG writes) pass.
+Natural and passive runs reproduce all five raw buffers; final clean NTSC/PAL
+reruns do so again. Independent review/rebuild verifies147 source files against
+Git and reconstructs exact ROM/build metadata. Exact-source CI push42113733631
+and PR42113747190 pass. All six downloaded release assets and remote tag/source
+identity are verified. These are automated/source checks, not physical acceptance.
+
+New evidence roots: `floe-aa-research` (private B/C), `floe-aa-validation`,
+`floe-aa-review`, `floe-aa-review-final`, `floe-transactions-aa`, and baseline
+`world-aa-profile`, all under `outputs/presentation/`. The rejected circular NAME
+layout lives in `name-aa-research`;51,200 finite contexts pass but no ROM or speed
+claim exists. It is not combined with C. Independent final review receipt SHA
+`bb385a58ecdb02100e1e5bb06212e278ae4b6e86bbf56d3ff3d42f2f3d3b1ced`.
+Final parity SHA `036cf14494a2e875099255e145fc91ac431e0c64c435955f04d856097af89d78`.
+Freshly checked four Z seals remain unchanged, including144 core-cadence files.
+Do not add files inside any sealed root. Use new output directories for new work.
+
+Workbook AA: `outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AA/Frostbite-performance-budget-AA.xlsx`,
+SHA `402065f30c2bb1df4c839e8a62206fc1b0fca5957410427f36a8e03a9c7e4424`.
+All25 Z tabs /765,304 cells and native features are preserved;27 tabs total.
+18 formula checks, two mutation/restore tests, raw aggregate audits and10 visual
+regions pass. Native Excel was not exercised. The frozen prepublication workbook
+caption precedes completed review; export audit and release VALIDATION record
+that later completion. Old detailed floe CGT attribution included12 actor calls
+to the shared fill helper; AA corrects that scope without changing historical
+sheets or valid previous whole-frame totals.
+
+Allocation: existing RAM F43D–F5D1 transaction slot plus retired typed-header
+ROM0:60B6–6211. No new RAM/VRAM; NAME helper atF5D2 and later WORLD code are
+unchanged. Keep direct-only kinds16–18 producer invariant, persistent owner
+publication order, VDP spacing and documented dead-scratch/mapper contracts.
+The exact256-byte color clone is generated locally from verified parent data.
+
+Issue #42 is **In review** for this diagnostic. PR #43 stays draft/stacked on41;
+no merge, close or successor handoff. Root/current chat remains the sole writer;
+no subagent owns pending tracked files. Next: remaining WORLD/preparation and
+worst-gap costs using AA as control, with particular attention to landing
+visibility. Owner motion, manual audio/controllers, all levels and physical
+MSX1 acceptance remain pending; keep #42/#39/#15/#16 open.
+
+## Historical Z core/header cadence delivery — 2026-11-05
 
 Published [v0.0.14](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.14-core-cadence-diagnostic)
 from clean runtime source `2c1891635553e07b6fd096a58cc0e34905acd568`, ROM SHA-256

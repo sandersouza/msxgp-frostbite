@@ -1,13 +1,33 @@
-<!-- AA playfield continuation, 2026-11-05 -->
-The owner reports a large improvement in v0.0.14 and authorizes the next
-playfield optimization, preserving graphics/mechanics and publishing a useful
-testable ROM. Status: **In progress**. Z is the sealed comparison control.
-Fresh passive profiling preserves all five natural buffers: floes cost23,038
-of37,063 WORLD cycles per active picture, with11,382cycles in setup/addressing
-outside pattern/color transfers and NAME copying. Investigate resident lane
-descriptors/direct transactions and an independently measured circular-NAME
-layout; universal PGT atlases exceed SCREEN2 capacity. Compare the whole route,
-long gaps and jumps before selecting a release. Original fluidity remains open.
+<!-- AA floe transaction delivery, 2026-11-05 -->
+Published [v0.0.15](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.15-floe-transactions-diagnostic)
+from clean source `e5dd710a910272150709f7b806fb3c62403fa009`, ROM SHA-256
+`d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0`.
+The owner reports a large improvement in v0.0.14 and authorized the next
+playfield optimization. Fresh passive profiling identified floes as the largest
+average WORLD cost. Native floe setup/publication and an exact resident color
+lookup raise active NTSC/PAL presentation from 20.11/19.07 to 21.46/20.20
+pictures/s; complete foreground falls 86,984 to 80,142 cycles (7.87%).
+
+NTSC longest gap falls 100.10 to 83.44 ms; P95 remains four fields. Jump states
+shown increase 251/390 to 266/390, but grounded landings regress 14/26 to 9/26.
+Endpoint Y improves 19/26 to 20/26. No original simulation state/contact rule is
+removed; graphics and mechanics match the bounded oracles. **Original fluidity
+and stable 30 FPS remain open.** The NAME-layout experiment was rejected before
+ROM construction because its proposed allocation did not fit.
+
+557 host tests, 4,089 source/density/header scenes, 4,507 CPU/all-RAM checkpoints,
+1,829 coherent pictures, 18 IRQ boundaries plus negative control, 10,560 clipping
+cases and 2,115 ordered-audio intervals pass. Exact-source CI, independent clean
+rebuild of all 147 sources, and final NTSC/PAL raw-buffer parity pass. All six
+published assets were downloaded and byte-verified; remote tag targets the exact
+source. AA workbook preserves all 25 Z tabs / 765,304 cells. See
+[the report](https://github.com/sandersouza/msxgp-frostbite/blob/e5dd710a910272150709f7b806fb3c62403fa009/docs/floe-transactions.md),
+`references/floe-transactions-result.json` and `references/floe-transactions-delivery.json`.
+
+Status: **In review** for diagnostic owner tests. PR #43 remains draft/stacked
+on #41. Continue WORLD preparation and long-gap costs while tracking landings.
+No owner-fluidity, all-level or physical acceptance; keep #42/#39/#15/#16 open.
+Root/current issue chat remains sole checkout owner. Prior versions are preserved.
 
 <!-- Historical Z delivery checkpoint, 2026-11-05 -->
 Published [v0.0.14](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.14-core-cadence-diagnostic)
