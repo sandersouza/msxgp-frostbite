@@ -29,7 +29,7 @@ from reference_traces import private_output
 from render_build import symbols
 from smoke import find_machine_profile,isolated_profile,validate_machine_profile
 
-HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py','scripts/presentation_cache_ownership.py','scripts/presentation_fixed_ownership.py','scripts/presentation_dirty.py','scripts/presentation_dirty_audit.py')))
+HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,*CASE_FILES,'scripts/presentation_check.py','scripts/presentation_matrix_check.py','scripts/presentation_player_palette.py','scripts/presentation_cache_ownership.py','scripts/presentation_fixed_ownership.py','scripts/presentation_dirty.py','scripts/presentation_dirty_audit.py')))
 CAPTURE_BYTES=16392
 
 def sha(data):return hashlib.sha256(data).hexdigest()
