@@ -25,22 +25,24 @@
 
 ### Task 1: Final NAME transactions
 
-- [ ] Add failing host tests for legal role/program coverage, zero-to-water translation, first+code-1 and fail-closed invalid inputs.
-- [ ] Implement scripts/presentation_world_packets.py, scripts/build_world_transactions.py and src/presentation_world_transactions.asm. Consume exact T build and its live program directory; emit immutable new build with complete source closure.
-- [ ] Run focused tests, full host suite and before/after natural NTSC route. Reuse semantic pixel/owner/native oracles; no claims from helper cycles.
+- [x] Add failing host tests for legal role/program coverage, zero-to-water translation, first+code-1 and fail-closed invalid inputs.
+- [x] Implement scripts/presentation_world_packets.py, scripts/build_world_transactions.py and src/presentation_world_transactions.asm. Consume exact T build and its live program directory; emit immutable new build with complete source closure.
+- [x] Run focused tests, full host suite and before/after natural NTSC route. Reuse semantic pixel/owner/native oracles; no claims from helper cycles.
 
 ### Task 2: Enemy cursor
 
-- [ ] Verify expected NAME grid, clipping and fusion context against the existing geometric oracle before replacement.
-- [ ] Add RAM-resident register-cursor walker with unchanged geometry/bulk upload and existing fusion fallback.
-- [ ] Run source/density matrices and natural NTSC/PAL routes plus IRQ boundary/register checks. Retain only a measured complete-picture gain.
+- [x] Verify expected NAME grid, clipping and fusion context against the existing geometric oracle before replacement.
+- [x] Add RAM-resident register-cursor walker with unchanged geometry/bulk upload and existing fusion fallback.
+- [x] Run source/density matrices and natural NTSC/PAL routes plus IRQ boundary/register checks. Retain only a measured complete-picture gain.
 
 ### Task 3: Evidence and delivery
 
-- [ ] Independent whole-change review; fix material findings once, with regression proof.
+- [x] Independent whole-change review; fix material findings once, with regression proof.
 - [ ] Preserve prior workbook tabs/features; append whole-route and active-picture comparison with raw receipts and gap distributions.
 - [ ] Commit corresponding source, rebuild clean bytes and verify exact identity. Publish versioned diagnostic prerelease, verify downloaded bytes/tag, update issue/PR/handoff.
 
 ## Execution ledger
 
 2026-11-04: Owner explicitly authorized continued native optimization and publication. Existing dedicated branch/chat reused; no new worktree or repeated approval required. T remains immutable. Baseline passive profiling: world100548, floes52148, enemies40251 foreground cycles per active snapshot; fusion is only1615. This bounds the selected changes.
+
+Review correction: forced geometry failure exposed an unbalanced stack in the new cursor. Moving the conditional jump after POP HL/DE/BC preserves carry, code size and valid-path timing. The directed target test rejects the former ROM and accepts the fixed candidate. All final verification is rebound to the corrected ROM before delivery. Compact immutable geometry occupancy was added after the first candidate yielded only3.25%active NTSC gain; normal fusion still uses original full geometry.

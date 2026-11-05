@@ -101,10 +101,10 @@ v_cells:
     LD C,A
     XOR A
     CALL qe_geometry          ;rare exact typed fusion needs the original IDs
-    JP C,p_world_fail
     POP HL
     POP DE
     POP BC
+    JP C,p_world_fail         ;POP preserves carry; unwind before failure RET
     PUSH BC
     PUSH DE
     PUSH HL
