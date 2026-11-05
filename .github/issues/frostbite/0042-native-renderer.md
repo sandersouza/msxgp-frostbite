@@ -1,12 +1,34 @@
-<!-- AB continuation from v0.0.15, 2026-11-05 -->
-The owner authorizes the next remaining bottleneck optimization using v0.0.15,
-with explicit attention to landing visibility. Status: **In progress**. Preserve
-the sealed AA control, original graphics/mechanics and coherent player/world
-snapshots. Measure the complete NTSC/PAL route, full foreground/ISR costs,
-picture gaps, grounded-landing windows and endpoint-Y coverage before selection.
-Fresh detailed WORLD profiling and per-arc analysis precede implementation.
-Update the performance workbook and publish a useful diagnostic only after
-qualification, review and exact-source artifact verification.
+<!-- AB ready-picture delivery from v0.0.15, 2026-11-05 -->
+Published [v0.0.16](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic)
+from clean source `a9cf5ff3ea802b79a0e328e0a9de844e9749f8d3`, ROM SHA-256
+`9d2ee2926bc8de7fd0d22b05e7ad334e76078141bfde997720adfb62414cc77b`.
+Fresh WORLD profiling and per-arc landing analysis led to current-picture enemy
+eligibility reuse and first-safe-VBlank admission of complete coherent scenes.
+NTSC active cadence improves 21.46 to 25.45 pictures/s (+18.60%), grounded
+landings 9/26 to 15/26, endpoints 20/26 to 21/26, and missed pose runs 2 to zero.
+P95/maximum NTSC gaps remain 66.75/83.44 ms. Original clock, mechanics, graphics,
+input and ordered audio are preserved in the bounded checks.
+
+**PAL limitation:** throughput improves 20.20 to 22.92, but grounded landings
+fall 13/26 to 12/26, endpoints 21/26 to 19/26, and P95 gaps rise 59.91 to79.71ms.
+First post-landing ages at source1732/1762 rise3 to7 and2 to6steps. No general
+PAL landing improvement, stable30FPS or original fluidity acceptance is claimed.
+Whole foreground mean is70,935 versus80,142cycles over different picture
+populations; this is not paired CPU savings. Long tails remain the next target.
+
+565 host tests,4089source/density/header scenes,4507CPU/all-RAM checkpoints,
+2497coherent pictures,18realIRQ boundaries plus rejectedAF2fault,10560clipping
+cases and2115ordered-audio intervals pass. Exact-source CI and independent clean
+rebuild verify151sources; final natural runs reproduce all5measurement buffers.
+All6published assets were downloaded and byte-verified; tag/source identity is
+exact. AB workbook preserves27AA sheets/767714cells. See `docs/ready-presentation.md`,
+`references/ready-presentation-result.json` and `references/ready-presentation-delivery.json`.
+
+Status: **In review** for diagnostic owner tests. PR43 remains draft/stacked on41.
+Next: WORLD/floe NAME costs, long preparation tails and PAL landing sampling.
+The NAME residency idea is only an offline upper bound, not a measured ROM gain.
+Keep42/39/15/16open. Root/current issue chat remains sole checkout owner; previous
+versions are preserved. No owner-fluidity, all-level or physical acceptance.
 
 <!-- Historical AA floe transaction delivery, 2026-11-05 -->
 Published [v0.0.15](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.15-floe-transactions-diagnostic)

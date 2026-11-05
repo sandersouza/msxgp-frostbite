@@ -13,6 +13,81 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## AB ready-picture delivery — 2026-11-05
+
+Published [v0.0.16](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic)
+from clean source `a9cf5ff3ea802b79a0e328e0a9de844e9749f8d3`, ROM SHA-256
+`9d2ee2926bc8de7fd0d22b05e7ad334e76078141bfde997720adfb62414cc77b`.
+Builder `scripts/build_ready_presentation.py` verifies the exact AA/v0.0.15
+control and all147parent sources, adds4maintained sources and reproduces151-file
+closure. Final build: `outputs/presentation/ready-presentation-ab/build-release`.
+Read [the report](../ready-presentation.md), `references/ready-presentation-result.json`
+and `references/ready-presentation-delivery.json`. The new validator entrypoint is
+`scripts/presentation_ready_check.py`; legacy two-field checks remain unchanged.
+
+Two declared changes only: certified enemy eligibility reuse at bank7:A50D–AA25,
+and the CP2→CP1 operand at RAM EA36 / ROM115. Exactly682bytes differ. New helper
+reconstructs per-lane count/offset/clip scratch; uncertified lanes use full fallback.
+No new RAM/VRAM, partial scene, player-only update, interpolation or source-clock
+change. The next actual VBlank can publish an already completed coherent scene.
+
+NTSC active cadence21.4600→25.4519 (+18.60%); grounded9/26→15/26, endpoints20→21,
+updates266/390→277/390, Y runs196/286→207/286, missed pose runs2/84→0. Mean first
+post-landing age3.077→2.500source steps, P956→5, maximum6unchanged. NTSC still
+loses grounded coverage at800/892 while gaining elsewhere; the complete per-arc
+vector is retained. P95/max gaps remain66.75/83.44ms; no stable30FPS claim.
+
+PAL active cadence20.1950→22.9176 (+13.48%) but grounded13→12, endpoints21→19,
+P95gap59.91→79.71ms, mean first-post age2.654→2.846/max6→7. Grounded1732/1762
+and endpoint202 are lost;232gains both metrics. First-post ages at1732/1762 rise
+3→7 and2→6. This is explicitly an NTSC-focused diagnostic, not a general PAL
+landing improvement. PAL source202/1190 landing states fall between two updates
+inside one IRQ: only24/26grounded states can be sampled after atomic IRQ return.
+
+Passive whole-foreground mean70,935 versus80,142, WORLD26,058 versus31,312;
+433versus365active pictures are different populations, not paired CPU savings.
+Complete ISR22,129 versus21,986 over the same1008active source intervals. P95
+foreground126,273/max173,876 still exceed two-field capacity. All5natural raw
+buffers are identical under passive profiling and final clean-source reruns.
+
+Qualification:565host tests,2115source/1920density/54header scenes,4507exact
+CPU/all128-RAM checkpoints,2497coherent pictures,9NTSC+9expandedPAL realIRQ
+boundaries plus rejectedAF2negative,10560clipping,2115audio intervals with3499
+ordered original/2472PSG writes. Zero lateVBlanks/canonical sourcewrites.
+Independent clean rebuild checks151Git blobs and exact ROM/build metadata.
+Review SHA `b7cb9588d638091f875a7068739aec7ca957f6b5a6fd0a9bb32f49754f5d4640`.
+RuntimeCI push42121636049/PR42121645087 pass. All6release assets were downloaded
+and byte-verified; remote tag targets the exact runtime source.
+
+AB workbook:29sheets,27AA sheets/767714cells preserved;12visual regions and
+independent raw-route/profile/landing/qualification checks. No nativeExcel test.
+SHA `a5d95a5a293e457f4b3e0fec5cee24980f05e1b6fdb9aaef0dcc436c9513b326`.
+Path `outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AB/`.
+
+Evidence under `outputs/presentation/`: `world-ab-profile` fresh baseline,
+`landing-ab-analysis`, `world-ab-design` isolated certificate/NAME ideas,
+`ready-ab-research` selected experiments/profile, `ready-ab-promotion-draft`,
+`ready-ab-review`, `ready-ab-delivery-review`, `ready-ab-validation`, and
+`ready-presentation-ab` final build/routes/publication. **Boundary folders inside
+ready-ab-review are mocks of adapter dispatch, not real IRQ evidence**; use the
+ready-ab-validation receipts. The latter is sealed154files, manifest SHA
+`6b4a3d419f7c680aab3f291d2ea4c99a612236d04addcf28bffb59fd331037bc`.
+All6AA/Z control-root seals were freshly reverified and remain immutable.
+
+Future NAME residency idea:52.02%of AA copied rows were already identical;
+713conservative row hits/427whole transactions give an upper bound2672cycles
+per picture before lookup/invalidation. RAM encoding and partial-dirty handling
+remain uncertified. No implementation or net speed gain is included. Do not
+confuse this with AA's rejected large circular NAME allocation.
+
+Status In review for human tests. Keep PR43 draft/stacked and42/39/15/16open.
+Next work: largest remaining WORLD and long foreground tails, with NTSC/PAL
+grounded/endpoint/first-post latency tracked independently. Do not game landing
+counts by slowing the original clock, replaying old pictures or player-only
+updates. Same issue42 chat remains sole checkout writer; no successor transfer
+or pending agent-owned tracked edits. All acceptance beyond bounded automated
+evidence remains pending.
+
 ## AA floe transaction delivery — 2026-11-05
 
 Published [v0.0.15](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.15-floe-transactions-diagnostic)
