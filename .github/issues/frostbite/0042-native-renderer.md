@@ -1,3 +1,11 @@
+<!-- Native lane X delivery checkpoint, 2026-11-05 -->
+The next diagnostic X measures18.2214NTSC/17.2158PAL active pictures/s, compared
+with W10.6131/10.5441. Whole foreground falls182,896→95,808cycles; NTSC gapP95
+falls133.47→83.44ms. Jump-state coverage rises132/390→229/390, still incomplete.
+Original-speed/smooth-motion acceptance remains OPEN. See
+[the native lane report](../../../../docs/native-lanes-cadence.md) for exact scope,
+reproduction, guards and pending owner tests. Release/CI finalization is pending.
+
 # Replace generic rendering with an MSX1-native residency and band pipeline
 
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/42
@@ -6,6 +14,27 @@ Implementation child of #39. Owner approved architectural replacement and
 resuming GitHub. Original Atari 2600 mechanics remain authoritative; preserve
 graphics, colors, actors, viewport, input order and audio event timing. The Atari
 400/800 fan port and Seaquest are implementation references, not gameplay specs.
+
+## Movement fluidity rejected by owner — 2026-11-05
+
+The owner reports that the third diagnostic still presents player movement as
+a slideshow, despite responsive controls. Status is **In progress**. Original
+presentation cadence and owner acceptance remain unmet; another small mean-FPS
+improvement is not sufficient evidence of a fix.
+
+The immutable W control presents active pictures at 10.6131 fps NTSC, with
+133.47 ms observed-order p95 and 150.19 ms maximum gaps. Of 84 contiguous active
+animation-pose runs, 12 are never presented; ten last four source steps. These
+pose runs describe animation states, not every individual position.
+
+Current work measures whole-frame tails and source-step/pose coverage while
+replacing generic world traversal, player construction and fixed HUD work.
+An internal combined prototype reaches 16.2723 fps but still has 100.10 ms p95
+gaps and five unpresented four-step pose runs. It is **not** a fluidity solution
+or a new human-test release. Investigate those remaining worst cases before
+delivery. Mechanics, input/audio order, colors, viewport and coherent snapshots
+remain required; asynchronous player-only motion over an older world has not
+been adopted. W and every prior sealed artifact remain unchanged.
 
 ## Player palette and selective header diagnostic — 2026-11-05
 

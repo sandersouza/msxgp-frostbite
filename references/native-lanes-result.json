@@ -1,0 +1,844 @@
+{
+  "version": "v0.0.13-native-lanes-cadence-diagnostic",
+  "source_tag": "v0.0.13-native-lanes-cadence-diagnostic",
+  "rom_sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "baseline": {
+    "version": "v0.0.12-player-palette-header-diagnostic",
+    "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4"
+  },
+  "automated_checks": {
+    "source_scenes": {
+      "complete": true,
+      "cases": 2115,
+      "receipt_sha256": "a1fbc71b71cf29230e5014af11ad61ccb3722efea16be8982b8b2123d141f8f6"
+    },
+    "density_scenes": {
+      "complete": true,
+      "cases": 1920,
+      "receipt_sha256": "b060e766f9238c5fdae73b9f5fa8777cf0f9a39b357a0310eb8f88ec42120cac"
+    },
+    "directed_header": {
+      "complete": true,
+      "cases": 54,
+      "receipt_sha256": "de49d57b2b4e3a9fdf28e90d6d39ccf0989c1e9ef86f47d6da29826b94e83ef9"
+    },
+    "clipping": {
+      "complete": true,
+      "cases": 10560,
+      "receipt_sha256": "78e03352cd3018c573193bddfd24c11c876bb2af5c4c996ac2a6d986907cbb8f"
+    },
+    "ntsc_irq": {
+      "complete": true,
+      "cases": 9,
+      "receipt_sha256": "03432c2265ee0c9e2364d8991b0224a92e33327275fd7169a6413d80265141a3"
+    },
+    "pal_irq": {
+      "complete": true,
+      "cases": 9,
+      "receipt_sha256": "ae68ed1759491c120d8b07dceeab8c0789c46728885da2bb59d7929539f52623"
+    },
+    "irq_negative": {
+      "complete": true,
+      "cases": null,
+      "receipt_sha256": "a3885521fafb06429a95de04560d31be35cc268e388ca34121c686feca5c1cf8"
+    },
+    "ntsc": {
+      "rom_sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+      "family": "ntsc",
+      "active_pictures_per_second": 18.221384584007605,
+      "active_gaps_ms": {
+        "count": 305,
+        "mean": 54.88057152789979,
+        "median": 50.06474286536644,
+        "p95": 83.44077250041337,
+        "maximum": 116.81708150058157
+      },
+      "source_steps_between_active_pictures": {
+        "count": 305,
+        "mean": 3.265573770491803,
+        "median": 3,
+        "p95": 5,
+        "maximum": 7
+      },
+      "vblank_gap_histogram": {
+        "2": 53,
+        "3": 152,
+        "4": 66,
+        "5": 28,
+        "6": 5,
+        "7": 1
+      },
+      "active_pose_runs": 84,
+      "fully_unpresented_pose_runs": 3,
+      "unpresented_duration_steps": {
+        "1": 2,
+        "4": 1
+      }
+    },
+    "pal": {
+      "rom_sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+      "family": "pal",
+      "active_pictures_per_second": 17.215785401427564,
+      "active_gaps_ms": {
+        "count": 289,
+        "mean": 58.0862259073628,
+        "median": 59.80955680121269,
+        "p95": 79.7788545750926,
+        "maximum": 119.58642788399487
+      },
+      "source_steps_between_active_pictures": {
+        "count": 289,
+        "mean": 3.4671280276816607,
+        "median": 3,
+        "p95": 5,
+        "maximum": 7
+      },
+      "vblank_gap_histogram": {
+        "2": 99,
+        "3": 129,
+        "4": 49,
+        "5": 11,
+        "6": 1
+      },
+      "active_pose_runs": 84,
+      "fully_unpresented_pose_runs": 1,
+      "unpresented_duration_steps": {
+        "1": 1
+      }
+    }
+  },
+  "host_tests": 553,
+  "host_log_sha256": "b38846cb300959a11ffca612a3cdf75d548580b20677ac107c1987e0b8d5d817",
+  "source_cpu_checkpoints": 4507,
+  "coherent_pictures": 1674,
+  "full_route_foreground_cycles": {
+    "description": {
+      "elapsed": {
+        "mean": 4072,
+        "maximum": 4072,
+        "p95": 4072
+      },
+      "irq": {
+        "mean": 0,
+        "maximum": 0,
+        "p95": 0
+      },
+      "foreground_plus_ack": {
+        "mean": 4072,
+        "maximum": 4072,
+        "p95": 4072
+      }
+    },
+    "sprites-preflight": {
+      "elapsed": {
+        "mean": 14830,
+        "maximum": 111859,
+        "p95": 24307
+      },
+      "irq": {
+        "mean": 438.1132686084142,
+        "maximum": 43824,
+        "p95": 0
+      },
+      "foreground_plus_ack": {
+        "mean": 14391.886731391585,
+        "maximum": 68035,
+        "p95": 24307
+      }
+    },
+    "dirty-state": {
+      "elapsed": {
+        "mean": 12769.73786407767,
+        "maximum": 35692,
+        "p95": 32401
+      },
+      "irq": {
+        "mean": 2866.6148867313914,
+        "maximum": 26076,
+        "p95": 22424
+      },
+      "foreground_plus_ack": {
+        "mean": 9903.122977346278,
+        "maximum": 10942,
+        "p95": 10528
+      }
+    },
+    "release": {
+      "elapsed": {
+        "mean": 3374.980582524272,
+        "maximum": 26338,
+        "p95": 22726
+      },
+      "irq": {
+        "mean": 1219.631067961165,
+        "maximum": 24097,
+        "p95": 20539
+      },
+      "foreground_plus_ack": {
+        "mean": 2155.349514563107,
+        "maximum": 2307,
+        "p95": 2253
+      }
+    },
+    "background": {
+      "elapsed": {
+        "mean": 11091.113268608415,
+        "maximum": 37079,
+        "p95": 32986
+      },
+      "irq": {
+        "mean": 6722.650485436893,
+        "maximum": 26286,
+        "p95": 25170
+      },
+      "foreground_plus_ack": {
+        "mean": 4368.462783171521,
+        "maximum": 11894,
+        "p95": 8502
+      }
+    },
+    "world": {
+      "elapsed": {
+        "mean": 63608.83818770226,
+        "maximum": 117006,
+        "p95": 97299
+      },
+      "irq": {
+        "mean": 24357.90291262136,
+        "maximum": 52012,
+        "p95": 47299
+      },
+      "foreground_plus_ack": {
+        "mean": 39250.935275080905,
+        "maximum": 69291,
+        "p95": 58503
+      }
+    },
+    "header": {
+      "elapsed": {
+        "mean": 19419.275080906147,
+        "maximum": 125774,
+        "p95": 79926
+      },
+      "irq": {
+        "mean": 7948.220064724919,
+        "maximum": 51680,
+        "p95": 26272
+      },
+      "foreground_plus_ack": {
+        "mean": 11471.05501618123,
+        "maximum": 74315,
+        "p95": 49669
+      }
+    },
+    "footer": {
+      "elapsed": {
+        "mean": 479.1132686084142,
+        "maximum": 22650,
+        "p95": 262
+      },
+      "irq": {
+        "mean": 216.88025889967636,
+        "maximum": 22364,
+        "p95": 0
+      },
+      "foreground_plus_ack": {
+        "mean": 262.2330097087379,
+        "maximum": 286,
+        "p95": 262
+      }
+    },
+    "upload": {
+      "elapsed": {
+        "mean": 16495.281553398057,
+        "maximum": 44101,
+        "p95": 37280
+      },
+      "irq": {
+        "mean": 6561.925566343042,
+        "maximum": 25631,
+        "p95": 23993
+      },
+      "foreground_plus_ack": {
+        "mean": 9933.355987055016,
+        "maximum": 19565,
+        "p95": 15781
+      }
+    },
+    "total": {
+      "elapsed": {
+        "mean": 146140.33980582524,
+        "maximum": 362279,
+        "p95": 257826
+      },
+      "irq": {
+        "mean": 50331.93851132686,
+        "maximum": 154637,
+        "p95": 98768
+      },
+      "foreground_plus_ack": {
+        "mean": 95808.40129449838,
+        "maximum": 207642,
+        "p95": 158545
+      }
+    }
+  },
+  "profile_receipt_sha256": "bbd1d5ea9c0219d15500abf9c5c57933531b5e4d88d7c01ac9d99ff656c19cce",
+  "jump_coverage": {
+    "ntsc": [
+      {
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 132,
+            "total": 390,
+            "fraction": 0.3384615384615385,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 5.076923076923077,
+              "median": 5.0,
+              "p95": 6,
+              "maximum": 7
+            }
+          },
+          "distinct_y": {
+            "presented": 106,
+            "total": 234,
+            "fraction": 0.452991452991453,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 4.076923076923077,
+              "median": 4.0,
+              "p95": 5,
+              "maximum": 5
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 114,
+            "total": 286,
+            "fraction": 0.3986013986013986,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 4.384615384615385,
+              "median": 4.0,
+              "p95": 5,
+              "maximum": 6
+            }
+          },
+          "unique_xy": {
+            "presented": 111,
+            "total": 258,
+            "fraction": 0.43023255813953487,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 4.269230769230769,
+              "median": 4.0,
+              "p95": 5,
+              "maximum": 5
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 4,
+            "missed_jumps": 22,
+            "source_steps_after_landing_at_commit": {
+              "count": 4,
+              "minimum": 4,
+              "mean": 5.75,
+              "median": 4.5,
+              "p95": 5,
+              "maximum": 10
+            },
+            "latency_ms_lower": {
+              "count": 4,
+              "minimum": 76.86954626914843,
+              "mean": 106.5024325717363,
+              "median": 85.63881722397593,
+              "p95": 93.71414523354105,
+              "maximum": 177.86254956984493
+            },
+            "latency_ms_upper": {
+              "count": 4,
+              "minimum": 84.13415671544833,
+              "mean": 113.34764613938253,
+              "median": 92.47949110850584,
+              "p95": 100.82398740621912,
+              "maximum": 184.2974456250701
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 9,
+            "missed_jumps": 17,
+            "source_steps_after_landing_at_commit": {
+              "count": 9,
+              "minimum": 4,
+              "mean": 6.333333333333333,
+              "median": 7,
+              "p95": 7,
+              "maximum": 10
+            },
+            "latency_ms_lower": {
+              "count": 9,
+              "minimum": 76.86954626914843,
+              "mean": 116.36907297808246,
+              "median": 127.53213048027057,
+              "p95": 127.74109558616686,
+              "maximum": 177.86254956984493
+            },
+            "latency_ms_upper": {
+              "count": 9,
+              "minimum": 84.13415671544833,
+              "mean": 123.062816332491,
+              "median": 134.16705195772138,
+              "p95": 134.19694402500681,
+              "maximum": 184.2974456250701
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 4,
+            "mean": 8.115384615384615,
+            "median": 7.5,
+            "p95": 11,
+            "maximum": 13
+          }
+        }
+      },
+      {
+        "rom_sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 229,
+            "total": 390,
+            "fraction": 0.5871794871794872,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 6,
+              "mean": 8.807692307692308,
+              "median": 8.5,
+              "p95": 11,
+              "maximum": 12
+            }
+          },
+          "distinct_y": {
+            "presented": 152,
+            "total": 234,
+            "fraction": 0.6495726495726496,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 5.846153846153846,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 173,
+            "total": 286,
+            "fraction": 0.6048951048951049,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 6.653846153846154,
+              "median": 6.0,
+              "p95": 8,
+              "maximum": 9
+            }
+          },
+          "unique_xy": {
+            "presented": 160,
+            "total": 258,
+            "fraction": 0.6201550387596899,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.153846153846154,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 8
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 10,
+            "missed_jumps": 16,
+            "source_steps_after_landing_at_commit": {
+              "count": 10,
+              "minimum": 1,
+              "mean": 2.3,
+              "median": 2.0,
+              "p95": 3,
+              "maximum": 6
+            },
+            "latency_ms_lower": {
+              "count": 10,
+              "minimum": 27.43588919820894,
+              "mean": 48.98513637906498,
+              "median": 43.802215085996025,
+              "p95": 60.355994965846094,
+              "maximum": 111.23760142699268
+            },
+            "latency_ms_upper": {
+              "count": 10,
+              "minimum": 34.07053131054383,
+              "mean": 55.81969216757976,
+              "median": 50.791231846504914,
+              "p95": 67.57674508911293,
+              "maximum": 117.67249748221786
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 18,
+            "missed_jumps": 8,
+            "source_steps_after_landing_at_commit": {
+              "count": 18,
+              "minimum": 1,
+              "mean": 3.111111111111111,
+              "median": 3.0,
+              "p95": 6,
+              "maximum": 7
+            },
+            "latency_ms_lower": {
+              "count": 18,
+              "minimum": 27.43588919820894,
+              "mean": 62.668781150179896,
+              "median": 60.650026749211605,
+              "p95": 111.23760142699268,
+              "maximum": 127.63046700069225
+            },
+            "latency_ms_upper": {
+              "count": 18,
+              "minimum": 34.07053131054383,
+              "mean": 69.34191356722661,
+              "median": 67.430497451491,
+              "p95": 117.67249748221786,
+              "maximum": 134.29555991054443
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 3.9615384615384617,
+            "median": 4.0,
+            "p95": 7,
+            "maximum": 8
+          }
+        }
+      }
+    ],
+    "pal": [
+      {
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 131,
+            "total": 390,
+            "fraction": 0.33589743589743587,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 5.038461538461538,
+              "median": 5.0,
+              "p95": 6,
+              "maximum": 7
+            }
+          },
+          "distinct_y": {
+            "presented": 110,
+            "total": 234,
+            "fraction": 0.4700854700854701,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 4.230769230769231,
+              "median": 4.0,
+              "p95": 5,
+              "maximum": 6
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 114,
+            "total": 286,
+            "fraction": 0.3986013986013986,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 4.384615384615385,
+              "median": 4.0,
+              "p95": 5,
+              "maximum": 6
+            }
+          },
+          "unique_xy": {
+            "presented": 114,
+            "total": 258,
+            "fraction": 0.4418604651162791,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 4.384615384615385,
+              "median": 4.0,
+              "p95": 5,
+              "maximum": 6
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 5,
+            "missed_jumps": 21,
+            "source_steps_after_landing_at_commit": {
+              "count": 5,
+              "minimum": 4,
+              "mean": 6.2,
+              "median": 6,
+              "p95": 6,
+              "maximum": 11
+            },
+            "latency_ms_lower": {
+              "count": 5,
+              "minimum": 73.24981247616691,
+              "mean": 112.4099850679336,
+              "median": 113.24260485620385,
+              "p95": 114.09662401226939,
+              "maximum": 187.5922777894914
+            },
+            "latency_ms_upper": {
+              "count": 5,
+              "minimum": 80.44011180191823,
+              "mean": 120.31987305649103,
+              "median": 120.31361527791873,
+              "p95": 120.31501210349305,
+              "maximum": 200.090234932091
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 10,
+            "missed_jumps": 16,
+            "source_steps_after_landing_at_commit": {
+              "count": 10,
+              "minimum": 4,
+              "mean": 6.5,
+              "median": 6.5,
+              "p95": 7,
+              "maximum": 11
+            },
+            "latency_ms_lower": {
+              "count": 10,
+              "minimum": 73.24981247616691,
+              "mean": 120.45352132743056,
+              "median": 120.88980582727649,
+              "p95": 133.58820743977338,
+              "maximum": 187.5922777894914
+            },
+            "latency_ms_upper": {
+              "count": 10,
+              "minimum": 80.44011180191823,
+              "mean": 128.27451533644592,
+              "median": 130.2643213034056,
+              "p95": 140.21865907538356,
+              "maximum": 200.090234932091
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 4,
+            "mean": 7.884615384615385,
+            "median": 7.0,
+            "p95": 11,
+            "maximum": 14
+          }
+        }
+      },
+      {
+        "rom_sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+        "summary": {
+          "complete_normal_active_jumps": 26,
+          "other_arcs": {
+            "interrupted": 1,
+            "partial_start": 0,
+            "partial_end": 0
+          },
+          "vertical_update_states": {
+            "presented": 213,
+            "total": 390,
+            "fraction": 0.5461538461538461,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 5,
+              "mean": 8.192307692307692,
+              "median": 8.0,
+              "p95": 10,
+              "maximum": 11
+            }
+          },
+          "distinct_y": {
+            "presented": 147,
+            "total": 234,
+            "fraction": 0.6282051282051282,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 3,
+              "mean": 5.653846153846154,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 7
+            }
+          },
+          "consecutive_y_runs": {
+            "presented": 163,
+            "total": 286,
+            "fraction": 0.5699300699300699,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 6.269230769230769,
+              "median": 7.0,
+              "p95": 8,
+              "maximum": 8
+            }
+          },
+          "unique_xy": {
+            "presented": 153,
+            "total": 258,
+            "fraction": 0.5930232558139535,
+            "per_jump_presented": {
+              "count": 26,
+              "minimum": 4,
+              "mean": 5.884615384615385,
+              "median": 6.0,
+              "p95": 7,
+              "maximum": 7
+            }
+          },
+          "grounded_landing": {
+            "presented_jumps": 9,
+            "missed_jumps": 17,
+            "source_steps_after_landing_at_commit": {
+              "count": 9,
+              "minimum": 1,
+              "mean": 2.888888888888889,
+              "median": 2,
+              "p95": 4,
+              "maximum": 8
+            },
+            "latency_ms_lower": {
+              "count": 9,
+              "minimum": 28.624867126967324,
+              "mean": 58.94880184182286,
+              "median": 53.24168295132381,
+              "p95": 73.33082835947025,
+              "maximum": 127.91346386202207
+            },
+            "latency_ms_upper": {
+              "count": 9,
+              "minimum": 40.567446421262865,
+              "mean": 67.19954010293932,
+              "median": 60.569709278691874,
+              "p95": 80.47223879012577,
+              "maximum": 140.41142100462167
+            }
+          },
+          "endpoint_y": {
+            "presented_jumps": 14,
+            "missed_jumps": 12,
+            "source_steps_after_landing_at_commit": {
+              "count": 14,
+              "minimum": 1,
+              "mean": 3.357142857142857,
+              "median": 3.5,
+              "p95": 5,
+              "maximum": 8
+            },
+            "latency_ms_lower": {
+              "count": 14,
+              "minimum": 28.624867126967324,
+              "mean": 67.14907700759237,
+              "median": 73.2850124806368,
+              "p95": 93.77756111461188,
+              "maximum": 127.91346386202207
+            },
+            "latency_ms_upper": {
+              "count": 14,
+              "minimum": 40.567446421262865,
+              "mean": 74.78807661707984,
+              "median": 80.4408102147054,
+              "p95": 100.40996830602822,
+              "maximum": 140.41142100462167
+            }
+          },
+          "first_post_landing_snapshot_source_steps_at_commit": {
+            "count": 26,
+            "minimum": 1,
+            "mean": 4.423076923076923,
+            "median": 4.5,
+            "p95": 7,
+            "maximum": 11
+          }
+        }
+      }
+    ]
+  },
+  "auxiliary_ram_guards": [
+    {
+      "bank": 147,
+      "rom_address": 47104,
+      "ram_address": 62464,
+      "size": 1240,
+      "sha256": "a551b43ae2da29296d539bcb9c80fa05dc47798de2253e69b45fcb22c271227f"
+    },
+    {
+      "bank": 148,
+      "rom_address": 47104,
+      "ram_address": 63744,
+      "size": 453,
+      "sha256": "b8ad15510b0f2832f9d386dfb02d52fe7a29a6aaf99ad0f04f25b4c6b7415b8e"
+    },
+    {
+      "bank": 146,
+      "rom_address": 48640,
+      "ram_address": 64768,
+      "size": 368,
+      "sha256": "29e54774b55d3fa544df013f20a6779b64880603bc8d3c96020dc10cf7046860"
+    }
+  ],
+  "validation_sources": {
+    "scripts/presentation_native_check.py": "01b4073dafc2fd58d9a3636c0846343dfd470cea9d152c84b5d0a658740e3186",
+    "scripts/presentation_native_density.py": "8305b7c4d8c75808c725304a77865ef168c4a170defedd3109d4331bc3fc6668",
+    "scripts/presentation_native_clipping.py": "2bc748be58b094f86b3abe0446abcc82b39f199c98af65414f9d2a9d2894151d",
+    "scripts/presentation_jump_coverage.py": "c47ef91afb19704bec7ca377968c9e0fcb6f0c912c56f8e33fea1f186067c62e",
+    "scripts/presentation_cadence_report.py": "91306cc060cec748cef838982aedcb3de620d737190d96c7e0d7eb2fa4e910ed",
+    "outputs/presentation/native-lanes-x/profile/profile_prepare.py": "cc824ec75efe1ef225d2eb9a4dbaaad46352f9dfb55fc3e5934ebc4bf271e583",
+    "outputs/presentation/native-lanes-x/validation-source-before-report-field.py": "d1be2ef7c123002d51334f68e9a7ef4eb2eb12dff32c97d0a905bca8ad1c77db"
+  },
+  "independent_review_sha256": "911e207f4ff35a67bc8613de048d7ddfe15cbf0d9bd52fc1a41b7b97d7195398",
+  "limitations": [
+    "Active NTSC/PAL cadence remains below30/25pictures per second.",
+    "NTSC active gaps still reach116.82ms; some original jump states are never presented.",
+    "Committed snapshot pixels and source logic are equivalent in tested scope; this is not a claim of identical real-time presentation.",
+    "Owner, manual audio/controller/all-level and physical MSX1 acceptance remain pending."
+  ],
+  "evidence_class": "Automated source/matrix/emulator/independent-review evidence; not human or physical acceptance.",
+  "test_receipt_note": "Full-route/matrix receipts retain the exact pre-report-field wrapper hash; its source is preserved locally. The later report-only addition explicitly lists all three already-active auxiliary guards. Density generator hash is recorded here."
+}

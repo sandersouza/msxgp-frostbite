@@ -13,6 +13,39 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## X native lane diagnostic — 2026-11-05
+
+Owner slideshow feedback remains the acceptance priority. X is a substantial
+measured diagnostic improvement, not a claim that original fluidity is solved.
+Selected ROM: `b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc`.
+Source/reproduction and complete limitations: [native lane report](../native-lanes-cadence.md).
+NTSC/PAL active cadence is18.2214/17.2158 pictures/s; NTSC mean gap54.88ms,
+p9583.44ms/max116.82ms; complete foreground95,808cycles. Of390 original jump
+updates,229 are presented vs132 inW; this remains below complete trajectory coverage.
+The source clock/controls and coherent pixels remain exact in the bounded route.
+
+Root owns all tracked changes; rejected prototype artifacts are ignored and
+preserved. HUD sprite variants regressed cadence and are excluded. All full
+source/density/directed, NTSC/expandedPAL, IRQ and clipping gates passed; independent
+review/rebuild found no blocker. Release/CI/commit finalization is pending in this
+checkpoint. Issue42 stays open; no successor owns the shared checkout.
+
+## Current owner feedback: slideshow movement — 2026-11-05
+
+The owner rejected the movement fluidity after W. Issue42 is back **In progress**;
+do not describe fast input or small average frame-rate gains as smooth animation.
+The current internal combined experiment improves active NTSC pictures from
+10.6131 to 16.2723 fps, but its 100.10 ms p95 and remaining unpresented four-step
+poses are still unacceptable as a claimed fix. No new release has been published
+in this investigation. W remains the immutable public control.
+
+Private working checkpoint: `.superpowers/sdd/issue-42-fluidity-x-current.md`.
+Root owns tracked changes; component agents write separate ignored prototype
+directories only. Preserve exact ROM/source hashes and report whole-frame tails,
+source-step gaps and pose-run coverage alongside mean costs. Final candidate,
+complete-source inventory, expanded-slot PAL, density/boundary checks, workbook
+and independent review are still pending. Do not close this issue or its parents.
+
 ## Latest world transaction diagnostic — 2026-11-05
 
 ### W palette/header follow-up delivered — 2026-11-05
