@@ -1,4 +1,14 @@
-<!-- AA floe transaction delivery, 2026-11-05 -->
+<!-- AB continuation from v0.0.15, 2026-11-05 -->
+The owner authorizes the next remaining bottleneck optimization using v0.0.15,
+with explicit attention to landing visibility. Status: **In progress**. Preserve
+the sealed AA control, original graphics/mechanics and coherent player/world
+snapshots. Measure the complete NTSC/PAL route, full foreground/ISR costs,
+picture gaps, grounded-landing windows and endpoint-Y coverage before selection.
+Fresh detailed WORLD profiling and per-arc analysis precede implementation.
+Update the performance workbook and publish a useful diagnostic only after
+qualification, review and exact-source artifact verification.
+
+<!-- Historical AA floe transaction delivery, 2026-11-05 -->
 Published [v0.0.15](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.15-floe-transactions-diagnostic)
 from clean source `e5dd710a910272150709f7b806fb3c62403fa009`, ROM SHA-256
 `d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0`.
