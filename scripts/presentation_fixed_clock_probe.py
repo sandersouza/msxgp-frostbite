@@ -22,6 +22,7 @@ from presentation_fixed_clock import ram_code
 from presentation_fixed_ownership import audit_active,audit_row
 from presentation_model import describe,pixels
 from presentation_palette import audit_palette
+from presentation_player_palette import adapted_frame
 from presentation_prepared_ownership import decorate_owners
 from presentation_shared_ownership import constructor
 from progression_play import input_records
@@ -239,7 +240,8 @@ after time {steps+60} {{fail watchdog}}
             regs.append(r);images.append(decode_target(row[at:at+16384],r[:1]+bytes([0xC2])+r[2:]))
         audit_active(row[128:16512],row[16520:32904],regs[0])
         if regs[0]!=regs[1] or images[0]!=images[1]:raise ValueError(f'active picture changed during preparation {index}')
-        if images[2]!=map_frame(pixels(original,describe(original,{'ram':list(ram)})),palette):raise ValueError(f'committed source pixels differ {index}')
+        description=describe(original,{'ram':list(ram)})
+        if images[2]!=adapted_frame(meta,original,description,ram,pixels(original,description),palette):raise ValueError(f'committed source pixels differ {index}')
         owner=owners[index*OWNER_BYTES:(index+1)*OWNER_BYTES]
         decorated=decorate_owners(owner[72:4182],owner[:32],owner[32:64],owner[64:72],rom,deltas)
         decorated=decorate_actor_owners(decorated,owner[4182:],rom,geometry)

@@ -15,6 +15,31 @@ chat/branch or resume predecessor edits.
 
 ## Latest world transaction diagnostic — 2026-11-05
 
+### Owner playtest feedback — 2026-11-05, after publication
+
+The owner reports fast control response but continued excessive perceived speed,
+skipped jump poses and insufficient visual continuity. This is not cadence or
+gameplay acceptance. The exact loaded binary and emulator settings were not
+independently observed during this playtest. The existing controlled V result
+still measures only 10.3356/10.2829 active pictures per second (NTSC/PAL);
+source-clock equivalence does not establish perceived motion quality.
+
+The supplied character reference calls for pastel skin on head/legs, gray body
+and a pastel yellow hat. The current general palette conversion needs review:
+the measured Atari colors 0x24=(162,98,33) and 0x36=(198,108,58) both map to TMS
+color6=(212,82,77); 0x16 maps to color10 and 0x06 to color14. These source codes
+occur in the original player color tables at FC39/FC3A. A same-mapper pixel
+equivalence check preserves this conversion but cannot establish that its color
+choices match the owner's visual reference. The screenshot's source palette has
+not been calibrated against the retained ALE palette, so do not assign every
+body part a replacement code solely from this table inspection.
+
+Next acceptance work must distinguish palette quality, actual jump/event
+durations and visible picture spacing. Preserve responsive original input and
+the sealed V control. Review player-specific color choices across poses and
+day/night/death states; improve presentation continuity without an arbitrary
+logic slowdown. This feedback inspection changes no ROM or published evidence.
+
 The latest selected ROM is [v0.0.11](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.11-world-transactions-diagnostic), built from clean `a43e2f1b265ef956ee154e82a198a17f9831a220`, SHA-256 `fbf81a5eafa536f95497be22c787812046cf59a38eb962ee28230b3fc8f9ec99`. Publication documentation follows that source commit. No other writer owns pending source files. This dedicated issue42 chat/branch and stacked draft PR43 remain the owner; do not start a duplicate.
 
 Read docs/world-transactions-diagnostic.md and references/world-transactions-result.json. V compiles final ice names and compact enemy occupancy in certified empty contact tails, with the original full-geometry fusion fallback. RAM image688bytes; E834/E835 scratch remains in Q region. Source IRQ/PSG/player/mask unchanged. Active picture rates10.3356NTSC/10.2829PAL, gains5.49%/6.02% versus T. World foreground−12.19%, complete foreground−6.48%; original presentation cadence remains unmet.

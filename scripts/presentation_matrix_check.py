@@ -21,6 +21,7 @@ from presentation_dirty_audit import boot_histories,audit_scene,audit_list,audit
 from presentation_fragments import background_tables
 from presentation_model import describe,pixels
 from presentation_palette import audit_palette
+from presentation_player_palette import adapted_frame
 from presentation_reference import HELPERS as SOURCE_FILES
 from presentation_source_cases import FILES as CASE_FILES,collect as collect_source,verify_files
 from reference_provenance import audit_manifest,snapshot_paths
@@ -81,7 +82,9 @@ def check(build_dir,out,*,component='full-scene',family='ntsc',limit=None,explor
             if component!='without-player':
                 for key in ('prefix','logo','playfield','ball'):model['footer'][key]=[]
             raw=pixels(original,model)
-        cases.extend(bytes(sample['ram']));expected.extend(map_frame(raw,palette))
+        cases.extend(bytes(sample['ram']))
+        model=describe(original,sample) if component=='full-scene' else model
+        expected.extend(adapted_frame(meta,original,model,sample['ram'],raw,palette))
     out=private_output(out);out.mkdir(parents=True,exist_ok=False);(out/'cases.bin').write_bytes(cases);(out/'expected.tms').write_bytes(expected)
     syms=symbols(build_dir/'presentation.sym');emulator=Path(shutil.which('openmsx')).resolve();profile=ET.fromstring(isolated_profile(find_machine_profile(str(emulator))))
     profile.find('.//VDP/version').text='TMS9918A' if family=='ntsc' else 'TMS9929A'
