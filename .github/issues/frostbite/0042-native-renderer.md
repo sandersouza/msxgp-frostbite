@@ -1,3 +1,34 @@
+<!-- AD igloo color-only delivery, 2026-11-12 -->
+Published [v0.0.17](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic)
+from clean runtime source `059bec5f985f3aac121014016dadfa31ec3fc892`.
+ROM SHA-256 `c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562`.
+The scoped igloo publisher reuses exact tiles or writes only certified color
+bytes; shape/cold/uncertified cases retain the full constructor. No new RAM/VRAM.
+Parent 151 sources and every earlier sealed control are unchanged.
+
+Against v0.0.16, active complete pictures/s rise 25.4519 to 25.9009 NTSC (+1.76%)
+and 22.9176 to 23.1226 PAL (+0.89%). Whole foreground means fall 1.66%/0.66%;
+different sampled picture populations are not paired component CPU savings.
+PAL P95/maximum gaps improve 79.713/99.683 to 59.843/79.780 ms. NTSC grounded
+coverage regresses 15/26 to 14/26 (arc 21/source 1672); first post-landing age
+rises 2 to 3 steps there, all-arc P95 rises 5 to 6, endpoint coverage stays 21/26.
+PAL grounded/endpoints improve 12/19 to 13/20 out of 26. Cold/full igloo maximum
+increases 25,025 to 27,389 cycles. Stable 30 fps/original fluidity remain open.
+
+569 host tests, 4,089 source/density/header scenes, 4,507 CPU/all-RAM checkpoints,
+2,510 coherent pictures, 10,560 clipping cases and 2,115 ordered-audio intervals
+pass. Eighteen generic IRQ targets plus two AD bank-119 stream IRQ probes pass;
+AF2 corruption is rejected. Independent clean 154-source rebuild and constructor
+review, exact-source CI and final natural/profile byte parity pass. Six release
+assets are downloaded and checksum/tag verified. AD workbook preserves all 29 AB
+sheets and 770,654 historical cells. No native Excel or human/physical acceptance.
+
+See `docs/igloo-colors.md`, `references/igloo-colors-result.json`,
+`references/igloo-colors-delivery.json` and the release's precise human tests.
+Status: **In review**. PR43 remains draft/stacked on41; keep42/39/15/16 open.
+Next: WORLD preparation, long foreground tails, cold igloo cost and landing
+presentation. Same issue42 chat/branch remains sole checkout owner.
+
 <!-- AC aurora cost audit, 2026-11-11 -->
 The owner's color-table proposal was checked against the exact v0.0.16 runtime.
 The band already uses preloaded patterns/colors and selects NAME IDs on row 3;

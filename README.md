@@ -5,18 +5,20 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.16 ready-picture diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic)
-raises active NTSC complete-picture cadence from 21.46 to 25.45 fps against
-v0.0.15 on the same route. Grounded landings shown improve from 9/26 to 15/26;
-the original simulation/input/PSG clock remains approximately 59.92 steps/s.
-Current-picture enemy eligibility is reused and completed coherent scenes can
-appear at the next safe VBlank. Graphics and mechanics pass the bounded oracles.
-**Motion remains uneven. PAL throughput improves, but landing coverage and
-long-gap behavior regress; this is an NTSC-focused diagnostic.** The release
-includes the exact ROM, updated workbook, source/hash and human tests. Read the
-[results, limitations and reproduction](docs/ready-presentation.md),
-[validation](references/ready-presentation-result.json) and
-[verified downloads](references/ready-presentation-delivery.json).
+The latest [v0.0.17 igloo color-only diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic)
+reuses igloo patterns when only certified background colors change. Against
+v0.0.16 on the same complete route, active NTSC/PAL cadence improves from
+25.45/22.92 to 25.90/23.12 pictures/s (+1.76%/+0.89%). PAL's P95/longest gaps
+fall from 79.71/99.68 to 59.84/79.78 ms. The original simulation/input/PSG clock
+remains approximately 59.92 steps/s; graphics and mechanics pass the bounded
+oracles. **Motion remains uneven. NTSC shows one fewer grounded landing
+(15/26 to 14/26), and the cold/full igloo path has a higher observed maximum.**
+This is a modest diagnostic improvement, not stable 30 fps or original fluidity.
+The release includes the exact ROM, updated workbook, source/hash and
+[human tests](docs/releases/v0.0.17-igloo-colors-diagnostic.md). Read the
+[results, limitations and reproduction](docs/igloo-colors.md),
+[validation](references/igloo-colors-result.json) and
+[verified downloads](references/igloo-colors-delivery.json).
 Issue #42 remains open; owner-fluidity, all-level and physical acceptance are pending.
 
 The earlier [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)

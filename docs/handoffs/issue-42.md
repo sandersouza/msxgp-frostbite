@@ -13,6 +13,57 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## AD igloo color-only delivery — 2026-11-12
+
+Release: [v0.0.17](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic).
+Exact clean runtime source `059bec5f985f3aac121014016dadfa31ec3fc892`;
+ROM SHA-256 `c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562`.
+4 MiB ASCII16, unchanged standard MSX1 hardware budget. Root/current issue42
+chat remains sole tracked writer; no successor or new issue was started.
+
+AD hooks only igloo publication: exact hits reuse the tile, certified unchanged
+patterns write eight CGT bytes, all other contexts use the original full path.
+Bridge 6212..6234 inclusive is before live footer6249. Helper/tables occupy
+119:B800..BC90, retired NAME-directory storage. All 2560 native far pointers
+are embedded in ice packets and verified; header dictionary remains in116..118.
+No new RAM/VRAM. Key validity is published last; mapper, IRQ and active-page
+contracts remain exact. Do not revive retired storage or assume generic typed
+constructor scratch is output by this scoped hit/color path.
+
+Whole-route active NTSC/PAL presentation rises 25.4519/22.9176 to
+25.9009/23.1226 pictures/s (+1.76%/+0.89%). Whole foreground means fall
+70,935/75,403 to 69,756/74,907 cycles (different picture populations; not paired
+CPU savings). PAL P95/max gaps fall 79.713/99.683 to 59.843/79.780 ms.
+NTSC grounded landings regress 15/26 to 14/26 at arc21/source1672; first
+post-landing age 2 to3 there and all-arc P95 5 to6. Endpoint coverage stays21/26.
+PAL grounded/endpoints improve12/19 to13/20 out of26; missed pose run1 to0.
+The full/cold igloo maximum rises25,025 to27,389 cycles. Stable30FPS and
+original fluidity are not achieved; original source state/contact rules remain
+identical. No simulation step is discarded to improve presentation statistics.
+
+Clean final NTSC/expanded-PAL natural runs match all five prototype/profile
+buffers. 4,507 CPU/all-RAM checkpoints, 2,510 coherent pictures, 4,089 scene
+cases, 569 host tests, 10,560 clipping cases and 2,115 audio intervals pass.
+Nine generic IRQ targets per mode, rejected AF2 corruption and one extra real
+AD bank119 CGT-stream IRQ per mode pass. Directed IRQ runs are not FPS evidence.
+Independent clean rebuild binds154sources, preserves151parents and exact ROM;
+917,504 constructor comparisons plus review find no blockers. Runtime CI push
+43149370548 and PR43149377001 pass at the exact source commit.
+
+Six release assets were downloaded and verified against local bytes and tag.
+AD workbook SHA-256 `c3c146d7a89e1c0a69a54d160e560e34012d18817dfb178932f158800a80eb04`;
+30 sheets, all29AB sheets/770654cells preserved; no formula errors, two mutation
+restore checks, six visual regions. Native Excel was not exercised.
+Read `docs/igloo-colors.md`, release notes, and both `references/igloo-colors-*`
+records. Raw evidence: NEW `outputs/presentation/igloo-ad-{research,validation,review}/`,
+`igloo-colors-ad/` and workbook output ending `-AD`. Prior sealed roots immutable.
+
+Status In review; PR43 draft/stacked on41; keep42/39/15/16 open. Next measure
+WORLD preparation, long tails and cold igloo/landing presentation. Human tests
+compare v16/v17 igloo colors/progress, repeated landing/re-jump, horizontal
+steering and audio with separate NTSC/PAL recordings. Owner, all-level,
+original-fluidity, manual listening and physical MSX1 acceptance are pending.
+
 ## AC aurora investigation — 2026-11-11
 
 Owner proposed fixed upper-band graphics with color-table-only animation.
