@@ -1,5 +1,30 @@
 # Issue #42 — native renderer implementation handoff
 
+## AL prepared temperature — 2026-11-12
+
+<!-- AL prepared temperature / autonomous continuation, 2026-11-12 -->
+v24 exact temperature-unit programs preserve v23 artwork/pastels/source CPU/RAM,
+mechanics/controls/PSG. Regular31.5939NTSC (+0.76%)/29.7739PAL (+0.60%);
+bear27.0953NTSC unchanged/24.6899PAL (+1.62%). BearNTSC foregroundmax104256→97481,
+headermax18996→12221. Stable/all-level29.97/30FPS remains open; guard630 unchanged.
+NTSC landing/end flags unchanged20/23of26, Yruns252→254of286. PALarc4 loses actual
+landing/end snapshot (15→14/26grounded,24→23/26end); Yruns233→234. PALbearFGP95
+86162→88004 andregularNTSCFGmax127789→127909 regress; different sampled pictures.
+Source48be6de16c8862580b8add5fd32937d802a7feb3; ROM
+4686698ca7c19cf6db27a8393d70a15297fe982b0f9a68274964233f2355c5be.
+186bound/182parent sources/47sealedroots unchanged;14reservedkernelbytes,
+256x32Bprograms in127..130/body131; fixed69FCgate. LIVEaa_publish60B6protected.
+593host/2115source/2040density/54header/2115audio/18generic+14newhardwareIRQ/
+negativeAF2/2exactCI/fourcleanpassive5bufferparity pass. Independent76640nativecalls,
+2115HALTpoison/49152contactfields; exactv23rollback. ALbook38tabs preserves37/
+788579cells/nativefeatures,zeroformulaerrors/2mutationrestore/5renderedregions;
+no nativeExcel. See docs/temperature-programs-diagnostic.md, v24release and
+references/temperature-programs-*.json. Inreview during delivery checks;
+PR43draftstacked41, sameIssue42chat/rootsolewriter. Keep42/39/15/16open.
+Noowner/mobile/manual-listening/physical/all-level acceptance. Nextremaining
+bearWORLDrowmetadata/uploads andplayer/preflight longframes towardstable30NTSC.
+
+
 ## AK shore-edge recipes — 2026-11-12
 
 <!-- AK exact shore-edge P0 / autonomous continuation, 2026-11-12 -->

@@ -5,21 +5,21 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.23 shore-edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.23-shore-recipes-diagnostic)
-reduces the measured NTSC bear window's longest picture gap66.75→50.10ms;
-foreground P95 falls30.79%. That window reaches27.10NTSC/24.30PAL pictures/s,
-while the regular level0 route reaches31.36NTSC/29.60PAL. Exact prepared player
-graphics avoid expensive shore-edge fallback with unchanged v22 colors,
-mechanics, controls and PSG. **Stable30FPS across gameplay remains open.**
-All26regular landing/end flags match v22; brief presentation omissions remain.
-No owner or physical acceptance is inferred from automation.
+The latest [v0.0.24 temperature diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.24-temperature-programs-diagnostic)
+uses exact prepared glyph programs when only temperature units change. Regular
+NTSC mean31.36→31.59 pictures/s; bear NTSC stays27.10, PAL24.30→24.69.
+Bear NTSC foreground maximum104,256→97,481 cycles. Same v23 artwork/colors,
+mechanics, source clock, controls and PSG. **Stable30FPS remains open.**
+NTSC landing flags match; PAL loses one brief landing/end snapshot despite its
+higher mean. PAL bear foreground P95 also worsens. This is a diagnostic with
+explicit presentation limits, not uniform smoothness or owner/hardware acceptance.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.23-shore-recipes-diagnostic%2Ffrostbite-0.0.23-shore-recipes-diagnostic.rom&ROM_FORMAT=ASCII16).
-Rollback: [unchanged v22 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/frostbite-0.0.22-dirty-traversal-diagnostic.rom).
-Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.23-shore-recipes-diagnostic.md)
-are attached. Read [architecture/limits](docs/shore-recipes-diagnostic.md),
-[validation](references/shore-recipes-result.json) and
-[verified downloads](references/shore-recipes-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.24-temperature-programs-diagnostic%2Ffrostbite-0.0.24-temperature-programs-diagnostic.rom&ROM_FORMAT=ASCII16).
+Rollback: [unchanged v23 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/frostbite-0.0.23-shore-recipes-diagnostic.rom).
+Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.24-temperature-programs-diagnostic.md)
+are attached. Read [architecture/limits](docs/temperature-programs-diagnostic.md),
+[validation](references/temperature-programs-result.json) and
+[verified downloads](references/temperature-programs-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.
