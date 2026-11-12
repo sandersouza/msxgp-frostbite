@@ -13,6 +13,64 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## AE bear-sprite experiment — 2026-11-12
+
+No new release or runtime promotion. v0.0.17 remains the exact public control:
+source `059bec5f985f3aac121014016dadfa31ec3fc892`, ROM SHA-256
+`c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562`.
+Root/current issue42 chat and `codex/feat/42-native-renderer` remain sole writer.
+Only documentation/result files are pending integration; no src/scripts/tests
+changes. Do not promote either ignored prototype or silently replace a binary.
+
+Private A SHA-256 `7aa6c4750f59556ca98477e371b4e7cfeae4d291d9b4324585129ef5ecc2f73f`;
+private B `384304804d341915e48f36c35281c4d02e107992faa4e97c078151202978906d`.
+Both use four exact sprites with page-specific unused SGT slots and full tile
+fallback, preserving existing dirty union/conservative enemy preflight. B adds
+a level>=3 gate and clears its active flag before every decision. Allocation:
+resident6235..6244; helper119:BC91..BE1A; extra clock RAM EF33..EF43(A) orEF52(B);
+keys/flagE8B8..BA; retired255:A480..AC7F sprite pool. These are unqualified private
+research allocations, not maintained runtime source.
+
+A regular active cadence regresses4.673%NTSC/4.473%PAL. B changes25.900928 to
+25.841656NTSC(-0.229%) and23.122575 to23.122577PAL(effectivelyunchanged). B full
+foreground rises69756 to69877NTSC /74907 to74987PAL; grounded/end coverage stays
+14/21NTSC and13/20PAL out of26. The ordinary route is level0/pose0/bearX140 only.
+The original bear primitive costs520/560cycles per active picture there; that
+is not an upper bound on other bear/dirty/NAME designs.
+
+Separate clean-start bear-chase live prefix: active source195..425, level4,
+122X values/all8poses, exact same original CPU traces. NTSC14.205704 to13.748278
+(-3.220%);PAL13.703336 to13.773877(+0.515%). Initial700step attempts correctly
+hit unchanged one-player guard at630 in all4runs; accepted prefix620 does not
+claim the full702step route. Private maintained-probe copy differs only in the
+immutable source-route directory. CPU/pixel/owner/active-page/clock oracles and
+the guard remain intact; no source state injections.
+
+Each variant passes4507standard-route source CPU/all-RAM checkpoints and2115
+source scenes. Six passive profiles preserve all5natural buffers. Independent
+review separately redecodes all2115A and2115B matrix pictures and verifies full
+sprite rectangles, source closure and paired/live measurements. B matrix shows
+controlled preparation -21.24% overall/-36.22% in653nonblanked level>=3rows;
+these are injected scene costs, not gameplay FPS, not all combination coverage.
+Do not summarize this experiment as proving every bear-sprite design worthless.
+No audio/density/directed-IRQ release qualification or owner/physical acceptance.
+
+AE workbook: `outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AE/`;
+SHA-256 `d00d1ba94b70c53e9f7106db663644bd9870b365bbfc66e42a51dead09832757`.
+All30AD sheets/773129cells/styles/native features preserved,31sheets total,
+zero formula errors,two mutation/restore checks,seven visual regions. No native
+Excel exercised. Raw producers/ROMs/proofs: NEW `outputs/presentation/bear-ae-research/`;
+review: `bear-ae-review/`. All14old sealed roots remain immutable. First AD profiler
+attempts failed from a Tcl channel collision; only corrected -02 runs qualify.
+
+Read `docs/bear-sprites-experiment.md` and `references/bear-sprites-result.json`.
+Visual proposals are analysis only: align eight bands to8pixel rows/24pixel
+pitch (<=7pixel anchor shifts), then evaluate two-color Bailey/border clipping.
+Any later adaptation must remap all actors consistently and preserve logical
+physics/input/contacts; none is implemented here. Status In review; PR43 draft
+stacked on41; keep42/39/15/16 open. Next action is an owner decision on any visual
+adaptation or another measured exact-renderer design, in this same issue scope.
+
 ## AD igloo color-only delivery — 2026-11-12
 
 Release: [v0.0.17](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic).

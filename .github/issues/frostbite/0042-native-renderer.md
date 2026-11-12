@@ -1,3 +1,34 @@
+<!-- AE bear-sprite experiment, 2026-11-12 -->
+Two private variants were measured against v0.0.17. Neither is promoted; no new
+release or public ROM change. All 154 v17 source files and 14 prior sealed
+control roots remain unchanged. Same issue42 chat/branch is the sole writer.
+
+A always attempts bear sprites and regresses regular active cadence 4.67% NTSC /
+4.47% PAL. B gates the path to level>=3, changing regular cadence -0.229% /
+effectively 0%. A separate live-clock clean-start bear-chase prefix changes
+14.2057 to13.7483 NTSC (-3.22%) and13.7033 to13.7739 PAL (+0.515%). No consistent
+whole-game gain supports publication. The regular route has only a stationary
+level0 bear. The bear-route active window covers all8poses/122X values at level4;
+its620step bound precedes the unchanged one-player guard failure at630, not a
+claim over the complete702step source route.
+
+Both prototypes pass their 4507 source CPU/all-RAM checkpoint and2115 scene
+oracles, with exact pixels/owners/active-page protection. Six passive profiles
+reproduce all5natural buffers. The B controlled matrix reduces paired preparation
+21.24% overall /36.22% in653 nonblanked level>=3 rows, but these injected scenes
+exclude live IRQ/commit/wait; they are not FPS. Independent reviews confirm both
+the savings signal and the mixed live result. New audio/density/directed-IRQ
+release qualification was not performed after rejection; no owner/physical or
+original-fluidity acceptance is claimed.
+
+The AE workbook preserves all30AD sheets/773129cells and adds the measured
+comparison, per-arc landings and live bear window. See
+`docs/bear-sprites-experiment.md` and `references/bear-sprites-result.json`.
+Visual adaptation analysis proposes tile-aligned band spacing, two-color Bailey
+and border clipping as separate hypotheses; none is implemented or authorized
+for adoption by this experiment. Status **In review**; PR43 remains draft/stacked
+on41. Keep42/39/15/16 open and v0.0.17 as the public control.
+
 <!-- AD igloo color-only delivery, 2026-11-12 -->
 Published [v0.0.17](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic)
 from clean runtime source `059bec5f985f3aac121014016dadfa31ec3fc892`.

@@ -21,6 +21,13 @@ The release includes the exact ROM, updated workbook, source/hash and
 [verified downloads](references/igloo-colors-delivery.json).
 Issue #42 remains open; owner-fluidity, all-level and physical acceptance are pending.
 
+The subsequent [bear-sprite experiments](docs/bear-sprites-experiment.md) preserve
+bounded graphics/state but do not improve live cadence consistently. A level-gated
+variant changes the regular route by -0.23% NTSC / effectively 0% PAL; a live
+moving-bear window changes -3.22% / +0.51%. Controlled scene-preparation savings
+do not override those game results. Both prototypes remain private; v0.0.17 is
+unchanged. The report also analyzes optional visual adaptations; none is applied.
+
 The earlier [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)
 raises active complete-picture cadence from10.61/10.54 to18.22/17.22fps on the
 same NTSC/PAL input route. The original source/input/PSG clock remains about59.92
