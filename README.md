@@ -5,28 +5,31 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.17 igloo color-only diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic)
-reuses igloo patterns when only certified background colors change. Against
-v0.0.16 on the same complete route, active NTSC/PAL cadence improves from
-25.45/22.92 to 25.90/23.12 pictures/s (+1.76%/+0.89%). PAL's P95/longest gaps
-fall from 79.71/99.68 to 59.84/79.78 ms. The original simulation/input/PSG clock
-remains approximately 59.92 steps/s; graphics and mechanics pass the bounded
-oracles. **Motion remains uneven. NTSC shows one fewer grounded landing
-(15/26 to 14/26), and the cold/full igloo path has a higher observed maximum.**
-This is a modest diagnostic improvement, not stable 30 fps or original fluidity.
-The release includes the exact ROM, updated workbook, source/hash and
-[human tests](docs/releases/v0.0.17-igloo-colors-diagnostic.md). Read the
-[results, limitations and reproduction](docs/igloo-colors.md),
-[validation](references/igloo-colors-result.json) and
-[verified downloads](references/igloo-colors-delivery.json).
-Issue #42 remains open; owner-fluidity, all-level and physical acceptance are pending.
+The latest [v0.0.18 tile-aligned playfield diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.18-grid24-diagnostic)
+tests the owner's selected visual option: eight sea bands at a 24-pixel pitch.
+Artwork, colors and the original mechanics/input/audio clock are preserved;
+anchors shift by up to seven pixels and Bailey follows the new ice contacts.
+Against v0.0.17, active complete pictures rise from 25.90 to 27.74 NTSC (+7.11%)
+and 23.12 to 25.38 PAL (+9.75%). Whole foreground mean falls 10.24%/12.31%.
+**Motion remains uneven. Long gaps barely change; stable 30 fps and original
+fluidity are not achieved.** NTSC grounded landings improve 14/26 to 15/26;
+PAL stays 13/26, with individual regressions disclosed.
 
-The subsequent [bear-sprite experiments](docs/bear-sprites-experiment.md) preserve
-bounded graphics/state but do not improve live cadence consistently. A level-gated
-variant changes the regular route by -0.23% NTSC / effectively 0% PAL; a live
-moving-bear window changes -3.22% / +0.51%. Controlled scene-preparation savings
-do not override those game results. Both prototypes remain private; v0.0.17 is
-unchanged. The report also analyzes optional visual adaptations; none is applied.
+This is a reversible layout test. Reload the unchanged
+[v0.0.17 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/frostbite-0.0.17-igloo-colors-diagnostic.rom)
+for immediate rollback; the additive builder also reproduces its exact bytes.
+The release includes the exact ROM, source/hash, updated workbook and
+[human tests](docs/releases/v0.0.18-grid24-diagnostic.md). Read the
+[architecture, results and rollback](docs/grid24-diagnostic.md),
+[validation](references/grid24-result.json) and
+[verified downloads](references/grid24-delivery.json).
+Issue #42 stays open for original fluidity, all-level and physical acceptance.
+
+The prior [bear-sprite experiments](docs/bear-sprites-experiment.md) remain
+private and rejected because they did not improve live cadence consistently.
+The new diagnostic implements only visual option 1 from that analysis; bear
+sprites, two-color Bailey and mask removal are not adopted. The previous
+[v0.0.17 igloo diagnostic](docs/igloo-colors.md) remains the original-layout control.
 
 The earlier [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)
 raises active complete-picture cadence from10.61/10.54 to18.22/17.22fps on the

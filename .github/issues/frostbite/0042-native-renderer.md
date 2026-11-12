@@ -1,3 +1,40 @@
+<!-- AF tile-aligned layout diagnostic, 2026-11-12 -->
+Owner selected visual option 1 with easy rollback. The new
+[v0.0.18 diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.18-grid24-diagnostic)
+uses eight tile-aligned sea bands at24pixel pitch. Artwork/colors/counts, black
+mask, bear tiles and original CPU/RAM/input/audio mechanics remain. Bailey's
+whole sprite group follows a monotone contact translation. This changes the
+presentation layout by up to7pixels, not the source collision/jump rules.
+
+Source `fa26b79fece16b8b9bbc293523792aa31d4a40ed`; ROM
+`6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a`.
+All154v17 files and17sealed predecessor roots are preserved. Original builder
+mode reproduces exactv17SHA c50a3131...9562; old ROM assets remain available.
+Runtime changes occupy one additive commit, with no new RAM/VRAM.
+
+Complete active presentation improves25.9009to27.7427NTSC (+7.11%) and
+23.1226to25.3762PAL (+9.75%). Whole foreground means fall69,756to62,612 and
+74,907to65,685cycles. Stage populations differ; these are observed means, not
+paired CPU savings. Long picture gaps barely change. Grounded landings improve
+14to15/26NTSC, stay13/26PAL; individual regressions remain documented. Stable
+30FPS/original fluidity are not accepted. The moving-bear prefix gains4.08%NTSC
+and effectively0%PAL; not all-level proof.
+
+575host tests,2115source/1920density/54header scenes,2115ordered audio intervals,
+4507natural CPU/all-RAM checkpoints and2580coherent pictures pass. Eighteen
+generic and four new-helper real IRQ boundaries pass; AF2corruption rejected.
+Independent three-mode rebuild, finite allocation/contact/NAME checks and539
+natural SAT comparisons pass. Clean final routes reproduce all5measured buffers
+per mode. Runtime-source push/PR CI pass. AF workbook preserves all31AE sheets
+and775,979cells, with formulas/export and five visual regions checked.
+
+See `docs/grid24-diagnostic.md`, `references/grid24-result.json` and the release's
+A/B spacing/contact/fluidity tests. Human/layout preference, manual listening,
+all-level and physicalMSX1 acceptance remain pending. Status **In review**;
+PR43 stays draft/stacked on41. Keep42/39/15/16open. Same issue42 chat/branch is
+the sole checkout writer. Next: remaining WORLD cost and long foreground tails,
+tracking every landing and the owner's decision on this reversible layout.
+
 <!-- AE bear-sprite experiment, 2026-11-12 -->
 Two private variants were measured against v0.0.17. Neither is promoted; no new
 release or public ROM change. All 154 v17 source files and 14 prior sealed

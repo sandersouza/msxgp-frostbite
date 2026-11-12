@@ -1,5 +1,63 @@
 # Issue #42 — native renderer implementation handoff
 
+## AF reversible grid24 diagnostic — 2026-11-12
+
+Owner selected visual option 1 with easy rollback. Same issue42 chat
+`01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb` owns the checkout, branch
+`codex/feat/42-native-renderer`. Runtime commit:
+`fa26b79fece16b8b9bbc293523792aa31d4a40ed`. One additive runtime commit;
+154 v17 source files and 17 sealed predecessor roots are unchanged.
+Local backup: `codex/backup/42-before-grid24-20261112`.
+
+v0.0.18 ROM SHA256:
+`6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a`.
+4 MiB ASCII16, standard-speed MSX1, 64 KiB RAM / 16 KiB VRAM, TMS9918 and PSG.
+The new builder supports original/grid24 and translated/prepared NAME modes.
+Original mode copies exact v17 SHA
+`c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562`.
+Reload the old public ROM and restart for immediate rollback. No migration.
+
+Eight sea bands use 24-pixel pitch. Enemy bottom-to-top anchors:
+152/128/104/80; ice:168/144/120/96. Whole Bailey SAT receives a monotone contact
+translation without recoloring/stretching. Source CPU/RAM, physics/input/audio
+clock, horizontal movement, artwork/colors/counts, bear tiles and black mask
+are retained. Anchors move up to seven target pixels. Only option 1 is applied.
+Prepared NAME uses retired packet tails45..64:B800..BFFF, lower14KiB unchanged;
+phase-zero pattern/owner banks35..44 intact. Speculative contact spill bits are
+masked out. Read allocation/liveness proof before reusing these tails.
+
+Active cadence:25.9009 to27.7427 NTSC (+7.11%),23.1226 to25.3762 PAL (+9.75%).
+Whole foreground means:69756 to62612 /74907 to65685 cycles. Stage populations
+differ, not paired savings. Maximum gaps remain83.44/79.78ms. Grounded landings
+14to15/26 NTSC,13to13 PAL; individual regressions remain in all26 workbook arcs.
+Endpoint21to23 NTSC/20to20 PAL. Bear620-step prefix gains4.08% NTSC/no material
+PAL gain. Original fluidity, stable30FPS, owner layout and physical acceptance
+remain unmet. Do not infer a complete speed fix from mean FPS.
+
+575 host tests;2115source/1920density/54header scenes;2115ordered audio intervals;
+4507original CPU/all-RAM checkpoints and2580coherent pictures pass. Eighteen
+generic and four new-helper real IRQ targets pass; AF2corruption is rejected.
+Independent three-mode rebuild,512literal deltas,1280slots,12800rotations,
+5256ordinary rectangles,5120contact spill checks and539natural SAT pairs pass.
+Committed-source review verifies all160files directly throughgit show. Final
+clean-source routes reproduce all5measured buffers per mode. Runtime CI
+push43221585093 /PR43221596444 pass at exact runtime sourcefa26b79.
+
+AF workbook SHA256:
+`4224851f0254f8c77f2738a578dab3a9b246c0672c70e0dc8665a6e5979d0e7e`.
+32 sheets, all31AE sheets/775979cells and native features preserved. Two
+mutation/restore checks, no formula errors and five visual regions checked.
+Native Excel was not exercised. New evidence only:
+`outputs/presentation/grid24-af{,-research,-review}/` and workbook output`-AF`.
+All previous evidence roots remain immutable.
+
+Read `docs/grid24-diagnostic.md`, `references/grid24-result.json`, the release
+human tests and `references/grid24-delivery.json` for publication/download proof.
+Status In review; PR43 stays draft/stacked on41. Keep42/39/15/16 open. No other
+chat may write this checkout. Next: owner A/B spacing/contact/fluidity feedback,
+then remaining WORLD and long preparation tails with per-landing tracking.
+Two-color Bailey, bear sprites and mask removal remain separate decisions.
+
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/42
 Parent: #39, original-speed objective still open. P1 / XL / exploratory 40h.
 Owner approved replacing the architecture and resuming GitHub. Continue
