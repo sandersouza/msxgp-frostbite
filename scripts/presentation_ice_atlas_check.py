@@ -26,9 +26,10 @@ def check(build,out,mode,steps=2252):
     clock.audit_row=prepared.audit_row=owners;clock.audit_active=matrix.audit_active=active
     try:result=border.check(build,out,mode,steps)
     finally:clock.audit_row,clock.audit_active,matrix.audit_active,prepared.audit_row=old
-    if not counts['owners']or not counts['active']:raise ValueError('atlas ownership audits were not exercised')
+    negative=(mode=='boundary-negative' and result.get('complete') and result.get('expected_failure')=='boundary-register-restoration')
+    if not negative and (not counts['owners']or not counts['active']):raise ValueError('atlas ownership audits were not exercised')
     producers={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()for p in(Path(__file__).resolve(),ROOT/'scripts/presentation_ice_atlas.py')}
-    receipt=dict(complete=True,rom_sha256=m['rom']['sha256'],mode=mode,atlas_ids=len(table),audits=counts,producers=producers,scope='Actual pixels/source/active-page guards retained. Both thirds immutable atlas bytes explicitly checked before shadow NAME ownership audit; footer and unregistered high IDs retain original guards.')
+    receipt=dict(complete=True,rom_sha256=m['rom']['sha256'],mode=mode,atlas_ids=len(table),audits=counts,negative_control=bool(negative),producers=producers,scope=('Expected AF2 rejection before picture decoding; no atlas ownership acceptance from this negative test.' if negative else 'Actual pixels/source/active-page guards retained. Both thirds immutable atlas bytes explicitly checked before shadow NAME ownership audit; footer and unregistered high IDs retain original guards.'))
     (out/'ice-atlas-contract.json').write_text(json.dumps(receipt,indent=2)+'\n');return result
 
 if __name__=='__main__':
