@@ -9,7 +9,11 @@ independent read-only design/runtime review; no extra issue or worktree.
   hook; independently qualify reused areas before runtime writes.
 - [x] If feasible, RED→GREEN additive model/builder/ASM/checker/tests; internal
   native/source proof and four whole-game routes before any promotion.
-- [ ] If useful, clean source CI/replay/qualification/review, workbook and exact
+- [x] If useful, clean source CI/replay/qualification/review, workbook and exact
   release/WebMSX/human tests; otherwise preserve public v24 and archive rejection.
-- [ ] Durable handoff/sole-writer tracking/immutable controls; stable30goal stays
+- [x] Durable handoff/sole-writer tracking/immutable controls; stable30goal stays
   open until actually demonstrated across the declared acceptance coverage.
+
+Delivered v25 from clean13bf76e, exact bf5c703d...8dae41; final delivery review
+3d233e4a...9d71532c. Stable/all-level30 remains open. See
+`docs/handoffs/issue-42-v25-delivery.md` for exact hashes and continuation.
