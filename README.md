@@ -5,31 +5,30 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.18 tile-aligned playfield diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.18-grid24-diagnostic)
-tests the owner's selected visual option: eight sea bands at a 24-pixel pitch.
-Artwork, colors and the original mechanics/input/audio clock are preserved;
-anchors shift by up to seven pixels and Bailey follows the new ice contacts.
-Against v0.0.17, active complete pictures rise from 25.90 to 27.74 NTSC (+7.11%)
-and 23.12 to 25.38 PAL (+9.75%). Whole foreground mean falls 10.24%/12.31%.
-**Motion remains uneven. Long gaps barely change; stable 30 fps and original
-fluidity are not achieved.** NTSC grounded landings improve 14/26 to 15/26;
-PAL stays 13/26, with individual regressions disclosed.
+The latest [v0.0.19 aligned-border diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.19-border-diagnostic)
+replaces seven black mask sprites with a tile border and enemy clipping. Only
+four extra pixels at the sea edge are cropped. P0 keeps its colors, foreground
+priority and grid24 contacts; original mechanics/input/audio clock remain.
+Active NTSC/PAL pictures rise from27.74/25.38 to28.92/26.21 (+4.26%/+3.28%).
+NTSC picture-gap P95 improves66.72to50.13ms, grounded landings15to17/26 and
+endpointY23to25/26. **Stable30FPS and original fluidity remain unmet.** Maximum
+long gaps persist and individual landing/PAL foreground-tail regressions are
+reported. This is a reversible diagnostic; native ice optimization continues.
 
-This is a reversible layout test. Reload the unchanged
-[v0.0.17 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/frostbite-0.0.17-igloo-colors-diagnostic.rom)
-for immediate rollback; the additive builder also reproduces its exact bytes.
-The release includes the exact ROM, source/hash, updated workbook and
-[human tests](docs/releases/v0.0.18-grid24-diagnostic.md). Read the
-[architecture, results and rollback](docs/grid24-diagnostic.md),
-[validation](references/grid24-result.json) and
-[verified downloads](references/grid24-delivery.json).
-Issue #42 stays open for original fluidity, all-level and physical acceptance.
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.19-border-diagnostic%2Ffrostbite-0.0.19-border-diagnostic.rom&ROM_FORMAT=ASCII16).
+For immediate rollback, reload the unchanged
+[v0.0.18 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/frostbite-0.0.18-grid24-diagnostic.rom).
+The release includes exact ROM/source/hash, workbook and
+[human tests](docs/releases/v0.0.19-border-diagnostic.md). Read
+[architecture/limits](docs/border-diagnostic.md),
+[validation](references/border-result.json) and
+[verified downloads](references/border-delivery.json).
 
-The prior [bear-sprite experiments](docs/bear-sprites-experiment.md) remain
-private and rejected because they did not improve live cadence consistently.
-The new diagnostic implements only visual option 1 from that analysis; bear
-sprites, two-color Bailey and mask removal are not adopted. The previous
-[v0.0.17 igloo diagnostic](docs/igloo-colors.md) remains the original-layout control.
+The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
+very few visual differences and authorized option3/autonomous performance work.
+The [earlier bear-sprite prototypes](docs/bear-sprites-experiment.md) stay private
+and rejected. Two-color Bailey is not adopted. Issue42 and39/15/16 remain open
+for original fluidity, all-level and physical acceptance.
 
 The earlier [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)
 raises active complete-picture cadence from10.61/10.54 to18.22/17.22fps on the

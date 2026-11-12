@@ -1,5 +1,63 @@
 # Issue #42 — native renderer implementation handoff
 
+## AG border diagnostic / autonomous continuation — 2026-11-12
+
+Owner testedv18 as stable with very few visual differences, selected option3
+and explicitly authorized autonomous work toward29.97/30NTSC while away.
+Publish testable ROMs with directWebMSX links. No direct mobile notification
+channel was assumed; the authorized release-link alternative is used.
+Same issue42chat/rootsolewriter/branch, no newissue or worktree.
+
+Runtime source:`c863310fae363d561520dfd2138d07dc1948cefc`.
+v19 ROM:`26260606e1ecbdeed0a8c0d3ae7ef4eb37658341da3a0ab02cd52ac8a5286ac9`.
+4MiBASCII16 standardMSX1/64KiBRAM/16KiBVRAM/TMS9918/PSG. All160v18 sources
+and22previous sealed roots unchanged. Newfive source files add an optional
+border builder; `--mode original` copies exactv18SHA6677bb8c...219a.
+Local backup:`codex/backup/42-before-border-20261112`.
+
+Seven mask SAT records removed on cold/cache paths. NAMEcolumn2 black only
+rows8..21 replaces targetX16..19mask withX16..23black: four extra crop pixels.
+P0 colors/grid24 contact/priority remain; as foreground it may overhang that
+extra border. Enemy full/certified clipping uses source11, raw160/normalized0
+cannot alias unclipped sentinel. Multicopy edge fallback remains. No newRAM/VRAM.
+
+Active pictures27.7427to28.9237NTSC /25.3762to26.2082PAL (+4.26%/+3.28%).
+Whole foreground62612to60254 /65685to63693; differing picture populations,
+not paired savings. NTSC gapP95 66.72to50.13ms; maxima83.44/79.78 persist.
+Grounded15to17/26NTSC /13to13PAL; endpoint23to25/20to22. Individual losses
+and PAL sampled foreground maximum150225to162982 are disclosed. Stable30FPS
+is not achieved. Live bear window effectively unchangedNTSC/+1.89%PAL.
+
+579host tests,2115source/2040deriveddensity/54header scenes,2115ordered audio,
+4507source CPU/allRAM/2658coherent pictures pass. 18generic+4newhelper realIRQs
+and rejectedAF2 pass. Independent165source rebuild,6336actualZ80sprite/cache
+cases,4actual NAME tests and10560finite clipping pass. Clean final natural
+routes match all5measured buffers per mode. Runtime sourceCIpush43253742994 /
+PR43254079515 pass. AG workbook33sheets preserves32AFtabs/778199cells/native
+features, no formulaerrors,2mutation/restore checks,5visualregions; no nativeExcel.
+
+Read docs/border-diagnostic.md, release v0.0.19 notes and references/border-*.json.
+New evidence only outputs/presentation/border-ag{,-research,-review}/ and book-AG.
+Private B rejection reuse has no cadence gain; exactA165source closure restored
+and delivered. Preserve B sources/build/failed density wrapper receipt attempts;
+the source guard rejected raw160 as expected, separate Z80 helper tests cover it.
+
+Continue immediately after v19 delivery toward target: immutable white ice
+atlas. Independent feasibility: actualdelta8=index1,61patterns; addingzero gives
+62slots. Third2footerIDs160..203 LIVE; sparse144..159+204..249 avoids it and
+staticbackground128..133. Use same IDs inthird1 for shared NAME programs. World
+RAM loaded by init pk_init7E5D→t_initializer7F20→loader7FBE before boot49D7.
+ac_names_code_endF5B8 leaves26zero bytes beforeF5D2. A16byteRAMstartupbridge can
+CALL original4A7Bstatic init, map65, CALLB800, restorebank1 throughresidentmapper;
+another8bytes can map65 and JP runtime helper. Parent165files muststayimmutable;
+new AH additive builder/oracle/ASM only. Atlas remains unimplemented in v19.
+Verify full PGT/CGT/NAME/staticownership and footer/activepage safety, retain
+blue/otherdelta fallback and compare higher-level/bear timings. No promised gain.
+
+Issue42 stays Inprogress during autonomous continuation. PR43draftstacked41;
+keep42/39/15/16open. Human v19 border, listening, alllevels and physicalMSX1
+acceptance are pending. Never infer full game/30FPS acceptance from this release.
+
 ## AF reversible grid24 diagnostic — 2026-11-12
 
 Owner selected visual option 1 with easy rollback. Same issue42 chat

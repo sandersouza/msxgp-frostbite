@@ -1,3 +1,35 @@
+<!-- AG mask replacement delivery, 2026-11-12 -->
+Owner accepted v18 gameplay as stable with very small visual differences and
+selected option3, authorizing autonomous work toward29.97/30NTSC. The new
+[v19 border diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.19-border-diagnostic)
+removes seven mask SAT entries, clips enemies atX24 and substitutes fourteen
+inactive NAME cells. Four extra sea-edge pixels are cropped, y64..175 only.
+P0/colors/priority/grid24 contacts and source CPU/RAM/mechanics/input/audio remain.
+All160v18 files and22prior sealed roots are unchanged. Sourcec863310fae363d561520dfd2138d07dc1948cefc;
+ROM26260606e1ecbdeed0a8c0d3ae7ef4eb37658341da3a0ab02cd52ac8a5286ac9.
+
+Active pictures improve27.7427to28.9237NTSC(+4.26%) and25.3762to26.2082PAL(+3.28%).
+Foreground means fall3.77%/3.03%; picture populations differ, not paired savings.
+NTSC P95 gaps66.72to50.13ms, grounded15to17/26, endpoints23to25/26. PAL grounded
+stays13/26, endpoints20to22. Individual landing losses and sampledPAL maximum
+foreground150225to162982cycles are disclosed. Long gaps/stable30FPS remain open.
+
+579host tests,2115source/2040density/54header scenes,2115ordered-audio intervals,
+4507source CPU/allRAM checkpoints/2658coherent pictures,18generic+4new-helperIRQ
+boundaries and negativeAF2 pass. Independent165source rebuild,6336actualZ80
+sprite/cache cases,4actualNAME cases and10560finite clipping pass. Finalclean
+routes match all5profile buffers per TV; sourceCIpush43253742994/PR43254079515 pass.
+AG workbook preserves all32AFtabs/778199cells and native features; formulas/export
+and5visual regions checked, no nativeExcel. Release includes directWebMSX and
+precise edge/dense/landing tests. See docs/border-diagnostic.md and references/border-result.json.
+
+Status **In progress** during autonomous continuation; border diagnostic is available for human review. Same issue42 chat/branch/root sole writer.
+PR43draftstacked41; keep42/39/15/16open. No ownerborder/manual/listening/alllevel/
+physical acceptance inferred from v18 feedback. Continue autonomously with
+immutable white-ice preparation/VRAM feasibility, preserving colors/mechanics;
+no new atlas is included in v19. B rejection-reuse variant has no cadence gain
+and remains private. Immediatev18 rollback stays available.
+
 <!-- AF tile-aligned layout diagnostic, 2026-11-12 -->
 Owner selected visual option 1 with easy rollback. The new
 [v0.0.18 diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.18-grid24-diagnostic)
