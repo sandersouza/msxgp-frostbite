@@ -1,5 +1,35 @@
 # Issue #42 — native renderer implementation handoff
 
+## AH immutable ice — 2026-11-12
+
+<!-- AH immutable ice / autonomous continuation, 2026-11-12 -->
+The v20 immutable-white-ice diagnostic reaches30.4355NTSC mean (+5.23%v19),
+28.0505PAL (+7.03%) on the regular level0 route. Same v19 artwork/mechanics and
+source/input/audio clock. No new visual adaptation. 62immutable pattern/color
+slots use1,984previously free bytes in existing16KiBVRAM; originalblue/otherdelta
+fallback. All165v19sources/27sealed predecessor roots remain unchanged.
+Runtime665cbdf4393fca63fe33299dca35442aa8fabce8;
+ROMc036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac.
+
+This is not stable30FPS/all-level acceptance. Maxgaps83.44NTSC/79.75PALms remain;
+grounded20/26NTSC,14/26PAL but individual losses and endpoint regressions remain.
+Level4 bear prefix15.05NTSC/15.33PAL; measured generic bear tiles74,124inclusive
+cycles/picture motivate next work. Earlier rejected sprite prototype stays private.
+
+583host;2115source/2040density/54header/2115ordered-audio scenes; fullsourceRAM/
+exactpixels/owners/activepage,18generic+10new realIRQ/negativeAF2,cleanreplay/
+exactsourceCI pass. Independent170source rebuild,6144actualZ80transitions,
+1984atlasbytecorruptions rejected,8192contactfields equal. AH workbook34tabs
+preserves33historicaltabs/780419cells/native features; no nativeExcel.
+See docs/ice-atlas-diagnostic.md, releasev20 and references/ice-atlas-*.json.
+
+Status **In progress** during autonomous continuation, same Issue42 chat/root
+sole writer/branch. PR43draftstacked41; keep42/39/15/16open. No owner v20,
+manual listening/mobile/physical/all-level acceptance. Continue largest measured
+bear composition/long-gap cost with reversible exact graphics; publish only
+qualified measured ROMs with WebMSX and human tests. Exactv19 rollback available.
+
+
 ## AG border diagnostic / autonomous continuation — 2026-11-12
 
 Owner testedv18 as stable with very few visual differences, selected option3
