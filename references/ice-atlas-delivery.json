@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "version": "v0.0.20-ice-atlas-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.20-ice-atlas-diagnostic",
+  "prerelease": true,
+  "source_commit": "665cbdf4393fca63fe33299dca35442aa8fabce8",
+  "tag_resolved_commit": "665cbdf4393fca63fe33299dca35442aa8fabce8",
+  "rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 18649,
+      "sha256": "948ec1e81c1c060979d274d3ac19c53c826a14cc869d243e1c6b00b45cad1bfc",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.20-ice-atlas-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/frostbite-0.0.20-ice-atlas-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AH.xlsx",
+      "bytes": 4674350,
+      "sha256": "b0b3aa3b7af80e8ebc3307bfcbf862d29a00b0be7ccffb812fd1d2b65a86fd75",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/Frostbite-performance-budget-AH.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 447,
+      "sha256": "94a7be777367fd4a5bd8f65b518a56559c6da29ba746acaf0587422eced74cd9",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 742,
+      "sha256": "b280d5e1373789d3ab17a0d594e4bbeb56ecb8f7c4be84485971b2b8b872bd98",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 110871,
+      "sha256": "e18312663645fac046b272737afb078a0ab4c23b9ead29b9ea1f75382a6b3f36",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "c5d4955f7c6d014df71da9d4accb3dd5ac570e3f07d1d5d25214aca775ccb50e",
+  "public_validation_sha256": "e18312663645fac046b272737afb078a0ab4c23b9ead29b9ea1f75382a6b3f36",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43259179816,
+      "event": "pull_request",
+      "headSha": "665cbdf4393fca63fe33299dca35442aa8fabce8",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43258950393,
+      "event": "push",
+      "headSha": "665cbdf4393fca63fe33299dca35442aa8fabce8",
+      "status": "completed"
+    }
+  ],
+  "rollback_v19_assets_unchanged": true,
+  "parent_source_files_preserved": 165,
+  "prior_roots_preserved": 27,
+  "issue42_open": true,
+  "board": "In progress",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.20-ice-atlas-diagnostic%2Ffrostbite-0.0.20-ice-atlas-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/ice-atlas-ah-research/webmsx-v20.png",
+    "screenshot_sha256": "186bb2ef96c1524f68f753d0a184df8471ca69f751cbf93112ef539a36f91fbd",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified; performance goal and owner/physical acceptance remain open. Autonomous generic bear composition investigation continues."
+}
