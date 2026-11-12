@@ -1,0 +1,84 @@
+{
+  "complete": true,
+  "version": "v0.0.18-grid24-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.18-grid24-diagnostic",
+  "prerelease": true,
+  "source_commit": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+  "tag_resolved_commit": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+  "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 18164,
+      "sha256": "a4a35d821e7316934ddf5604fd70754313692dcfaa9f49ccdb586bccc21b39b0",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.18-grid24-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/frostbite-0.0.18-grid24-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AF.xlsx",
+      "bytes": 4650002,
+      "sha256": "4224851f0254f8c77f2738a578dab3a9b246c0672c70e0dc8665a6e5979d0e7e",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/Frostbite-performance-budget-AF.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 444,
+      "sha256": "86991bca555216a5dea9f7b9d8b380c1ed89291a4b689fd39952b94edcde5271",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 903,
+      "sha256": "9663a9d5638d2f8f61d24a10f844eabe71c0d6c6789339a88bd29614c453cbbe",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 109330,
+      "sha256": "3a487f766d9fd2b776b6570049dbfe9ebdf680a6f6a2f12a3c80470a9dfa4297",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.18-grid24-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "86c0bcd684f3ef6c483e3332d1f8ab16af252d1a7c717da88c17ee0201df8ccf",
+  "public_validation_sha256": "3a487f766d9fd2b776b6570049dbfe9ebdf680a6f6a2f12a3c80470a9dfa4297",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43221596444,
+      "event": "pull_request",
+      "headSha": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43221585093,
+      "event": "push",
+      "headSha": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+      "status": "completed"
+    }
+  ],
+  "rollback_v17_assets_unchanged": true,
+  "parent_source_files_preserved": 154,
+  "prior_roots_preserved": 17,
+  "issue42_open": true,
+  "board": "In review",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "producer_sha256": "588fc4ed5d24ddfe95124ab328cb53317dc942d8a442c34e5ca0d65892a933a0",
+  "package_producer_sha256": "96e280bce2f65daab6c9e041ad7b82b1f487c9c588dc9d89dadd8103e39583d6",
+  "scope": "Six exact downloaded assets and tag verified. Publication and automated diagnostic checks only; owner layout/fluidity, all-level and physical acceptance remain open."
+}
