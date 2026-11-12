@@ -5,21 +5,21 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.24 temperature diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.24-temperature-programs-diagnostic)
-uses exact prepared glyph programs when only temperature units change. Regular
-NTSC mean31.36→31.59 pictures/s; bear NTSC stays27.10, PAL24.30→24.69.
-Bear NTSC foreground maximum104,256→97,481 cycles. Same v23 artwork/colors,
-mechanics, source clock, controls and PSG. **Stable30FPS remains open.**
-NTSC landing flags match; PAL loses one brief landing/end snapshot despite its
-higher mean. PAL bear foreground P95 also worsens. This is a diagnostic with
-explicit presentation limits, not uniform smoothness or owner/hardware acceptance.
+The latest [v0.0.25 hybrid bear diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.25-bear-hybrid-diagnostic)
+uses an exact sprite prefix and tile suffix, retaining v24 composed graphics,
+player colors, original mechanics/clock/controls and PSG. Bear NTSC mean rises
+27.10→28.12 pictures/s (+3.79%); regular NTSC stays31.59. Bear foreground maximum
+97,481→93,939 cycles. **Stable/all-level30FPS remains open.** Bear PAL stays24.69;
+regular PAL regresses29.77→29.66. All26 landing/end flags match v24; existing
+missed snapshots and long frames remain. This is an automated/emulator-qualified
+diagnostic; owner/mobile/listening/physical acceptance remains pending.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.24-temperature-programs-diagnostic%2Ffrostbite-0.0.24-temperature-programs-diagnostic.rom&ROM_FORMAT=ASCII16).
-Rollback: [unchanged v23 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/frostbite-0.0.23-shore-recipes-diagnostic.rom).
-Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.24-temperature-programs-diagnostic.md)
-are attached. Read [architecture/limits](docs/temperature-programs-diagnostic.md),
-[validation](references/temperature-programs-result.json) and
-[verified downloads](references/temperature-programs-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.25-bear-hybrid-diagnostic%2Ffrostbite-0.0.25-bear-hybrid-diagnostic.rom&ROM_FORMAT=ASCII16).
+Rollback: [unchanged v24 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/frostbite-0.0.24-temperature-programs-diagnostic.rom).
+Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.25-bear-hybrid-diagnostic.md)
+are attached. Read [architecture/limits](docs/bear-hybrid-diagnostic.md),
+[validation](references/bear-hybrid-result.json) and
+[verified downloads](references/bear-hybrid-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.

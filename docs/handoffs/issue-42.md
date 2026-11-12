@@ -1,5 +1,29 @@
 # Issue #42 — native renderer implementation handoff
 
+## AN exact hybrid bear — 2026-11-12
+
+<!-- AN exact hybrid bear — 2026-11-12 -->
+v25 diagnostic: exact left16px sprite/right tile bear, no P0 recolor or new visual
+compromise. NTSCbear27.0953→28.1214FPS(+3.79%), fullFG74126→70670, max97481→93939.
+PALbear24.6899 unchanged; regularNTSC31.5939 unchanged/PAL29.7739→29.6550(-.40%).
+All26landing/endflags unchanged: NTSC20/23,PAL14/23; Yruns254/235of286. Worstbear
+gaps50.10msNTSC/59.81msPAL, regularFG+102/209cycles; stable/all-level30FPS OPEN.
+Source13bf76ed540b968a6a6746385a396f6e4feeba71; ROM
+bf5c703d1e607a47bec037a1e5bac0ce32d34539f14e051f69134470d78dae41.
+191boundclean/186parents/56sealedroots unchanged;105retiredRAMcodebytes,
+1777/1792kerneloccupation unchanged, no newRAM/VRAM. SATappendafterWORLD,
+strictS4/capacity/viewport gates, fullnativefallback,8dirtyhistory safety.
+598host/2115source/2040density/54header/2115audio/18generic+18hybridIRQ/AF2negative/
+2exactCI/fourcleanpassive5bufferparity GREEN. Independent11714actualZ80calls,
+5436RGB (768isolatedABIcases, explicitly separate),all96records/352programs,
+80masks/8checkernegatives. Review7e12e1b673be8b4a829faca35bdaaa3dba50b3c4e4d527ae8b47abbb6dd1ebe0.
+AN40tabbook preserves39historicaltabs, raw/XML/formula/renderchecks; no nativeExcel.
+See docs/bear-hybrid-diagnostic.md, references/bear-hybrid-result.json, v25release
+with exactROM/workbook/SHA/source and directWebMSX/humantests. Owner/mobile/
+listening/physical acceptance pending. SameIssue42/rootwriter/branch, Inreview
+for delivery, draftPR43stacked41; no merge/close. NextremainingP0/preflight/NAME
+longframes, fullroutes before promotion. v24rollback unchanged.
+
 ## AM rejected row metadata — 2026-11-12
 
 <!-- AM rejected prepacked bear metadata — 2026-11-12 -->
