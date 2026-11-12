@@ -13,6 +13,32 @@ Current exclusive owner is the issue42 fork/thread
 starting instructions describe the original transfer; do not create a duplicate
 chat/branch or resume predecessor edits.
 
+## AC aurora investigation — 2026-11-11
+
+Owner proposed fixed upper-band graphics with color-table-only animation.
+Exact v0.0.16 audit confirms its PGT/CGT are already preloaded; animation chooses
+two NAME IDs from eight gradient states on row 3. No static bank-0 background
+PGT/CGT writes occur during active preparation. Fresh passive NTSC/PAL runs
+reproduce all five final natural buffers byte for byte. All 151 bound sources
+and the control ROM remain unchanged; no candidate or release was created.
+
+Measured aurora row CPU 502/546 cycles per active picture (0.71%/0.72% of
+foreground), excluding common background setup and NAME IO. Existing row-3
+payload is 6944/6816 bytes, estimated 465/506 stream cycles per picture before
+shared setup. These are costs, not predicted savings. Igloo preparation is
+3909/4259 cycles per picture. Top-row PGT writes are unchanged in 164/172 NTSC
+and 160/168 PAL cases; this is a concrete next color-only reuse lead, not a
+certificate to skip construction. Preserve physical-key validity and active
+page protection. Fixed band NAME IDs would require per-page CGT ownership or
+coherent commit-time writes, including correct igloo overlap.
+
+Read `docs/aurora-cost-audit.md` and `references/aurora-cost-audit.json`.
+Raw evidence and producers: `outputs/presentation/aurora-ac-research/`.
+Only trial 2 is accepted; trial 1 was a profiler Tcl channel-variable collision,
+not a game failure. Keep the v0.0.16 ROM and every prior sealed root immutable.
+Same issue42 chat/branch remains sole writer. Status In review; original fluidity
+and owner/physical acceptance stay open.
+
 ## AB ready-picture delivery — 2026-11-05
 
 Published [v0.0.16](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic)

@@ -1,0 +1,132 @@
+{
+  "complete": true,
+  "source_commit": "a9cf5ff3ea802b79a0e328e0a9de844e9749f8d3",
+  "rom_sha256": "9d2ee2926bc8de7fd0d22b05e7ad334e76078141bfde997720adfb62414cc77b",
+  "source_unchanged": true,
+  "rom_changed": false,
+  "candidate_built": false,
+  "layout": {
+    "gradient_states": 8,
+    "patterns_per_state": 2,
+    "constant_pattern_shapes": 2,
+    "changing_color_bytes_per_tile": 3,
+    "preloaded_at_boot": true,
+    "current_update": "Select preloaded NAME IDs on dirty row3; no gradient PGT/CGT upload.",
+    "color_only_alternative": "Fixed NAME IDs would require isolated per-page CGT ownership or a coherent commit-time color transaction, plus correct igloo composition."
+  },
+  "families": {
+    "ntsc": {
+      "active_pictures": 433,
+      "complete_foreground_cycles": {
+        "count": 433,
+        "mean": 70935.10161662818,
+        "maximum": 173876,
+        "p95": 126273
+      },
+      "background_cycles": {
+        "count": 433,
+        "mean": 3321.1293302540416,
+        "maximum": 11894,
+        "p95": 7893
+      },
+      "world_cycles": {
+        "count": 433,
+        "mean": 26058.226327944572,
+        "maximum": 62731,
+        "p95": 49679
+      },
+      "header_cycles": {
+        "count": 433,
+        "mean": 6377.685912240185,
+        "maximum": 47795,
+        "p95": 35267
+      },
+      "aurora_rows": 217,
+      "aurora_row_cycles_per_picture": 501.93302540415704,
+      "aurora_row_percent_of_foreground": 0.7075947083531025,
+      "aurora_name_bytes": 6944,
+      "name_payload_cycle_estimate_per_picture": 465.0715935334873,
+      "name_payload_scope": "29 cycles per streamed byte; excludes address/setup, which can be shared with other dirty rows. These are existing costs, not a measured saving.",
+      "igloo_cycles_per_picture": 3909.2678983833716,
+      "igloo_calls": 247,
+      "igloo_calls_with_top_row_dirty": 217,
+      "igloo_pgt_writes": 232,
+      "igloo_pgt_writes_unchanged": 180,
+      "igloo_top_pgt_writes": 172,
+      "igloo_top_pgt_writes_unchanged": 164,
+      "static_gradient_pgt_cgt_writes": 0,
+      "all_five_buffers_identical": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      }
+    },
+    "pal": {
+      "active_pictures": 391,
+      "complete_foreground_cycles": {
+        "count": 391,
+        "mean": 75403.44245524297,
+        "maximum": 174727,
+        "p95": 134836
+      },
+      "background_cycles": {
+        "count": 391,
+        "mean": 3603.3452685421994,
+        "maximum": 11873,
+        "p95": 7893
+      },
+      "world_cycles": {
+        "count": 391,
+        "mean": 28376.736572890026,
+        "maximum": 63383,
+        "p95": 50467
+      },
+      "header_cycles": {
+        "count": 391,
+        "mean": 6983.386189258312,
+        "maximum": 47869,
+        "p95": 37178
+      },
+      "aurora_rows": 213,
+      "aurora_row_cycles_per_picture": 545.854219948849,
+      "aurora_row_percent_of_foreground": 0.7239115379551144,
+      "aurora_name_bytes": 6816,
+      "name_payload_cycle_estimate_per_picture": 505.53452685421996,
+      "name_payload_scope": "29 cycles per streamed byte; excludes address/setup, which can be shared with other dirty rows. These are existing costs, not a measured saving.",
+      "igloo_cycles_per_picture": 4259.25831202046,
+      "igloo_calls": 240,
+      "igloo_calls_with_top_row_dirty": 213,
+      "igloo_pgt_writes": 228,
+      "igloo_pgt_writes_unchanged": 176,
+      "igloo_top_pgt_writes": 168,
+      "igloo_top_pgt_writes_unchanged": 160,
+      "static_gradient_pgt_cgt_writes": 0,
+      "all_five_buffers_identical": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      }
+    }
+  },
+  "evidence": {
+    "outputs/presentation/aurora-ac-research/ntsc-report-02.json": "94282255683eeff3405632507e9df11317ed69dac6060d1f43ebb89f67ad1619",
+    "outputs/presentation/aurora-ac-research/ntsc-profile-02/check.json": "03c47379622d8881c1ecd39d7a064e2945dffc8d31d30236f97b50baaee06d99",
+    "outputs/presentation/aurora-ac-research/ntsc-profile-02/ready-contract.json": "c5a8733ebccd36c7979b5d21ffbcac53a115368d85c2a33430ad18eed11834ab",
+    "outputs/presentation/aurora-ac-research/ntsc-profile-02/rows.tsv": "4961d2d3b9ea256d4d99278f2dd9ce208b26f4227eaed43411a90342685f6947",
+    "outputs/presentation/aurora-ac-research/ntsc-profile-02/io.tsv": "79db823f88869fe54df83fe5d875069a8630de73742116e45daf3dd68a9e2377",
+    "outputs/presentation/aurora-ac-research/ntsc-profile-02/calls.tsv": "0b3584af8664f1f5d23bf666e269530470d43ac49e283459e2400f75db89ab9c",
+    "outputs/presentation/aurora-ac-research/ntsc-profile-02/phases.tsv": "59a3c6d1ea28fd2f24821ca1cda2bd849d4826dbda40699466f769e529efb8af",
+    "outputs/presentation/aurora-ac-research/pal-report-02.json": "68094bb737c88086c18ade6df8fa2942d3aa486c61139a63ca55911b9ee92388",
+    "outputs/presentation/aurora-ac-research/pal-profile-02/check.json": "a2eb68e06254d78ab005401be22d26ccad3b94b3e3fc3d531aff544ae21103b7",
+    "outputs/presentation/aurora-ac-research/pal-profile-02/ready-contract.json": "8a8bb0508db0f74857624bef0729888e0acd5808ef8fe9771d7dbb8014529bf7",
+    "outputs/presentation/aurora-ac-research/pal-profile-02/rows.tsv": "6f4b2b6decd00d3a25888919625a099981bebc904a9adcd070b2dabed1c85b3a",
+    "outputs/presentation/aurora-ac-research/pal-profile-02/io.tsv": "954596f5c53abd73ebb8fa18e8f396a00fbd31f475df3f52e04b8050b4115d78",
+    "outputs/presentation/aurora-ac-research/pal-profile-02/calls.tsv": "72efc5f6909982cc54a27c0e4d6566c8ece6e64509ef5524d388e8b4939a62a0",
+    "outputs/presentation/aurora-ac-research/pal-profile-02/phases.tsv": "cdb53c71b1cec8a9f48a05e4fb43a8d05b9e0ef6f2482361f43d43132adeec1b"
+  },
+  "scope": "Exact unchanged-v0.0.16 automated emulator audit. No candidate, measured speed gain, new ROM or fluidity acceptance. Igloo unchanged-PGT counts are an optimization lead, not proof that its constructor can simply be skipped."
+}

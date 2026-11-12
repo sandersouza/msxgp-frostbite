@@ -1,3 +1,18 @@
+<!-- AC aurora cost audit, 2026-11-11 -->
+The owner's color-table proposal was checked against the exact v0.0.16 runtime.
+The band already uses preloaded patterns/colors and selects NAME IDs on row 3;
+there are zero static-background PGT/CGT writes during active preparation.
+Full-route passive NTSC/PAL runs reproduce all five natural buffers exactly.
+Aurora row preparation averages 502/546 cycles per active picture, only
+0.71%/0.72% of foreground, excluding shared setup and NAME IO. Igloo preparation
+averages 3909/4259 cycles per picture; 164/172 NTSC top-row PGT writes leave
+identical pattern bytes. This is a promising color-only igloo lead, not a speed
+claim or proof that its constructor can be skipped. Shared CGT entries cannot
+be recolored during preparation without protecting the active page.
+See `docs/aurora-cost-audit.md` and `references/aurora-cost-audit.json`.
+No runtime change, candidate ROM or new release from this audit. v0.0.16 remains
+the control. Status: **In review**; all original cadence/owner acceptance remains open.
+
 <!-- AB ready-picture delivery from v0.0.15, 2026-11-05 -->
 Published [v0.0.16](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.16-ready-presentation-diagnostic)
 from clean source `a9cf5ff3ea802b79a0e328e0a9de844e9749f8d3`, ROM SHA-256
