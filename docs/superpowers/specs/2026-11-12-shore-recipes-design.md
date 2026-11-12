@@ -22,8 +22,9 @@ programs; contact14lowerprefix/speculative reads must match. No ROM size change.
 Reuse now-unreachable original bank2 dirty-describe/compare/span BA91..BC52,
 after v22 redirects the entry to AJ. Protect captureBC53. A short mapper entry/
 data-copy bridge fits EFD1..F000 reserved padding. Bank2 body directly calls
-p_sprite_emit/cache_store, stages at dead C500. For right eligible0, defaultway0 is invalid before <=4uploads and cache_store
-remains unpublished; other ways/static patterns are untouched. Existing P0way/key
+p_sprite_emit/cache_store, stages at dead C500. The actual inherited L right-limit predicate controls eligibility/selected way;
+<=4uploads remain within that six-slot way and original cache_store controls
+publication. Other ways/static patterns are untouched. Existing P0way/key
 controls publication; <=4patterns fits6slots, metadata follows uploads. No new
 RAM/VRAM region, recoloring, skipped simulation or controls change.
 

@@ -1,3 +1,24 @@
+<!-- AK exact shore-edge P0 / autonomous continuation, 2026-11-12 -->
+v23 preserves v22graphics/pastels/mechanics/clock/controls/PSG. Prepared normal
+standingY27 shore-edge recipes cover576base+1656rightalias cases; otherstates
+retainoriginalpaths. Regular31.3564NTSC/29.5956PAL; bear27.0953/24.2955 (+4.45%/
+3.87%). BearNTSCmaxgap66.75→50.10ms; foregroundP95123816→85694 (−30.79%).
+All26regularlanding/endflags andYrun counts unchanged. Notstable/all-level30FPS;
+regularmaxgaps66.78/79.75ms remain, bearprefix620/122X/all8poses/guard630.
+Source295f3308d81bb58273ebde7f1ee8b91d675779b3; ROM
+b1a1d10077e778f833cfb4cab233740cf2d705bd5d40c397e5b9c8767f1cadd9.
+178parent sources/42sealedroots preserved,182closure;18reservedRAMbytes/310B
+retiredbank2body/7retiredROMtails; header116118/igloo119protected. Exactv22rollback.
+Rejected02coordinateoverflow fixed16bit; actualinheritedLgovernsP0eligibility/
+selectedway, no blanketright-ineligibleclaim.591host/2115source/2040density/
+54header/2115audio/18generic+14newIRQ/negative/CI/fourcleanpassive5bufferparitypass.
+Independent24294callsperROM, all160X/2pages/3ways/cache/priority/ABI,2115HALTpoison/
+57344contact pass. AKbook37preserves36historical786599cells/nativefeatures.
+See docs/shore-recipes-diagnostic.md, v23release and references/shore-recipes-*.json.
+SameIssue42chat/rootsolewriter/branch; PR43draftstacked41. Deliveryinreview;
+returnInprogressforautonomousremainingworld/header/iglooburstinvestigation.
+Noowner/mobile/manual-listening/physical/all-levelacceptance. Keep42/39/15/16open.
+
 <!-- AJ specialized dirty traversal / autonomous continuation, 2026-11-12 -->
 v22 preserves v21 graphics/mechanics/source clock/input/PSG while specializing
 state comparison/four-lane traversal. Regular31.2970NTSC (+2.83%) /29.4768PAL

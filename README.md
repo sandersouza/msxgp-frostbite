@@ -5,20 +5,21 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.22 dirty-traversal diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.22-dirty-traversal-diagnostic)
-reaches31.30NTSC/29.48PAL on the regular level0 route and25.94NTSC/23.39PAL
-on the measured level4 bear prefix. State comparison/four-lane traversal is
-faster with exact v21 graphics, colors, mechanics, controls and PSG.
-Regular NTSC maximum picture gap falls83.44→66.78ms.
-**Stable30FPS across gameplay remains open**, including brief landing omissions.
-No owner or physical acceptance is inferred from automated tests.
+The latest [v0.0.23 shore-edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.23-shore-recipes-diagnostic)
+reduces the measured NTSC bear window's longest picture gap66.75→50.10ms;
+foreground P95 falls30.79%. That window reaches27.10NTSC/24.30PAL pictures/s,
+while the regular level0 route reaches31.36NTSC/29.60PAL. Exact prepared player
+graphics avoid expensive shore-edge fallback with unchanged v22 colors,
+mechanics, controls and PSG. **Stable30FPS across gameplay remains open.**
+All26regular landing/end flags match v22; brief presentation omissions remain.
+No owner or physical acceptance is inferred from automation.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.22-dirty-traversal-diagnostic%2Ffrostbite-0.0.22-dirty-traversal-diagnostic.rom&ROM_FORMAT=ASCII16).
-Rollback: [unchanged v21 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/frostbite-0.0.21-native-bear-diagnostic.rom).
-Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.22-dirty-traversal-diagnostic.md)
-are attached. Read [architecture/limits](docs/dirty-native-diagnostic.md),
-[validation](references/dirty-native-result.json) and
-[verified downloads](references/dirty-native-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.23-shore-recipes-diagnostic%2Ffrostbite-0.0.23-shore-recipes-diagnostic.rom&ROM_FORMAT=ASCII16).
+Rollback: [unchanged v22 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/frostbite-0.0.22-dirty-traversal-diagnostic.rom).
+Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.23-shore-recipes-diagnostic.md)
+are attached. Read [architecture/limits](docs/shore-recipes-diagnostic.md),
+[validation](references/shore-recipes-result.json) and
+[verified downloads](references/shore-recipes-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.
