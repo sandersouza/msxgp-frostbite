@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "version": "v0.0.23-shore-recipes-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.23-shore-recipes-diagnostic",
+  "prerelease": true,
+  "source_commit": "295f3308d81bb58273ebde7f1ee8b91d675779b3",
+  "tag_resolved_commit": "295f3308d81bb58273ebde7f1ee8b91d675779b3",
+  "rom_sha256": "b1a1d10077e778f833cfb4cab233740cf2d705bd5d40c397e5b9c8767f1cadd9",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 19979,
+      "sha256": "304fb7a573a5cbb82b6ff714e923beba9d6b045ce6dbd6c39502edd308526810",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.23-shore-recipes-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "b1a1d10077e778f833cfb4cab233740cf2d705bd5d40c397e5b9c8767f1cadd9",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/frostbite-0.0.23-shore-recipes-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AK.xlsx",
+      "bytes": 4708493,
+      "sha256": "4c16d18eb2de3b6c81088addab4020221a274df01311b33d3f614e441b625837",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/Frostbite-performance-budget-AK.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 451,
+      "sha256": "e68e6b53901856f272e0fd4ff4bfe6d7349a92e938ec4ba74a17f961cfa378ec",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 797,
+      "sha256": "55827c81a0f06e836dee5691a77e18860a3eb512aaf7fb3d4e654f3a84e616e4",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 201114,
+      "sha256": "8e83b5b68c8e9b918666536e2d1aa1c938f6029c262472b52816044ca5b3e337",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.23-shore-recipes-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "f0c5de2879dbc609ee5f771b5450b2eef202f13ce0ed3c9a41976f5cbacac1e5",
+  "public_validation_sha256": "8e83b5b68c8e9b918666536e2d1aa1c938f6029c262472b52816044ca5b3e337",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43286914717,
+      "event": "pull_request",
+      "headSha": "295f3308d81bb58273ebde7f1ee8b91d675779b3",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43286896994,
+      "event": "push",
+      "headSha": "295f3308d81bb58273ebde7f1ee8b91d675779b3",
+      "status": "completed"
+    }
+  ],
+  "rollback_v22_assets_unchanged": true,
+  "parent_source_files_preserved": 178,
+  "prior_roots_preserved": 42,
+  "issue42_open": true,
+  "board": "In review",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.23-shore-recipes-diagnostic%2Ffrostbite-0.0.23-shore-recipes-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/shore-recipes-ak-research/webmsx-v23.png",
+    "screenshot_sha256": "83875624c9e54b22c65220cbee1e566e207d1c64d31cf21d656addd2cf93f358",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified; performance goal and owner/physical acceptance remain open. Autonomous remaining world/header/igloo long-frame investigation continues."
+}
