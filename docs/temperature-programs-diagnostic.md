@@ -64,7 +64,7 @@ Consecutive Y runs shown improve 252→254 NTSC and 233→234 PAL, out of 286.
 **PAL arc 4 loses its grounded and endpoint snapshot:** grounded 15→14/26,
 endpoint 24→23/26. Exact source trajectories, contacts and input remain equal;
 this is a presentation sampling regression, explicitly retained in this diagnostic.
-Landing age P95/max remain 2/3 source steps NTSC and 2/4 PAL. Human comparison
+Shown grounded-landing age P95/max remain 2/3 source steps NTSC and 2/4 PAL. Human comparison
 should check landings, especially PAL; rollback stays available.
 
 Bear scope is the unchanged 620-step prefix, active source 195..425, level 4,
@@ -83,7 +83,7 @@ An accidentally selected audio-negative flag deliberately inserted an extra
 write and was rejected; the separate positive audio run passes unchanged ROM.
 
 Independent 38,320 calls per ROM (76,640 total) cover all 256 pairs, both pages,
-32 upper fonts, eight low bits, six incoming banks, repeats, stable levels,
+32 upper fonts, all eight low-bit combinations, six incoming banks, repeats, stable levels,
 15 matching colors and nine guard/fallback classes. There are 21,552 body
 entries and 21,504 program copies. PGT/CGT/180 keys/owners/NAME, all other VRAM,
 source/P0/SP/IFF/slot/mapper guards pass; directed hardware IRQ tests also
