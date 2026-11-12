@@ -1,5 +1,24 @@
 # Issue #42 — native renderer implementation handoff
 
+## AM rejected row metadata — 2026-11-12
+
+<!-- AM rejected prepacked bear metadata — 2026-11-12 -->
+AM prototype rejected: foreground saves435NTSC/443PALcycles, but all4routecadences
+andall26landing/endflags unchanged. Exactv24publicROM4686...55c5be/runtime48be
+remainsbase; no newtestableversion/release. Privatecee4...0dfdf190dirtyclosure,
+4experimental sourcesarchived/hash-boundandremoved;186v24sources/52sealedroots
+unchanged. Initial132143allocationpoisonfails30sourceframes dueLIVEenemyoccupancy;
+correctedcompact192B132141poison2115GREEN.149P0/150partialcontact/151+treeprotected.
+597hostatcheckpoint/2115source/2115audio/fourpassive5bufferparity/independent15648
+actualcalls exact426outputs+registers+PGTCGT+72keys+NAME+oldpointer/SP/mapperpass.
+No prototype IRQ/density/header/CI/browser/owner/physicalacceptance or30FPSclaim.
+AMbook39preserves38tabs/790559cells/nativefeatures,zeroerrors/2mutations/5views.
+Independentreviewa921bffc6028131afdc12a079d9832b1a6277155b74aebdecdc0ab91f3ca6dbe.
+See docs/bear-rows-experiment.md and references/bear-rows-result.json.
+SameIssue42/rootwriter/branch, Inprogress; draftPR43stacked41. Nextread-only
+hybridbearstripfeasibility, no newvisualcompromise; stable30/alllevels stillopen.
+
+
 ## AL prepared temperature — 2026-11-12
 
 <!-- AL prepared temperature / autonomous continuation, 2026-11-12 -->
