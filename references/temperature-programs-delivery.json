@@ -1,0 +1,93 @@
+{
+  "complete": true,
+  "version": "v0.0.24-temperature-programs-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.24-temperature-programs-diagnostic",
+  "prerelease": true,
+  "source_commit": "48be6de16c8862580b8add5fd32937d802a7feb3",
+  "tag_resolved_commit": "48be6de16c8862580b8add5fd32937d802a7feb3",
+  "rom_sha256": "4686698ca7c19cf6db27a8393d70a15297fe982b0f9a68274964233f2355c5be",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 20503,
+      "sha256": "9ef89026170f45c2900debb1a708f46551a3196b2c355262c4f9160f89f082ac",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.24-temperature-programs-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "4686698ca7c19cf6db27a8393d70a15297fe982b0f9a68274964233f2355c5be",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/frostbite-0.0.24-temperature-programs-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AL.xlsx",
+      "bytes": 4719428,
+      "sha256": "1fbb62438402891a15eb46cd43500024a63588dea786c0e2f7e722acc7945707",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/Frostbite-performance-budget-AL.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 458,
+      "sha256": "808d06563d83c81266adb75b9096bc4027e0be40f06ed6f25ff0674ff3ad6cfa",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 894,
+      "sha256": "0a18d7b182a6bb77c74cdc932a90c64b9bd33ae2dde9b43db90e35f707497785",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 222853,
+      "sha256": "b8e5356e358a5341fc167143d470f5be8f06e08bafa286c02f89cd11d00cb087",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "01210f3d9f16c27f2206c86e34b73f51c4f0dc9adf24ae25b14981f3ce6c864b",
+  "documentation_commit": "62c9d2e16ff13b57e83c441abb6a96988973f988",
+  "public_validation_sha256": "b8e5356e358a5341fc167143d470f5be8f06e08bafa286c02f89cd11d00cb087",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43296960236,
+      "event": "pull_request",
+      "headSha": "48be6de16c8862580b8add5fd32937d802a7feb3",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43296771394,
+      "event": "push",
+      "headSha": "48be6de16c8862580b8add5fd32937d802a7feb3",
+      "status": "completed"
+    }
+  ],
+  "rollback_v23_assets_unchanged": true,
+  "parent_source_files_preserved": 182,
+  "prior_roots_preserved": 47,
+  "issue42_open": true,
+  "board": "In review",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.24-temperature-programs-diagnostic%2Ffrostbite-0.0.24-temperature-programs-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/header-bursts-al-research/webmsx-v24.png",
+    "screenshot_sha256": "a8891635f10a6ff18626f70abd4ea8f10fd353581cf3a73b45593b26de9c1521",
+    "launch_receipt_sha256": "7dd2b9ba595a9084f125d5141f59d49543fecd722bf8e01129aed9065341d382",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified. PAL landing sampling regression disclosed; performance goal and owner/physical acceptance remain open."
+}

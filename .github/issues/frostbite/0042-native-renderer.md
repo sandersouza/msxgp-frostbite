@@ -15,7 +15,7 @@ negativeAF2/2exactCI/fourcleanpassive5bufferparity pass. Independent76640nativec
 2115HALTpoison/49152contactfields; exactv23rollback. ALbook38tabs preserves37/
 788579cells/nativefeatures,zeroformulaerrors/2mutationrestore/5renderedregions;
 no nativeExcel. See docs/temperature-programs-diagnostic.md, v24release and
-references/temperature-programs-*.json. Inreview during delivery checks;
+references/temperature-programs-*.json. Verified v24 delivery; Inprogress for remaining work;
 PR43draftstacked41, sameIssue42chat/rootsolewriter. Keep42/39/15/16open.
 Noowner/mobile/manual-listening/physical/all-level acceptance. Nextremaining
 bearWORLDrowmetadata/uploads andplayer/preflight longframes towardstable30NTSC.
