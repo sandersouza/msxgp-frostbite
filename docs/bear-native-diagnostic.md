@@ -16,7 +16,7 @@ ROM SHA256: `635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15`.
 Nine certified background/clip/color contexts use prepared tiles. Other contexts
 retain the original per-cell constructor. Interior white-bear day/night rows
 can use bulk transfers after validating the original background fill invariant.
-All three row contexts are checked before writes. Logical-zero or fully clipped
+All dirty-row contexts are checked before writes. Logical-zero or fully clipped
 cells preserve the original skip behavior.
 
 Directory bank66, records67..78, tiles79..101, cell body102, strips103..111 and
@@ -36,8 +36,9 @@ to174. `scripts/build_bear_native.py --mode original` reproduces exact v20 ROM
 `c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac`.
 Backup tag: `codex/backup/42-before-bear-native-20261112`.
 32 predecessor evidence roots were reverified unchanged. Private A/B and two P0
-cache-layout variants are retained locally; the cache variants showed no useful
-whole-game gain and were reverted before qualifying C.
+cache-layout variants are retained locally. D was rejected without measurement
+because its three-slot ways cannot hold an existing four-sprite pose; measured E
+showed no useful whole-route gain. Both were reverted before qualifying C.
 
 ## Whole-route measurements
 

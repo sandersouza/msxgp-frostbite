@@ -24,19 +24,19 @@ close acceptance. v20c036c3...43ac exact rollback. No new sprites or P0 recolori
 
 ### Task1: Prepared native bear and ownership
 
-- [ ] Add failing tests for256byte prepared-record padding/IDs/context-index layouts and exact
+- [x] Add failing tests for256byte prepared-record padding/IDs/context-index layouts and exact
   uniform-row merge, source rawmask decoding, certified uniform/fallback boundary.
-- [ ] Add scripts/presentation_bear_native.py,scripts/build_bear_native.py,
+- [x] Add scripts/presentation_bear_native.py,scripts/build_bear_native.py,
   src/presentation_bear_native.asm,tests/test_presentation_bear_native.py only;
   audit kernel padding/copy count and transient scratch, exact original rollback.
-- [ ] Pass source/density/header directed pixels/owners/active-page guards.
+- [x] Pass source/density/header directed pixels/owners/active-page guards.
 
 ### Task2: Whole-game comparison and qualified delivery
 
-- [ ] Measure full regular NTSC/PAL plus live bear, phases/foreground/ISR/gaps/
+- [x] Measure full regular NTSC/PAL plus live bear, phases/foreground/ISR/gaps/
  26landings; reject regressions with no meaningful gain. Iterate toward30FPS.
-- [ ] Pass host/audio/realIRQ/negative/independent actualZ80/rebuild/contact/CI/
+- [x] Pass host/audio/realIRQ/negative/independent actualZ80/rebuild/contact/CI/
  clean-source replay checks. Preserve rejected/failed private evidence.
-- [ ] Update AIworkbook preserving all34historical tabs/native features, audit/preview.
-- [ ] Publish useful exact ROM/source/hash/human tests/WebMSX; verify downloads;
+- [x] Update AIworkbook preserving all34historical tabs/native features, audit/preview.
+- [x] Publish useful exact ROM/source/hash/human tests/WebMSX; verify downloads;
  sync issue/PR/handoff, retain rollback and honest limits; seal only new roots.
