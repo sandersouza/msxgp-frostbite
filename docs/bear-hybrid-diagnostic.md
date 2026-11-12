@@ -93,8 +93,8 @@ RAM, coherent pixels, ownership and inactive-page protection pass throughout.
 Independent native review covers5440 wrapper calls (4672 coherent-source cases
 and768 explicitly isolated coarse-override ABI cases),5436 rasters, all96
 records/all352 physical programs/80 masks, all8 dirty histories and36,436 valid
-keys.6274 additional admission calls compare with all32 exact scanlines, including
-span15/16/17, raw-Y wrap and capacity boundaries.03/05 wrapper outputs are byte
+keys, including capacity29/30 boundaries.6274 additional admission calls compare
+with all32 exact scanlines, including span15/16/17 and raw-Y wrap.03/05 outputs are byte
 identical. ABI cases are not natural gameplay or reachable-source acceptance.
 
 The40-tab AN workbook preserves39 historical tabs/native features, with complete
