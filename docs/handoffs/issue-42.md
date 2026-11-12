@@ -1,5 +1,28 @@
 # Issue #42 — native renderer implementation handoff
 
+## AJ specialized dirty traversal — 2026-11-12
+
+<!-- AJ specialized dirty traversal / autonomous continuation, 2026-11-12 -->
+v22 preserves v21 graphics/mechanics/source clock/input/PSG while specializing
+state comparison/four-lane traversal. Regular31.2970NTSC (+2.83%) /29.4768PAL
+(+4.42%); bear25.9404NTSC (+7.53%)/23.3900PAL (+2.27%). RegularNTSCmaxgap
+83.44→66.78ms, P9550.07 unchanged. Notstable/all-level30FPS; bearprefix620steps/
+122X/all8poses/guard630. Grounded20/26NTSC (−1),15/26PAL (+2); NTSC loses
+arc8grounded/end, gainsend6; PALgainsgrounded1/15,end24. Exactsourceclock stays.
+Source80b5a435a28f9009812a73aecfddaf679c690b49; ROM
+b0a3d2befe9c370bbec9ba9096df63143a5743949b1deeeeea63879fa843c1e2.
+174parent sources/37sealedroots unchanged,178closure.16reservedkernelbytes,
+no new RAM/VRAM. Exactv21rollback. Initialobsolete-span prototype rejected by
+rootdirty/pixelguard andindependentreview, correctedactualparenttablederivation.
+589host/2115source/2040density/54header/2115audio/fourcleanroutes/18generic+
+12newactualIRQ/negativeAF2/CI pass. Independent98450Z80cases perROM/8192contact.
+AJbook36tabs/35historical784619cells/nativefeatures preserved, no nativeExcel.
+See docs/dirty-native-diagnostic.md, releasev22 and references/dirty-native-*.json.
+SameIssue42chat/rootsolewriter/branch, Inprogress; PR43draftstacked41. No owner/
+manual/mobile/physical/all-levelacceptance. Continue measured bear/player/long
+framecosts without changingmechanics or desynchronizing pictures. Keep42/39/15/16open.
+
+
 ## AI native bear — 2026-11-12
 
 <!-- AI native bear / autonomous continuation, 2026-11-12 -->

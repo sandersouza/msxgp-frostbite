@@ -5,21 +5,20 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.21 native-bear diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.21-native-bear-diagnostic)
-raises the measured level4 bear window from15.05 to **24.12 complete pictures/s
-NTSC (+60.35%)**, and15.33 to22.87PAL (+49.15%). Exact prepared bear tiles and
-certified row transfers preserve v20 artwork, palette, mechanics, controls and
-PSG. The regular level0 route remains30.44NTSC and reaches28.23PAL.
-**Stable30FPS across gameplay is still open.** Long gaps and some missed-looking
-landings persist; no owner or physical acceptance is inferred.
+The latest [v0.0.22 dirty-traversal diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.22-dirty-traversal-diagnostic)
+reaches31.30NTSC/29.48PAL on the regular level0 route and25.94NTSC/23.39PAL
+on the measured level4 bear prefix. State comparison/four-lane traversal is
+faster with exact v21 graphics, colors, mechanics, controls and PSG.
+Regular NTSC maximum picture gap falls83.44→66.78ms.
+**Stable30FPS across gameplay remains open**, including brief landing omissions.
+No owner or physical acceptance is inferred from automated tests.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.21-native-bear-diagnostic%2Ffrostbite-0.0.21-native-bear-diagnostic.rom&ROM_FORMAT=ASCII16).
-Rollback: [unchanged v20 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/frostbite-0.0.20-ice-atlas-diagnostic.rom).
-The release includes exact ROM/source/hash, workbook and
-[human tests](docs/releases/v0.0.21-native-bear-diagnostic.md). Read
-[architecture/limits](docs/bear-native-diagnostic.md),
-[validation](references/bear-native-result.json) and
-[verified downloads](references/bear-native-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.22-dirty-traversal-diagnostic%2Ffrostbite-0.0.22-dirty-traversal-diagnostic.rom&ROM_FORMAT=ASCII16).
+Rollback: [unchanged v21 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/frostbite-0.0.21-native-bear-diagnostic.rom).
+Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.22-dirty-traversal-diagnostic.md)
+are attached. Read [architecture/limits](docs/dirty-native-diagnostic.md),
+[validation](references/dirty-native-result.json) and
+[verified downloads](references/dirty-native-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.
