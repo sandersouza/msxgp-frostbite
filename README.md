@@ -5,23 +5,21 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.20 immutable-ice diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.20-ice-atlas-diagnostic)
-reaches **30.44 complete pictures/s on the measured regular NTSC route**, versus
-28.92 in v19 (+5.23%). PAL rises26.21to28.05 (+7.03%). White ice uses immutable
-patterns/colors in unused existing VRAM; blue/other contexts retain the exact
-fallback. No artwork, palette, mechanics, input or audio changes from v19.
-**This is an average milestone, not stable30FPS across the game.** Long gaps and
-individual landing regressions persist; the separate level4 bear window remains
-about15FPS. Original fluidity/all-level/physical acceptance stays open.
+The latest [v0.0.21 native-bear diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.21-native-bear-diagnostic)
+raises the measured level4 bear window from15.05 to **24.12 complete pictures/s
+NTSC (+60.35%)**, and15.33 to22.87PAL (+49.15%). Exact prepared bear tiles and
+certified row transfers preserve v20 artwork, palette, mechanics, controls and
+PSG. The regular level0 route remains30.44NTSC and reaches28.23PAL.
+**Stable30FPS across gameplay is still open.** Long gaps and some missed-looking
+landings persist; no owner or physical acceptance is inferred.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.20-ice-atlas-diagnostic%2Ffrostbite-0.0.20-ice-atlas-diagnostic.rom&ROM_FORMAT=ASCII16).
-For rollback, reload the unchanged
-[v0.0.19 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/frostbite-0.0.19-border-diagnostic.rom).
-The release includes exact ROM/source/hash, updated workbook and
-[human tests](docs/releases/v0.0.20-ice-atlas-diagnostic.md). Read
-[architecture/limits](docs/ice-atlas-diagnostic.md),
-[validation](references/ice-atlas-result.json) and
-[verified downloads](references/ice-atlas-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.21-native-bear-diagnostic%2Ffrostbite-0.0.21-native-bear-diagnostic.rom&ROM_FORMAT=ASCII16).
+Rollback: [unchanged v20 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.20-ice-atlas-diagnostic/frostbite-0.0.20-ice-atlas-diagnostic.rom).
+The release includes exact ROM/source/hash, workbook and
+[human tests](docs/releases/v0.0.21-native-bear-diagnostic.md). Read
+[architecture/limits](docs/bear-native-diagnostic.md),
+[validation](references/bear-native-result.json) and
+[verified downloads](references/bear-native-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.

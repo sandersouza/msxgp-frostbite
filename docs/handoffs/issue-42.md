@@ -1,5 +1,32 @@
 # Issue #42 — native renderer implementation handoff
 
+## AI native bear — 2026-11-12
+
+<!-- AI native bear / autonomous continuation, 2026-11-12 -->
+v21 exact prepared bear tiles/certified rows preserve all v20 graphics/mechanics,
+clock/input/PSG. Live level4 bear window15.0453→24.1245NTSC (+60.35%),
+15.3333→22.8702PAL (+49.15%); whole foreground138852→81308NTSCcycles.
+RegularNTSC30.4355 unchanged, PAL28.2288. Not stable/all-level30FPS; regular
+maxgap83.44ms remains, grounded21/26NTSC (+1) /13/26PAL (−1), PAL loses
+groundedarc15/endpointarc24. Bear prefix620steps/122X/all8poses; guard630.
+Source851aa41466d7b9ea86c753a5228337c688d40a88; ROM
+635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15.
+170 parent sources/32 sealed roots unchanged;174 source closure.142bytes
+existing reserved kernel padding occupied; no new RAM region/VRAM allocation.
+Exactv20 rollback; rejected P0 cache-layout experiments remain private.
+
+586host;2115source/2040density/54header/2115ordered-audio, four clean routes,
+18generic+14new realIRQs/negativeAF2, exactsourceCI pass. Independent38144Z80
+calls perROM,385024contactfields. AI workbook35tabs preserves34historical/
+782639cells/native features; no nativeExcel. See docs/bear-native-diagnostic.md,
+v21 release and references/bear-native-*.json; direct WebMSX/human tests included.
+
+Status In progress, same Issue42chat/root sole writer/branch; PR43draftstacked41.
+No owner/manual-listening/mobile/physical/all-level acceptance. Continue next
+measured dirty-state/source/renderer overhead; no desynchronized player-only
+pictures. Keep42/39/15/16open. User away; routine work remains authorized.
+
+
 ## AH immutable ice — 2026-11-12
 
 <!-- AH immutable ice / autonomous continuation, 2026-11-12 -->

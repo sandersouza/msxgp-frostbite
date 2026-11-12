@@ -1,0 +1,4775 @@
+{
+  "complete": true,
+  "version": "v0.0.21-native-bear-diagnostic",
+  "source_commit": "851aa41466d7b9ea86c753a5228337c688d40a88",
+  "source_dirty": false,
+  "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "source_files_verified": 174,
+  "parent_source_files_preserved": 170,
+  "new_ram_allocation_bytes": 0,
+  "occupied_reserved_ram_code_bytes_added": 142,
+  "new_vram_bytes": 0,
+  "hardware_vram_bytes": 16384,
+  "bear_native": {
+    "parent_rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+    "descriptor_variants": 512,
+    "records": 96,
+    "logical_patterns": 470,
+    "final_tiles": 2860,
+    "bulk_strips": 210,
+    "contexts": [
+      [
+        0,
+        136,
+        0,
+        15
+      ],
+      [
+        1,
+        129,
+        0,
+        15
+      ],
+      [
+        0,
+        136,
+        0,
+        1
+      ],
+      [
+        1,
+        129,
+        0,
+        1
+      ],
+      [
+        0,
+        128,
+        0,
+        15
+      ],
+      [
+        1,
+        131,
+        0,
+        15
+      ],
+      [
+        0,
+        135,
+        1,
+        1
+      ],
+      [
+        1,
+        132,
+        0,
+        1
+      ],
+      [
+        0,
+        140,
+        1,
+        1
+      ]
+    ],
+    "directory_bank": 66,
+    "record_banks": [
+      67,
+      78
+    ],
+    "tile_banks": [
+      79,
+      101
+    ],
+    "body_bank": 102,
+    "reserved_ram_code_bytes_added": 142,
+    "new_ram_allocation_bytes": 0,
+    "new_vram_bytes": 0,
+    "scope": "Exact final16byte tiles for nine certified contexts, original per-cell fallback otherwise. Source state unchanged."
+  },
+  "families": {
+    "ntsc": {
+      "changes": {
+        "fps_percent": 3.3148585654174667e-06,
+        "grounded_landing_presented": {
+          "gained": [
+            3
+          ],
+          "lost": []
+        },
+        "endpoint_y_presented": {
+          "gained": [],
+          "lost": []
+        }
+      },
+      "runs": [
+        {
+          "label": "AH",
+          "rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+          "summary": {
+            "fps": 30.435482155528486,
+            "gaps": {
+              "count": 513,
+              "mean": 32.85638764945125,
+              "median": 33.37630900016553,
+              "p95": 50.06530159559475,
+              "maximum": 83.43965503995321
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 341,
+                "total": 390,
+                "fraction": 0.8743589743589744,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 10,
+                  "mean": 13.115384615384615,
+                  "median": 13.0,
+                  "p95": 15,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 206,
+                "total": 234,
+                "fraction": 0.8803418803418803,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.923076923076923,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 248,
+                "total": 286,
+                "fraction": 0.8671328671328671,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 7,
+                  "mean": 9.538461538461538,
+                  "median": 10.0,
+                  "p95": 11,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 212,
+                "total": 258,
+                "fraction": 0.8217054263565892,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 8.153846153846153,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 20,
+                "missed_jumps": 6,
+                "source_steps_after_landing_at_commit": {
+                  "count": 20,
+                  "minimum": 0,
+                  "mean": 1,
+                  "median": 1.0,
+                  "p95": 3,
+                  "maximum": 3
+                },
+                "latency_ms_lower": {
+                  "count": 20,
+                  "minimum": 10.641017224255478,
+                  "mean": 27.574929215864017,
+                  "median": 27.3967780821307,
+                  "p95": 60.735372791793196,
+                  "maximum": 61.56899829447582
+                },
+                "latency_ms_upper": {
+                  "count": 20,
+                  "minimum": 17.155252972095525,
+                  "mean": 33.8892792240356,
+                  "median": 33.89257573239135,
+                  "p95": 67.3166561671934,
+                  "maximum": 67.38118950872263
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 23,
+                "missed_jumps": 3,
+                "source_steps_after_landing_at_commit": {
+                  "count": 23,
+                  "minimum": 0,
+                  "mean": 1.2608695652173914,
+                  "median": 1,
+                  "p95": 3,
+                  "maximum": 3
+                },
+                "latency_ms_lower": {
+                  "count": 23,
+                  "minimum": 10.641017224255478,
+                  "mean": 31.976544019105585,
+                  "median": 27.469692377106725,
+                  "p95": 61.155258559397296,
+                  "maximum": 61.67459830788502
+                },
+                "latency_ms_upper": {
+                  "count": 23,
+                  "minimum": 17.155252972095525,
+                  "mean": 38.2422905704497,
+                  "median": 33.90877890905131,
+                  "p95": 67.28145616272485,
+                  "maximum": 67.38118950872263
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 1.5769230769230769,
+                "median": 1.0,
+                "p95": 3,
+                "maximum": 5
+              }
+            }
+          },
+          "foreground": {
+            "count": 517,
+            "mean": 56072.61315280464,
+            "p95": 106617,
+            "maximum": 160847
+          },
+          "stages": {
+            "description": {
+              "count": 517,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 517,
+              "mean": 11536.924564796906,
+              "p95": 21696,
+              "maximum": 58365
+            },
+            "dirty-state": {
+              "count": 517,
+              "mean": 9444.644100580272,
+              "p95": 10349,
+              "maximum": 10816
+            },
+            "release": {
+              "count": 517,
+              "mean": 2072.0483558994197,
+              "p95": 2163,
+              "maximum": 2205
+            },
+            "background": {
+              "count": 517,
+              "mean": 1991.2282398452612,
+              "p95": 5866,
+              "maximum": 7880
+            },
+            "world": {
+              "count": 517,
+              "mean": 16868.353965183753,
+              "p95": 34516,
+              "maximum": 40547
+            },
+            "header": {
+              "count": 517,
+              "mean": 5032.504835589942,
+              "p95": 33242,
+              "maximum": 47810
+            },
+            "footer": {
+              "count": 517,
+              "mean": 262.0464216634429,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 517,
+              "mean": 4792.862669245648,
+              "p95": 11436,
+              "maximum": 14068
+            }
+          },
+          "complete_isr": {
+            "count": 1008,
+            "mean": 21930.303571428572,
+            "p95": 24496,
+            "maximum": 27344
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 121,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.324903025384359,
+                "latency_ms_upper": 17.156649797669843
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 140,
+                "snapshot_step": 172,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.714490249458919,
+                "latency_ms_upper": 17.15581170232472
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 154,
+                "snapshot_step": 202,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 43.956703994502355,
+                "latency_ms_upper": 50.56396832558363
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 167,
+                "snapshot_step": 233,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.13207125486575,
+                "latency_ms_upper": 67.25268155589603
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 179,
+                "snapshot_step": 262,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.37470823805843,
+                "latency_ms_upper": 33.876093190615464
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 193,
+                "snapshot_step": 292,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.41884792620297,
+                "latency_ms_upper": 33.90877890905131
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 207,
+                "snapshot_step": 324,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.83719299519855,
+                "latency_ms_upper": 100.66027944892397
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 218,
+                "snapshot_step": 353,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.67459830788502,
+                "latency_ms_upper": 67.28145616272485
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 230,
+                "snapshot_step": 382,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.81135591255257,
+                "latency_ms_upper": 33.941185262373
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 422,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.880079730802976,
+                "latency_ms_upper": 33.84480429775216
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 440,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.657779131147294,
+                "latency_ms_upper": 17.155252972095525
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 459,
+                "snapshot_step": 740,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.641017224255478,
+                "latency_ms_upper": 17.155252972095525
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 474,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.155258559397296,
+                "latency_ms_upper": 67.25296092101019
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 488,
+                "snapshot_step": 800,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.469692377106725,
+                "latency_ms_upper": 33.87637255573139
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 503,
+                "snapshot_step": 830,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.824206707837362,
+                "latency_ms_upper": 33.94118526237477
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 516,
+                "snapshot_step": 862,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.773920987161915,
+                "latency_ms_upper": 33.90933763927961
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 530,
+                "snapshot_step": 893,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.47660247322105,
+                "latency_ms_upper": 50.59581594867524
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 722,
+                "snapshot_step": 1190,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.199747453936482,
+                "latency_ms_upper": 17.156091067441537
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1052,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.859965442534218,
+                "latency_ms_upper": 33.84396620240793
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1065,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.33671458243947,
+                "latency_ms_upper": 33.876651920845546
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1081,
+                "snapshot_step": 1642,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.339508233588106,
+                "latency_ms_upper": 33.90905827416546
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1094,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.257374889824604,
+                "latency_ms_upper": 33.90877890905131
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1108,
+                "snapshot_step": 1702,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.353197124217132,
+                "latency_ms_upper": 33.908499543937154
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1119,
+                "snapshot_step": 1732,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 60.735372791793196,
+                "latency_ms_upper": 67.3166561671934
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1130,
+                "snapshot_step": 1764,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.89083109725271,
+                "latency_ms_upper": 100.7248127904532
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1140,
+                "snapshot_step": 1793,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.56899829447582,
+                "latency_ms_upper": 67.38118950872263
+              }
+            }
+          ]
+        },
+        {
+          "label": "AI",
+          "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+          "summary": {
+            "fps": 30.435483164421676,
+            "gaps": {
+              "count": 513,
+              "mean": 32.8563865603085,
+              "median": 33.37630900016464,
+              "p95": 50.0655809607089,
+              "maximum": 83.44077250040982
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 342,
+                "total": 390,
+                "fraction": 0.8769230769230769,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 10,
+                  "mean": 13.153846153846153,
+                  "median": 13.0,
+                  "p95": 15,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 207,
+                "total": 234,
+                "fraction": 0.8846153846153846,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.961538461538462,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 249,
+                "total": 286,
+                "fraction": 0.8706293706293706,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 7,
+                  "mean": 9.576923076923077,
+                  "median": 10.0,
+                  "p95": 11,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 212,
+                "total": 258,
+                "fraction": 0.8217054263565892,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 8.153846153846153,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 21,
+                "missed_jumps": 5,
+                "source_steps_after_landing_at_commit": {
+                  "count": 21,
+                  "minimum": 0,
+                  "mean": 1,
+                  "median": 1,
+                  "p95": 3,
+                  "maximum": 3
+                },
+                "latency_ms_lower": {
+                  "count": 21,
+                  "minimum": 10.641296589369631,
+                  "mean": 27.562508110733997,
+                  "median": 27.374428872942502,
+                  "p95": 60.73649025225336,
+                  "maximum": 61.56816019913691
+                },
+                "latency_ms_upper": {
+                  "count": 21,
+                  "minimum": 17.155252972095525,
+                  "mean": 33.890167871162596,
+                  "median": 33.90822017881945,
+                  "p95": 67.31777362765357,
+                  "maximum": 67.38035141338372
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 23,
+                "missed_jumps": 3,
+                "source_steps_after_landing_at_commit": {
+                  "count": 23,
+                  "minimum": 0,
+                  "mean": 1.173913043478261,
+                  "median": 1,
+                  "p95": 3,
+                  "maximum": 3
+                },
+                "latency_ms_lower": {
+                  "count": 23,
+                  "minimum": 10.641296589369631,
+                  "mean": 30.506281858630462,
+                  "median": 27.419127291317125,
+                  "p95": 61.153582368708825,
+                  "maximum": 61.67823005437789
+                },
+                "latency_ms_upper": {
+                  "count": 23,
+                  "minimum": 17.155252972095525,
+                  "mean": 36.792604257998,
+                  "median": 33.90822017881945,
+                  "p95": 67.28508790921772,
+                  "maximum": 67.38035141338372
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 1.5,
+                "median": 1.0,
+                "p95": 3,
+                "maximum": 5
+              }
+            }
+          },
+          "foreground": {
+            "count": 517,
+            "mean": 56055.29593810445,
+            "p95": 106397,
+            "maximum": 161006
+          },
+          "stages": {
+            "description": {
+              "count": 517,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 517,
+              "mean": 11541.311411992263,
+              "p95": 21823,
+              "maximum": 58365
+            },
+            "dirty-state": {
+              "count": 517,
+              "mean": 9445.589941972921,
+              "p95": 10346,
+              "maximum": 10819
+            },
+            "release": {
+              "count": 517,
+              "mean": 2072.129593810445,
+              "p95": 2163,
+              "maximum": 2205
+            },
+            "background": {
+              "count": 517,
+              "mean": 1991.0967117988394,
+              "p95": 5866,
+              "maximum": 7883
+            },
+            "world": {
+              "count": 517,
+              "mean": 16843.628626692458,
+              "p95": 34462,
+              "maximum": 39552
+            },
+            "header": {
+              "count": 517,
+              "mean": 5031.31914893617,
+              "p95": 35040,
+              "maximum": 47746
+            },
+            "footer": {
+              "count": 517,
+              "mean": 262.1392649903288,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 517,
+              "mean": 4796.081237911025,
+              "p95": 11426,
+              "maximum": 14068
+            }
+          },
+          "complete_isr": {
+            "count": 1008,
+            "mean": 21930.41865079365,
+            "p95": 24496,
+            "maximum": 27344
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 122,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.324344295154276,
+                "latency_ms_upper": 17.15609106743976
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 141,
+                "snapshot_step": 172,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.714490249459807,
+                "latency_ms_upper": 17.155811702325607
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 155,
+                "snapshot_step": 202,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 43.957821454960744,
+                "latency_ms_upper": 50.56508578604202
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 167,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.31492410348224,
+                "latency_ms_upper": 33.90877890905131
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 180,
+                "snapshot_step": 262,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.374428872942502,
+                "latency_ms_upper": 33.875813825499534
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 194,
+                "snapshot_step": 292,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.419127291317125,
+                "latency_ms_upper": 33.90905827416546
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 208,
+                "snapshot_step": 324,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.83858982077287,
+                "latency_ms_upper": 100.66167627449829
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 219,
+                "snapshot_step": 353,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.67823005437789,
+                "latency_ms_upper": 67.28508790921772
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 231,
+                "snapshot_step": 382,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.81051781720656,
+                "latency_ms_upper": 33.940347167026985
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 423,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.87924163545874,
+                "latency_ms_upper": 33.84396620240793
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 441,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.657779131147294,
+                "latency_ms_upper": 17.155252972095525
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 460,
+                "snapshot_step": 740,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.641296589369631,
+                "latency_ms_upper": 17.155532337209678
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 475,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.153582368708825,
+                "latency_ms_upper": 67.25128473032171
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 489,
+                "snapshot_step": 800,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.469133646874866,
+                "latency_ms_upper": 33.875813825499534
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 504,
+                "snapshot_step": 830,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.824206707837362,
+                "latency_ms_upper": 33.94118526237477
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 517,
+                "snapshot_step": 862,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.773641622051315,
+                "latency_ms_upper": 33.90905827416901
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 531,
+                "snapshot_step": 893,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.47604374299274,
+                "latency_ms_upper": 50.59525721844693
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 723,
+                "snapshot_step": 1190,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.199747453936482,
+                "latency_ms_upper": 17.156091067441537
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1053,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.860803537876677,
+                "latency_ms_upper": 33.844804297750386
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1066,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.337273312667776,
+                "latency_ms_upper": 33.87721065107385
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1082,
+                "snapshot_step": 1642,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.338670138242094,
+                "latency_ms_upper": 33.90822017881945
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1095,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.256816159592745,
+                "latency_ms_upper": 33.90822017881945
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1109,
+                "snapshot_step": 1702,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.35375585444544,
+                "latency_ms_upper": 33.90905827416546
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1120,
+                "snapshot_step": 1732,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 60.73649025225336,
+                "latency_ms_upper": 67.31777362765357
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1131,
+                "snapshot_step": 1764,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.89222792282703,
+                "latency_ms_upper": 100.72620961602752
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1141,
+                "snapshot_step": 1793,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.56816019913691,
+                "latency_ms_upper": 67.38035141338372
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "pal": {
+      "changes": {
+        "fps_percent": 0.6355932203389703,
+        "grounded_landing_presented": {
+          "gained": [],
+          "lost": [
+            15
+          ]
+        },
+        "endpoint_y_presented": {
+          "gained": [],
+          "lost": [
+            24
+          ]
+        }
+      },
+      "runs": [
+        {
+          "label": "AH",
+          "rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+          "summary": {
+            "fps": 28.05050429870147,
+            "gaps": {
+              "count": 472,
+              "mean": 35.64998295044173,
+              "median": 39.87294474577041,
+              "p95": 59.810115531441,
+              "maximum": 79.74672758688683
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 318,
+                "total": 390,
+                "fraction": 0.8153846153846154,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 9,
+                  "mean": 12.23076923076923,
+                  "median": 12.0,
+                  "p95": 14,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 194,
+                "total": 234,
+                "fraction": 0.8290598290598291,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.461538461538462,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 229,
+                "total": 286,
+                "fraction": 0.8006993006993007,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 7,
+                  "mean": 8.807692307692308,
+                  "median": 9.0,
+                  "p95": 11,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 207,
+                "total": 258,
+                "fraction": 0.8023255813953488,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 7.961538461538462,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 14,
+                "missed_jumps": 12,
+                "source_steps_after_landing_at_commit": {
+                  "count": 14,
+                  "minimum": 0,
+                  "mean": 1.0714285714285714,
+                  "median": 1.0,
+                  "p95": 2,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 14,
+                  "minimum": 9.447569453659987,
+                  "mean": 30.595169417979825,
+                  "median": 33.8575154104781,
+                  "p95": 54.76087044582201,
+                  "maximum": 69.12275163463022
+                },
+                "latency_ms_upper": {
+                  "count": 14,
+                  "minimum": 20.403431162340446,
+                  "mean": 37.545494110084945,
+                  "median": 40.388932112880305,
+                  "p95": 60.372198142498945,
+                  "maximum": 80.37529909527308
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 24,
+                "missed_jumps": 2,
+                "source_steps_after_landing_at_commit": {
+                  "count": 24,
+                  "minimum": 0,
+                  "mean": 1.8333333333333333,
+                  "median": 2.0,
+                  "p95": 4,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 24,
+                  "minimum": 9.447569453659987,
+                  "mean": 43.041375835941516,
+                  "median": 40.93844329377028,
+                  "p95": 74.14880941572122,
+                  "maximum": 74.43236500728467
+                },
+                "latency_ms_upper": {
+                  "count": 24,
+                  "minimum": 20.403431162340446,
+                  "mean": 50.35758734699521,
+                  "median": 50.34075559882645,
+                  "p95": 80.34233401172486,
+                  "maximum": 80.37529909527308
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 1.8076923076923077,
+                "median": 2.0,
+                "p95": 4,
+                "maximum": 4
+              }
+            }
+          },
+          "foreground": {
+            "count": 476,
+            "mean": 58331.794117647056,
+            "p95": 106176,
+            "maximum": 137052
+          },
+          "stages": {
+            "description": {
+              "count": 476,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 476,
+              "mean": 11783.95588235294,
+              "p95": 22648,
+              "maximum": 58365
+            },
+            "dirty-state": {
+              "count": 476,
+              "mean": 9494.63655462185,
+              "p95": 10349,
+              "maximum": 10819
+            },
+            "release": {
+              "count": 476,
+              "mean": 2076.214285714286,
+              "p95": 2163,
+              "maximum": 2199
+            },
+            "background": {
+              "count": 476,
+              "mean": 2134.905462184874,
+              "p95": 5869,
+              "maximum": 7859
+            },
+            "world": {
+              "count": 476,
+              "mean": 17938.287815126052,
+              "p95": 34516,
+              "maximum": 39550
+            },
+            "header": {
+              "count": 476,
+              "mean": 5399.453781512605,
+              "p95": 32349,
+              "maximum": 42853
+            },
+            "footer": {
+              "count": 476,
+              "mean": 262.20168067226894,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 476,
+              "mean": 5170.138655462185,
+              "p95": 11426,
+              "maximum": 14522
+            }
+          },
+          "complete_isr": {
+            "count": 843,
+            "mean": 25964.0521945433,
+            "p95": 44152,
+            "maximum": 49334
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 103,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.447569453659987,
+                "latency_ms_upper": 20.403431162340446
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 120,
+                "snapshot_step": 173,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 48.471523615432055,
+                "latency_ms_upper": 60.24313145944582
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 134,
+                "snapshot_step": 203,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 47.55101556203378,
+                "latency_ms_upper": 60.30962035677767
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 147,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.810721753742,
+                "latency_ms_upper": 40.40457655931107
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 159,
+                "snapshot_step": 262,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.9043090672142,
+                "latency_ms_upper": 40.37328766644954
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 172,
+                "snapshot_step": 293,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.3264576922482,
+                "latency_ms_upper": 60.34314417055775
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 184,
+                "snapshot_step": 323,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.43236500728467,
+                "latency_ms_upper": 80.2554514610101
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 195,
+                "snapshot_step": 352,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.32587102550677,
+                "latency_ms_upper": 40.438379738207075
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 207,
+                "snapshot_step": 382,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.30827102327072,
+                "latency_ms_upper": 40.438100373091146
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 394,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 14.439265325620454,
+                "latency_ms_upper": 20.40398989256964
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 409,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.906795416735562,
+                "latency_ms_upper": 20.404269257683794
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 425,
+                "snapshot_step": 741,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.139841795537436,
+                "latency_ms_upper": 60.2456457454803
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 439,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.21275609050724,
+                "latency_ms_upper": 60.31045845212191
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 454,
+                "snapshot_step": 800,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.965490027366485,
+                "latency_ms_upper": 40.372170205991154
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 470,
+                "snapshot_step": 831,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.76087044582201,
+                "latency_ms_upper": 60.372198142498945
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 482,
+                "snapshot_step": 862,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.270277367653534,
+                "latency_ms_upper": 40.40569401977123
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 494,
+                "snapshot_step": 893,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.22253386953102,
+                "latency_ms_upper": 60.34174734498521
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 683,
+                "snapshot_step": 1191,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.455950407105007,
+                "latency_ms_upper": 20.40510735302803
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 975,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 14.420268497811861,
+                "latency_ms_upper": 20.40426925768557
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 989,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.895900177253395,
+                "latency_ms_upper": 20.435837515659472
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1004,
+                "snapshot_step": 1643,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.14880941572122,
+                "latency_ms_upper": 80.24511495176156
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1015,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.754010635430376,
+                "latency_ms_upper": 40.40541465465708
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1027,
+                "snapshot_step": 1703,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.22421006021594,
+                "latency_ms_upper": 60.30626797539895
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1038,
+                "snapshot_step": 1733,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.2991078475086,
+                "latency_ms_upper": 80.34233401172486
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1048,
+                "snapshot_step": 1763,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 68.85456112438959,
+                "latency_ms_upper": 80.34401020241688
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1059,
+                "snapshot_step": 1794,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 69.12275163463022,
+                "latency_ms_upper": 80.37529909527308
+              }
+            }
+          ]
+        },
+        {
+          "label": "AI",
+          "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+          "summary": {
+            "fps": 28.228791402294906,
+            "gaps": {
+              "count": 475,
+              "mean": 35.42482516338632,
+              "median": 39.87266538065626,
+              "p95": 59.81011553144455,
+              "maximum": 79.74700695200454
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 319,
+                "total": 390,
+                "fraction": 0.8179487179487179,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 9,
+                  "mean": 12.26923076923077,
+                  "median": 12.0,
+                  "p95": 14,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 193,
+                "total": 234,
+                "fraction": 0.8247863247863247,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.423076923076923,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 229,
+                "total": 286,
+                "fraction": 0.8006993006993007,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 7,
+                  "mean": 8.807692307692308,
+                  "median": 9.0,
+                  "p95": 11,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 206,
+                "total": 258,
+                "fraction": 0.7984496124031008,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 7.923076923076923,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 13,
+                "missed_jumps": 13,
+                "source_steps_after_landing_at_commit": {
+                  "count": 13,
+                  "minimum": 0,
+                  "mean": 1.0769230769230769,
+                  "median": 1,
+                  "p95": 2,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 13,
+                  "minimum": 9.448686914119264,
+                  "mean": 30.3129845574489,
+                  "median": 33.811280483972084,
+                  "p95": 54.76338473186004,
+                  "maximum": 69.12191353929131
+                },
+                "latency_ms_upper": {
+                  "count": 13,
+                  "minimum": 20.40426925768557,
+                  "mean": 37.32599448339921,
+                  "median": 40.37328766645132,
+                  "p95": 60.37471242853698,
+                  "maximum": 80.37446099993417
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 23,
+                "missed_jumps": 3,
+                "source_steps_after_landing_at_commit": {
+                  "count": 23,
+                  "minimum": 0,
+                  "mean": 1.826086956521739,
+                  "median": 2,
+                  "p95": 4,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 23,
+                  "minimum": 9.448686914119264,
+                  "mean": 42.80886561548074,
+                  "median": 47.5504568318037,
+                  "p95": 74.14936814595308,
+                  "maximum": 74.45583167693037
+                },
+                "latency_ms_upper": {
+                  "count": 23,
+                  "minimum": 20.40426925768557,
+                  "mean": 49.921647195019915,
+                  "median": 60.2417346338715,
+                  "p95": 80.2789181306558,
+                  "maximum": 80.37446099993417
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 1.8846153846153846,
+                "median": 2.0,
+                "p95": 4,
+                "maximum": 4
+              }
+            }
+          },
+          "foreground": {
+            "count": 479,
+            "mean": 57911.42171189979,
+            "p95": 106397,
+            "maximum": 137171
+          },
+          "stages": {
+            "description": {
+              "count": 479,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 479,
+              "mean": 11680.36534446764,
+              "p95": 22729,
+              "maximum": 58365
+            },
+            "dirty-state": {
+              "count": 479,
+              "mean": 9487.67223382046,
+              "p95": 10349,
+              "maximum": 10816
+            },
+            "release": {
+              "count": 479,
+              "mean": 2075.5678496868477,
+              "p95": 2163,
+              "maximum": 2205
+            },
+            "background": {
+              "count": 479,
+              "mean": 2110.3799582463466,
+              "p95": 5866,
+              "maximum": 7859
+            },
+            "world": {
+              "count": 479,
+              "mean": 17736.052192066807,
+              "p95": 34462,
+              "maximum": 39514
+            },
+            "header": {
+              "count": 479,
+              "mean": 5363.269311064718,
+              "p95": 32349,
+              "maximum": 42829
+            },
+            "footer": {
+              "count": 479,
+              "mean": 262.10020876826724,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 479,
+              "mean": 5124.014613778706,
+              "p95": 11426,
+              "maximum": 14536
+            }
+          },
+          "complete_isr": {
+            "count": 843,
+            "mean": 25968.979833926453,
+            "p95": 44152,
+            "maximum": 49334
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 104,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.448686914119264,
+                "latency_ms_upper": 20.404548622799723
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 121,
+                "snapshot_step": 173,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 48.472641075890444,
+                "latency_ms_upper": 60.24424891990421
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 135,
+                "snapshot_step": 203,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 47.5504568318037,
+                "latency_ms_upper": 60.30906162654759
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 148,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.811280483972084,
+                "latency_ms_upper": 40.40513528954115
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 160,
+                "snapshot_step": 262,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.90402970209916,
+                "latency_ms_upper": 40.3730083013345
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 173,
+                "snapshot_step": 293,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.325898962018115,
+                "latency_ms_upper": 60.34258544032767
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 185,
+                "snapshot_step": 323,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.45583167693037,
+                "latency_ms_upper": 80.2789181306558
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 196,
+                "snapshot_step": 352,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.32531229527669,
+                "latency_ms_upper": 40.43782100797699
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 208,
+                "snapshot_step": 382,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.308271023272496,
+                "latency_ms_upper": 40.43810037309292
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 395,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 14.44010342096469,
+                "latency_ms_upper": 20.404827987913876
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 410,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.906795416737339,
+                "latency_ms_upper": 20.40426925768557
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 426,
+                "snapshot_step": 741,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.135930683928635,
+                "latency_ms_upper": 60.2417346338715
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 439,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.20800688355598,
+                "latency_ms_upper": 60.30570924517065
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 454,
+                "snapshot_step": 800,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.96660748782665,
+                "latency_ms_upper": 40.37328766645132
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 470,
+                "snapshot_step": 831,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.76338473186004,
+                "latency_ms_upper": 60.37471242853698
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 482,
+                "snapshot_step": 863,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.71114345538197,
+                "latency_ms_upper": 60.340909249639196
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 494,
+                "snapshot_step": 893,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.223092599759326,
+                "latency_ms_upper": 60.342306075213514
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 685,
+                "snapshot_step": 1191,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.454553581534242,
+                "latency_ms_upper": 20.403710527457264
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 979,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 14.420547862926014,
+                "latency_ms_upper": 20.404548622799723
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 993,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.897576367945419,
+                "latency_ms_upper": 20.437513706351496
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1008,
+                "snapshot_step": 1643,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.14936814595308,
+                "latency_ms_upper": 80.24567368199342
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1019,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.75429000054453,
+                "latency_ms_upper": 40.40569401977123
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1031,
+                "snapshot_step": 1703,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.22812117182474,
+                "latency_ms_upper": 60.310179087007754
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1042,
+                "snapshot_step": 1733,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.29771102193428,
+                "latency_ms_upper": 80.34093718615054
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1052,
+                "snapshot_step": 1764,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 88.78977635426111,
+                "latency_ms_upper": 100.2792254322884
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1063,
+                "snapshot_step": 1794,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 69.12191353929131,
+                "latency_ms_upper": 80.37446099993417
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "bear_families": {
+    "ntsc": {
+      "runs": [
+        {
+          "label": "AH",
+          "folder": "outputs/presentation/ice-atlas-ah-research/bear-ntsc-a",
+          "fps": 15.045285442024483,
+          "gaps": {
+            "count": 58,
+            "mean": 66.46600384242632,
+            "median": 66.75289736544698,
+            "p95": 83.440493135301,
+            "maximum": 83.47373758396692
+          },
+          "profile": {
+            "complete": true,
+            "label": "AH",
+            "family": "ntsc",
+            "rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+            "groups": {
+              "all": {
+                "pictures": 328,
+                "foreground": {
+                  "count": 328,
+                  "mean": 58505.60365853659,
+                  "p95": 147937,
+                  "maximum": 311505
+                },
+                "phases": {
+                  "description": {
+                    "count": 328,
+                    "mean": 4066.9024390243903,
+                    "p95": 4072,
+                    "maximum": 4072
+                  },
+                  "sprites-preflight": {
+                    "count": 328,
+                    "mean": 16056.942073170732,
+                    "p95": 33110,
+                    "maximum": 75623
+                  },
+                  "dirty-state": {
+                    "count": 328,
+                    "mean": 8911.146341463415,
+                    "p95": 10130,
+                    "maximum": 10556
+                  },
+                  "release": {
+                    "count": 328,
+                    "mean": 2052.621951219512,
+                    "p95": 2163,
+                    "maximum": 2451
+                  },
+                  "background": {
+                    "count": 328,
+                    "mean": 1643.6432926829268,
+                    "p95": 5869,
+                    "maximum": 21786
+                  },
+                  "world": {
+                    "count": 328,
+                    "mean": 21123.204268292684,
+                    "p95": 96253,
+                    "maximum": 119662
+                  },
+                  "header": {
+                    "count": 328,
+                    "mean": 1331.75,
+                    "p95": 817,
+                    "maximum": 76149
+                  },
+                  "footer": {
+                    "count": 328,
+                    "mean": 475.9786585365854,
+                    "p95": 265,
+                    "maximum": 27431
+                  },
+                  "upload": {
+                    "count": 328,
+                    "mean": 2843.4146341463415,
+                    "p95": 11928,
+                    "maximum": 27374
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": {
+                      "count": 157,
+                      "mean": 30749.261146496814,
+                      "p95": 86308,
+                      "maximum": 93011
+                    },
+                    "cycles_per_picture": 14718.396341463415
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 381,
+                      "mean": 539.6036745406824,
+                      "p95": 875,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 626.795731707317
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 375,
+                      "mean": 264.37333333333333,
+                      "p95": 264,
+                      "maximum": 288
+                    },
+                    "cycles_per_picture": 302.2560975609756
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 328,
+                      "mean": 2821.4146341463415,
+                      "p95": 11906,
+                      "maximum": 27352
+                    },
+                    "cycles_per_picture": 2821.4146341463415
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 628,
+                      "mean": 1012.8184713375796,
+                      "p95": 2936,
+                      "maximum": 5730
+                    },
+                    "cycles_per_picture": 1939.1768292682927
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 381,
+                      "mean": 1160.5590551181103,
+                      "p95": 2483,
+                      "maximum": 4205
+                    },
+                    "cycles_per_picture": 1348.0884146341464
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 14,
+                      "mean": 892.1428571428571,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 38.079268292682926
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 628,
+                      "mean": 778.1019108280254,
+                      "p95": 1718,
+                      "maximum": 9205
+                    },
+                    "cycles_per_picture": 1489.780487804878
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": {
+                      "count": 63,
+                      "mean": 2322.5714285714284,
+                      "p95": 2354,
+                      "maximum": 2354
+                    },
+                    "cycles_per_picture": 446.1036585365854
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": {
+                      "count": 584,
+                      "mean": 1410.9041095890411,
+                      "p95": 1410,
+                      "maximum": 1434
+                    },
+                    "cycles_per_picture": 2512.0975609756097
+                  },
+                  "pt_mono": {
+                    "cpu": {
+                      "count": 584,
+                      "mean": 4293.023972602739,
+                      "p95": 5074,
+                      "maximum": 5074
+                    },
+                    "cycles_per_picture": 7643.676829268293
+                  },
+                  "pt_merge": {
+                    "cpu": {
+                      "count": 584,
+                      "mean": 1601.3801369863013,
+                      "p95": 2360,
+                      "maximum": 2384
+                    },
+                    "cycles_per_picture": 2851.237804878049
+                  },
+                  "pt_background": {
+                    "cpu": {
+                      "count": 584,
+                      "mean": 806.4520547945206,
+                      "p95": 806,
+                      "maximum": 830
+                    },
+                    "cycles_per_picture": 1435.878048780488
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": {
+                      "count": 738,
+                      "mean": 5451.273712737127,
+                      "p95": 7609,
+                      "maximum": 7681
+                    },
+                    "cycles_per_picture": 12265.365853658537
+                  }
+                }
+              },
+              "active": {
+                "pictures": 59,
+                "foreground": {
+                  "count": 59,
+                  "mean": 138851.59322033898,
+                  "p95": 181711,
+                  "maximum": 191390
+                },
+                "phases": {
+                  "description": {
+                    "count": 59,
+                    "mean": 4064,
+                    "p95": 4064,
+                    "maximum": 4064
+                  },
+                  "sprites-preflight": {
+                    "count": 59,
+                    "mean": 15640.542372881357,
+                    "p95": 67836,
+                    "maximum": 75623
+                  },
+                  "dirty-state": {
+                    "count": 59,
+                    "mean": 9717.915254237289,
+                    "p95": 10362,
+                    "maximum": 10556
+                  },
+                  "release": {
+                    "count": 59,
+                    "mean": 2143.3728813559323,
+                    "p95": 2199,
+                    "maximum": 2217
+                  },
+                  "background": {
+                    "count": 59,
+                    "mean": 5521.677966101695,
+                    "p95": 7823,
+                    "maximum": 8854
+                  },
+                  "world": {
+                    "count": 59,
+                    "mean": 89524.66101694915,
+                    "p95": 108305,
+                    "maximum": 116432
+                  },
+                  "header": {
+                    "count": 59,
+                    "mean": 1935.7966101694915,
+                    "p95": 18844,
+                    "maximum": 19026
+                  },
+                  "footer": {
+                    "count": 59,
+                    "mean": 262,
+                    "p95": 262,
+                    "maximum": 262
+                  },
+                  "upload": {
+                    "count": 59,
+                    "mean": 10041.627118644068,
+                    "p95": 14054,
+                    "maximum": 15107
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": {
+                      "count": 58,
+                      "mean": 75402.12068965517,
+                      "p95": 92634,
+                      "maximum": 93011
+                    },
+                    "cycles_per_picture": 74124.1186440678
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 99,
+                      "mean": 854.6565656565657,
+                      "p95": 921,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 1434.084745762712
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 93,
+                      "mean": 265.505376344086,
+                      "p95": 274,
+                      "maximum": 288
+                    },
+                    "cycles_per_picture": 418.50847457627117
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 59,
+                      "mean": 10019.627118644068,
+                      "p95": 14032,
+                      "maximum": 15085
+                    },
+                    "cycles_per_picture": 10019.627118644068
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 232,
+                      "mean": 1103.4008620689656,
+                      "p95": 4631,
+                      "maximum": 5730
+                    },
+                    "cycles_per_picture": 4338.796610169492
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 99,
+                      "mean": 1989.6363636363637,
+                      "p95": 4181,
+                      "maximum": 4205
+                    },
+                    "cycles_per_picture": 3338.5423728813557
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 14,
+                      "mean": 892.1428571428571,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 211.6949152542373
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 232,
+                      "mean": 1315.9655172413793,
+                      "p95": 1718,
+                      "maximum": 1742
+                    },
+                    "cycles_per_picture": 5174.64406779661
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": {
+                      "count": 58,
+                      "mean": 2321.9310344827586,
+                      "p95": 2354,
+                      "maximum": 2354
+                    },
+                    "cycles_per_picture": 2282.576271186441
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": {
+                      "count": 536,
+                      "mean": 1410.9850746268658,
+                      "p95": 1410,
+                      "maximum": 1434
+                    },
+                    "cycles_per_picture": 12818.440677966102
+                  },
+                  "pt_mono": {
+                    "cpu": {
+                      "count": 536,
+                      "mean": 4295.1567164179105,
+                      "p95": 5074,
+                      "maximum": 5074
+                    },
+                    "cycles_per_picture": 39020.40677966102
+                  },
+                  "pt_merge": {
+                    "cpu": {
+                      "count": 536,
+                      "mean": 1603.410447761194,
+                      "p95": 2360,
+                      "maximum": 2384
+                    },
+                    "cycles_per_picture": 14566.57627118644
+                  },
+                  "pt_background": {
+                    "cpu": {
+                      "count": 536,
+                      "mean": 806.4925373134329,
+                      "p95": 806,
+                      "maximum": 830
+                    },
+                    "cycles_per_picture": 7326.779661016949
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": {
+                      "count": 678,
+                      "mean": 5450.194690265486,
+                      "p95": 7609,
+                      "maximum": 7612
+                    },
+                    "cycles_per_picture": 62631.05084745763
+                  }
+                }
+              }
+            },
+            "all_five_buffers_identical": {
+              "route-cpu.bin": true,
+              "captures.bin": true,
+              "owners.bin": true,
+              "irq.tsv": true,
+              "pictures.tsv": true
+            },
+            "protected_inputs_unchanged": true,
+            "active_sprite_decisions": 0,
+            "active_decisions": 0,
+            "producer_sha256": "4c9f25ebe6f5461216f67ba1fe9c3ffd335b164bdc3f11cef9668fb8ee7d32ef",
+            "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+          }
+        },
+        {
+          "label": "AI",
+          "folder": "outputs/presentation/bear-native-ai-research/bear-ntsc-c",
+          "fps": 24.12453979891922,
+          "gaps": {
+            "count": 93,
+            "mean": 41.45156791943447,
+            "median": 33.40871535348633,
+            "p95": 50.096869853570425,
+            "maximum": 66.75289736544698
+          },
+          "profile": {
+            "complete": true,
+            "label": "AIC",
+            "family": "ntsc",
+            "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+            "groups": {
+              "all": {
+                "pictures": 369,
+                "foreground": {
+                  "count": 369,
+                  "mean": 50304.92140921409,
+                  "p95": 89018,
+                  "maximum": 255174
+                },
+                "phases": {
+                  "description": {
+                    "count": 369,
+                    "mean": 4066.60162601626,
+                    "p95": 4072,
+                    "maximum": 4072
+                  },
+                  "sprites-preflight": {
+                    "count": 369,
+                    "mean": 15645.081300813008,
+                    "p95": 33110,
+                    "maximum": 75833
+                  },
+                  "dirty-state": {
+                    "count": 369,
+                    "mean": 8956.631436314363,
+                    "p95": 10130,
+                    "maximum": 10556
+                  },
+                  "release": {
+                    "count": 369,
+                    "mean": 2056.9024390243903,
+                    "p95": 2163,
+                    "maximum": 2451
+                  },
+                  "background": {
+                    "count": 369,
+                    "mean": 1885.9105691056911,
+                    "p95": 5869,
+                    "maximum": 21786
+                  },
+                  "world": {
+                    "count": 369,
+                    "mean": 12700.731707317073,
+                    "p95": 38802,
+                    "maximum": 63331
+                  },
+                  "header": {
+                    "count": 369,
+                    "mean": 1198.7127371273714,
+                    "p95": 817,
+                    "maximum": 76149
+                  },
+                  "footer": {
+                    "count": 369,
+                    "mean": 452.2113821138211,
+                    "p95": 265,
+                    "maximum": 27431
+                  },
+                  "upload": {
+                    "count": 369,
+                    "mean": 3342.1382113821137,
+                    "p95": 11942,
+                    "maximum": 27374
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 442,
+                      "mean": 575.1764705882352,
+                      "p95": 875,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 688.9647696476965
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 436,
+                      "mean": 264.4426605504587,
+                      "p95": 264,
+                      "maximum": 283
+                    },
+                    "cycles_per_picture": 312.4579945799458
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 369,
+                      "mean": 3320.1382113821137,
+                      "p95": 11920,
+                      "maximum": 27352
+                    },
+                    "cycles_per_picture": 3320.1382113821137
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 776,
+                      "mean": 975.9536082474227,
+                      "p95": 2939,
+                      "maximum": 5706
+                    },
+                    "cycles_per_picture": 2052.411924119241
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 442,
+                      "mean": 1200.9796380090497,
+                      "p95": 2483,
+                      "maximum": 4181
+                    },
+                    "cycles_per_picture": 1438.5718157181573
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 19,
+                      "mean": 892.2631578947369,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 45.94308943089431
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 776,
+                      "mean": 864.8969072164948,
+                      "p95": 1718,
+                      "maximum": 9205
+                    },
+                    "cycles_per_picture": 1818.861788617886
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_mono": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_merge": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_background": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ai_entry": {
+                    "cpu": {
+                      "count": 194,
+                      "mean": 10618.577319587628,
+                      "p95": 20645,
+                      "maximum": 20801
+                    },
+                    "cycles_per_picture": 5582.666666666667
+                  },
+                  "ai_tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ai_copy": {
+                    "cpu": {
+                      "count": 196,
+                      "mean": 167.5,
+                      "p95": 179,
+                      "maximum": 179
+                    },
+                    "cycles_per_picture": 88.97018970189701
+                  },
+                  "ai_bulk": {
+                    "cpu": {
+                      "count": 98,
+                      "mean": 18493.673469387755,
+                      "p95": 18915,
+                      "maximum": 18921
+                    },
+                    "cycles_per_picture": 4911.59891598916
+                  },
+                  "ai_bulk_upload": {
+                    "cpu": {
+                      "count": 294,
+                      "mean": 2448.8571428571427,
+                      "p95": 2470,
+                      "maximum": 2470
+                    },
+                    "cycles_per_picture": 1951.121951219512
+                  },
+                  "ai_bulk_ids": {
+                    "cpu": {
+                      "count": 98,
+                      "mean": 1798.204081632653,
+                      "p95": 1820,
+                      "maximum": 1820
+                    },
+                    "cycles_per_picture": 477.57181571815715
+                  },
+                  "presentation_sprites_prepare": {
+                    "cpu": {
+                      "count": 369,
+                      "mean": 13543.130081300813,
+                      "p95": 29856,
+                      "maximum": 71241
+                    },
+                    "cycles_per_picture": 13543.130081300813
+                  },
+                  "x_preflight": {
+                    "cpu": {
+                      "count": 369,
+                      "mean": 1709.9756097560976,
+                      "p95": 3877,
+                      "maximum": 4247
+                    },
+                    "cycles_per_picture": 1709.9756097560976
+                  },
+                  "ys_static": {
+                    "cpu": {
+                      "count": 122,
+                      "mean": 2837532.9590163934,
+                      "p95": 5454844,
+                      "maximum": 5781107
+                    },
+                    "cycles_per_picture": 938154.5284552845
+                  },
+                  "ag_player": {
+                    "cpu": {
+                      "count": 122,
+                      "mean": 2837678.9590163934,
+                      "p95": 5454990,
+                      "maximum": 5781253
+                    },
+                    "cycles_per_picture": 938202.7994579945
+                  }
+                }
+              },
+              "active": {
+                "pictures": 94,
+                "foreground": {
+                  "count": 94,
+                  "mean": 81308.03191489361,
+                  "p95": 126033,
+                  "maximum": 133741
+                },
+                "phases": {
+                  "description": {
+                    "count": 94,
+                    "mean": 4064,
+                    "p95": 4064,
+                    "maximum": 4064
+                  },
+                  "sprites-preflight": {
+                    "count": 94,
+                    "mean": 14211.893617021276,
+                    "p95": 68019,
+                    "maximum": 75833
+                  },
+                  "dirty-state": {
+                    "count": 94,
+                    "mean": 9598.765957446809,
+                    "p95": 10321,
+                    "maximum": 10556
+                  },
+                  "release": {
+                    "count": 94,
+                    "mean": 2136.191489361702,
+                    "p95": 2181,
+                    "maximum": 2217
+                  },
+                  "background": {
+                    "count": 94,
+                    "mean": 5128.468085106383,
+                    "p95": 6864,
+                    "maximum": 8854
+                  },
+                  "world": {
+                    "count": 94,
+                    "mean": 35164.90425531915,
+                    "p95": 42042,
+                    "maximum": 44825
+                  },
+                  "header": {
+                    "count": 94,
+                    "mean": 1268.4148936170213,
+                    "p95": 841,
+                    "maximum": 19026
+                  },
+                  "footer": {
+                    "count": 94,
+                    "mean": 262.25531914893617,
+                    "p95": 262,
+                    "maximum": 286
+                  },
+                  "upload": {
+                    "count": 94,
+                    "mean": 9473.13829787234,
+                    "p95": 13483,
+                    "maximum": 15107
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 154,
+                      "mean": 848.5454545454545,
+                      "p95": 921,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 1390.1702127659576
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 148,
+                      "mean": 265.30405405405406,
+                      "p95": 274,
+                      "maximum": 283
+                    },
+                    "cycles_per_picture": 417.71276595744683
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 94,
+                      "mean": 9451.13829787234,
+                      "p95": 13461,
+                      "maximum": 15085
+                    },
+                    "cycles_per_picture": 9451.13829787234
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 372,
+                      "mean": 992.516129032258,
+                      "p95": 2960,
+                      "maximum": 5706
+                    },
+                    "cycles_per_picture": 3927.8297872340427
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 154,
+                      "mean": 1820.8896103896104,
+                      "p95": 4178,
+                      "maximum": 4181
+                    },
+                    "cycles_per_picture": 2983.159574468085
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 19,
+                      "mean": 892.2631578947369,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 180.35106382978722
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 372,
+                      "mean": 1303.8924731182797,
+                      "p95": 1718,
+                      "maximum": 1718
+                    },
+                    "cycles_per_picture": 5160.085106382979
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_mono": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_merge": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_background": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ai_entry": {
+                    "cpu": {
+                      "count": 93,
+                      "mean": 20373.1935483871,
+                      "p95": 20795,
+                      "maximum": 20801
+                    },
+                    "cycles_per_picture": 20156.457446808512
+                  },
+                  "ai_tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ai_copy": {
+                    "cpu": {
+                      "count": 186,
+                      "mean": 167.5,
+                      "p95": 179,
+                      "maximum": 179
+                    },
+                    "cycles_per_picture": 331.43617021276594
+                  },
+                  "ai_bulk": {
+                    "cpu": {
+                      "count": 93,
+                      "mean": 18492.935483870966,
+                      "p95": 18915,
+                      "maximum": 18921
+                    },
+                    "cycles_per_picture": 18296.202127659573
+                  },
+                  "ai_bulk_upload": {
+                    "cpu": {
+                      "count": 279,
+                      "mean": 2448.9247311827958,
+                      "p95": 2470,
+                      "maximum": 2470
+                    },
+                    "cycles_per_picture": 7268.617021276596
+                  },
+                  "ai_bulk_ids": {
+                    "cpu": {
+                      "count": 93,
+                      "mean": 1798.3225806451612,
+                      "p95": 1820,
+                      "maximum": 1820
+                    },
+                    "cycles_per_picture": 1779.1914893617022
+                  },
+                  "presentation_sprites_prepare": {
+                    "cpu": {
+                      "count": 94,
+                      "mean": 11336.659574468085,
+                      "p95": 63751,
+                      "maximum": 71241
+                    },
+                    "cycles_per_picture": 11336.659574468085
+                  },
+                  "x_preflight": {
+                    "cpu": {
+                      "count": 94,
+                      "mean": 2484.2340425531916,
+                      "p95": 4201,
+                      "maximum": 4247
+                    },
+                    "cycles_per_picture": 2484.2340425531916
+                  },
+                  "ys_static": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ag_player": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  }
+                }
+              }
+            },
+            "all_five_buffers_identical": {
+              "route-cpu.bin": true,
+              "captures.bin": true,
+              "owners.bin": true,
+              "irq.tsv": true,
+              "pictures.tsv": true
+            },
+            "protected_inputs_unchanged": true,
+            "active_sprite_decisions": 0,
+            "active_decisions": 0,
+            "producer_sha256": "fe89b0fb5bad4c8e30985fe3b3ba9d3e640042700b053322a39063abb478bea7",
+            "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+          }
+        }
+      ],
+      "fps_percent": 60.346175497173135
+    },
+    "pal": {
+      "runs": [
+        {
+          "label": "AH",
+          "folder": "outputs/presentation/ice-atlas-ah-research/bear-pal-a",
+          "fps": 15.333317336409001,
+          "gaps": {
+            "count": 59,
+            "mean": 65.2174593442671,
+            "median": 59.810394896558705,
+            "p95": 79.74728631711514,
+            "maximum": 79.77913394020675
+          },
+          "profile": {
+            "complete": true,
+            "label": "AH",
+            "family": "pal",
+            "rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+            "groups": {
+              "all": {
+                "pictures": 291,
+                "foreground": {
+                  "count": 291,
+                  "mean": 60492.762886597935,
+                  "p95": 147772,
+                  "maximum": 311481
+                },
+                "phases": {
+                  "description": {
+                    "count": 291,
+                    "mean": 4066.85910652921,
+                    "p95": 4072,
+                    "maximum": 4072
+                  },
+                  "sprites-preflight": {
+                    "count": 291,
+                    "mean": 15906.90378006873,
+                    "p95": 33110,
+                    "maximum": 75762
+                  },
+                  "dirty-state": {
+                    "count": 291,
+                    "mean": 8931.333333333334,
+                    "p95": 10130,
+                    "maximum": 10556
+                  },
+                  "release": {
+                    "count": 291,
+                    "mean": 2054.278350515464,
+                    "p95": 2163,
+                    "maximum": 2475
+                  },
+                  "background": {
+                    "count": 291,
+                    "mean": 1842.9621993127148,
+                    "p95": 5869,
+                    "maximum": 21786
+                  },
+                  "world": {
+                    "count": 291,
+                    "mean": 22540.580756013747,
+                    "p95": 95845,
+                    "maximum": 119638
+                  },
+                  "header": {
+                    "count": 291,
+                    "mean": 1482.3883161512028,
+                    "p95": 817,
+                    "maximum": 76149
+                  },
+                  "footer": {
+                    "count": 291,
+                    "mean": 503.11340206185565,
+                    "p95": 265,
+                    "maximum": 27431
+                  },
+                  "upload": {
+                    "count": 291,
+                    "mean": 3164.3436426116837,
+                    "p95": 11942,
+                    "maximum": 27374
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": {
+                      "count": 143,
+                      "mean": 32381.125874125875,
+                      "p95": 80983,
+                      "maximum": 93032
+                    },
+                    "cycles_per_picture": 15912.374570446735
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 336,
+                      "mean": 554.0386904761905,
+                      "p95": 875,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 639.7147766323025
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 330,
+                      "mean": 264.6424242424242,
+                      "p95": 264,
+                      "maximum": 288
+                    },
+                    "cycles_per_picture": 300.10996563573883
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 291,
+                      "mean": 3142.3436426116837,
+                      "p95": 11920,
+                      "maximum": 27352
+                    },
+                    "cycles_per_picture": 3142.3436426116837
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 572,
+                      "mean": 990.3898601398602,
+                      "p95": 2936,
+                      "maximum": 5706
+                    },
+                    "cycles_per_picture": 1946.745704467354
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 336,
+                      "mean": 1171.735119047619,
+                      "p95": 2483,
+                      "maximum": 4181
+                    },
+                    "cycles_per_picture": 1352.9312714776631
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 11,
+                      "mean": 891.7272727272727,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 33.707903780068726
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 572,
+                      "mean": 829.6433566433567,
+                      "p95": 1718,
+                      "maximum": 9205
+                    },
+                    "cycles_per_picture": 1630.7766323024055
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": {
+                      "count": 64,
+                      "mean": 2307.03125,
+                      "p95": 2330,
+                      "maximum": 2354
+                    },
+                    "cycles_per_picture": 507.38831615120273
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": {
+                      "count": 549,
+                      "mean": 1410.9617486338798,
+                      "p95": 1410,
+                      "maximum": 1434
+                    },
+                    "cycles_per_picture": 2661.917525773196
+                  },
+                  "pt_mono": {
+                    "cpu": {
+                      "count": 549,
+                      "mean": 4298.265938069217,
+                      "p95": 5050,
+                      "maximum": 5074
+                    },
+                    "cycles_per_picture": 8109.099656357388
+                  },
+                  "pt_merge": {
+                    "cpu": {
+                      "count": 549,
+                      "mean": 1606.735883424408,
+                      "p95": 2360,
+                      "maximum": 2384
+                    },
+                    "cycles_per_picture": 3031.2646048109964
+                  },
+                  "pt_background": {
+                    "cpu": {
+                      "count": 549,
+                      "mean": 806.3060109289618,
+                      "p95": 806,
+                      "maximum": 830
+                    },
+                    "cycles_per_picture": 1521.1752577319587
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": {
+                      "count": 735,
+                      "mean": 5216.872108843538,
+                      "p95": 7588,
+                      "maximum": 7684
+                    },
+                    "cycles_per_picture": 13176.635738831616
+                  },
+                  "ai_entry": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  }
+                }
+              },
+              "active": {
+                "pictures": 60,
+                "foreground": {
+                  "count": 60,
+                  "mean": 134078.46666666667,
+                  "p95": 187035,
+                  "maximum": 205609
+                },
+                "phases": {
+                  "description": {
+                    "count": 60,
+                    "mean": 4064,
+                    "p95": 4064,
+                    "maximum": 4064
+                  },
+                  "sprites-preflight": {
+                    "count": 60,
+                    "mean": 15614.233333333334,
+                    "p95": 68181,
+                    "maximum": 75762
+                  },
+                  "dirty-state": {
+                    "count": 60,
+                    "mean": 9714.766666666666,
+                    "p95": 10362,
+                    "maximum": 10556
+                  },
+                  "release": {
+                    "count": 60,
+                    "mean": 2141.7,
+                    "p95": 2199,
+                    "maximum": 2217
+                  },
+                  "background": {
+                    "count": 60,
+                    "mean": 5458.533333333334,
+                    "p95": 7823,
+                    "maximum": 8854
+                  },
+                  "world": {
+                    "count": 60,
+                    "mean": 84967.18333333333,
+                    "p95": 106105,
+                    "maximum": 116474
+                  },
+                  "header": {
+                    "count": 60,
+                    "mean": 1877.8666666666666,
+                    "p95": 18844,
+                    "maximum": 19026
+                  },
+                  "footer": {
+                    "count": 60,
+                    "mean": 262,
+                    "p95": 262,
+                    "maximum": 262
+                  },
+                  "upload": {
+                    "count": 60,
+                    "mean": 9978.183333333332,
+                    "p95": 14054,
+                    "maximum": 15117
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": {
+                      "count": 59,
+                      "mean": 70964.40677966102,
+                      "p95": 92987,
+                      "maximum": 93032
+                    },
+                    "cycles_per_picture": 69781.66666666667
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 99,
+                      "mean": 853.3737373737374,
+                      "p95": 921,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 1408.0666666666666
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 93,
+                      "mean": 264.73118279569894,
+                      "p95": 264,
+                      "maximum": 283
+                    },
+                    "cycles_per_picture": 410.3333333333333
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 60,
+                      "mean": 9956.183333333332,
+                      "p95": 14032,
+                      "maximum": 15095
+                    },
+                    "cycles_per_picture": 9956.183333333332
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 236,
+                      "mean": 1042.0974576271187,
+                      "p95": 2939,
+                      "maximum": 5706
+                    },
+                    "cycles_per_picture": 4098.916666666667
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 99,
+                      "mean": 1886.828282828283,
+                      "p95": 4178,
+                      "maximum": 4181
+                    },
+                    "cycles_per_picture": 3113.266666666667
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 11,
+                      "mean": 891.7272727272727,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 163.48333333333332
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 236,
+                      "mean": 1321.915254237288,
+                      "p95": 1718,
+                      "maximum": 1739
+                    },
+                    "cycles_per_picture": 5199.533333333334
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": {
+                      "count": 59,
+                      "mean": 2304.677966101695,
+                      "p95": 2330,
+                      "maximum": 2354
+                    },
+                    "cycles_per_picture": 2266.266666666667
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": {
+                      "count": 501,
+                      "mean": 1411.0538922155688,
+                      "p95": 1410,
+                      "maximum": 1434
+                    },
+                    "cycles_per_picture": 11782.3
+                  },
+                  "pt_mono": {
+                    "cpu": {
+                      "count": 501,
+                      "mean": 4301.0499001996,
+                      "p95": 5050,
+                      "maximum": 5074
+                    },
+                    "cycles_per_picture": 35913.76666666667
+                  },
+                  "pt_merge": {
+                    "cpu": {
+                      "count": 501,
+                      "mean": 1609.4211576846308,
+                      "p95": 2360,
+                      "maximum": 2384
+                    },
+                    "cycles_per_picture": 13438.666666666666
+                  },
+                  "pt_background": {
+                    "cpu": {
+                      "count": 501,
+                      "mean": 806.3353293413173,
+                      "p95": 806,
+                      "maximum": 830
+                    },
+                    "cycles_per_picture": 6732.9
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": {
+                      "count": 675,
+                      "mean": 5194.988148148148,
+                      "p95": 7588,
+                      "maximum": 7612
+                    },
+                    "cycles_per_picture": 58443.61666666667
+                  },
+                  "ai_entry": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  }
+                }
+              }
+            },
+            "all_five_buffers_identical": {
+              "route-cpu.bin": true,
+              "captures.bin": true,
+              "owners.bin": true,
+              "irq.tsv": true,
+              "pictures.tsv": true
+            },
+            "protected_inputs_unchanged": true,
+            "active_sprite_decisions": 0,
+            "active_decisions": 0,
+            "producer_sha256": "2dd1e0b1ba5b17c1c0b4d476f4f5941d55c7e91e990fc787446c0ccb1b0583ad",
+            "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+          }
+        },
+        {
+          "label": "AI",
+          "folder": "outputs/presentation/bear-native-ai-research/bear-pal-c",
+          "fps": 22.870215287165355,
+          "gaps": {
+            "count": 88,
+            "mean": 43.72499285396735,
+            "median": 39.873503476000494,
+            "p95": 59.810115531442776,
+            "maximum": 59.842521884764466
+          },
+          "profile": {
+            "complete": true,
+            "label": "AIC",
+            "family": "pal",
+            "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+            "groups": {
+              "all": {
+                "pictures": 324,
+                "foreground": {
+                  "count": 324,
+                  "mean": 51723.96604938272,
+                  "p95": 90869,
+                  "maximum": 255150
+                },
+                "phases": {
+                  "description": {
+                    "count": 324,
+                    "mean": 4066.5925925925926,
+                    "p95": 4072,
+                    "maximum": 4072
+                  },
+                  "sprites-preflight": {
+                    "count": 324,
+                    "mean": 15691.438271604939,
+                    "p95": 33110,
+                    "maximum": 75623
+                  },
+                  "dirty-state": {
+                    "count": 324,
+                    "mean": 8978.37962962963,
+                    "p95": 10130,
+                    "maximum": 10553
+                  },
+                  "release": {
+                    "count": 324,
+                    "mean": 2060.6111111111113,
+                    "p95": 2163,
+                    "maximum": 2451
+                  },
+                  "background": {
+                    "count": 324,
+                    "mean": 2076.0185185185187,
+                    "p95": 5869,
+                    "maximum": 21786
+                  },
+                  "world": {
+                    "count": 324,
+                    "mean": 13354.50925925926,
+                    "p95": 39174,
+                    "maximum": 63307
+                  },
+                  "header": {
+                    "count": 324,
+                    "mean": 1352.9722222222222,
+                    "p95": 817,
+                    "maximum": 76149
+                  },
+                  "footer": {
+                    "count": 324,
+                    "mean": 478.56481481481484,
+                    "p95": 265,
+                    "maximum": 27431
+                  },
+                  "upload": {
+                    "count": 324,
+                    "mean": 3664.8796296296296,
+                    "p95": 11918,
+                    "maximum": 27374
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 385,
+                      "mean": 588.1662337662337,
+                      "p95": 875,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 698.9012345679013
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 379,
+                      "mean": 264.6622691292876,
+                      "p95": 264,
+                      "maximum": 288
+                    },
+                    "cycles_per_picture": 309.5895061728395
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 324,
+                      "mean": 3642.8796296296296,
+                      "p95": 11896,
+                      "maximum": 27352
+                    },
+                    "cycles_per_picture": 3642.8796296296296
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 692,
+                      "mean": 977.6112716763006,
+                      "p95": 2939,
+                      "maximum": 5706
+                    },
+                    "cycles_per_picture": 2087.9845679012346
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 385,
+                      "mean": 1239.9246753246753,
+                      "p95": 2483,
+                      "maximum": 4181
+                    },
+                    "cycles_per_picture": 1473.3672839506173
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 20,
+                      "mean": 891.8,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 55.04938271604938
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 692,
+                      "mean": 919.9884393063584,
+                      "p95": 1718,
+                      "maximum": 9181
+                    },
+                    "cycles_per_picture": 1964.9135802469136
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_mono": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_merge": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_background": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ai_entry": {
+                    "cpu": {
+                      "count": 173,
+                      "mean": 11247.35838150289,
+                      "p95": 20489,
+                      "maximum": 20801
+                    },
+                    "cycles_per_picture": 6005.533950617284
+                  }
+                }
+              },
+              "active": {
+                "pictures": 89,
+                "foreground": {
+                  "count": 89,
+                  "mean": 82702.25842696629,
+                  "p95": 125915,
+                  "maximum": 133531
+                },
+                "phases": {
+                  "description": {
+                    "count": 89,
+                    "mean": 4064,
+                    "p95": 4064,
+                    "maximum": 4064
+                  },
+                  "sprites-preflight": {
+                    "count": 89,
+                    "mean": 15039.483146067416,
+                    "p95": 67886,
+                    "maximum": 75623
+                  },
+                  "dirty-state": {
+                    "count": 89,
+                    "mean": 9639.033707865168,
+                    "p95": 10321,
+                    "maximum": 10553
+                  },
+                  "release": {
+                    "count": 89,
+                    "mean": 2138.123595505618,
+                    "p95": 2181,
+                    "maximum": 2217
+                  },
+                  "background": {
+                    "count": 89,
+                    "mean": 5208,
+                    "p95": 6864,
+                    "maximum": 8851
+                  },
+                  "world": {
+                    "count": 89,
+                    "mean": 35307.77528089887,
+                    "p95": 42015,
+                    "maximum": 44825
+                  },
+                  "header": {
+                    "count": 89,
+                    "mean": 1340.808988764045,
+                    "p95": 817,
+                    "maximum": 18972
+                  },
+                  "footer": {
+                    "count": 89,
+                    "mean": 262,
+                    "p95": 262,
+                    "maximum": 262
+                  },
+                  "upload": {
+                    "count": 89,
+                    "mean": 9703.033707865168,
+                    "p95": 13459,
+                    "maximum": 15117
+                  }
+                },
+                "calls": {
+                  "bear-tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "bear-preflight": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "x_eligible": {
+                    "cpu": {
+                      "count": 145,
+                      "mean": 851.6137931034483,
+                      "p95": 921,
+                      "maximum": 921
+                    },
+                    "cycles_per_picture": 1387.4606741573034
+                  },
+                  "ab_certified_setup": {
+                    "cpu": {
+                      "count": 139,
+                      "mean": 265.46043165467626,
+                      "p95": 274,
+                      "maximum": 283
+                    },
+                    "cycles_per_picture": 414.59550561797755
+                  },
+                  "ac_names": {
+                    "cpu": {
+                      "count": 89,
+                      "mean": 9681.033707865168,
+                      "p95": 13437,
+                      "maximum": 15095
+                    },
+                    "cycles_per_picture": 9681.033707865168
+                  },
+                  "x_hybrid": {
+                    "cpu": {
+                      "count": 352,
+                      "mean": 999.7244318181819,
+                      "p95": 4628,
+                      "maximum": 5706
+                    },
+                    "cycles_per_picture": 3953.9662921348313
+                  },
+                  "x_accepted": {
+                    "cpu": {
+                      "count": 145,
+                      "mean": 1846.9172413793103,
+                      "p95": 4178,
+                      "maximum": 4181
+                    },
+                    "cycles_per_picture": 3009.0224719101125
+                  },
+                  "x_clip_pattern": {
+                    "cpu": {
+                      "count": 20,
+                      "mean": 891.8,
+                      "p95": 899,
+                      "maximum": 899
+                    },
+                    "cycles_per_picture": 200.40449438202248
+                  },
+                  "ag_floe": {
+                    "cpu": {
+                      "count": 352,
+                      "mean": 1342.8636363636363,
+                      "p95": 1718,
+                      "maximum": 1739
+                    },
+                    "cycles_per_picture": 5311.101123595506
+                  },
+                  "p_fast_geometry_lookup": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "presentation_geometry_pattern": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_mono": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_merge": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "pt_background": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "p_fast_world_tile": {
+                    "cpu": null,
+                    "cycles_per_picture": 0.0
+                  },
+                  "ai_entry": {
+                    "cpu": {
+                      "count": 88,
+                      "mean": 20352.363636363636,
+                      "p95": 20795,
+                      "maximum": 20801
+                    },
+                    "cycles_per_picture": 20123.685393258427
+                  }
+                }
+              }
+            },
+            "all_five_buffers_identical": {
+              "route-cpu.bin": true,
+              "captures.bin": true,
+              "owners.bin": true,
+              "irq.tsv": true,
+              "pictures.tsv": true
+            },
+            "protected_inputs_unchanged": true,
+            "active_sprite_decisions": 0,
+            "active_decisions": 0,
+            "producer_sha256": "2dd1e0b1ba5b17c1c0b4d476f4f5941d55c7e91e990fc787446c0ccb1b0583ad",
+            "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+          }
+        }
+      ],
+      "fps_percent": 49.15373356853425
+    }
+  },
+  "natural": {
+    "ntsc": {
+      "complete": true,
+      "family": "ntsc",
+      "expanded_ram_slot": false,
+      "stack_min_sp": 62282,
+      "stack_bytes": 54,
+      "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+      "source_checkpoints": 2253,
+      "hardware_vblanks": 2252,
+      "source_steps_per_second": 59.92274696939879,
+      "committed_pictures_per_second": 37.458385684735774,
+      "active_picture_intervals": 513,
+      "active_pictures_per_second": 30.435483164421676,
+      "committed_pictures": 1405,
+      "max_irq_cycles": 29230,
+      "mean_irq_cycles": 17648.051509769095,
+      "mean_prepare_elapsed_cycles": 57985.15658362989,
+      "max_prepare_elapsed_cycles": 313479,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+    },
+    "bear-ntsc": {
+      "complete": true,
+      "family": "ntsc",
+      "expanded_ram_slot": false,
+      "stack_min_sp": 62280,
+      "stack_bytes": 56,
+      "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+      "source_checkpoints": 621,
+      "hardware_vblanks": 620,
+      "source_steps_per_second": 59.922749886549816,
+      "committed_pictures_per_second": 35.91472201104385,
+      "active_picture_intervals": 93,
+      "active_pictures_per_second": 24.12453979891922,
+      "committed_pictures": 369,
+      "max_irq_cycles": 25999,
+      "mean_irq_cycles": 15494.377419354838,
+      "mean_prepare_elapsed_cycles": 61112.40921409214,
+      "max_prepare_elapsed_cycles": 313479,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "dee611e8fd8b97f4195fed9be9ded7b19caa230df45cd9b4b36f8c941ce16f7d",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+      "producer_sha256": "e6d6a55f948330fe72291a1299f13db68c33ecd0250d7f33b0f37ae55495a572",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+    },
+    "pal": {
+      "complete": true,
+      "family": "pal",
+      "expanded_ram_slot": true,
+      "stack_min_sp": 62282,
+      "stack_bytes": 54,
+      "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+      "source_checkpoints": 2254,
+      "hardware_vblanks": 1886,
+      "source_steps_per_second": 59.92467978542404,
+      "committed_pictures_per_second": 34.2126333188722,
+      "active_picture_intervals": 475,
+      "active_pictures_per_second": 28.228791402294906,
+      "committed_pictures": 1284,
+      "max_irq_cycles": 49313,
+      "mean_irq_cycles": 20827.269353128315,
+      "mean_prepare_elapsed_cycles": 58667.661214953274,
+      "max_prepare_elapsed_cycles": 301887,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+    },
+    "bear-pal": {
+      "complete": true,
+      "family": "pal",
+      "expanded_ram_slot": true,
+      "stack_min_sp": 62280,
+      "stack_bytes": 56,
+      "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+      "source_checkpoints": 621,
+      "hardware_vblanks": 519,
+      "source_steps_per_second": 59.93902310199918,
+      "committed_pictures_per_second": 31.58167352137699,
+      "active_picture_intervals": 88,
+      "active_pictures_per_second": 22.870215287165355,
+      "committed_pictures": 324,
+      "max_irq_cycles": 42488,
+      "mean_irq_cycles": 18227.880539499038,
+      "mean_prepare_elapsed_cycles": 62806.62345679013,
+      "max_prepare_elapsed_cycles": 301887,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "dee611e8fd8b97f4195fed9be9ded7b19caa230df45cd9b4b36f8c941ce16f7d",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+      "producer_sha256": "e6d6a55f948330fe72291a1299f13db68c33ecd0250d7f33b0f37ae55495a572",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+    }
+  },
+  "qualification": {
+    "source-scenes": {
+      "path": "outputs/presentation/bear-native-ai-research/matrix-full-c/check.json",
+      "sha256": "574f9a296903ff2a3697d4c545ef6d49dcf036bd9f987742f786db217290d371",
+      "complete": true,
+      "counts": {
+        "cases": 2115
+      }
+    },
+    "density": {
+      "path": "outputs/presentation/bear-native-ai-research/density-full/check.json",
+      "sha256": "ebd0dad62cdae83df5a175baf7185662c3c8c022b949efc0a2263107979b08f5",
+      "complete": true,
+      "counts": {
+        "cases": 2040
+      }
+    },
+    "header": {
+      "path": "outputs/presentation/bear-native-ai-research/header/check.json",
+      "sha256": "a572cfe3512557a55c80af99fd5bef0f0f4e615f8a9bbe829e6bdf73a6b475a0",
+      "complete": true,
+      "counts": {
+        "cases": 54
+      }
+    },
+    "audio": {
+      "path": "outputs/presentation/bear-native-ai-research/audio/check.json",
+      "sha256": "40b663d6f941ec3361159431c9e112e8554b5a0b3e706b4ed7f1ad4f912c6937",
+      "complete": true,
+      "counts": {
+        "cases": 2115,
+        "ordered_source_writes": 3499,
+        "physical_psg_writes": 2472
+      }
+    },
+    "irq-ntsc": {
+      "path": "outputs/presentation/bear-native-ai-research/boundary-ntsc/boundary-check.json",
+      "sha256": "f0c2fcf0a163eaec0ac70dc70532362c362eddd27fff194938e4a6471ab1d4b4",
+      "complete": true,
+      "counts": {}
+    },
+    "irq-pal": {
+      "path": "outputs/presentation/bear-native-ai-research/boundary-pal/boundary-check.json",
+      "sha256": "266372b5237545227fa4f47f5eb461bc1850a7464ff5c3b6975f2d686538d0d7",
+      "complete": true,
+      "counts": {}
+    },
+    "irq-negative": {
+      "path": "outputs/presentation/bear-native-ai-research/boundary-negative/negative-check.json",
+      "sha256": "8f17dae5be27dd0c5302fe491d3a5adeb7a76563137581823e53a0f40c1bf5d2",
+      "complete": true,
+      "counts": {}
+    },
+    "cell-irq-ntsc": {
+      "path": "outputs/presentation/bear-native-ai-research/bear-irq-cell2-ntsc/bear-irq-check.json",
+      "sha256": "dbc7ce3bff54ff2a15871c34a6348f601d088f4a3843d70cb2006372a4a09e79",
+      "complete": true,
+      "counts": {
+        "directed_irq_count": 2
+      }
+    },
+    "cell-irq-pal": {
+      "path": "outputs/presentation/bear-native-ai-research/bear-irq-cell2-pal/bear-irq-check.json",
+      "sha256": "d8bd842820b344a5cdfebea16c2a50525b96808d005fa6571bc0f8eeb13a81ec",
+      "complete": true,
+      "counts": {
+        "directed_irq_count": 2
+      }
+    },
+    "bulk-irq-ntsc": {
+      "path": "outputs/presentation/bear-native-ai-research/bear-irq-bulk-ntsc/bear-irq-check.json",
+      "sha256": "4496fe13a7ba2f7deab320c2c8b58de205967909a3b5c0b9174b0e77699ff5e4",
+      "complete": true,
+      "counts": {
+        "directed_irq_count": 5
+      }
+    },
+    "bulk-irq-pal": {
+      "path": "outputs/presentation/bear-native-ai-research/bear-irq-bulk-pal/bear-irq-check.json",
+      "sha256": "7436573edaaee08a3d320dbe3a9df5766ad63eb1e1a6d431bdb0fb4a9dc2f648",
+      "complete": true,
+      "counts": {
+        "directed_irq_count": 5
+      }
+    }
+  },
+  "host_tests": 586,
+  "clean_source_parity": {
+    "complete": true,
+    "routes": {
+      "ntsc-final": {
+        "clean_source": true,
+        "raw_sha256": {
+          "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+          "captures.bin": "9fc5e61ffb91fb590cd912159ef0167c1795191c379ff3d7defcf9ead6eda184",
+          "owners.bin": "dd15c530ad9cf90886fd9c8722e77b04cff2645d6d2312495560ac0e4b849e9b",
+          "irq.tsv": "28b9e94aa9999c21c8a12af2a3ae9b84b385d09fb2efb84e6efb83e5adab0b67",
+          "pictures.tsv": "02817b316ad1928b2f2308e8be38c7b749a39c69e8443a264253c33e7748a214"
+        }
+      },
+      "bear-ntsc-final": {
+        "clean_source": true,
+        "raw_sha256": {
+          "route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+          "captures.bin": "8af786cde22bfee144b06158b7efa1cd61b9ad5fc7e2b1f4c0bb8854eb8ae1bb",
+          "owners.bin": "0376a76cfb0cb5351a6439484ce42bb2316542beac8e8c718e65cbc7ef6886b0",
+          "irq.tsv": "d447150292f74e0d85730c3d5e980d37d32437ee9abb124b690cc742947e71b5",
+          "pictures.tsv": "38e1a5d5b795730f5f997aa6eb39e000b3269c1664be310067b8b285076acdc8"
+        }
+      },
+      "pal-final": {
+        "clean_source": true,
+        "raw_sha256": {
+          "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+          "captures.bin": "3d726d09412273b68ea789b08895daa811418fb2fed55bb844ae8915a07197e2",
+          "owners.bin": "7313eb5e8fec7b8715ff36ac47ea765764fb33adbaa29ae90c1313e22caf0b56",
+          "irq.tsv": "7c6a9c0ac73b4432faaa6e9cee81ff5d1cb841fd04ddea46fb54376061221a36",
+          "pictures.tsv": "701e0da33b2670987c7ca229c730dafced06bc01e8b0315f601c82bd04d7765b"
+        }
+      },
+      "bear-pal-final": {
+        "clean_source": true,
+        "raw_sha256": {
+          "route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+          "captures.bin": "b98fdbf0be4cd1d1245fa6012077525000e428dd21b6e4048212f6f24a8abcdc",
+          "owners.bin": "df037c803d3753022a43661824c792daeaffade0ba7fd17b5230a0e5102a3157",
+          "irq.tsv": "ac60db8164cad27a1e53f12f0b0b35bc60b265298ac9c7eef33cb3903f4b8a36",
+          "pictures.tsv": "8a7b57643189b902bd98da114e63bce803144884373d755dfd69c70932a63437"
+        }
+      }
+    }
+  },
+  "independent_review": {
+    "path": "outputs/presentation/bear-native-ai-review/review.json",
+    "sha256": "d6fe6f5cb0cfe62eaa207ad19db008830288e781d8cf1e12e453492076bc5f99",
+    "implementation_blockers": 0,
+    "actual_z80_cases_per_rom": 38144,
+    "contact14_fields_equal": 385024
+  },
+  "workbook": {
+    "complete": true,
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AI/Frostbite-performance-budget-AI.xlsx",
+    "sha256": "85d09e708937d6d34739843d492e91a39f49d6fcb7b10b4b952246ab107fa1d1",
+    "sheet_count": 35,
+    "historical_sheets_preserved": 34,
+    "preserved_cells": 782639,
+    "formula_errors": 0,
+    "mutation_restore_checks": 2,
+    "visual_regions_checked": [
+      "bear-summary",
+      "regular-summary",
+      "costs-validation",
+      "ntsc-landings",
+      "pal-landings"
+    ],
+    "native_excel_tested": false,
+    "audit_sha256": "4f845008ce4aeead164efb7b04054e6e2ae3deb082bafdd750fb920c71c813de",
+    "builder_sha256": "caf8f8b5a7aa1b573b8a6f70e5319e148dde08f59a061415fa3d6759cff76e3a",
+    "delivery_sha256": "fbeecc4d5857671a9cf503cd82241935104d8979abc13648697230a21ebb3f52"
+  },
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43269084062,
+      "event": "pull_request",
+      "headSha": "851aa41466d7b9ea86c753a5228337c688d40a88",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43269061315,
+      "event": "push",
+      "headSha": "851aa41466d7b9ea86c753a5228337c688d40a88",
+      "status": "completed"
+    }
+  ],
+  "controls_preserved": {
+    "outputs/presentation/core-z-combined": {
+      "files": 41,
+      "manifest_sha256": "ceabb96b96a9aeab658fd5fe7af682f6bbaad6411dfd80a5f18802b32d8f579c",
+      "unchanged": true
+    },
+    "outputs/presentation/core-z-validation": {
+      "files": 157,
+      "manifest_sha256": "c4d59f7223b0749ac0c63b779bc29e4cdbc846f4cf444b71b5a316bf9e55d3f2",
+      "unchanged": true
+    },
+    "outputs/presentation/core-z-review": {
+      "files": 3,
+      "manifest_sha256": "5a083a9f41422661dda99b97d2bf0c0936f11dbf53a030c28c9894cbd64b72de",
+      "unchanged": true
+    },
+    "outputs/presentation/core-cadence-z": {
+      "files": 144,
+      "manifest_sha256": "a49e3ae9f814b55545c1476e954064211a8c327aba0319bd6fe9ab4e339625dd",
+      "unchanged": true
+    },
+    "outputs/presentation/floe-aa-validation": {
+      "files": 128,
+      "manifest_sha256": "b664295a7a02eee35680b1cd73d6973a52c2082d2330291fd21e0652a89d8f70",
+      "unchanged": true
+    },
+    "outputs/presentation/floe-transactions-aa": {
+      "files": 129,
+      "manifest_sha256": "6c5323ef98415c70ae25d11457be9efbc86b187be2618a64e5be321ba6862edf",
+      "unchanged": true
+    },
+    "outputs/presentation/ready-presentation-ab": {
+      "files": 118,
+      "manifest_sha256": "b1c6a460f03ecbe3d7cae1cf9341d3a69fd6c2cf939aa70a7550d889c5debb81",
+      "unchanged": true
+    },
+    "outputs/presentation/aurora-ac-research": {
+      "files": 85,
+      "manifest_sha256": "f1db25587effebaa73188932490a26e4ae6d7550c60266d0f41c1bf10418719c",
+      "unchanged": true
+    },
+    "outputs/presentation/igloo-ad-research": {
+      "files": 148,
+      "manifest_sha256": "abbb59a9454cb09d034adffdbe05fe3db0e7cfa8ad36eae1af87b41cbbdb6aad"
+    },
+    "outputs/presentation/igloo-ad-validation": {
+      "files": 155,
+      "manifest_sha256": "84f4d3b150dd104442e129eaf4f82f05a2eef6086ca24c19b3dd84c8eb2b5aaf"
+    },
+    "outputs/presentation/igloo-ad-review": {
+      "files": 106,
+      "manifest_sha256": "583128ee2cacba48bcbfad958d679bbfe36a262a14ba3f2767cedad2842005ea"
+    },
+    "outputs/presentation/igloo-ad-delivery-review": {
+      "files": 1,
+      "manifest_sha256": "558ac8ddb8034d4628f4f68c7a10a350872fa6c1974fbb595bd571f06d8c6406"
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AD": {
+      "files": 22,
+      "manifest_sha256": "c4d5b8498d4567e24bddd02a765da09ee89675bc60f333597e9512fdbf3f4c97"
+    },
+    "outputs/presentation/igloo-colors-ad": {
+      "files": 96,
+      "manifest_sha256": "01aa1fba186ec3ca48e387d4b72ff032146a114dc33197c8b75da2b8f6b73b3d"
+    },
+    "outputs/presentation/bear-ae-review": {
+      "manifest_sha256": "e7de8552ab9e8a6ead12a446cb26fdb8787f1c69d28b4908637eb96c4e89d9e7",
+      "files": 10
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AE": {
+      "manifest_sha256": "028a4dd8f1d7e085ad0ba35e55469127cf374b0251704899212dcc33ff87c59b",
+      "files": 21
+    },
+    "outputs/presentation/bear-ae-research": {
+      "manifest_sha256": "5a45cd2c07d816f35b2c3b9f48ea8ffbd778e81bb2050ba5d628e9a75db986f5",
+      "files": 561
+    },
+    "outputs/presentation/grid24-af-review": {
+      "files": 204,
+      "manifest_sha256": "8b9a57762df68176d9c208d30b7a371a6e8fae737ae728d8b8919e008869fe56"
+    },
+    "outputs/presentation/grid24-af-delivery-review": {
+      "files": 2,
+      "manifest_sha256": "98326e4e94b4e97adfdf58fcd5b7c98627f071e32cdfa86ac3e1c59fa8368a06"
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AF": {
+      "files": 19,
+      "manifest_sha256": "e51944e5e0aafb332e3e9130b23cddfff8be37515bfb0a72f6cfc1b6099dca71"
+    },
+    "outputs/presentation/grid24-af": {
+      "files": 82,
+      "manifest_sha256": "267703092752f08c02f8bb79d861065781f48b7dabe3b50259caf8929b42b094"
+    },
+    "outputs/presentation/grid24-af-research": {
+      "files": 742,
+      "manifest_sha256": "31f85044718bfad1c521b65d643d83c7bf13d309720a59a287f094e04efd7827"
+    },
+    "outputs/presentation/border-ag-review": {
+      "files": 58,
+      "manifest_sha256": "a4a49dc248f00eb0627424508caaeb329e1daf64ce7667b26b6ac4e07119f0b2"
+    },
+    "outputs/presentation/border-ag-delivery-review": {
+      "files": 10,
+      "manifest_sha256": "e7aec7694741458bb3a5f76b960984af5386b24299bef9a82f4fcba8d2c02ade"
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AG": {
+      "files": 20,
+      "manifest_sha256": "c8b740e596ac0c1b9db771b592caa110d23460f9c8b6d7cf6ce093742e53f0e8"
+    },
+    "outputs/presentation/border-ag": {
+      "files": 88,
+      "manifest_sha256": "ef260995e49200ce8fdc465b58286ae708d583fde804347eccaa7f44ad8819f4"
+    },
+    "outputs/presentation/border-ag-research": {
+      "files": 585,
+      "manifest_sha256": "fe3795617c04bfd94f9bce1741683f47e946f69fa94c212fb4b01592466db948"
+    },
+    "outputs/presentation/ice-atlas-ah-review": {
+      "files": 142,
+      "manifest_sha256": "1ce230be5a6b3d16114b3a3290f617681a3c85bdebabc1ce7a6f6ee962003814"
+    },
+    "outputs/presentation/ice-atlas-ah-delivery-review": {
+      "files": 10,
+      "manifest_sha256": "79cb0d7fb52bda737b166c23aa386d7cd52653d96c710ba1595da90774a3b067"
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AH": {
+      "files": 18,
+      "manifest_sha256": "e08828c3c69e51039d1c526668f0ddf429f1d6cdd80868b33973f280a1e8d61f"
+    },
+    "outputs/presentation/ice-atlas-ah": {
+      "files": 141,
+      "manifest_sha256": "823eb014084c0a3748d48c6c8cd0a49aff04249ff2f1dd8754e402b1c1e00db5"
+    },
+    "outputs/presentation/ice-atlas-ah-research": {
+      "files": 613,
+      "manifest_sha256": "36a3895becf9f23cda09df70c082019476bd5bd7be2494dec062bd13ac6a2ebc"
+    }
+  },
+  "rollback": {
+    "rom_sha256": "c036c3d960da3be4331df6afbb168bc5037777d47be9f4892a16ff6f5d4e43ac",
+    "source_commit": "665cbdf4393fca63fe33299dca35442aa8fabce8",
+    "builder_flag": "--mode original",
+    "byte_identical": true,
+    "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.20-ice-atlas-diagnostic",
+    "runtime_change_commit": "851aa41466d7b9ea86c753a5228337c688d40a88",
+    "local_backup_tag": "codex/backup/42-before-bear-native-20261112"
+  },
+  "limitations": [
+    "Bear level4 prefix improves15.05 to24.12NTSC,15.33 to22.87PAL; stable/all-level30FPS is still open. One-player guard limits this prefix to620steps; no broader claim.",
+    "Regular level0 NTSC mean remains30.44, PAL28.23. NTSC long gaps remain83.44ms; individual landing pictures still disappear. PAL loses grounded arc15 and endpoint arc24 versus v20.",
+    "Stage populations differ; inclusive bear cost is inside WORLD, not additive. No player-only picture updates, P0 recoloring or cache-layout experiment promoted.",
+    "No manual listening, mobile-control, physical MSX or owner fluidity acceptance."
+  ],
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "original_fluidity_accepted": false,
+  "evidence": {
+    "outputs/presentation/bear-native-ai-research/comparison.json": "6018b249f373579685d0c944f00eaf975a4ed2e86e16925f427f5f131ce0eb18",
+    "outputs/presentation/bear-native-ai-research/clean-parity.json": "fe9fd5c9439df4afa042c571bded83ec0a61d6cccc558560e37af26fc522a9bf",
+    "outputs/presentation/bear-native-ai-research/controls-preserved.json": "5876f3596a1bf8029bd22440fd5d8295fd9766d47b0d979c0c417f2da5cee9e6",
+    "outputs/presentation/bear-native-ai-research/source-ci-c.json": "9408cba2cef88d1063c483deb08fd9e5ce38fb71be5c8a5241d68a615993cb22",
+    "outputs/presentation/bear-native-ai-research/host-c.log": "1b807a2cd7d858da3a4b5603abfd47a22ff3ae67ac17f54e80011cc1daa9b8fa",
+    "outputs/presentation/bear-native-ai-review/review.json": "d6fe6f5cb0cfe62eaa207ad19db008830288e781d8cf1e12e453492076bc5f99",
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AI/workbook-export-audit.json": "4f845008ce4aeead164efb7b04054e6e2ae3deb082bafdd750fb920c71c813de",
+    "outputs/presentation/bear-native-ai-research/fixed_clock_bear_probe.py": "e6d6a55f948330fe72291a1299f13db68c33ecd0250d7f33b0f37ae55495a572",
+    "outputs/presentation/bear-native-ai-research/bear_route_final.py": "d2dbce35934022a36b7b02e7256af0ad60d9751191abcf0e92e2ba1d9ee15afa",
+    "outputs/presentation/bear-native-ai-research/feasibility.py": "d48aac2d1463f6eca70ce9892fe74794930ff9e909f15b6a44c9d3083961a483",
+    "outputs/presentation/bear-native-ai-research/record_result.py": "8c5bb2c51c44b8bb16d81a129f0ec17686484f437db4c372bab9ba77e6738bff",
+    "outputs/presentation/bear-native-ai-research/bear_irq.py": "89fa96e32451e3cd9406e076ad9787d81a751be36d935a1b1df825d197b51e80",
+    "outputs/presentation/bear-native-ai-research/profile_player.py": "6581fe1d2b928b23109422976892129df4877d36ea46610f8adc42aa91e2c190",
+    "outputs/presentation/bear-native-ai-research/bear_route_e.py": "a43ba58ecb0f5c8207b51b69f4c9eebad85e5aa4fd02e1914abcb0be0ceb9886",
+    "outputs/presentation/bear-native-ai-research/profile_a.py": "33f56bbe9c8073f3837ed30e6b48ce6b2d08ebaf14ad754cde2a0e693a42e6b1",
+    "outputs/presentation/bear-native-ai-research/profile_c.py": "fe89b0fb5bad4c8e30985fe3b3ba9d3e640042700b053322a39063abb478bea7",
+    "outputs/presentation/bear-native-ai-research/prebake_feasibility.py": "c3b549152135264b759d979b13508f4709f624b1d32df2ac6dfd23c2f6686582",
+    "outputs/presentation/bear-native-ai-research/expanded_density_source.py": "339a47b0f9b1f0461073bb5518f4c301b5eb8099f78e2b89b27aec3595468b39",
+    "outputs/presentation/bear-native-ai-research/profile_bear_final.py": "2dd1e0b1ba5b17c1c0b4d476f4f5941d55c7e91e990fc787446c0ccb1b0583ad",
+    "outputs/presentation/bear-native-ai-research/bear_route_c.py": "fd0b78d296b662f6f195fdf266e5034a816954c23434b7ad6ddc7c279ff9d582",
+    "outputs/presentation/bear-native-ai-research/density.py": "c23a1e59c5492ac887f4bb58b22a08666dcb02230e7b8052964327ddb31c1bbd",
+    "outputs/presentation/bear-native-ai-research/profile_baseline.py": "4c9f25ebe6f5461216f67ba1fe9c3ffd335b164bdc3f11cef9668fb8ee7d32ef",
+    "outputs/presentation/bear-native-ai-research/bear_route_b.py": "2dad97f830dbcdc739b12b1493d09cb652b8a905b65c63f18de931d382b596af",
+    "outputs/presentation/bear-native-ai-research/bulk_feasibility.py": "17622e2d46baf767cb45da2e9e4dfc236dcd7fb48d4bc26d595aeefc9c3172f7",
+    "outputs/presentation/bear-native-ai-research/profile_b.py": "23e3f82a314b0e294ab6d9b64303b786c761b4c00cb89875cb4c2b05517fc0d8",
+    "outputs/presentation/bear-native-ai-research/bear_route.py": "9e5f5bae3c281e2eeb54f9de35bb5b47c0cca46a34b34923f47870c8c21d6865",
+    "outputs/presentation/bear-native-ai-research/profile_regular.py": "dabdada2cda631349dbec092f8fac3415a1bf69726f7d6132257b0d19bd0b482",
+    "outputs/presentation/bear-native-ai-research/compare.py": "985d33e02443b7b9d4fb1de659c8e4d9d2fb8ca97d5ea568105207057fa76c0b",
+    "outputs/presentation/bear-native-ai-research/bear_irq_v2.py": "4eccb54655d311b08ce6b5aefbed3bfd5f456b110b01c996a1ba71150dfb7c7e"
+  },
+  "scope": "Qualified reversible native-bear composition diagnostic. Same v20 pixels/mechanics/clock/controls/PSG. Whole-game cadence goal stays open."
+}
