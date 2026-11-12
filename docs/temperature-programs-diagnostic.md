@@ -86,7 +86,8 @@ Independent 38,320 calls per ROM (76,640 total) cover all 256 pairs, both pages,
 32 upper fonts, eight low bits, six incoming banks, repeats, stable levels,
 15 matching colors and nine guard/fallback classes. There are 21,552 body
 entries and 21,504 program copies. PGT/CGT/180 keys/owners/NAME, all other VRAM,
-source/P0/register/SP/IFF/slot/mapper guards pass. Retirement and clean source
+source/P0/SP/IFF/slot/mapper guards pass; directed hardware IRQ tests also
+check complete register restoration. Retirement and clean source
 rebuild are bound in `references/temperature-programs-result.json`.
 
 The AL workbook appends one comparison tab, preserving all 37 historical tabs
