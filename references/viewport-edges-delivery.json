@@ -1,0 +1,99 @@
+{
+  "complete": true,
+  "version": "v0.0.28-viewport-edges-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic",
+  "release_id": 444267580,
+  "prerelease": true,
+  "source_commit": "ece9a5aa395592ac143255dfd618ac46d1b14b4c",
+  "documentation_commit": "cde706e33701588b8e3ee57560847fa3980694c4",
+  "rom_sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "sha256": "7bd7f552026d7d2c9850b7e13bdd4353f8ae410dd86efd75b1f20dd468d78c91",
+      "bytes": 24897,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.28-viewport-edges-diagnostic/BUILD.json",
+      "api_digest": "sha256:7bd7f552026d7d2c9850b7e13bdd4353f8ae410dd86efd75b1f20dd468d78c91"
+    },
+    {
+      "name": "Frostbite-performance-budget-AR.xlsx",
+      "sha256": "9f0e92a73c40256ebca73cfcba6a6a8316bc67bf32e94a5884a0e55d6b67e949",
+      "bytes": 4775286,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.28-viewport-edges-diagnostic/Frostbite-performance-budget-AR.xlsx",
+      "api_digest": "sha256:9f0e92a73c40256ebca73cfcba6a6a8316bc67bf32e94a5884a0e55d6b67e949"
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "174a0d74978b9422f970b2497995f3a41b7eef9cac613a743017f25bcef9e38c",
+      "bytes": 452,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.28-viewport-edges-diagnostic/SHA256SUMS",
+      "api_digest": "sha256:174a0d74978b9422f970b2497995f3a41b7eef9cac613a743017f25bcef9e38c"
+    },
+    {
+      "name": "SOURCE.txt",
+      "sha256": "481f108c6668ad2000ff9191ddb12151ff0f0fcbc9e9e4caa5247806d6e6920c",
+      "bytes": 858,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.28-viewport-edges-diagnostic/SOURCE.txt",
+      "api_digest": "sha256:481f108c6668ad2000ff9191ddb12151ff0f0fcbc9e9e4caa5247806d6e6920c"
+    },
+    {
+      "name": "VALIDATION.json",
+      "sha256": "64699badf67bb6353bff46e451797c21b8374d7febc9bef1dc552ced862b9dfe",
+      "bytes": 9936,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.28-viewport-edges-diagnostic/VALIDATION.json",
+      "api_digest": "sha256:64699badf67bb6353bff46e451797c21b8374d7febc9bef1dc552ced862b9dfe"
+    },
+    {
+      "name": "frostbite-0.0.28-viewport-edges-diagnostic.rom",
+      "sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+      "bytes": 4194304,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.28-viewport-edges-diagnostic/frostbite-0.0.28-viewport-edges-diagnostic.rom",
+      "api_digest": "sha256:e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8"
+    }
+  ],
+  "release_notes_sha256": "3a137976a8d744d8ffd21ce6863b7363762eb7d6ad07065e836797f704f434dc",
+  "six_fresh_downloads_match": true,
+  "tag_exact_runtime": true,
+  "rollback_v27_assets_and_notes_unchanged": true,
+  "prepublication_review": {
+    "complete": true,
+    "rom_sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+    "blockers": [],
+    "receipt_path": "outputs/presentation/viewport-ar-delivery-review/review.json",
+    "receipt_sha256": "8da7d290fe55f0a8bf484fdb03426388d344f44a6aa81c0a4f0741998599cdbb"
+  },
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "webmsx": {
+    "complete": true,
+    "rom_sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+    "rom_sha1": "53DD0FB848C30D9460334ED6B99D2C34D48DE74C",
+    "mapper": "ASCII16",
+    "machine": "MSX1A",
+    "video_hz": 60,
+    "console_errors": 0,
+    "console_warnings": 1,
+    "warning": "ScriptProcessorNode deprecation",
+    "F1_pressed": true,
+    "screenshot_sha256": "c06c8897c8035582dd8fdb00d12d1e9b17c10ed5e321a921f2d7b0478f7007d2",
+    "state_sha256": "bcaef09c92f82b7698b0fadcc7851412908c6d2b2179a80f608c0f5ffb423196",
+    "browser_closed": true,
+    "scope": "Desktop launch, exact published ROM and game picture only. No fluidity, listening, mobile, human or hardware acceptance.",
+    "initial_audio_muted": true,
+    "final_muted_message_visible": false,
+    "audio_listening_verified": false
+  },
+  "independent_postpublication_review_sha256": "5e1b22a6cbc46dcb99a09e56d6a613f09090af77b83d6f0bb77f55ddeaafb14b",
+  "tracking": {
+    "issue": 42,
+    "state": "open",
+    "PR": 43,
+    "draft": true,
+    "merged": false,
+    "base": "codex/fix/39-atari800-performance",
+    "project": 7,
+    "status": "In review",
+    "fresh_issue_PR_bodies_verified": true,
+    "fresh_project_item_verified": true
+  }
+}

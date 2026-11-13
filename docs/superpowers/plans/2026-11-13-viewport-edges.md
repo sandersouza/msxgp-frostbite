@@ -16,7 +16,7 @@ Same Issue42 writer and branch; all73 prior evidence roots are read-only.
   partial cache keys160..167. Keep the original cache eligibility and fast path.
 - [x] Verify finite edge/copy/palette/cache/IRQ cases, complete scene matrices
   and whole regular/bear NTSC/PAL routes. Compare full-frame timing and landings.
-- [ ] Update the existing performance workbook, clean rebuild/CI and review;
+- [x] Update the existing performance workbook, clean rebuild/CI and review;
   publish an immutable diagnostic release with exact ROM, hashes and human tests.
 
 The initial fallback-only prototype at31f16d8 passed pixels but caused75k-cycle

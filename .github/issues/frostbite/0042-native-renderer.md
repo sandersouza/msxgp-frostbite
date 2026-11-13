@@ -13,7 +13,10 @@ The fallback-only prototype was rejected for75k-cycle dragged-left preparation.
 619host/2115source/2115density/2272terminal/54header/2115audio pass, as do four
 natural/passive routes, independent native/cache/IRQ/negative proofs and two
 exact-source CI checks. The43-tab book preserves42 historical tabs/798479 cells.
-All73 prior roots are unchanged. Publication/download review remains pending.
+All73 prior roots are unchanged. The v28 prerelease is published; all six fresh
+downloads match the tested ROM/workbook, API digests and exact runtime tag.
+The v27 rollback assets and notes are unchanged. WebMSX/postpublication and
+tracking receipt: references/viewport-edges-delivery.json.
 Stable/all-level30FPS and human/physical acceptance stay open. PR43 remains
 unmerged/draft/stacked on41. Earlier sections below are historical delivery.
 See docs/handoffs/issue-42-v28-delivery.md and references/viewport-edges-result.json.

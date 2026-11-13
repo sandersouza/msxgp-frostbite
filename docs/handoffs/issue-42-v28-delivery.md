@@ -46,3 +46,23 @@ See `docs/releases/v0.0.28-viewport-edges-diagnostic.md` for exact human tests.
 After delivery, keep all published bytes and v27 rollback unchanged. Next work
 remains WORLD/NAME and P0 spikes toward consistent presentation cadence. Do not
 change source movement or shorten the complete-frame measurement route.
+
+## Published delivery
+
+[v0.0.28 prerelease](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic)
+contains the exact ROM, workbook and four provenance/checksum files. All six
+fresh root downloads and six independent downloads match the reviewed packet,
+API digests and runtime tag. Documentation source is
+`cde706e33701588b8e3ee57560847fa3980694c4`. v27 assets and notes are unchanged.
+
+Independent prepublication receipt: `8da7d290fe55f0a8bf484fdb03426388d344f44a6aa81c0a4f0741998599cdbb`.
+Independent postpublication receipt: `5e1b22a6cbc46dcb99a09e56d6a613f09090af77b83d6f0bb77f55ddeaafb14b`.
+Actual desktop WebMSX loads the exact published ROM as ASCII16/MSX1A/60Hz and
+displays the game after F1. The scoped browser is closed. This is launch-only
+evidence; listening, fluidity, mobile, owner and physical acceptance remain open.
+
+GitHub issue/PR bodies and Project7 were freshly checked. Issue42 is open,
+In review; PR43 remains draft, unmerged and stacked on41. All independent
+writers have stopped. New AR evidence roots are sealed separately from the
+73 immutable predecessors; see `outputs/presentation/viewport-ar-seals.json`.
+Exact public delivery receipt: `references/viewport-edges-delivery.json`.
