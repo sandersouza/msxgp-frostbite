@@ -1,3 +1,19 @@
+## Qualified v26 candidate — native bands and left-edge closure
+
+Source `eaa441806da4bb8fa4bfff2b0a6e73b3976286fe`,214 source files; exact ROM
+`7765bb9e1485a237c49abe0a95c621bea918b61989aae1fc4ad97b1d8b031c84`.
+Packed player bands, exact three-sprite bear, four-stream temperature update and
+private warm NAME prefix preserve original mechanics/controls/palette/PSG.
+The owner-requested lower-left background closure retains player foreground.
+
+Bear NTSC28.12→29.83FPS (+6.08%); full foreground mean70670→62257cycles.
+Grounded snapshots20→22/26 NTSC and14→17/26 PAL; no previous landing/endpoint
+lost.612host/2115source/2040density/54header/2115audio,66IRQs, negative controls,
+four clean passive/natural routes, independent native review and exact CI pass.
+Workbook41tabs preserves all40 historical tabs. Publication verification is in
+progress. See docs/handoffs/issue-42-v26-delivery.md and native-bands diagnostics.
+Stable/all-level30FPS and owner/physical acceptance remain open; no issue close.
+
 ## Local continuation — lower left edge closure
 
 Owner report confirmed: the black sea-edge column stopped at Y175 while water

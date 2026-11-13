@@ -5,21 +5,20 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.25 hybrid bear diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.25-bear-hybrid-diagnostic)
-uses an exact sprite prefix and tile suffix, retaining v24 composed graphics,
-player colors, original mechanics/clock/controls and PSG. Bear NTSC mean rises
-27.10→28.12 pictures/s (+3.79%); regular NTSC stays31.59. Bear foreground maximum
-97,481→93,939 cycles. **Stable/all-level30FPS remains open.** Bear PAL stays24.69;
-regular PAL regresses29.77→29.66. All26 landing/end flags match v24; existing
-missed snapshots and long frames remain. This is an automated/emulator-qualified
-diagnostic; owner/mobile/listening/physical acceptance remains pending.
+The latest [v0.0.26 native bands diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.26-native-bands-diagnostic)
+packs player color bands, uses an exact three-sprite bear and reduces redundant
+header transfers. The lower left sea border is closed. Original mechanics,
+clock, controls, player colors and PSG stay exact. Bear NTSC28.12→29.83FPS (+6.08%);
+foreground maximum93,939→79,409 cycles. Grounded landing snapshots improve20→22
+of26 NTSC and14→17 PAL, with no prior landing/endpoint lost. **Stable/all-level
+30FPS remains open:** one long bear picture and regular hitches remain. This is
+automated/emulator evidence; owner/mobile/listening/physical acceptance is pending.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.25-bear-hybrid-diagnostic%2Ffrostbite-0.0.25-bear-hybrid-diagnostic.rom&ROM_FORMAT=ASCII16).
-Rollback: [unchanged v24 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.24-temperature-programs-diagnostic/frostbite-0.0.24-temperature-programs-diagnostic.rom).
-Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.25-bear-hybrid-diagnostic.md)
-are attached. Read [architecture/limits](docs/bear-hybrid-diagnostic.md),
-[validation](references/bear-hybrid-result.json) and
-[verified downloads](references/bear-hybrid-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.26-native-bands-diagnostic%2Ffrostbite-0.0.26-native-bands-diagnostic.rom&ROM_FORMAT=ASCII16).
+Rollback: [unchanged v25 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/frostbite-0.0.25-bear-hybrid-diagnostic.rom).
+Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.26-native-bands-diagnostic.md)
+are attached. Read [architecture/limits](docs/native-bands-diagnostic.md) and
+[validation](references/native-bands-result.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.
