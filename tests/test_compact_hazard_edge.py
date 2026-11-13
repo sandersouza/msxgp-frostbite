@@ -48,6 +48,7 @@ class HazardEdgeTests(unittest.TestCase):
     def test_rejects_partial_or_unqualified_source_shapes(self):
         m=self.model()
         with self.assertRaises(ValueError):m.ordinary_program(bytes(7),(0,0,0,0))
+        with self.assertRaises(ValueError):m.ordinary_program([999]*8,(255,255,255,80))
         with self.assertRaises(ValueError):m.shore_program(bytes([128]+[0]*18),0,0)
         with self.assertRaises(ValueError):m.ordinary_context(160,0,0)
 

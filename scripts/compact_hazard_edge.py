@@ -41,7 +41,8 @@ def _row_masks(clock,after_always,after_different,player_x,visible):
 
 
 def ordinary_program(glyph,context):
-    if len(glyph)!=8 or len(context)!=4:
+    if (len(glyph)!=8 or len(context)!=4
+            or any(type(v) is not int or not 0<=v<=255 for v in glyph)):
         raise ValueError('complete enemy glyph and horizontal context required')
     visible_distance,clock_distance,sample,px=context
     if (any(type(v) is not int or v not in (*range(15),255) for v in (visible_distance,clock_distance))
@@ -94,7 +95,8 @@ def _wide_clock_window(value,left):
 
 
 def shore_program(glyph,player_x,bear_x):
-    if len(glyph)!=19 or any(glyph[:2]) or type(player_x) is not int or not 0<=player_x<160:
+    if (len(glyph)!=19 or any(glyph[:2]) or type(player_x) is not int or not 0<=player_x<160
+            or any(type(v) is not int or not 0<=v<=255 for v in glyph)):
         raise ValueError('qualified19-byte bear glyph with blank final rows and complete player X required')
     body,clocks,initial=bear_position(bear_x)
     old=0;rows=[];clip=clip_player(player_x)
