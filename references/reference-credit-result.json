@@ -1,0 +1,228 @@
+{
+  "complete": true,
+  "version": "v0.0.30-reference-credit-diagnostic",
+  "source_commit": "9915dab1c4c431a62b68c4886cdf788b1983f774",
+  "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "source_files": 232,
+  "preserved_parent_sources": 229,
+  "parent_rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+  "credit": {
+    "parent_rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+    "patches": [
+      {
+        "offset": 1080602,
+        "size": 112,
+        "before_sha256": "73370e45c9751c6bbc04ff29bf4735d25ef9841528820cacf39861dd8e6cbc38",
+        "after_sha256": "bea2139a08b761c6fff9178fa8816494d05da05fef9bf601f138cc6e6732071e"
+      },
+      {
+        "offset": 1080904,
+        "size": 112,
+        "before_sha256": "f8c328b8620764f39d8c1c975440224a06b541b08a0bfd9b56fea56dddab5c41",
+        "after_sha256": "c66e82c7ddc927f3571692e6704859d11c23d57bfbfd4a742570fed2bfc9c270"
+      }
+    ],
+    "word": "retroworks",
+    "hyphen": false,
+    "year": false,
+    "right": 247,
+    "top": 182,
+    "bottom": 188,
+    "coarse_shift": 1,
+    "ids": [
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      250,
+      251,
+      252,
+      253
+    ],
+    "cells": [
+      [
+        22,
+        24,
+        134
+      ],
+      [
+        22,
+        25,
+        135
+      ],
+      [
+        22,
+        26,
+        136
+      ],
+      [
+        22,
+        27,
+        137
+      ],
+      [
+        22,
+        28,
+        138
+      ],
+      [
+        22,
+        29,
+        139
+      ],
+      [
+        22,
+        30,
+        140
+      ],
+      [
+        23,
+        24,
+        141
+      ],
+      [
+        23,
+        25,
+        142
+      ],
+      [
+        23,
+        26,
+        143
+      ],
+      [
+        23,
+        27,
+        250
+      ],
+      [
+        23,
+        28,
+        251
+      ],
+      [
+        23,
+        29,
+        252
+      ],
+      [
+        23,
+        30,
+        253
+      ]
+    ],
+    "glyph_size": [
+      4,
+      7
+    ],
+    "character_pitch": 5,
+    "executable_bytes_unchanged": true,
+    "extra_vram_bytes": 0,
+    "extra_ram_bytes": 0
+  },
+  "reports": {
+    "matrix-final": "1a0609dbbfa048c1bc06d90f95bd652dfac67bd1339da07fb8733eb191bd9eee",
+    "density-full-final": "a2eed75ff55b8b914d73f22b694cebea627610180e2300a1192198e1bacc415a",
+    "header-final": "7bf5379fcd528430bd954fbdeeb4927ae7dfe0783a3008f27fcf02dc87194c20",
+    "audio-final": "3b7832a915523ae6eecbf1e35cb61d1b2d1de1903effd802367fded999c2b31c",
+    "ntsc-final": "031c7b5a0ff40be8664e9b9ed72033ee766216e8ae51ec651808a2dbc5ca2ed5",
+    "pal-final": "aa1922ac9551f2d74cece27716e266f0babb5d93315d3c12b75e31242581c38a",
+    "bear-ntsc-final": "8ae0f86455c5d1744bc766f33cd7ee75430b5d1376d12657a20d6eceecbf3ca8",
+    "bear-pal-final": "82513c9a7bf06801d5922cd86d2ca18044cad4d363b82fc0cdba9937caf8fc8c"
+  },
+  "native_review_sha256": "aa926cca784211c2f37dc5d4a693e05c173632bc7a47b4efe2c3f174ca728dfa",
+  "host_tests": 619,
+  "exact_source_ci": [
+    {
+      "id": 43443298922,
+      "source_commit": "9915dab1c4c431a62b68c4886cdf788b1983f774",
+      "conclusion": "success"
+    },
+    {
+      "id": 43443093359,
+      "source_commit": "9915dab1c4c431a62b68c4886cdf788b1983f774",
+      "conclusion": "success"
+    }
+  ],
+  "full_frame_timing_identical_to_v29": {
+    "ntsc": {
+      "metrics": {
+        "active_pictures_per_second": 32.53896141054464,
+        "committed_pictures": 1474,
+        "mean_prepare_elapsed_cycles": 53629.717774762554,
+        "max_prepare_elapsed_cycles": 311449,
+        "mean_irq_cycles": 17718.453818827707,
+        "max_irq_cycles": 29308
+      },
+      "non_picture_buffers_identical": true,
+      "buffers": {
+        "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+        "owners.bin": "4e4b4eaa7fbec0d22132aa72d49e781b2d154e4d7a89b58ba5f7d8d2177b02c8",
+        "irq.tsv": "a94b0dec4fb0f2415a16907fdd3112aaed36d76a3f873aa27dc2f3fb143b53ee",
+        "pictures.tsv": "a02fda1f38185636752381f060253a4f35603fcf506623b689e8b48bd1956df1"
+      }
+    },
+    "pal": {
+      "metrics": {
+        "active_pictures_per_second": 30.99913887907773,
+        "committed_pictures": 1335,
+        "mean_prepare_elapsed_cycles": 54297.880149812736,
+        "max_prepare_elapsed_cycles": 299857,
+        "mean_irq_cycles": 20901.28844114528,
+        "max_irq_cycles": 49391
+      },
+      "non_picture_buffers_identical": true,
+      "buffers": {
+        "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+        "owners.bin": "7a7d3b04e6997a01a1a832e7aa138838268bd3886d19276498859b7f78dafa4e",
+        "irq.tsv": "a11c32a524a33602e163cdfa1d47cfe24c8f9f21d2b66bf5d29b372941ea6123",
+        "pictures.tsv": "678ba6d8733888c81044ba12761aa669071e113d234251bed343a2e9cb3015cd"
+      }
+    },
+    "bear-ntsc": {
+      "metrics": {
+        "active_pictures_per_second": 29.69779166275396,
+        "committed_pictures": 349,
+        "mean_prepare_elapsed_cycles": 68649.72206303725,
+        "max_prepare_elapsed_cycles": 311449,
+        "mean_irq_cycles": 15527.41935483871,
+        "max_irq_cycles": 25961
+      },
+      "non_picture_buffers_identical": true,
+      "buffers": {
+        "route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+        "owners.bin": "9169dfa0ef369e9c4a805dd23423f169e6df875792ff4eba93fb6354367cf649",
+        "irq.tsv": "6ff36b54dc38d9bbe737b901c94c9a863704fef48ed0eb520a79aa582d82f3c0",
+        "pictures.tsv": "c5ac939b056eb720b2ecf32026bcba10d4c216dfa0a5a6846f741e60e6a69141"
+      }
+    },
+    "bear-pal": {
+      "metrics": {
+        "active_pictures_per_second": 25.078849904497336,
+        "committed_pictures": 316,
+        "mean_prepare_elapsed_cycles": 69347.16139240506,
+        "max_prepare_elapsed_cycles": 299857,
+        "mean_irq_cycles": 18282.56262042389,
+        "max_irq_cycles": 43020
+      },
+      "non_picture_buffers_identical": true,
+      "buffers": {
+        "route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+        "owners.bin": "f70b7fb9e6c9594e19307d2b7b5de7f8b432dd12e051de662dd6de905ef1089c",
+        "irq.tsv": "1a49fef47d62635e49c92090f2d6be2816c8516216a4afe03b75e960abf55d0f",
+        "pictures.tsv": "df74429738b32f769d456a57c95b2e827001767442d6bc3e960d8ba6689acfce"
+      }
+    }
+  },
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "uniform30fps_accepted": false
+}

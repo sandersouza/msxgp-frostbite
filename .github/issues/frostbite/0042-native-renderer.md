@@ -1,4 +1,23 @@
-## Current delivery — v29 aligned credit
+## Current delivery — v30 owner-reference lettering
+
+Owner rejected v29's joined uppercase font and supplied a lowercase reference.
+The replacement uses its4x7 glyphs with five-pixel pitch, no year or hyphen,
+right edgeX247 and the existing Activision baseline/coarse shift. Only98 bytes
+inside two existing PGT tables change. All executable, color and NAME bytes,
+memory allocations, mechanics, input and PSG remain v29-identical.
+
+Runtime9915dab1c4c431a62b68c4886cdf788b1983f774; ROM SHA-256
+e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d.
+232 bound sources retain229 parents.619host/2115source/2115dense/54header/
+2115audio and four full routes pass. Source CPU, ownership, IRQ and picture
+timing buffers are byte-identical to v29 across all four routes, proving no
+whole-frame cost/cadence change. Independent PNG/literal-table/128nativecommit
+checks pass; unchanged v29 runtime IRQ proofs are explicitly reused.
+See docs/handoffs/issue-42-v30-delivery.md, references/reference-credit-result.json
+and reference-credit-delivery.json. Owner visual acceptance and all-level30FPS
+remain open; PR43 draft/stacked on41, no merge/close. Earlier sections are history.
+
+## Previous delivery — v29 aligned credit
 
 Owner-requested RETROWORKS now ends at X247 with an angular uppercase wordmark,
 matching Activision's seven-pixel height/baseline, including the coarse footer
