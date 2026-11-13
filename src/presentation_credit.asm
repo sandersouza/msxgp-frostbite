@@ -26,6 +26,17 @@ as_top:
 as_bottom:
  DB 141,142,143,250,251,252,253
 as_names_end:
+as_commit_guard:
+ LD HL,SAT
+ LD A,($F068)
+ CP 150
+ SBC A,A
+ CPL
+ LD C,A
+ LD A,($DA08)
+ CP C
+ JP Z,presentation_commit+3
+ JP as_bridge
  ASSERT $ <= $66FA
  DS $66FA-$,0
  ORG aq_boot

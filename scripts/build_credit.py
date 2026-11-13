@@ -66,7 +66,7 @@ def build(base, out):
     at = s['presentation_commit'] - 0x4000
     if original[at:at+3] != bytes((33, s['SAT'] & 255, s['SAT'] >> 8)):
         raise ValueError('Commit hook differs')
-    patch(at, bytes((195, q['as_bridge'] & 255, q['as_bridge'] >> 8)), original[at:at+3])
+    patch(at, bytes((195, q['as_commit_guard'] & 255, q['as_commit_guard'] >> 8)), original[at:at+3])
     def refresh(node):
         if isinstance(node, dict):
             if all(k in node for k in ('bank', 'rom_address', 'ram_address', 'size', 'sha256')):
