@@ -1,4 +1,14 @@
-## Current delivery — v30 owner-reference lettering
+## Owner accepted v30 — integration and closure authorized
+
+On2026-11-13 the owner accepted the current v0.0.30 baseline as stable and
+enjoyable, explicitly requested closing42 and opening a successor for a32 KiB
+mapperless cartridge plus native MSX-DOS COM and BASIC BIN. The DoD permits
+closure with39's original-cadence goal unmet;39/15/16 remain open. This owner
+acceptance does not assert physical hardware or uniform/all-level30FPS.
+See docs/handoffs/issue-42-owner-acceptance.md. PR41/43 integration and fresh
+checks precede closure. The following delivery entries are historical evidence.
+
+## Accepted delivery — v30 owner-reference lettering
 
 Owner rejected v29's joined uppercase font and supplied a lowercase reference.
 The replacement uses its4x7 glyphs with five-pixel pitch, no year or hyphen,
