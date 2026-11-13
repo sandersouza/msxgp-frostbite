@@ -8,6 +8,14 @@ Branch: `codex/enhancement/44-compact-native-formats`, from the integrated PR43
 main commit. Resolve and record that exact merge SHA before implementation.
 The dispatch message also carries the verified integration SHA.
 
+Inventory continuation: integrated starting commit
+`57d32b526757ac4ce3deb72323c4f163112dfe49`. Issue44 owns this checkout exclusively.
+See `docs/compact-native-inventory.md` and its compact receipt for the read-only
+storage/coverage measurements and finite collision-factor experiments. All
+new raw work is in `outputs/compact/issue44-*`; older controls remain immutable.
+No product ROM bytes or upper RAM/VRAM allocation changed. Do not mistake the
+completed inventory for completion of this issue's ROM/COM/BIN deliverables.
+
 ## Authority and ownership
 
 The owner approved v0.0.30 as stable/enjoyable and requested closing42 and this
