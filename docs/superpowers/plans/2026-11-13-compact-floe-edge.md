@@ -35,6 +35,13 @@ needed51,159bytes and was rejected.
 - [x] Review and record generator limitations before flat runtime integration.
 - [ ] Qualify native row/view/Y convolution and combined electrical outputs.
 
+Row-evaluator gate:666distinct five-mask tuples,22tags(-2,-1,0..19),228views.
+Full-program gate: classify captured native generator outputs into2,086distinct
+39-byte programs. Execute all34source-Y values ×228views per program against
+direct accepted-ROM bit7 responses (16,170,672calls). These checks qualify
+program accumulation from intermediate masks; the combined geometry caller,
+shadow merge and default-game timing remain separate integration gates.
+
 Native work is staged: qualify all24,000horizontal mask-generator inputs first.
 Its32-byte result is independent of player Y/glyph/reflection. Native view/Y
 convolution and combined electrical outputs remain a subsequent component gate;
