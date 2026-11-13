@@ -12,6 +12,7 @@ cf_shift EQU $C784
 cf_reflection EQU $C785
 cf_absolute_x EQU $C786
 
+    IFNDEF CF_ENEMY_ONLY
 cf_contact:
     LD A,(cf_y)
     SUB 50
@@ -137,5 +138,138 @@ cf_contact:
     LD A,C
     RET
 cf_end:
+    ENDIF
 
     ASSERT (cf_glyphs & 255) == 0
+
+    IFDEF CF_WITH_ENEMY
+; Ordinary common-profile component, playerX25..151, one original copy.
+; Same seven-byte input ABI, interpreted as: shape index0..32, Y(0 or36..61),
+; signed-distance index(distance+7), P0 pose/shift/reflection, P1 reflection.
+; Seven collision rows retain the source's early latch read; visual height is8.
+cf_enemy_contact:
+    LD A,(cf_y)
+    SUB 36
+    JP C,.direct_miss
+    CP 25
+    JP NC,.direct_miss
+    PUSH IX
+    PUSH AF
+    LD A,(cf_dx)
+    CP 7
+    JR C,.right_shift
+    SUB 7
+    LD E,A
+    LD D,0
+    LD HL,cf_enemy_left_end
+    JR .rotation_address
+.right_shift:
+    NEG
+    ADD A,7
+    LD E,A
+    LD D,0
+    LD HL,cf_enemy_right_end
+.rotation_address:
+    OR A
+    SBC HL,DE              ; one-byte rotations; enter at the required count
+    PUSH HL
+    POP IX
+    LD A,(cf_control)
+    LD L,A
+    LD H,0
+    LD DE,cf_enemy_shapes
+    ADD HL,DE
+    LD A,(HL)
+    ADD A,7
+    LD L,A
+    LD A,(cf_absolute_x)    ; P1 reflection in this entrypoint
+    AND 1
+    ADD A,cf_enemy_glyphs/256
+    LD H,A
+    EX DE,HL
+    POP AF
+    LD B,7
+    CP 19
+    JR C,.bottom_clip
+    SUB 18
+    EX DE,HL
+    LD E,A
+    LD D,0
+    OR A
+    SBC HL,DE              ; enemy source bytes run backwards through the rows
+    EX DE,HL
+    NEG
+    ADD A,7
+    LD B,A
+    LD A,18
+    JR .glyph
+.bottom_clip:
+    CP 6
+    JR NC,.glyph
+    INC A
+    LD B,A
+    DEC A
+.glyph:
+    PUSH DE
+    LD C,A
+    LD A,(cf_pose)
+    LD L,A
+    LD H,0
+    LD DE,cf_bases
+    ADD HL,DE
+    LD A,(HL)
+    LD L,A
+    LD A,(cf_shift)
+    ADD A,L
+    ADD A,C
+    LD L,A
+    LD A,(cf_reflection)
+    AND 1
+    ADD A,cf_glyphs/256
+    LD H,A
+    POP DE
+    PUSH DE
+    PUSH HL
+    LD A,(cf_dx)
+    LD E,A
+    LD D,0
+    LD HL,cf_enemy_clip_masks
+    ADD HL,DE
+    LD C,(HL)
+    POP HL
+    POP DE
+.rows:
+    LD A,(DE)
+    CALL cf_enemy_rotate
+    AND C                  ; remove rotated pixels that crossed the clip edge
+    AND (HL)
+    JR NZ,.hit
+    DEC DE
+    DEC HL
+    DJNZ .rows
+    LD A,7
+    POP IX
+    RET
+.hit:
+    LD A,135
+    POP IX
+    RET
+.direct_miss:
+    LD A,7
+    RET
+
+cf_enemy_rotate:
+    JP (IX)
+    DUP 7
+    RLCA
+    EDUP
+cf_enemy_left_end:
+    RET
+    DUP 7
+    RRCA
+    EDUP
+cf_enemy_right_end:
+    RET
+cf_enemy_end:
+    ASSERT (cf_enemy_glyphs & 255) == 0
+    ENDIF

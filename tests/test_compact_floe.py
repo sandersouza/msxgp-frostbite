@@ -58,6 +58,31 @@ class FloeGeometryTests(unittest.TestCase):
         self.assertEqual(shadow(5, 49, 95), 64)
         self.assertEqual(shadow(5, 49, 159), 64)
 
+    def test_enemy_shift_clips_pixels_without_rotating_them(self):
+        model = self.model()
+        mask = getattr(model, 'enemy_mask', None)
+        self.assertIsNotNone(mask, 'clipped enemy shift missing')
+        self.assertEqual(mask(128, 1), 0)
+        self.assertEqual(mask(64, 1), 128)
+        self.assertEqual(mask(1, -1), 0)
+        self.assertEqual(mask(2, -1), 1)
+        self.assertEqual(mask(128, -7), 1)
+        self.assertEqual(mask(1, 7), 128)
+
+    def test_enemy_uses_seven_collision_rows_and_independent_reflections(self):
+        model = self.model()
+        contact = getattr(model, 'ordinary_convolve', None)
+        self.assertIsNotNone(contact, 'ordinary contact convolution missing')
+        player = bytes([128] + [0] * 18)
+        enemy = bytes([0] * 7 + [128])
+        self.assertTrue(contact(player, enemy, 36, 0))
+        self.assertFalse(contact(player, enemy, 36, 0, enemy_reflect=True))
+        self.assertTrue(contact(player, enemy, 36, 0, player_reflect=True, enemy_reflect=True))
+        # A lone final visual row is excluded by the source's earlier latch read.
+        last = bytes([128] + [0] * 7)
+        self.assertFalse(contact(player, last, 43, 0))
+        self.assertFalse(contact(player, enemy, 61, 0))
+
 
 if __name__ == '__main__':
     unittest.main()

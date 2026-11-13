@@ -29,6 +29,13 @@ flat layout/loaders and whole-frame qualification remain pending. An additional
 host-only ordinary-enemy experiment identifies seven collision rows versus
 eight visual rows; preserve this source timing distinction.
 
+Ordinary-enemy component WIP extends the same host/fixture/assembly files with
+`--component enemy`. Its common-profile geometry matches25,740cells ×228views.
+Smoke02 passes30,000actual Z80 cases:192code+1,078data bytes including shared
+P0glyph pages/offsets. Full native corpus and a fresh floe regression are pending.
+Do not edit the three component sources while those qualifications run; source
+fingerprints are checked before/after. No default-game source is changed.
+
 ## Authority and ownership
 
 The owner approved v0.0.30 as stable/enjoyable and requested closing42 and this

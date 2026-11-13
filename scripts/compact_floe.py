@@ -9,6 +9,7 @@ import hashlib
 from original_graphics import SOURCE_SHA256
 from presentation_contact14 import read_field
 from stella_floe import control_pairs
+from hazard_domain import shapes
 
 
 def signed_nibble(value):
@@ -65,6 +66,40 @@ def shadow_channel(control, y, absolute_x):
     if control not in (4, 5) or 50 <= y <= 68 or absolute_x < 94:
         return 0
     return 64 if absolute_x % 32 == 30 or control == 5 and absolute_x % 32 == 31 else 0
+
+
+def enemy_mask(value, distance):
+    if type(value) is not int or not 0 <= value <= 255 or type(distance) is not int or not -7 <= distance <= 7:
+        raise ValueError('byte pattern and signed distance -7..7 required')
+    return (value << distance) & 255 if distance >= 0 else value >> -distance
+
+
+def ordinary_convolve(player, enemy, y, distance, *, player_reflect=False, enemy_reflect=False):
+    if len(player) != 19 or len(enemy) != 8:
+        raise ValueError('complete source player and enemy glyphs required')
+    footprint = []
+    for dy in range(7):
+        value = enemy[7 - dy]
+        if enemy_reflect:
+            value = int(f'{value:08b}'[::-1], 2)
+        footprint.append(enemy_mask(value, distance))
+    # Both seven-row contact windows use the same glyph convolution, with
+    # different source-Y origins: enemy36, ice50. Visual enemy height stays8.
+    return convolve(player, bytes(footprint), y + 14, reflect=player_reflect) if y else False
+
+
+def literal_atoms(glyph_pages, bases):
+    atoms = [[0] * 8 for _ in range(19)]
+    for pose, base in enumerate(bases):
+        for shift in range(19):
+            for reflect in range(2):
+                view = pose * 38 + shift * 2 + reflect
+                for row in range(19):
+                    value = glyph_pages[reflect * 256 + base + shift + row]
+                    for bit in range(8):
+                        if value & (128 >> bit):
+                            atoms[row][bit] |= 1 << view
+    return atoms
 
 
 class FloeOracle:
@@ -138,6 +173,21 @@ class FloeOracle:
         mask, shadow = self.records[self.row(control, px, yi)[dx]]
         return 7 | shadow | (128 if mask & (1 << view) else 0)
 
+    @lru_cache(None)
+    def ordinary_row(self, directory, mode, yi):
+        if not 0 <= mode < 66 or not 0 <= yi < 26 or not 0x4000 <= directory <= 0x8000 - 66 * 3:
+            raise ValueError('complete resident ordinary common-profile directory required')
+        at = directory - 0x4000 + mode * 3
+        pointer = self.rom[at:at+3]
+        bank, address = pointer[2], int.from_bytes(pointer[:2], 'little')
+        return self.row_at(*self.pointer(bank, address + yi * 3))
+
+    def ordinary_sample(self, directory, mode, yi, distance_index, view):
+        if not 0 <= distance_index < 15 or not 0 <= view < 228:
+            raise ValueError('ordinary signed-distance index and literal view required')
+        mask, shadow = self.records[self.ordinary_row(directory, mode, yi)[distance_index]]
+        return 7 | shadow | (128 if mask & (1 << view) else 0)
+
 
 def build_assets(original, oracle):
     if len(original) != 4096 or hashlib.sha256(original).hexdigest() != SOURCE_SHA256:
@@ -152,17 +202,7 @@ def build_assets(original, oracle):
     if any(base + 36 >= 256 for base in bases):
         raise ValueError('literal glyph views cross their source page')
     reverse = bytes(int(f'{byte:08b}'[::-1], 2) for byte in glyphs)
-    atoms = [[0] * 8 for _ in range(19)]
-    for pose, base in enumerate(bases):
-        for shift in range(19):
-            for reflect in range(2):
-                view = pose * 38 + shift * 2 + reflect
-                page = reverse if reflect else glyphs
-                for row in range(19):
-                    value = page[base + shift + row]
-                    for bit in range(8):
-                        if value & (128 >> bit):
-                            atoms[row][bit] |= 1 << view
+    atoms = literal_atoms(glyphs + reverse, bases)
     shadow_directory = bytearray()
     shadow_maps = {}
     cells, interior = 0, 0
@@ -206,3 +246,44 @@ def build_assets(original, oracle):
         reference_shadow_dictionary_bytes=len(shadow_directory) + len(shadow_maps) * 20,
         player_x_domain=[9, 153], sizes={k:len(v) for k,v in assets.items()},
         scope='Exact finite floe component only; no edge/enemy/shore, target timing or whole-game equivalence claim.')
+
+
+def build_enemy_assets(original, oracle, directory):
+    if len(original) != 4096 or hashlib.sha256(original).hexdigest() != SOURCE_SHA256:
+        raise ValueError('canonical original ROM required')
+    domain = shapes(original)
+    if len(domain) != 33 or oracle.meta['tables']['profile_ys']['ordinary'] != list(range(36, 62)):
+        raise ValueError('qualified ordinary shape/Y domain differs')
+    glyph = original[0xC00:0xD00]
+    enemy = original[0xD00:0xE00]
+    reverse = lambda data: bytes(int(f'{value:08b}'[::-1], 2) for value in data)
+    bases = original[0xCAA:0xCB0]
+    atoms = literal_atoms(glyph + reverse(glyph), bases)
+    cells = 0
+    for index, shape in enumerate(domain):
+        for reflect in range(2):
+            page = reverse(enemy) if reflect else enemy
+            mode = index * 2 + reflect
+            for yi, y in enumerate(range(36, 62)):
+                row = oracle.ordinary_row(directory, mode, yi)
+                for xi, distance in enumerate(range(-7, 8)):
+                    predicted = 0
+                    for dy in range(7):
+                        tag = y - 36 - dy
+                        if 0 <= tag < 19:
+                            mask = enemy_mask(page[shape + 7 - dy], distance)
+                            for bit in range(8):
+                                if mask & (128 >> bit):
+                                    predicted |= atoms[tag][bit]
+                    actual, shadow = oracle.records[row[xi]]
+                    if predicted != actual or shadow:
+                        raise ValueError(f'ordinary geometric contact differs at {mode}/{yi}/{xi}')
+                    cells += 1
+    assets = dict(glyphs=glyph + reverse(glyph), bases=bases,
+                  enemy_glyphs=enemy + reverse(enemy), enemy_shapes=bytes(domain),
+                  enemy_clip_masks=bytes(enemy_mask(255, distance) for distance in range(-7, 8)))
+    return assets, dict(complete=True, geometric_cells=cells, literal_views=228,
+        shape_count=33, enemy_reflections=2, source_y=[36, 61], collision_rows=7,
+        visual_rows=8, player_x_domain=[25, 151],
+        sizes={k:len(v) for k,v in assets.items()},
+        scope='Ordinary common-profile source cells only; no edge, copy union, shore, native timing or game-integration proof.')
