@@ -45,6 +45,22 @@ host-only; no shore Z80 implementation yet. Boundary research stays separate:
 all9,859stored bit7 masks admit adjacent-byte-equality event atoms, but the
 first Y-relative edge model is incomplete and must not replace the old tables.
 
+Shore follow-through: source3d9a173 is now fully qualified for the common-X
+domain,1,132,704native cases,137code+2,747data bytes (518shared),81..1,540cycles.
+635host tests pass. Independent review verifies all native outputs/files and
+frozen sources. Prior floe/enemy fixtures rebuild byte-identically; one-case
+smokes are not new complete native reruns. All three components occupy6,451
+logical bytes before integration. See `docs/compact-shore-component.md`.
+
+Edge work remains open. `issue44-floe-edge-events-03` represents every edge
+column exactly with adjacent-byte event atoms, but `issue44-edge-storage-01`
+measures51,159bytes for its first explicit lookup/DAG encoding. Reject that
+encoding for the compact runtime. Investigate a bounded source-clock/event
+calculation instead. `issue44-edge-counter-01` captures unmodified Stella7.0
+counter states across nine player positions and two ice rows. Run its helper
+with SDL dummy video/audio also in the parent environment: backend `-help`
+otherwise timed out before creating a capture. No default game changed.
+
 ## Authority and ownership
 
 The owner approved v0.0.30 as stable/enjoyable and requested closing42 and this

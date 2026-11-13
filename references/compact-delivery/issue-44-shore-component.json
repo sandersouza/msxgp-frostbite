@@ -1,0 +1,109 @@
+{
+  "complete": true,
+  "game_runtime_changed": false,
+  "component_fixture_only": true,
+  "component": "bear",
+  "no_playable_rom_release": true,
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "component_rom_sha256": "c927bf70ea51e2487d7a87364b6dcc8a019eb1de10aadb3a6cbce08eab41b8af",
+  "source_commit": "3d9a17341023ae207d24fa4f893d8a23670b3e35",
+  "oracle_metadata_sha256": "cb207af5a74c1113eda366ae8b312a4cc0ea3337ab797a85c20a6b10b094b2e9",
+  "oracle_symbols_sha256": "e79c101374fa0376dbef6ac99364f1e882a663bf9d2cca6aa06d6a9b42d196e8",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "sources": {
+    "scripts/compact_floe.py": "228efe1066c337d58a5b015f086db9720b0bd4c85264ccd28e568617997cba12",
+    "scripts/compact_floe_probe.py": "f7be3f3b0aaf291047e9e546d9fb068c82bdff77e67b386a5678e5cb1b7dcc3f",
+    "src/compact_floe_kernel.asm": "936b43d828a06328f913ec053a0e14a98e8bee28a91b59fad33ab4247f806a74"
+  },
+  "cases": 1132704,
+  "host_proof": {
+    "complete": true,
+    "geometric_cells": 4267200,
+    "literal_views": 228,
+    "bear_aliases": 3,
+    "bear_reflections": 2,
+    "source_y": [
+      12,
+      46
+    ],
+    "collision_rows": 17,
+    "visual_rows": 19,
+    "source_final_rows_blank": true,
+    "player_x_domain": [
+      25,
+      151
+    ],
+    "footprint_groups": 123,
+    "sizes": {
+      "directory": 138,
+      "footprints": 2091,
+      "glyphs": 512,
+      "bases": 6
+    },
+    "scope": "Every shore common-X source cell; no edge, native timing or default-game integration claim."
+  },
+  "complete_native_domain": true,
+  "outputs_equal": true,
+  "ix_iy_sp_preserved": true,
+  "only_stack_writes": true,
+  "mapper_accesses": 0,
+  "component_code_bytes": 137,
+  "component_data_bytes": 2747,
+  "cycles_including_call_and_jump": {
+    "min": 81,
+    "mean": 827.2252768596209,
+    "p95": 1362,
+    "max": 1540
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "files": {
+    "inputs.bin": "a89520d25acc2dcb2eb0983b7ce0e4b00dc1cc55b0561ccdbc934894b7f32059",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "3b590b123ab7d83d84f1ff0c2f2f1ee3e99ce572406ad1f7b10154fccd486a29",
+    "expected.bin": "86fedb7ad2029c616ffd97d5b9b9ec1a26adad11babf659735beb3ae89b5e5f7",
+    "probe.tcl": "f814625b3ba6ae65459ea2593d15987f99d14c583280d62f93f66dc000f7d688",
+    "glyphs.bin": "951dd5d31ca1c38f8a3c722cf96b6267aa62bed9ba6b4f46aa5fade4bbdaf535",
+    "bases.bin": "bcf4ea69951b0f26b79b0f01491e5331e10549813d11c02f1aecf122ef70c874",
+    "actual.bin": "1cacfa290406bcbea370de5d4570f9219a4978a5605d275c74ac0175273f08c8",
+    "component-fixture.rom": "c927bf70ea51e2487d7a87364b6dcc8a019eb1de10aadb3a6cbce08eab41b8af",
+    "fixture.sym": "978c50e70d693535baa0a12787e732f6e80cd2fa86c1d17658fa6c292cf1e72b",
+    "directory.bin": "78247e31eaa91a67a4a8accca296f557ee0b02721e97316303b16e4511de71f9",
+    "fixture.asm": "a4edfb29ab239e155aab56e55c4af7210ed29e80fef4169fecb509cb8b14eae8",
+    "footprints.bin": "993863d7627e0d1f32acf257e7ec372b51551c049186900bf91ee180ad28043c",
+    "host-proof.json": "4fe65068582a9ca2525365f6493745697c8687744de801765b81407056ae4694"
+  },
+  "scope": "Actual Z80 shore component at playerX25..151; no edge, default game integration or whole-frame cadence proof.",
+  "raw_receipt": {
+    "path": "outputs/compact/issue44-bear-native-full-01/component-result.json",
+    "sha256": "a0a86114b363de34f4562c4b7285eae2f0ffc9ba037a28c643d2d0918f7c21af"
+  },
+  "host_tests": {
+    "count": 635,
+    "log_sha256": "369dfe3a5b12c37d20f372ec6c4c7e468c9efafddb9397c57aaff92d5ede5a34"
+  },
+  "rebuild_parity": {
+    "floe": {
+      "path": "outputs/compact/issue44-floe-bear-regression-01/component-result.json",
+      "sha256": "ad41fd9ca7b3f65bc85cd6dd0a79a1e5c4ab217f2268d515e539bc10b1a7a91e",
+      "cases": 1,
+      "fixture_bytes_unchanged": true,
+      "new_full_domain_run": false
+    },
+    "enemy": {
+      "path": "outputs/compact/issue44-enemy-bear-regression-01/component-result.json",
+      "sha256": "db002bcf14704d5eec57dc99c4e14dd924d8c16f28e1af83e4d91025121ebbde",
+      "cases": 1,
+      "fixture_bytes_unchanged": true,
+      "new_full_domain_run": false
+    }
+  },
+  "independent_review": "Final native outputs, all recorded hashes and frozen sources verified; no Critical/Important blockers for the isolated shore component.",
+  "logical_combined_storage": {
+    "bytes": 6451,
+    "shared_bytes_counted_once": 518,
+    "whole_game_size_claim": false
+  }
+}

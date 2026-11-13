@@ -24,18 +24,18 @@ against the accepted ROM, then execute every declared native input/view.
 
 ## Task 1: Host proof
 
-- [ ] Add hand-derived width/reflection/clipping tests; observe RED.
-- [ ] Implement footprint compiler and independently read shore records.
-- [ ] Verify every common-X cell, not just representative X80.
-- [ ] Run focused and full synthetic host checks.
+- [x] Add hand-derived width/reflection/clipping tests; observe RED.
+- [x] Implement footprint compiler and independently read shore records.
+- [x] Verify every common-X cell, not just representative X80.
+- [x] Run focused and full synthetic host checks.
 
 ## Task 2: Native proof
 
-- [ ] Add shore fixture and observe missing-entry failure.
-- [ ] Implement clipped 17-row Z80 convolution with the shared input ABI.
-- [ ] Execute full shore corpus; verify ABI, writes, hashes and cycles.
-- [ ] Check unchanged floe/enemy fixture bytes against sealed controls.
-- [ ] Obtain independent review, document exact storage/scope and commit.
+- [x] Add shore fixture and observe missing-entry failure.
+- [x] Implement clipped 17-row Z80 convolution with the shared input ABI.
+- [x] Execute full shore corpus; verify ABI, writes, hashes and cycles.
+- [x] Check unchanged floe/enemy fixture bytes against sealed controls.
+- [x] Obtain independent review, document exact storage/scope and commit.
 
 Edge contacts, copy dispatch, flat layout, cartridge/DOS/BASIC loading and
 whole-game qualification remain subsequent work in issue44.
