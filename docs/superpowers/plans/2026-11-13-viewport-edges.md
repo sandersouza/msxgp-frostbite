@@ -10,11 +10,11 @@ mechanics, source coordinates, colors, controls and PSG unchanged.
 Same Issue42 writer and branch; all73 prior evidence roots are read-only.
 
 - [x] Reproduce both defects with synthetic pixel cases and actual native calls.
-- [ ] Add a guarded builder, native helper and independent view oracle. Reuse
+- [x] Add a guarded builder, native helper and independent view oracle. Reuse
   only the verified ECC0..ECFF alignment padding. Preserve all220 parent sources.
   Recompile the existing standing-shore reservation for X16 and distinguish
   partial cache keys160..167. Keep the original cache eligibility and fast path.
-- [ ] Verify finite edge/copy/palette/cache/IRQ cases, complete scene matrices
+- [x] Verify finite edge/copy/palette/cache/IRQ cases, complete scene matrices
   and whole regular/bear NTSC/PAL routes. Compare full-frame timing and landings.
 - [ ] Update the existing performance workbook, clean rebuild/CI and review;
   publish an immutable diagnostic release with exact ROM, hashes and human tests.

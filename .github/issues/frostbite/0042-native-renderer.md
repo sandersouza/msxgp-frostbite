@@ -1,3 +1,23 @@
+## Current delivery — v28 viewport edge corrections
+
+Owner feedback after v27 reproduced two visual defects: old P0 left clipping
+and native enemy glyph overflow from the right to the left. Final source ece9a5a
+binds225 files; ROMe85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8.
+P0 clips exactly at X16; enemy glyphs do not wrap, while separate copies keep
+their original coordinates. Prepared shore and private partial cache keys keep
+the edge fast. Source mechanics, clock, controls, colors and PSG are unchanged.
+
+Regular cadence changes about-0.2%; bear cadence stays29.70NTSC/25.08PAL.
+Grounded/endpoint snapshots are unchanged, one NTSC Y run is missed versusv27.
+The fallback-only prototype was rejected for75k-cycle dragged-left preparation.
+619host/2115source/2115density/2272terminal/54header/2115audio pass, as do four
+natural/passive routes, independent native/cache/IRQ/negative proofs and two
+exact-source CI checks. The43-tab book preserves42 historical tabs/798479 cells.
+All73 prior roots are unchanged. Publication/download review remains pending.
+Stable/all-level30FPS and human/physical acceptance stay open. PR43 remains
+unmerged/draft/stacked on41. Earlier sections below are historical delivery.
+See docs/handoffs/issue-42-v28-delivery.md and references/viewport-edges-result.json.
+
 ## Current delivery — v27 open playfield and sinking colors
 
 The owner explicitly resumed after v26. Same Issue42 writer/checkout/branch;

@@ -5,20 +5,19 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.27 open playfield diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.27-open-playfield-diagnostic)
-removes the left stripe, adds `Activision - Retroworks` and preserves the
-player's normal colors during sinking, including original water fade. Source
-mechanics, controls, clock and PSG remain exact. Regular active cadence improves
-2.61% NTSC/1.95% PAL; grounded NTSC landings improve22→24/26. Bear NTSC is29.70
-versus29.83 despite lower mean CPU, with one extra long gap. **Stable/all-level
-30FPS remains open.** Owner/mobile/listening/physical acceptance is pending.
+The latest [v0.0.28 viewport edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic)
+keeps the player visible through the expanded left edge and prevents a right
+enemy glyph fragment from appearing at the left. Original mechanics, source
+positions, controls, clock and PSG remain exact; v27 colors are preserved. Prepared shore/cache
+paths retain approximately the v27 cadence, with0.2% regular-route overhead.
+Landing/endpoint snapshots stay unchanged. **Stable/all-level30FPS remains open.**
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.27-open-playfield-diagnostic%2Ffrostbite-0.0.27-open-playfield-diagnostic.rom&ROM_FORMAT=ASCII16).
-[Unchanged v26 rollback](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/frostbite-0.0.26-native-bands-diagnostic.rom).
-Exact ROM/source/hash,42-tab workbook and [human tests](docs/releases/v0.0.27-open-playfield-diagnostic.md)
-are attached. Read [architecture/limits](docs/open-playfield-diagnostic.md),
-[validation](references/open-playfield-result.json) and
-[verified downloads](references/open-playfield-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.28-viewport-edges-diagnostic%2Ffrostbite-0.0.28-viewport-edges-diagnostic.rom&ROM_FORMAT=ASCII16).
+[Unchanged v27 rollback](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/frostbite-0.0.27-open-playfield-diagnostic.rom).
+The exact ROM, source/hash,43-tab workbook and [human tests](docs/releases/v0.0.28-viewport-edges-diagnostic.md)
+are attached. Read [architecture/limits](docs/viewport-edges-diagnostic.md),
+[validation](references/viewport-edges-result.json) and
+[verified downloads](references/viewport-edges-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.
