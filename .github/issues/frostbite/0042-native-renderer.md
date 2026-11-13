@@ -1,3 +1,13 @@
+## Owner-requested stop after v26
+
+The owner requested stopping after the delivered v0.0.26 round on2026-11-12.
+Implementation/experiments are paused pending resume. Issue remains open and
+Project7 is In review; PR43 remains draft/stacked on41. Preserve local AP WIP.
+Next requested additions: remove the left black stripe/enlarge the visible
+playfield and add `Activision - Retroworks`; these are NOT implemented in v26.
+The full-height-stripe proposal was rejected. See
+docs/handoffs/issue-42-owner-stop-after-v26.md for pending-file ownership/evidence.
+
 ## Published v26 — native bands and left-edge closure
 
 Source `eaa441806da4bb8fa4bfff2b0a6e73b3976286fe`,214 source files; exact ROM
