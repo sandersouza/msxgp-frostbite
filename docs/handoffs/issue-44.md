@@ -1,5 +1,33 @@
 # Issue44 — compact native formats
 
+## Latest continuation: compact-grid full-route measurement (2026-11-13)
+
+The compact prepared-grid reconstruction is lossless at component level
+(1,280/1,280 rows), and its integrated experimental ROM retains exact source
+CPU/RAM, committed pixels, physical owners and active-page protection on full
+regular NTSC/PAL routes. It is **not acceptable as currently integrated**:
+
+| Route | v0.0.30 | Grid experiment | Difference |
+| --- | ---: | ---: | ---: |
+| NTSC active pictures/s | 32.5390 | 29.7533 | -8.56% |
+| PAL active pictures/s | 30.9991 | 28.5002 | -8.06% |
+| NTSC mean prepare cycles | 53,629.7 | 56,431.5 | +2,801.7 |
+| PAL mean prepare cycles | 54,297.9 | 57,373.5 | +3,075.6 |
+
+Integrated ROM SHA-256 `8b6c108a39b900252a014c25c96bb9a346ba8698ee1081bf13e7227a6a3f2875`.
+Exact route outputs are under `outputs/compact/issue44-grid-internal-03-ntsc/`
+and `...-pal/`; the matched v30 NTSC control is under
+`outputs/compact/issue44-v30-ntsc-control-01/`. The result demonstrates that
+reducing prepared data alone is insufficient; this integration loses cadence
+and must be optimized or excluded from any candidate. No source edits or new
+public ROM/release were made for this measurement. The standalone row
+constructor's 4,114-cycle average is not a whole-frame cost by itself.
+
+The compact header constructor also passes 6,446 standalone native cases,
+replacing 5,328 prepared bytes with 1,360 fragment bytes plus ten phase bytes;
+it has not been integrated into a gameplay route. Its receipt is under
+`outputs/compact/issue44-header-native-01/`.
+
 Issue: https://github.com/sandersouza/msxgp-frostbite/issues/44
 Dedicated successor chat: `Frostbite — ISSUE #44`, forked in the Frostbite
 project0fd5a899-599e-40d4-988e-46b3d31433dd, workspace
