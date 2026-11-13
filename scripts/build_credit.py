@@ -28,10 +28,14 @@ def build(base, out):
     s = symbols(base / 'presentation.sym')
     (out / 'symbols.inc').write_text('\n'.join(f'{n} EQU ${v:04X}' for n, v in s.items() if '.' not in n) + '\n')
     tiles, cells = compile_tiles()
-    if list(tiles) != [*range(134, 144), *range(250, 255)]:
+    if list(tiles) != [*range(134, 144), *range(250, 254)]:
         raise ValueError('Static credit reservation differs')
     (out / 'aligned-credit-patterns.bin').write_bytes(b''.join(tiles.values()))
     (out / 'aligned-credit-colors.bin').write_bytes(b''.join(tile_colors(i) for i in tiles))
+    coarse, coarse_cells = compile_tiles(True)
+    if coarse_cells != cells:
+        raise ValueError('Vertical phases must share NAME identities')
+    (out / 'aligned-credit-coarse.bin').write_bytes(b''.join(coarse.values()))
     source = ROOT / 'src/presentation_credit.asm'
     run = subprocess.run([str(verified_tool('sjasmplus')), '--nologo', f'--inc={out}', f'--raw={out / "aligned-credit.bin"}', f'--sym={out / "aligned-credit.sym"}', str(source)], capture_output=True, text=True)
     (out / 'aligned-credit-assembler.log').write_text(run.stdout + run.stderr)
@@ -51,11 +55,18 @@ def build(base, out):
     at = 147 * 16384 + 0x3800 + s['aq_credit'] - 0xf400
     patch(at, bytes((195, q['as_names'] & 255, q['as_names'] >> 8)), original[at:at + 3])
     at = 65 * 16384 + s['aq_boot'] - 0x8000
-    tail = code[80:]
+    n = q['as_boot_end'] - q['as_boot']
+    tail = code[80:80 + n]
     old_end = 65 * 16384 + s['aq_boot_end'] - 0x8000
     if any(x != 255 for x in original[old_end:at + len(tail)]):
         raise ValueError('Boot tail is occupied')
     patch(at, tail, original[at:at + len(tail)])
+    at = 147 * 16384 + 0x3800 + s['aq_credit'] + 3 - 0xf400
+    patch(at, code[80 + n:], original[at:at + len(code[80 + n:])])
+    at = s['presentation_commit'] - 0x4000
+    if original[at:at+3] != bytes((33, s['SAT'] & 255, s['SAT'] >> 8)):
+        raise ValueError('Commit hook differs')
+    patch(at, bytes((195, q['as_bridge'] & 255, q['as_bridge'] >> 8)), original[at:at+3])
     def refresh(node):
         if isinstance(node, dict):
             if all(k in node for k in ('bank', 'rom_address', 'ram_address', 'size', 'sha256')):
@@ -68,6 +79,12 @@ def build(base, out):
     world = bytes(rom[147 * 16384 + 0x3800:147 * 16384 + 0x3800 + 1240])
     (out / 'world.bin').write_bytes(world)
     m['world_x']['code_sha256'] = sha(world)
+    regions = m['profile']['ram']['regions']
+    reserved = next(r for r in regions if r['name'] == 'fixed_reserved')
+    if reserved['start'] != 0xda08 or reserved['end'] != 0xdb00:
+        raise ValueError('Credit phase byte must come from the existing reserved RAM')
+    reserved['start'] = 0xda09
+    regions.append(dict(name='credit_displayed_phase', start=0xda08, end=0xda09))
     for bank in (0, 65, 147):
         name = f'assets-{bank:03d}.bin'
         blob = bytes(rom[bank * 16384:(bank + 1) * 16384])
@@ -85,7 +102,8 @@ def build(base, out):
     m.update(version='aligned-credit-as-diagnostic', source_commit=commit, source_dirty=dirty, source_files=files,
         complete_source=dict(commit=commit, working_tree_dirty=dirty, files=files, scope='Aligned static credit only; v28 mechanics and visuals outside credit preserved.'))
     m['aligned_credit'] = dict(parent_rom_sha256=PARENT, patches=patches, tiles=list(tiles), cells=cells,
-        word='RETROWORKS', word_right=247, top=182, bottom=188, new_ram_bytes=0, occupied_existing_vram_bytes=96)
+        word='RETROWORKS', hyphen=False, word_right=247, top=182, bottom=188, coarse_vertical_shift=1,
+        new_ram_bytes=0, occupied_existing_ram_bytes=1, phase_cache_address=0xda08, occupied_existing_vram_bytes=80)
     s.update({n:v for n,v in q.items() if n.startswith('as_')})
     (out / 'presentation.sym').write_text('\n'.join(f'{n}: EQU 0x{v:08X}' for n,v in s.items()) + '\n')
     name = 'frostbite-aligned-credit-as.rom'

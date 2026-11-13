@@ -11,25 +11,25 @@ FONT = {
     'S': (15, 16, 16, 14, 1, 1, 30),
 }
 
-def pixels():
-    points = {(121 + x, 185) for x in range(5)}
+def pixels(coarse=False):
+    shift = int(coarse)
+    points = set()
     for i, letter in enumerate('RETROWORKS'):
         for y, bits in enumerate(FONT[letter]):
             for x in range(5):
                 if bits & (16 >> x):
-                    points.add((197 + i * 5 + x + int(y < 3), 182 + y))
+                    points.add((197 + i * 5 + x + int(y < 3), 182 + y + shift))
     return points
 
-def compile_tiles():
-    points = pixels()
+def compile_tiles(coarse=False):
+    points = pixels(coarse)
     pool, cells = [], []
-    for row, columns in ((22, range(24, 31)), (23, (15, *range(24, 31)))):
+    for row, columns in ((22, range(24, 31)), (23, range(24, 31))):
         for col in columns:
             pattern = bytes(sum((int((col * 8 + x, row * 8 + y) in points)
                                  << (7 - x)) for x in range(8)) for y in range(8))
-            if pattern not in pool:
-                pool.append(pattern)
-            cells.append((row, col, pool.index(pattern)))
+            pool.append(pattern)
+            cells.append((row, col, len(pool) - 1))
     ids = (*range(134, 144), *range(250, 256))
     if len(pool) > len(ids):
         raise ValueError('Credit exceeds the verified free bank2 tile IDs')
@@ -38,14 +38,16 @@ def compile_tiles():
 def audit_credit(vram):
     if len(vram) != 16384:
         raise ValueError('Complete VRAM required')
-    tiles, _ = compile_tiles()
-    for identifier, pattern in tiles.items():
-        at = 4096 + identifier * 8
-        if vram[at:at + 8] != pattern or vram[8192 + at:8192 + at + 8] != tile_colors(identifier):
-            raise ValueError('Aligned immutable credit tile differs')
+    for coarse in (False, True):
+        tiles, _ = compile_tiles(coarse)
+        if all(vram[4096 + i*8:4104 + i*8] == p and
+               vram[12288 + i*8:12296 + i*8] == tile_colors(i, coarse)
+               for i, p in tiles.items()):
+            return
+    raise ValueError('Credit is not one complete qualified vertical phase')
 
-def tile_colors(identifier):
-    return bytes([244, 244, 241, 241, 241, 241, 241, 241]) if 134 <= identifier <= 140 else bytes([241]) * 8
+def tile_colors(identifier, coarse=False):
+    return bytes([244] * (2 + int(coarse)) + [241] * (6 - int(coarse))) if 134 <= identifier <= 140 else bytes([241]) * 8
 
 def shadow_credit(raw, vram):
     audit_credit(vram)
@@ -73,6 +75,6 @@ def expected_frame(meta, original, description, ram, raw, palette):
         return bytes(result)
     for y in range(184, 192):
         result[y * 256 + 120:y * 256 + 192] = bytes([1]) * 72
-    for x, y in pixels():
+    for x, y in pixels(description['coarse_shift']):
         result[y * 256 + x] = 15
     return bytes(result)
