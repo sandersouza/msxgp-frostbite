@@ -1,4 +1,22 @@
-## Current delivery — v28 viewport edge corrections
+## Current delivery — v29 aligned credit
+
+Owner-requested RETROWORKS now ends at X247 with an angular uppercase wordmark,
+matching Activision's seven-pixel height/baseline, including the coarse footer
+shift. The owner subsequently removed the hyphen. Original graphics outside
+the credit, mechanics, controls, audio and v28 edge fixes are preserved.
+
+Runtime5ac94c5fb282596a20cb5a5dc8bd93064e9fdb22; ROM SHA-256
+94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3.
+229 source files retain225 v28 parents. Fourteen prepared tiles occupy80
+additional existing VRAM bytes; the displayed phase uses one reserved RAM byte.
+Changes publish only during VBlank; unchanged phases avoid mapper swaps.
+Source/full-picture checks and independent native/IRQ review pass. See
+docs/handoffs/issue-42-v29-delivery.md and the v29 release tests. Publication
+verification is recorded in references/aligned-credit-delivery.json.
+Stable/all-level30FPS and owner/physical acceptance remain open. PR43 stays
+draft/stacked on41, no merge or close. Earlier sections are delivery history.
+
+## Previous delivery — v28 viewport edge corrections
 
 Owner feedback after v27 reproduced two visual defects: old P0 left clipping
 and native enemy glyph overflow from the right to the left. Final source ece9a5a

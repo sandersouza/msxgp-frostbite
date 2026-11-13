@@ -5,7 +5,14 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.28 viewport edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic)
+The latest [v0.0.29 aligned credit diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.29-aligned-credit-diagnostic)
+right-aligns RETROWORKS with the playfield, using angular uppercase lettering
+with the same height and baseline as Activision. The hyphen is removed.
+Both remain aligned through the original vertical footer shift. Source
+mechanics, controls, audio and v28 edge fixes remain. See the
+[exact ROM and human tests](docs/releases/v0.0.29-aligned-credit-diagnostic.md).
+
+The previous [v0.0.28 viewport edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic)
 keeps the player visible through the expanded left edge and prevents a right
 enemy glyph fragment from appearing at the left. Original mechanics, source
 positions, controls, clock and PSG remain exact; v27 colors are preserved. Prepared shore/cache
