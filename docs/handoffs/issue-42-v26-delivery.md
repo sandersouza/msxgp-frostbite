@@ -30,12 +30,24 @@ phase proofs507286 calls, additional checker controls and clean full-chain rebui
 are bound. Workbook41tabs preserves40/794519cells/nativefeatures,zeroerrors,
 2mutations/5views. Browser/mobile/listening/owner/physical acceptance separate.
 
-Publication verification and final delivery receipt are pending at this document
-checkpoint. Use exact six assets, immutable documentation links and direct WebMSX;
-never overwrite published bytes. Current ignored roots:
+Published [v26](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.26-native-bands-diagnostic)
+has six independently downloaded/digest-verified assets. Tag resolves to runtime
+eaa4418, notes link immutable DOCS6af32b00f4377e086b016651fa2cac41bcf21950, and all
+six v25 rollback assets remain unchanged. Fresh prepublication review is
+427ce94abad31f9956f39f15872e9b1eafead73451072b64bddeb8282f706270; final delivery
+review is bc7a05ae74c72e13bf5f4695be0ee6021898e0bdbbbcff8b73ef130c92f375bb.
+See references/native-bands-delivery.json. Issue42 remains open, PR43 draft/stacked
+on41 and Project7 In review at this historical delivery checkpoint.
+
+Desktop WebMSX actually loads exact ROM SHA1C034A4A3579857AEC74AF12C260269ED1105A838,
+ASCII16/NTSC60 and the game picture,0errors/1deprecationwarning; F1 pressed and
+browser closed. Screenshot is muted. This is launch proof only, not fluidity,
+mobile, listening, owner or hardware acceptance. All review writers stopped.
+Use exact six assets and never overwrite published bytes. Current ignored roots:
 `outputs/presentation/player-bands-ao-research`, `player-bands-ao-review`,
 `native-bands-ao`, and `outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AO`.
-61 predecessor roots remain sealed. Freeze new evidence only after all writers stop.
+61 predecessor roots remain sealed. Freeze the six new AO roots after all writers
+stop, using native-bands-ao-seals.json; future AP work must use fresh outputs.
 
 Rejected border01 erased a reused bootstrap and never shipped. Rejected shared
 NAME-cursor prototype01 could violate the generic public list contract. Private
@@ -43,8 +55,11 @@ NAME-cursor prototype01 could violate the generic public list contract. Private
 bytes are identical. Keep histories and exact source snapshots. All failures are
 retained; no old evidence is overwritten to hide a rejection.
 
-Next: fresh AP research from v26, identify the single remaining active NTSC bear
-long frame from whole-route traces, then reduce general player/WORLD/NAME spikes
+Next: fresh AP research from v26. The single remaining active NTSC bear gap is
+picture214/source318→320,50.063346ms; R/remaining-bear-long-frame.json and full
+passive phases identify foreground79409/IRQ39746/elapsed119155cycles. Inspect
+ordinary cache-key/hold scanning and NAME/preflight costs at that exact picture,
+then reduce general player/WORLD/NAME spikes
 and establish consistent presentation cadence. Preserve the v26 artifacts/control
 and all existing source mechanics; do not stop the operation for an incidental
 graphic correction or wait for routine human testing.

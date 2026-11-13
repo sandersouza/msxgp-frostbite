@@ -18,7 +18,8 @@ automated/emulator evidence; owner/mobile/listening/physical acceptance is pendi
 Rollback: [unchanged v25 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/frostbite-0.0.25-bear-hybrid-diagnostic.rom).
 Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.26-native-bands-diagnostic.md)
 are attached. Read [architecture/limits](docs/native-bands-diagnostic.md) and
-[validation](references/native-bands-result.json).
+[validation](references/native-bands-result.json) and
+[verified downloads](references/native-bands-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.
