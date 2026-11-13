@@ -2,6 +2,58 @@
 from copy import deepcopy
 from presentation_open_view import expected_frame as parent,credit_pixels
 
+def edge_key(x,original):
+ return 160+x if x<8 else original
+
+def compile_standing_edges(rom,palette):
+ """Finite sourceY27 packets; exact LEFT16 raster, including half source pixels."""
+ from itertools import product
+ from presentation_model import player
+ from presentation_sprites import expand_pair
+ from presentation_shore_recipes import pack_record
+ if len(rom)!=4096 or len(palette)!=256:raise ValueError('Complete source and palette required')
+ pool=[];records=[];directory=[];checks=0;maximum=0
+ for x,pose,reflect,coarse in product(range(24),range(6),range(2),range(2)):
+  ram=[0]*128;ram[0x64]=27;ram[0x66]=x;ram[0x6e]=pose;ram[0x6c]=reflect*8
+  planes={};wanted={}
+  def point(y,dx,color):
+   planes.setdefault(color,{})[y]=planes.get(color,{}).get(y,0)|(128>>dx)
+   for tx in range(8+(x+dx)*3//2,8+(x+dx+1)*3//2):
+    if tx>=16:wanted[y,tx-(8+x*3//2)]=color
+  for row in player(rom,ram)['rows']:
+   for dx in range(8):
+    pos=x+dx;bit=dx if reflect else 7-dx
+    pattern=row['prefix_pattern']if pos<row['update_x']else row['pattern']
+    color=row['prefix_color']if pos<row['color_update_x']else row['color']
+    if pos>=row['suffix_x']:color=row['suffix_color']
+    if pos>=5 and pattern&(1<<bit):point(row['y']-7+int(coarse and row['y']>=57),dx,palette[color])
+    if coarse and row['y']==56 and row['pattern']&(1<<bit):point(50,dx,palette[row['color']])
+  entries=[];cut=27+coarse
+  if wanted:
+   top=min(y for y,tx in wanted);bottom=max(y for y,tx in wanted)
+   cut=next(q for q in range(bottom-15,top+17)if all(sum(any(mask for y,mask in p.items()if bt<=y<bt+16)for p in planes.values())<=3 for bt in(q-16,q)))
+   mask=65535>>max(0,16-(8+x*3//2))
+   for bt in(cut-16,cut):
+    for color,p in planes.items():
+     pat=bytearray(32)
+     for dy in range(16):
+      a,b=expand_pair(p.get(bt+dy,0),x&1);pat[dy]=a&(mask>>8);pat[dy+16]=b&(mask&255)
+     if any(pat):
+      pat=bytes(pat)
+      if pat not in pool:pool.append(pat)
+      entries.append((bt-27-coarse,color,pool.index(pat)))
+  actual={}
+  for dy,color,pid in entries:
+   for y in range(16):
+    for tx in range(16):
+     if pool[pid][tx//8*16+y]&(128>>(tx%8)):actual[27+coarse+dy+y,tx]=color
+  if actual!=wanted:raise ValueError(('Prepared edge pixels differ',x,pose,reflect,coarse))
+  record=pack_record(cut-27-coarse,entries)
+  if record not in records:records.append(record)
+  directory.append(records.index(record));maximum=max(maximum,len(entries));checks+=1
+ if len(pool)>256 or len(records)>256:raise ValueError('Existing shore reservation exceeded')
+ return b''.join(i.to_bytes(2,'little')for i in directory),b''.join(records),b''.join(pool),dict(finite_cases=checks,records=len(records),patterns=len(pool),max_entries=maximum,decoded_pixels_exact=True)
+
 def expected_frame(meta,original,description,ram,raw,palette):
  from presentation_model import pixels
  from presentation_grid24 import anchor,player_delta

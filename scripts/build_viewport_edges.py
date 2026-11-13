@@ -3,6 +3,7 @@ import argparse,hashlib,json,shutil,subprocess
 from pathlib import Path
 from environment import ROOT,verified_tool
 from render_build import symbols
+from presentation_viewport_edges import compile_standing_edges
 sha=lambda b:hashlib.sha256(b).hexdigest()
 PARENT='78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a'
 def build(base,out):
@@ -36,13 +37,19 @@ def build(base,out):
  needle=bytes((0x3e,8))+ins(0xcd,s['p_player_zone'])
  at=unique(needle,s['p_player_init_masks'],s['p_player_zone'])
  patch(at+1,bytes((5,)),bytes((8,)))
- # Keep partial-edge patterns out of old full/shore cache identities.
+ # Keep the prepared path fast while distinguishing every new partial mask.
  if parent[0xb253:0xb259]!=bytes.fromhex('3a66f0fe54d8'):raise ValueError('Inherited cache entry differs')
- needle=ins(0xcd,0xb253);at=unique(needle,s['p_player_cache_lookup'],s['p_player_cache_lookup.miss'])
- patch(at,ins(0xcd,q['ar_cache_gate']),needle)
- for lo,hi,limit in((s['ak_try'],s['ak_try.recipe_x'],24),):
-  needle=bytes.fromhex('3a66f0')+bytes((0xfe,limit));at=unique(needle,lo,hi)
-  patch(at,ins(0xcd,q['ar_player_x']),needle[:3])
+ at=s['p_player_cache_lookup.horizontal_key'];patch(at,ins(0xcd,q['ar_edge_key']),ins(0x32,s['p_pc_key']+5))
+ palette=parent[115*16384+0x3c00:115*16384+0x3d00]
+ original=(ROOT/'references/roms/frostbite.bin').read_bytes()
+ if sha(original)!=m['profile']['source_sha256']:raise ValueError('Original identity differs')
+ directory,records,patterns,finite=compile_standing_edges(original,palette)
+ for first,count,data in((120,1,directory),(121,2,records),(123,4,patterns)):
+  if len(data)>count*2048:raise ValueError('Prepared shore capacity exceeded')
+  data=data.ljust(count*2048,b'\xff')
+  for i in range(count):
+   at=(first+i)*16384+0x3800;patch(at,data[i*2048:(i+1)*2048],parent[at:at+2048])
+ (out/'viewport-shore-finite.json').write_text(json.dumps(finite,indent=2)+'\n')
  # Stop this enemy glyph at column31; the next copy still normalizes normally.
  at=147*16384+0x3800+s['x_actor.nextcell']+7-0xf400
  expected=bytes((0x16,1))+ins(0x2a,s['qe_rowbase'])+bytes((0x23,0x18,1))
@@ -66,7 +73,7 @@ def build(base,out):
  for p in(Path(__file__),source,ROOT/'scripts/presentation_viewport_edges.py',ROOT/'scripts/presentation_viewport_edges_check.py',ROOT/'tests/test_presentation_viewport_edges.py'):files[str(p.resolve().relative_to(ROOT))]=sha(p.read_bytes())
  commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();dirty=bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())
  m.update(version='viewport-edges-ar-diagnostic',source_commit=commit,source_dirty=dirty,source_files=files,complete_source=dict(commit=commit,working_tree_dirty=dirty,files=files,scope='Player X16 clipping and no enemy glyph overflow wrap. Source mechanics/coordinates/input/clock/PSG unchanged.'))
- m['viewport_edges']=dict(parent_rom_sha256=PARENT,patches=patches,player_left_target=16,player_source_cut=5,partial_source_pixel_clipped_exactly=True,enemy_glyph_wrap=False,left_player_cache_and_recipe_fallback_below=8,occupied_alignment_padding_bytes=q['ar_end']-q['ar_pattern'],new_ram_bytes=0,new_vram_bytes=0)
+ m['viewport_edges']=dict(parent_rom_sha256=PARENT,patches=patches,player_left_target=16,player_source_cut=5,partial_source_pixel_clipped_exactly=True,enemy_glyph_wrap=False,partial_cache_key_range=[160,167],prepared_shore=finite,occupied_alignment_padding_bytes=q['ar_end']-q['ar_pattern'],new_ram_bytes=0,new_vram_bytes=0)
  s.update({n:v for n,v in q.items()if n.startswith('ar_')});(out/'presentation.sym').write_text('\n'.join(f'{n}: EQU 0x{v:08X}'for n,v in s.items())+'\n')
  name='frostbite-viewport-edges-ar.rom';(out/name).write_bytes(rom);m['rom'].update(filename=name,sha256=sha(rom));(out/'build.json').write_text(json.dumps(m,indent=2)+'\n');print(dict(rom_sha256=sha(rom),sources=len(files),patches=len(patches)));return m
 if __name__=='__main__':

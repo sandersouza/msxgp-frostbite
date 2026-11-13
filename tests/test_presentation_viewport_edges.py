@@ -11,6 +11,21 @@ from presentation_grid24 import anchor,player_delta
 from graphics_mapping import map_y,TMS_RGB
 
 class ViewportEdges(unittest.TestCase):
+ def test_partial_edge_cache_keys_cannot_alias_old_clip_masks(self):
+  from presentation_viewport_edges import edge_key
+  keys={edge_key(x,255)for x in range(8)}
+  self.assertEqual(len(keys),8)
+  self.assertFalse(keys&set(range(24)))
+  self.assertFalse(keys&{0,1,3,7,15,31,63,127,128,192,224,240,248,252,254,255})
+  for x in range(8,160):self.assertEqual(edge_key(x,255),255)
+ def test_prepared_edge_packets_decode_exactly(self):
+  from presentation_viewport_edges import compile_standing_edges
+  rom=bytearray(4096);rom[0xc00:0xc13]=bytes((255,))*19
+  rom[0xc20:0xc33]=bytes((0x24,))*19;rom[0xcb0:0xcb6]=bytes((32,))*6
+  palette=bytearray(256);palette[0x24]=10
+  directory,records,patterns,proof=compile_standing_edges(bytes(rom),palette)
+  self.assertEqual(len(directory),1152);self.assertEqual(proof['finite_cases'],576)
+  self.assertLessEqual(len(records),4096);self.assertLessEqual(len(patterns),8192)
  def scene(self):
   rom=bytearray(4096);rom[0xd00:0xd08]=bytes((255,))*8
   ram=[0]*128;ram[0x64]=64

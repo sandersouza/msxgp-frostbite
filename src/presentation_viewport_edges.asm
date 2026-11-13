@@ -22,21 +22,19 @@ ar_pattern:
  RET
 ar_left_masks:
  DB $00,$01,$07,$0F,$3F,$7F
-; Old clipped recipes and cache identities cannot describe the new edge.
-ar_player_x:
+; Distinguish all partial positions from full, right-clipped and shore keys.
+ar_edge_key:
+ LD B,A
  LD A,($F066)
  CP 8
- RET NC
- LD A,255
+ JR C,.partial
+ LD A,B
+ JR .store
+.partial:
+ ADD A,160
+.store:
+ LD (p_pc_key+5),A
  RET
-ar_cache_gate:
- LD A,($F066)
- CP 8
- JR NC,.original
- OR A
- RET
-.original:
- JP $B256                   ;unchanged inherited-L eligibility after its load
 ar_end:
  ASSERT $ <= $ED00
  DS $ED00-$,0
