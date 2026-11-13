@@ -1,0 +1,324 @@
+{
+  "issue": 39,
+  "scope": "Atari800 reference research only; MSX runtime unchanged. No original-speed/full-game/hardware acceptance.",
+  "baseline_msx_rom_sha256": "838b67ae6ba4c7cbed72f643f64f78b45bb404a1e43b395f36331343f6656ae6",
+  "emulator_commit": "98cc2dc749867c9c7317a0271ba062a6c797f886",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "emulator_patch": "tools/atari800-antic-trace.patch",
+  "machine": "Atari400/800,8KiB RAM,bundled Altirra OS",
+  "reports": {
+    "ntsc": {
+      "cartridge": {
+        "sha256": "e3fc0fd44748810def7f3313720ed65f320624ec1cc832d087d983d00e947243",
+        "bytes": 8208,
+        "type": 1,
+        "payload_sha256": "9c5ea6709eab5143c9bbe7373792cea4a5c39698d33457440d829f1d4b94e6e0",
+        "payload_checksum": 842869,
+        "mapped_start": 40960,
+        "mapped_end_exclusive": 49152,
+        "run": 40960,
+        "init": 40960,
+        "flags": 4
+      },
+      "capture": {
+        "output_frames": 1200,
+        "sample_first_frame": 300,
+        "sample_intervals": 899,
+        "nominal_emulator_hz": 59.922744751,
+        "loop_counter_increments": {
+          "1": 899
+        },
+        "antic_register_writes": {
+          "d404": {
+            "0": 2022,
+            "1": 103,
+            "2": 99,
+            "3": 705,
+            "4": 1493,
+            "5": 662,
+            "6": 703,
+            "7": 655,
+            "8": 224,
+            "9": 582,
+            "10": 626,
+            "11": 226,
+            "15": 900
+          },
+          "d405": {
+            "7": 3600
+          },
+          "d409": {
+            "186": 3600,
+            "188": 4500
+          }
+        },
+        "antic_write_scanlines": {
+          "d404": [
+            32,
+            83,
+            103,
+            117,
+            129,
+            143,
+            155,
+            169,
+            181,
+            195
+          ],
+          "d405": [
+            104,
+            130,
+            156,
+            182
+          ],
+          "d409": [
+            116,
+            129,
+            142,
+            155,
+            168,
+            181,
+            194,
+            210,
+            249
+          ]
+        },
+        "snapshot_differences": {
+          "0480-04cc": {
+            "mean_changed_bytes_between_snapshots": 0.05672969966629588,
+            "maximum_changed_bytes_between_snapshots": 7
+          },
+          "0600-0a00": {
+            "mean_changed_bytes_between_snapshots": 0.25139043381535037,
+            "maximum_changed_bytes_between_snapshots": 4
+          },
+          "0a00-0b00": {
+            "mean_changed_bytes_between_snapshots": 0.0,
+            "maximum_changed_bytes_between_snapshots": 0
+          },
+          "0b00-1000": {
+            "mean_changed_bytes_between_snapshots": 4.667408231368187,
+            "maximum_changed_bytes_between_snapshots": 33
+          }
+        },
+        "raw_sha256": {
+          "ram": "e11b447664ceec1eac835311fb846a68c693494d0f08f61333c536d6d17dbf31",
+          "timing": "7c7ead455e70b86d0328eca8a3ed507f2cba6598422b9ba2be6b9a06277bfbfb",
+          "antic": "c625f624907bb2f71a8609ea3225b9ef5955ad87d335e60e850afc2133f70b76",
+          "gtia": "ae5644024ce75b4815c6d3bb2cb7056f6cfbf2854c0aea48482e3dc6612d0772"
+        },
+        "scope": "Counter cadence and hardware writes for this input sample only. Snapshot differences are not write counts. No full-game, source-mechanics, worst-density or physical-clock acceptance.",
+        "gtia": {
+          "read_counts": {
+            "d004": 8100,
+            "d005": 3600
+          },
+          "write_counts": {
+            "d000": 900,
+            "d001": 900,
+            "d003": 900,
+            "d012": 1800,
+            "d013": 1800,
+            "d014": 900,
+            "d015": 1800,
+            "d016": 2700,
+            "d017": 1800,
+            "d018": 9900,
+            "d019": 900,
+            "d01a": 13500,
+            "d01b": 900,
+            "d01e": 9000,
+            "d01f": 900
+          },
+          "read_scanlines": [
+            102,
+            116,
+            129,
+            142,
+            155,
+            168,
+            181,
+            194,
+            210
+          ],
+          "scope": "Read events only; returned collision values are not recorded."
+        }
+      }
+    },
+    "pal": {
+      "cartridge": {
+        "sha256": "e3fc0fd44748810def7f3313720ed65f320624ec1cc832d087d983d00e947243",
+        "bytes": 8208,
+        "type": 1,
+        "payload_sha256": "9c5ea6709eab5143c9bbe7373792cea4a5c39698d33457440d829f1d4b94e6e0",
+        "payload_checksum": 842869,
+        "mapped_start": 40960,
+        "mapped_end_exclusive": 49152,
+        "run": 40960,
+        "init": 40960,
+        "flags": 4
+      },
+      "capture": {
+        "output_frames": 1200,
+        "sample_first_frame": 300,
+        "sample_intervals": 899,
+        "nominal_emulator_hz": 49.860759735,
+        "loop_counter_increments": {
+          "1": 899
+        },
+        "antic_register_writes": {
+          "d404": {
+            "0": 2560,
+            "1": 72,
+            "2": 75,
+            "3": 77,
+            "4": 2284,
+            "5": 242,
+            "6": 239,
+            "7": 1011,
+            "8": 192,
+            "9": 964,
+            "10": 192,
+            "11": 192,
+            "15": 900
+          },
+          "d405": {
+            "7": 3600
+          },
+          "d409": {
+            "186": 3600,
+            "188": 4500
+          }
+        },
+        "antic_write_scanlines": {
+          "d404": [
+            32,
+            83,
+            103,
+            117,
+            129,
+            143,
+            155,
+            169,
+            181,
+            195
+          ],
+          "d405": [
+            104,
+            130,
+            156,
+            182
+          ],
+          "d409": [
+            116,
+            129,
+            142,
+            155,
+            168,
+            181,
+            194,
+            210,
+            249
+          ]
+        },
+        "snapshot_differences": {
+          "0480-04cc": {
+            "mean_changed_bytes_between_snapshots": 0.04671857619577308,
+            "maximum_changed_bytes_between_snapshots": 6
+          },
+          "0600-0a00": {
+            "mean_changed_bytes_between_snapshots": 0.2135706340378198,
+            "maximum_changed_bytes_between_snapshots": 4
+          },
+          "0a00-0b00": {
+            "mean_changed_bytes_between_snapshots": 0.0,
+            "maximum_changed_bytes_between_snapshots": 0
+          },
+          "0b00-1000": {
+            "mean_changed_bytes_between_snapshots": 3.546162402669633,
+            "maximum_changed_bytes_between_snapshots": 33
+          }
+        },
+        "raw_sha256": {
+          "ram": "72def942cc554d3da148ef3eeac5530faff63c6c0866d9d76ab479957fb7c5d7",
+          "timing": "29f75360b71a442c76ef227359ddd5cac8277ecb1dc30f9507573dbbeb1bf8d3",
+          "antic": "48402266d9af71626cb11bf473d98aba14acdc4bd33cc1c140cca06aa4918f44",
+          "gtia": "6a2ba86faeaf8da63c9590db3a6f46e3d537e76fbbbec4f0d7e8cb0bbc3c4e3f"
+        },
+        "scope": "Counter cadence and hardware writes for this input sample only. Snapshot differences are not write counts. No full-game, source-mechanics, worst-density or physical-clock acceptance.",
+        "gtia": {
+          "read_counts": {
+            "d004": 8100,
+            "d005": 3600
+          },
+          "write_counts": {
+            "d000": 900,
+            "d001": 900,
+            "d003": 900,
+            "d012": 1800,
+            "d013": 1800,
+            "d014": 900,
+            "d015": 1800,
+            "d016": 2700,
+            "d017": 1800,
+            "d018": 9900,
+            "d019": 900,
+            "d01a": 13500,
+            "d01b": 900,
+            "d01e": 9000,
+            "d01f": 900
+          },
+          "read_scanlines": [
+            102,
+            116,
+            129,
+            142,
+            155,
+            168,
+            181,
+            194,
+            210
+          ],
+          "scope": "Read events only; returned collision values are not recorded."
+        }
+      }
+    }
+  },
+  "model": {
+    "scope": "Idealized per-generation 28-slot shared floe pool versus two fixed14-slot rows/bank. Same source masks/colors, no target execution, no object-fusion or scheduling costs; upload counts are not speed estimates.",
+    "source_checkpoints": 2254,
+    "visible_states": 2254,
+    "peak_required_patterns_per_bank": 18,
+    "fixed_role_pattern_misses": 7081,
+    "shared_pool_pattern_misses": 6376,
+    "pattern_miss_reduction_percent": 9.956220872758081
+  },
+  "files": {
+    "scripts/atari800_reference.py": "a93d4ffe2eca384278118fc8e97b6ac4e5a75d0a3051a2c9951757fe9fa79b10",
+    "tools/atari800-reference-probe.c": "713b8d7fcddf950b04391a3f9fa0fa5c6915085289e63414f2c9dae6c41c33b3",
+    "tools/atari800-antic-trace.patch": "4b6a726bc2a4662379c50703980aa3b2a0fb3b3b2a2c2d675d4557b41ca4c559",
+    "tests/test_atari800_reference.py": "04c5bccf2e5546637919de02ab8098716176498b81d1806568bbddacb03e9f78",
+    "outputs/atari800-research/probe": "5e55a33f47a214e68dc7e036db0a98f7cce6a4c251f4b68ef3f5201686dd6328",
+    "outputs/atari800-research/emulator/src/libatari800.a": "ebacb212c8670ba6581372f4f3b754b3dcbbfd48295578e225bf2e4f7eb1863e",
+    "outputs/atari800-research/isolated.cfg": "df683da4ebb2a23a20d2aab0959fef8cb13405a7a418d97f41a78e47788e0c7a",
+    "outputs/atari800-research/pool_model.py": "8cf947136a17b105cb6ebb2450e9dc86b55c599edbba30e2e8ebca49037cdee7",
+    "outputs/atari800-research/pool-model.json": "7983b53d4370d89818dac6a041b00fc8ebcd8712d2d9cca226b24f2f2ba21b27",
+    "outputs/atari800-research/ntsc-hardware/ram-frames.bin": "e11b447664ceec1eac835311fb846a68c693494d0f08f61333c536d6d17dbf31",
+    "outputs/atari800-research/ntsc-hardware/frames.tsv": "7c7ead455e70b86d0328eca8a3ed507f2cba6598422b9ba2be6b9a06277bfbfb",
+    "outputs/atari800-research/ntsc-hardware/antic.tsv": "c625f624907bb2f71a8609ea3225b9ef5955ad87d335e60e850afc2133f70b76",
+    "outputs/atari800-research/ntsc-hardware/gtia.tsv": "ae5644024ce75b4815c6d3bb2cb7056f6cfbf2854c0aea48482e3dc6612d0772",
+    "outputs/atari800-research/ntsc-hardware/probe.log": "e77b37ad22d0f15988cfe105c20d08c537b6057cc3a3f35c181ad0b078655733",
+    "outputs/atari800-research/ntsc-hardware/research.json": "172e3f1ebbabe4625c0783c1b4cad2569c65b993e977a009da9e4ad2c74b2d50",
+    "outputs/atari800-research/ntsc-hardware/frame-0600.ppm": "c56231a9722b6c73c3b72e2b942056ad417be8630438f22a95f7c1ff0fec108d",
+    "outputs/atari800-research/pal-hardware/ram-frames.bin": "72def942cc554d3da148ef3eeac5530faff63c6c0866d9d76ab479957fb7c5d7",
+    "outputs/atari800-research/pal-hardware/frames.tsv": "29f75360b71a442c76ef227359ddd5cac8277ecb1dc30f9507573dbbeb1bf8d3",
+    "outputs/atari800-research/pal-hardware/antic.tsv": "48402266d9af71626cb11bf473d98aba14acdc4bd33cc1c140cca06aa4918f44",
+    "outputs/atari800-research/pal-hardware/gtia.tsv": "6a2ba86faeaf8da63c9590db3a6f46e3d537e76fbbbec4f0d7e8cb0bbc3c4e3f",
+    "outputs/atari800-research/pal-hardware/probe.log": "f16b949a2fec78c28fc84d1864b480a45a386519861d69d6ddac3fe40ff971f5",
+    "outputs/atari800-research/pal-hardware/research.json": "aa53c3a48894e9758928809a5cdb7fa7e3b0d05e0042cfc419b3d0a747a22177",
+    "outputs/atari800-research/pal-hardware/frame-0600.ppm": "10b565d414178a5078a9ee2cdd541db413daccd34977badb3afb43e5e555d80e"
+  },
+  "author_release_byte_match": false,
+  "fan_port_mechanics_equivalence_accepted": false,
+  "msx_runtime_changed": false
+}
