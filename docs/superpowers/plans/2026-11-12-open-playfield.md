@@ -14,7 +14,7 @@ input/clock/audio exact; source214 and67 prior evidence roots preserved.
   compose preserved AP cache optimization without editing its parent sources.
 - [x] Compare complete source matrices, terminal frames, all4 natural routes and
   passive foreground/IRQ/26landing evidence. Revise if graphics/contracts fail.
-- [ ] Clean source, independent native/IRQ/negative review, full qualification/CI,
+- [x] Clean source, independent native/IRQ/negative review, full qualification/CI,
   historical workbook, exact prerelease/ROM/hash/source/WebMSX/human tests.
 - [ ] Verified downloads/tracking/handoff and immutable evidence. No incidental
   checkpoint ends the authorized round before requested delivery is concrete.

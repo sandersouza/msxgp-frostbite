@@ -18,7 +18,9 @@ audio intervals, four natural/passive routes,1811 independent native calls and
 9 new hardware IRQ boundaries pass. Negative controls pass. The42-tab workbook
 preserves41 historical tabs/796499 cells/18 native parts. Clean rebuild and two
 exact-source CI checks pass. All67 prior evidence roots/19390 files are intact.
-Release publication and download verification are the remaining delivery steps.
+All six release assets were freshly downloaded and independently verified.
+The v26 rollback remains unchanged. Actual desktop WebMSX loads the exact ROM
+and game picture; launch-only, no listening test, browser closed. Project7 is In review.
 PR43 remains draft/stacked on41. See docs/handoffs/issue-42-v27-delivery.md and
 references/open-playfield-result.json. Earlier sections below are history.
 

@@ -1,0 +1,97 @@
+{
+  "complete": true,
+  "version": "v0.0.27-open-playfield-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.27-open-playfield-diagnostic",
+  "release_id": 443781669,
+  "prerelease": true,
+  "source_commit": "e42b737f0def8dd70be9b31712b776d83258fadd",
+  "documentation_commit": "8f174472926c542402385db272d1196890629f76",
+  "rom_sha256": "78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "sha256": "ab897374a11c6b70d192574a31c12a692c949d103e33cfd091bae5c6390201cc",
+      "bytes": 24308,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/BUILD.json",
+      "api_digest": "sha256:ab897374a11c6b70d192574a31c12a692c949d103e33cfd091bae5c6390201cc"
+    },
+    {
+      "name": "Frostbite-performance-budget-AQ.xlsx",
+      "sha256": "1b5291b199c12e34548210e83b2c62193b02f546093a8f5f3f2ac8a21d6deadc",
+      "bytes": 4764008,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/Frostbite-performance-budget-AQ.xlsx",
+      "api_digest": "sha256:1b5291b199c12e34548210e83b2c62193b02f546093a8f5f3f2ac8a21d6deadc"
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "1d68927bec90eaca9656e56be6fa8d1e1d4a32032748ade784da2989ba0a2acc",
+      "bytes": 452,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/SHA256SUMS",
+      "api_digest": "sha256:1d68927bec90eaca9656e56be6fa8d1e1d4a32032748ade784da2989ba0a2acc"
+    },
+    {
+      "name": "SOURCE.txt",
+      "sha256": "54975bb940779d35ead5b2b3f9af598062b9e5cb356b9f4458c057c64c8cd3d6",
+      "bytes": 890,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/SOURCE.txt",
+      "api_digest": "sha256:54975bb940779d35ead5b2b3f9af598062b9e5cb356b9f4458c057c64c8cd3d6"
+    },
+    {
+      "name": "VALIDATION.json",
+      "sha256": "108ea51c27b934ec25edf8a3baaa17e6ad2cd3540c6aab362b3c95bc5f424c05",
+      "bytes": 20313,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/VALIDATION.json",
+      "api_digest": "sha256:108ea51c27b934ec25edf8a3baaa17e6ad2cd3540c6aab362b3c95bc5f424c05"
+    },
+    {
+      "name": "frostbite-0.0.27-open-playfield-diagnostic.rom",
+      "sha256": "78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a",
+      "bytes": 4194304,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/frostbite-0.0.27-open-playfield-diagnostic.rom",
+      "api_digest": "sha256:78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a"
+    }
+  ],
+  "release_notes_sha256": "3c6b462a3288eedfe6908b41f0b3abf7e01a42c6f94d8afa97281b40b4ba7785",
+  "six_fresh_downloads_match": true,
+  "tag_exact_runtime": true,
+  "rollback_v26_assets_unchanged": true,
+  "prepublication_review": {
+    "complete": true,
+    "rom_sha256": "78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a",
+    "blockers": [],
+    "receipt_path": "outputs/presentation/open-view-aq-review/delivery-prepublication/review.json",
+    "receipt_sha256": "b1c2d919d301051d09add0e845fac1682b952e2923340463c6728f31d0899828"
+  },
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "webmsx": {
+    "complete": true,
+    "rom_sha1": "198055659361B3B8D16D8E8033D6F953C0FF187B",
+    "mapper": "ASCII16",
+    "machine": "MSX1A",
+    "video_hz": 60,
+    "console_errors": 0,
+    "console_warnings": 1,
+    "warning": "ScriptProcessorNode deprecation",
+    "F1_pressed": true,
+    "screenshot_sha256": "25a7c3f6fd90448fdb4fde56eb336af02bc401f7a4bd3c308518ae4445f1bbd4",
+    "state_sha256": "7dcd0faa3bf8ab19315d20058049b09dbf3fef634c7a380734f2bd5e9720365e",
+    "browser_closed": true,
+    "scope": "Desktop browser launch and exact ROM/picture only. No fluidity, listening, mobile, human or hardware acceptance.",
+    "initial_audio_muted": true,
+    "audio_listening_verified": false
+  },
+  "independent_postpublication_review_sha256": "dfa9c68062b6e221c3d12f6fe955d3ad4e66281b89a6a69ceaca2bf5ab3d63f6",
+  "tracking": {
+    "issue": 42,
+    "state": "open",
+    "PR": 43,
+    "draft": true,
+    "base": "codex/fix/39-atari800-performance",
+    "project": 7,
+    "status": "In review",
+    "merged": false,
+    "fresh_issue_PR_bodies_verified": true,
+    "fresh_project_item_verified": true
+  }
+}

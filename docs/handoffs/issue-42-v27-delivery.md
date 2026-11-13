@@ -50,3 +50,13 @@ continuing. Next: WORLD/NAME peak at source343→345 in the620-step bear prefix,
 plus the remaining source318→320 gap and general player/WORLD spikes. Keep the
 new border/palette/credit fixes, original source mechanics/PSG and exact v26
 rollback. No further ROM should be released without full-frame measurement.
+
+Publication completed: [v27](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.27-open-playfield-diagnostic)
+has six freshly downloaded exact assets and independent postpublication review
+`dfa9c68062b6e221c3d12f6fe955d3ad4e66281b89a6a69ceaca2bf5ab3d63f6`.
+Runtime tag and immutable DOCS8f174472926c542402385db272d1196890629f76 match;
+all six old v26 assets/notes remain unchanged. Actual desktop WebMSX loads
+ROM SHA1`198055659361B3B8D16D8E8033D6F953C0FF187B`, ASCII16/MSX1A/NTSC60.
+F1 pressed and game picture observed.0 console errors/1 deprecation warning;
+audio not listened to, browser closed. Launch-only evidence, not human fluidity acceptance.
+All review writers stopped; keep the new evidence roots immutable after sealing.
