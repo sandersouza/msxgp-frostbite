@@ -5,7 +5,69 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
+The latest [v0.0.30 reference credit diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.30-reference-credit-diagnostic)
+uses separated lowercase `retroworks`, matching the owner's supplied pixel-font
+reference without a year or hyphen. The right edge and Activision baseline
+remain aligned. Only98 pattern bytes change; all executable/color/NAME bytes
+stay identical to v29. Four fresh routes have exactly unchanged whole-frame
+timings and source behavior. See the
+[exact ROM and human tests](docs/releases/v0.0.30-reference-credit-diagnostic.md).
+[Play v30 in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.30-reference-credit-diagnostic%2Ffrostbite-0.0.30-reference-credit-diagnostic.rom&ROM_FORMAT=ASCII16).
+
+The owner accepted v30 as stable and enjoyable on2026-11-13 and authorized
+closing issue42 after integration. [Issue44](https://github.com/sandersouza/msxgp-frostbite/issues/44)
+targets a compact32 KiB mapperless cartridge plus native MSX-DOS COM and BASIC
+BIN formats, preserving this accepted baseline.32 KiB feasibility remains to be
+measured;39/15/16 retain original-cadence and final timing/hardware qualification.
+
+The previous [v0.0.28 viewport edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic)
+keeps the player visible through the expanded left edge and prevents a right
+enemy glyph fragment from appearing at the left. Original mechanics, source
+positions, controls, clock and PSG remain exact; v27 colors are preserved. Prepared shore/cache
+paths retain approximately the v27 cadence, with0.2% regular-route overhead.
+Landing/endpoint snapshots stay unchanged. **Stable/all-level30FPS remains open.**
+
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.28-viewport-edges-diagnostic%2Ffrostbite-0.0.28-viewport-edges-diagnostic.rom&ROM_FORMAT=ASCII16).
+[Unchanged v27 rollback](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.27-open-playfield-diagnostic/frostbite-0.0.27-open-playfield-diagnostic.rom).
+The exact ROM, source/hash,43-tab workbook and [human tests](docs/releases/v0.0.28-viewport-edges-diagnostic.md)
+are attached. Read [architecture/limits](docs/viewport-edges-diagnostic.md),
+[validation](references/viewport-edges-result.json) and
+[verified downloads](references/viewport-edges-delivery.json).
+
+The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
+very few visual differences and authorized option3/autonomous performance work.
+The [earlier bear-sprite prototypes](docs/bear-sprites-experiment.md) stay private
+and rejected. Two-color Bailey is not adopted. Issue42 and39/15/16 remain open
+for original fluidity, all-level and physical acceptance.
+
+The earlier [v0.0.13 native lane diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic)
+raises active complete-picture cadence from10.61/10.54 to18.22/17.22fps on the
+same NTSC/PAL input route. The original source/input/PSG clock remains about59.92
+steps/s. Native lanes, bounded enemy sprites and prepared player/header paths
+retain coherent graphics and mechanics. **Motion is still uneven: original
+fluidity is not achieved.** NTSC picture-gap P95 is83.44ms, and229/390 original
+jump updates are presented versus132/390 previously. The release includes the
+exact ROM, source/hash, updated performance workbook and
+[human tests](docs/releases/v0.0.13-native-lanes-cadence-diagnostic.md).
+Read the [measured scope and reproduction](docs/native-lanes-cadence.md),
+[validation](references/native-lanes-result.json) and
+[verified downloads](references/native-lanes-delivery.json). Issue42 remains open;
+manual audio/controllers, all levels and physical MSX1 acceptance are pending.
+
+The earlier [v0.0.10 fixed-clock diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.10-fixed-clock-diagnostic)
+separates original gameplay timing from drawing. Input-only MSX1 NTSC/PAL routes
+run about59.92original logical steps/s, with exact source CPU/RAM and committed
+graphics checks. **Active drawing is only about9.8/9.7fps; this is not a final
+performance solution.** Coherent snapshots preserve colors, actors, player and
+the black mask, but visible motion and feedback are coarse. Read the
+[human tests](docs/releases/v0.0.10-fixed-clock-diagnostic.md) and
+[measured architecture limits](docs/fixed-clock-diagnostic.md),
+[validation](references/fixed-clock-result.json) and
+[verified downloads](references/fixed-clock-delivery.json). Issue42 remains
+open for a faster complete-picture pipeline; original-time simulation does not
+certify original-time presentation, all levels, audio listening or real hardware.
+
+The earlier [v0.0.9-performance-preview](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.9-performance-preview)
 reduces repeated font-mask, actor-role and igloo work while retaining complete
 graphics and source updates. The same measured blue-ice input sequence gains
 about 2–3%; **original-speed gameplay remains unfinished**, with slowdown and

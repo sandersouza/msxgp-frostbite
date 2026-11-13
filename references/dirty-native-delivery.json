@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "version": "v0.0.22-dirty-traversal-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.22-dirty-traversal-diagnostic",
+  "prerelease": true,
+  "source_commit": "80b5a435a28f9009812a73aecfddaf679c690b49",
+  "tag_resolved_commit": "80b5a435a28f9009812a73aecfddaf679c690b49",
+  "rom_sha256": "b0a3d2befe9c370bbec9ba9096df63143a5743949b1deeeeea63879fa843c1e2",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 19523,
+      "sha256": "851b22e7c91ebfa505ac54a3fab3012ba09a09b5a3fef87e1e485ccff9ec8c7f",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.22-dirty-traversal-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "b0a3d2befe9c370bbec9ba9096df63143a5743949b1deeeeea63879fa843c1e2",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/frostbite-0.0.22-dirty-traversal-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AJ.xlsx",
+      "bytes": 4697189,
+      "sha256": "a75ef459147766e36f07ccfabbf4b4203fe50aeaba37c7206f8f243fe3deb74d",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/Frostbite-performance-budget-AJ.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 453,
+      "sha256": "eef64d2ca5a0ebbd3bfc95d0a3ae3a9abb1496ebfc3f87ea93c9b81b408aa996",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 768,
+      "sha256": "dd1700422988fd71e3c4ee54ba7b1fcfc89703c20d15bc1634f53a7a045a4cb6",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 181615,
+      "sha256": "f02904b4bc75b7c49c89b328e029519baede7527eb2c91413795694f42429f41",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.22-dirty-traversal-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "35c3dbd790230a0a7ddcd6589d426762be390ac66c980739c4bb8710fdea6cc7",
+  "public_validation_sha256": "f02904b4bc75b7c49c89b328e029519baede7527eb2c91413795694f42429f41",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43280549888,
+      "event": "pull_request",
+      "headSha": "80b5a435a28f9009812a73aecfddaf679c690b49",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43280530789,
+      "event": "push",
+      "headSha": "80b5a435a28f9009812a73aecfddaf679c690b49",
+      "status": "completed"
+    }
+  ],
+  "rollback_v21_assets_unchanged": true,
+  "parent_source_files_preserved": 174,
+  "prior_roots_preserved": 37,
+  "issue42_open": true,
+  "board": "In progress",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.22-dirty-traversal-diagnostic%2Ffrostbite-0.0.22-dirty-traversal-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/dirty-native-aj-research/webmsx-v22.png",
+    "screenshot_sha256": "aae4098968758748cece22f9ec915b844b700ebc7c6b6724a95a6de7be285adc",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified; performance goal and owner/physical acceptance remain open. Autonomous remaining bear/player and long-frame investigation continues."
+}

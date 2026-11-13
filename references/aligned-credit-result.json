@@ -1,0 +1,334 @@
+{
+  "complete": true,
+  "version": "v0.0.29-aligned-credit-diagnostic",
+  "source_commit": "5ac94c5fb282596a20cb5a5dc8bd93064e9fdb22",
+  "rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "source_files": 229,
+  "preserved_parent_sources": 225,
+  "parent_rom_sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+  "reports": {
+    "matrix-06": "f5c495f61d499cda48399111395acc80a66e8bb3a28c003586409bc9a0efa75e",
+    "density-full-06": "5f17b5a9abc71abfba7e0526539fcbd35bc210419c316d5b0cec6bd545c317e0",
+    "header-06": "ccb8b425791ae9c5cf347de8bc3b6710e23d9f74eedfdd1b7343ff7b1bc3a4f4",
+    "audio-06": "9dcc9872264cb4526f3a9875be0703102724866da8952a6bd37063838fd77a13",
+    "ntsc-06": "1aafdcd2c16b93f06c45277b9aac748b518c5d80d98e7213faf535e0619ca878",
+    "pal-06": "89c57ff5fb8ead399889a5b94bfec5f67140fd6728f18292b44e41f52c234656",
+    "bear-ntsc-06": "cbcae0cf383495238a488ce8593a20aee8c32325a54c00c88864d864ad2b03f1",
+    "bear-pal-06": "8e156881ab64ffd8f67e0dd65324201c0853497f495159cdc6ec46c409c0ade6",
+    "as-ntsc-profile-06.json": "4318577aa4fab34d18f14c6e6a93eb3429327f67ca1516e0821fd321a49e76c0",
+    "as-pal-profile-06.json": "50878c3bdfe5c3f574922fe385b7d8f723a10f71a9e0f01e748c91ffac15ae50",
+    "as-bear-ntsc-profile-06.json": "9a48802425adfc0783ad7023d29a99b716d01598019736550688946b65d93dec",
+    "as-bear-pal-profile-06.json": "235db7211b07b04b2f65bc18d611d5aed60f89ad4d13888082c4eff30d25db49"
+  },
+  "host_tests": 619,
+  "exact_source_ci": [
+    {
+      "id": 43439222606,
+      "source_commit": "5ac94c5fb282596a20cb5a5dc8bd93064e9fdb22",
+      "conclusion": "success"
+    },
+    {
+      "id": 43439217910,
+      "source_commit": "5ac94c5fb282596a20cb5a5dc8bd93064e9fdb22",
+      "conclusion": "success"
+    }
+  ],
+  "native_review_sha256": "aee012607a8db874a23518064a4a43fdab2b17d0f8d441cca0fad38a1bd06500",
+  "credit": {
+    "parent_rom_sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+    "patches": [
+      {
+        "offset": 9898,
+        "size": 80,
+        "before_sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+        "after_sha256": "59928b9840c5acb29aa220801df431d7d8a0fb66da8c08345a3c0c3162ec51f3"
+      },
+      {
+        "offset": 2423202,
+        "size": 3,
+        "before_sha256": "d11b34bc6e530fdae6bdd1f207be0cdab8443cc6c02f3292aec46ac257273dd3",
+        "after_sha256": "3407679ef1ab3f356b4fc77b6d52ec0a840fb4c7cb4cb840d415b224ef762869"
+      },
+      {
+        "offset": 1080551,
+        "size": 465,
+        "before_sha256": "7589c4e1c6d3c0cd66784d192f78842dc104fdc681552f1e9d66917a3a829399",
+        "after_sha256": "a3ca91dc5a061a068d9b353028c10cc6e665cb2149145128872cd1961fd8218e"
+      },
+      {
+        "offset": 2423205,
+        "size": 19,
+        "before_sha256": "e8eaeee559ab7ebfd8f72af04bdfc7dc66a3803fb48257fcd1b3f5e2fcb602fa",
+        "after_sha256": "f62f243dc895e3959904124b79ef1e6dc39b316f483cd28fffb9bfbb1726bfad"
+      },
+      {
+        "offset": 2581,
+        "size": 3,
+        "before_sha256": "44c5fc278090e0514b8ac1b9276d11683bd08a836a9ec04b21f2a1da885a6081",
+        "after_sha256": "d9b85d49e62739a4b7c4903c263038ce819ec9dab04916ed7e5d00b3286af759"
+      }
+    ],
+    "tiles": [
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      250,
+      251,
+      252,
+      253
+    ],
+    "cells": [
+      [
+        22,
+        24,
+        134
+      ],
+      [
+        22,
+        25,
+        135
+      ],
+      [
+        22,
+        26,
+        136
+      ],
+      [
+        22,
+        27,
+        137
+      ],
+      [
+        22,
+        28,
+        138
+      ],
+      [
+        22,
+        29,
+        139
+      ],
+      [
+        22,
+        30,
+        140
+      ],
+      [
+        23,
+        24,
+        141
+      ],
+      [
+        23,
+        25,
+        142
+      ],
+      [
+        23,
+        26,
+        143
+      ],
+      [
+        23,
+        27,
+        250
+      ],
+      [
+        23,
+        28,
+        251
+      ],
+      [
+        23,
+        29,
+        252
+      ],
+      [
+        23,
+        30,
+        253
+      ]
+    ],
+    "word": "RETROWORKS",
+    "hyphen": false,
+    "word_right": 247,
+    "top": 182,
+    "bottom": 188,
+    "coarse_vertical_shift": 1,
+    "new_ram_bytes": 0,
+    "occupied_existing_ram_bytes": 1,
+    "phase_cache_address": 55816,
+    "occupied_existing_vram_bytes": 80
+  },
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "uniform30fps_accepted": false,
+  "performance": {
+    "complete": true,
+    "source_commit": "5ac94c5fb282596a20cb5a5dc8bd93064e9fdb22",
+    "rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+    "regular": {
+      "ntsc": [
+        {
+          "version": "AR",
+          "fps": 32.59823308033514,
+          "foreground": {
+            "count": 554,
+            "mean": 50185.83754512636,
+            "p95": 95349,
+            "maximum": 126485
+          },
+          "gaps": {
+            "count": 550,
+            "mean": 30.67650929225514,
+            "median": 33.376029635050486,
+            "p95": 50.06502223047882,
+            "maximum": 66.75345609567707
+          }
+        },
+        {
+          "version": "AS",
+          "fps": 32.53896141054464,
+          "foreground": {
+            "count": 553,
+            "mean": 50217.32549728752,
+            "p95": 95348,
+            "maximum": 126326
+          },
+          "gaps": {
+            "count": 549,
+            "mean": 30.732388393808357,
+            "median": 33.376029635051374,
+            "p95": 50.06502223047704,
+            "maximum": 66.75289736544786
+          }
+        }
+      ],
+      "pal": [
+        {
+          "version": "AR",
+          "fps": 30.999130119513357,
+          "foreground": {
+            "count": 525,
+            "mean": 51449.72190476191,
+            "p95": 99229,
+            "maximum": 135554
+          },
+          "gaps": {
+            "count": 521,
+            "mean": 32.25896972413813,
+            "median": 39.87210665042795,
+            "p95": 59.810115531442776,
+            "maximum": 79.74588949154082
+          }
+        },
+        {
+          "version": "AS",
+          "fps": 30.99913887907773,
+          "foreground": {
+            "count": 525,
+            "mean": 51517.137142857144,
+            "p95": 99286,
+            "maximum": 136346
+          },
+          "gaps": {
+            "count": 521,
+            "mean": 32.258960608577766,
+            "median": 39.872106650426176,
+            "p95": 59.809836166323294,
+            "maximum": 79.74700695199743
+          }
+        }
+      ]
+    },
+    "bear": {
+      "ntsc": [
+        {
+          "version": "AR",
+          "fps": 29.697787301895673,
+          "foreground": {
+            "count": 114,
+            "mean": 61768.587719298244,
+            "p95": 75842,
+            "maximum": 79398
+          },
+          "gaps": {
+            "count": 113,
+            "mean": 33.67254232897573,
+            "median": 33.376309000166415,
+            "p95": 33.408435988372176,
+            "maximum": 50.06390477002043
+          }
+        },
+        {
+          "version": "AS",
+          "fps": 29.69779166275396,
+          "foreground": {
+            "count": 114,
+            "mean": 61768.71929824561,
+            "p95": 75863,
+            "maximum": 79308
+          },
+          "gaps": {
+            "count": 113,
+            "mean": 33.672537384460426,
+            "median": 33.376309000166415,
+            "p95": 33.408715353488105,
+            "maximum": 50.06474286536289
+          }
+        }
+      ],
+      "pal": [
+        {
+          "version": "AR",
+          "fps": 25.078855395321337,
+          "foreground": {
+            "count": 97,
+            "mean": 63597.65979381443,
+            "p95": 76891,
+            "maximum": 79374
+          },
+          "gaps": {
+            "count": 96,
+            "mean": 39.87422807926705,
+            "median": 39.87322411088634,
+            "p95": 39.904513003747866,
+            "maximum": 39.905909829322184
+          }
+        },
+        {
+          "version": "AS",
+          "fps": 25.078849904497336,
+          "foreground": {
+            "count": 97,
+            "mean": 63597.65979381443,
+            "p95": 76891,
+            "maximum": 79374
+          },
+          "gaps": {
+            "count": 96,
+            "mean": 39.874236809426904,
+            "median": 39.87322411088545,
+            "p95": 39.9053510990921,
+            "maximum": 39.906468559552266
+          }
+        }
+      ]
+    },
+    "limitations": [
+      "Bounded level0 and level4 bear routes, not all-level acceptance.",
+      "Source mechanics and source clock unchanged; presentation cadence is separate.",
+      "Different presented picture populations are not paired CPU savings."
+    ]
+  },
+  "scope": "Aligned uppercase RETROWORKS at X247, seven-pixel original footer baseline, no hyphen; source mechanics and graphics outside credit preserved. All-level30FPS and owner/physical acceptance remain open."
+}

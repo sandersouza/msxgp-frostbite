@@ -1,0 +1,97 @@
+{
+  "complete": true,
+  "version": "v0.0.30-reference-credit-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.30-reference-credit-diagnostic",
+  "release_id": 444342261,
+  "prerelease": true,
+  "source_commit": "9915dab1c4c431a62b68c4886cdf788b1983f774",
+  "documentation_commit": "38048bd6400b4ece9055d23fe336c7becdb96619",
+  "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "sha256": "22ada8d8b75244d19cd12c604c954fb76fcf053871c02057823fe82714700bd3",
+      "bytes": 25542,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.30-reference-credit-diagnostic/BUILD.json",
+      "api_digest": "sha256:22ada8d8b75244d19cd12c604c954fb76fcf053871c02057823fe82714700bd3"
+    },
+    {
+      "name": "PERFORMANCE.json",
+      "sha256": "980950c08be39fea7f2c0ea930673666195e5baa166c9a035cf5095a7b712b1e",
+      "bytes": 3519,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.30-reference-credit-diagnostic/PERFORMANCE.json",
+      "api_digest": "sha256:980950c08be39fea7f2c0ea930673666195e5baa166c9a035cf5095a7b712b1e"
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "3d70c216acaef7d6c43ce43b43f917f316ca8f47c3120b9905d982fb58efa845",
+      "bytes": 434,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.30-reference-credit-diagnostic/SHA256SUMS",
+      "api_digest": "sha256:3d70c216acaef7d6c43ce43b43f917f316ca8f47c3120b9905d982fb58efa845"
+    },
+    {
+      "name": "SOURCE.txt",
+      "sha256": "dfe9c22d51237a2593687479a52599617cba1d6b2e7ad26e80f42206b6a50448",
+      "bytes": 981,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.30-reference-credit-diagnostic/SOURCE.txt",
+      "api_digest": "sha256:dfe9c22d51237a2593687479a52599617cba1d6b2e7ad26e80f42206b6a50448"
+    },
+    {
+      "name": "VALIDATION.json",
+      "sha256": "3a6144bd94de1dc0b8e5afcb38e1332c0b899784cb6c2005453b17c02f0b569d",
+      "bytes": 6610,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.30-reference-credit-diagnostic/VALIDATION.json",
+      "api_digest": "sha256:3a6144bd94de1dc0b8e5afcb38e1332c0b899784cb6c2005453b17c02f0b569d"
+    },
+    {
+      "name": "frostbite-0.0.30-reference-credit-diagnostic.rom",
+      "sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "bytes": 4194304,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.30-reference-credit-diagnostic/frostbite-0.0.30-reference-credit-diagnostic.rom",
+      "api_digest": "sha256:e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d"
+    }
+  ],
+  "release_notes_sha256": "f9d0bdac48f9241273d00e787eeb5ab2e6c84507e90978dff142be8ffbd1efa8",
+  "six_fresh_downloads_match": true,
+  "tag_exact_runtime": true,
+  "rollback_v29_assets_and_notes_unchanged": true,
+  "prepublication_review": {
+    "complete": true,
+    "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+    "blockers": [],
+    "receipt_path": "outputs/presentation/credit-reference-at-delivery-review/review.json",
+    "receipt_sha256": "e9af834fb29414838b12daf9d5b27dab602701339d17464598bea5d6188c7593"
+  },
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "webmsx": {
+    "complete": true,
+    "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+    "rom_sha1": "7F8E29FB70A19F9F4BF43E6E31B19F6BCA83E3F3",
+    "mapper": "ASCII16",
+    "machine": "MSX1A",
+    "video_hz": 60,
+    "F1_pressed": true,
+    "screenshot_sha256": "80acab8849b3d1fda9f7cfce75911b442ebda4b88d85d5a37e2d85a2df3e4ad9",
+    "state_sha256": "b1258883fafdb08bec632d7b6ac390af889c24e4299e5acfd37dd3d8656b7fcb",
+    "browser_closed": true,
+    "console_errors": 0,
+    "console_warnings": 1,
+    "warning": "ScriptProcessorNode deprecation",
+    "audio_listening_verified": false,
+    "scope": "Desktop launch, exact published ROM and displayed game only; no fluidity, listening, mobile, owner or physical acceptance."
+  },
+  "tracking": {
+    "issue": 42,
+    "state": "open",
+    "PR": 43,
+    "draft": true,
+    "merged": false,
+    "base": "codex/fix/39-atari800-performance",
+    "project": 7,
+    "status": "In review",
+    "fresh_issue_PR_bodies_verified": true,
+    "fresh_project_item_verified": true
+  },
+  "independent_postpublication_review_sha256": "03893c829942cda926920e5430276da4239312387228e7dc463a9bdd8cdd7713"
+}

@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "version": "v0.0.21-native-bear-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.21-native-bear-diagnostic",
+  "prerelease": true,
+  "source_commit": "851aa41466d7b9ea86c753a5228337c688d40a88",
+  "tag_resolved_commit": "851aa41466d7b9ea86c753a5228337c688d40a88",
+  "rom_sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 19090,
+      "sha256": "76a635225f2df8934a05332057266c14434e9dc2ab4802d6ed764d00c044bd48",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.21-native-bear-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "635876dcf352bfc2eafee908757045c7387a11653c21f4dce266fd765dd5ad15",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/frostbite-0.0.21-native-bear-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AI.xlsx",
+      "bytes": 4685745,
+      "sha256": "85d09e708937d6d34739843d492e91a39f49d6fcb7b10b4b952246ab107fa1d1",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/Frostbite-performance-budget-AI.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 449,
+      "sha256": "95cede9c432c3c6d9b9e53ad57724bd0fa4550056cf60d65f375bfa9cb5f092c",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 743,
+      "sha256": "565c11aaefe0b63ce61cc81fe831d3c1baa0cc3bca79677ad52072b65585962f",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 177903,
+      "sha256": "f9148818ffede611559c7ac2d16681cdb016a930aefc21bc3706320ee0e2a0f0",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.21-native-bear-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "1dbeca0076bd575131198380816b84eb98984b31d592f2fb1ba2dfb0877cdebd",
+  "public_validation_sha256": "f9148818ffede611559c7ac2d16681cdb016a930aefc21bc3706320ee0e2a0f0",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43269084062,
+      "event": "pull_request",
+      "headSha": "851aa41466d7b9ea86c753a5228337c688d40a88",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43269061315,
+      "event": "push",
+      "headSha": "851aa41466d7b9ea86c753a5228337c688d40a88",
+      "status": "completed"
+    }
+  ],
+  "rollback_v20_assets_unchanged": true,
+  "parent_source_files_preserved": 170,
+  "prior_roots_preserved": 32,
+  "issue42_open": true,
+  "board": "In progress",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.21-native-bear-diagnostic%2Ffrostbite-0.0.21-native-bear-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/bear-native-ai-research/webmsx-v21.png",
+    "screenshot_sha256": "7727f860e7e38c2da27168afa398d0242f39076d0847223e483e2573ac05f275",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified; performance goal and owner/physical acceptance remain open. Autonomous remaining dirty-state/source/renderer overhead investigation continues."
+}

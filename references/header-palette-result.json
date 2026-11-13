@@ -1,0 +1,1017 @@
+{
+  "version": "0.0.12-player-palette-header-diagnostic",
+  "source_commit": "48f570ea2b4c3894b2a77cb6555c226fe0b11863",
+  "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+  "diagnostic_ready": true,
+  "original_speed_presentation_accepted": false,
+  "manual_emulator_accepted": false,
+  "physical_hardware_accepted": false,
+  "palette_policy": {
+    "normal_overrides": {
+      "22": 11,
+      "36": 10,
+      "54": 11
+    },
+    "condition": "EB==0 and F0==0",
+    "scope": "Player only, including shore path; terminal colors unchanged."
+  },
+  "checks": {
+    "ntsc-final": {
+      "receipt_sha256": "203a1f5aa27a38f7ed3bd9f1e7ff6221f355b4f70dd21155dabfd6298d30efa7",
+      "result": {
+        "complete": true,
+        "family": "ntsc",
+        "expanded_ram_slot": false,
+        "stack_min_sp": 62268,
+        "stack_bytes": 68,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "source_checkpoints": 2253,
+        "hardware_vblanks": 2252,
+        "source_steps_per_second": 59.924183733779046,
+        "committed_pictures_per_second": 19.849478028520725,
+        "active_picture_intervals": 178,
+        "active_pictures_per_second": 10.613145819696472,
+        "committed_pictures": 743,
+        "max_irq_cycles": 28329,
+        "mean_irq_cycles": 18248.315275310833,
+        "mean_prepare_elapsed_cycles": 114100.67429340511,
+        "max_prepare_elapsed_cycles": 625145,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "physical_owners_equal": true,
+        "active_page_protected": true,
+        "late_vblanks": 0,
+        "canonical_source_writes": 0,
+        "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+        "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+      }
+    },
+    "pal-final": {
+      "receipt_sha256": "e845e51f407dfcdbee14b018d73a39c44a60c79b1735985a9ce3cae26048b0a2",
+      "result": {
+        "complete": true,
+        "family": "pal",
+        "expanded_ram_slot": true,
+        "stack_min_sp": 62270,
+        "stack_bytes": 66,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "source_checkpoints": 2254,
+        "hardware_vblanks": 1886,
+        "source_steps_per_second": 59.92467176702477,
+        "committed_pictures_per_second": 17.55703776379927,
+        "active_picture_intervals": 177,
+        "active_pictures_per_second": 10.544127304892623,
+        "committed_pictures": 658,
+        "max_irq_cycles": 52558,
+        "mean_irq_cycles": 21549.07211028632,
+        "mean_prepare_elapsed_cycles": 121776.38905775076,
+        "max_prepare_elapsed_cycles": 601075,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "physical_owners_equal": true,
+        "active_page_protected": true,
+        "late_vblanks": 0,
+        "canonical_source_writes": 0,
+        "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+        "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+        "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate."
+      }
+    },
+    "matrix-final": {
+      "receipt_sha256": "d1ac12a26845333c316890df413bcee05872c7f64428180006a3ee4b2d4f13d3",
+      "result": {
+        "exploratory": true,
+        "component": "full-scene",
+        "family": "ntsc",
+        "cases": 2115,
+        "complete": true,
+        "different_frames": 0,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "source_report_sha256": "874e8e309afa19ff0ba3bbf34532e3a8ed14887b7a53184d69410a5bd0ed0247",
+        "domain": "all-source",
+        "source_domain_families": {
+          "fixtures": 1690,
+          "cold_route": 31,
+          "natural_window": 394
+        },
+        "unmapped_source_startup": 7,
+        "max_prepare_cycles_including_rpc": 516146,
+        "frame_deadline_accepted": false,
+        "full_source_pixels_accepted": true,
+        "live_cache_ownership_accepted": false,
+        "fixed_role_ownership_accepted": true,
+        "physical_name_pages_accepted": true,
+        "integrated_dirty_states_accepted": true,
+        "dirty_row_list_accepted": true,
+        "scope": "Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance",
+        "prepared_band_ownership_accepted": true,
+        "prepared_checker_scope": "Fixed-generation roles and active full-page protection retained; source-packet keys independently reconstructed from saved owner/tuple, obsolete per-tile ice metadata required FF."
+      }
+    },
+    "density-clean": {
+      "receipt_sha256": "0f5515271b09841d45813c5936bd8bd3d9a3af1b3f6273aead662d883eee6246",
+      "result": {
+        "exploratory": true,
+        "component": "full-scene",
+        "family": "ntsc",
+        "cases": 1920,
+        "complete": true,
+        "different_frames": 0,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "source_report_sha256": "e903e001235852f1f2006cf88211ab8ff8e39e5c1c2e95675804da8814d49ef2",
+        "domain": "derived full-density coordinates/copy modes from one original-route state",
+        "source_domain_families": {
+          "derived-density": 1920
+        },
+        "unmapped_source_startup": 0,
+        "max_prepare_cycles_including_rpc": 529834,
+        "frame_deadline_accepted": false,
+        "full_source_pixels_accepted": true,
+        "live_cache_ownership_accepted": false,
+        "fixed_role_ownership_accepted": true,
+        "physical_name_pages_accepted": true,
+        "integrated_dirty_states_accepted": true,
+        "dirty_row_list_accepted": true,
+        "scope": "Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance; synthetic full-scene actor density/boundaries/cache repeats, NOT original observed high-level gameplay or native source timing.",
+        "prepared_band_ownership_accepted": true,
+        "prepared_checker_scope": "Fixed-generation roles and active full-page protection retained; source-packet keys independently reconstructed from saved owner/tuple, obsolete per-tile ice metadata required FF.",
+        "derivation": {
+          "unique_states": 640,
+          "copies_modes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "groups": 33,
+          "reflections": [
+            0,
+            128
+          ],
+          "coarse": [
+            0,
+            1
+          ],
+          "xs": [
+            0,
+            1,
+            7,
+            8,
+            15,
+            16,
+            31,
+            32,
+            143,
+            144,
+            151,
+            152,
+            153,
+            159
+          ],
+          "repeats": 3,
+          "base_ram": "006053000f90ff98ffa0ffa8ffb0ffb8ff105010501001010100000000c0081050105000000000000000000c0c0c0c8c0707070707070707ffff00840a0a0a0000000000000000000000000003ff0000000000ff000000000000000001010101a0c0b0d01b4540008c000000000000000000ff000000000004ffff00d4ff59f6",
+          "base_capture_sha256": "5fed4b7d2ed861d355e8caf726e92fe60039871109f93287e588efd08ec984ce",
+          "cases_sha256": "e903e001235852f1f2006cf88211ab8ff8e39e5c1c2e95675804da8814d49ef2"
+        }
+      }
+    },
+    "transitions": {
+      "receipt_sha256": "a57ec271a899383a1c1f3d5f21ceeaab6f0bbffe047646e4e4535c53ed1bbcfc",
+      "result": {
+        "exploratory": true,
+        "component": "full-scene",
+        "family": "ntsc",
+        "cases": 54,
+        "complete": true,
+        "different_frames": 0,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+        "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+        "source_report_sha256": "d11ad85198f1e72dfbf254b9ce82f4f9fc1e0e9910a6a45997adc6ff675b6928",
+        "domain": "Synthetic renderer transitions derived from original source case228; not gameplay timing.",
+        "source_domain_families": {
+          "directed-header-palette": 54
+        },
+        "unmapped_source_startup": 0,
+        "max_prepare_cycles_including_rpc": 499000,
+        "frame_deadline_accepted": false,
+        "full_source_pixels_accepted": true,
+        "live_cache_ownership_accepted": false,
+        "fixed_role_ownership_accepted": true,
+        "physical_name_pages_accepted": true,
+        "integrated_dirty_states_accepted": true,
+        "dirty_row_list_accepted": true,
+        "scope": "Ordered injected graphics fixtures, full source/ABI/RAM/slot/VRAM/visible-prepare/VBlank guards; not natural gameplay or whole-frame performance acceptance",
+        "prepared_band_ownership_accepted": true,
+        "prepared_checker_scope": "Fixed-generation roles and active full-page protection retained; source-packet keys independently reconstructed from saved owner/tuple, obsolete per-tile ice metadata required FF.",
+        "directed_cases_sha256": "d11ad85198f1e72dfbf254b9ce82f4f9fc1e0e9910a6a45997adc6ff675b6928",
+        "directed_producer_sha256": "a045669c36de12deb0378315dd109d4ed9c8f618d1b5eb6471cc48652b48e654"
+      }
+    },
+    "irq-ntsc": {
+      "receipt_sha256": "5d1b1b7e37cbf7e2f0a5c96569d7ee4ea61f2be7f3f78a46716d82e11a968488",
+      "result": {
+        "complete": true,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "family": "ntsc",
+        "expanded_ram_slot": false,
+        "boundaries": [
+          [
+            "mapper-before",
+            "19390",
+            "19390",
+            "7",
+            "62330",
+            "7",
+            "403",
+            "2",
+            "1",
+            "49700",
+            "50592",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "mapper-shadow",
+            "19393",
+            "19393",
+            "1",
+            "62330",
+            "7",
+            "403",
+            "2",
+            "1",
+            "49700",
+            "50592",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "address-low",
+            "59706",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "19012",
+            "6296",
+            "19024",
+            "49536",
+            "50592",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "stream-byte",
+            "18794",
+            "18794",
+            "7",
+            "62320",
+            "7",
+            "18944",
+            "6040",
+            "19024",
+            "49537",
+            "50592",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-address-low",
+            "59722",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "27176",
+            "6228",
+            "27216",
+            "49560",
+            "50592",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-byte",
+            "59731",
+            "59731",
+            "7",
+            "62320",
+            "7",
+            "21544",
+            "6228",
+            "27216",
+            "49560",
+            "50592",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-before",
+            "59648",
+            "59648",
+            "2",
+            "62332",
+            "7",
+            "68",
+            "152",
+            "24160",
+            "49871",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-copy",
+            "59665",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "24160",
+            "49871",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-complete",
+            "59667",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "23072",
+            "49871",
+            "50048",
+            "22728",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ]
+        ],
+        "main_alternate_index_sp_bank_restored": true,
+        "hardware_vblank_interrupts": true,
+        "irq_vram_and_snapshot_unchanged": true,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "canonical_source_writes": 0,
+        "probe_receipt_sha256": "100365ca5fb5ed16dda765a03306954e9e8875bd8911208b733473f993e13eb5",
+        "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "boundary_log_sha256": "6b97aabe4a7caa70630879a618abb85619dff89d7ac851bf8026cf21d328869a",
+        "scope": "Directed real VDP interrupt alignment with temporary diagnostic PC/IFF parking. Timing deliberately perturbed; do not use these rates as performance evidence."
+      }
+    },
+    "irq-pal": {
+      "receipt_sha256": "9987d18450dcd513fb0c071f78e62dedc2b30c74a94424c1f463b6fb27ab7d1c",
+      "result": {
+        "complete": true,
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "family": "pal",
+        "expanded_ram_slot": true,
+        "boundaries": [
+          [
+            "mapper-before",
+            "19390",
+            "19390",
+            "7",
+            "62316",
+            "7",
+            "64588",
+            "773",
+            "40166",
+            "40358",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "mapper-shadow",
+            "19393",
+            "19393",
+            "252",
+            "62316",
+            "7",
+            "64588",
+            "773",
+            "40166",
+            "40358",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "address-low",
+            "59706",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "18500",
+            "6296",
+            "18512",
+            "49536",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "stream-byte",
+            "18794",
+            "18794",
+            "7",
+            "62320",
+            "7",
+            "18432",
+            "6040",
+            "18512",
+            "49537",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-address-low",
+            "59722",
+            "59701",
+            "7",
+            "62318",
+            "0",
+            "26664",
+            "6228",
+            "26704",
+            "49560",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "fill-byte",
+            "59731",
+            "59731",
+            "7",
+            "62320",
+            "7",
+            "21544",
+            "6228",
+            "26704",
+            "49560",
+            "50496",
+            "58688",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-before",
+            "59648",
+            "59648",
+            "2",
+            "62332",
+            "7",
+            "68",
+            "152",
+            "23136",
+            "49871",
+            "50048",
+            "22728",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-copy",
+            "59665",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "23136",
+            "49871",
+            "50048",
+            "22728",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ],
+          [
+            "snapshot-complete",
+            "59667",
+            "59701",
+            "1",
+            "62330",
+            "0",
+            "324",
+            "152",
+            "24096",
+            "49871",
+            "50080",
+            "23757",
+            "66",
+            "1267",
+            "511",
+            "57349",
+            "0"
+          ]
+        ],
+        "main_alternate_index_sp_bank_restored": true,
+        "hardware_vblank_interrupts": true,
+        "irq_vram_and_snapshot_unchanged": true,
+        "source_cpu_all_ram_equal": true,
+        "coherent_picture_pixels_equal": true,
+        "canonical_source_writes": 0,
+        "probe_receipt_sha256": "dfbc8c603a12a469a3748dd0ae63715d86343acd1cb05a48954c117743349199",
+        "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "boundary_log_sha256": "3c3c4365a63e6ce63c9f5acfaf288675ddaf9f4c87ef08e2b54d632477d1d268",
+        "scope": "Directed real VDP interrupt alignment with temporary diagnostic PC/IFF parking. Timing deliberately perturbed; do not use these rates as performance evidence."
+      }
+    },
+    "negative": {
+      "receipt_sha256": "e798c3ba4d9895ebf010e020ab01d968ab00b08468c64351cc5b58ca5be592b1",
+      "result": {
+        "complete": true,
+        "negative_control": "AF2 mutation after RETI must fail register oracle",
+        "expected_failure": "boundary-register-restoration",
+        "rom_sha256": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+        "producer_sha256": "66af4eb505536d36aa190147c403d0801e087a7694bd9f3847920e3d680315af",
+        "launch_sha256": "5d7110aaeb71b610360fab2963f345ae895387622a72a81cfc09f799c2e6f62f",
+        "log_sha256": "f21a336b2b12e93c6f3f40a7e4e306cb5763c6c241addb65c411415ab14f4d6f"
+      }
+    }
+  },
+  "rates": {
+    "ntsc": {
+      "active_pictures_per_second": {
+        "before": 10.335599090143376,
+        "after": 10.613145819696472,
+        "percent": 2.6853472849752924
+      },
+      "committed_pictures_per_second": {
+        "before": 19.528461335685616,
+        "after": 19.849478028520725,
+        "percent": 1.6438401741794895
+      },
+      "source_steps_per_second": {
+        "before": 59.922746523762946,
+        "after": 59.924183733779046,
+        "percent": 0.0023984381549269074
+      }
+    },
+    "pal": {
+      "active_pictures_per_second": {
+        "before": 10.282888016963646,
+        "after": 10.544127304892623,
+        "percent": 2.540524485903295
+      },
+      "committed_pictures_per_second": {
+        "before": 17.28980735643551,
+        "after": 17.55703776379927,
+        "percent": 1.5455950540957941
+      },
+      "source_steps_per_second": {
+        "before": 59.924675776224134,
+        "after": 59.92467176702477,
+        "percent": -6.6903980910915095e-06
+      }
+    }
+  },
+  "foreground_profile": {
+    "all": {
+      "description": {
+        "elapsed": {
+          "mean": 4088.193808882907,
+          "maximum": 16104,
+          "p95": 4072
+        },
+        "irq": {
+          "mean": 16.16150740242261,
+          "maximum": 12008,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 4072.0323014804844,
+          "maximum": 4096,
+          "p95": 4072
+        }
+      },
+      "dirty-state": {
+        "elapsed": {
+          "mean": 9053.35800807537,
+          "maximum": 10541,
+          "p95": 10055
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 9053.35800807537,
+          "maximum": 10541,
+          "p95": 10055
+        }
+      },
+      "release": {
+        "elapsed": {
+          "mean": 781.2880215343204,
+          "maximum": 1137,
+          "p95": 1011
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 781.2880215343204,
+          "maximum": 1137,
+          "p95": 1011
+        }
+      },
+      "background": {
+        "elapsed": {
+          "mean": 5459.325706594886,
+          "maximum": 45380,
+          "p95": 18138
+        },
+        "irq": {
+          "mean": 771.9461641991925,
+          "maximum": 25725,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 4687.3795423956935,
+          "maximum": 28589,
+          "p95": 18021
+        }
+      },
+      "world": {
+        "elapsed": {
+          "mean": 38972.2462987887,
+          "maximum": 243608,
+          "p95": 167048
+        },
+        "irq": {
+          "mean": 15260.919246298788,
+          "maximum": 76809,
+          "p95": 70045
+        },
+        "foreground_plus_ack": {
+          "mean": 23711.327052489905,
+          "maximum": 197311,
+          "p95": 100432
+        }
+      },
+      "header": {
+        "elapsed": {
+          "mean": 23500.316285329744,
+          "maximum": 177191,
+          "p95": 116655
+        },
+        "irq": {
+          "mean": 6434.671601615074,
+          "maximum": 77429,
+          "p95": 45148
+        },
+        "foreground_plus_ack": {
+          "mean": 17065.64468371467,
+          "maximum": 142340,
+          "p95": 82785
+        }
+      },
+      "footer": {
+        "elapsed": {
+          "mean": 390.0592193808883,
+          "maximum": 39424,
+          "p95": 247
+        },
+        "irq": {
+          "mean": 49.00538358008075,
+          "maximum": 12914,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 341.0538358008075,
+          "maximum": 27416,
+          "p95": 247
+        }
+      },
+      "sprites": {
+        "elapsed": {
+          "mean": 23726.660834454913,
+          "maximum": 106847,
+          "p95": 78035
+        },
+        "irq": {
+          "mean": 5456.446837146703,
+          "maximum": 50312,
+          "p95": 23486
+        },
+        "foreground_plus_ack": {
+          "mean": 18270.21399730821,
+          "maximum": 64930,
+          "p95": 56028
+        }
+      },
+      "upload": {
+        "elapsed": {
+          "mean": 8129.226110363392,
+          "maximum": 45517,
+          "p95": 38897
+        },
+        "irq": {
+          "mean": 2915.5531628532976,
+          "maximum": 25441,
+          "p95": 22914
+        },
+        "foreground_plus_ack": {
+          "mean": 5213.672947510094,
+          "maximum": 27023,
+          "p95": 19589
+        }
+      },
+      "total": {
+        "elapsed": {
+          "mean": 114100.67429340511,
+          "maximum": 625145,
+          "p95": 365406
+        },
+        "irq": {
+          "mean": 30904.70390309556,
+          "maximum": 201066,
+          "p95": 132049
+        },
+        "foreground_plus_ack": {
+          "mean": 83195.97039030955,
+          "maximum": 496820,
+          "p95": 228027
+        }
+      }
+    },
+    "active": {
+      "description": {
+        "elapsed": {
+          "mean": 4072,
+          "maximum": 4072,
+          "p95": 4072
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 4072,
+          "maximum": 4072,
+          "p95": 4072
+        }
+      },
+      "dirty-state": {
+        "elapsed": {
+          "mean": 9958.07142857143,
+          "maximum": 10541,
+          "p95": 10538
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 9958.07142857143,
+          "maximum": 10541,
+          "p95": 10538
+        }
+      },
+      "release": {
+        "elapsed": {
+          "mean": 945.8241758241758,
+          "maximum": 1029,
+          "p95": 1029
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 945.8241758241758,
+          "maximum": 1029,
+          "p95": 1029
+        }
+      },
+      "background": {
+        "elapsed": {
+          "mean": 16264.423076923076,
+          "maximum": 45380,
+          "p95": 43605
+        },
+        "irq": {
+          "mean": 3151.4065934065934,
+          "maximum": 25725,
+          "p95": 25175
+        },
+        "foreground_plus_ack": {
+          "mean": 13113.016483516483,
+          "maximum": 19688,
+          "p95": 19655
+        }
+      },
+      "world": {
+        "elapsed": {
+          "mean": 148161.76923076922,
+          "maximum": 181753,
+          "p95": 173308
+        },
+        "irq": {
+          "mean": 59973.78571428572,
+          "maximum": 76809,
+          "p95": 74038
+        },
+        "foreground_plus_ack": {
+          "mean": 88187.98351648351,
+          "maximum": 114669,
+          "p95": 104607
+        }
+      },
+      "header": {
+        "elapsed": {
+          "mean": 44145.91208791209,
+          "maximum": 164492,
+          "p95": 126718
+        },
+        "irq": {
+          "mean": 17025.120879120877,
+          "maximum": 77429,
+          "p95": 50309
+        },
+        "foreground_plus_ack": {
+          "mean": 27120.79120879121,
+          "maximum": 97019,
+          "p95": 74581
+        }
+      },
+      "footer": {
+        "elapsed": {
+          "mean": 247,
+          "maximum": 247,
+          "p95": 247
+        },
+        "irq": {
+          "mean": 0,
+          "maximum": 0,
+          "p95": 0
+        },
+        "foreground_plus_ack": {
+          "mean": 247,
+          "maximum": 247,
+          "p95": 247
+        }
+      },
+      "sprites": {
+        "elapsed": {
+          "mean": 36326.62637362637,
+          "maximum": 106847,
+          "p95": 100848
+        },
+        "irq": {
+          "mean": 12992.005494505494,
+          "maximum": 50312,
+          "p95": 44288
+        },
+        "foreground_plus_ack": {
+          "mean": 23334.620879120877,
+          "maximum": 62502,
+          "p95": 57188
+        }
+      },
+      "upload": {
+        "elapsed": {
+          "mean": 27340.686813186814,
+          "maximum": 45517,
+          "p95": 43421
+        },
+        "irq": {
+          "mean": 11423.758241758242,
+          "maximum": 25441,
+          "p95": 24203
+        },
+        "foreground_plus_ack": {
+          "mean": 15916.92857142857,
+          "maximum": 21179,
+          "p95": 20663
+        }
+      },
+      "total": {
+        "elapsed": {
+          "mean": 287462.3131868132,
+          "maximum": 477567,
+          "p95": 415527
+        },
+        "irq": {
+          "mean": 104566.07692307692,
+          "maximum": 201066,
+          "p95": 153958
+        },
+        "foreground_plus_ack": {
+          "mean": 182896.23626373627,
+          "maximum": 296693,
+          "p95": 248934
+        }
+      }
+    }
+  },
+  "profile_sha256": "9a20af2afbf33f93e24bc3a192aaa6307a18e9cf85f82b988ada158d3300322a",
+  "profile_receipt_sha256": "c5109ad60c1b894a9679a8129f29f0534599a15a6fabf2b4b5ee456cb2fa75c8",
+  "host_tests": {
+    "passed": 553,
+    "log_sha256": "80b545da625470f691b250a45fd27c644a8569b60ef37da2cefc533f1c0097c7"
+  },
+  "review": {
+    "base": "42a9b150c290d6129b53da72df10774b34456756",
+    "head": "d2cad7c3ced522e0ddcfadded2dda8b0d109ba01",
+    "blocking_findings": 0,
+    "followup": "Added palette helper producer fingerprint and 54 directed blank/header/terminal transitions; ROM unchanged."
+  },
+  "source_files_verified_against_release_git_objects": 130,
+  "original_free_ci": [
+    42039275961,
+    42039267698
+  ],
+  "scope": "Automated emulator and synthetic renderer evidence. Deliberate player-only palette adaptation; no owner or physical acceptance. Active long gaps remain about150ms."
+}

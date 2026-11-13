@@ -1,0 +1,3103 @@
+{
+  "complete": true,
+  "decision": "Do not promote either private implementation; retain v0.0.17. No consistent live whole-game gain.",
+  "public_rom_changed": false,
+  "new_release": false,
+  "baseline_source_commit": "059bec5f985f3aac121014016dadfa31ec3fc892",
+  "baseline_rom_sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+  "parent_sources_preserved": 154,
+  "variants": {
+    "A": {
+      "rom_sha256": "7aa6c4750f59556ca98477e371b4e7cfeae4d291d9b4324585129ef5ecc2f73f",
+      "private_unqualified": true,
+      "source_base_commit": "b123de469fdf6b5d6074b44df94cd2bfc5182072",
+      "source_dirty": true,
+      "parent_sources_preserved": 154,
+      "pattern_slots": [
+        [
+          22,
+          23,
+          58,
+          59
+        ],
+        [
+          46,
+          47,
+          60,
+          61
+        ]
+      ],
+      "geometry_cases": 512,
+      "natural": {
+        "ntsc": {
+          "source_checkpoints": 2253,
+          "committed_pictures": 1256,
+          "active_pictures_per_second": 24.690539841362398,
+          "source_steps_per_second": 59.92270196021327,
+          "stack_bytes": 58,
+          "expanded_ram_slot": false
+        },
+        "pal": {
+          "source_checkpoints": 2254,
+          "committed_pictures": 1146,
+          "active_pictures_per_second": 22.088391846733717,
+          "source_steps_per_second": 59.92467221249133,
+          "stack_bytes": 56,
+          "expanded_ram_slot": true
+        }
+      },
+      "profiles": {
+        "ntsc": {
+          "complete": true,
+          "label": "AE",
+          "family": "ntsc",
+          "rom_sha256": "7aa6c4750f59556ca98477e371b4e7cfeae4d291d9b4324585129ef5ecc2f73f",
+          "groups": {
+            "all": {
+              "pictures": 1256,
+              "foreground": {
+                "count": 1256,
+                "mean": 55626.828821656054,
+                "p95": 111730,
+                "maximum": 315861
+              },
+              "phases": {
+                "description": {
+                  "count": 1256,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 1256,
+                  "mean": 16906.001592356686,
+                  "p95": 34234,
+                  "maximum": 62586
+                },
+                "dirty-state": {
+                  "count": 1256,
+                  "mean": 9048.350318471337,
+                  "p95": 10349,
+                  "maximum": 11289
+                },
+                "release": {
+                  "count": 1256,
+                  "mean": 2064.2866242038217,
+                  "p95": 2199,
+                  "maximum": 2451
+                },
+                "background": {
+                  "count": 1256,
+                  "mean": 1825.6226114649683,
+                  "p95": 5927,
+                  "maximum": 19830
+                },
+                "world": {
+                  "count": 1256,
+                  "mean": 13411.708598726114,
+                  "p95": 43932,
+                  "maximum": 124652
+                },
+                "header": {
+                  "count": 1256,
+                  "mean": 4634.95780254777,
+                  "p95": 27433,
+                  "maximum": 76149
+                },
+                "footer": {
+                  "count": 1256,
+                  "mean": 317.6886942675159,
+                  "p95": 262,
+                  "maximum": 27431
+                },
+                "upload": {
+                  "count": 1256,
+                  "mean": 3346.2125796178343,
+                  "p95": 13187,
+                  "maximum": 27023
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 193,
+                    "mean": 1109.8652849740934,
+                    "p95": 738,
+                    "maximum": 76732
+                  },
+                  "cycles_per_picture": 170.54458598726114
+                },
+                "bear-preflight": {
+                  "cpu": {
+                    "count": 1256,
+                    "mean": 5530.349522292993,
+                    "p95": 8813,
+                    "maximum": 12997
+                  },
+                  "cycles_per_picture": 5530.349522292993
+                }
+              }
+            },
+            "active": {
+              "pictures": 421,
+              "foreground": {
+                "count": 421,
+                "mean": 74172.24940617578,
+                "p95": 131223,
+                "maximum": 174587
+              },
+              "phases": {
+                "description": {
+                  "count": 421,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 421,
+                  "mean": 14382.70783847981,
+                  "p95": 23076,
+                  "maximum": 59831
+                },
+                "dirty-state": {
+                  "count": 421,
+                  "mean": 9646.161520190024,
+                  "p95": 10453,
+                  "maximum": 11289
+                },
+                "release": {
+                  "count": 421,
+                  "mean": 2123.764845605701,
+                  "p95": 2235,
+                  "maximum": 2307
+                },
+                "background": {
+                  "count": 421,
+                  "mean": 3401.2019002375296,
+                  "p95": 7917,
+                  "maximum": 11894
+                },
+                "world": {
+                  "count": 421,
+                  "mean": 26584.824228028505,
+                  "p95": 49784,
+                  "maximum": 62024
+                },
+                "header": {
+                  "count": 421,
+                  "mean": 6079.486935866983,
+                  "p95": 35106,
+                  "maximum": 47722
+                },
+                "footer": {
+                  "count": 421,
+                  "mean": 262.1140142517815,
+                  "p95": 262,
+                  "maximum": 286
+                },
+                "upload": {
+                  "count": 421,
+                  "mean": 7619.98812351544,
+                  "p95": 15300,
+                  "maximum": 19565
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 184,
+                    "mean": 716.0869565217391,
+                    "p95": 738,
+                    "maximum": 738
+                  },
+                  "cycles_per_picture": 312.96912114014253
+                },
+                "bear-preflight": {
+                  "cpu": {
+                    "count": 421,
+                    "mean": 5113.904988123515,
+                    "p95": 8963,
+                    "maximum": 12997
+                  },
+                  "cycles_per_picture": 5113.904988123515
+                }
+              }
+            }
+          },
+          "all_five_buffers_identical": {
+            "route-cpu.bin": true,
+            "captures.bin": true,
+            "owners.bin": true,
+            "irq.tsv": true,
+            "pictures.tsv": true
+          },
+          "protected_inputs_unchanged": true,
+          "active_sprite_decisions": 141,
+          "active_decisions": 421,
+          "producer_sha256": "148b499d429867eb9519ec04c24a118a0a4b7b22e4e6ff6ed69cdc9b22755852",
+          "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+        },
+        "pal": {
+          "complete": true,
+          "label": "AE",
+          "family": "pal",
+          "rom_sha256": "7aa6c4750f59556ca98477e371b4e7cfeae4d291d9b4324585129ef5ecc2f73f",
+          "groups": {
+            "all": {
+              "pictures": 1146,
+              "foreground": {
+                "count": 1146,
+                "mean": 57969.03752181501,
+                "p95": 115289,
+                "maximum": 315813
+              },
+              "phases": {
+                "description": {
+                  "count": 1146,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 1146,
+                  "mean": 17733.14572425829,
+                  "p95": 35698,
+                  "maximum": 64559
+                },
+                "dirty-state": {
+                  "count": 1146,
+                  "mean": 9072.464223385688,
+                  "p95": 10349,
+                  "maximum": 11310
+                },
+                "release": {
+                  "count": 1146,
+                  "mean": 2067.3979057591623,
+                  "p95": 2217,
+                  "maximum": 2451
+                },
+                "background": {
+                  "count": 1146,
+                  "mean": 1945.9092495636999,
+                  "p95": 6865,
+                  "maximum": 19830
+                },
+                "world": {
+                  "count": 1146,
+                  "mean": 14310.45462478185,
+                  "p95": 44372,
+                  "maximum": 124628
+                },
+                "header": {
+                  "count": 1146,
+                  "mean": 4844.348167539267,
+                  "p95": 27889,
+                  "maximum": 76149
+                },
+                "footer": {
+                  "count": 1146,
+                  "mean": 323.0261780104712,
+                  "p95": 262,
+                  "maximum": 27431
+                },
+                "upload": {
+                  "count": 1146,
+                  "mean": 3600.2914485165793,
+                  "p95": 13745,
+                  "maximum": 26999
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 186,
+                    "mean": 1122.9569892473119,
+                    "p95": 714,
+                    "maximum": 76708
+                  },
+                  "cycles_per_picture": 182.26003490401396
+                },
+                "bear-preflight": {
+                  "cpu": {
+                    "count": 1146,
+                    "mean": 5666.58202443281,
+                    "p95": 8813,
+                    "maximum": 13039
+                  },
+                  "cycles_per_picture": 5666.58202443281
+                }
+              }
+            },
+            "active": {
+              "pictures": 377,
+              "foreground": {
+                "count": 377,
+                "mean": 79268.14854111406,
+                "p95": 134448,
+                "maximum": 173027
+              },
+              "phases": {
+                "description": {
+                  "count": 377,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 377,
+                  "mean": 15483.679045092838,
+                  "p95": 24617,
+                  "maximum": 64559
+                },
+                "dirty-state": {
+                  "count": 377,
+                  "mean": 9730.514588859416,
+                  "p95": 10519,
+                  "maximum": 11310
+                },
+                "release": {
+                  "count": 377,
+                  "mean": 2133.5888594164458,
+                  "p95": 2235,
+                  "maximum": 2307
+                },
+                "background": {
+                  "count": 377,
+                  "mean": 3716.763925729443,
+                  "p95": 7893,
+                  "maximum": 11873
+                },
+                "world": {
+                  "count": 377,
+                  "mean": 28799.602122015916,
+                  "p95": 50288,
+                  "maximum": 62048
+                },
+                "header": {
+                  "count": 377,
+                  "mean": 6678,
+                  "p95": 36610,
+                  "maximum": 47786
+                },
+                "footer": {
+                  "count": 377,
+                  "mean": 262.19098143236073,
+                  "p95": 262,
+                  "maximum": 286
+                },
+                "upload": {
+                  "count": 377,
+                  "mean": 8391.80901856764,
+                  "p95": 15313,
+                  "maximum": 19552
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 177,
+                    "mean": 714.4067796610169,
+                    "p95": 714,
+                    "maximum": 738
+                  },
+                  "cycles_per_picture": 335.41114058355436
+                },
+                "bear-preflight": {
+                  "cpu": {
+                    "count": 377,
+                    "mean": 5237.838196286472,
+                    "p95": 8956,
+                    "maximum": 13039
+                  },
+                  "cycles_per_picture": 5237.838196286472
+                }
+              }
+            }
+          },
+          "all_five_buffers_identical": {
+            "route-cpu.bin": true,
+            "captures.bin": true,
+            "owners.bin": true,
+            "irq.tsv": true,
+            "pictures.tsv": true
+          },
+          "protected_inputs_unchanged": true,
+          "active_sprite_decisions": 131,
+          "active_decisions": 377,
+          "producer_sha256": "148b499d429867eb9519ec04c24a118a0a4b7b22e4e6ff6ed69cdc9b22755852",
+          "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+        }
+      }
+    },
+    "B": {
+      "rom_sha256": "384304804d341915e48f36c35281c4d02e107992faa4e97c078151202978906d",
+      "private_unqualified": true,
+      "source_base_commit": "b123de469fdf6b5d6074b44df94cd2bfc5182072",
+      "source_dirty": true,
+      "parent_sources_preserved": 154,
+      "pattern_slots": [
+        [
+          22,
+          23,
+          58,
+          59
+        ],
+        [
+          46,
+          47,
+          60,
+          61
+        ]
+      ],
+      "geometry_cases": 512,
+      "natural": {
+        "ntsc": {
+          "source_checkpoints": 2253,
+          "committed_pictures": 1318,
+          "active_pictures_per_second": 25.84165559686317,
+          "source_steps_per_second": 59.92274786067046,
+          "stack_bytes": 60,
+          "expanded_ram_slot": false
+        },
+        "pal": {
+          "source_checkpoints": 2254,
+          "committed_pictures": 1189,
+          "active_pictures_per_second": 23.12257726178383,
+          "source_steps_per_second": 59.924677112624046,
+          "stack_bytes": 56,
+          "expanded_ram_slot": true
+        }
+      },
+      "profiles": {
+        "ntsc": {
+          "complete": true,
+          "label": "B",
+          "family": "ntsc",
+          "rom_sha256": "384304804d341915e48f36c35281c4d02e107992faa4e97c078151202978906d",
+          "groups": {
+            "all": {
+              "pictures": 1318,
+              "foreground": {
+                "count": 1318,
+                "mean": 51597.58952959029,
+                "p95": 105899,
+                "maximum": 314759
+              },
+              "phases": {
+                "description": {
+                  "count": 1318,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 1318,
+                  "mean": 13202.072837632777,
+                  "p95": 28796,
+                  "maximum": 58856
+                },
+                "dirty-state": {
+                  "count": 1318,
+                  "mean": 9036.47875569044,
+                  "p95": 10346,
+                  "maximum": 10942
+                },
+                "release": {
+                  "count": 1318,
+                  "mean": 2062.3748103186645,
+                  "p95": 2199,
+                  "maximum": 2451
+                },
+                "background": {
+                  "count": 1318,
+                  "mean": 1753.576631259484,
+                  "p95": 5903,
+                  "maximum": 19830
+                },
+                "world": {
+                  "count": 1318,
+                  "mean": 13518.067526555387,
+                  "p95": 43875,
+                  "maximum": 124652
+                },
+                "header": {
+                  "count": 1318,
+                  "mean": 4428.438543247345,
+                  "p95": 25580,
+                  "maximum": 76149
+                },
+                "footer": {
+                  "count": 1318,
+                  "mean": 315.0690440060698,
+                  "p95": 262,
+                  "maximum": 27431
+                },
+                "upload": {
+                  "count": 1318,
+                  "mean": 3209.5113808801216,
+                  "p95": 13174,
+                  "maximum": 27023
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 764,
+                    "mean": 813.8141361256545,
+                    "p95": 714,
+                    "maximum": 76732
+                  },
+                  "cycles_per_picture": 471.7405159332322
+                },
+                "bear-preflight": {
+                  "cpu": null,
+                  "cycles_per_picture": 0.0
+                }
+              }
+            },
+            "active": {
+              "pictures": 440,
+              "foreground": {
+                "count": 440,
+                "mean": 69876.50454545455,
+                "p95": 123649,
+                "maximum": 173695
+              },
+              "phases": {
+                "description": {
+                  "count": 440,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 440,
+                  "mean": 11324.495454545455,
+                  "p95": 21806,
+                  "maximum": 58856
+                },
+                "dirty-state": {
+                  "count": 440,
+                  "mean": 9615.927272727273,
+                  "p95": 10393,
+                  "maximum": 10942
+                },
+                "release": {
+                  "count": 440,
+                  "mean": 2119.2136363636364,
+                  "p95": 2235,
+                  "maximum": 2307
+                },
+                "background": {
+                  "count": 440,
+                  "mean": 3276.5363636363636,
+                  "p95": 7893,
+                  "maximum": 11894
+                },
+                "world": {
+                  "count": 440,
+                  "mean": 26042.302272727273,
+                  "p95": 49715,
+                  "maximum": 62767
+                },
+                "header": {
+                  "count": 440,
+                  "mean": 5827.729545454546,
+                  "p95": 32391,
+                  "maximum": 47722
+                },
+                "footer": {
+                  "count": 440,
+                  "mean": 262.05454545454546,
+                  "p95": 262,
+                  "maximum": 286
+                },
+                "upload": {
+                  "count": 440,
+                  "mean": 7336.245454545455,
+                  "p95": 14808,
+                  "maximum": 19565
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 320,
+                    "mean": 714.75,
+                    "p95": 714,
+                    "maximum": 738
+                  },
+                  "cycles_per_picture": 519.8181818181819
+                },
+                "bear-preflight": {
+                  "cpu": null,
+                  "cycles_per_picture": 0.0
+                }
+              }
+            }
+          },
+          "all_five_buffers_identical": {
+            "route-cpu.bin": true,
+            "captures.bin": true,
+            "owners.bin": true,
+            "irq.tsv": true,
+            "pictures.tsv": true
+          },
+          "protected_inputs_unchanged": true,
+          "active_sprite_decisions": 0,
+          "active_decisions": 0,
+          "producer_sha256": "7453cd0f042b83ab614c4aa9652e432460bf4aace9ef37d259e457d25ce586b6",
+          "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+        },
+        "pal": {
+          "complete": true,
+          "label": "B",
+          "family": "pal",
+          "rom_sha256": "384304804d341915e48f36c35281c4d02e107992faa4e97c078151202978906d",
+          "groups": {
+            "all": {
+              "pictures": 1189,
+              "foreground": {
+                "count": 1189,
+                "mean": 54181.68881412952,
+                "p95": 108083,
+                "maximum": 314711
+              },
+              "phases": {
+                "description": {
+                  "count": 1189,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 1189,
+                  "mean": 13991.599663582843,
+                  "p95": 29846,
+                  "maximum": 58856
+                },
+                "dirty-state": {
+                  "count": 1189,
+                  "mean": 9063.6173254836,
+                  "p95": 10349,
+                  "maximum": 10942
+                },
+                "release": {
+                  "count": 1189,
+                  "mean": 2066.3692178301094,
+                  "p95": 2217,
+                  "maximum": 2451
+                },
+                "background": {
+                  "count": 1189,
+                  "mean": 1892.5407905803197,
+                  "p95": 5927,
+                  "maximum": 19830
+                },
+                "world": {
+                  "count": 1189,
+                  "mean": 14567.913372582001,
+                  "p95": 44489,
+                  "maximum": 124628
+                },
+                "header": {
+                  "count": 1189,
+                  "mean": 4697.762825904121,
+                  "p95": 27585,
+                  "maximum": 76149
+                },
+                "footer": {
+                  "count": 1189,
+                  "mean": 320.8999158957107,
+                  "p95": 262,
+                  "maximum": 27431
+                },
+                "upload": {
+                  "count": 1189,
+                  "mean": 3508.9857022708156,
+                  "p95": 13187,
+                  "maximum": 26999
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 735,
+                    "mean": 817.5238095238095,
+                    "p95": 714,
+                    "maximum": 76708
+                  },
+                  "cycles_per_picture": 505.3658536585366
+                },
+                "bear-preflight": {
+                  "cpu": null,
+                  "cycles_per_picture": 0.0
+                }
+              }
+            },
+            "active": {
+              "pictures": 394,
+              "foreground": {
+                "count": 394,
+                "mean": 74986.8730964467,
+                "p95": 134132,
+                "maximum": 172979
+              },
+              "phases": {
+                "description": {
+                  "count": 394,
+                  "mean": 4072,
+                  "p95": 4072,
+                  "maximum": 4072
+                },
+                "sprites-preflight": {
+                  "count": 394,
+                  "mean": 12117,
+                  "p95": 23359,
+                  "maximum": 58856
+                },
+                "dirty-state": {
+                  "count": 394,
+                  "mean": 9699.007614213198,
+                  "p95": 10454,
+                  "maximum": 10942
+                },
+                "release": {
+                  "count": 394,
+                  "mean": 2130.1370558375634,
+                  "p95": 2235,
+                  "maximum": 2307
+                },
+                "background": {
+                  "count": 394,
+                  "mean": 3602.543147208122,
+                  "p95": 7893,
+                  "maximum": 11870
+                },
+                "world": {
+                  "count": 394,
+                  "mean": 28488.89086294416,
+                  "p95": 51028,
+                  "maximum": 63440
+                },
+                "header": {
+                  "count": 394,
+                  "mean": 6469.192893401016,
+                  "p95": 35106,
+                  "maximum": 47722
+                },
+                "footer": {
+                  "count": 394,
+                  "mean": 262.1218274111675,
+                  "p95": 262,
+                  "maximum": 286
+                },
+                "upload": {
+                  "count": 394,
+                  "mean": 8145.9796954314725,
+                  "p95": 15300,
+                  "maximum": 19541
+                }
+              },
+              "calls": {
+                "bear-tile": {
+                  "cpu": {
+                    "count": 309,
+                    "mean": 714.3106796116505,
+                    "p95": 714,
+                    "maximum": 738
+                  },
+                  "cycles_per_picture": 560.2081218274112
+                },
+                "bear-preflight": {
+                  "cpu": null,
+                  "cycles_per_picture": 0.0
+                }
+              }
+            }
+          },
+          "all_five_buffers_identical": {
+            "route-cpu.bin": true,
+            "captures.bin": true,
+            "owners.bin": true,
+            "irq.tsv": true,
+            "pictures.tsv": true
+          },
+          "protected_inputs_unchanged": true,
+          "active_sprite_decisions": 0,
+          "active_decisions": 0,
+          "producer_sha256": "7453cd0f042b83ab614c4aa9652e432460bf4aace9ef37d259e457d25ce586b6",
+          "scope": "Passive full foreground/IRQ-separated stage attribution. Different sampled pictures, not paired component CPU savings."
+        }
+      }
+    }
+  },
+  "regular_comparisons": {
+    "A": {
+      "ntsc": {
+        "changes": {
+          "grounded_landing_presented": {
+            "gained": [
+              16,
+              21,
+              24
+            ],
+            "lost": [
+              1,
+              5,
+              11
+            ]
+          },
+          "endpoint_y_presented": {
+            "gained": [
+              16,
+              24
+            ],
+            "lost": [
+              4,
+              5,
+              20
+            ]
+          },
+          "fps_percent": -4.673145996689265
+        },
+        "runs": [
+          {
+            "label": "AD",
+            "summary": {
+              "fps": 25.90092802234393,
+              "gaps": {
+                "count": 437,
+                "mean": 38.60865522414219,
+                "median": 33.408435988372176,
+                "p95": 66.75233863521868,
+                "maximum": 83.44161059576294
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 279,
+                  "total": 390,
+                  "fraction": 0.7153846153846154,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 8,
+                    "mean": 10.73076923076923,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 15
+                  }
+                },
+                "distinct_y": {
+                  "presented": 181,
+                  "total": 234,
+                  "fraction": 0.7735042735042735,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 6.961538461538462,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 9
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 209,
+                  "total": 286,
+                  "fraction": 0.7307692307692307,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 6,
+                    "mean": 8.038461538461538,
+                    "median": 8.0,
+                    "p95": 10,
+                    "maximum": 11
+                  }
+                },
+                "unique_xy": {
+                  "presented": 191,
+                  "total": 258,
+                  "fraction": 0.7403100775193798,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.346153846153846,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 10
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 14,
+                  "missed_jumps": 12,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 14,
+                    "minimum": 0,
+                    "mean": 1.2142857142857142,
+                    "median": 1.0,
+                    "p95": 2,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 14,
+                    "minimum": 10.641296589371407,
+                    "mean": 31.317647514258187,
+                    "median": 27.861641633223577,
+                    "p95": 45.245135904142586,
+                    "maximum": 78.48427663292057
+                  },
+                  "latency_ms_upper": {
+                    "count": 14,
+                    "minimum": 17.38209744534558,
+                    "mean": 37.69537349419646,
+                    "median": 34.15154719384539,
+                    "p95": 50.856463600819524,
+                    "maximum": 84.29646784716738
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 21,
+                  "missed_jumps": 5,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 21,
+                    "minimum": 0,
+                    "mean": 1.9047619047619047,
+                    "median": 2,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 21,
+                    "minimum": 10.641296589371407,
+                    "mean": 42.95142858340071,
+                    "median": 44.10728179140033,
+                    "p95": 78.07137499318983,
+                    "maximum": 78.48427663292057
+                  },
+                  "latency_ms_upper": {
+                    "count": 21,
+                    "minimum": 17.38209744534558,
+                    "mean": 49.20456437367072,
+                    "median": 50.82405724749872,
+                    "p95": 84.16768052923018,
+                    "maximum": 84.29646784716738
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.5384615384615383,
+                  "median": 2.5,
+                  "p95": 6,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 441,
+              "mean": 69756.22675736962,
+              "p95": 123363,
+              "maximum": 173397
+            },
+            "complete_isr": {
+              "count": 1008,
+              "mean": 22151.501984126986,
+              "p95": 25104,
+              "maximum": 26863
+            }
+          },
+          {
+            "label": "AE",
+            "summary": {
+              "fps": 24.690539841362398,
+              "gaps": {
+                "count": 417,
+                "mean": 40.50134206967672,
+                "median": 50.032336512042974,
+                "p95": 66.75317673055758,
+                "maximum": 83.47429631419523
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 269,
+                  "total": 390,
+                  "fraction": 0.6897435897435897,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 7,
+                    "mean": 10.346153846153847,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 15
+                  }
+                },
+                "distinct_y": {
+                  "presented": 173,
+                  "total": 234,
+                  "fraction": 0.7393162393162394,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 4,
+                    "mean": 6.653846153846154,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 9
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 200,
+                  "total": 286,
+                  "fraction": 0.6993006993006993,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.6923076923076925,
+                    "median": 8.0,
+                    "p95": 10,
+                    "maximum": 11
+                  }
+                },
+                "unique_xy": {
+                  "presented": 180,
+                  "total": 258,
+                  "fraction": 0.6976744186046512,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 4,
+                    "mean": 6.923076923076923,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 9
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 14,
+                  "missed_jumps": 12,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 14,
+                    "minimum": 0,
+                    "mean": 1.5714285714285714,
+                    "median": 2.0,
+                    "p95": 3,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 14,
+                    "minimum": 10.6583378613756,
+                    "mean": 37.335072314657495,
+                    "median": 43.97486272696716,
+                    "p95": 61.106369664301496,
+                    "maximum": 78.48511472826658
+                  },
+                  "latency_ms_upper": {
+                    "count": 14,
+                    "minimum": 17.512281588860645,
+                    "mean": 43.771265422201495,
+                    "median": 50.85604455315007,
+                    "p95": 67.70525304193598,
+                    "maximum": 84.29730594251339
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 20,
+                  "missed_jumps": 6,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 20,
+                    "minimum": 0,
+                    "mean": 2.05,
+                    "median": 2.0,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 20,
+                    "minimum": 10.6583378613756,
+                    "mean": 45.445287040670834,
+                    "median": 44.270570701025136,
+                    "p95": 78.12948293707666,
+                    "maximum": 78.48511472826658
+                  },
+                  "latency_ms_upper": {
+                    "count": 20,
+                    "minimum": 17.512281588860645,
+                    "mean": 51.743811015086784,
+                    "median": 50.953542978228406,
+                    "p95": 84.26350276361916,
+                    "maximum": 84.29730594251339
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.923076923076923,
+                  "median": 3.0,
+                  "p95": 6,
+                  "maximum": 7
+                }
+              }
+            },
+            "foreground": {
+              "count": 421,
+              "mean": 74172.24940617578,
+              "p95": 131223,
+              "maximum": 174587
+            },
+            "complete_isr": {
+              "count": 1008,
+              "mean": 22169.21626984127,
+              "p95": 25512,
+              "maximum": 27333
+            }
+          }
+        ]
+      },
+      "pal": {
+        "changes": {
+          "grounded_landing_presented": {
+            "gained": [
+              24
+            ],
+            "lost": [
+              3,
+              10,
+              23
+            ]
+          },
+          "endpoint_y_presented": {
+            "gained": [
+              2,
+              24
+            ],
+            "lost": [
+              1,
+              3,
+              10,
+              22
+            ]
+          },
+          "fps_percent": -4.47261223615798
+        },
+        "runs": [
+          {
+            "label": "AD",
+            "summary": {
+              "fps": 23.122574963883157,
+              "gaps": {
+                "count": 390,
+                "mean": 43.247778483234384,
+                "median": 39.87364315855757,
+                "p95": 59.842521884764466,
+                "maximum": 79.77969267043773
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 264,
+                  "total": 390,
+                  "fraction": 0.676923076923077,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 8,
+                    "mean": 10.153846153846153,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 13
+                  }
+                },
+                "distinct_y": {
+                  "presented": 175,
+                  "total": 234,
+                  "fraction": 0.7478632478632479,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 6.730769230769231,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 8
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 198,
+                  "total": 286,
+                  "fraction": 0.6923076923076923,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 6,
+                    "mean": 7.615384615384615,
+                    "median": 7.0,
+                    "p95": 10,
+                    "maximum": 10
+                  }
+                },
+                "unique_xy": {
+                  "presented": 183,
+                  "total": 258,
+                  "fraction": 0.7093023255813954,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.038461538461538,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 9
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 13,
+                  "missed_jumps": 13,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 13,
+                    "minimum": 0,
+                    "mean": 1.4615384615384615,
+                    "median": 1,
+                    "p95": 3,
+                    "maximum": 3
+                  },
+                  "latency_ms_lower": {
+                    "count": 13,
+                    "minimum": 9.44812818389007,
+                    "mean": 36.390529651544696,
+                    "median": 34.32531229527669,
+                    "p95": 53.82611477156729,
+                    "maximum": 54.99078793533485
+                  },
+                  "latency_ms_upper": {
+                    "count": 13,
+                    "minimum": 20.630834365820583,
+                    "mean": 43.69220969962136,
+                    "median": 40.632538493021286,
+                    "p95": 60.60211563201179,
+                    "maximum": 60.665531513087956
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 20,
+                  "missed_jumps": 6,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 20,
+                    "minimum": 0,
+                    "mean": 2.05,
+                    "median": 2.0,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 20,
+                    "minimum": 9.44812818389007,
+                    "mean": 46.42640335573387,
+                    "median": 48.65660300401409,
+                    "p95": 74.37481579362881,
+                    "maximum": 74.3776094447739
+                  },
+                  "latency_ms_upper": {
+                    "count": 20,
+                    "minimum": 20.630834365820583,
+                    "mean": 53.566612516395566,
+                    "median": 60.502382286017124,
+                    "p95": 80.47251815524348,
+                    "maximum": 80.47391498081424
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.5,
+                  "median": 2.0,
+                  "p95": 5,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 394,
+              "mean": 74906.63959390864,
+              "p95": 134044,
+              "maximum": 172891
+            },
+            "complete_isr": {
+              "count": 843,
+              "mean": 26174.244365361803,
+              "p95": 44272,
+              "maximum": 48965
+            }
+          },
+          {
+            "label": "AE",
+            "summary": {
+              "fps": 22.088391846733717,
+              "gaps": {
+                "count": 373,
+                "mean": 45.272648499663106,
+                "median": 39.874062206230576,
+                "p95": 79.71404186844921,
+                "maximum": 99.68306027721496
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 251,
+                  "total": 390,
+                  "fraction": 0.6435897435897436,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 7,
+                    "mean": 9.653846153846153,
+                    "median": 9.0,
+                    "p95": 12,
+                    "maximum": 13
+                  }
+                },
+                "distinct_y": {
+                  "presented": 166,
+                  "total": 234,
+                  "fraction": 0.7094017094017094,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 4,
+                    "mean": 6.384615384615385,
+                    "median": 6.0,
+                    "p95": 8,
+                    "maximum": 8
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 189,
+                  "total": 286,
+                  "fraction": 0.6608391608391608,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.269230769230769,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 10
+                  }
+                },
+                "unique_xy": {
+                  "presented": 173,
+                  "total": 258,
+                  "fraction": 0.6705426356589147,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 4,
+                    "mean": 6.653846153846154,
+                    "median": 6.5,
+                    "p95": 8,
+                    "maximum": 8
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 11,
+                  "missed_jumps": 15,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 11,
+                    "minimum": 1,
+                    "mean": 1.9090909090909092,
+                    "median": 2,
+                    "p95": 3,
+                    "maximum": 3
+                  },
+                  "latency_ms_lower": {
+                    "count": 11,
+                    "minimum": 29.514365652618224,
+                    "mean": 43.6581388772239,
+                    "median": 34.519471050092676,
+                    "p95": 54.98883237953223,
+                    "maximum": 68.44640869161367
+                  },
+                  "latency_ms_upper": {
+                    "count": 11,
+                    "minimum": 40.66550357657306,
+                    "mean": 51.60122560015555,
+                    "median": 40.7624432714222,
+                    "p95": 60.6984965966344,
+                    "maximum": 80.70075945406785
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 18,
+                  "missed_jumps": 8,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 18,
+                    "minimum": 1,
+                    "mean": 2.7222222222222223,
+                    "median": 2.5,
+                    "p95": 4,
+                    "maximum": 6
+                  },
+                  "latency_ms_lower": {
+                    "count": 18,
+                    "minimum": 29.514365652618224,
+                    "mean": 56.396134145540884,
+                    "median": 54.420464053391626,
+                    "p95": 74.50527930225448,
+                    "maximum": 114.49863041253394
+                  },
+                  "latency_ms_upper": {
+                    "count": 18,
+                    "minimum": 40.66550357657306,
+                    "mean": 63.98105221628884,
+                    "median": 60.682293419972666,
+                    "p95": 80.70075945406785,
+                    "maximum": 120.5418565767502
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 1,
+                  "mean": 3.1923076923076925,
+                  "median": 3.0,
+                  "p95": 6,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 377,
+              "mean": 79268.14854111406,
+              "p95": 134448,
+              "maximum": 173027
+            },
+            "complete_isr": {
+              "count": 843,
+              "mean": 26197.463819691577,
+              "p95": 44538,
+              "maximum": 49429
+            }
+          }
+        ]
+      }
+    },
+    "B": {
+      "ntsc": {
+        "changes": {
+          "grounded_landing_presented": {
+            "gained": [],
+            "lost": []
+          },
+          "endpoint_y_presented": {
+            "gained": [],
+            "lost": []
+          },
+          "fps_percent": -0.22884286396853692
+        },
+        "runs": [
+          {
+            "label": "AD",
+            "summary": {
+              "fps": 25.90092802234393,
+              "gaps": {
+                "count": 437,
+                "mean": 38.60865522414219,
+                "median": 33.408435988372176,
+                "p95": 66.75233863521868,
+                "maximum": 83.44161059576294
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 279,
+                  "total": 390,
+                  "fraction": 0.7153846153846154,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 8,
+                    "mean": 10.73076923076923,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 15
+                  }
+                },
+                "distinct_y": {
+                  "presented": 181,
+                  "total": 234,
+                  "fraction": 0.7735042735042735,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 6.961538461538462,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 9
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 209,
+                  "total": 286,
+                  "fraction": 0.7307692307692307,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 6,
+                    "mean": 8.038461538461538,
+                    "median": 8.0,
+                    "p95": 10,
+                    "maximum": 11
+                  }
+                },
+                "unique_xy": {
+                  "presented": 191,
+                  "total": 258,
+                  "fraction": 0.7403100775193798,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.346153846153846,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 10
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 14,
+                  "missed_jumps": 12,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 14,
+                    "minimum": 0,
+                    "mean": 1.2142857142857142,
+                    "median": 1.0,
+                    "p95": 2,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 14,
+                    "minimum": 10.641296589371407,
+                    "mean": 31.317647514258187,
+                    "median": 27.861641633223577,
+                    "p95": 45.245135904142586,
+                    "maximum": 78.48427663292057
+                  },
+                  "latency_ms_upper": {
+                    "count": 14,
+                    "minimum": 17.38209744534558,
+                    "mean": 37.69537349419646,
+                    "median": 34.15154719384539,
+                    "p95": 50.856463600819524,
+                    "maximum": 84.29646784716738
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 21,
+                  "missed_jumps": 5,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 21,
+                    "minimum": 0,
+                    "mean": 1.9047619047619047,
+                    "median": 2,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 21,
+                    "minimum": 10.641296589371407,
+                    "mean": 42.95142858340071,
+                    "median": 44.10728179140033,
+                    "p95": 78.07137499318983,
+                    "maximum": 78.48427663292057
+                  },
+                  "latency_ms_upper": {
+                    "count": 21,
+                    "minimum": 17.38209744534558,
+                    "mean": 49.20456437367072,
+                    "median": 50.82405724749872,
+                    "p95": 84.16768052923018,
+                    "maximum": 84.29646784716738
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.5384615384615383,
+                  "median": 2.5,
+                  "p95": 6,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 441,
+              "mean": 69756.22675736962,
+              "p95": 123363,
+              "maximum": 173397
+            },
+            "complete_isr": {
+              "count": 1008,
+              "mean": 22151.501984126986,
+              "p95": 25104,
+              "maximum": 26863
+            }
+          },
+          {
+            "label": "B",
+            "summary": {
+              "fps": 25.84165559686317,
+              "gaps": {
+                "count": 436,
+                "mean": 38.69721103013951,
+                "median": 33.40787725814387,
+                "p95": 66.75233863521868,
+                "maximum": 83.4410518655302
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 278,
+                  "total": 390,
+                  "fraction": 0.7128205128205128,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 7,
+                    "mean": 10.692307692307692,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 15
+                  }
+                },
+                "distinct_y": {
+                  "presented": 180,
+                  "total": 234,
+                  "fraction": 0.7692307692307693,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 4,
+                    "mean": 6.923076923076923,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 9
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 208,
+                  "total": 286,
+                  "fraction": 0.7272727272727273,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 8,
+                    "median": 8.0,
+                    "p95": 10,
+                    "maximum": 11
+                  }
+                },
+                "unique_xy": {
+                  "presented": 190,
+                  "total": 258,
+                  "fraction": 0.7364341085271318,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.3076923076923075,
+                    "median": 7.0,
+                    "p95": 9,
+                    "maximum": 10
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 14,
+                  "missed_jumps": 12,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 14,
+                    "minimum": 0,
+                    "mean": 1.2142857142857142,
+                    "median": 1.0,
+                    "p95": 2,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 14,
+                    "minimum": 10.640458494025395,
+                    "mean": 31.31770737821173,
+                    "median": 27.86178131578243,
+                    "p95": 45.24429780880013,
+                    "maximum": 78.48567345849489
+                  },
+                  "latency_ms_upper": {
+                    "count": 14,
+                    "minimum": 17.381538715115497,
+                    "mean": 37.695433358150005,
+                    "median": 34.15168687640424,
+                    "p95": 50.8564636008213,
+                    "maximum": 84.2978646727417
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 21,
+                  "missed_jumps": 5,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 21,
+                    "minimum": 0,
+                    "mean": 1.9047619047619047,
+                    "median": 2,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 21,
+                    "minimum": 10.640458494025395,
+                    "mean": 42.95124233999119,
+                    "median": 44.10672306117114,
+                    "p95": 78.07137499318983,
+                    "maximum": 78.48567345849489
+                  },
+                  "latency_ms_upper": {
+                    "count": 21,
+                    "minimum": 17.381538715115497,
+                    "mean": 49.204378130261205,
+                    "median": 50.82405724749961,
+                    "p95": 84.16768052923018,
+                    "maximum": 84.2978646727417
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.5384615384615383,
+                  "median": 2.5,
+                  "p95": 6,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 440,
+              "mean": 69876.50454545455,
+              "p95": 123649,
+              "maximum": 173695
+            },
+            "complete_isr": {
+              "count": 1008,
+              "mean": 22149.130952380954,
+              "p95": 25124,
+              "maximum": 26863
+            }
+          }
+        ]
+      },
+      "pal": {
+        "changes": {
+          "grounded_landing_presented": {
+            "gained": [],
+            "lost": []
+          },
+          "endpoint_y_presented": {
+            "gained": [],
+            "lost": []
+          },
+          "fps_percent": 9.937909939417011e-06
+        },
+        "runs": [
+          {
+            "label": "AD",
+            "summary": {
+              "fps": 23.122574963883157,
+              "gaps": {
+                "count": 390,
+                "mean": 43.247778483234384,
+                "median": 39.87364315855757,
+                "p95": 59.842521884764466,
+                "maximum": 79.77969267043773
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 264,
+                  "total": 390,
+                  "fraction": 0.676923076923077,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 8,
+                    "mean": 10.153846153846153,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 13
+                  }
+                },
+                "distinct_y": {
+                  "presented": 175,
+                  "total": 234,
+                  "fraction": 0.7478632478632479,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 6.730769230769231,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 8
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 198,
+                  "total": 286,
+                  "fraction": 0.6923076923076923,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 6,
+                    "mean": 7.615384615384615,
+                    "median": 7.0,
+                    "p95": 10,
+                    "maximum": 10
+                  }
+                },
+                "unique_xy": {
+                  "presented": 183,
+                  "total": 258,
+                  "fraction": 0.7093023255813954,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.038461538461538,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 9
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 13,
+                  "missed_jumps": 13,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 13,
+                    "minimum": 0,
+                    "mean": 1.4615384615384615,
+                    "median": 1,
+                    "p95": 3,
+                    "maximum": 3
+                  },
+                  "latency_ms_lower": {
+                    "count": 13,
+                    "minimum": 9.44812818389007,
+                    "mean": 36.390529651544696,
+                    "median": 34.32531229527669,
+                    "p95": 53.82611477156729,
+                    "maximum": 54.99078793533485
+                  },
+                  "latency_ms_upper": {
+                    "count": 13,
+                    "minimum": 20.630834365820583,
+                    "mean": 43.69220969962136,
+                    "median": 40.632538493021286,
+                    "p95": 60.60211563201179,
+                    "maximum": 60.665531513087956
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 20,
+                  "missed_jumps": 6,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 20,
+                    "minimum": 0,
+                    "mean": 2.05,
+                    "median": 2.0,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 20,
+                    "minimum": 9.44812818389007,
+                    "mean": 46.42640335573387,
+                    "median": 48.65660300401409,
+                    "p95": 74.37481579362881,
+                    "maximum": 74.3776094447739
+                  },
+                  "latency_ms_upper": {
+                    "count": 20,
+                    "minimum": 20.630834365820583,
+                    "mean": 53.566612516395566,
+                    "median": 60.502382286017124,
+                    "p95": 80.47251815524348,
+                    "maximum": 80.47391498081424
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.5,
+                  "median": 2.0,
+                  "p95": 5,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 394,
+              "mean": 74906.63959390864,
+              "p95": 134044,
+              "maximum": 172891
+            },
+            "complete_isr": {
+              "count": 843,
+              "mean": 26174.244365361803,
+              "p95": 44272,
+              "maximum": 48965
+            }
+          },
+          {
+            "label": "B",
+            "summary": {
+              "fps": 23.12257726178383,
+              "gaps": {
+                "count": 390,
+                "mean": 43.24777418530953,
+                "median": 39.87364315855757,
+                "p95": 59.842521884765354,
+                "maximum": 79.77969267043505
+              },
+              "poses_missed": 0,
+              "jump": {
+                "complete_normal_active_jumps": 26,
+                "other_arcs": {
+                  "interrupted": 1,
+                  "partial_start": 0,
+                  "partial_end": 0
+                },
+                "vertical_update_states": {
+                  "presented": 264,
+                  "total": 390,
+                  "fraction": 0.676923076923077,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 8,
+                    "mean": 10.153846153846153,
+                    "median": 10.0,
+                    "p95": 13,
+                    "maximum": 13
+                  }
+                },
+                "distinct_y": {
+                  "presented": 175,
+                  "total": 234,
+                  "fraction": 0.7478632478632479,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 6.730769230769231,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 8
+                  }
+                },
+                "consecutive_y_runs": {
+                  "presented": 198,
+                  "total": 286,
+                  "fraction": 0.6923076923076923,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 6,
+                    "mean": 7.615384615384615,
+                    "median": 7.0,
+                    "p95": 10,
+                    "maximum": 10
+                  }
+                },
+                "unique_xy": {
+                  "presented": 183,
+                  "total": 258,
+                  "fraction": 0.7093023255813954,
+                  "per_jump_presented": {
+                    "count": 26,
+                    "minimum": 5,
+                    "mean": 7.038461538461538,
+                    "median": 7.0,
+                    "p95": 8,
+                    "maximum": 9
+                  }
+                },
+                "grounded_landing": {
+                  "presented_jumps": 13,
+                  "missed_jumps": 13,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 13,
+                    "minimum": 0,
+                    "mean": 1.4615384615384615,
+                    "median": 1,
+                    "p95": 3,
+                    "maximum": 3
+                  },
+                  "latency_ms_lower": {
+                    "count": 13,
+                    "minimum": 9.448686914119264,
+                    "mean": 36.3906370996656,
+                    "median": 34.324753565046606,
+                    "p95": 53.8269528669133,
+                    "maximum": 54.98827364930392
+                  },
+                  "latency_ms_upper": {
+                    "count": 13,
+                    "minimum": 20.63027563559139,
+                    "mean": 43.69231714774225,
+                    "median": 40.6333765883673,
+                    "p95": 60.60267436224365,
+                    "maximum": 60.66636960842686
+                  }
+                },
+                "endpoint_y": {
+                  "presented_jumps": 20,
+                  "missed_jumps": 6,
+                  "source_steps_after_landing_at_commit": {
+                    "count": 20,
+                    "minimum": 0,
+                    "mean": 2.05,
+                    "median": 2.0,
+                    "p95": 4,
+                    "maximum": 4
+                  },
+                  "latency_ms_lower": {
+                    "count": 20,
+                    "minimum": 9.448686914119264,
+                    "mean": 46.426696689104176,
+                    "median": 48.658558559815376,
+                    "p95": 74.3736983331651,
+                    "maximum": 74.37565388897127
+                  },
+                  "latency_ms_upper": {
+                    "count": 20,
+                    "minimum": 20.63027563559139,
+                    "mean": 53.56690584976587,
+                    "median": 60.50419815926311,
+                    "p95": 80.47140069477976,
+                    "maximum": 80.47195942501162
+                  }
+                },
+                "first_post_landing_snapshot_source_steps_at_commit": {
+                  "count": 26,
+                  "minimum": 0,
+                  "mean": 2.5,
+                  "median": 2.0,
+                  "p95": 5,
+                  "maximum": 6
+                }
+              }
+            },
+            "foreground": {
+              "count": 394,
+              "mean": 74986.8730964467,
+              "p95": 134132,
+              "maximum": 172979
+            },
+            "complete_isr": {
+              "count": 843,
+              "mean": 26174.244365361803,
+              "p95": 44272,
+              "maximum": 48965
+            }
+          }
+        ]
+      }
+    }
+  },
+  "controlled_matrices": {
+    "A": {
+      "complete": true,
+      "cases": 2115,
+      "zero_pixel_differences": true,
+      "identical_case_order": true,
+      "all_cases": {
+        "cases": 2115,
+        "before_mean": 98376.80472813238,
+        "after_mean": 77728.93995271868,
+        "paired_delta_mean": -20647.864775413713,
+        "before_p95": 202189,
+        "after_p95": 141103,
+        "before_max": 307538,
+        "after_max": 281202,
+        "total_ratio_percent": -20.988549925436985,
+        "faster_cases": 693,
+        "equal_cases": 0,
+        "slower_cases": 1422
+      },
+      "visible_bear_cases": 653,
+      "visible_bear": {
+        "cases": 653,
+        "before_mean": 129883.65084226646,
+        "after_mean": 82753.7886676876,
+        "paired_delta_mean": -47129.86217457887,
+        "before_p95": 214759,
+        "after_p95": 186927,
+        "before_max": 296613,
+        "after_max": 263690,
+        "total_ratio_percent": -36.286216062570034,
+        "faster_cases": 435,
+        "equal_cases": 0,
+        "slower_cases": 218
+      },
+      "visible_bear_levels": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255
+      ],
+      "visible_bear_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visible_bear_unique_x": 160,
+      "raw_hashes": {
+        "outputs/presentation/igloo-ad-validation/matrix/check.json": "81b1b18ae073a34886f8848649fa657125c65b9c3f40236c1c7089f4ec09716c",
+        "outputs/presentation/bear-ae-research/matrix-01/check.json": "e65cf9f75de904f64530c787afdc3a672e17e3992711ebbc283cb826d0d5b4cb",
+        "outputs/presentation/igloo-ad-validation/matrix/cases.bin": "a5f22f7a4f87b6db07dbe318b3fc03f6749caa1ca9255795ae5618d91c9a8b68",
+        "outputs/presentation/bear-ae-research/matrix-01/cases.bin": "a5f22f7a4f87b6db07dbe318b3fc03f6749caa1ca9255795ae5618d91c9a8b68",
+        "outputs/presentation/igloo-ad-validation/matrix/timing.tsv": "8a2f737979f5d3032b4a4df6e5be6572dfbfc7089e4f302be2a83c37f30f6e4b",
+        "outputs/presentation/bear-ae-research/matrix-01/timing.tsv": "686d427dddd1fe72af8e555c7d21d9ceed109f0f567b73c5bea4b1e04fc37f8c"
+      },
+      "scope": "Paired original-source scene preparation with IRQ/source clock disabled by the existing controlled harness; excludes live IRQ service and is not gameplay FPS. Visible bear means nonblanked level>=3; scene corpus is not a continuous moving-bear route."
+    },
+    "B": {
+      "complete": true,
+      "cases": 2115,
+      "zero_pixel_differences": true,
+      "identical_case_order": true,
+      "all_cases": {
+        "cases": 2115,
+        "before_mean": 98376.80472813238,
+        "after_mean": 77483.38345153665,
+        "paired_delta_mean": -20893.421276595745,
+        "before_p95": 202189,
+        "after_p95": 154464,
+        "before_max": 307538,
+        "after_max": 307626,
+        "total_ratio_percent": -21.23815805395939,
+        "faster_cases": 692,
+        "equal_cases": 0,
+        "slower_cases": 1423
+      },
+      "visible_bear_cases": 653,
+      "visible_bear": {
+        "cases": 653,
+        "before_mean": 129883.65084226646,
+        "after_mean": 82836.2787136294,
+        "paired_delta_mean": -47047.37212863706,
+        "before_p95": 214759,
+        "after_p95": 186990,
+        "before_max": 296613,
+        "after_max": 263753,
+        "total_ratio_percent": -36.22270533939057,
+        "faster_cases": 435,
+        "equal_cases": 0,
+        "slower_cases": 218
+      },
+      "visible_bear_levels": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255
+      ],
+      "visible_bear_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "visible_bear_unique_x": 160,
+      "raw_hashes": {
+        "outputs/presentation/igloo-ad-validation/matrix/check.json": "81b1b18ae073a34886f8848649fa657125c65b9c3f40236c1c7089f4ec09716c",
+        "outputs/presentation/bear-ae-research/matrix-b-01/check.json": "884934e58028829b1664e5bbd8f0e2dd8fcd81e00602a40160f856bd68ee74b8",
+        "outputs/presentation/igloo-ad-validation/matrix/cases.bin": "a5f22f7a4f87b6db07dbe318b3fc03f6749caa1ca9255795ae5618d91c9a8b68",
+        "outputs/presentation/bear-ae-research/matrix-b-01/cases.bin": "a5f22f7a4f87b6db07dbe318b3fc03f6749caa1ca9255795ae5618d91c9a8b68",
+        "outputs/presentation/igloo-ad-validation/matrix/timing.tsv": "8a2f737979f5d3032b4a4df6e5be6572dfbfc7089e4f302be2a83c37f30f6e4b",
+        "outputs/presentation/bear-ae-research/matrix-b-01/timing.tsv": "db6080f733b026279bf641e93eb4dc2ea7c944866d8234d1ded989169c75c92d"
+      },
+      "scope": "Paired original-source scene preparation with IRQ/source clock disabled by the existing controlled harness; excludes live IRQ service and is not gameplay FPS. Visible bear means nonblanked level>=3; scene corpus is not a continuous moving-bear route."
+    }
+  },
+  "live_bear_chase": {
+    "complete": true,
+    "source_steps": 620,
+    "families": {
+      "ntsc": {
+        "runs": [
+          {
+            "label": "AD",
+            "rom_sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+            "fps": 14.205703885771916,
+            "active_source_first": 195,
+            "active_source_last": 425,
+            "active_source_states": 231,
+            "bear_x_range": [
+              19,
+              140
+            ],
+            "bear_unique_x": 122,
+            "bear_poses": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "gaps": {
+              "count": 55,
+              "mean": 70.39425909768367,
+              "p95": 83.44161059576116,
+              "maximum": 83.47373758396515
+            },
+            "source_checkpoints": 621,
+            "pictures": 322,
+            "source_steps_per_second": 59.92275474822886,
+            "source_cpu_all_ram_equal": true,
+            "coherent_picture_pixels_equal": true,
+            "physical_owners_equal": true,
+            "active_page_protected": true,
+            "evidence": {
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/check.json": "8ba1ac4a5b43d200e134f0c97fd41ad332ff424858bd93928c8dd31e26a79892",
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/bear-route-contract.json": "2ecec590d55403dcae23ad63717c4221cb358af425d906f02124d1aefbc3e80c",
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/captures.bin": "b1018f67b66b6bda213d094a0dc2bde554a6c641058d737bc70b3e4ec571bdcb",
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/owners.bin": "b3ce1d2d9bc9ebfd6a347955b7d41f16986c14f7e2cb1b61099fa3fbde0d2b41",
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/irq.tsv": "f77f8420e9f9e5a5211875673ae1476db29e4901010369376808f7d30399e22b",
+              "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/pictures.tsv": "92b6f45c44ad8541a78b87ce1f9bd9fc2c24bf06c4e68bb634755d24a639ce03"
+            }
+          },
+          {
+            "label": "B",
+            "rom_sha256": "384304804d341915e48f36c35281c4d02e107992faa4e97c078151202978906d",
+            "fps": 13.748278076332717,
+            "active_source_first": 195,
+            "active_source_last": 425,
+            "active_source_states": 231,
+            "bear_x_range": [
+              19,
+              140
+            ],
+            "bear_unique_x": 122,
+            "bear_poses": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "gaps": {
+              "count": 53,
+              "mean": 72.73638156340994,
+              "p95": 83.44188996087532,
+              "maximum": 83.474296314197
+            },
+            "source_checkpoints": 621,
+            "pictures": 322,
+            "source_steps_per_second": 59.922761230468815,
+            "source_cpu_all_ram_equal": true,
+            "coherent_picture_pixels_equal": true,
+            "physical_owners_equal": true,
+            "active_page_protected": true,
+            "evidence": {
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/check.json": "2eb841c86abbb780963400e5e54ee731d1628f83b168069100f6b7caefc76f93",
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/bear-route-contract.json": "8157b1e62b8bb22692d0a8c115c72a4b6f3db2ef9e774cb154a60bff9f1220e8",
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/captures.bin": "bf2c414ab490efe2c74adf00018f4894c80a02923bd4936f4084d9da43fc3569",
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/owners.bin": "f5cef94bd83f859897e0398b9c51764baed447527bb89acf0da11cc3ec63e392",
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/irq.tsv": "7ae567deee8bf5a917d4659fa07a68ab47764a21e65cd3734f6f0556aae44ce5",
+              "outputs/presentation/bear-ae-research/bear-b-ntsc-02/pictures.tsv": "011fce91c0b9b9f8726a366d06612b04a50b38bcf1ca508574e101384fef4992"
+            }
+          }
+        ],
+        "fps_percent": -3.2200150947630624
+      },
+      "pal": {
+        "runs": [
+          {
+            "label": "AD",
+            "rom_sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+            "fps": 13.703335634126006,
+            "active_source_first": 195,
+            "active_source_last": 425,
+            "active_source_states": 231,
+            "bear_x_range": [
+              19,
+              140
+            ],
+            "bear_unique_x": 122,
+            "bear_poses": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "gaps": {
+              "count": 53,
+              "mean": 72.97493301628379,
+              "p95": 79.7788545750926,
+              "maximum": 99.68361900744327
+            },
+            "source_checkpoints": 621,
+            "pictures": 283,
+            "source_steps_per_second": 59.93900526616602,
+            "source_cpu_all_ram_equal": true,
+            "coherent_picture_pixels_equal": true,
+            "physical_owners_equal": true,
+            "active_page_protected": true,
+            "evidence": {
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/check.json": "34ef18a933347765ab3642e935c05ea9b11f3b88fba7f4e2cea25a4c4119f41d",
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/bear-route-contract.json": "a7cb56bfe34620b6219b5923089ff69ad9224d14b65091e2e8d945a974b84d21",
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/captures.bin": "c9d816c53c069b7b366b686e132b86ca2e1db8c3cbe5fb1d9d3c94e556ec1699",
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/owners.bin": "8e77b9cd619cad5596ec3ce3466dec6c42024b4cbf593aa74425e15071693001",
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/irq.tsv": "2bed4e253f45fdd48b95660891de54cb2332b2b35312df0680453235abde20ce",
+              "outputs/presentation/bear-ae-research/bear-ad-pal-02/pictures.tsv": "0a427ece76391e1037ec69243ef65d5e3b7577a2a730cb4e15fe827cee8c58ad"
+            }
+          },
+          {
+            "label": "B",
+            "rom_sha256": "384304804d341915e48f36c35281c4d02e107992faa4e97c078151202978906d",
+            "fps": 13.773876925867102,
+            "active_source_first": 195,
+            "active_source_last": 425,
+            "active_source_states": 231,
+            "bear_x_range": [
+              19,
+              140
+            ],
+            "bear_unique_x": 122,
+            "bear_poses": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "gaps": {
+              "count": 53,
+              "mean": 72.60120047406677,
+              "p95": 79.77913394020763,
+              "maximum": 99.68306027721319
+            },
+            "source_checkpoints": 621,
+            "pictures": 284,
+            "source_steps_per_second": 59.93899229465766,
+            "source_cpu_all_ram_equal": true,
+            "coherent_picture_pixels_equal": true,
+            "physical_owners_equal": true,
+            "active_page_protected": true,
+            "evidence": {
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/check.json": "a40350a4c9cf2194b20e2e7cb76d7a1b99a597855cb39ff6e628787cee4f3feb",
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/bear-route-contract.json": "8708c8e7aae10694bc2e642a9cea92ccee2ccb25fb7b2918149947807e7b6bbd",
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/route-cpu.bin": "8ef58769b5d01dbe832c8131ed4178f5e1c623fc883aa1ecb381e566eeb0a83a",
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/captures.bin": "4072ee3b3cb8f525f497b2f6369f46f00796be0f6b8f3df9164714b00fa57fc9",
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/owners.bin": "fafda35c54e5557cb5b8aea4470717bfce32c8533dde0a68d7c32d7cb0b635e5",
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/irq.tsv": "49e4fa16957e5c757778f06f5222fb728d1ac807afc1754295a7c0bfade837f6",
+              "outputs/presentation/bear-ae-research/bear-b-pal-02/pictures.tsv": "fbf32c9ef0bdcddb6d3814f9f192c63982d5346bc1ffa2fce4c321e7e7144677"
+            }
+          }
+        ],
+        "fps_percent": 0.5147746039688483
+      }
+    },
+    "scope": "Independent clean-start original bear-chase route, bounded620step prefix. Active source195..425 is level4 with122bearX values/all8poses. Initial700step attempts fail unchanged one-player guard at630. No all702step route acceptance, no all-level or physical claim."
+  },
+  "review": [
+    {
+      "path": "outputs/presentation/bear-ae-review/review.json",
+      "sha256": "ac8b5eca9b89d2b51c66c3efa41c7902584795a170e9f99622c63388710e773e",
+      "scope": "Independent read-only audit of rejected private prototype; not release certification."
+    },
+    {
+      "path": "outputs/presentation/bear-ae-review/matrix-review.json",
+      "sha256": "22d82e8ca39d8eee604da844240eaefe245fd0f4f961e1c81ec75d8be6f5b3e5",
+      "scope": "Follow-up on controlled ordered-scene preparation; preserves initial private-candidate review unchanged."
+    },
+    {
+      "path": "outputs/presentation/bear-ae-review/b-live-review.json",
+      "sha256": "a464cde5257dc0cae8aaf10cde33204ebaa0831b73ad590dfd895aed5fe09331",
+      "scope": "Read-only conditional B gate and bounded620step clean-start bear-route evidence; no release certification."
+    },
+    {
+      "path": "outputs/presentation/bear-ae-review/b-matrix-review.json",
+      "sha256": "53fb9bdddb62c226e8056ee45f71124d281f339aec59c2c167934fdf83ce20c0",
+      "scope": "Ordered injected full-scene preparation, not natural gameplay FPS or release certification."
+    }
+  ],
+  "controls_preserved": {
+    "outputs/presentation/core-z-combined": {
+      "files": 41,
+      "manifest_sha256": "ceabb96b96a9aeab658fd5fe7af682f6bbaad6411dfd80a5f18802b32d8f579c",
+      "unchanged": true
+    },
+    "outputs/presentation/core-z-validation": {
+      "files": 157,
+      "manifest_sha256": "c4d59f7223b0749ac0c63b779bc29e4cdbc846f4cf444b71b5a316bf9e55d3f2",
+      "unchanged": true
+    },
+    "outputs/presentation/core-z-review": {
+      "files": 3,
+      "manifest_sha256": "5a083a9f41422661dda99b97d2bf0c0936f11dbf53a030c28c9894cbd64b72de",
+      "unchanged": true
+    },
+    "outputs/presentation/core-cadence-z": {
+      "files": 144,
+      "manifest_sha256": "a49e3ae9f814b55545c1476e954064211a8c327aba0319bd6fe9ab4e339625dd",
+      "unchanged": true
+    },
+    "outputs/presentation/floe-aa-validation": {
+      "files": 128,
+      "manifest_sha256": "b664295a7a02eee35680b1cd73d6973a52c2082d2330291fd21e0652a89d8f70",
+      "unchanged": true
+    },
+    "outputs/presentation/floe-transactions-aa": {
+      "files": 129,
+      "manifest_sha256": "6c5323ef98415c70ae25d11457be9efbc86b187be2618a64e5be321ba6862edf",
+      "unchanged": true
+    },
+    "outputs/presentation/ready-presentation-ab": {
+      "files": 118,
+      "manifest_sha256": "b1c6a460f03ecbe3d7cae1cf9341d3a69fd6c2cf939aa70a7550d889c5debb81",
+      "unchanged": true
+    },
+    "outputs/presentation/aurora-ac-research": {
+      "files": 85,
+      "manifest_sha256": "f1db25587effebaa73188932490a26e4ae6d7550c60266d0f41c1bf10418719c",
+      "unchanged": true
+    },
+    "outputs/presentation/igloo-ad-research": {
+      "files": 148,
+      "manifest_sha256": "abbb59a9454cb09d034adffdbe05fe3db0e7cfa8ad36eae1af87b41cbbdb6aad"
+    },
+    "outputs/presentation/igloo-ad-validation": {
+      "files": 155,
+      "manifest_sha256": "84f4d3b150dd104442e129eaf4f82f05a2eef6086ca24c19b3dd84c8eb2b5aaf"
+    },
+    "outputs/presentation/igloo-ad-review": {
+      "files": 106,
+      "manifest_sha256": "583128ee2cacba48bcbfad958d679bbfe36a262a14ba3f2767cedad2842005ea"
+    },
+    "outputs/presentation/igloo-ad-delivery-review": {
+      "files": 1,
+      "manifest_sha256": "558ac8ddb8034d4628f4f68c7a10a350872fa6c1974fbb595bd571f06d8c6406"
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AD": {
+      "files": 22,
+      "manifest_sha256": "c4d5b8498d4567e24bddd02a765da09ee89675bc60f333597e9512fdbf3f4c97"
+    },
+    "outputs/presentation/igloo-colors-ad": {
+      "files": 96,
+      "manifest_sha256": "01aa1fba186ec3ca48e387d4b72ff032146a114dc33197c8b75da2b8f6b73b3d"
+    }
+  },
+  "workbook": {
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AE/Frostbite-performance-budget-AE.xlsx",
+    "sha256": "d00d1ba94b70c53e9f7106db663644bd9870b365bbfc66e42a51dead09832757",
+    "audit_sha256": "e2e2413ca1657b19e2713e35d55a8887d593f253f6a9998068a6e0e8d754c34d",
+    "delivery_sha256": "5b97b3ebd66f7a9dee5f06ad35b0a5e72353d0235be28b1c0ed2686e487091ff",
+    "sheets": 31,
+    "preserved_AD_sheets": 30,
+    "preserved_cells": 773129,
+    "formula_errors": [],
+    "mutation_restore_checks": 2,
+    "manual_visual_regions": 7,
+    "native_excel_tested": false
+  },
+  "evidence": {
+    "outputs/presentation/igloo-colors-ad/build-release/build.json": "e1b438194c2bd489133bf40f6fa9b77fd4febb69305c861697563c1047ebf2e8",
+    "outputs/presentation/bear-ae-research/build-01/build.json": "9a83b1ce52d49241bb8098e38223e5dc83f6cf52f557137536d511cbf139be82",
+    "outputs/presentation/bear-ae-research/build-01/finite.json": "45cfce8464cdb59aa02982f6d052cfd9f135799859140134569d8059a74aad70",
+    "outputs/presentation/bear-ae-research/ntsc-01/check.json": "04d41c07bb953799a863f789e9ff0822c1dd04e8fda4f37c4454067dc10d785b",
+    "outputs/presentation/bear-ae-research/ntsc-01/ready-contract.json": "e0a5823c3dbd11d68fa93fd39e9d17ca48d9d749de04cc5bfa82ff39b86481e9",
+    "outputs/presentation/bear-ae-research/pal-01/check.json": "ae5a9396c32a72d9246368b556ef734c911f9104d71388844bb81b92c5d780a6",
+    "outputs/presentation/bear-ae-research/pal-01/ready-contract.json": "6fa114104037e00079d62ce245f7666b59a9922d410e37f14d99485e60887de3",
+    "outputs/presentation/bear-ae-research/matrix-01/check.json": "e65cf9f75de904f64530c787afdc3a672e17e3992711ebbc283cb826d0d5b4cb",
+    "outputs/presentation/bear-ae-research/ae-ntsc-profile.json": "e64d511382270549f1548da2a2565b44056ab63a45923d496d653f80d0322264",
+    "outputs/presentation/bear-ae-research/ae-pal-profile.json": "9e26616cea997ccd73b955926627b59af91a89e0d3860046d703561f3071c2ee",
+    "outputs/presentation/bear-ae-research/build-b-01/build.json": "bc0daf1629eadd03bd77ea49ad098a1a1dcce883d3d8db93e8f9948e483daa4f",
+    "outputs/presentation/bear-ae-research/build-b-01/finite.json": "45cfce8464cdb59aa02982f6d052cfd9f135799859140134569d8059a74aad70",
+    "outputs/presentation/bear-ae-research/ntsc-b-01/check.json": "675a87577d2e5192feb5fb405cb02ba49fc2e9e18f90a277c448def0bb4c1ba2",
+    "outputs/presentation/bear-ae-research/ntsc-b-01/ready-contract.json": "c0aa6a36e5ee11629d6968ee075a8db1e6f06cb080f2ecc663b2d387d002f4b9",
+    "outputs/presentation/bear-ae-research/pal-b-01/check.json": "df487b61fa9232f73b66d421b6ee16be25d40674e6c59ad41655cef6dddb9e17",
+    "outputs/presentation/bear-ae-research/pal-b-01/ready-contract.json": "88caa9967011c0f882c87c437214681b7a99bebb3ee119aafc6807a8fb8eb856",
+    "outputs/presentation/bear-ae-research/matrix-b-01/check.json": "884934e58028829b1664e5bbd8f0e2dd8fcd81e00602a40160f856bd68ee74b8",
+    "outputs/presentation/bear-ae-research/b-ntsc-profile.json": "6d51472a68cee7e00ba796c9509c7451097d6d7289fbdb185e5daf751f7c5d02",
+    "outputs/presentation/bear-ae-research/b-pal-profile.json": "140d012d872bef05c20782bf032fce0d7b1742f5162c71c3f741257889697f97",
+    "outputs/presentation/bear-ae-research/ad-ntsc-profile.json": "028ce2d4c1ebe6473a46a16125da5245175efbbf02293085745faae49b1796c9",
+    "outputs/presentation/bear-ae-research/ad-pal-profile.json": "b668f2dc5668f3df59d3d5e7490ecac505b0ac23799bde9076005b38bcbf8b3b",
+    "outputs/presentation/bear-ae-research/comparison.json": "904919322ef04d41d1dd125bd59a8258c7f4c241593108251ca2896ba67ad34c",
+    "outputs/presentation/bear-ae-research/comparison-b.json": "400038309a6ecd6eb8fb339dae88cdabc15560e4725b87991960adb987ddb13d",
+    "outputs/presentation/bear-ae-research/matrix-comparison.json": "1aa80d6c6f2f9f48c79216e72776b06cbd35376c877752fbce487d4bc43a7532",
+    "outputs/presentation/bear-ae-research/matrix-comparison-b.json": "8a4d0ea02a1d9acfced87d4f5b507850c6854793c2c05211af6f1c09db99be47",
+    "outputs/presentation/bear-ae-research/bear-comparison.json": "3cdba052ed5085c9f23ff25440caeb4d7aac3003f4f4e9b28a7d344bc6baf3f4",
+    "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/check.json": "8ba1ac4a5b43d200e134f0c97fd41ad332ff424858bd93928c8dd31e26a79892",
+    "outputs/presentation/bear-ae-research/bear-ad-ntsc-02/bear-route-contract.json": "2ecec590d55403dcae23ad63717c4221cb358af425d906f02124d1aefbc3e80c",
+    "outputs/presentation/bear-ae-research/bear-b-ntsc-02/check.json": "2eb841c86abbb780963400e5e54ee731d1628f83b168069100f6b7caefc76f93",
+    "outputs/presentation/bear-ae-research/bear-b-ntsc-02/bear-route-contract.json": "8157b1e62b8bb22692d0a8c115c72a4b6f3db2ef9e774cb154a60bff9f1220e8",
+    "outputs/presentation/bear-ae-research/bear-ad-pal-02/check.json": "34ef18a933347765ab3642e935c05ea9b11f3b88fba7f4e2cea25a4c4119f41d",
+    "outputs/presentation/bear-ae-research/bear-ad-pal-02/bear-route-contract.json": "a7cb56bfe34620b6219b5923089ff69ad9224d14b65091e2e8d945a974b84d21",
+    "outputs/presentation/bear-ae-research/bear-b-pal-02/check.json": "a40350a4c9cf2194b20e2e7cb76d7a1b99a597855cb39ff6e628787cee4f3feb",
+    "outputs/presentation/bear-ae-research/bear-b-pal-02/bear-route-contract.json": "8708c8e7aae10694bc2e642a9cea92ccee2ccb25fb7b2918149947807e7b6bbd",
+    "outputs/presentation/bear-ae-review/review.json": "ac8b5eca9b89d2b51c66c3efa41c7902584795a170e9f99622c63388710e773e",
+    "outputs/presentation/bear-ae-review/matrix-review.json": "22d82e8ca39d8eee604da844240eaefe245fd0f4f961e1c81ec75d8be6f5b3e5",
+    "outputs/presentation/bear-ae-review/b-live-review.json": "a464cde5257dc0cae8aaf10cde33204ebaa0831b73ad590dfd895aed5fe09331",
+    "outputs/presentation/bear-ae-review/b-matrix-review.json": "53fb9bdddb62c226e8056ee45f71124d281f339aec59c2c167934fdf83ce20c0",
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AE/workbook-export-audit.json": "e2e2413ca1657b19e2713e35d55a8887d593f253f6a9998068a6e0e8d754c34d"
+  },
+  "visual_adaptations_implemented": false,
+  "limitations": [
+    "Regular route has no moving bear: level0/pose0/X140.",
+    "Bear route is only the620step single-player prefix; earlier700attempts rejected at630.",
+    "Scene-matrix preparation costs exclude live IRQ/commit/wait and are not FPS.",
+    "Natural-window matrix rows are injected snapshots, not a continuous play route.",
+    "Stage populations differ, and inclusive calls are not summable.",
+    "No full audio/density/directed-IRQ release qualification, all-level/owner/listening/controller/physical acceptance."
+  ],
+  "original_fluidity_accepted": false,
+  "human_accepted": false,
+  "physical_hardware_accepted": false
+}

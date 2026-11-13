@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "version": "v0.0.17-igloo-colors-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic",
+  "source_commit": "059bec5f985f3aac121014016dadfa31ec3fc892",
+  "prerelease": true,
+  "published_at": "2026-11-12T04:17:11Z",
+  "all_downloaded_assets_match_local": true,
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 17033,
+      "sha256": "39165c05d9b80ca4cc742d6d5d1ac4b0bccb8785184f6fc3d305041608ac7b2b",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/BUILD.json"
+    },
+    {
+      "name": "frostbite-0.0.17-igloo-colors-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/frostbite-0.0.17-igloo-colors-diagnostic.rom"
+    },
+    {
+      "name": "Frostbite-performance-budget-AD.xlsx",
+      "bytes": 4622957,
+      "sha256": "c3c146d7a89e1c0a69a54d160e560e34012d18817dfb178932f158800a80eb04",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/Frostbite-performance-budget-AD.xlsx"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 450,
+      "sha256": "a561b48c71baebf41fb3a7bfe3c3f908d6c802e8ce9608e9c26bde3ff9fedd64",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 568,
+      "sha256": "c1dd7b67e21fc383b694f757dd17f07e88a4c367d2f16e6faf29e5f2c35ed06a",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/SOURCE.txt"
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 59608,
+      "sha256": "77a11a3f4b026165f0db4790938ada5c026fb62076fd7d60e9b457438d8b44be",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.17-igloo-colors-diagnostic/VALIDATION.json"
+    }
+  ],
+  "github_release_metadata_sha256": "bccaec87fb6d257cfa3adaddf71c3122b713d6caabe1ca0497ad02c36bd98f92",
+  "github_tag_metadata_sha256": "f213f33484be052ccc00f46c5c2a6a121bd5cdb6958f56e8df9c5942131c0ae2",
+  "evidence_scope": "Publication identity and checksum verification. NTSC landing/age and cold igloo regressions disclosed. Owner and physical acceptance remain pending."
+}

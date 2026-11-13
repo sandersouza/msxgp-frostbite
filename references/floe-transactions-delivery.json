@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "version": "v0.0.15-floe-transactions-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.15-floe-transactions-diagnostic",
+  "source_commit": "e5dd710a910272150709f7b806fb3c62403fa009",
+  "prerelease": true,
+  "published_at": "2026-11-05T21:39:31Z",
+  "all_downloaded_assets_match_local": true,
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 16187,
+      "sha256": "e5c0b506a3d9fc84a13d0cbb766905cdee1cf45bfbad163ddda4aa63d5a0e313",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.15-floe-transactions-diagnostic/BUILD.json"
+    },
+    {
+      "name": "frostbite-0.0.15-floe-transactions-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "d28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.15-floe-transactions-diagnostic/frostbite-0.0.15-floe-transactions-diagnostic.rom"
+    },
+    {
+      "name": "Frostbite-performance-budget-AA.xlsx",
+      "bytes": 4586954,
+      "sha256": "402065f30c2bb1df4c839e8a62206fc1b0fca5957410427f36a8e03a9c7e4424",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.15-floe-transactions-diagnostic/Frostbite-performance-budget-AA.xlsx"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 455,
+      "sha256": "f8221df984c8bf64881f0357f25be7b31584051c7e6bd15790b7140be96a0e8a",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.15-floe-transactions-diagnostic/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 516,
+      "sha256": "090130dfac53350a54d8e2092791a6555a034c989e97caef45ea58ee7e46938e",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.15-floe-transactions-diagnostic/SOURCE.txt"
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 47318,
+      "sha256": "5ad1451ad778ab0ba84fb9f73ce43efdb2fb381fe07c9c13c0674e799d585184",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.15-floe-transactions-diagnostic/VALIDATION.json"
+    }
+  ],
+  "github_release_metadata_sha256": "6b8463d995c18a62843207aff4034109eab77e2c8866e32438fe314bb853cf90",
+  "github_tag_metadata_sha256": "78c39b0511ecb265e45c7baf0e7cb5f9b92a48630b195a2731899b518777bdd2",
+  "evidence_scope": "Publication identity and checksum verification; owner and physical acceptance remain pending."
+}

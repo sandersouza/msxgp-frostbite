@@ -1,0 +1,238 @@
+{
+  "complete": true,
+  "source_commit": "ece9a5aa395592ac143255dfd618ac46d1b14b4c",
+  "rom_sha256": "e85b8bc13ebd07888b91d66fc76677ca3e7d210182d40c242cdd6c1a5c2dafd8",
+  "clean_rebuild_byte_identical": true,
+  "source_files": 225,
+  "preserved_parent_sources": 220,
+  "reports": {
+    "matrix-full-04": "621e0b31353693f2541320dcd77734c8617be83b8e2114cf55832aa683e7faeb",
+    "density-full-04": "b2db375d4ad7e17529ecd9a3c41c56503195c87622aebaee10903f6185f791cf",
+    "terminal-04-0": "2600571d37709d3bca391552908af7374f8d2241d2c8f57c8298bc1e7a19f184",
+    "terminal-04-1": "3367a5d77abed541167673f2b4c9ec8c985bcf257c58b3a0508e615bbcdd9299",
+    "header-04": "ff3db09ad39a0adb51df6dff682861818742bb969ac09777682c7a3a5eef7b66",
+    "audio-04": "4d5167b5a04f20e649c55d672bde2c7a2482453bfe2fc9c6fd9728717a675719",
+    "ntsc-04": "7bb0cbe75802051b96510d345ac6dc17bd47916ec0a356b453b1439380b870e5",
+    "pal-04": "f7a132837bfcc9c56abeb1d48300f0bb7377475bc7f5f42c9745a3de736d8cde",
+    "bear-ntsc-04": "334dd5d2acdff2b2ddc827d51b033f040b2aea5152f1f334a63e8a12fcd5c54c",
+    "bear-pal-04": "5990f5ebaef49c0440941bcf50f550a8e8c9848943694d59ea71bf436d2a7073",
+    "ar-ntsc-profile-04.json": "9b2919e0bb891ffe31320b2bb5646f8d3f7795f4e66956a36676c9a7dd8284d4",
+    "ar-pal-profile-04.json": "959d2e670a75884ee88a55dc318198b8ca68b8365e1314dd4521e4c68f060124",
+    "ar-bear-ntsc-profile-04.json": "bc0b9595c96c7caa7cb8bae01979eb0444f5961367421e24dd232a01c6af209f",
+    "ar-bear-pal-profile-04.json": "99f1f4d14c2a25734eb3bbf8080ffb48420a0b020700f8c55e8f47bc28d3529b"
+  },
+  "native_review_sha256": "6f6d838d9a9bef81cd48ff6139863d4dbfee0c6c09f6bfdbaf5172b113f8d592",
+  "workbook_sha256": "9f0e92a73c40256ebca73cfcba6a6a8316bc67bf32e94a5884a0e55d6b67e949",
+  "workbook_audit_sha256": "c9e417e794d98120cb6a9dfede46e74fca9cdad756e68e8a6fdc1eebf98193b9",
+  "immutable_roots_preserved": 73,
+  "immutable_files_checked": 21900,
+  "ci_runs": [
+    43431723640,
+    43431716106
+  ],
+  "host_tests": 619,
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "uniform30fps_accepted": false,
+  "version": "v0.0.28-viewport-edges-diagnostic",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "parent_rom_sha256": "78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a",
+  "fixes": [
+    "P0 visible through physicalX16, including fractional source-pixel clipping",
+    "Enemy glyph right overflow does not wrap into the left edge"
+  ],
+  "prepared_shore": {
+    "finite_cases": 576,
+    "records": 134,
+    "patterns": 239,
+    "max_entries": 4,
+    "decoded_pixels_exact": true
+  },
+  "partial_cache_keys": [
+    160,
+    167
+  ],
+  "source_gameplay_controls_and_psg_unchanged": true,
+  "performance": {
+    "regular-ntsc": [
+      {
+        "version": "AQ",
+        "fps": 32.65749935060179,
+        "foreground": {
+          "count": 555,
+          "mean": 50075.17477477477,
+          "p95": 95266,
+          "maximum": 126088
+        },
+        "gaps_ms": {
+          "count": 551,
+          "mean": 30.620838088804028,
+          "median": 33.37602963505226,
+          "p95": 50.06474286536644,
+          "maximum": 66.75289736544786
+        }
+      },
+      {
+        "version": "AR",
+        "fps": 32.59823308033514,
+        "foreground": {
+          "count": 554,
+          "mean": 50185.83754512636,
+          "p95": 95349,
+          "maximum": 126485
+        },
+        "gaps_ms": {
+          "count": 550,
+          "mean": 30.67650929225514,
+          "median": 33.376029635050486,
+          "p95": 50.06502223047882,
+          "maximum": 66.75345609567707
+        }
+      }
+    ],
+    "regular-pal": [
+      {
+        "version": "AQ",
+        "fps": 31.05863663717453,
+        "foreground": {
+          "count": 526,
+          "mean": 51257.75475285171,
+          "p95": 99316,
+          "maximum": 135472
+        },
+        "gaps_ms": {
+          "count": 522,
+          "mean": 32.19716343901218,
+          "median": 39.87238601553855,
+          "p95": 59.80955680121358,
+          "maximum": 79.74561012642312
+        }
+      },
+      {
+        "version": "AR",
+        "fps": 30.999130119513357,
+        "foreground": {
+          "count": 525,
+          "mean": 51449.72190476191,
+          "p95": 99229,
+          "maximum": 135554
+        },
+        "gaps_ms": {
+          "count": 521,
+          "mean": 32.25896972413813,
+          "median": 39.87210665042795,
+          "p95": 59.810115531442776,
+          "maximum": 79.74588949154082
+        }
+      }
+    ],
+    "bear-ntsc": [
+      {
+        "version": "AQ",
+        "fps": 29.69804459472625,
+        "foreground": {
+          "count": 114,
+          "mean": 61535.21929824561,
+          "p95": 75760,
+          "maximum": 79620
+        },
+        "gaps_ms": {
+          "count": 113,
+          "mean": 33.67225060257263,
+          "median": 33.376309000166415,
+          "p95": 33.40899471860226,
+          "maximum": 50.064742865364664
+        }
+      },
+      {
+        "version": "AR",
+        "fps": 29.697787301895673,
+        "foreground": {
+          "count": 114,
+          "mean": 61768.587719298244,
+          "p95": 75842,
+          "maximum": 79398
+        },
+        "gaps_ms": {
+          "count": 113,
+          "mean": 33.67254232897573,
+          "median": 33.376309000166415,
+          "p95": 33.408435988372176,
+          "maximum": 50.06390477002043
+        }
+      }
+    ],
+    "bear-pal": [
+      {
+        "version": "AQ",
+        "fps": 25.079062218109318,
+        "foreground": {
+          "count": 97,
+          "mean": 63346.0206185567,
+          "p95": 76809,
+          "maximum": 79596
+        },
+        "gaps_ms": {
+          "count": 96,
+          "mean": 39.87389924324646,
+          "median": 39.87322411088545,
+          "p95": 39.87434157134473,
+          "maximum": 39.90674792466642
+        }
+      },
+      {
+        "version": "AR",
+        "fps": 25.078855395321337,
+        "foreground": {
+          "count": 97,
+          "mean": 63597.65979381443,
+          "p95": 76891,
+          "maximum": 79374
+        },
+        "gaps_ms": {
+          "count": 96,
+          "mean": 39.87422807926705,
+          "median": 39.87322411088634,
+          "p95": 39.904513003747866,
+          "maximum": 39.905909829322184
+        }
+      }
+    ]
+  },
+  "validation": {
+    "source_scenes": 2115,
+    "dense_edge_scenes": 2115,
+    "terminal_edge_scenes": 2272,
+    "header_scenes": 54,
+    "audio_intervals": 2115,
+    "independent_P0_calls": 40960,
+    "independent_key_calls": 131072,
+    "independent_actor_continuations": 124,
+    "independent_helper_calls": 1818,
+    "real_IRQ_boundaries": 16,
+    "AF2_negative_rejected": true,
+    "independent_packet_pixel_cases": 2232,
+    "independent_cache_scenes": 1344,
+    "expected_warm_hits": 384,
+    "actual_warm_hits": 384
+  },
+  "workbook": {
+    "sha256": "9f0e92a73c40256ebca73cfcba6a6a8316bc67bf32e94a5884a0e55d6b67e949",
+    "tabs": 43,
+    "historical_tabs_preserved": 42,
+    "cells_preserved": 798479,
+    "formula_errors": 0,
+    "mutation_restore_checks": 2,
+    "native_excel_tested": false
+  },
+  "limitations": [
+    "Stable/all-level30FPS remains open.",
+    "Regular active cadence is about0.2percent lower; bear cadence is unchanged at reported precision.",
+    "NTSC consecutiveY runs260/286 versus261/286; landing and endpoint snapshots unchanged.",
+    "Foreground costs use different picture populations; not paired per-picture savings.",
+    "Natural level0 route and620-step level4 bear prefix, not all-level acceptance.",
+    "Automated/emulator, owner/mobile/listening and physical hardware acceptance remain separate."
+  ],
+  "manifest_layer_note": "Historical shore_recipes describes the v27 ancestor. viewport_edges.prepared_shore is the current239-pattern/134-record context."
+}

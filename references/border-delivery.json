@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "version": "v0.0.19-border-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.19-border-diagnostic",
+  "prerelease": true,
+  "source_commit": "c863310fae363d561520dfd2138d07dc1948cefc",
+  "tag_resolved_commit": "c863310fae363d561520dfd2138d07dc1948cefc",
+  "rom_sha256": "26260606e1ecbdeed0a8c0d3ae7ef4eb37658341da3a0ab02cd52ac8a5286ac9",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 18557,
+      "sha256": "0ccb446e3d5cdfce76c3618943f0b2b85184f71e4c7122c5980598846a6f29b3",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.19-border-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "26260606e1ecbdeed0a8c0d3ae7ef4eb37658341da3a0ab02cd52ac8a5286ac9",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/frostbite-0.0.19-border-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AG.xlsx",
+      "bytes": 4662142,
+      "sha256": "3298ca76a263b5ffe0e935ead4ca9945cdb4e167798c250cf553c6300a74be8d",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/Frostbite-performance-budget-AG.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 444,
+      "sha256": "8acccb4b4717e54cc856dff9ecf3b53918f0bdd1eafadc0dbb773d2e4a3e33fb",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 906,
+      "sha256": "6e56a27fada2cd0d4fe14b058aec015a0a95826825ccefe11ddc31afd445f678",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 110271,
+      "sha256": "ebff3131fcef97acc77fbbd7548d5ab30cfbc5d6acedde138c52f8aec94e4bbd",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.19-border-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "6ecc45bf2fa2f58c675cf1680a926474b2bf3b9484fdaea101a8f598d8004762",
+  "public_validation_sha256": "ebff3131fcef97acc77fbbd7548d5ab30cfbc5d6acedde138c52f8aec94e4bbd",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43254079515,
+      "event": "pull_request",
+      "headSha": "c863310fae363d561520dfd2138d07dc1948cefc",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43253742994,
+      "event": "push",
+      "headSha": "c863310fae363d561520dfd2138d07dc1948cefc",
+      "status": "completed"
+    }
+  ],
+  "rollback_v18_assets_unchanged": true,
+  "parent_source_files_preserved": 160,
+  "prior_roots_preserved": 22,
+  "issue42_open": true,
+  "board": "In progress",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.19-border-diagnostic%2Ffrostbite-0.0.19-border-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/border-ag-research/webmsx-v19.png",
+    "screenshot_sha256": "f254814b16f12c2444166232ab7e69a830c2d24b47e058e32136fdf24632593e",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified; performance goal and owner/physical acceptance remain open. Autonomous ice-atlas investigation continues."
+}

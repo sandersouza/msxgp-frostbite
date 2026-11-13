@@ -1,0 +1,2883 @@
+{
+  "complete": true,
+  "version": "v0.0.18-grid24-diagnostic",
+  "source_commit": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+  "source_dirty": false,
+  "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "source_files_verified": 160,
+  "parent_source_files_preserved": 154,
+  "new_ram_bytes": 0,
+  "new_vram_bytes": 0,
+  "declared_adaptation": {
+    "view": "grid24-v1",
+    "vertical_pitch_pixels": 24,
+    "prior_pitch_pixels": 26,
+    "enemy_y": [
+      152,
+      128,
+      104,
+      80
+    ],
+    "ice_y": [
+      168,
+      144,
+      120,
+      96
+    ],
+    "maximum_anchor_shift_pixels": 7,
+    "player": "Whole P0 SAT translation through monotone source-contact map; pose foot offsets retained.",
+    "unchanged": "Original CPU/RAM, horizontal motion, artwork/colors/counts, input/source clock/audio, bear tiles and black mask."
+  },
+  "families": {
+    "ntsc": {
+      "changes": {
+        "fps_percent": 7.110758118073535,
+        "grounded_landing_presented": {
+          "gained": [
+            4,
+            16,
+            18,
+            21
+          ],
+          "lost": [
+            5,
+            7,
+            15
+          ]
+        },
+        "endpoint_y_presented": {
+          "gained": [
+            12,
+            16,
+            23,
+            24
+          ],
+          "lost": [
+            5,
+            20
+          ]
+        }
+      },
+      "runs": [
+        {
+          "label": "AD",
+          "rom_sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+          "summary": {
+            "fps": 25.90092802234393,
+            "gaps": {
+              "count": 437,
+              "mean": 38.60865522414219,
+              "median": 33.408435988372176,
+              "p95": 66.75233863521868,
+              "maximum": 83.44161059576294
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 279,
+                "total": 390,
+                "fraction": 0.7153846153846154,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 8,
+                  "mean": 10.73076923076923,
+                  "median": 10.0,
+                  "p95": 13,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 181,
+                "total": 234,
+                "fraction": 0.7735042735042735,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 6.961538461538462,
+                  "median": 7.0,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 209,
+                "total": 286,
+                "fraction": 0.7307692307692307,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 8.038461538461538,
+                  "median": 8.0,
+                  "p95": 10,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 191,
+                "total": 258,
+                "fraction": 0.7403100775193798,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.346153846153846,
+                  "median": 7.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 14,
+                "missed_jumps": 12,
+                "source_steps_after_landing_at_commit": {
+                  "count": 14,
+                  "minimum": 0,
+                  "mean": 1.2142857142857142,
+                  "median": 1.0,
+                  "p95": 2,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 14,
+                  "minimum": 10.641296589371407,
+                  "mean": 31.317647514258187,
+                  "median": 27.861641633223577,
+                  "p95": 45.245135904142586,
+                  "maximum": 78.48427663292057
+                },
+                "latency_ms_upper": {
+                  "count": 14,
+                  "minimum": 17.38209744534558,
+                  "mean": 37.69537349419646,
+                  "median": 34.15154719384539,
+                  "p95": 50.856463600819524,
+                  "maximum": 84.29646784716738
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 21,
+                "missed_jumps": 5,
+                "source_steps_after_landing_at_commit": {
+                  "count": 21,
+                  "minimum": 0,
+                  "mean": 1.9047619047619047,
+                  "median": 2,
+                  "p95": 4,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 21,
+                  "minimum": 10.641296589371407,
+                  "mean": 42.95142858340071,
+                  "median": 44.10728179140033,
+                  "p95": 78.07137499318983,
+                  "maximum": 78.48427663292057
+                },
+                "latency_ms_upper": {
+                  "count": 21,
+                  "minimum": 17.38209744534558,
+                  "mean": 49.20456437367072,
+                  "median": 50.82405724749872,
+                  "p95": 84.16768052923018,
+                  "maximum": 84.29646784716738
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 2.5384615384615383,
+                "median": 2.5,
+                "p95": 6,
+                "maximum": 6
+              }
+            }
+          },
+          "foreground": {
+            "count": 441,
+            "mean": 69756.22675736962,
+            "p95": 123363,
+            "maximum": 173397
+          },
+          "stages": {
+            "description": {
+              "count": 441,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 441,
+              "mean": 11261.430839002267,
+              "p95": 21754,
+              "maximum": 58677
+            },
+            "dirty-state": {
+              "count": 441,
+              "mean": 9616.959183673469,
+              "p95": 10393,
+              "maximum": 10945
+            },
+            "release": {
+              "count": 441,
+              "mean": 2119.013605442177,
+              "p95": 2235,
+              "maximum": 2307
+            },
+            "background": {
+              "count": 441,
+              "mean": 3274.7233560090704,
+              "p95": 7893,
+              "maximum": 11894
+            },
+            "world": {
+              "count": 441,
+              "mean": 26009.7052154195,
+              "p95": 49491,
+              "maximum": 62731
+            },
+            "header": {
+              "count": 441,
+              "mean": 5814.632653061224,
+              "p95": 32391,
+              "maximum": 47722
+            },
+            "footer": {
+              "count": 441,
+              "mean": 262.16326530612247,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 441,
+              "mean": 7325.598639455782,
+              "p95": 14808,
+              "maximum": 19565
+            }
+          },
+          "complete_isr": {
+            "count": 1008,
+            "mean": 22151.501984126986,
+            "p95": 25104,
+            "maximum": 26863
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 116,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.323785564925082,
+                "latency_ms_upper": 17.38237681046062
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 133,
+                "snapshot_step": 172,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.715048979688113,
+                "latency_ms_upper": 17.383214905804856
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 147,
+                "snapshot_step": 203,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 78.00041625402088,
+                "latency_ms_upper": 84.13443608056338
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 156,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.002519873335366,
+                "latency_ms_upper": 50.823219152154486
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 166,
+                "snapshot_step": 263,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.41646494177344,
+                "latency_ms_upper": 67.44460538979169
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 176,
+                "snapshot_step": 292,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.10728179140033,
+                "latency_ms_upper": 50.82405724749872
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 186,
+                "snapshot_step": 324,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 6,
+                "hardware_vblanks_after_landing": 7,
+                "latency_ms_lower": 111.72174117101363,
+                "latency_ms_upper": 117.54482762473906
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 195,
+                "snapshot_step": 352,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.516272319526706,
+                "latency_ms_upper": 50.855625505477065
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 206,
+                "snapshot_step": 382,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.84348290075833,
+                "latency_ms_upper": 34.16775037050712
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 393,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.879800365688823,
+                "latency_ms_upper": 34.07136940588806
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 409,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.659175956721612,
+                "latency_ms_upper": 17.383494270919897
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 426,
+                "snapshot_step": 740,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.641296589371407,
+                "latency_ms_upper": 17.38237681046151
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 438,
+                "snapshot_step": 772,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 78.06886070715713,
+                "latency_ms_upper": 84.16656306877002
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 449,
+                "snapshot_step": 801,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.478763362384115,
+                "latency_ms_upper": 67.44460538979169
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 460,
+                "snapshot_step": 831,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 45.245135904142586,
+                "latency_ms_upper": 50.856463600819524
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 471,
+                "snapshot_step": 862,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.80548924513937,
+                "latency_ms_upper": 34.135344017183655
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 483,
+                "snapshot_step": 894,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 78.07891785128973,
+                "latency_ms_upper": 84.19813132674392
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 673,
+                "snapshot_step": 1190,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.19890935859047,
+                "latency_ms_upper": 17.38209744534558
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 993,
+                "snapshot_step": 1583,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.86680150689483,
+                "latency_ms_upper": 67.40996411555145
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1003,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.02458971740586,
+                "latency_ms_upper": 50.79137152906199
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1014,
+                "snapshot_step": 1643,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 78.07137499318983,
+                "latency_ms_upper": 84.16768052923018
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1024,
+                "snapshot_step": 1673,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.301645879574096,
+                "latency_ms_upper": 67.47980539426024
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1034,
+                "snapshot_step": 1703,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.39746811396307,
+                "latency_ms_upper": 67.47952602914609
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1043,
+                "snapshot_step": 1734,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 6,
+                "hardware_vblanks_after_landing": 7,
+                "latency_ms_lower": 111.56445861136177,
+                "latency_ms_upper": 117.60768477558159
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1051,
+                "snapshot_step": 1765,
+                "source_steps_after_landing_at_snapshot": 3,
+                "source_steps_after_landing_at_commit": 6,
+                "hardware_vblanks_after_landing": 7,
+                "latency_ms_lower": 111.77454117772356,
+                "latency_ms_upper": 117.60852287092405
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1060,
+                "snapshot_step": 1793,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 78.48427663292057,
+                "latency_ms_upper": 84.29646784716738
+              }
+            }
+          ]
+        },
+        {
+          "label": "AF",
+          "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+          "summary": {
+            "fps": 27.742680364349134,
+            "gaps": {
+              "count": 469,
+              "mean": 36.04554379269909,
+              "median": 33.37658836527879,
+              "p95": 66.72021164701114,
+              "maximum": 83.44133123064523
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 305,
+                "total": 390,
+                "fraction": 0.782051282051282,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 8,
+                  "mean": 11.73076923076923,
+                  "median": 12.0,
+                  "p95": 14,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 187,
+                "total": 234,
+                "fraction": 0.7991452991452992,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.1923076923076925,
+                  "median": 7.0,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 220,
+                "total": 286,
+                "fraction": 0.7692307692307693,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 8.461538461538462,
+                  "median": 8.0,
+                  "p95": 10,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 198,
+                "total": 258,
+                "fraction": 0.7674418604651163,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 7.615384615384615,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 15,
+                "missed_jumps": 11,
+                "source_steps_after_landing_at_commit": {
+                  "count": 15,
+                  "minimum": 0,
+                  "mean": 0.8666666666666667,
+                  "median": 1,
+                  "p95": 2,
+                  "maximum": 3
+                },
+                "latency_ms_lower": {
+                  "count": 15,
+                  "minimum": 10.641855319599713,
+                  "mean": 25.40630163889516,
+                  "median": 27.33755267778193,
+                  "p95": 44.004475429140655,
+                  "maximum": 61.79584276772232
+                },
+                "latency_ms_upper": {
+                  "count": 15,
+                  "minimum": 17.38209744534558,
+                  "mean": 31.8867342078392,
+                  "median": 34.10433448943806,
+                  "p95": 50.82377788238546,
+                  "maximum": 67.60803398196913
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 23,
+                "missed_jumps": 3,
+                "source_steps_after_landing_at_commit": {
+                  "count": 23,
+                  "minimum": 0,
+                  "mean": 1.6956521739130435,
+                  "median": 1,
+                  "p95": 3,
+                  "maximum": 5
+                },
+                "latency_ms_lower": {
+                  "count": 23,
+                  "minimum": 10.641855319599713,
+                  "mean": 39.43504600141369,
+                  "median": 27.87812417500035,
+                  "p95": 61.905074527627946,
+                  "maximum": 94.877700936852
+                },
+                "latency_ms_upper": {
+                  "count": 23,
+                  "minimum": 17.38209744534558,
+                  "mean": 45.7220000088669,
+                  "median": 34.16775037050712,
+                  "p95": 67.60803398196913,
+                  "maximum": 100.92092710107181
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 2.076923076923077,
+                "median": 1.5,
+                "p95": 5,
+                "maximum": 5
+              }
+            }
+          },
+          "foreground": {
+            "count": 473,
+            "mean": 62611.50528541226,
+            "p95": 118873,
+            "maximum": 163083
+          },
+          "stages": {
+            "description": {
+              "count": 473,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 473,
+              "mean": 12262.67441860465,
+              "p95": 23440,
+              "maximum": 63598
+            },
+            "dirty-state": {
+              "count": 473,
+              "mean": 9572.752642706131,
+              "p95": 10393,
+              "maximum": 10863
+            },
+            "release": {
+              "count": 473,
+              "mean": 2080.002114164905,
+              "p95": 2163,
+              "maximum": 2223
+            },
+            "background": {
+              "count": 473,
+              "mean": 2323.217758985201,
+              "p95": 6827,
+              "maximum": 8878
+            },
+            "world": {
+              "count": 473,
+              "mean": 21562.788583509515,
+              "p95": 42080,
+              "maximum": 56854
+            },
+            "header": {
+              "count": 473,
+              "mean": 5429.215644820296,
+              "p95": 35040,
+              "maximum": 47722
+            },
+            "footer": {
+              "count": 473,
+              "mean": 262.1014799154334,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 473,
+              "mean": 5046.752642706131,
+              "p95": 11540,
+              "maximum": 15221
+            }
+          },
+          "complete_isr": {
+            "count": 1008,
+            "mean": 22227.375,
+            "p95": 25224,
+            "maximum": 28156
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 118,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.32350619981004,
+                "latency_ms_upper": 17.38209744534558
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 135,
+                "snapshot_step": 172,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.714490249458919,
+                "latency_ms_upper": 17.38265617557566
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 149,
+                "snapshot_step": 203,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.31086492836335,
+                "latency_ms_upper": 67.44488475490584
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 159,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.3146447383672,
+                "latency_ms_upper": 34.13534401718632
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 169,
+                "snapshot_step": 262,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.40851141695444,
+                "latency_ms_upper": 34.104334489439836
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 180,
+                "snapshot_step": 294,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.80869775348566,
+                "latency_ms_upper": 100.82538423179521
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 190,
+                "snapshot_step": 324,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 95.03051365466852,
+                "latency_ms_upper": 100.85360010839395
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 201,
+                "snapshot_step": 353,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.905074527627946,
+                "latency_ms_upper": 67.51193238246778
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 212,
+                "snapshot_step": 382,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.843482900760108,
+                "latency_ms_upper": 34.1677503705089
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 402,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.87812417500035,
+                "latency_ms_upper": 34.06969321519959
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 418,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.657779131147294,
+                "latency_ms_upper": 17.38209744534558
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 437,
+                "snapshot_step": 740,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 10.641855319599713,
+                "latency_ms_upper": 17.382935540689815
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 450,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.38042684195888,
+                "latency_ms_upper": 67.47812920357177
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 463,
+                "snapshot_step": 801,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.4812776484186,
+                "latency_ms_upper": 67.44711967582617
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 475,
+                "snapshot_step": 830,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.823927342719657,
+                "latency_ms_upper": 34.16775037050712
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 488,
+                "snapshot_step": 863,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 45.15965017900214,
+                "latency_ms_upper": 50.789415973259366
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 499,
+                "snapshot_step": 892,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 44.004475429140655,
+                "latency_ms_upper": 50.82377788238546
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 690,
+                "snapshot_step": 1190,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 11.199747453936482,
+                "latency_ms_upper": 17.38293554069159
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1012,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.893209891200144,
+                "latency_ms_upper": 34.07164877100044
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1024,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.33755267778193,
+                "latency_ms_upper": 34.10433448943806
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1039,
+                "snapshot_step": 1644,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.76036758861639,
+                "latency_ms_upper": 100.85667312465674
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1050,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 27.257374889828156,
+                "latency_ms_upper": 34.135623382304914
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1063,
+                "snapshot_step": 1703,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.398306209309084,
+                "latency_ms_upper": 67.4803641244921
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1073,
+                "snapshot_step": 1733,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 94.877700936852,
+                "latency_ms_upper": 100.92092710107181
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1082,
+                "snapshot_step": 1763,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 78.39823217755537,
+                "latency_ms_upper": 84.23221387075586
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1092,
+                "snapshot_step": 1793,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 61.79584276772232,
+                "latency_ms_upper": 67.60803398196913
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "pal": {
+      "changes": {
+        "fps_percent": 9.74662559591466,
+        "grounded_landing_presented": {
+          "gained": [
+            15,
+            19
+          ],
+          "lost": [
+            7,
+            13
+          ]
+        },
+        "endpoint_y_presented": {
+          "gained": [],
+          "lost": []
+        }
+      },
+      "runs": [
+        {
+          "label": "AD",
+          "rom_sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+          "summary": {
+            "fps": 23.122574963883157,
+            "gaps": {
+              "count": 390,
+              "mean": 43.247778483234384,
+              "median": 39.87364315855757,
+              "p95": 59.842521884764466,
+              "maximum": 79.77969267043773
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 264,
+                "total": 390,
+                "fraction": 0.676923076923077,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 8,
+                  "mean": 10.153846153846153,
+                  "median": 10.0,
+                  "p95": 13,
+                  "maximum": 13
+                }
+              },
+              "distinct_y": {
+                "presented": 175,
+                "total": 234,
+                "fraction": 0.7478632478632479,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 6.730769230769231,
+                  "median": 7.0,
+                  "p95": 8,
+                  "maximum": 8
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 198,
+                "total": 286,
+                "fraction": 0.6923076923076923,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 7.615384615384615,
+                  "median": 7.0,
+                  "p95": 10,
+                  "maximum": 10
+                }
+              },
+              "unique_xy": {
+                "presented": 183,
+                "total": 258,
+                "fraction": 0.7093023255813954,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.038461538461538,
+                  "median": 7.0,
+                  "p95": 8,
+                  "maximum": 9
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 13,
+                "missed_jumps": 13,
+                "source_steps_after_landing_at_commit": {
+                  "count": 13,
+                  "minimum": 0,
+                  "mean": 1.4615384615384615,
+                  "median": 1,
+                  "p95": 3,
+                  "maximum": 3
+                },
+                "latency_ms_lower": {
+                  "count": 13,
+                  "minimum": 9.44812818389007,
+                  "mean": 36.390529651544696,
+                  "median": 34.32531229527669,
+                  "p95": 53.82611477156729,
+                  "maximum": 54.99078793533485
+                },
+                "latency_ms_upper": {
+                  "count": 13,
+                  "minimum": 20.630834365820583,
+                  "mean": 43.69220969962136,
+                  "median": 40.632538493021286,
+                  "p95": 60.60211563201179,
+                  "maximum": 60.665531513087956
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 20,
+                "missed_jumps": 6,
+                "source_steps_after_landing_at_commit": {
+                  "count": 20,
+                  "minimum": 0,
+                  "mean": 2.05,
+                  "median": 2.0,
+                  "p95": 4,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 20,
+                  "minimum": 9.44812818389007,
+                  "mean": 46.42640335573387,
+                  "median": 48.65660300401409,
+                  "p95": 74.37481579362881,
+                  "maximum": 74.3776094447739
+                },
+                "latency_ms_upper": {
+                  "count": 20,
+                  "minimum": 20.630834365820583,
+                  "mean": 53.566612516395566,
+                  "median": 60.502382286017124,
+                  "p95": 80.47251815524348,
+                  "maximum": 80.47391498081424
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 2.5,
+                "median": 2.0,
+                "p95": 5,
+                "maximum": 6
+              }
+            }
+          },
+          "foreground": {
+            "count": 394,
+            "mean": 74906.63959390864,
+            "p95": 134044,
+            "maximum": 172891
+          },
+          "stages": {
+            "description": {
+              "count": 394,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 394,
+              "mean": 12065,
+              "p95": 23307,
+              "maximum": 58804
+            },
+            "dirty-state": {
+              "count": 394,
+              "mean": 9699.007614213198,
+              "p95": 10454,
+              "maximum": 10942
+            },
+            "release": {
+              "count": 394,
+              "mean": 2130.07614213198,
+              "p95": 2235,
+              "maximum": 2307
+            },
+            "background": {
+              "count": 394,
+              "mean": 3602.604060913706,
+              "p95": 7893,
+              "maximum": 11870
+            },
+            "world": {
+              "count": 394,
+              "mean": 28460.65736040609,
+              "p95": 50992,
+              "maximum": 63404
+            },
+            "header": {
+              "count": 394,
+              "mean": 6469.131979695431,
+              "p95": 35106,
+              "maximum": 47722
+            },
+            "footer": {
+              "count": 394,
+              "mean": 262.1218274111675,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 394,
+              "mean": 8146.040609137056,
+              "p95": 15300,
+              "maximum": 19541
+            }
+          },
+          "complete_isr": {
+            "count": 843,
+            "mean": 26174.244365361803,
+            "p95": 44272,
+            "maximum": 48965
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 97,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.44812818389007,
+                "latency_ms_upper": 20.630834365820583
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 112,
+                "snapshot_step": 173,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 48.697529993336985,
+                "latency_ms_upper": 60.46913783735075
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 124,
+                "snapshot_step": 205,
+                "source_steps_after_landing_at_snapshot": 3,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 88.09303975784655,
+                "latency_ms_upper": 100.37840004805076
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 133,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 53.74761317430021,
+                "latency_ms_upper": 60.56831245311933
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 142,
+                "snapshot_step": 265,
+                "source_steps_after_landing_at_snapshot": 3,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 94.3488627744582,
+                "latency_ms_upper": 100.37700322247645
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 150,
+                "snapshot_step": 292,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.91604240203705,
+                "latency_ms_upper": 40.63281785813544
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 160,
+                "snapshot_step": 324,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 6,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 114.52237644728669,
+                "latency_ms_upper": 120.34546290101211
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 169,
+                "snapshot_step": 352,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.32531229527669,
+                "latency_ms_upper": 40.66466548122705
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 180,
+                "snapshot_step": 384,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.94583808836097,
+                "latency_ms_upper": 80.53761022699923
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 362,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.37671547640697,
+                "latency_ms_upper": 40.56828451660621
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 375,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.906795416737339,
+                "latency_ms_upper": 20.631113730935624
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 390,
+                "snapshot_step": 741,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.30050467308114,
+                "latency_ms_upper": 80.406308623024
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 400,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.37481579362881,
+                "latency_ms_upper": 80.47251815524348
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 410,
+                "snapshot_step": 800,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.9668868529408,
+                "latency_ms_upper": 40.600411504815526
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 421,
+                "snapshot_step": 831,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.99078793533485,
+                "latency_ms_upper": 60.60211563201179
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 432,
+                "snapshot_step": 863,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.905860940426265,
+                "latency_ms_upper": 60.53562673468349
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 442,
+                "snapshot_step": 892,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.813236039776484,
+                "latency_ms_upper": 40.632538493021286
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 629,
+                "snapshot_step": 1191,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.455112311762548,
+                "latency_ms_upper": 20.631113730935624
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 906,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.38928690657761,
+                "latency_ms_upper": 40.567725786377906
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 916,
+                "snapshot_step": 1613,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.33989515427442,
+                "latency_ms_upper": 80.43899434145985
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 927,
+                "snapshot_step": 1643,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.3776094447739,
+                "latency_ms_upper": 80.47391498081424
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 937,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.75429000054453,
+                "latency_ms_upper": 40.632538493021286
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 947,
+                "snapshot_step": 1703,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.45496564507479,
+                "latency_ms_upper": 60.53702356025781
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 955,
+                "snapshot_step": 1732,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 53.82611477156729,
+                "latency_ms_upper": 60.601836266897635
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 964,
+                "snapshot_step": 1764,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 88.9842144741877,
+                "latency_ms_upper": 100.47366355221499
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 972,
+                "snapshot_step": 1793,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 3,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 48.61567601469119,
+                "latency_ms_upper": 60.665531513087956
+              }
+            }
+          ]
+        },
+        {
+          "label": "AF",
+          "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+          "summary": {
+            "fps": 25.376245773747545,
+            "gaps": {
+              "count": 427,
+              "mean": 39.40693233017662,
+              "median": 39.873224110884564,
+              "p95": 59.841125059191036,
+              "maximum": 79.7788545750926
+            },
+            "poses_missed": 0,
+            "jump": {
+              "complete_normal_active_jumps": 26,
+              "other_arcs": {
+                "interrupted": 1,
+                "partial_start": 0,
+                "partial_end": 0
+              },
+              "vertical_update_states": {
+                "presented": 292,
+                "total": 390,
+                "fraction": 0.7487179487179487,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 8,
+                  "mean": 11.23076923076923,
+                  "median": 11.0,
+                  "p95": 14,
+                  "maximum": 15
+                }
+              },
+              "distinct_y": {
+                "presented": 185,
+                "total": 234,
+                "fraction": 0.7905982905982906,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.115384615384615,
+                  "median": 7.5,
+                  "p95": 9,
+                  "maximum": 9
+                }
+              },
+              "consecutive_y_runs": {
+                "presented": 215,
+                "total": 286,
+                "fraction": 0.7517482517482518,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 6,
+                  "mean": 8.26923076923077,
+                  "median": 8.0,
+                  "p95": 10,
+                  "maximum": 11
+                }
+              },
+              "unique_xy": {
+                "presented": 194,
+                "total": 258,
+                "fraction": 0.751937984496124,
+                "per_jump_presented": {
+                  "count": 26,
+                  "minimum": 5,
+                  "mean": 7.461538461538462,
+                  "median": 8.0,
+                  "p95": 9,
+                  "maximum": 10
+                }
+              },
+              "grounded_landing": {
+                "presented_jumps": 13,
+                "missed_jumps": 13,
+                "source_steps_after_landing_at_commit": {
+                  "count": 13,
+                  "minimum": 0,
+                  "mean": 1.2307692307692308,
+                  "median": 1,
+                  "p95": 2,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 13,
+                  "minimum": 9.448966279234305,
+                  "mean": 33.37276321217062,
+                  "median": 33.81379477000834,
+                  "p95": 54.98967047487824,
+                  "maximum": 69.34959610788383
+                },
+                "latency_ms_upper": {
+                  "count": 13,
+                  "minimum": 20.63055500070554,
+                  "mean": 40.62263177625661,
+                  "median": 40.6325384930204,
+                  "p95": 60.601556901787035,
+                  "maximum": 80.60214356852669
+                }
+              },
+              "endpoint_y": {
+                "presented_jumps": 20,
+                "missed_jumps": 6,
+                "source_steps_after_landing_at_commit": {
+                  "count": 20,
+                  "minimum": 0,
+                  "mean": 1.8,
+                  "median": 2.0,
+                  "p95": 4,
+                  "maximum": 4
+                },
+                "latency_ms_lower": {
+                  "count": 20,
+                  "minimum": 9.448966279234305,
+                  "mean": 43.47757885429595,
+                  "median": 41.538240195331696,
+                  "p95": 74.37593325408542,
+                  "maximum": 74.37677134943144
+                },
+                "latency_ms_upper": {
+                  "count": 20,
+                  "minimum": 20.63055500070554,
+                  "mean": 50.57630229540395,
+                  "median": 50.55251435587493,
+                  "p95": 80.47363561570009,
+                  "maximum": 80.60214356852669
+                }
+              },
+              "first_post_landing_snapshot_source_steps_at_commit": {
+                "count": 26,
+                "minimum": 0,
+                "mean": 2.269230769230769,
+                "median": 2.0,
+                "p95": 5,
+                "maximum": 6
+              }
+            }
+          },
+          "foreground": {
+            "count": 431,
+            "mean": 65684.79350348028,
+            "p95": 120888,
+            "maximum": 150225
+          },
+          "stages": {
+            "description": {
+              "count": 431,
+              "mean": 4072,
+              "p95": 4072,
+              "maximum": 4072
+            },
+            "sprites-preflight": {
+              "count": 431,
+              "mean": 12465.858468677494,
+              "p95": 23492,
+              "maximum": 59030
+            },
+            "dirty-state": {
+              "count": 431,
+              "mean": 9637.14849187935,
+              "p95": 10454,
+              "maximum": 10942
+            },
+            "release": {
+              "count": 431,
+              "mean": 2085.3619489559164,
+              "p95": 2163,
+              "maximum": 2217
+            },
+            "background": {
+              "count": 431,
+              "mean": 2512.9443155452436,
+              "p95": 5869,
+              "maximum": 8854
+            },
+            "world": {
+              "count": 431,
+              "mean": 23213.39675174014,
+              "p95": 42591,
+              "maximum": 55634
+            },
+            "header": {
+              "count": 431,
+              "mean": 5930.16241299304,
+              "p95": 35064,
+              "maximum": 47786
+            },
+            "footer": {
+              "count": 431,
+              "mean": 262.2227378190255,
+              "p95": 262,
+              "maximum": 286
+            },
+            "upload": {
+              "count": 431,
+              "mean": 5505.69837587007,
+              "p95": 11540,
+              "maximum": 15210
+            }
+          },
+          "complete_isr": {
+            "count": 843,
+            "mean": 26280.38196915777,
+            "p95": 44183,
+            "maximum": 50146
+          },
+          "arcs": [
+            {
+              "id": 0,
+              "landing_step": 142,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 98,
+                "snapshot_step": 142,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.448966279234305,
+                "latency_ms_upper": 20.63167246116482
+              }
+            },
+            {
+              "id": 1,
+              "landing_step": 172,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 114,
+                "snapshot_step": 173,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 48.70004427937058,
+                "latency_ms_upper": 60.471652123384345
+              }
+            },
+            {
+              "id": 2,
+              "landing_step": 202,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 127,
+                "snapshot_step": 205,
+                "source_steps_after_landing_at_snapshot": 3,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 88.08745245555016,
+                "latency_ms_upper": 100.37281274575437
+              }
+            },
+            {
+              "id": 3,
+              "landing_step": 232,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 137,
+                "snapshot_step": 232,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.81183921420128,
+                "latency_ms_upper": 40.6325384930204
+              }
+            },
+            {
+              "id": 4,
+              "landing_step": 262,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 147,
+                "snapshot_step": 264,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 5,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 94.35025960003252,
+                "latency_ms_upper": 100.37840004805076
+              }
+            },
+            {
+              "id": 5,
+              "landing_step": 292,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 156,
+                "snapshot_step": 292,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.91660113226713,
+                "latency_ms_upper": 40.63337658836552
+              }
+            },
+            {
+              "id": 6,
+              "landing_step": 322,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 167,
+                "snapshot_step": 324,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 6,
+                "hardware_vblanks_after_landing": 6,
+                "latency_ms_lower": 114.52321454263092,
+                "latency_ms_upper": 120.34630099635635
+              }
+            },
+            {
+              "id": 7,
+              "landing_step": 352,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 177,
+                "snapshot_step": 353,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.96173396339543,
+                "latency_ms_upper": 60.56859181823526
+              }
+            },
+            {
+              "id": 8,
+              "landing_step": 382,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 188,
+                "snapshot_step": 383,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 55.007829207342596,
+                "latency_ms_upper": 60.59960134598086
+              }
+            },
+            {
+              "id": 9,
+              "landing_step": 680,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 372,
+                "snapshot_step": 680,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.37643611129282,
+                "latency_ms_upper": 40.56800515149206
+              }
+            },
+            {
+              "id": 10,
+              "landing_step": 710,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 385,
+                "snapshot_step": 710,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.906236686507256,
+                "latency_ms_upper": 20.63055500070554
+              }
+            },
+            {
+              "id": 11,
+              "landing_step": 740,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 400,
+                "snapshot_step": 741,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.30106340331122,
+                "latency_ms_upper": 80.40686735325409
+              }
+            },
+            {
+              "id": 12,
+              "landing_step": 770,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 413,
+                "snapshot_step": 771,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.37593325408542,
+                "latency_ms_upper": 80.47363561570009
+              }
+            },
+            {
+              "id": 13,
+              "landing_step": 800,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 425,
+                "snapshot_step": 801,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.53849581441261,
+                "latency_ms_upper": 60.50433784182019
+              }
+            },
+            {
+              "id": 14,
+              "landing_step": 830,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 440,
+                "snapshot_step": 831,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.98967047487824,
+                "latency_ms_upper": 60.600998171555176
+              }
+            },
+            {
+              "id": 15,
+              "landing_step": 862,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 451,
+                "snapshot_step": 862,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 34.302124990748695,
+                "latency_ms_upper": 40.63197976279298
+              }
+            },
+            {
+              "id": 16,
+              "landing_step": 892,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 462,
+                "snapshot_step": 892,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.81379477000834,
+                "latency_ms_upper": 40.633097223253145
+              }
+            },
+            {
+              "id": 17,
+              "landing_step": 1190,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 649,
+                "snapshot_step": 1191,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 9.455950407105007,
+                "latency_ms_upper": 20.631951826278083
+              }
+            },
+            {
+              "id": 18,
+              "landing_step": 1582,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 929,
+                "snapshot_step": 1582,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 14.45295421624948,
+                "latency_ms_upper": 20.631393096049777
+              }
+            },
+            {
+              "id": 19,
+              "landing_step": 1612,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 941,
+                "snapshot_step": 1612,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 0,
+                "hardware_vblanks_after_landing": 1,
+                "latency_ms_lower": 13.897297002831266,
+                "latency_ms_upper": 20.664078814487397
+              }
+            },
+            {
+              "id": 20,
+              "landing_step": 1642,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 956,
+                "snapshot_step": 1643,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 74.37677134943144,
+                "latency_ms_upper": 80.47307688547178
+              }
+            },
+            {
+              "id": 21,
+              "landing_step": 1672,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 967,
+                "snapshot_step": 1672,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 1,
+                "hardware_vblanks_after_landing": 2,
+                "latency_ms_lower": 33.75456936565868,
+                "latency_ms_upper": 40.63281785813544
+              }
+            },
+            {
+              "id": 22,
+              "landing_step": 1702,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 978,
+                "snapshot_step": 1703,
+                "source_steps_after_landing_at_snapshot": 1,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 54.4516132636943,
+                "latency_ms_upper": 60.53367117887731
+              }
+            },
+            {
+              "id": 23,
+              "landing_step": 1732,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 987,
+                "snapshot_step": 1732,
+                "source_steps_after_landing_at_snapshot": 0,
+                "source_steps_after_landing_at_commit": 2,
+                "hardware_vblanks_after_landing": 3,
+                "latency_ms_lower": 53.82583540645669,
+                "latency_ms_upper": 60.601556901787035
+              }
+            },
+            {
+              "id": 24,
+              "landing_step": 1762,
+              "grounded_landing_presented": false,
+              "endpoint_y_presented": false,
+              "first_post_landing_snapshot_latency": {
+                "picture": 996,
+                "snapshot_step": 1764,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 5,
+                "latency_ms_lower": 88.98365574395228,
+                "latency_ms_upper": 100.47310482197958
+              }
+            },
+            {
+              "id": 25,
+              "landing_step": 1792,
+              "grounded_landing_presented": true,
+              "endpoint_y_presented": true,
+              "first_post_landing_snapshot_latency": {
+                "picture": 1006,
+                "snapshot_step": 1794,
+                "source_steps_after_landing_at_snapshot": 2,
+                "source_steps_after_landing_at_commit": 4,
+                "hardware_vblanks_after_landing": 4,
+                "latency_ms_lower": 69.34959610788383,
+                "latency_ms_upper": 80.60214356852669
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "bear_families": {
+    "ntsc": {
+      "runs": [
+        {
+          "label": "AD",
+          "folder": "outputs/presentation/bear-ae-research/bear-ad-ntsc-02",
+          "fps": 14.205703885771916,
+          "gaps": {
+            "count": 55,
+            "mean": 70.39425909768367,
+            "median": 66.75317673056202,
+            "p95": 83.44161059576116,
+            "maximum": 83.47373758396515
+          }
+        },
+        {
+          "label": "AF",
+          "folder": "outputs/presentation/grid24-af-research/bear-ntsc-b",
+          "fps": 14.785882897386873,
+          "gaps": {
+            "count": 57,
+            "mean": 67.63207898641826,
+            "median": 66.75261800033283,
+            "p95": 83.44133123064523,
+            "maximum": 83.4723407583926
+          }
+        }
+      ],
+      "fps_percent": 4.084127166666129
+    },
+    "pal": {
+      "runs": [
+        {
+          "label": "AD",
+          "folder": "outputs/presentation/bear-ae-research/bear-ad-pal-02",
+          "fps": 13.703335634126006,
+          "gaps": {
+            "count": 53,
+            "mean": 72.97493301628379,
+            "median": 79.7458894915417,
+            "p95": 79.7788545750926,
+            "maximum": 99.68361900744327
+          }
+        },
+        {
+          "label": "AF",
+          "folder": "outputs/presentation/grid24-af-research/bear-pal-b",
+          "fps": 13.703338603536528,
+          "gaps": {
+            "count": 53,
+            "mean": 72.97491720316407,
+            "median": 79.74588949154082,
+            "p95": 79.77913394020675,
+            "maximum": 99.68306027721319
+          }
+        }
+      ],
+      "fps_percent": 2.166925339164294e-05
+    }
+  },
+  "natural": {
+    "ntsc": {
+      "complete": true,
+      "family": "ntsc",
+      "expanded_ram_slot": false,
+      "stack_min_sp": 62278,
+      "stack_bytes": 58,
+      "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+      "source_checkpoints": 2253,
+      "hardware_vblanks": 2252,
+      "source_steps_per_second": 59.92274830630631,
+      "committed_pictures_per_second": 36.08710426843218,
+      "active_picture_intervals": 469,
+      "active_pictures_per_second": 27.742680364349134,
+      "committed_pictures": 1353,
+      "max_irq_cycles": 30042,
+      "mean_irq_cycles": 18094.621669627,
+      "mean_prepare_elapsed_cycles": 61391.879526977085,
+      "max_prepare_elapsed_cycles": 380937,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "838830e07fe79d6cba05a93135e6047d4042f613eccb6d71f44a064e2b01ce0f",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate.",
+      "pixel_scope": "Exact declared grid24 view from original artwork/state. Original spacing is intentionally adapted.",
+      "raw_sha256": {
+        "route-cpu.bin": "7eff158edccfafd6b316eff3a4007e4aeba44580418fa418803c37c06a4b1555",
+        "captures.bin": "b47625137e3dbc3f4d4c3dd346fff7cb6968c8ad4d65e76dac3b2774dd7f12ce",
+        "owners.bin": "d4b59576a298c07349c63fedc1340cdea00ce5ca530579ed9702a45e050e549d",
+        "irq.tsv": "edc608b61f2b5282b79c97f18de50200e848754b133589f1bf82255e3d53d83e",
+        "pictures.tsv": "3b517d2684eee7540a4bad3a9da39e5153d748bc17a476f0c83855342a07a91e"
+      }
+    },
+    "pal": {
+      "complete": true,
+      "family": "pal",
+      "expanded_ram_slot": true,
+      "stack_min_sp": 62278,
+      "stack_bytes": 58,
+      "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+      "source_checkpoints": 2254,
+      "hardware_vblanks": 1886,
+      "source_steps_per_second": 59.92467265795791,
+      "committed_pictures_per_second": 32.71005437742355,
+      "active_picture_intervals": 427,
+      "active_pictures_per_second": 25.376245773747545,
+      "committed_pictures": 1227,
+      "max_irq_cycles": 50125,
+      "mean_irq_cycles": 21304.46871686108,
+      "mean_prepare_elapsed_cycles": 62920.60391198044,
+      "max_prepare_elapsed_cycles": 369320,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "active_page_protected": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0,
+      "source_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "profile_sha256": "2661fd4c8ad6f5edf8e979eaee224faec050b05c9212db630d17b270fe975914",
+      "producer_sha256": "427fdd8c989f4f08f0dfd3387068c9d267956930173bb893e2be337f3d33996e",
+      "scope": "Input-only emulator proof of the independent source and coherent-picture clocks. Original graphics per committed snapshot, not 60fps graphics. Manual/audio/physical acceptance remains separate.",
+      "pixel_scope": "Exact declared grid24 view from original artwork/state. Original spacing is intentionally adapted.",
+      "raw_sha256": {
+        "route-cpu.bin": "c2dd1aa9590ecb0b03558573b4a3e6ec4c3674676c7adfff01440ceb18e75447",
+        "captures.bin": "e154fb1a82cc81ae2fe9dfec72be10b3f1b2445edf4f344a04ebb1d5770aff02",
+        "owners.bin": "d26ba81dbc62fba066a9641b4b9031189097ada3145adcf31f4d542fc67fcbf1",
+        "irq.tsv": "0707b46e470b8242e0ff010e05f12fce77c0a7ff01f4fd21c34ff0da72745505",
+        "pictures.tsv": "bd2756552d55250c08ca62ed247b0c29265adb80b5240fbce7926b6e902716bc"
+      }
+    }
+  },
+  "qualification": {
+    "source-scenes": {
+      "path": "outputs/presentation/grid24-af-research/matrix-b/check.json",
+      "sha256": "5aa5dc98fa3a59c73bc6270909e86a7aeffc0db4ac32837251af9be778285f5a",
+      "complete": true,
+      "counts": {
+        "cases": 2115
+      }
+    },
+    "density-scenes": {
+      "path": "outputs/presentation/grid24-af-research/density-b/check.json",
+      "sha256": "4c5f689a89980a82e91aa515280f50c16d13779ebc2698f9e1dc3c10e2ac7ba0",
+      "complete": true,
+      "counts": {
+        "cases": 1920
+      }
+    },
+    "header": {
+      "path": "outputs/presentation/grid24-af-research/header-final/check.json",
+      "sha256": "77e6c496ef161f2b9da67a108ae719ce17b9702a7a9d79d851b717436a8d9ba5",
+      "complete": true,
+      "counts": {
+        "cases": 54
+      }
+    },
+    "audio": {
+      "path": "outputs/presentation/grid24-af-research/audio-b/check.json",
+      "sha256": "eb7826455be686a831500f9ead7051247c50d554a69d23ad995cc5be14d2ed42",
+      "complete": true,
+      "counts": {
+        "cases": 2115,
+        "ordered_source_writes": 3499,
+        "physical_psg_writes": 2472
+      }
+    },
+    "irq-ntsc": {
+      "path": "outputs/presentation/grid24-af-research/boundary-ntsc/boundary-check.json",
+      "sha256": "ef3dd9bb82c3c42f5ecfa3cc1e59e9f029f7c8a18cc5b023902dc6725b618a9d",
+      "complete": true,
+      "counts": {}
+    },
+    "irq-pal": {
+      "path": "outputs/presentation/grid24-af-research/boundary-pal/boundary-check.json",
+      "sha256": "5d2310df638058805279256986cb74750bd0c490769587bbe79e388f48423143",
+      "complete": true,
+      "counts": {}
+    },
+    "irq-negative": {
+      "path": "outputs/presentation/grid24-af-research/boundary-negative/negative-check.json",
+      "sha256": "95a792d1421e4651a628dc316d19fcefbf24e08fc3adf9eea92ac232365022dd",
+      "complete": true,
+      "counts": {}
+    },
+    "helper-irq-ntsc": {
+      "path": "outputs/presentation/grid24-af-research/grid-irq-ntsc/grid-irq-check.json",
+      "sha256": "c1fd0725cfb7b5ee7a3fffdc2b05c8086bced659fb6e75d0e99184e79564be98",
+      "complete": true,
+      "counts": {
+        "directed_irq_count": 2
+      }
+    },
+    "helper-irq-pal": {
+      "path": "outputs/presentation/grid24-af-research/grid-irq-pal/grid-irq-check.json",
+      "sha256": "5e91290a83cd611d054c34121ce7ff4e20e87f50c76ada17810660574d84050f",
+      "complete": true,
+      "counts": {
+        "directed_irq_count": 2
+      }
+    }
+  },
+  "host_tests": 575,
+  "clean_source_parity": {
+    "complete": true,
+    "source_commit": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+    "source_dirty": false,
+    "source_files": 160,
+    "rom_sha256": "6677bb8ccc9caaf440b24df6a69fe9ecd7d206743645d738623e6cfedc8a219a",
+    "raw_parity": {
+      "ntsc": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      },
+      "pal": {
+        "route-cpu.bin": true,
+        "captures.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true
+      }
+    }
+  },
+  "independent_review": {
+    "path": "outputs/presentation/grid24-af-review/review.json",
+    "sha256": "2e97b6db3e9d4c75d59f862f2ec2df22e7cd3740639eac9e8d70a8fcaa744bb0",
+    "status": "no_blocking_findings",
+    "independent_natural_sat_pairs": 539,
+    "prepared_matrix_cases": 256,
+    "translated_matrix_cases": 96,
+    "source_files": 160,
+    "committed_source_review_sha256": "0075ce5eece0f66a31490eac39783649d8c78f49df6a0fa03bb16b3b5127bdaf"
+  },
+  "workbook": {
+    "complete": true,
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AF/Frostbite-performance-budget-AF.xlsx",
+    "sha256": "4224851f0254f8c77f2738a578dab3a9b246c0672c70e0dc8665a6e5979d0e7e",
+    "parent_sha256": "d00d1ba94b70c53e9f7106db663644bd9870b365bbfc66e42a51dead09832757",
+    "sheet_count": 32,
+    "historical_sheets_preserved": 31,
+    "preserved_cells": 775979,
+    "formula_errors": 0,
+    "mutation_restore_checks": 2,
+    "visual_regions_checked": [
+      "summary",
+      "costs",
+      "validation",
+      "ntsc-landings",
+      "pal-landings"
+    ],
+    "native_excel_tested": false,
+    "audit_sha256": "43ade0e5d5b2fe6c10820496e1ea77c575c9f7238dcc3f35e8d10614ed055ff9",
+    "builder_sha256": "02bdeac06dfda8d48e3448e1f8014f75d332ff48e79efb6e7100376791dc6f38",
+    "delivery_sha256": "1f65ca247c860375a9ffa950d6dbb19bdbeb2ef76c593b93c0d4e711d72c0a03"
+  },
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43221596444,
+      "event": "pull_request",
+      "headSha": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43221585093,
+      "event": "push",
+      "headSha": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+      "status": "completed"
+    }
+  ],
+  "controls_preserved": {
+    "outputs/presentation/core-z-combined": {
+      "files": 41,
+      "manifest_sha256": "ceabb96b96a9aeab658fd5fe7af682f6bbaad6411dfd80a5f18802b32d8f579c",
+      "unchanged": true
+    },
+    "outputs/presentation/core-z-validation": {
+      "files": 157,
+      "manifest_sha256": "c4d59f7223b0749ac0c63b779bc29e4cdbc846f4cf444b71b5a316bf9e55d3f2",
+      "unchanged": true
+    },
+    "outputs/presentation/core-z-review": {
+      "files": 3,
+      "manifest_sha256": "5a083a9f41422661dda99b97d2bf0c0936f11dbf53a030c28c9894cbd64b72de",
+      "unchanged": true
+    },
+    "outputs/presentation/core-cadence-z": {
+      "files": 144,
+      "manifest_sha256": "a49e3ae9f814b55545c1476e954064211a8c327aba0319bd6fe9ab4e339625dd",
+      "unchanged": true
+    },
+    "outputs/presentation/floe-aa-validation": {
+      "files": 128,
+      "manifest_sha256": "b664295a7a02eee35680b1cd73d6973a52c2082d2330291fd21e0652a89d8f70",
+      "unchanged": true
+    },
+    "outputs/presentation/floe-transactions-aa": {
+      "files": 129,
+      "manifest_sha256": "6c5323ef98415c70ae25d11457be9efbc86b187be2618a64e5be321ba6862edf",
+      "unchanged": true
+    },
+    "outputs/presentation/ready-presentation-ab": {
+      "files": 118,
+      "manifest_sha256": "b1c6a460f03ecbe3d7cae1cf9341d3a69fd6c2cf939aa70a7550d889c5debb81",
+      "unchanged": true
+    },
+    "outputs/presentation/aurora-ac-research": {
+      "files": 85,
+      "manifest_sha256": "f1db25587effebaa73188932490a26e4ae6d7550c60266d0f41c1bf10418719c",
+      "unchanged": true
+    },
+    "outputs/presentation/igloo-ad-research": {
+      "files": 148,
+      "manifest_sha256": "abbb59a9454cb09d034adffdbe05fe3db0e7cfa8ad36eae1af87b41cbbdb6aad"
+    },
+    "outputs/presentation/igloo-ad-validation": {
+      "files": 155,
+      "manifest_sha256": "84f4d3b150dd104442e129eaf4f82f05a2eef6086ca24c19b3dd84c8eb2b5aaf"
+    },
+    "outputs/presentation/igloo-ad-review": {
+      "files": 106,
+      "manifest_sha256": "583128ee2cacba48bcbfad958d679bbfe36a262a14ba3f2767cedad2842005ea"
+    },
+    "outputs/presentation/igloo-ad-delivery-review": {
+      "files": 1,
+      "manifest_sha256": "558ac8ddb8034d4628f4f68c7a10a350872fa6c1974fbb595bd571f06d8c6406"
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AD": {
+      "files": 22,
+      "manifest_sha256": "c4d5b8498d4567e24bddd02a765da09ee89675bc60f333597e9512fdbf3f4c97"
+    },
+    "outputs/presentation/igloo-colors-ad": {
+      "files": 96,
+      "manifest_sha256": "01aa1fba186ec3ca48e387d4b72ff032146a114dc33197c8b75da2b8f6b73b3d"
+    },
+    "outputs/presentation/bear-ae-review": {
+      "manifest_sha256": "e7de8552ab9e8a6ead12a446cb26fdb8787f1c69d28b4908637eb96c4e89d9e7",
+      "files": 10
+    },
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AE": {
+      "manifest_sha256": "028a4dd8f1d7e085ad0ba35e55469127cf374b0251704899212dcc33ff87c59b",
+      "files": 21
+    },
+    "outputs/presentation/bear-ae-research": {
+      "manifest_sha256": "5a45cd2c07d816f35b2c3b9f48ea8ffbd778e81bb2050ba5d628e9a75db986f5",
+      "files": 561
+    }
+  },
+  "rollback": {
+    "rom_sha256": "c50a3131df056011af9a037b58624d9de84930b3474579b24d2137d736e9d562",
+    "source_commit": "059bec5f985f3aac121014016dadfa31ec3fc892",
+    "builder_flag": "--layout original",
+    "byte_identical": true,
+    "release": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.17-igloo-colors-diagnostic",
+    "runtime_change_commit": "fa26b79fece16b8b9bbc293523792aa31d4a40ed",
+    "local_backup_tag": "codex/backup/42-before-grid24-20261112"
+  },
+  "limitations": [
+    "Declared presentation spacing changes from26to24pixels. Source rules/input/audio clock are unchanged.",
+    "Regular route remains level0. Separate620step clean-start bear prefix includes level4, not all levels.",
+    "Different picture populations: stage means are observed costs, not paired savings. IRQ totals include RETI21cycles.",
+    "Original fluidity, owner preference and physical MSX acceptance remain pending."
+  ],
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "original_fluidity_accepted": false,
+  "evidence": {
+    "outputs/presentation/grid24-af-research/comparison.json": "a3cd2cb931180a872b668b0c76113e272fc532e9adcaba0a893d8c04f80373ac",
+    "outputs/presentation/grid24-af-research/clean-parity.json": "8a65eb4f9d3cdd74cbe66da0e93eeecbd394db10d8ac77b7c4e3f910cdf34b2a",
+    "outputs/presentation/grid24-af-research/controls-preserved.json": "a8d3b472b2d9f4fcbd6bf174d0360262477d9b74efa28cc712afb173f73bfba0",
+    "outputs/presentation/grid24-af-research/host-final.log": "165082708ab63f79d1198f7e0e0347df26f46c35a5aa189735e1fa7887107e00",
+    "outputs/presentation/grid24-af-research/source-ci.json": "21d98f6dfca05ee0e5a7648d61d196779a7e2c9e67289bfba487bf7606b57edf",
+    "outputs/presentation/grid24-af-research/record_result.py": "1b341b3eb253d18865830c2ae05af5a5ba48cf9c802bcac43c5f0407d46e2f57",
+    "outputs/presentation/grid24-af-review/review.json": "2e97b6db3e9d4c75d59f862f2ec2df22e7cd3740639eac9e8d70a8fcaa744bb0",
+    "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-AF/workbook-export-audit.json": "43ade0e5d5b2fe6c10820496e1ea77c575c9f7238dcc3f35e8d10614ed055ff9",
+    "outputs/presentation/grid24-af-research/fixed_clock_bear_probe.py": "e6d6a55f948330fe72291a1299f13db68c33ecd0250d7f33b0f37ae55495a572",
+    "outputs/presentation/grid24-af-research/grid_irq.py": "2893ce1e04ed3cd752c9520c555b42e483bf43958f807f9a6e883330d67c5cec",
+    "outputs/presentation/grid24-af-research/profile.py": "6e1dd908bde5935ab73c072675c5b5586a2ec1d5ab9db8836d7e337ee2d913d7",
+    "outputs/presentation/grid24-af-research/profile_b.py": "c44cf021dd9ed88fa907beee1e5b04bf88b3876ace58775863e956767c775f7b",
+    "outputs/presentation/grid24-af-research/verify_controls.py": "99a2d0819ed1d3fa34092baf33c10fe601b4cf8bf36e1ebe56892a0162925a35",
+    "outputs/presentation/grid24-af-research/bear_route.py": "332b429449c7bef3b7c9f6150bd49d6dc475150322070b7c573ad369f73d9af5",
+    "outputs/presentation/grid24-af-research/compare.py": "ae5f74d4ea6bd925051e20282bc3548efe0d3c0eb619d8e1662eccd29260335c",
+    "outputs/presentation/grid24-af-review/committed-source-review.json": "0075ce5eece0f66a31490eac39783649d8c78f49df6a0fa03bb16b3b5127bdaf",
+    "outputs/presentation/grid24-af/ntsc-final/check.json": "6eb2eb6ad84fef5e144b3f340c785445820de1efb8e824d612c7d5bbe2734735",
+    "outputs/presentation/grid24-af/ntsc-final/grid24-contract.json": "7f0103fcf652d42f31924038073bb828d4cb9585f685d14e983f11c870f0cf99",
+    "outputs/presentation/grid24-af/pal-final/check.json": "1e22b9fdae24adde72d9a49ae3fa7abe2ceee37dd5ce2ee8c22d3ccadf74b039",
+    "outputs/presentation/grid24-af/pal-final/grid24-contract.json": "72c951faad25921d85ee935a1a2cb4b94de67919954eeb1c6bf0c5f6e047df81"
+  },
+  "scope": "Qualified reversible layout diagnostic. Bounded automated source equivalence and declared view correctness; not final original-fluidity or physical acceptance."
+}

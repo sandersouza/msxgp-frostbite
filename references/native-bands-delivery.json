@@ -1,0 +1,96 @@
+{
+  "complete": true,
+  "version": "v0.0.26-native-bands-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.26-native-bands-diagnostic",
+  "prerelease": true,
+  "source_commit": "eaa441806da4bb8fa4bfff2b0a6e73b3976286fe",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "sha256": "9064d366f3c6d8fe30dbdabb589a98f658bc92b09f6aa6880b76ed42943e0026",
+      "bytes": 23675,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/BUILD.json"
+    },
+    {
+      "name": "frostbite-0.0.26-native-bands-diagnostic.rom",
+      "sha256": "7765bb9e1485a237c49abe0a95c621bea918b61989aae1fc4ad97b1d8b031c84",
+      "bytes": 4194304,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/frostbite-0.0.26-native-bands-diagnostic.rom"
+    },
+    {
+      "name": "Frostbite-performance-budget-AO.xlsx",
+      "sha256": "b1c757747b5bd84b53d19ec2db675c8460cb0082b145cf308b91e55714982605",
+      "bytes": 4752668,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/Frostbite-performance-budget-AO.xlsx"
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "f8c249cc69d52e0f2a00a39d52622bb5e85c544925badccb063faa206a9a1648",
+      "bytes": 450,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE.txt",
+      "sha256": "e62b568b18bcb1d4d9a2c340588eea614006deb24a58badd8c8f50e9bcc5a1fc",
+      "bytes": 865,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/SOURCE.txt"
+    },
+    {
+      "name": "VALIDATION.json",
+      "sha256": "50d3f2c5c39da6c8854e722720153ed0a8ef3aee5526aae923703d94c57430c3",
+      "bytes": 168425,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/VALIDATION.json"
+    }
+  ],
+  "release_notes_sha256": "4233abcef929e65071c24666fe766bd5bff8c90957027595c69667682a8f7637",
+  "documentation_commit": "6af32b00f4377e086b016651fa2cac41bcf21950",
+  "rollback_v25_assets_unchanged": true,
+  "webmsx": {
+    "complete": true,
+    "rom_sha1": "C034A4A3579857AEC74AF12C260269ED1105A838",
+    "mapper": "ASCII16",
+    "msx1": true,
+    "video_hz": 60,
+    "console_errors": 0,
+    "console_warnings": 1,
+    "warning": "ScriptProcessorNode deprecation",
+    "F1_pressed": true,
+    "game_picture_observed": true,
+    "browser_session_closed": true,
+    "screenshot_sha256": "d95b28e54838278203b5542c21331c0f23129fe9956584d2b30a8bda00cd1822",
+    "scope": "Desktop launch only. No mobile/listening/human/fluidity/physical acceptance."
+  },
+  "tag_resolved_commit": "eaa441806da4bb8fa4bfff2b0a6e73b3976286fe",
+  "rom_sha256": "7765bb9e1485a237c49abe0a95c621bea918b61989aae1fc4ad97b1d8b031c84",
+  "public_validation_sha256": "50d3f2c5c39da6c8854e722720153ed0a8ef3aee5526aae923703d94c57430c3",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43343236082,
+      "event": "pull_request",
+      "headSha": "eaa441806da4bb8fa4bfff2b0a6e73b3976286fe",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43343226784,
+      "event": "push",
+      "headSha": "eaa441806da4bb8fa4bfff2b0a6e73b3976286fe",
+      "status": "completed"
+    }
+  ],
+  "parent_source_files_preserved": 191,
+  "prior_roots_preserved": 61,
+  "prepublication_review_sha256": "427ce94abad31f9956f39f15872e9b1eafead73451072b64bddeb8282f706270",
+  "issue42_open": true,
+  "board": {
+    "status": "In review",
+    "item_id": "PVTI_lAHOAJR8nM4Bn8x0zhF2yWM"
+  },
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "scope": "Verified six downloaded assets/API digests/notes/tag/docs, unchanged v25 assets, exact source CI, tracking and desktop WebMSX launch only. Stable/all-level30FPS and original fluidity remain open; owner/mobile/listening/hardware acceptance separate. Inreview records this delivery checkpoint; autonomous successor research may move issue42 back Inprogress."
+}

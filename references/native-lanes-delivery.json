@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "version": "v0.0.13-native-lanes-cadence-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.13-native-lanes-cadence-diagnostic",
+  "source_commit": "2318fe1b5b96e528a1864d43ebca093dd60194ba",
+  "prerelease": true,
+  "published_at": "2026-11-05T18:15:59Z",
+  "all_downloaded_assets_match_local": true,
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 15112,
+      "sha256": "debe39604866783f82db60a653e1f50c40174a11be6ab9b7e41d2eebd5d61dbb",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.13-native-lanes-cadence-diagnostic/BUILD.json"
+    },
+    {
+      "name": "frostbite-0.0.13-native-lanes-cadence-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.13-native-lanes-cadence-diagnostic/frostbite-0.0.13-native-lanes-cadence-diagnostic.rom"
+    },
+    {
+      "name": "Frostbite-performance-budget-X.xlsx",
+      "bytes": 4536707,
+      "sha256": "a58b1f9f081986f0a351c927e39d982c6bc4955fef17e63bd077e2497a479059",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.13-native-lanes-cadence-diagnostic/Frostbite-performance-budget-X.xlsx"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 457,
+      "sha256": "8e8c0fdba5b34f7d5a88af4aee3b264bfcc6d9829861fd3e9aafd6c9588b38df",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.13-native-lanes-cadence-diagnostic/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 435,
+      "sha256": "b6045453338d57fdeef6f11d80760a5d63797f71dcbd384602b6d721c933128c",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.13-native-lanes-cadence-diagnostic/SOURCE.txt"
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 26945,
+      "sha256": "85377ff75e807393f611b0bc28c41ce5d330806e5f8dcebc2366df80f41aed07",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.13-native-lanes-cadence-diagnostic/VALIDATION.json"
+    }
+  ],
+  "github_release_metadata_sha256": "fb4c92706e39fced08016f67817bb6f7fe0634cbfab8a08aefcef8dc700ff0d3",
+  "github_tag_metadata_sha256": "e9bb7de1ba4c07872e551ceb3b18af8030697d9bc81bedfb501fda5ba70714d7",
+  "evidence_scope": "Publication identity and checksum verification; human acceptance remains pending."
+}

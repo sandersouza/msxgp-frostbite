@@ -1,0 +1,209 @@
+{
+  "rom_sha256": "29b4588b62d4b44a88401c691512d415b26bdaf559198d889730ee2b49763b1e",
+  "release": "v0.0.10-fixed-clock-diagnostic",
+  "owner_feedback": "Owner reports excessive speed, cadence unlike the original and apparent skipped pictures after the diagnostic delivery.",
+  "owner_loaded_binary_hash_verified": false,
+  "manual_gameplay_cadence_accepted": false,
+  "controlled_result": "Visual skipping confirmed. No doubled source-step rate found in the retained original-counter/input replay; owner acceleration remains unreproduced in their setup.",
+  "original_trace_sha256": "0a4e41b12cf485f6e6a0e834e178b6582e3964d9735a524a49b3366b6a015c2d",
+  "original_route_sha256": "222392d8cb149a58e09aa2eb5c332f8974a84b8c2b050f66c7410f1d8adf5e7a",
+  "source_cpu_all_ram_rechecked": 2253,
+  "steady_original_frame_deltas": {
+    "1": 2251
+  },
+  "excluded_startup": {
+    "step": 1,
+    "original_video_frames": 7
+  },
+  "temperature": {
+    "original_frames_per_degree": 64,
+    "checked_intervals": 11,
+    "msx_irq_entry_interval_seconds_min": 1.0680363007030218,
+    "msx_irq_entry_interval_seconds_max": 1.0680444022913527
+  },
+  "first_normal_jumps": [
+    {
+      "start": 113,
+      "end": 142,
+      "original_frames": 29,
+      "source_cycles": 577447,
+      "msx_entry_interval_seconds": 0.4839573185977546,
+      "displayed_snapshots": 5
+    },
+    {
+      "start": 143,
+      "end": 172,
+      "original_frames": 29,
+      "source_cycles": 577313,
+      "msx_entry_interval_seconds": 0.4839548043117219,
+      "displayed_snapshots": 5
+    },
+    {
+      "start": 173,
+      "end": 202,
+      "original_frames": 29,
+      "source_cycles": 577357,
+      "msx_entry_interval_seconds": 0.48395648050240947,
+      "displayed_snapshots": 5
+    },
+    {
+      "start": 203,
+      "end": 232,
+      "original_frames": 29,
+      "source_cycles": 577346,
+      "msx_entry_interval_seconds": 0.4839534074861467,
+      "displayed_snapshots": 4
+    }
+  ],
+  "source_states_between_active_pictures": {
+    "mean": 6.0426829268292686,
+    "minimum": 2,
+    "maximum": 9,
+    "histogram": {
+      "2": 7,
+      "3": 1,
+      "4": 8,
+      "5": 49,
+      "6": 36,
+      "7": 34,
+      "8": 18,
+      "9": 11
+    }
+  },
+  "measured_prepare_stages": {
+    "description": {
+      "elapsed": {
+        "mean": 4072,
+        "maximum": 4072
+      },
+      "irq": {
+        "mean": 0,
+        "maximum": 0
+      },
+      "foreground_plus_ack": {
+        "mean": 4072,
+        "maximum": 4072
+      }
+    },
+    "dirty-state": {
+      "elapsed": {
+        "mean": 9951.065476190477,
+        "maximum": 10541
+      },
+      "irq": {
+        "mean": 0,
+        "maximum": 0
+      },
+      "foreground_plus_ack": {
+        "mean": 9951.065476190477,
+        "maximum": 10541
+      }
+    },
+    "release": {
+      "elapsed": {
+        "mean": 940.5,
+        "maximum": 1029
+      },
+      "irq": {
+        "mean": 0,
+        "maximum": 0
+      },
+      "foreground_plus_ack": {
+        "mean": 940.5,
+        "maximum": 1029
+      }
+    },
+    "background": {
+      "elapsed": {
+        "mean": 14775.470238095239,
+        "maximum": 45600
+      },
+      "irq": {
+        "mean": 2071.7976190476193,
+        "maximum": 25912
+      },
+      "foreground_plus_ack": {
+        "mean": 12703.672619047618,
+        "maximum": 19688
+      }
+    },
+    "world": {
+      "elapsed": {
+        "mean": 167073.91666666666,
+        "maximum": 224285
+      },
+      "irq": {
+        "mean": 66507.97023809524,
+        "maximum": 103368
+      },
+      "foreground_plus_ack": {
+        "mean": 100565.94642857143,
+        "maximum": 130472
+      }
+    },
+    "header": {
+      "elapsed": {
+        "mean": 54487.88690476191,
+        "maximum": 182416
+      },
+      "irq": {
+        "mean": 21775.285714285714,
+        "maximum": 77758
+      },
+      "foreground_plus_ack": {
+        "mean": 32712.60119047619,
+        "maximum": 107129
+      }
+    },
+    "footer": {
+      "elapsed": {
+        "mean": 373.01785714285717,
+        "maximum": 21418
+      },
+      "irq": {
+        "mean": 125.875,
+        "maximum": 21147
+      },
+      "foreground_plus_ack": {
+        "mean": 247.14285714285714,
+        "maximum": 271
+      }
+    },
+    "sprites": {
+      "elapsed": {
+        "mean": 40586.916666666664,
+        "maximum": 106738
+      },
+      "irq": {
+        "mean": 16140.785714285714,
+        "maximum": 50222
+      },
+      "foreground_plus_ack": {
+        "mean": 24446.130952380954,
+        "maximum": 57863
+      }
+    },
+    "upload": {
+      "elapsed": {
+        "mean": 24211.60119047619,
+        "maximum": 45546
+      },
+      "irq": {
+        "mean": 8539.035714285714,
+        "maximum": 25601
+      },
+      "foreground_plus_ack": {
+        "mean": 15672.565476190477,
+        "maximum": 21168
+      }
+    }
+  },
+  "active_snapshot_count": 168,
+  "source_timing_audit_sha256": "9edc34d4a2dfd3af85f098673cf37b0c92b6742a030bdafd98bde861cfc6abc3",
+  "prepare_profile_sha256": "4f894bc3ea31271c0b00c4d0f1ae1ec288f808522a9a42ad6a3fca1f89056c03",
+  "all_existing_measurement_buffers_identical": true,
+  "timing_scope": "IRQ-entry logical event anchors, not visible event times. Every original frame counter interval after startup is one frame. Profiling is disjoint; foreground retains CPU interrupt acknowledgement overhead and excludes measured entry-through-RETI duration.",
+  "next": "Reduce complete world preparation and make actual presentation more regular. Do not arbitrarily halve simulation to mask missing pictures. Verify owner emulator/machine speed before attributing their accelerated feeling to a clock defect.",
+  "rom_changed": false,
+  "new_release_required": false
+}

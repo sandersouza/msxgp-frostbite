@@ -1,0 +1,21 @@
+{
+  "assets": {
+    "frostbite-0.0.12-player-palette-header-diagnostic.rom": "98904b6bb592f78964158d154545764eda0e986c9c979196d60e9a7ed03f30b4",
+    "validation.json": "aa12dbfcf0512ac0eabcd553067431b3ef86f4937ec6fa33a66025b2f56472f1",
+    "SHA256SUMS": "d9de44168a823101ebedf9894d87b8b1a77c56abb41792466a62135838530b71",
+    "build.json": "25c05d8bf56f45e56b492c36fbe0376d40bd21b4a7504d3b603cdbc8126270b3"
+  },
+  "byte_equal": true,
+  "source_commit": "48f570ea2b4c3894b2a77cb6555c226fe0b11863",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.12-player-palette-header-diagnostic",
+  "workbook": {
+    "path": "outputs/01a1a457-0a26-77c0-b7c7-ddaa7a36a5eb-W/Frostbite-performance-budget-W.xlsx",
+    "sha256": "06737821c5a69b87da0994cb33adb40be9c9cb409a1ef828e2bebcdeccc61d5d",
+    "audit_sha256": "f0952943541fa8fa8585e5782c03244996032e3f9b4c646b210db996e8a5809a",
+    "preserved_cells": 434766,
+    "independent_aggregates": 180,
+    "formula_errors": 0,
+    "native_excel_tested": false
+  },
+  "summary_sha256": "aa12dbfcf0512ac0eabcd553067431b3ef86f4937ec6fa33a66025b2f56472f1"
+}

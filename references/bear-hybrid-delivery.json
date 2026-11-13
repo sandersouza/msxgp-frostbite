@@ -1,0 +1,93 @@
+{
+  "complete": true,
+  "version": "v0.0.25-bear-hybrid-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.25-bear-hybrid-diagnostic",
+  "prerelease": true,
+  "source_commit": "13bf76ed540b968a6a6746385a396f6e4feeba71",
+  "tag_resolved_commit": "13bf76ed540b968a6a6746385a396f6e4feeba71",
+  "rom_sha256": "bf5c703d1e607a47bec037a1e5bac0ce32d34539f14e051f69134470d78dae41",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "bytes": 21046,
+      "sha256": "89827471c8ca9ced4b5c8ca65cab6eae52fa388982861a68bce2815cbcc689ee",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/BUILD.json",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "frostbite-0.0.25-bear-hybrid-diagnostic.rom",
+      "bytes": 4194304,
+      "sha256": "bf5c703d1e607a47bec037a1e5bac0ce32d34539f14e051f69134470d78dae41",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/frostbite-0.0.25-bear-hybrid-diagnostic.rom",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "Frostbite-performance-budget-AN.xlsx",
+      "bytes": 4741281,
+      "sha256": "4e395c1bdf8aac762dcef753745a6ce68f665780434262efb1a1a367bad40962",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/Frostbite-performance-budget-AN.xlsx",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 449,
+      "sha256": "66cadaf05fa734daff0322cb84a889b5cf0afdf982da1ecb887cb6475d8e5387",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/SHA256SUMS",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "SOURCE.txt",
+      "bytes": 850,
+      "sha256": "9f594f3eaad2ef1fe10726bf0b7c61aaae324206d3a420bf9ff20cc38395edee",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/SOURCE.txt",
+      "downloaded_byte_identical": true
+    },
+    {
+      "name": "VALIDATION.json",
+      "bytes": 164393,
+      "sha256": "5f760cbff5aeff31e7f272a4bbe3b8f105c2b474d8976940f0049f2aceb95812",
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/VALIDATION.json",
+      "downloaded_byte_identical": true
+    }
+  ],
+  "release_notes_sha256": "b23203ea21c8b2468dedcbf6e5172a97664e77a814f5f243fd1d5b3fd0286e94",
+  "documentation_commit": "fe965f6bfdc7a3354d45af6b23f0a290c3daaf32",
+  "public_validation_sha256": "5f760cbff5aeff31e7f272a4bbe3b8f105c2b474d8976940f0049f2aceb95812",
+  "exact_source_ci": [
+    {
+      "conclusion": "success",
+      "databaseId": 43319192531,
+      "event": "pull_request",
+      "headSha": "13bf76ed540b968a6a6746385a396f6e4feeba71",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43319180042,
+      "event": "push",
+      "headSha": "13bf76ed540b968a6a6746385a396f6e4feeba71",
+      "status": "completed"
+    }
+  ],
+  "rollback_v24_assets_unchanged": true,
+  "parent_source_files_preserved": 186,
+  "prior_roots_preserved": 56,
+  "issue42_open": true,
+  "board": "In review",
+  "pr43_draft_stacked_on41": true,
+  "issue_body_synced": true,
+  "pr_body_synced": true,
+  "owner_accepted": false,
+  "physical_hardware_accepted": false,
+  "webmsx": {
+    "url": "https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.25-bear-hybrid-diagnostic%2Ffrostbite-0.0.25-bear-hybrid-diagnostic.rom&ROM_FORMAT=ASCII16",
+    "browser_launch_verified": true,
+    "cartridge": "ASCII16",
+    "console_errors": 0,
+    "screenshot": "outputs/presentation/bear-sprite-admission-an-research/webmsx-v25.png",
+    "screenshot_sha256": "dd2eda50e0c06c7731a93d8e0fda44ebf8d4ebf82609e0b6e00b2c4b13449da8",
+    "launch_receipt_sha256": "b4fa5ffd3ea59d6d0c079308d26cc632a35f1e9af42cc2c1abaaa3e8ecbb86bd",
+    "scope": "Browser launch/cartridge/game picture only. Not browser performance, visual fidelity, mobile controls or physical acceptance."
+  },
+  "scope": "Six downloaded assets/tag/source/tracking verified. PALregular cadence-.40% and existing missed landing snapshots disclosed; performance goal and owner/physical acceptance remain open."
+}
