@@ -63,7 +63,7 @@ under `references/compact-delivery/`; update `docs/handoffs/issue-44.md`.
 - [x] Audit active contact lookup and graphics allocations, distinguishing
   startup copies, live runtime, model estimates and unclassified data.
 - [x] Record measured sizes and the next exact replacement/equivalence gate.
-- [ ] Review the diff, commit explicit paths and update issue #44. Leave it
+- [x] Review the diff, commit explicit paths and update issue #44. Leave it
   In progress; do not claim formats, release or 32 KiB completion.
 
 Later runtime/loader tasks require a concrete layout derived from this ledger;

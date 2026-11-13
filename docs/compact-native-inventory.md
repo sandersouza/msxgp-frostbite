@@ -69,7 +69,9 @@ Three finite experiments establish the first replacement boundary:
    visible seven-row ice geometry against literal original player glyphs
    matches all **54,400 cells × 228 views** at interior player X80. A separate
    complete directory comparison finds identical pure bit7 rows throughout
-   player X25..134. This gives a concrete small-routine candidate. It does
+   player X9..153 (all145 coordinates). Shared seven-byte footprints need
+   **2,629 bytes**:147 footprints/1,029 bytes plus a1,600-byte directory.
+   This gives a concrete small-routine candidate. It does
    **not** establish edge, enemy or shore equivalence, nor Z80 execution cost.
 3. **Reject an unrestricted glyph-OR shortcut.** It reconstructs 8,177 of the
    10,716 masks and fails on 2,539. Removing the remaining masks on this basis
@@ -132,6 +134,13 @@ and captures versus sealed v30. The matrix preserves captures, ownership,
 timing, scene and band buffers, with zero differing frames. These establish no
 observer-induced gameplay or cadence change. They do not qualify a new loader,
 all-state compact runtime or physical hardware.
+
+All five modes were also rerun through the maintained observer, reproducing
+the private observer's exact phase-aware read sets and all baseline buffers.
+627 host tests pass, including actual Tcl execution of both completion forms.
+An initial maintained-observer completion-hook failure was rejected and fixed;
+it changed no product ROM. Independent review found no Critical/Important
+inventory blockers; the explicit finalization producer binds the final receipt.
 
 The compact [receipt](../references/compact-delivery/issue-44-inventory.json)
 binds the raw local results and producer hashes. Raw captures, originals,

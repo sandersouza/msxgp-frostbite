@@ -624,6 +624,64 @@
         "parent_producer_sha256": "98f5845b97cbb8f76e52097b3da9fae208fc0c4ad497859815c163391002c15c",
         "producer_sha256": "80ef768e0c2ef86299edb3ac394abde6bcda55367a81cd6368618db798e3414f"
       }
+    },
+    "complete_floe_x_domain": {
+      "path": "outputs/compact/issue44-floe-x-domain-01/x-domain.json",
+      "sha256": "08703e141f03790480a5bdad0bb4185ef393dd267c11edbc9860235774e836a6",
+      "result": {
+        "complete": true,
+        "runtime_changed": false,
+        "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+        "cells": 8704000,
+        "equal_player_x": {
+          "first": 9,
+          "last": 153,
+          "count": 145
+        },
+        "differing_cells_by_player_x": {
+          "0": 11174,
+          "1": 11325,
+          "2": 10498,
+          "3": 10743,
+          "4": 4473,
+          "5": 5009,
+          "6": 1978,
+          "7": 2854,
+          "8": 2476,
+          "154": 84,
+          "155": 363,
+          "156": 1221,
+          "157": 2510,
+          "158": 6424,
+          "159": 8105
+        },
+        "scope": "Pure electrical bit7 comparison, all emitted floe control/Y/dX cells; bit6 independently factored. No source-coordinate reachability claim.",
+        "producer_sha256": "40035ec8093f6e3ea2324a92d810fce18b8221297f66c6225c3018731c7a6619",
+        "parent_producer_sha256": "98f5845b97cbb8f76e52097b3da9fae208fc0c4ad497859815c163391002c15c"
+      }
+    },
+    "shared_footprints": {
+      "path": "outputs/compact/issue44-footprints-01/footprints.json",
+      "sha256": "7f136067f04418c954749d219abc0c2a5e73c609a7439079b237a5e3c5e7ed8e",
+      "result": {
+        "complete": true,
+        "runtime_changed": false,
+        "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+        "groups": 147,
+        "footprint_bytes": 1029,
+        "directory_bytes": 1600,
+        "encoded_bytes": 2629,
+        "cells": 54400,
+        "literal_views": 228,
+        "mismatches": 0,
+        "scope": "Exact interior bit7 component, not complete game contacts or actual Z80 timing.",
+        "files": {
+          "directory.bin": "95cfe122c93614c6dcf7e372ebc0786e5e3f6d0566975ec97e94869b52aeb4d1",
+          "footprints.bin": "eb1b46f99b655056850d6c5c69d09e127e8ad097d9f1f0a7c4444cc204dc3203"
+        },
+        "producer_sha256": "3b03ec396c726d63cc7a8f3409f8665f58de1d68f3856b12c1f40b953b032a47",
+        "parent_producer_sha256": "80ef768e0c2ef86299edb3ac394abde6bcda55367a81cd6368618db798e3414f"
+      }
     }
   },
   "architecture_decision": "Replace the finite collision tables by an exact geometric/event routine before flat linking. Separate uniform bit6 using the proven 420-byte control/Y/absolute-X representation. Keep original table oracle for edge/event equivalence; no edge omission or mechanics compromise.",
@@ -643,13 +701,151 @@
     "owner_acceptance_of_compact_formats": false,
     "physical_hardware": false,
     "compact_formats_built": false,
-    "size_target_achieved": false
+    "size_target_achieved": false,
+    "test_log_path": "outputs/compact/issue44-report-02/host-tests.log"
   },
-  "producer_sha256": "5fb653b34820de775264c84abd3a5447bc819c4335bc70eb235d62e600a1b597",
+  "producer_sha256": "7377ac0518fedbbd392213cb834fc17c4d60b601d6baca5ad12f7bd85eb3c322",
   "bound_sources": {
     "scripts/compact_inventory.py": "bca77f5577f3dc089c4056424a6a0070ca8b375eb1b8331d2baf5579f459ce35",
-    "tests/test_compact_inventory.py": "60510f5eca206e0057b66770f13e2e52fb8f1c3fa8f94dd5b90a00f16c339118",
     "scripts/compact_live_probe.py": "c68a5f747fd2385eb199b9e8dc9d1212f678e9c4aa54734ecbdef4e20882f20b",
+    "tests/test_compact_inventory.py": "60510f5eca206e0057b66770f13e2e52fb8f1c3fa8f94dd5b90a00f16c339118",
     "tests/test_compact_live_probe.py": "a98ab5d6f501bf04eb20b4ec6544955db1177140bcab28bd5c021ae4f82cfb2f"
+  },
+  "previous_aggregate": {
+    "path": "outputs/compact/issue44-report-01/inventory-result.json",
+    "sha256": "000c0805730259baf841473dfdc24e0abbb8f04493397cef722e90446379e350"
+  },
+  "producer_path": "outputs/compact/issue44-report-02/finalize.py",
+  "maintained_observer": {
+    "ntsc": {
+      "complete": true,
+      "runtime_changed": false,
+      "mode": "ntsc",
+      "count": 2252,
+      "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "observed_bytes": {
+        "startup": 6997,
+        "runtime": 26336
+      },
+      "observed_union_bytes": 32639,
+      "baseline_buffer_parity": {
+        "route-cpu.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true,
+        "captures.bin": true
+      },
+      "original_oracle_complete": true,
+      "scope": "Tested fetch/data read coverage only; unobserved bytes are unclassified.",
+      "producer_sha256": "c68a5f747fd2385eb199b9e8dc9d1212f678e9c4aa54734ecbdef4e20882f20b",
+      "receipt_path": "outputs/compact/issue44-maintained-01/ntsc/live-set.json",
+      "receipt_sha256": "44e496121a35e0e5e940fe0202df6aa6ecbc83c3cff40f8e70bf3ac478780a16"
+    },
+    "pal": {
+      "complete": true,
+      "runtime_changed": false,
+      "mode": "pal",
+      "count": 2252,
+      "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "observed_bytes": {
+        "startup": 7002,
+        "runtime": 26347
+      },
+      "observed_union_bytes": 32655,
+      "baseline_buffer_parity": {
+        "route-cpu.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true,
+        "captures.bin": true
+      },
+      "original_oracle_complete": true,
+      "scope": "Tested fetch/data read coverage only; unobserved bytes are unclassified.",
+      "producer_sha256": "c68a5f747fd2385eb199b9e8dc9d1212f678e9c4aa54734ecbdef4e20882f20b",
+      "receipt_path": "outputs/compact/issue44-maintained-01/pal/live-set.json",
+      "receipt_sha256": "ac0770d35adaa757ca592db4f4913463959c7c13e8442ea1e8d5364e67b8d137"
+    },
+    "bear-ntsc": {
+      "complete": true,
+      "runtime_changed": false,
+      "mode": "bear-ntsc",
+      "count": 620,
+      "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "observed_bytes": {
+        "startup": 6997,
+        "runtime": 21590
+      },
+      "observed_union_bytes": 27905,
+      "baseline_buffer_parity": {
+        "route-cpu.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true,
+        "captures.bin": true
+      },
+      "original_oracle_complete": true,
+      "scope": "Tested fetch/data read coverage only; unobserved bytes are unclassified.",
+      "producer_sha256": "c68a5f747fd2385eb199b9e8dc9d1212f678e9c4aa54734ecbdef4e20882f20b",
+      "receipt_path": "outputs/compact/issue44-maintained-01/bear-ntsc/live-set.json",
+      "receipt_sha256": "1fd1e19cadc0d0001f6480611922a739f12f71f0a19d8237ad85538d525aa846"
+    },
+    "bear-pal": {
+      "complete": true,
+      "runtime_changed": false,
+      "mode": "bear-pal",
+      "count": 620,
+      "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "observed_bytes": {
+        "startup": 7002,
+        "runtime": 21775
+      },
+      "observed_union_bytes": 28095,
+      "baseline_buffer_parity": {
+        "route-cpu.bin": true,
+        "owners.bin": true,
+        "irq.tsv": true,
+        "pictures.tsv": true,
+        "captures.bin": true
+      },
+      "original_oracle_complete": true,
+      "scope": "Tested fetch/data read coverage only; unobserved bytes are unclassified.",
+      "producer_sha256": "c68a5f747fd2385eb199b9e8dc9d1212f678e9c4aa54734ecbdef4e20882f20b",
+      "receipt_path": "outputs/compact/issue44-maintained-01/bear-pal/live-set.json",
+      "receipt_sha256": "808f8cdd8b64098cf137240e47cbe2de2b058f634a9a6ec4beff7c30f9cc3b19"
+    },
+    "matrix": {
+      "complete": true,
+      "runtime_changed": false,
+      "mode": "matrix",
+      "count": 2115,
+      "rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "observed_bytes": {
+        "startup": 6997,
+        "runtime": 36296
+      },
+      "observed_union_bytes": 43077,
+      "baseline_buffer_parity": {
+        "captures.bin": true,
+        "ownership.bin": true,
+        "timing.tsv": true,
+        "scenes.bin": true,
+        "band-records.bin": true
+      },
+      "original_oracle_complete": true,
+      "scope": "Tested fetch/data read coverage only; unobserved bytes are unclassified.",
+      "producer_sha256": "c68a5f747fd2385eb199b9e8dc9d1212f678e9c4aa54734ecbdef4e20882f20b",
+      "receipt_path": "outputs/compact/issue44-maintained-01/matrix/live-set.json",
+      "receipt_sha256": "3a969894d544dadd05d7d90a5402eaebbb7d1c33007217a1a915f51a7d2f306f"
+    }
+  },
+  "rejected_observer_run": {
+    "path": "outputs/compact/issue44-maintained-smoke-01",
+    "reason": "Completion injection joined a Tcl variable name to compact_finish. Rejected, corrected and covered by actual Tcl tests. Smoke02 and all five full modes pass.",
+    "product_rom_changed": false
+  },
+  "independent_review": {
+    "commit": "e361bdf",
+    "assessment": "No Critical/Important blockers for inventory scope.",
+    "limitation": "Review is of the inventory, not compact formats. Minor aggregate-producer finalization provenance corrected by this explicit producer."
   }
 }
