@@ -4,13 +4,16 @@
 ; Bit7 geometry is proven only for playerX9..153; caller must enforce this.
 ; A returns the electrical byte. Clobbers AF/BC/DE/HL; preserves IX/IY/SP.
 ; No RAM writes except bounded stack; no mapper access. Tables supplied by build.
-cf_control EQU $C780
-cf_y EQU $C781
-cf_dx EQU $C782
-cf_pose EQU $C783
-cf_shift EQU $C784
-cf_reflection EQU $C785
-cf_absolute_x EQU $C786
+    IFNDEF CF_INPUT_ORIGIN
+CF_INPUT_ORIGIN EQU $C780
+    ENDIF
+cf_control EQU CF_INPUT_ORIGIN
+cf_y EQU CF_INPUT_ORIGIN+1
+cf_dx EQU CF_INPUT_ORIGIN+2
+cf_pose EQU CF_INPUT_ORIGIN+3
+cf_shift EQU CF_INPUT_ORIGIN+4
+cf_reflection EQU CF_INPUT_ORIGIN+5
+cf_absolute_x EQU CF_INPUT_ORIGIN+6
 
     IFNDEF CF_ENEMY_ONLY
 cf_contact:

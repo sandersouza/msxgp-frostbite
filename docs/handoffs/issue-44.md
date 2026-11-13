@@ -1,5 +1,46 @@
 # Issue44 — compact native formats
 
+## Active continuation: startup grid and common contacts (2026-11-13)
+
+Continue execution toward the full Issue44 DoD; the owner explicitly rejected
+ending the task at intermediate progress reports. Same branch/chat/root writer.
+Current internal ROM SHA-256:
+`c706c0a5d3d98d7713780913b7fea89aad4967beb075ad5903c5773cb2cfbba1`.
+Build `outputs/compact/issue44-shore-common-game-01/build`;245 bound sources
+are archived under `outputs/compact/issue44-common-integration-stage-01/source`.
+Public receipt: `references/compact-delivery/issue-44-common-integration.json`.
+
+New integration replaces prepared grid rows with startup expansion (160-byte
+directory plus5,632 immutable RAM bytes), and uses compact native interior floe,
+ordinary common-profile and common-X shore collision kernels. The cold/boundary
+paths retain their exact original table reader. Native source mechanics and
+pixels pass all four regular/bear NTSC/PAL routes, plus2,115 controlled scenes.
+Independent directed hot-entry tests pass25,968 enemy and169,800 shore queries
+against the sealed v30 tables, with forbidden-write/IX/IY/SP/IFF guards. These
+are directed integration coverage, not the full Cartesian product of all views.
+The preexisting standalone full kernel proofs remain separate; default kernel
+fixture rebuild is byte-identical after making its input origin configurable.
+651 host tests pass after these edits. New RAM grid content/immutability checks
+also pass all four routes. No source freeze or long check remains active.
+
+Active picture rates: regular32.6898NTSC/30.8206PAL; bear29.3064NTSC/25.0789PAL.
+Source clock remains59.92updates/s. PAL and bear still need final cadence
+qualification against the accepted baseline. No mapperless ROM, COM/BIN,
+human-test release, physical evidence or Issue44 completion is claimed.
+
+Rejected intermediate stages remain local/immutable: per-frame nibble decode
+lost8% cadence; unrolled byte decode recovered most of it; the first startup
+prototype failed initial-picture and cold-matrix assumptions, both corrected.
+The first per-row floe integration preserved gameplay but wasted work copying
+parameters four times. Current acquisition prepares shared fields once per tick.
+
+Next: native edge contact query glue/shore event generator and their actual
+whole-frame costs, then eliminate the original contact pools. Continue factoring
+remaining renderer programs/assets and produce a concrete flat link/RAM budget
+before implementing Normal32K/COM/BIN loaders. Do not truncate/rename this4MiB
+experimental ROM or present it as a playable compact delivery. Preserve the
+owner-approved v30 release and all sealed controls.
+
 ## Latest continuation: compact-grid full-route measurement (2026-11-13)
 
 The compact prepared-grid reconstruction is lossless at component level

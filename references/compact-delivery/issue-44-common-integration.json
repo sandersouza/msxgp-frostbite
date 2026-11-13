@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "issue": 44,
+  "stage_only": true,
+  "issue_complete": false,
+  "new_testable_release": false,
+  "mapperless": false,
+  "rom_sha256": "c706c0a5d3d98d7713780913b7fea89aad4967beb075ad5903c5773cb2cfbba1",
+  "runtime_source_commit": "682ee7ea6caadac43ba714806c542139396f3c7e",
+  "runtime_source_dirty": true,
+  "build_metadata_sha256": "89b59f3d0433f7dea0a8201849358903eb1917e196e34b9430f636d8a5cd5952",
+  "source_files_count": 245,
+  "source_archive": "outputs/compact/issue44-common-integration-stage-01/source",
+  "routes": {
+    "ntsc": {
+      "cases": null,
+      "active_pictures_per_second": 32.689834447831345,
+      "mean_irq_cycles": 17491.737122557726,
+      "mean_prepare_elapsed_cycles": 53541.75338753388,
+      "source_steps_per_second": 59.922749643213905,
+      "different_frames": null,
+      "receipt_sha256": "b9c76ae79d2543d57a4e518d5c5b2d5e65170a8a7aaa041c86a2701f30f70041"
+    },
+    "pal": {
+      "cases": null,
+      "active_pictures_per_second": 30.820584093091718,
+      "mean_irq_cycles": 20629.760869565216,
+      "mean_prepare_elapsed_cycles": 54215.014925373136,
+      "source_steps_per_second": 59.92467310342449,
+      "different_frames": null,
+      "receipt_sha256": "25d6a80c516afdb16290da40ccdcf899a2384eb6c767bae749a36855f04e626e"
+    },
+    "bear-ntsc": {
+      "cases": null,
+      "active_pictures_per_second": 29.3064477409617,
+      "mean_irq_cycles": 15419.438709677419,
+      "mean_prepare_elapsed_cycles": 68611.51149425287,
+      "source_steps_per_second": 59.92276123046882,
+      "different_frames": null,
+      "receipt_sha256": "7ee2c83a0ae785f873693afa86fb3c7a9c3926c41bcbbd029138d3ea99583eb4"
+    },
+    "bear-pal": {
+      "cases": null,
+      "active_pictures_per_second": 25.078853565046398,
+      "mean_irq_cycles": 18157.65317919075,
+      "mean_prepare_elapsed_cycles": 69332.25632911392,
+      "source_steps_per_second": 59.939005266166035,
+      "different_frames": null,
+      "receipt_sha256": "7f1c0fcfc602fd4008b1f6e0a8a2e934b77aab156491ef512be2dc50b2fe76c6"
+    },
+    "matrix": {
+      "cases": 2115,
+      "active_pictures_per_second": null,
+      "mean_irq_cycles": null,
+      "mean_prepare_elapsed_cycles": null,
+      "source_steps_per_second": null,
+      "different_frames": 0,
+      "receipt_sha256": "869f6ef1ec94a412c990e9fbaa1276cefc35b4cb955ef9a3c7842ec20a933c6a"
+    }
+  },
+  "directed_queries": {
+    "enemy": {
+      "complete": true,
+      "kind": "enemy",
+      "cases": 25968,
+      "rom_sha256": "c706c0a5d3d98d7713780913b7fea89aad4967beb075ad5903c5773cb2cfbba1",
+      "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "directed_integration_only": true,
+      "all_axes_covered": true,
+      "cartesian_all_views": false,
+      "bounded_cpu_writes": true,
+      "output_sha256": "59ae5b761f6136b289fd4943bfb6c62fbd5dad8f2a5976310f6e58e77aa02d1e",
+      "producer_sha256": "e44cf20ac56cd8e2d0dcb1a11525484971a8130c86e623c7119c52b308557228",
+      "receipt_sha256": "6fbd592b4ce9afeb9aaa7e46c6571839ad16bc564edbf1c4beee581186e8af9f"
+    },
+    "shore": {
+      "complete": true,
+      "kind": "shore",
+      "cases": 169800,
+      "rom_sha256": "c706c0a5d3d98d7713780913b7fea89aad4967beb075ad5903c5773cb2cfbba1",
+      "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+      "directed_integration_only": true,
+      "all_axes_covered": true,
+      "cartesian_all_views": false,
+      "bounded_cpu_writes": true,
+      "output_sha256": "ed8db573ef5e8f58bcd507c34cc7d6cbc7a5b04bf6e4897f769460533f812d85",
+      "producer_sha256": "e44cf20ac56cd8e2d0dcb1a11525484971a8130c86e623c7119c52b308557228",
+      "receipt_sha256": "84188694ed419f70b322c4c13e8be2061ab985b0987912870002a8dd88275b36"
+    }
+  },
+  "boundaries": "Original table fallback retained; no table removal or flat loader qualification yet.",
+  "ram": {
+    "grid_directory": [
+      4096,
+      4256
+    ],
+    "grid_rows": [
+      4352,
+      9984
+    ],
+    "floe_data": [
+      256,
+      4096
+    ],
+    "enemy_data": [
+      9984,
+      10560
+    ],
+    "native_code_and_shore_footprints": [
+      12288,
+      16384
+    ],
+    "shared_query_inputs": [
+      13056,
+      13063
+    ]
+  }
+}
