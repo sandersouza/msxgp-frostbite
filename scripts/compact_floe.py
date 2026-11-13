@@ -9,7 +9,7 @@ import hashlib
 from original_graphics import SOURCE_SHA256
 from presentation_contact14 import read_field
 from stella_floe import control_pairs
-from hazard_domain import shapes
+from hazard_domain import shapes, bear_modes
 
 
 def signed_nibble(value):
@@ -86,6 +86,38 @@ def ordinary_convolve(player, enemy, y, distance, *, player_reflect=False, enemy
     # Both seven-row contact windows use the same glyph convolution, with
     # different source-Y origins: enemy36, ice50. Visual enemy height stays8.
     return convolve(player, bytes(footprint), y + 14, reflect=player_reflect) if y else False
+
+
+def bear_mask(value, distance):
+    if type(value) is not int or not 0 <= value <= 255 or type(distance) is not int or not -7 <= distance <= 15:
+        raise ValueError('byte pattern and signed bear distance -7..15 required')
+    result = 0
+    for bit in range(8):
+        if value & (128 >> bit):
+            for wide in (0, 1):
+                x = bit * 2 + wide - distance
+                if 0 <= x < 8:
+                    result |= 128 >> x
+    return result
+
+
+def bear_convolve(player, bear, y, distance, *, player_reflect=False, enemy_reflect=False):
+    if len(player) != 19 or len(bear) != 19 or any(bear[:2]):
+        raise ValueError('complete player and qualified bear glyphs with blank final rows required')
+    if y == 0:
+        return False
+    for dy in range(17):
+        tag = y - 12 - dy
+        if 0 <= tag < 19:
+            value = bear[18 - dy]
+            pattern = player[tag]
+            if enemy_reflect:
+                value = int(f'{value:08b}'[::-1], 2)
+            if player_reflect:
+                pattern = int(f'{pattern:08b}'[::-1], 2)
+            if pattern & bear_mask(value, distance):
+                return True
+    return False
 
 
 def literal_atoms(glyph_pages, bases):
@@ -188,6 +220,25 @@ class FloeOracle:
         mask, shadow = self.records[self.ordinary_row(directory, mode, yi)[distance_index]]
         return 7 | shadow | (128 if mask & (1 << view) else 0)
 
+    @lru_cache(None)
+    def shore_row(self, directory, mode, px, yi):
+        if (not 0 <= mode < 6 or not 0 <= px < 160 or not 0 <= yi < 35
+                or not 0x4000 <= directory <= 0x8000 - 18):
+            raise ValueError('complete resident shore directory and source coordinates required')
+        at = directory - 0x4000 + mode * 3
+        pointer = self.rom[at:at+3]
+        bank, address = pointer[2], int.from_bytes(pointer[:2], 'little')
+        bank, address = self.pointer(bank, address + px * 3)
+        return self.row_at(*self.pointer(bank, address + yi * 3))
+
+    def shore_sample(self, directory, mode, yi, distance_index, view):
+        if not 0 <= distance_index < 23 or not 0 <= view < 228:
+            raise ValueError('shore signed-distance index and literal view required')
+        # Representative X80: source bearX79-distance yields bodyX80-distance.
+        bx = 86 - distance_index
+        mask, shadow = self.records[self.shore_row(directory, mode, 80, yi)[bx]]
+        return 7 | shadow | (128 if mask & (1 << view) else 0)
+
 
 def build_assets(original, oracle):
     if len(original) != 4096 or hashlib.sha256(original).hexdigest() != SOURCE_SHA256:
@@ -287,3 +338,60 @@ def build_enemy_assets(original, oracle, directory):
         visual_rows=8, player_x_domain=[25, 151],
         sizes={k:len(v) for k,v in assets.items()},
         scope='Ordinary common-profile source cells only; no edge, copy union, shore, native timing or game-integration proof.')
+
+
+def build_bear_assets(original, oracle, directory):
+    if len(original) != 4096 or hashlib.sha256(original).hexdigest() != SOURCE_SHA256:
+        raise ValueError('canonical original ROM required')
+    reps, _ = bear_modes(original)
+    if len(reps) != 3 or oracle.meta['tables']['profile_ys']['shore'] != list(range(12, 47)):
+        raise ValueError('qualified shore alias/Y domain differs')
+    glyphs = original[0xC00:0xD00]
+    reverse = bytes(int(f'{value:08b}'[::-1], 2) for value in glyphs)
+    bases = original[0xCAA:0xCB0]
+    atoms = literal_atoms(glyphs + reverse, bases)
+    groups = {bytes(17): 0}
+    lookup = bytearray()
+    cells = 0
+    for index, pose in enumerate(reps):
+        shape = original[0xEE7 + pose]
+        bear = original[0xD00 + shape:0xD00 + shape + 19]
+        if len(bear) != 19 or any(bear[:2]):
+            raise ValueError('source bear final rows are not blank')
+        for reflect in range(2):
+            theory = {}
+            for distance in range(-7, 16):
+                footprint = []
+                for dy in range(17):
+                    value = bear[18-dy]
+                    if reflect:
+                        value = int(f'{value:08b}'[::-1], 2)
+                    footprint.append(bear_mask(value, distance))
+                ident = groups.setdefault(bytes(footprint), len(groups))
+                if ident > 255:
+                    raise ValueError('shore footprint directory exceeds byte capacity')
+                lookup.append(ident)
+                for y in range(12, 47):
+                    predicted = 0
+                    for dy, mask in enumerate(footprint):
+                        tag = y - 12 - dy
+                        if 0 <= tag < 19:
+                            for bit in range(8):
+                                if mask & (128 >> bit):
+                                    predicted |= atoms[tag][bit]
+                    theory[y, distance] = predicted
+            for px in range(25, 152):
+                for yi, y in enumerate(range(12, 47)):
+                    for bx, ident in enumerate(oracle.shore_row(directory, index*2+reflect, px, yi)):
+                        body_x = (bx + (6 if bx < 15 else 1)) % 160
+                        expected = theory.get((y, px-body_x), 0)
+                        actual, shadow = oracle.records[ident]
+                        if actual != expected or shadow:
+                            raise ValueError(f'shore differs at {index}/{reflect}/{px}/{yi}/{bx}')
+                        cells += 1
+    assets = dict(directory=bytes(lookup), footprints=b''.join(groups), glyphs=glyphs+reverse, bases=bases)
+    return assets, dict(complete=True, geometric_cells=cells, literal_views=228,
+        bear_aliases=3, bear_reflections=2, source_y=[12, 46], collision_rows=17,
+        visual_rows=19, source_final_rows_blank=True, player_x_domain=[25,151],
+        footprint_groups=len(groups), sizes={k:len(v) for k,v in assets.items()},
+        scope='Every shore common-X source cell; no edge, native timing or default-game integration claim.')

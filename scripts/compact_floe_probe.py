@@ -8,7 +8,7 @@ import shutil
 import statistics
 import subprocess
 
-from compact_floe import FloeOracle, build_assets, build_enemy_assets
+from compact_floe import FloeOracle, build_assets, build_enemy_assets, build_bear_assets
 from compact_live_probe import CONTROL_SHA
 from environment import ROOT, verified_tool
 from reference_traces import private_output
@@ -21,6 +21,15 @@ def sha(path):
 
 
 def cases(assets, component='floe'):
+    if component == 'bear':
+        for mode in range(6):
+            for y in (0, *range(12, 47)):
+                for distance_index in range(23):
+                    for view in range(228):
+                        pose, remainder = divmod(view, 38)
+                        shift, reflect = divmod(remainder, 2)
+                        yield bytes((mode, y, distance_index, pose, shift, reflect, 0))
+        return
     if component == 'enemy':
         for shape in range(len(assets['enemy_shapes'])):
             for enemy_reflection in range(2):
@@ -48,7 +57,7 @@ def cases(assets, component='floe'):
 
 
 def check(build, out, limit=None, component='floe'):
-    if component not in ('floe', 'enemy'):
+    if component not in ('floe', 'enemy', 'bear'):
         raise ValueError('declared isolated component required')
     if limit is not None and (type(limit) is not int or limit <= 0):
         raise ValueError('positive finite native-case limit required')
@@ -75,8 +84,13 @@ def check(build, out, limit=None, component='floe'):
     oracle_syms_raw = (build / 'presentation.sym').read_bytes()
     old_syms = symbols(build / 'presentation.sym')
     common_directory = old_syms['hazard_ordinary_common_modes']
-    assets, proof = (build_enemy_assets(original, oracle, common_directory) if component == 'enemy'
-                     else build_assets(original, oracle))
+    shore_directory = old_syms['hazard_shore_modes']
+    if component == 'bear':
+        assets, proof = build_bear_assets(original, oracle, shore_directory)
+    elif component == 'enemy':
+        assets, proof = build_enemy_assets(original, oracle, common_directory)
+    else:
+        assets, proof = build_assets(original, oracle)
     for name, data in assets.items():
         (out / (name + '.bin')).write_bytes(data)
     (out / 'host-proof.json').write_text(json.dumps(proof, indent=2) + '\n')
@@ -89,6 +103,8 @@ def check(build, out, limit=None, component='floe'):
         inputs.extend(row)
         if component == 'enemy':
             expected.append(oracle.ordinary_sample(common_directory, control * 2 + fx, y - 36, dx, view) if y else 7)
+        elif component == 'bear':
+            expected.append(oracle.shore_sample(shore_directory, control, y - 12, dx, view) if y else 7)
         else:
             expected.append(oracle.sample(control, 80, y - 44 if y else 0, dx, view))
     (out / 'inputs.bin').write_bytes(inputs)
@@ -101,6 +117,8 @@ def check(build, out, limit=None, component='floe'):
     assembly += [f'cf_{name} EQU ${address:04X}' for name,address in locations.items()]
     if component == 'enemy':
         assembly += ['    DEFINE CF_ENEMY_ONLY', '    DEFINE CF_WITH_ENEMY']
+    elif component == 'bear':
+        assembly += ['    DEFINE CF_ENEMY_ONLY', '    DEFINE CF_WITH_BEAR']
     assembly += ['    DS $4100-$,$FF', '    INCLUDE "compact_floe_kernel.asm"',
                  '    ASSERT $ <= $5000']
     previous_end = None
@@ -123,8 +141,9 @@ def check(build, out, limit=None, component='floe'):
     if rom.stat().st_size != 32768:
         raise ValueError('component fixture capacity differs')
     syms = symbols(out / 'fixture.sym')
-    entry = syms['cf_enemy_contact' if component == 'enemy' else 'cf_contact']
-    component_end = syms['cf_enemy_end' if component == 'enemy' else 'cf_end']
+    prefix = {'enemy':'cf_enemy', 'bear':'cf_bear', 'floe':'cf'}[component]
+    entry = syms[prefix + '_contact']
+    component_end = syms[prefix + '_end']
     emulator = Path(shutil.which('openmsx')).resolve()
     profile = isolated_profile(find_machine_profile(str(emulator)))
     validate_machine_profile(profile)
@@ -204,6 +223,7 @@ after time {60 + len(expected) * 0.002} {{fail_kernel watchdog}}
         original_sha256=hashlib.sha256(original).hexdigest(),
         sources=source_hashes, cases=len(expected), host_proof=proof,
         complete_native_domain=len(expected) == (33 * 2 * 27 * 15 * 228 if component == 'enemy'
+            else 6 * 36 * 23 * 228 if component == 'bear'
             else proof['footprint_groups'] * 34 * 228 + 10 * 34 * 160),
         outputs_equal=True, ix_iy_sp_preserved=True, only_stack_writes=True, mapper_accesses=0,
         component_code_bytes=component_end-entry,
@@ -214,6 +234,7 @@ after time {60 + len(expected) * 0.002} {{fail_kernel watchdog}}
         machine_profile_sha256=hashlib.sha256(profile).hexdigest(),
         files={p.name:sha(p) for p in out.iterdir() if p.is_file()},
         scope=('Actual Z80 ordinary component at playerX25..151, single copy only; no edge/copy-union/shore, default game integration or whole-frame cadence proof.' if component == 'enemy'
+               else 'Actual Z80 shore component at playerX25..151; no edge, default game integration or whole-frame cadence proof.' if component == 'bear'
                else 'Actual Z80 floe component at interiorX9..153 plus full uniform shadow channel; no edge/enemy/shore, default game integration or whole-frame cadence proof.'))
     (out / 'component-result.json').write_text(json.dumps(report, indent=2) + '\n')
     return report
@@ -224,7 +245,7 @@ if __name__ == '__main__':
     parser.add_argument('--build', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--limit', type=int)
-    parser.add_argument('--component', choices=('floe', 'enemy'), default='floe')
+    parser.add_argument('--component', choices=('floe', 'enemy', 'bear'), default='floe')
     args = parser.parse_args()
     result = check(args.build, args.out, args.limit, args.component)
     print({k:v for k,v in result.items() if k not in ('files','sources')})

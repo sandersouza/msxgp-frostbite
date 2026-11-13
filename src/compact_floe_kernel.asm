@@ -273,3 +273,104 @@ cf_enemy_right_end:
 cf_enemy_end:
     ASSERT (cf_enemy_glyphs & 255) == 0
     ENDIF
+
+    IFDEF CF_WITH_BEAR
+; Shore common-X profile, playerX25..151. Inputs: mode0..5, Y(0 or12..46),
+; signed-distance index(distance+7, range0..22), P0 pose/shift/reflection, zero.
+; Footprints contain doubled/reflected source pixels; last two rows are blank.
+cf_bear_contact:
+    LD A,(cf_y)
+    SUB 12
+    JP C,.no_hit
+    CP 35
+    JP NC,.no_hit
+    LD C,A
+    LD A,(cf_control)
+    LD L,A
+    LD H,0
+    LD E,A
+    LD D,0
+    ADD HL,HL
+    ADD HL,HL
+    ADD HL,HL              ; mode*8
+    PUSH HL
+    ADD HL,HL
+    OR A
+    SBC HL,DE              ; mode*15
+    POP DE
+    ADD HL,DE              ; mode*23
+    LD A,(cf_dx)
+    LD E,A
+    LD D,0
+    ADD HL,DE
+    LD DE,cf_directory
+    ADD HL,DE
+    LD A,(HL)
+    OR A
+    JR Z,.no_hit
+    LD L,A
+    LD H,0
+    LD E,A
+    LD D,0
+    ADD HL,HL
+    ADD HL,HL
+    ADD HL,HL
+    ADD HL,HL
+    ADD HL,DE              ; footprint*17
+    LD DE,cf_footprints
+    ADD HL,DE
+    EX DE,HL
+    LD A,C
+    LD B,17
+    CP 19
+    JR C,.bottom_clip
+    SUB 18
+    LD L,A
+    LD H,0
+    ADD HL,DE
+    EX DE,HL
+    NEG
+    ADD A,17
+    LD B,A
+    LD A,18
+    JR .glyph
+.bottom_clip:
+    CP 16
+    JR NC,.glyph
+    INC A
+    LD B,A
+    DEC A
+.glyph:
+    PUSH DE
+    LD C,A
+    LD A,(cf_pose)
+    LD L,A
+    LD H,0
+    LD DE,cf_bases
+    ADD HL,DE
+    LD A,(HL)
+    LD L,A
+    LD A,(cf_shift)
+    ADD A,L
+    ADD A,C
+    LD L,A
+    LD A,(cf_reflection)
+    AND 1
+    ADD A,cf_glyphs/256
+    LD H,A
+    POP DE
+.rows:
+    LD A,(DE)
+    AND (HL)
+    JR NZ,.hit
+    INC DE
+    DEC HL
+    DJNZ .rows
+.no_hit:
+    LD A,7
+    RET
+.hit:
+    LD A,135
+    RET
+cf_bear_end:
+    ENDIF

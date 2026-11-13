@@ -83,6 +83,34 @@ class FloeGeometryTests(unittest.TestCase):
         self.assertFalse(contact(player, last, 43, 0))
         self.assertFalse(contact(player, enemy, 61, 0))
 
+    def test_bear_doubles_pixels_before_clipping(self):
+        model = self.model()
+        mask = getattr(model, 'bear_mask', None)
+        self.assertIsNotNone(mask, 'doubled-width bear mask missing')
+        self.assertEqual(mask(128, 0), 192)
+        self.assertEqual(mask(128, 1), 128)
+        self.assertEqual(mask(128, -1), 96)
+        self.assertEqual(mask(1, 14), 192)
+        self.assertEqual(mask(1, 15), 128)
+        self.assertEqual(mask(128, -7), 1)
+        self.assertEqual(mask(128, 2), 0)
+
+    def test_bear_convolution_keeps_seventeen_source_rows(self):
+        model = self.model()
+        contact = getattr(model, 'bear_convolve', None)
+        self.assertIsNotNone(contact, 'shore contact convolution missing')
+        player = bytes([128] + [0] * 18)
+        bear = bytes([0] * 18 + [128])
+        self.assertTrue(contact(player, bear, 12, 0))
+        self.assertFalse(contact(player, bear, 12, 0, enemy_reflect=True))
+        self.assertTrue(contact(player, bear, 12, 14, enemy_reflect=True))
+        self.assertFalse(contact(player, bear, 0, 0))
+        bottom = bytes([0, 0, 128] + [0] * 16)
+        self.assertTrue(contact(player, bottom, 28, 0))
+        self.assertFalse(contact(player, bottom, 27, 0))
+        with self.assertRaises(ValueError):
+            contact(player, bytes([128] + [0] * 18), 30, 0)
+
 
 if __name__ == '__main__':
     unittest.main()
