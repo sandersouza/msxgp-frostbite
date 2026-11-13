@@ -124,7 +124,9 @@ set boot [debug set_bp {q['ready']} {{}} {{
   reg IX 0xDDDD;reg IY 0xEEEE;reg SP 0xF380
   debug write_block memory 0xC6D0 [binary format cu* [list 205 {entry&255} {entry>>8} 195 214 198 24 254]]
   set ::checking 1
-  debug set_watchpoint write_mem {{0x0000 0xFFFF}} {{$::checking && !(($::wp_last_address>=0xF300 && $::wp_last_address<0xF380)||($::wp_last_address>=0xC790 && $::wp_last_address<0xC799)||($::wp_last_address>=0xC7D4 && $::wp_last_address<0xC7D6))}} {{fail_contact "write address=$::wp_last_address PC=[reg PC]"}}
+  foreach range {{{{0x0000 0xC78F}} {{0xC799 0xC7D3}} {{0xC7D6 0xF2FF}} {{0xF380 0xFFFF}}}} {{
+   debug set_watchpoint write_mem $range {{$::checking}} {{fail_contact "write address=$::wp_last_address PC=[reg PC]"}}
+  }}
   debug set_bp 0xC6D6 {{}} {{debug break;after break {{
    if {{[reg IX]!=0xDDDD || [reg IY]!=0xEEEE || [reg SP]!=0xF380 || ([reg IFF]&3)!=0}} {{fail_contact abi}}
    set cycles [expr {{round(([machine_info time]-$::started)*3579545)}}]
