@@ -1,3 +1,32 @@
+## Local continuation — lower left edge closure
+
+Owner report confirmed: the black sea-edge column stopped at Y175 while water
+continued below. The internal closure extends the existing black tile through
+row22/Y183, with no extra sprites or memory. Source mechanics and player
+foreground priority remain exact. This is part of the current AO candidate;
+no new human-test ROM/release has been delivered yet.
+
+Closure02: ROM `4b22951ec3a957f797605c9688e04debb393c77e4191d21adf2ff641d555f9c3`,
+205 sources; patch only58 resident bytes. 610 host tests,256 matrix scenes and
+four full regular/bear NTSC/PAL routes pass. All3497 committed pictures close the
+edge on both pages; cadence is unchanged. Independent review passes67,932 native
+calls and exact rebuild. See docs/handoffs/issue-42-left-edge-closure.md.
+The ongoing temperature-burst optimization and release qualification remain open.
+
+<!-- AO exact player rectangles / three-sprite bear continuation — 2026-11-12 -->
+Continuing autonomously on sameIssue42/rootwriter, Inprogress; no newissue/chat/
+worktree. v25 publicbf5c...8dae41/runtime13bf remains latest;61priorroots sealed.
+Offline72normalP0recipes preserveRGB with3sprites/max2perline, pool70vs137. Fullbear
+fits3sprites exactly (currentleftpair+thinright) inexisting132tail; SGT58/59free.
+Designreview4626a1e7...30557239 includes5256sourceY/grid/logo and391680cacheguard
+cases;23BdeadcodegapHALTpoison2115GREEN. Phase1internalf283...43ef5c/195dirtysource
+closure gives32.0966regularNTSC and28.2605bearNTSC vs31.5939/28.1214v25,256matrix/
+601host/source/RGB/owners/activeGREEN. PAL/nativecache review pending. No newhuman
+ROM/release yet. Source191parents unchanged;4newatoms archived/hash-bound. Next
+fullbearweightedS4/threeSGT withuniformsignedcacheABI, not playerrecolor orsource
+speedshortcut. Allsource/graphics/owner guards staystrict. Stable/all-level30OPEN.
+See docs/superpowers/specs/2026-11-12-player-bands-design.md and matchingplan.
+
 <!-- AN exact hybrid bear — 2026-11-12 -->
 v25 diagnostic: exact left16px sprite/right tile bear, no P0 recolor or new visual
 compromise. NTSCbear27.0953→28.1214FPS(+3.79%), fullFG74126→70670, max97481→93939.
