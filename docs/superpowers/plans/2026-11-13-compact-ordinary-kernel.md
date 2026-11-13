@@ -43,7 +43,7 @@ Files: extend `src/compact_floe_kernel.asm`, `scripts/compact_floe_probe.py`.
 - [x] Implement shifted seven-row collision without precomputed per-position
   geometry. Use the same seven-byte ABI: shape index, Y, distance+7, pose,
   shift, player reflection, enemy reflection. Return 7/135; preserve IX/IY/SP.
-- [ ] Qualify all shape/reflection/Y/distance/player-view cases, record exact
+- [x] Qualify all shape/reflection/Y/distance/player-view cases, record exact
   outputs and cycles, and rerun the unchanged floe fixture for regression.
-- [ ] Review, document and commit bounded scope. Keep issue44 In progress,
+- [x] Review, document and commit bounded scope. Keep issue44 In progress,
   with no whole-frame or full-format completion claim.

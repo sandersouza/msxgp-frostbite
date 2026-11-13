@@ -29,12 +29,21 @@ flat layout/loaders and whole-frame qualification remain pending. An additional
 host-only ordinary-enemy experiment identifies seven collision rows versus
 eight visual rows; preserve this source timing distinction.
 
-Ordinary-enemy component WIP extends the same host/fixture/assembly files with
+Qualified ordinary-enemy component extends the same host/fixture/assembly files with
 `--component enemy`. Its common-profile geometry matches25,740cells ×228views.
-Smoke02 passes30,000actual Z80 cases:192code+1,078data bytes including shared
-P0glyph pages/offsets. Full native corpus and a fresh floe regression are pending.
-Do not edit the three component sources while those qualifications run; source
-fingerprints are checked before/after. No default-game source is changed.
+Source04a3454 passes6,094,440actual Z80 cases:192code+1,078data bytes including
+shared P0glyph pages/offsets. Floe regression passes1,193,944calls with identical
+ROM/cycle statistics. Independent review verifies final native receipts without
+Critical/Important blockers. See `docs/compact-ordinary-component.md`.
+No default-game source is changed. PR45 is draft, issue44 In progress.
+
+Next shore research: `outputs/compact/issue44-bear-common-01` proves exact
+geometry across4,267,200shore common-Xcells ×228views, playerX25..151, all
+source bear positions/modes/Y.123shared17-row footprints plus a138-byte directory
+occupy2,229bytes; source bottom two rows are blank in these aliases. This is
+host-only; no shore Z80 implementation yet. Boundary research stays separate:
+all9,859stored bit7 masks admit adjacent-byte-equality event atoms, but the
+first Y-relative edge model is incomplete and must not replace the old tables.
 
 ## Authority and ownership
 

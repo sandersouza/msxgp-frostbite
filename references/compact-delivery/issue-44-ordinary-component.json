@@ -1,0 +1,100 @@
+{
+  "complete": true,
+  "game_runtime_changed": false,
+  "component_fixture_only": true,
+  "component": "enemy",
+  "no_playable_rom_release": true,
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "component_rom_sha256": "a003193fd2220ff02923403e229cb58a1b1d33746f05ec56c45110d2a716c302",
+  "source_commit": "04a3454e4e05ae01a85c6526e6dfb3cf4ac9b1da",
+  "oracle_metadata_sha256": "cb207af5a74c1113eda366ae8b312a4cc0ea3337ab797a85c20a6b10b094b2e9",
+  "oracle_symbols_sha256": "e79c101374fa0376dbef6ac99364f1e882a663bf9d2cca6aa06d6a9b42d196e8",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "sources": {
+    "scripts/compact_floe.py": "97eac80ec706053d319b0bc0ee9064b402c063141b1133d21c3e72ebfaef7129",
+    "scripts/compact_floe_probe.py": "1206b65ec376e0a347496680150795243f5aa35b501f3b8ab0cc56a48d39e433",
+    "src/compact_floe_kernel.asm": "330f8cb6e4b1d792bef76cfbef0e116fec199c26fc2a23918107ff4e80b7039b"
+  },
+  "cases": 6094440,
+  "host_proof": {
+    "complete": true,
+    "geometric_cells": 25740,
+    "literal_views": 228,
+    "shape_count": 33,
+    "enemy_reflections": 2,
+    "source_y": [
+      36,
+      61
+    ],
+    "collision_rows": 7,
+    "visual_rows": 8,
+    "player_x_domain": [
+      25,
+      151
+    ],
+    "sizes": {
+      "glyphs": 512,
+      "bases": 6,
+      "enemy_glyphs": 512,
+      "enemy_shapes": 33,
+      "enemy_clip_masks": 15
+    },
+    "scope": "Ordinary common-profile source cells only; no edge, copy union, shore, native timing or game-integration proof."
+  },
+  "complete_native_domain": true,
+  "outputs_equal": true,
+  "ix_iy_sp_preserved": true,
+  "only_stack_writes": true,
+  "mapper_accesses": 0,
+  "component_code_bytes": 192,
+  "component_data_bytes": 1078,
+  "cycles_including_call_and_jump": {
+    "min": 81,
+    "mean": 1050.167082455484,
+    "p95": 1597,
+    "max": 1615
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "files": {
+    "inputs.bin": "85eb6c8d8e17dacb888704f991b3801724029b6342ef493dfcdb24fe27beceaf",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "714d0f01b4655e917f97b4794364e7c28aa8ca460213f31f5cdd6d2145810140",
+    "expected.bin": "1e1f6bc300e49dafc0fcd78a70327b1638a30d07e48699bd522c90dbe4069ddc",
+    "enemy_shapes.bin": "260e0bb96088ee4661398e66f4c0fdee99d4f40bf40736dc50217afdad9a7c1f",
+    "probe.tcl": "40571d20e23b3744bb8322be77bd76cd6f48439629f46bc64da9027bcaa4d908",
+    "enemy_clip_masks.bin": "84465785ba2e4529ccfb31e44080c9afdc105234a8b7ec6753aa1a571c17c771",
+    "glyphs.bin": "951dd5d31ca1c38f8a3c722cf96b6267aa62bed9ba6b4f46aa5fade4bbdaf535",
+    "bases.bin": "bcf4ea69951b0f26b79b0f01491e5331e10549813d11c02f1aecf122ef70c874",
+    "enemy_glyphs.bin": "c88e5a0a6be5f7c8aefaf7d8a1dfed5906ee9dccbc8832c1eec34ec9bc563ffe",
+    "actual.bin": "2d8d2869c3e3215c2690371d76e3cb4ab1a5112f032c35b5347445f6f2cc4102",
+    "component-fixture.rom": "a003193fd2220ff02923403e229cb58a1b1d33746f05ec56c45110d2a716c302",
+    "fixture.sym": "60d4395b05362adb6522587158648902658eb388f4d25ce2726b9ef19b8bc532",
+    "fixture.asm": "b4b5e23461c9973a19f402af917fc000b20a53eb2f75076c49836a7ffb2d449a",
+    "host-proof.json": "9a9269acabb8eae0ff9990c69833d92db7c82b6b6167e1839b30931815974e9e"
+  },
+  "scope": "Actual Z80 ordinary component at playerX25..151, single copy only; no edge/copy-union/shore, default game integration or whole-frame cadence proof.",
+  "raw_receipt": {
+    "path": "outputs/compact/issue44-enemy-full-01/component-result.json",
+    "sha256": "b691a0e9092933bfdfd01a006f1ecdc6d31f3479cfa66e8fc885cf13a4d5cf5a"
+  },
+  "host_tests": {
+    "count": 633,
+    "log_sha256": "6dcf487efcac3df403fbfdca4486f4da5e83e24ca7a92a6b41bcb25775584987"
+  },
+  "floe_regression": {
+    "path": "outputs/compact/issue44-kernel-full-02/component-result.json",
+    "sha256": "5bc1c232d619913bd2f0fe167d7cc98690558eb92af18823d1cbc7a9421e4768",
+    "complete_native_domain": true,
+    "cases": 1193944,
+    "fixture_bytes_and_cycles_unchanged": true
+  },
+  "independent_review": "Final native outputs, recorded files and frozen sources verified; no Critical/Important blockers for declared isolated components.",
+  "logical_combined_storage": {
+    "bytes": 4085,
+    "shared_bytes_counted_once": 518,
+    "whole_game_size_claim": false
+  }
+}
