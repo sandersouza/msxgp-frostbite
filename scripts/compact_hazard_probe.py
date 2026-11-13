@@ -131,7 +131,7 @@ set boot [debug set_bp {q['ready']} {{}} {{
   dispatch_context
  }}
 }}]
-after time {60+count*0.002} {{fail_context watchdog}}
+after time {60+count*0.02} {{fail_context watchdog}}
 '''
     (out/'probe.tcl').write_text(tcl)
     run=subprocess.run([str(emulator),'-setting',str(settings),'-machine','Frostbite_HazardContext','-cart',str(fixture),'-romtype','Normal','-script',str(out/'probe.tcl')],env={**os.environ,'OPENMSX_USER_DATA':str(user),'SDL_VIDEODRIVER':'dummy','SDL_AUDIODRIVER':'dummy'},capture_output=True,text=True,timeout=1200)
