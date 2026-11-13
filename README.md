@@ -5,21 +5,20 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.26 native bands diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.26-native-bands-diagnostic)
-packs player color bands, uses an exact three-sprite bear and reduces redundant
-header transfers. The lower left sea border is closed. Original mechanics,
-clock, controls, player colors and PSG stay exact. Bear NTSC28.12→29.83FPS (+6.08%);
-foreground maximum93,939→79,409 cycles. Grounded landing snapshots improve20→22
-of26 NTSC and14→17 PAL, with no prior landing/endpoint lost. **Stable/all-level
-30FPS remains open:** one long bear picture and regular hitches remain. This is
-automated/emulator evidence; owner/mobile/listening/physical acceptance is pending.
+The latest [v0.0.27 open playfield diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.27-open-playfield-diagnostic)
+removes the left stripe, adds `Activision - Retroworks` and preserves the
+player's normal colors during sinking, including original water fade. Source
+mechanics, controls, clock and PSG remain exact. Regular active cadence improves
+2.61% NTSC/1.95% PAL; grounded NTSC landings improve22→24/26. Bear NTSC is29.70
+versus29.83 despite lower mean CPU, with one extra long gap. **Stable/all-level
+30FPS remains open.** Owner/mobile/listening/physical acceptance is pending.
 
-[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.26-native-bands-diagnostic%2Ffrostbite-0.0.26-native-bands-diagnostic.rom&ROM_FORMAT=ASCII16).
-Rollback: [unchanged v25 ROM](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.25-bear-hybrid-diagnostic/frostbite-0.0.25-bear-hybrid-diagnostic.rom).
-Exact ROM/source/hash, workbook and [human tests](docs/releases/v0.0.26-native-bands-diagnostic.md)
-are attached. Read [architecture/limits](docs/native-bands-diagnostic.md) and
-[validation](references/native-bands-result.json) and
-[verified downloads](references/native-bands-delivery.json).
+[Play in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.27-open-playfield-diagnostic%2Ffrostbite-0.0.27-open-playfield-diagnostic.rom&ROM_FORMAT=ASCII16).
+[Unchanged v26 rollback](https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.26-native-bands-diagnostic/frostbite-0.0.26-native-bands-diagnostic.rom).
+Exact ROM/source/hash,42-tab workbook and [human tests](docs/releases/v0.0.27-open-playfield-diagnostic.md)
+are attached. Read [architecture/limits](docs/open-playfield-diagnostic.md),
+[validation](references/open-playfield-result.json) and
+[verified downloads](references/open-playfield-delivery.json).
 
 The owner accepted [v0.0.18 gameplay](docs/grid24-diagnostic.md) as stable with
 very few visual differences and authorized option3/autonomous performance work.

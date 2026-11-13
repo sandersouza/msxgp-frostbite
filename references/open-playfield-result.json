@@ -1,0 +1,682 @@
+{
+  "complete": true,
+  "version": "v0.0.27-open-playfield-diagnostic",
+  "source_commit": "e42b737f0def8dd70be9b31712b776d83258fadd",
+  "source_files": 220,
+  "preserved_parent_source_files": 214,
+  "rom_sha256": "78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a",
+  "rom_bytes": 4194304,
+  "mapper": "ASCII16",
+  "parent_rom_sha256": "7765bb9e1485a237c49abe0a95c621bea918b61989aae1fc4ad97b1d8b031c84",
+  "presentation": {
+    "left_target_x": 16,
+    "previous_left_target_x": 24,
+    "credit": "Activision - Retroworks",
+    "terminal_player_palette": "Normal adapted hat/skin/body palette, original water fade and silhouette retained",
+    "five_general_planes": [
+      59264,
+      59384
+    ],
+    "five_colors": [
+      50411,
+      50416
+    ],
+    "occupied_reserved_ram_bytes": 120,
+    "additional_hardware": false
+  },
+  "checks": {
+    "host_tests": 615,
+    "original_source_scenes": 2115,
+    "dense_edge_scenes": 2088,
+    "header_scenes": 54,
+    "audio_intervals": 2115,
+    "natural_routes": 4,
+    "passive_profiles": 4,
+    "profile_five_buffer_identity": true,
+    "independent_native_calls": 1811,
+    "new_hardware_irq_boundaries": 9,
+    "AF2_negative_rejected": true,
+    "immutable_credit_negative_cases": 5760,
+    "source_cpu_all_ram_exact": true,
+    "source_input_and_psg_exact": true,
+    "owner_and_active_pages_guarded": true
+  },
+  "performance": {
+    "regular-ntsc": [
+      {
+        "version": "AO",
+        "fps": 31.82773518632759,
+        "foreground": {
+          "count": 541,
+          "mean": 51265.06654343808,
+          "p95": 98113,
+          "maximum": 126506
+        },
+        "phases": {
+          "description": {
+            "count": 541,
+            "mean": 4072,
+            "p95": 4072,
+            "maximum": 4072
+          },
+          "sprites-preflight": {
+            "count": 541,
+            "mean": 10708.916820702403,
+            "p95": 19482,
+            "maximum": 51212
+          },
+          "dirty-state": {
+            "count": 541,
+            "mean": 6808.68022181146,
+            "p95": 7186,
+            "maximum": 8035
+          },
+          "release": {
+            "count": 541,
+            "mean": 2068.097966728281,
+            "p95": 2163,
+            "maximum": 2181
+          },
+          "background": {
+            "count": 541,
+            "mean": 1837.1977818853975,
+            "p95": 5836,
+            "maximum": 6888
+          },
+          "world": {
+            "count": 541,
+            "mean": 16460.70794824399,
+            "p95": 34263,
+            "maximum": 39561
+          },
+          "header": {
+            "count": 541,
+            "mean": 4514.805914972274,
+            "p95": 26869,
+            "maximum": 43051
+          },
+          "footer": {
+            "count": 541,
+            "mean": 262.04436229205174,
+            "p95": 262,
+            "maximum": 286
+          },
+          "upload": {
+            "count": 541,
+            "mean": 4532.6155268022185,
+            "p95": 8644,
+            "maximum": 13126
+          }
+        },
+        "landings": 22,
+        "endpoint_y": 25,
+        "gaps_ms": {
+          "count": 537,
+          "mean": 31.41913787285673,
+          "median": 33.37630900016464,
+          "p95": 50.06502223047704,
+          "maximum": 66.75261800033638
+        }
+      },
+      {
+        "version": "AQ",
+        "fps": 32.65749935060179,
+        "foreground": {
+          "count": 555,
+          "mean": 50075.17477477477,
+          "p95": 95266,
+          "maximum": 126088
+        },
+        "phases": {
+          "description": {
+            "count": 555,
+            "mean": 4072,
+            "p95": 4072,
+            "maximum": 4072
+          },
+          "sprites-preflight": {
+            "count": 555,
+            "mean": 10179.176576576576,
+            "p95": 19046,
+            "maximum": 51227
+          },
+          "dirty-state": {
+            "count": 555,
+            "mean": 6810.972972972973,
+            "p95": 7186,
+            "maximum": 8038
+          },
+          "release": {
+            "count": 555,
+            "mean": 2067.345945945946,
+            "p95": 2145,
+            "maximum": 2181
+          },
+          "background": {
+            "count": 555,
+            "mean": 1812.1495495495496,
+            "p95": 5833,
+            "maximum": 6888
+          },
+          "world": {
+            "count": 555,
+            "mean": 16415.10990990991,
+            "p95": 34263,
+            "maximum": 39561
+          },
+          "header": {
+            "count": 555,
+            "mean": 4379.803603603604,
+            "p95": 26827,
+            "maximum": 43051
+          },
+          "footer": {
+            "count": 555,
+            "mean": 262.34594594594597,
+            "p95": 262,
+            "maximum": 286
+          },
+          "upload": {
+            "count": 555,
+            "mean": 4076.2702702702704,
+            "p95": 8264,
+            "maximum": 12760
+          }
+        },
+        "landings": 24,
+        "endpoint_y": 25,
+        "gaps_ms": {
+          "count": 551,
+          "mean": 30.620838088804028,
+          "median": 33.37602963505226,
+          "p95": 50.06474286536644,
+          "maximum": 66.75289736544786
+        }
+      }
+    ],
+    "regular-pal": [
+      {
+        "version": "AO",
+        "fps": 30.463581821427045,
+        "foreground": {
+          "count": 516,
+          "mean": 52543.432170542634,
+          "p95": 100622,
+          "maximum": 138450
+        },
+        "phases": {
+          "description": {
+            "count": 516,
+            "mean": 4072,
+            "p95": 4072,
+            "maximum": 4072
+          },
+          "sprites-preflight": {
+            "count": 516,
+            "mean": 11091.99031007752,
+            "p95": 20610,
+            "maximum": 63156
+          },
+          "dirty-state": {
+            "count": 516,
+            "mean": 6806.12984496124,
+            "p95": 7186,
+            "maximum": 8035
+          },
+          "release": {
+            "count": 516,
+            "mean": 2070.4883720930234,
+            "p95": 2163,
+            "maximum": 2199
+          },
+          "background": {
+            "count": 516,
+            "mean": 1910.6957364341085,
+            "p95": 5866,
+            "maximum": 7823
+          },
+          "world": {
+            "count": 516,
+            "mean": 16963.054263565893,
+            "p95": 34471,
+            "maximum": 39547
+          },
+          "header": {
+            "count": 516,
+            "mean": 4660.858527131783,
+            "p95": 27392,
+            "maximum": 43051
+          },
+          "footer": {
+            "count": 516,
+            "mean": 262.04651162790697,
+            "p95": 262,
+            "maximum": 286
+          },
+          "upload": {
+            "count": 516,
+            "mean": 4706.168604651163,
+            "p95": 9913,
+            "maximum": 14657
+          }
+        },
+        "landings": 17,
+        "endpoint_y": 24,
+        "gaps_ms": {
+          "count": 512,
+          "mean": 32.826080854899146,
+          "median": 39.87238601554122,
+          "p95": 59.8098361663304,
+          "maximum": 79.74700695199743
+        }
+      },
+      {
+        "version": "AQ",
+        "fps": 31.05863663717453,
+        "foreground": {
+          "count": 526,
+          "mean": 51257.75475285171,
+          "p95": 99316,
+          "maximum": 135472
+        },
+        "phases": {
+          "description": {
+            "count": 526,
+            "mean": 4072,
+            "p95": 4072,
+            "maximum": 4072
+          },
+          "sprites-preflight": {
+            "count": 526,
+            "mean": 10442.868821292775,
+            "p95": 20060,
+            "maximum": 51333
+          },
+          "dirty-state": {
+            "count": 526,
+            "mean": 6809.92205323194,
+            "p95": 7186,
+            "maximum": 8035
+          },
+          "release": {
+            "count": 526,
+            "mean": 2069.680608365019,
+            "p95": 2163,
+            "maximum": 2199
+          },
+          "background": {
+            "count": 526,
+            "mean": 1886.0437262357414,
+            "p95": 5866,
+            "maximum": 7823
+          },
+          "world": {
+            "count": 526,
+            "mean": 16847.01330798479,
+            "p95": 34471,
+            "maximum": 39547
+          },
+          "header": {
+            "count": 526,
+            "mean": 4607.3821292775665,
+            "p95": 26845,
+            "maximum": 43051
+          },
+          "footer": {
+            "count": 526,
+            "mean": 262,
+            "p95": 262,
+            "maximum": 262
+          },
+          "upload": {
+            "count": 526,
+            "mean": 4260.844106463878,
+            "p95": 9315,
+            "maximum": 14280
+          }
+        },
+        "landings": 17,
+        "endpoint_y": 24,
+        "gaps_ms": {
+          "count": 522,
+          "mean": 32.19716343901218,
+          "median": 39.87238601553855,
+          "p95": 59.80955680121358,
+          "maximum": 79.74561012642312
+        }
+      }
+    ],
+    "bear-ntsc": [
+      {
+        "version": "AO",
+        "fps": 29.8305338372,
+        "foreground": {
+          "count": 115,
+          "mean": 62257.12173913044,
+          "p95": 76628,
+          "maximum": 79409
+        },
+        "phases": {
+          "description": {
+            "count": 115,
+            "mean": 4064,
+            "p95": 4064,
+            "maximum": 4064
+          },
+          "sprites-preflight": {
+            "count": 115,
+            "mean": 10231.104347826087,
+            "p95": 21787,
+            "maximum": 34829
+          },
+          "dirty-state": {
+            "count": 115,
+            "mean": 6769.721739130435,
+            "p95": 7108,
+            "maximum": 7350
+          },
+          "release": {
+            "count": 115,
+            "mean": 2135.608695652174,
+            "p95": 2181,
+            "maximum": 2217
+          },
+          "background": {
+            "count": 115,
+            "mean": 5084.44347826087,
+            "p95": 6861,
+            "maximum": 8854
+          },
+          "world": {
+            "count": 115,
+            "mean": 15341.130434782608,
+            "p95": 21756,
+            "maximum": 24431
+          },
+          "header": {
+            "count": 115,
+            "mean": 8826.678260869565,
+            "p95": 16553,
+            "maximum": 18574
+          },
+          "footer": {
+            "count": 115,
+            "mean": 262.83478260869566,
+            "p95": 262,
+            "maximum": 286
+          },
+          "upload": {
+            "count": 115,
+            "mean": 9541.6,
+            "p95": 12096,
+            "maximum": 13608
+          }
+        },
+        "gaps_ms": {
+          "count": 114,
+          "mean": 33.522698770913564,
+          "median": 33.376309000166415,
+          "p95": 33.37742646062658,
+          "maximum": 50.063346039790346
+        }
+      },
+      {
+        "version": "AQ",
+        "fps": 29.69804459472625,
+        "foreground": {
+          "count": 114,
+          "mean": 61535.21929824561,
+          "p95": 75760,
+          "maximum": 79620
+        },
+        "phases": {
+          "description": {
+            "count": 114,
+            "mean": 4064,
+            "p95": 4064,
+            "maximum": 4064
+          },
+          "sprites-preflight": {
+            "count": 114,
+            "mean": 9608.771929824561,
+            "p95": 21301,
+            "maximum": 24908
+          },
+          "dirty-state": {
+            "count": 114,
+            "mean": 6789.8859649122805,
+            "p95": 7149,
+            "maximum": 7350
+          },
+          "release": {
+            "count": 114,
+            "mean": 2136.157894736842,
+            "p95": 2181,
+            "maximum": 2217
+          },
+          "background": {
+            "count": 114,
+            "mean": 5121.017543859649,
+            "p95": 6864,
+            "maximum": 8851
+          },
+          "world": {
+            "count": 114,
+            "mean": 15572.421052631578,
+            "p95": 23510,
+            "maximum": 29493
+          },
+          "header": {
+            "count": 114,
+            "mean": 8792.473684210527,
+            "p95": 16553,
+            "maximum": 18535
+          },
+          "footer": {
+            "count": 114,
+            "mean": 262.8421052631579,
+            "p95": 262,
+            "maximum": 286
+          },
+          "upload": {
+            "count": 114,
+            "mean": 9187.649122807017,
+            "p95": 12768,
+            "maximum": 13228
+          }
+        },
+        "gaps_ms": {
+          "count": 113,
+          "mean": 33.67225060257263,
+          "median": 33.376309000166415,
+          "p95": 33.40899471860226,
+          "maximum": 50.064742865364664
+        }
+      }
+    ],
+    "bear-pal": [
+      {
+        "version": "AO",
+        "fps": 25.07905489689044,
+        "foreground": {
+          "count": 97,
+          "mean": 63930.43298969072,
+          "p95": 76700,
+          "maximum": 79526
+        },
+        "phases": {
+          "description": {
+            "count": 97,
+            "mean": 4064,
+            "p95": 4064,
+            "maximum": 4064
+          },
+          "sprites-preflight": {
+            "count": 97,
+            "mean": 11135.061855670103,
+            "p95": 21695,
+            "maximum": 25125
+          },
+          "dirty-state": {
+            "count": 97,
+            "mean": 6783.639175257732,
+            "p95": 7108,
+            "maximum": 7343
+          },
+          "release": {
+            "count": 97,
+            "mean": 2136.463917525773,
+            "p95": 2181,
+            "maximum": 2217
+          },
+          "background": {
+            "count": 97,
+            "mean": 5133.690721649485,
+            "p95": 6864,
+            "maximum": 8854
+          },
+          "world": {
+            "count": 97,
+            "mean": 15180.577319587628,
+            "p95": 21568,
+            "maximum": 24452
+          },
+          "header": {
+            "count": 97,
+            "mean": 9598.309278350516,
+            "p95": 18598,
+            "maximum": 18909
+          },
+          "footer": {
+            "count": 97,
+            "mean": 262,
+            "p95": 262,
+            "maximum": 262
+          },
+          "upload": {
+            "count": 97,
+            "mean": 9636.690721649484,
+            "p95": 13145,
+            "maximum": 13608
+          }
+        },
+        "gaps_ms": {
+          "count": 96,
+          "mean": 39.87391088345958,
+          "median": 39.87322411088545,
+          "p95": 39.87434157134562,
+          "maximum": 39.906468559552266
+        }
+      },
+      {
+        "version": "AQ",
+        "fps": 25.079062218109318,
+        "foreground": {
+          "count": 97,
+          "mean": 63346.0206185567,
+          "p95": 76809,
+          "maximum": 79596
+        },
+        "phases": {
+          "description": {
+            "count": 97,
+            "mean": 4064,
+            "p95": 4064,
+            "maximum": 4064
+          },
+          "sprites-preflight": {
+            "count": 97,
+            "mean": 10668.329896907217,
+            "p95": 21259,
+            "maximum": 24710
+          },
+          "dirty-state": {
+            "count": 97,
+            "mean": 6796.81443298969,
+            "p95": 7149,
+            "maximum": 7350
+          },
+          "release": {
+            "count": 97,
+            "mean": 2137.020618556701,
+            "p95": 2181,
+            "maximum": 2217
+          },
+          "background": {
+            "count": 97,
+            "mean": 5164.4639175257735,
+            "p95": 6864,
+            "maximum": 8854
+          },
+          "world": {
+            "count": 97,
+            "mean": 15366.505154639175,
+            "p95": 23489,
+            "maximum": 29493
+          },
+          "header": {
+            "count": 97,
+            "mean": 9595.309278350516,
+            "p95": 18598,
+            "maximum": 18909
+          },
+          "footer": {
+            "count": 97,
+            "mean": 262,
+            "p95": 262,
+            "maximum": 262
+          },
+          "upload": {
+            "count": 97,
+            "mean": 9291.577319587628,
+            "p95": 12768,
+            "maximum": 13228
+          }
+        },
+        "gaps_ms": {
+          "count": 96,
+          "mean": 39.87389924324646,
+          "median": 39.87322411088545,
+          "p95": 39.87434157134473,
+          "maximum": 39.90674792466642
+        }
+      }
+    ]
+  },
+  "ci": [
+    {
+      "run_id": 43357867545,
+      "conclusion": "success",
+      "source_commit": "e42b737f0def8dd70be9b31712b776d83258fadd"
+    },
+    {
+      "run_id": 43357859837,
+      "conclusion": "success",
+      "source_commit": "e42b737f0def8dd70be9b31712b776d83258fadd"
+    }
+  ],
+  "independent_review_sha256": "1a9493ba4f2046b40d49675a652f0649f68e758c1e03aba0be400a1d452ea754",
+  "raw_comparison_sha256": "0fb307fdbde230e2f3e5aceb518ca139bceee0593051fa15da3501b658a6de54",
+  "limitations": [
+    "Whole-game stable 29.97/30 FPS is not accepted.",
+    "Regular NTSC/PAL active picture cadence improves, but regular long hitches remain.",
+    "Bear NTSC 29.8305 to29.6980 FPS, with two long active intervals instead of one, despite lower foreground mean. PAL bear cadence unchanged.",
+    "Different sampled picture populations; observed mean CPU changes are not paired per-picture savings.",
+    "Bounded original level0 route and620-step level4 bear prefix. Not all-level or whole-game acceptance.",
+    "Automated emulator/native evidence is separate from owner/mobile/listening/physical acceptance."
+  ],
+  "qualification_sha256": "a91488921085d156a2e3bbc0dee87883cb243f90b1b2b9e813847a5903a9374b",
+  "workbook": {
+    "sha256": "1b5291b199c12e34548210e83b2c62193b02f546093a8f5f3f2ac8a21d6deadc",
+    "sheet_count": 42,
+    "preserved_historical_tabs": 41,
+    "preserved_cells": 796499,
+    "native_parts_preserved": 18,
+    "formula_errors": 0,
+    "mutation_restore_checks": 2,
+    "native_excel_tested": false
+  },
+  "immutable_prior_roots": 67,
+  "immutable_prior_files_verified": 19390,
+  "immutable_control_receipt_sha256": "92d067878beb324a3cca6f147a596a5abbcadb52e48503f0faf0545d5d55c4ad"
+}

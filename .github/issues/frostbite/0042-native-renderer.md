@@ -1,4 +1,28 @@
-## Owner-requested stop after v26
+## Current delivery — v27 open playfield and sinking colors
+
+The owner explicitly resumed after v26. Same Issue42 writer/checkout/branch;
+no new issue, merge or closure. Source e42b737 binds220 files. ROM SHA256:
+`78090dde8429a5bc6097e02cfaf278539e05ff68b9582d65e16d430d04334c8a`.
+The left stripe is removed, the visible edge is X16 and the footer adds
+`Activision - Retroworks`. Sinking retains normal hat/skin/body colors and the
+original water fade. Original mechanics, input, clock and PSG remain exact.
+
+Whole regular cadence improves2.61% NTSC/1.95% PAL; foreground mean falls
+2.32%/2.45%. NTSC grounded landings improve22→24/26 without losing a previous
+landing or endpoint. Bear mean falls1.16%, but NTSC cadence29.83→29.70 has one
+extra long interval. PAL bear cadence is unchanged. Stable/all-level30FPS and
+owner/mobile/listening/physical acceptance remain open.
+
+615 host tests,2115 source scenes,2088 density scenes,54 header scenes,2115
+audio intervals, four natural/passive routes,1811 independent native calls and
+9 new hardware IRQ boundaries pass. Negative controls pass. The42-tab workbook
+preserves41 historical tabs/796499 cells/18 native parts. Clean rebuild and two
+exact-source CI checks pass. All67 prior evidence roots/19390 files are intact.
+Release publication and download verification are the remaining delivery steps.
+PR43 remains draft/stacked on41. See docs/handoffs/issue-42-v27-delivery.md and
+references/open-playfield-result.json. Earlier sections below are history.
+
+## Historical stop after v26 — superseded by owner resume
 
 The owner requested stopping after the delivered v0.0.26 round on2026-11-12.
 Implementation/experiments are paused pending resume. Issue remains open and
