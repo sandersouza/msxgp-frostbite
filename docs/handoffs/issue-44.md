@@ -108,6 +108,29 @@ host runtime; this is observer speed, not a game gain). Negative CPU writes to
 7000/C7D0/C800/F400 all fail in `issue44-edge-write-guard-neg-02`; neg01's0.1s
 watchdog fired during BIOS boot and is rejected. These checks remain local.
 
+Long-check completion: full02 now passes all16,170,672native calls. No source
+freeze remains active. Receipt sourcec7a08c1 contains the same six sources as
+322bd13. Cycles75/3,129.210546mean/6,711P95/6,775max. Independent review verifies
+all outputs,14files and6source hashes, class membership and direct-ROM expected
+bytes. See `docs/compact-floe-edge-accumulation.md`. Combined caller, shadow
+merge, layout and cadence remain pending; C800 fixture buffers overlap current
+NAME pages and are not an integration allocation. Logical component total7,996B.
+
+New hazard host research: ordinary analytic03 matches every exceptional-X
+cell:33shapes×2reflections×4copy counts×33playerX×160objectX×26Y,36,241,920cells
+each with228views. Analytic02 was rejected (2,064columns) because its alignment
+missed the X153 right-tail bit;03 corrects that threshold. Shore clock02 passes
+all3aliases×2reflections×160playerX×160bearX×35Y =5,376,000cells ×228views.
+Both are private host results, not target code proofs.
+
+Untracked next files at this update: `scripts/compact_hazard_edge.py`,
+`tests/test_compact_hazard_edge.py` and its plan. Six hand-derived tests pass.
+The new ordinary/shore analytic compiler still needs the complete maintained
+host proof and source commit, then native context/query qualification. The shore
+compiler keeps18rows (including the clearing row), omitting only the final row
+whose old/new source glyph bytes are both verified blank. It includes initial
+bear fine motion: body=(bx+(bx<15?6:1))%160, clocks=14-(bx%15).
+
 ## Authority and ownership
 
 The owner approved v0.0.30 as stable/enjoyable and requested closing42 and this
