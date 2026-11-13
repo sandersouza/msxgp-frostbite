@@ -79,6 +79,35 @@ No row evaluator source exists yet at this handoff update. The earlier scope
 and source hashes remain immutable; any later source extension needs its own
 source-bound receipt.
 
+Row follow-through: source78c1d8a qualifies3,340,656native tuple/tag/view calls,
+101code bytes and518shared data bytes,99..419cycles.641host tests pass; the
+horizontal-generator24k regression is byte/cycle identical. Independent review
+reconstructed all666tuples from captured native masks and verified the final
+receipt. See `docs/compact-floe-edge-row.md`.
+
+Accumulation WIP: source322bd13 and `scripts/compact_floe_contact_probe.py`
+classify actual captured geometry into2,086distinct39-byte programs. Expected
+bit7 bytes come directly from v30. Independent review verifies all24,000class
+members preserve source responses across34Y×228views, and reproduces the
+16,170,672-byte expected corpus.100k native smoke passes,126wrapper+101row bytes.
+Combined geometry calls, shadow merge and game integration remain separate.
+
+ACTIVE LONG CHECK: `outputs/compact/issue44-edge-contact-native-full-02`, exec
+session88297, source322bd13. Do not edit its six frozen sources or any of the232
+baseline sources until completion: compact_floe.py, compact_floe_edge.py,
+compact_floe_contact_probe.py, compact_floe_edge.asm, compact_floe_edge_row.asm,
+compact_floe_edge_contact.asm (under scripts/ or src/ as appropriate).
+Raw expected count16,170,672calls, actual target48,512,016bytes. New files and
+documentation/private research outside those hashes may proceed meanwhile.
+
+Full accumulation01 was stopped incomplete because permitted-write callbacks
+made the16M run exceed its watchdog estimate. STOPPED.txt documents rejection.
+The322bd13 guard watches the exact complement of allowed write regions instead.
+Smoke02 is byte-identical to smoke01 across100koutputs AND cycles (38.9→13.1s
+host runtime; this is observer speed, not a game gain). Negative CPU writes to
+7000/C7D0/C800/F400 all fail in `issue44-edge-write-guard-neg-02`; neg01's0.1s
+watchdog fired during BIOS boot and is rejected. These checks remain local.
+
 ## Authority and ownership
 
 The owner approved v0.0.30 as stable/enjoyable and requested closing42 and this

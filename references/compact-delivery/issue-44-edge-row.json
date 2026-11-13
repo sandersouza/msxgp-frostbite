@@ -1,0 +1,140 @@
+{
+  "complete": true,
+  "component_fixture_only": true,
+  "game_runtime_changed": false,
+  "component": "floe-edge-row-evaluator",
+  "stage": "row",
+  "cases": 3340656,
+  "complete_native_stage_domain": true,
+  "complete_native_horizontal_domain": false,
+  "outputs_equal": true,
+  "output_bytes_per_case": 1,
+  "source_commit": "78c1d8a36563625f9c6b02c2f1536351b34b1ecf",
+  "sources": {
+    "scripts/compact_floe.py": "228efe1066c337d58a5b015f086db9720b0bd4c85264ccd28e568617997cba12",
+    "scripts/compact_floe_edge.py": "85f9201fd31b9e87691ed50cd8f03817b0d1457ad78a1a811c752347b4362db1",
+    "scripts/compact_floe_edge_probe.py": "84af0e5a6f035d87e7cb2ca8d45598d8ab3b6ff1f4289495f3201301d339ae0b",
+    "src/compact_floe_edge.asm": "fee31802154b8a76cdf55d797cd3910df34e0bf95f247f6050b8c65a8ac5a7a5",
+    "src/compact_floe_edge_row.asm": "e85db710f52e15aa643daf2f2f2ef54b0e87616b6eebe3884049658e5ae7a8cc"
+  },
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "oracle_metadata_sha256": "cb207af5a74c1113eda366ae8b312a4cc0ea3337ab797a85c20a6b10b094b2e9",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "component_rom_sha256": "6422e69a4461ebb48af6747b88945a1e6de71a1fd41ab69c7c700a42ed91b20c",
+  "component_code_bytes": 101,
+  "component_data_bytes": 518,
+  "scratch_reserved_bytes": 0,
+  "mask_output_bytes": 0,
+  "ix_iy_sp_preserved": true,
+  "bounded_writes": true,
+  "mapper_accesses": 0,
+  "cycles_including_call_and_jump": {
+    "min": 99,
+    "mean": 341.08954768165296,
+    "p95": 419,
+    "max": 419
+  },
+  "host_proof": {
+    "complete": true,
+    "edge_columns": 24000,
+    "edge_cells": 816000,
+    "literal_views": 228,
+    "source_y": [
+      45,
+      77
+    ],
+    "outside_y_sentinel": 0,
+    "edge_player_x": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159
+    ],
+    "interior_proof": {
+      "complete": true,
+      "shadow_cells": 8704000,
+      "interior_cells": 7888000,
+      "literal_views": 228,
+      "geometric_cells": 54400,
+      "footprint_groups": 147,
+      "scalar_shadow_cells": 8704000,
+      "scalar_shadow_table_bytes": 0,
+      "reference_shadow_dictionary_bytes": 420,
+      "player_x_domain": [
+        9,
+        153
+      ],
+      "sizes": {
+        "directory": 1600,
+        "footprints": 1029,
+        "glyphs": 512,
+        "bases": 6
+      },
+      "scope": "Exact finite floe component only; no edge/enemy/shore, target timing or whole-game equivalence claim."
+    },
+    "sizes": {
+      "directory": 1600,
+      "footprints": 1029,
+      "glyphs": 512,
+      "bases": 6,
+      "edge_windows": 320,
+      "edge_low_masks": 32,
+      "edge_bits": 32,
+      "edge_control_clocks": 20,
+      "edge_motion_clocks": 6
+    },
+    "scope": "Host proof of all declared floe edge cells and clipped visible footprints; no native kernel or whole-game integration proof."
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "files": {
+    "row-domain.bin": "945354554c5ebcb92411f905c9060636d16d544a25b1a427a11262aee51fd79a",
+    "inputs.bin": "dee081541e0629e8e2ee91acbc7ae8c1e6bea6b1cf7d9aa698b7c0860476db10",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "a2c95ec5391fa879a2869f24d42a1d631f13384e42f8fc36b8bd2df9947f978a",
+    "expected.bin": "6b44c6d20bd51e25718eb66c8c4b16d59ff6c655ff23f9757a7bae8f4d5745b5",
+    "probe.tcl": "bee663f5f3152267d72fc6ccad6287abefda8cf2775669e0486c6ea489516ce7",
+    "glyphs.bin": "951dd5d31ca1c38f8a3c722cf96b6267aa62bed9ba6b4f46aa5fade4bbdaf535",
+    "bases.bin": "bcf4ea69951b0f26b79b0f01491e5331e10549813d11c02f1aecf122ef70c874",
+    "actual.bin": "33ce6aab0aaf594004dc3663d628b5b1b9802bbe0a1409cb80d425ae5ac13ca0",
+    "component-fixture.rom": "6422e69a4461ebb48af6747b88945a1e6de71a1fd41ab69c7c700a42ed91b20c",
+    "fixture.sym": "c217b4acb7e36054015e7b3a9c45bdcf78e7b62c09f963d05c0c47035f57530d",
+    "fixture.asm": "d3a9f19973e7608b0fb17fb4823c7742fdf388b4a85dde897876c1135ec2e77b",
+    "host-proof.json": "099f236c14715d9ac60a76dca0b12fe7859bc4e6fbac960ed48941606b175717"
+  },
+  "scope": "Every declared native row-mask/tag/view input; full-program accumulation, combined geometry calls, default integration and cadence remain separate.",
+  "raw_receipt": {
+    "path": "outputs/compact/issue44-edge-row-native-full-01/component-result.json",
+    "sha256": "a86e10e1aa091874cd00a685a6ba783547fa0ed47f3ab06c26e4114287d1fd3b"
+  },
+  "host_tests": {
+    "count": 641,
+    "log_sha256": "6ded11682fd788d008be48d6f6028062a3a09489fa1ac2c8526c36c49e8b21ac"
+  },
+  "mask_generator_regression": {
+    "path": "outputs/compact/issue44-edge-masks-regression-01/component-result.json",
+    "sha256": "59bf9a5ac85d5d9e98732451fe7d2d5c8a7dd2672fa7b2ac058f2466fa66e9bb",
+    "cases": 24000,
+    "fixture_bytes_and_cycles_unchanged": true
+  },
+  "independent_review": "All666mask tuples independently derived from captured native geometry; complete native row outputs, recorded files and frozen sources verified without Critical/Important blockers.",
+  "logical_combined_storage": {
+    "bytes": 7870,
+    "shared_player_data_counted_once": 518,
+    "whole_game_size_claim": false,
+    "accumulation_wrapper_not_included": true
+  }
+}
