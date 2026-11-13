@@ -16,16 +16,16 @@ glyph pages and the row operator. Avoid large per-position contact lookups.
 
 ## Task 1: Host compiler and source proof
 
-- [ ] Add hand-derived wrap, next-copy, final-visual-row and doubled-pixel tests;
+- [x] Add hand-derived wrap, next-copy, final-visual-row and doubled-pixel tests;
   observe RED before implementation.
-- [ ] Maintain the analytic ordinary and shore compilers without embedded ROM bytes.
-- [ ] Compare all exceptional enemy X/shapes/reflections/copies/object X/Y/views
+- [x] Maintain the analytic ordinary and shore compilers without embedded ROM bytes.
+- [x] Compare all exceptional enemy X/shapes/reflections/copies/object X/Y/views
   and all shore X/poses/reflections/bear X/Y/views against the accepted ROM.
-- [ ] Keep rejected experiments distinct and bind proof outputs to exact source.
+- [x] Keep rejected experiments distinct and bind proof outputs to exact source.
 
 ## Task 2: Native queries and integration boundary
 
-- [ ] Qualify ordinary horizontal contexts for every raw coordinate/count.
+- [x] Qualify ordinary horizontal contexts for every raw coordinate/count.
 - [ ] Implement measured native queries, sharing existing glyph/data operators.
 - [ ] Verify intermediate masks, electrical outputs, ABI and bounded writes.
 - [ ] Measure actual query costs before flat game integration. Do not promote

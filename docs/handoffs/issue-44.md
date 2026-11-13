@@ -8,6 +8,38 @@ Branch: `codex/enhancement/44-compact-native-formats`, from the integrated PR43
 main commit. Resolve and record that exact merge SHA before implementation.
 The dispatch message also carries the verified integration SHA.
 
+## Current continuation checkpoint
+
+Issue44 remains In progress, draft PR45. Root is the only checkout writer;
+`inventory_review` is read-only. Accepted v30 is still the rollback baseline.
+No compact playable ROM/COM/BIN exists. No source freeze or long check from the
+historical entries below remains active.
+
+Maintained hazard host proofs are complete at38c352f:36,241,920ordinary edge
+cells and5,376,000shore cells, each across228views. Native context9354be9 passes
+102,400cases; ordinary programf1857a3/watchdog9d5f876 passes73,458programs.
+Generic accumulation177eeb2 passes1,091,680declared cases,85wrapper bytes plus
+the101-byte row operator. See `docs/compact-hazard-edges.md` and source-bound
+receipts. Actual query glue/native shore generator remain pending.
+
+Enemy packet constructor06c8b0f passes all8,448native buffer/flag cases versus
+sealedv30.184code+33extra shape bytes reuse existing source/expansion/reverse
+data instead of21,992packet/directory bytes. Mean5,867/max7,245cycles require
+whole-frame testing after integration. See `docs/compact-enemy-packets.md`.
+651host tests pass in `/tmp/frostbite44-compact-packet-tests.log`.
+
+The read-only render audit proves prepared NAME rows can normalize from40,960
+to490data bytes; header fragments to1,360bytes, temperature extra glyph data0.
+Other audited factoring opportunities remain unimplemented. Private evidence:
+`issue44-review-budget-01/report.json`, `issue44-review-row-packets-01/result.json`.
+Selected current asset arenas alone total124,280bytes. Collision replacement
+alone cannot prove32KiB or48KiB fit. Next: constructors/decoders with identity
+and ownership preservation, full linked code/data/RAM budget, actual native
+formats/loaders, NTSC/PAL density/oracle checks and playable release. Never
+present a component fixture as the requested game ROM.
+
+## Historical progress (later checkpoints supersede WIP wording)
+
 Inventory continuation: integrated starting commit
 `57d32b526757ac4ce3deb72323c4f163112dfe49`. Issue44 owns this checkout exclusively.
 See `docs/compact-native-inventory.md` and its compact receipt for the read-only
@@ -92,13 +124,12 @@ members preserve source responses across34Y×228views, and reproduces the
 16,170,672-byte expected corpus.100k native smoke passes,126wrapper+101row bytes.
 Combined geometry calls, shadow merge and game integration remain separate.
 
-ACTIVE LONG CHECK: `outputs/compact/issue44-edge-contact-native-full-02`, exec
-session88297, source322bd13. Do not edit its six frozen sources or any of the232
-baseline sources until completion: compact_floe.py, compact_floe_edge.py,
+Completed former long check: `outputs/compact/issue44-edge-contact-native-full-02`,
+source322bd13. Its six sources were frozen until completion: compact_floe.py, compact_floe_edge.py,
 compact_floe_contact_probe.py, compact_floe_edge.asm, compact_floe_edge_row.asm,
 compact_floe_edge_contact.asm (under scripts/ or src/ as appropriate).
-Raw expected count16,170,672calls, actual target48,512,016bytes. New files and
-documentation/private research outside those hashes may proceed meanwhile.
+Raw expected count16,170,672calls, actual target48,512,016bytes. See the completion
+entry below; the freeze is no longer active.
 
 Full accumulation01 was stopped incomplete because permitted-write callbacks
 made the16M run exceed its watchdog estimate. STOPPED.txt documents rejection.

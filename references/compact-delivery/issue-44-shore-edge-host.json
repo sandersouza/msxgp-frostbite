@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "accepted": true,
+  "kind": "shore",
+  "complete_declared_domain": true,
+  "columns": 153600,
+  "cells": 5376000,
+  "literal_views": 228,
+  "origin": 12,
+  "program_rows": 18,
+  "source_commit": "38c352fa8fbd13e80c5df8b241b5a485c3b3a712",
+  "sources": {
+    "scripts/compact_hazard_edge.py": "a951236bea06cde5e0dbf404e2298d44e2dc2287597a62c2f97aec421479f717",
+    "scripts/compact_floe.py": "228efe1066c337d58a5b015f086db9720b0bd4c85264ccd28e568617997cba12"
+  },
+  "producer_sha256": "e3fadd3c48c1f9e9e29c24eebe687978f2e9462a7db99b37108fc6c6703ff825",
+  "oracle_helper_sha256": "3a1a02a8293369c530d35206908b306000129985f53555fc092a6488a54f1821",
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "electrical_stream_sha256": "e965c3e392f8871b8989b6cb113f5e8121b46fe754ee28ad6072bcce3a65cce6",
+  "scope": "Maintained host compiler only; native contexts/queries, integration and cadence remain pending."
+}
