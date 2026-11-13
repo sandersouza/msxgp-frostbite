@@ -1,0 +1,97 @@
+{
+  "complete": true,
+  "version": "v0.0.29-aligned-credit-diagnostic",
+  "url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.29-aligned-credit-diagnostic",
+  "release_id": 444311344,
+  "prerelease": true,
+  "source_commit": "5ac94c5fb282596a20cb5a5dc8bd93064e9fdb22",
+  "documentation_commit": "0f04560c7738576f7d22c11f7961c95e8d231196",
+  "rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+  "assets": [
+    {
+      "name": "BUILD.json",
+      "sha256": "a7575890e66c182567efce64e4e6e107e61defbf25814e45dcc4704ba39b5830",
+      "bytes": 25290,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.29-aligned-credit-diagnostic/BUILD.json",
+      "api_digest": "sha256:a7575890e66c182567efce64e4e6e107e61defbf25814e45dcc4704ba39b5830"
+    },
+    {
+      "name": "PERFORMANCE.json",
+      "sha256": "ebcf77aa936bbfa497b210bd19454b17b8cfc2ca337b6fa3244d737ca9a31954",
+      "bytes": 3968,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.29-aligned-credit-diagnostic/PERFORMANCE.json",
+      "api_digest": "sha256:ebcf77aa936bbfa497b210bd19454b17b8cfc2ca337b6fa3244d737ca9a31954"
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "4d8d41f045e2524098959a9d6c7729337533370dff46cfbcba3b2194edbb6916",
+      "bytes": 432,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.29-aligned-credit-diagnostic/SHA256SUMS",
+      "api_digest": "sha256:4d8d41f045e2524098959a9d6c7729337533370dff46cfbcba3b2194edbb6916"
+    },
+    {
+      "name": "SOURCE.txt",
+      "sha256": "e6f75bde4672b96c2d5491ca54109ce2d2d8938e03707926a6922d51e5f4ae89",
+      "bytes": 934,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.29-aligned-credit-diagnostic/SOURCE.txt",
+      "api_digest": "sha256:e6f75bde4672b96c2d5491ca54109ce2d2d8938e03707926a6922d51e5f4ae89"
+    },
+    {
+      "name": "VALIDATION.json",
+      "sha256": "be127df17db7e20254ca1def556a556c7094d314f18970ff360527c1271525d5",
+      "bytes": 9124,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.29-aligned-credit-diagnostic/VALIDATION.json",
+      "api_digest": "sha256:be127df17db7e20254ca1def556a556c7094d314f18970ff360527c1271525d5"
+    },
+    {
+      "name": "frostbite-0.0.29-aligned-credit-diagnostic.rom",
+      "sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+      "bytes": 4194304,
+      "url": "https://github.com/sandersouza/msxgp-frostbite/releases/download/v0.0.29-aligned-credit-diagnostic/frostbite-0.0.29-aligned-credit-diagnostic.rom",
+      "api_digest": "sha256:94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3"
+    }
+  ],
+  "release_notes_sha256": "f3d47e52f2b6a7aae3cf5f5eb2b20a7fe574cf41d1a5998c82d45fed5eb0fa28",
+  "six_fresh_downloads_match": true,
+  "tag_exact_runtime": true,
+  "rollback_v28_assets_and_notes_unchanged": true,
+  "prepublication_review": {
+    "complete": true,
+    "rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+    "blockers": [],
+    "receipt_path": "outputs/presentation/credit-as-delivery-review/review.json",
+    "receipt_sha256": "13146c99b472bc26cb2099b3665e13602aaa572c13372b9040b7ae2bb9809f08"
+  },
+  "owner_acceptance": false,
+  "physical_acceptance": false,
+  "webmsx": {
+    "complete": true,
+    "rom_sha256": "94e4ee71f2ef4021e9ec16c960fa258cae6d27d660c11f3005dde0d51d0473d3",
+    "rom_sha1": "4AF4BCE016CDA8CEC94DB81474BF1BBE0637F09E",
+    "mapper": "ASCII16",
+    "machine": "MSX1A",
+    "video_hz": 60,
+    "F1_pressed": true,
+    "screenshot_sha256": "47580b41f662284694ac502ca3b4a385f54df4c52a75268ca87c12b2c6106826",
+    "state_sha256": "4729b5eb10a9cf21c06447acce892291d1e9edfe7725cd1ea5272ff1a2838190",
+    "browser_closed": true,
+    "console_errors": 0,
+    "console_warnings": 1,
+    "warning": "ScriptProcessorNode deprecation",
+    "audio_listening_verified": false,
+    "scope": "Desktop launch, exact published ROM and displayed game only; no fluidity, listening, mobile, owner or physical acceptance."
+  },
+  "tracking": {
+    "issue": 42,
+    "state": "open",
+    "PR": 43,
+    "draft": true,
+    "merged": false,
+    "base": "codex/fix/39-atari800-performance",
+    "project": 7,
+    "status": "In review",
+    "fresh_issue_PR_bodies_verified": true,
+    "fresh_project_item_verified": true
+  },
+  "independent_postpublication_review_sha256": "8a2d7ea02e908c08d4cb02193fc4b5e0788975d1d23a2d21c5ee29656a2f9ac4"
+}

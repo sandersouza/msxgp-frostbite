@@ -11,4 +11,4 @@ source mechanics and graphics outside the credit. All v28 evidence stays intact.
 - [x] Build an additive, hash-guarded static credit layer on sealed v28.
 - [x] Inspect the actual raster and audit free tile/code reservations.
 - [x] Verify native graphics/ownership and full NTSC/PAL routes, including bear.
-- [ ] Review and publish the exact v29 diagnostic ROM with rollback and tests.
+- [x] Review and publish the exact v29 diagnostic ROM with rollback and tests.

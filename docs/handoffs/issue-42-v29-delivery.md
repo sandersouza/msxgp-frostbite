@@ -30,3 +30,22 @@ remain open. Follow the release's focused footer tests before visual acceptance.
 After publication, record exact downloads, tag/source/notes and rollback in
 `references/aligned-credit-delivery.json`. Keep PR43 draft/stacked on41 and
 Issue42 open/In review. Continue existing WORLD/NAME work after this delivery.
+
+## Verified publication
+
+[v0.0.29](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.29-aligned-credit-diagnostic)
+contains the exact tested ROM and five provenance/performance/checksum files.
+All six root downloads and six independent downloads match the frozen packet,
+API digests, runtime tag and immutable documentation0f04560c. v28's six assets,
+notes and historical workbook are unchanged. Native review is sealed with179
+files, receipt `aee012607a8db874a23518064a4a43fdab2b17d0f8d441cca0fad38a1bd06500`.
+Prepublication review: `13146c99b472bc26cb2099b3665e13602aaa572c13372b9040b7ae2bb9809f08`.
+Postpublication review: `8a2d7ea02e908c08d4cb02193fc4b5e0788975d1d23a2d21c5ee29656a2f9ac4`.
+
+Actual desktop WebMSX loads the exact published ROM as ASCII16/MSX1A/60Hz,
+showing the game and aligned footer after F1. The scoped browser is closed.
+This is launch-only evidence, separate from human/mobile/listening/physical
+acceptance. Fresh GitHub issue/PR bodies and Project7 status were checked:
+Issue42 open/In review, PR43 draft/stacked on41/unmerged. All writers stopped;
+new AS evidence is sealed under `outputs/presentation/credit-as-seals.json`.
+Public receipt: `references/aligned-credit-delivery.json`.
