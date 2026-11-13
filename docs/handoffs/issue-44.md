@@ -61,6 +61,24 @@ counter states across nine player positions and two ice rows. Run its helper
 with SDL dummy video/audio also in the parent environment: backend `-help`
 otherwise timed out before creating a capture. No default game changed.
 
+Edge follow-through: `issue44-edge-event-model-03` corrects the rejected02 model's
+GRP/ENAM one-color-clock delay; all816,000edge cells ×228views match. Sparse04
+and analytic01 agree independently. Maintained sourcec79bfb2 qualifies all24,000
+native horizontal mask-generator cases,652code+666data bytes,32scratch+32output,
+19,352..24,969cycles (about6.98ms worst before convolution).640host tests pass.
+Independent review reproduces all masks/assets and verifies final raw/native
+hashes. See `docs/compact-floe-edge-masks.md`. This is geometry only; native
+view/Y convolution and combined electrical outputs remain pending. Do not
+promote without full-frame IRQ/cadence measurement and optimization if necessary.
+
+`issue44-edge-evaluator-domain-01` measures666distinct five-mask row tuples and
+2,086distinct39-byte full programs across the24,000horizontal cases. A row
+evaluator can be qualified over all tuple/tag/view inputs, separately from the
+already-qualified geometry generator. A full-program comparison can follow.
+No row evaluator source exists yet at this handoff update. The earlier scope
+and source hashes remain immutable; any later source extension needs its own
+source-bound receipt.
+
 ## Authority and ownership
 
 The owner approved v0.0.30 as stable/enjoyable and requested closing42 and this

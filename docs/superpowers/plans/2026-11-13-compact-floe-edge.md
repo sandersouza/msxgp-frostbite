@@ -30,9 +30,10 @@ needed51,159bytes and was rejected.
 
 - [x] Add an isolated edge fixture; observe missing-entry failure.
 - [x] Implement bounded Z80 masks, sharing existing floe/player assets.
-- [ ] Measure code/data/scratch RAM and native cycles in the declared corpus.
-- [ ] Verify source/ROM provenance, ABI, write bounds and native outputs.
-- [ ] Review and record limitations before flat runtime integration.
+- [x] Measure generator code/data/scratch RAM and cycles in its declared corpus.
+- [x] Verify generator provenance, ABI, write bounds and native outputs.
+- [x] Review and record generator limitations before flat runtime integration.
+- [ ] Qualify native row/view/Y convolution and combined electrical outputs.
 
 Native work is staged: qualify all24,000horizontal mask-generator inputs first.
 Its32-byte result is independent of player Y/glyph/reflection. Native view/Y
