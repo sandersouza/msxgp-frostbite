@@ -52,5 +52,22 @@ class EdgeMaskTests(unittest.TestCase):
         for args in ((-1,0,8,8,0,0),(0,160,8,8,0,0),(0,0,16,8,0,0),(0,0,8,8,160,0),(0,0,8,8,0,8)):
             with self.assertRaises(ValueError):m.edge_row_masks(*args)
 
+    def test_row_evaluator_uses_whole_byte_equality_and_exit_tag(self):
+        m=self.model()
+        contact=getattr(m,'edge_row_convolve',None)
+        self.assertIsNotNone(contact,'row mask evaluator missing')
+        equal=bytes([128,128]+[0]*17)
+        masks=(0,128,1,128,0)
+        self.assertTrue(contact(equal,masks,0))
+        self.assertFalse(contact(equal,masks,0,reflect=True))
+        different=bytes([1,128]+[0]*17)
+        self.assertTrue(contact(different,masks,0))
+        self.assertTrue(contact(equal,masks,-1))
+        self.assertFalse(contact(equal,masks,-2))
+        self.assertFalse(contact(equal,masks,19))
+        self.assertFalse(contact(equal,masks,18))
+        visible=(0,0,0,0,128)
+        self.assertTrue(contact(equal,visible,0))
+
 
 if __name__=='__main__':unittest.main()

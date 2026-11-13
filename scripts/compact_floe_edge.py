@@ -128,6 +128,40 @@ def edge_convolve(glyph,footprint,control,motion_clocks,player_x,floe_x,y,*,refl
     return False
 
 
+def edge_row_convolve(glyph,masks,tag,*,reflect=False):
+    if (len(glyph) != 19 or len(masks) != 5
+            or any(type(v) is not int or not 0 <= v <= 255 for v in masks)
+            or type(tag) is not int):
+        raise ValueError('complete glyph, five byte masks and integer tag required')
+    if reflect:
+        glyph = bytes(int(f'{b:08b}'[::-1],2) for b in glyph)
+    before,equal,different,exiting,visible = masks
+    if tag == -1:
+        return bool(glyph[0] & exiting)
+    if not 0 <= tag < 19:
+        return False
+    new = glyph[tag]
+    old = glyph[tag+1] if tag < 18 else 0
+    return bool(new & visible or old & before
+                or (old & equal if old == new else new & different))
+
+
+def edge_row_domain(assets):
+    result = set()
+    for control in range(10):
+        pair = assets['edge_control_clocks'][control*2:control*2+2]
+        for px in (*range(9),*range(154,160)):
+            clip = visible_player_mask(px)
+            for fx in range(160):
+                dx = (fx-px) % 160
+                group = assets['directory'][control*160+dx]
+                visible = assets['footprints'][group*7:group*7+7]
+                rows = compile_edge_rows(pair,assets['edge_motion_clocks'],px,fx)
+                for row in range(8):
+                    result.add((*rows[row],visible[row] & clip if row < 7 else 0))
+    return tuple(sorted(result))
+
+
 def build_edge_assets(original,oracle):
     assets,base_proof = build_assets(original,oracle)
     control_clocks = tuple(tuple((v >> 4)^8 for v in pair) for pair in control_pairs(original))
