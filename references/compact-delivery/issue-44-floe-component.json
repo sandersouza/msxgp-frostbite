@@ -1,0 +1,88 @@
+{
+  "complete": true,
+  "game_runtime_changed": false,
+  "component_fixture_only": true,
+  "no_playable_rom_release": true,
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "component_rom_sha256": "6cf4d187caf6b8f9c6e55fc0ab9a9f046a49b7c7c7dcedefde94aa0e0e52a0f5",
+  "source_commit": "3370af7b3217ece06a113088df28310cf30b4c25",
+  "oracle_metadata_sha256": "cb207af5a74c1113eda366ae8b312a4cc0ea3337ab797a85c20a6b10b094b2e9",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "sources": {
+    "scripts/compact_floe.py": "c5e3651b6004e3cae972c08adcf5c8915f3400af8ffc1359c7f073d1210c38be",
+    "scripts/compact_floe_probe.py": "e170acfa43582e9fd3e85f7daf821269297c063ed6a45fc702cb1c2bdc867db3",
+    "src/compact_floe_kernel.asm": "4120dcdd7fef86db9293e3eb001d7927a1419f8cd1db1b4bc0bc777471111ad9"
+  },
+  "cases": 1193944,
+  "host_proof": {
+    "complete": true,
+    "shadow_cells": 8704000,
+    "interior_cells": 7888000,
+    "literal_views": 228,
+    "geometric_cells": 54400,
+    "footprint_groups": 147,
+    "scalar_shadow_cells": 8704000,
+    "scalar_shadow_table_bytes": 0,
+    "reference_shadow_dictionary_bytes": 420,
+    "player_x_domain": [
+      9,
+      153
+    ],
+    "sizes": {
+      "directory": 1600,
+      "footprints": 1029,
+      "glyphs": 512,
+      "bases": 6
+    },
+    "scope": "Exact finite floe component only; no edge/enemy/shore, target timing or whole-game equivalence claim."
+  },
+  "complete_native_domain": true,
+  "outputs_equal": true,
+  "ix_iy_sp_preserved": true,
+  "only_stack_writes": true,
+  "mapper_accesses": 0,
+  "component_code_bytes": 186,
+  "component_data_bytes": 3147,
+  "cycles_including_call_and_jump": {
+    "min": 141,
+    "mean": 656.4104673251006,
+    "p95": 1084,
+    "max": 1227
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "files": {
+    "inputs.bin": "02f2a3fac1ae2e06654d0c94c9defc960827579eb50f35a50ea56cdd6116a76f",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "0c7fcf90e7a693c06d5badc043536764bbd29f07382d3ba2773aa39f2a1cd7d0",
+    "expected.bin": "241d7bf33169cb2e44425e5d592504775b0208579307f07ae349b9779756a596",
+    "probe.tcl": "a5fce851b46f0371be1f23f131ae1721ac75d4c8a1de36fa9bf1500e424c3c0a",
+    "glyphs.bin": "951dd5d31ca1c38f8a3c722cf96b6267aa62bed9ba6b4f46aa5fade4bbdaf535",
+    "bases.bin": "bcf4ea69951b0f26b79b0f01491e5331e10549813d11c02f1aecf122ef70c874",
+    "actual.bin": "a29486ecba7d600633435e695a4e4a3ed61698f5546ca8405a2ddf280a21c9ea",
+    "component-fixture.rom": "6cf4d187caf6b8f9c6e55fc0ab9a9f046a49b7c7c7dcedefde94aa0e0e52a0f5",
+    "fixture.sym": "907aec00dd15f6feee43c8f7f687e9313fd516f462db1782a933b811bbfda7d8",
+    "directory.bin": "95cfe122c93614c6dcf7e372ebc0786e5e3f6d0566975ec97e94869b52aeb4d1",
+    "fixture.asm": "7303e23f1168d6224bf25e88d95328cd2ee47f7a8e194f5736ab364cfbcb6ad6",
+    "footprints.bin": "eb1b46f99b655056850d6c5c69d09e127e8ad097d9f1f0a7c4444cc204dc3203",
+    "host-proof.json": "69c4e741fc65af56990e89944b2649ae84908f541247aa1bbaf563ff786af1fe"
+  },
+  "scope": "Actual Z80 floe component at interiorX9..153 plus full uniform shadow channel; no edge/enemy/shore, default game integration or whole-frame cadence proof.",
+  "raw_receipt": {
+    "path": "outputs/compact/issue44-kernel-full-01/component-result.json",
+    "sha256": "a801f857f5b8baf7f1c234091f25269a3e7890fcf259987db3a74f826c39b462"
+  },
+  "host_test_count": 631,
+  "host_test_log_sha256": "a25abfa19e952739d6dc1a8757ebd7345f02c1820e9487a28330ed8afe6ba149",
+  "independent_review": {
+    "source_commit": "3370af7b3217ece06a113088df28310cf30b4c25",
+    "assessment": "No Critical/Important blockers for the declared component; final native outputs, files, sources and cycles independently verified."
+  },
+  "next_host_hypothesis": {
+    "path": "outputs/compact/issue44-ordinary-geometry-02/ordinary-geometry.json",
+    "sha256": "9dc5f8e3cd0f2049d8e03f69c6ae3e7d48a4aa8346ffd09d6f6380702a038317",
+    "scope": "Ordinary common-profile seven-row collision hypothesis; no native or edge proof."
+  }
+}

@@ -16,14 +16,18 @@ new raw work is in `outputs/compact/issue44-*`; older controls remain immutable.
 No product ROM bytes or upper RAM/VRAM allocation changed. Do not mistake the
 completed inventory for completion of this issue's ROM/COM/BIN deliverables.
 
-Next component WIP: `scripts/compact_floe.py`, `compact_floe_probe.py` and
+Qualified standalone component: `scripts/compact_floe.py`, `compact_floe_probe.py` and
 `src/compact_floe_kernel.asm` implement a standalone floe kernel, unlinked from
 the default game. Host proof checks8,704,000shadow cells,7,888,000interior cells
 and54,400cells ×228views. The shadow channel reduces further to a scalar rule
-with zero table bytes. Native smoke03 passes20,000cases,186code+3,147data bytes,
-141..1,066cycles including CALL/JP. This is a component sample, not a full native
-qualification or whole-frame gain. Full shared-footprint/Y/view plus shadow-X
-qualification, review and edge/enemy/shore replacements remain pending.
+with zero table bytes. Source3370af7 passes1,193,944native cases,
+186code+3,147data bytes,141..1,227cycles including CALL/JP. Independent review
+verifies the final receipt with no Critical/Important blockers. This is full
+qualification of the declared component corpus, not whole-game cadence or new
+formats. See `docs/compact-floe-component.md`. Boundary/enemy/shore equivalents,
+flat layout/loaders and whole-frame qualification remain pending. An additional
+host-only ordinary-enemy experiment identifies seven collision rows versus
+eight visual rows; preserve this source timing distinction.
 
 ## Authority and ownership
 

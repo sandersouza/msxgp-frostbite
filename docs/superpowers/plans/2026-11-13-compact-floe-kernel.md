@@ -4,7 +4,7 @@
 
 **Goal:** Prove an actual small Z80 floe-contact component before replacing the accepted game's tables.
 
-**Architecture:** Shared seven-byte footprints and a420-byte independent shadow channel. A mapperless component fixture compares actual Z80 results with the accepted ROM's contact oracle. This fixture is not a playable game release and does not change the default build.
+**Architecture:** Shared seven-byte footprints and an exact scalar shadow channel, derived from the initially proved420-byte dictionary. A mapperless component fixture compares actual Z80 results with the accepted ROM's contact oracle. This fixture is not a playable game release and does not change the default build.
 
 **Tech Stack:** Python, sjasmplus, Z80, openMSX, existing local original/baseline.
 
@@ -49,12 +49,13 @@ Files: `src/compact_floe_kernel.asm`, `scripts/compact_floe_probe.py`.
 
 Measured refinement: the420-byte shadow dictionary admits an exact scalar rule,
 verified against all8,704,000cells. The component uses zero shadow-table bytes;
-the footprint/glyph data occupy3,147bytes and initial native smoke passes20,000
-cases. Full native-domain qualification is still pending.
-- [ ] Exercise all shared footprints/Y/literal views and all shadow-X entries
+the footprint/glyph data occupy3,147bytes. Full native qualification now passes
+1,193,944cases, code186bytes,141..1,227cycles including CALL/JP. This is not
+whole-game cadence or edge/enemy/shore qualification.
+- [x] Exercise all shared footprints/Y/literal views and all shadow-X entries
   on actual standard-speed Z80. Record exact outputs, cycles and preserved ABI.
-- [ ] Compare cold/loading layout and bounds, document component size and mean/
+- [x] Compare cold/loading layout and bounds, document component size and mean/
   worst cycles. Keep the actual original-contact oracle independent of the
   implementation and reject any mismatch.
-- [ ] Review and commit the component with explicit remaining edge/hazard and
+- [x] Review and commit the component with explicit remaining edge/hazard and
   whole-game timing limitations. Issue44 stays In progress; no game release.
