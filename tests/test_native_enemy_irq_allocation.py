@@ -30,3 +30,25 @@ class NativeIRQAllocation(unittest.TestCase):
         free={a for first,last in free_extents(m) for a in range(first,last)}
         self.assertFalse(set(range(0xE370,0xE374))&free)
         self.assertIn(0xE374,free)
+
+    def test_flat_catalog_preserves_all_eight_P0_cache_records(self):
+        from native_flat_catalog import free_extents
+        m=self.meta(116,True)
+        m['compact_retired_resident']={'ranges':[]}
+        m['compact_grid_palette']={'reclaimed_ranges':[]}
+        free={a for first,last in free_extents(m) for a in range(first,last)}
+        self.assertFalse(set(range(0xC080,0xC180))&free)
+
+    def test_native_lifetimes_preserve_fixed_key_publishers(self):
+        from native_flat_catalog import free_extents
+        m=self.meta(116,True)
+        m['compact_retired_resident']={'ranges':[]};m['compact_grid_palette']={'reclaimed_ranges':[]}
+        free={a for first,last in free_extents(m,native_lifetimes=True) for a in range(first,last)}
+        self.assertFalse(set(range(0x4B02,0x4B2F))&free)
+
+    def test_native_lifetimes_preserve_live_header_fragment_inputs(self):
+        from native_flat_catalog import free_extents
+        m=self.meta(116,True)
+        m['compact_retired_resident']={'ranges':[]};m['compact_grid_palette']={'reclaimed_ranges':[]}
+        free={a for first,last in free_extents(m,native_lifetimes=True) for a in range(first,last)}
+        self.assertFalse(set(range(0xC7B0,0xC7B3))&free)

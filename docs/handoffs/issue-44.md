@@ -1,3 +1,100 @@
+# Current Issue44 continuation — real native formats built, acceptance pending
+
+This section supersedes the historical progress entries below. Sole writer stays
+in this Issue44 chat/branch; do not start a new issue or reset the checkout.
+Branch: `codex/enhancement/44-compact-native-formats`; PR45 remains draft,
+Issue44 In progress. Continue autonomously; this handoff is not a stopping point.
+
+Actual complete Normal32K cartridge: `outputs/compact/issue44-native-delivery-02/cartridge/FROSTBIT.ROM`,
+SHA256 `4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d`.
+It is32768 bytes with no mapper or external game payload. The shared source-built
+cold RAM/VRAM were reproduced twice from maintained initializers and qualified
+assets, never from emulator snapshots.219 named immutable objects occupy16512
+of16886 declared free bytes;374 fragmented bytes remain. Packed payload32156B,
+header157B,stage2 269B,68B payload gap. Audited backwards ZX0 requires3B overlap
+slack; low decode is shifted3 bytes then relocated before entry.
+
+Native disk files under delivery-02/disk:
+- COM32527B: `4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577`.
+- Main BASIC BIN21267B: `b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e`.
+- Required VRAM companion FBGFX.BIN11797B: `789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f`.
+- Launcher BAS80B: `8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8`.
+
+ROM same-byte evidence also exists under native-plain32-05. Four actual cold
+Normal-ROM source/pixel/physical/IRQ routes pass: regular30.168185NTSC /
+28.440668PAL; bear28.015826 /24.045080. These are below accepted v30
+32.538961 /30.999139 and29.697792 /25.078850. Cadence recovery is OPEN.
+Regular/pal and bear/ntsc: native-plain32-check-11; ntsc and bear/pal:
+native-plain32-check-05. The new real-cold2115-scene matrix is running under
+native-plain32-check-15; previous warm2115 matrix under native-takeover-15
+passes. Never substitute a historical4MiB inner receipt's ROM id for the actual
+executed native product: outer native-takeover.json distinguishes them.
+
+Real native DOS1 COM and Disk BASIC loading already passed on an actual Sony
+HB-701FD64KiB/TMS9918 profile with Microsoft BIOS/BASIC/DOS system files.
+Initial product plain32-03/disk-02 passed both formats in NTSC/PAL. The current
+same-byte disk-03 BASIC NTSC check passes under native-disk-check-06; finish the
+remaining final same-byte disk matrix before publication. Tests compare full
+cold low RAM/high RAM/VRAM before native entry, then subsequent IRQ/rendering.
+No physical MSX or owner/audio-listening acceptance is claimed.
+
+Current source: scripts/build_native_delivery.py orchestrates exact native
+allocation/link/cold initialization/cartridge/COM/BIN creation and private source
+archive. See docs/native-formats.md for addresses, slots, BASIC companion,
+reset-only exit, reproducible commands and evidence classes. Full host suite:
+721 tests pass (/tmp/fb44-native-suite-current.log); rerun before delivery.
+
+Selected small savings: fast normal70-pattern P0 generator; exact512-case sparse
+bear-row clearing; exact1280-row aligned byte increments; only source-proved
+obsolete mapper CALLs are elided. Native graphic/palette/IRQ ownership stays
+strict. Optional P0-clear prototype at native-link-23/cold-11/plain32-09 passes
+512/2115 graphics plus natural routes but has MIXED cadence: regularNTSC30.04964,
+PAL28.38117, bearNTSC28.01583/PAL24.16967. Do not select it merely because mean
+prepare cycles fell. The earlier X0-empty experiment was rejected by the actual
+pixel oracle: expanded accepted playfield shows the player there. It is removed
+from the builder. Preserve accepted v30 and all old published bytes.
+
+Next: complete current native matrix/final disk quartet; freeze/archive exact
+sources, commit scoped files excluding unrelated build_compact_grid_experiment.py,
+request independent whole-branch review, publish useful native diagnostic with
+exact hashes/source/human tests and honest cadence limits. Keep44 open until its
+own full acceptance passes; continue measured cadence work without another
+permission/checkpoint. Publish new bytes only with a new version. No legacy
+removal (Issue17), no original-derived inputs/assets staged.
+
+---
+
+## Current continuation: native flat link (Task5, not delivered)
+
+Current qualified internal base: `outputs/compact/issue44-native-enemy-irq-game-02/build`,
+SHA `e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239`.
+All four natural routes and2115 original scenes pass the independent original
+source/RGB/physical owner/IRQ oracles;704 host tests passed before the additional
+P0 cache allocator regression. The enemy SGT uploader now protects both VDP
+address bytes against the real source IRQ;264 injected latch-reset cases also
+pass. See `references/compact-delivery/issue-44-native-graphic-irq.json`.
+Native bear Tasks1–4 are complete. Task5 continues to actual flat executable,
+Normal32K attempt, standalone COM/BLOAD BIN, full cadence recovery and delivery.
+No native product binary or new human release exists yet. Current4MiB internal
+regularNTSC29.01336/PAL27.86551, bear27.75642/24.04508: below accepted cadence.
+
+The allocation-only catalog is NOT a closed budget. Complete source IRQ edge
+families49/50/51, Retroworks runtime credit and P0 grid translation must all be
+linked, even where sampled ROM-read coverage misses them. Share the identical
+row evaluator and contact accumulator instead of copying cartridge padding.
+C080..C17F is the entire live eight-way P0 cache;C100..C17F must never be reused.
+
+Next-link architecture: build all code/assets from maintained source and exact
+finite source domains, never from a captured emulator RAM image. First run a
+RAM takeover diagnostic after genuine cold initialization; use the two ASCII16
+windows independently to copy linked core and resident payloads into actual
+RAM. Source-qualified cold/dead routines can then hold native immutable objects.
+Preserve original gameplay, fixed physical roles and independent original
+oracles. A native metadata allocation may reuse only explicitly proved unused
+ice/fusion key slots, with exact immutable initialization/write protection;
+active bear/header/igloo/enemy/P0 keys remain intact. Audit all rare edge states
+and interrupt boundaries before making any fit/compatibility claim.
+
 # Issue44 — compact native formats
 
 ## Native bear integration, Tasks1–3 complete; Task4 active

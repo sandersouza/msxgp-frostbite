@@ -65,3 +65,14 @@ class Allocation(unittest.TestCase):
         q=Layout(((0x100,0x200),))
         with self.assertRaises(ValueError):q.windows('bad',b'abcdef',b'\x04\0',4,8)
         self.assertEqual(q.objects,{})
+
+    def test_windows_can_keep_the_pointer_high_bit_available(self):
+        q=Layout(((0x100,0x108),(0x200,0x208),(0x9000,0x9008)))
+        pointers=q.windows('bounded',b'abcdefghijk',b'\0\0\7\0',4,8,address_limit=0x8000)
+        for at in range(0,len(pointers),2):self.assertLess(int.from_bytes(pointers[at:at+2],'little'),0x8000)
+        self.assertEqual(q.image[0x9000:0x9008],bytes(8))
+
+    def test_address_limit_is_checked_before_allocation(self):
+        q=Layout(((0x7FFF,0x8010),))
+        with self.assertRaises(ValueError):q.add('phase-pointer',b'AB',address_limit=0x8000)
+        self.assertEqual(q.objects,{})

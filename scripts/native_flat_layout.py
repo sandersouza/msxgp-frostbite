@@ -12,14 +12,15 @@ class Layout:
         self.image=bytearray(65536)
         self.objects={}
 
-    def add(self,name,data,alignment=1):
+    def add(self,name,data,alignment=1,*,address_limit=65536):
         if not isinstance(name,str) or not name or name in self.objects:raise ValueError('unique named native object required')
         if not data or type(alignment) is not int or alignment<1 or alignment&(alignment-1):
             raise ValueError('nonempty object and power-of-two alignment required')
+        if type(address_limit) is not int or not 0<address_limit<=65536:raise ValueError('bounded exclusive address limit required')
         choices=[]
         for i,(a,b) in enumerate(self.free):
             start=(a+alignment-1)&-alignment
-            if start+len(data)<=b:choices.append((b-a,i,start))
+            if start+len(data)<=min(b,address_limit):choices.append((b-a,i,start))
         if not choices:raise ValueError(f'native object {name} ({len(data)} bytes) cannot fit certified free extents')
         _,i,start=min(choices)
         a,b=self.free.pop(i);end=start+len(data)
@@ -36,7 +37,7 @@ class Layout:
         return b''.join(self.add(f'{name}/{i//stride}',data[i:i+stride]).to_bytes(2,'little')
                         for i in range(0,len(data),stride))
 
-    def windows(self,name,pool,offsets,width,chunk_size=128):
+    def windows(self,name,pool,offsets,width,chunk_size=128,*,address_limit=65536):
         if (not pool or not offsets or len(offsets)%2 or type(width) is not int or width<1
                 or type(chunk_size) is not int or chunk_size<width):
             raise ValueError('bounded whole immutable windows required')
@@ -45,7 +46,7 @@ class Layout:
         spans=[];start=0
         while start<len(pool):
             end=min(start+chunk_size,len(pool))
-            address=self.add(f'{name}/chunk{len(spans)}',pool[start:end])
+            address=self.add(f'{name}/chunk{len(spans)}',pool[start:end],address_limit=address_limit)
             spans.append((start,end,address))
             if end==len(pool):break
             start=end-width+1
