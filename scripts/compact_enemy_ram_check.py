@@ -9,12 +9,23 @@ import compact_grid_window_check
 from render_build import symbols
 
 
+def native_code_size(metadata):
+    rows=[r for r in metadata.get('compact_enemy_ram',{}).get('initializers',[]) if r['ram_address']==0xE300]
+    feature=metadata.get('native_enemy_irq_fix')
+    expected=116 if feature else 112
+    if (len(rows)!=1 or rows[0]['size']!=expected or feature and
+            (feature.get('code_bytes')!=116 or not feature.get('protected_address_latch'))):
+        raise ValueError('explicit exact native enemy code allocation required')
+    return expected
+
+
 def check(build, out, mode):
     build, out = build.resolve(), out.resolve()
     m = json.loads((build/'build.json').read_bytes())
     node = m.get('compact_enemy_ram', {})
     if not node.get('RAM_only_hot_constructor'):
         raise ValueError('explicit native RAM SGT module required')
+    code_bytes=native_code_size(m)
     initializers = []
     for row in node['initializers']:
         data = (build/row['file']).read_bytes()
@@ -61,7 +72,7 @@ debug set_watchpoint read_mem {{0xA800 0xB7FF}} {{$::enemy_ram_guard && $::enemy
                 text += f'debug set_watchpoint write_mem {span} {{$::enemy_ram_guard}} {{{fail} immutable-enemy-RAM-write}}\n'
                 if mode == 'matrix':
                     text += f'debug set_watchpoint read_mem {span} {{$::enemy_ram_guard}} {{{fail} cold-uninitialized-enemy-RAM-read}}\n'
-            unused = ((0xDFBF, 0xDFBF), (0xE370, 0xE4FF)) if cache else ((0xDFBE, 0xDFFF), (0xE370, 0xE4FF))
+            unused = ((0xDFBF, 0xDFBF), (0xE300+code_bytes, 0xE4FF)) if cache else ((0xDFBE, 0xDFFF), (0xE300+code_bytes, 0xE4FF))
             for first, last in unused:
                 for access in ('read_mem', 'write_mem'):
                     text += f'debug set_watchpoint {access} {{{first} {last}}} {{$::enemy_ram_guard}} {{{fail} unused-enemy-RAM-suffix}}\n'
@@ -97,8 +108,8 @@ debug set_watchpoint write_mem {{0xDFC0 0xDFFF}} {{$::enemy_ram_guard}} {{
     if cache and mode == 'matrix' and not publications:
         raise ValueError('original record publication guard never exercised')
     result = dict(complete=True, mode=mode, rom_sha256=m['rom']['sha256'],
-        native_RAM_code_bytes=112, immutable_RAM_asset_bytes=1214,
-        unused_suffix_bytes=401 if cache else 466,
+        native_RAM_code_bytes=code_bytes, immutable_RAM_asset_bytes=1214,
+        unused_suffix_bytes=(513 if cache else 578)-code_bytes,
         exact_original_record_cache_publications=publications if cache else None,
         hot_source_ROM_reads=0 if mode != 'matrix' else None,
         cold_matrix_avoids_uninitialized_RAM=mode == 'matrix',

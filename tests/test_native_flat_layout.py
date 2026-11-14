@@ -51,3 +51,17 @@ class Allocation(unittest.TestCase):
     def test_complete_row_count_is_required(self):
         q=Layout(((0x100,0x200),))
         with self.assertRaises(ValueError):q.records('partial',b'ABC',2)
+
+    def test_overlapping_windows_remain_whole_across_scattered_chunks(self):
+        q=Layout(((0x100,0x108),(0x200,0x208),(0x300,0x308)))
+        pool=b'abcdefghijklmnop'
+        offsets=b''.join(i.to_bytes(2,'little') for i in range(13))
+        pointers=q.windows('windows',pool,offsets,4,8)
+        for i in range(13):
+            at=int.from_bytes(pointers[i*2:i*2+2],'little')
+            self.assertEqual(q.image[at:at+4],pool[i:i+4])
+
+    def test_out_of_bounds_window_is_rejected_before_mutation(self):
+        q=Layout(((0x100,0x200),))
+        with self.assertRaises(ValueError):q.windows('bad',b'abcdef',b'\x04\0',4,8)
+        self.assertEqual(q.objects,{})

@@ -35,3 +35,20 @@ class Layout:
             raise ValueError('whole fixed-stride native record stream required')
         return b''.join(self.add(f'{name}/{i//stride}',data[i:i+stride]).to_bytes(2,'little')
                         for i in range(0,len(data),stride))
+
+    def windows(self,name,pool,offsets,width,chunk_size=128):
+        if (not pool or not offsets or len(offsets)%2 or type(width) is not int or width<1
+                or type(chunk_size) is not int or chunk_size<width):
+            raise ValueError('bounded whole immutable windows required')
+        positions=[int.from_bytes(offsets[i:i+2],'little') for i in range(0,len(offsets),2)]
+        if any(at+width>len(pool) for at in positions):raise ValueError('window outside its literal source pool')
+        spans=[];start=0
+        while start<len(pool):
+            end=min(start+chunk_size,len(pool))
+            address=self.add(f'{name}/chunk{len(spans)}',pool[start:end])
+            spans.append((start,end,address))
+            if end==len(pool):break
+            start=end-width+1
+        return b''.join(next((address+at-start).to_bytes(2,'little')
+                             for start,end,address in spans if start<=at and at+width<=end)
+                        for at in positions)
