@@ -21,8 +21,12 @@ def candidate_observer(out,entry,s,mode):
     if observer.count(old)!=1:raise ValueError('unique original phase hook required')
     # Matrix fixtures dispatch directly through C760 instead of entering the
     # live clock loop. Cold boot/RAM expansion must stay in the startup phase.
-    active=0xC760 if mode=='matrix' else s['t_main.frame']
-    return observer.replace(old,f'debug set_bp {active} {{}} {{set ::compact_phase runtime}}')
+    if mode=='matrix':
+        # A breakpoint at a debugger-set PC is skipped on continue; actual
+        # opcode fetches still trigger read_mem, as qualified by the CPU fixture.
+        hook='debug set_watchpoint read_mem 0xC760 {} {set ::compact_phase runtime}'
+    else:hook=f"debug set_bp {s['t_main.frame']} {{}} {{set ::compact_phase runtime}}"
+    return observer.replace(old,hook)
 
 
 def probe(build,out,mode):
@@ -49,7 +53,7 @@ def probe(build,out,mode):
     result=dict(complete=True,mode=mode,rom_sha256=m['rom']['sha256'],producer_sha256=producer,
         observed_bytes={k:len(v) for k,v in phases.items()},observed_union_bytes=len(phases['startup']|phases['runtime']),
         retired_collision_and_graphics_guards_retained=True,coverage_is_lower_bound=True,
-        runtime_phase_starts_at='first matrix render RPC atC760' if mode=='matrix' else 't_main.frame after cold rendering and RAM expansion')
+        runtime_phase_starts_at='matrix render RPC opcode fetch atC760' if mode=='matrix' else 't_main.frame after cold rendering and RAM expansion')
     (out/'candidate-live-set.json').write_text(json.dumps(result,indent=2)+'\n');print(result)
 
 

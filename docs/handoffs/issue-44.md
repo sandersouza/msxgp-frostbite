@@ -1,5 +1,36 @@
 # Issue44 — compact native formats
 
+## Continuing execution: P0 shore sharing qualified, resident reclamation next
+
+Latest qualified internal build `outputs/compact/issue44-shore-pattern-game-01/build`,
+ROM `92a9789c691f8d0c1fb3c0992e7cb05145b65da47b2b4e81dc70a62099d776ba`.
+All four routes and2115 scenes pass.239 P0 patterns now use4668 bytes instead
+7648, with exact32-byte component proof and existing C500 output/emit/cache ABI.
+50EE bridge selects58:A800; directory58:A900, halves58:AD00.123..126 old spans
+are erased/guarded. Rates remain32.215212/30.404079 regular and29.312112/
+25.078843 bear. Receipt/archive: `references/compact-delivery/issue-44-shore-patterns.json`.
+No native format/size result has been delivered. Latest host suite654 passes.
+
+Next actual flat-layout step: reclaim old bank1 primitive expansion/glyph/clip
+prefix8000..B59F, retaining colors and background/row-map tail, and unused
+resident contact-pointer directories7408..78FF (keep7400's current floe-stream
+bridge,7300 control map,7900 shape map,7A00 bear map). Native source-clock
+queries use direct source modes rather than those old pointer arrays. Require
+cold-to-end physical read guards on both ranges and unchanged source/pixels/
+timing before using the1272 reclaimed resident bytes for code relocation.
+The898-byte bank113 dirty-description module is a concrete first relocation:
+reproduce it from presentation_dirty_native.asm/floe-spans.inc before moving
+it into reclaimed resident space and removing its mapper-dependent entry.
+
+Observer caveat corrected: matrix drivers set PC=C760 directly, which skips
+an execution breakpoint there. The second attempted phase hook still reported
+zero active bytes and was rejected. Actual-Tcl regression now disables that
+breakpoint and requires a read_mem opcode-fetch watchpoint to mark matrix
+activity. Corrected probe runs at `issue44-compact-active-live-03/matrix`, log
+`/tmp/frostbite44-compact-active-live03-matrix.log`. Runtime phase on normal
+routes remains t_main.frame after cold RAM expansion. Physical union coverage
+is always a lower bound; never delete on trace absence alone.
+
 ## Continuing execution: shared-mask bulk strips and shore-pattern sharing
 
 Latest fully checked stage `outputs/compact/issue44-bear-strip-game-02/build`, ROM

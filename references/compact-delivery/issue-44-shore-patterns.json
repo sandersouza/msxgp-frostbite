@@ -1,0 +1,43 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "92a9789c691f8d0c1fb3c0992e7cb05145b65da47b2b4e81dc70a62099d776ba",
+  "bound_source_files": 289,
+  "source_archive": "outputs/compact/issue44-shore-pattern-stage-01/source",
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-shore-pattern-game-01/ntsc/retired-floe-assets-check.json",
+      "sha256": "4828636d9e4d3b2cd4eeb1d25883e254c4a28333e2b6fc7b0ea0e283350fb331"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-shore-pattern-game-01/pal/retired-floe-assets-check.json",
+      "sha256": "ff8965ee37c00d4c0064617e1d9020cda19de7f47b821bfbe5043421678f59e9"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-shore-pattern-game-01/bear-ntsc/retired-floe-assets-check.json",
+      "sha256": "26bdbab80ee547df9e893ae184598a6f189adc75060eb18ec19d220b05dfe743"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-shore-pattern-game-01/bear-pal/retired-floe-assets-check.json",
+      "sha256": "9a485926af47a683f4bbb2bf5d5dd6f93450eca00989dd1ee1aed70ae0d7fac0"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-shore-pattern-game-01/matrix/retired-floe-assets-check.json",
+      "sha256": "be62d1081c6537a7e13abff516e1a551745257b8f4ff3a036fc723b8fdf95bdf"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 32.21521210596282,
+    "pal": 30.404079100546664,
+    "bear-ntsc": 29.312111562798492,
+    "bear-pal": 25.078842583402423
+  },
+  "old_pattern_bytes": 7648,
+  "new_half_bytes": 3712,
+  "new_directory_bytes": 956,
+  "native_cases": 239,
+  "scope": "Exact P0 shore32-byte pattern sharing and guarded whole-game proof. No cadence change from compact parent. Flat layout/native loaders/size and accepted-v30 cadence remain pending."
+}
