@@ -1,5 +1,43 @@
 # Issue44 — compact native formats
 
+## Native bear integration, Tasks1–3 complete; Task4 active
+
+Current new internal integration: `outputs/compact/issue44-native-bear-renderer-01/build`,
+SHA547069add859bae4a6b231bbe0505f9c6c60a46de932867ad68d4ac0a7dabac8.
+All four natural routes and2115 original scenes pass with original source/RGB,
+exact native kind10 keys, physical role/PGT/CGT and active-page/IRQ guards.
+685 host tests pass. Commits422b3a0(key/painter) and a3b2bc4(integration).
+Task2 proves38400 actual native mask/palette cases and460800 host complete-tile
+RGB cases. New native body491B at538A, helpers220B at6A50, atlas856B at2:9FF2.
+It uses original-glyph semantic keys and canonical per-row solid background
+colors; complete sprite admission and original dirty ordering are unchanged.
+
+RegularNTSC31.503273 /PAL30.047090, bearNTSC28.274994 /PAL24.818239.
+Mean prepare55190.377 /55836.294 regular,61615.059 /63942.692 bear.
+This saves representation storage, NOT a cadence promotion: PAL bear is below
+selected parent25.340515. Keep internal while final mapperless link recovers
+accepted cadence; do not silently promote it or claim delivered COM/BIN.
+
+Task4 retirement candidate `outputs/compact/issue44-native-bear-retirement-02/build`,
+SHAfa7a2e8f2dacb67ff693c9e83e3a396c348cc40d54fe859520c648e38a89b6bb.
+Expanded mask/context/records/directory/strip allocations are erased and cold
+CPU-read guarded: newly retired16883 allocated foreign bytes (includes padding),
+28 resident bridge bytes and130 upper helper bytes. Existing original host
+oracles remain separate. Matrix/dense1920/header54/IRQ-NTSC checks running or
+finishing; header54 and IRQ-NTSC already pass. Fresh source-bound output root02
+supersedes root01 only because checker provenance changed, ROM bytes identical.
+All source checker files frozen during active proofs. Pending five natural/
+matrix repeats plus PAL IRQ and full host suite before completion.
+
+Next Task5 must build the ACTUAL flat executable/loaders, not stop at this
+component. A concrete remaining large representation is P0's standing left-
+shore prepared recipe/pattern bundle (~6.5KiB). Native original row generator
+already exists as exact fallback. Measure an isolated recipe bypass before
+retirement; do not sacrifice accepted cadence. Compact NAME palette trial
+also preserves pictures and saves3474 more RAM bytes than the current literal
+windows but loses some cadence; final flat link may reconsider with full
+measurements. Neither has been selected or integrated yet.
+
 ## Active native bitmap-renderer work (continue, do not stop)
 
 Selected integration parent remains `issue44-enemy-resident-game-03/build`,
