@@ -1,0 +1,58 @@
+{
+  "release_url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic",
+  "release_tag": "v0.0.31-native-formats-diagnostic",
+  "runtime_source_commit": "424aab92bd269821a703fda81749e74f4ca6616c",
+  "qualification_source_commit": "ee704f2c9698ca2d625ffe3cd6a89e7281212111",
+  "all_downloads_byte_exact": true,
+  "assets": {
+    "FBGFX.BIN": {
+      "bytes": 11797,
+      "sha256": "789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f"
+    },
+    "FROSTBIT.BAS": {
+      "bytes": 80,
+      "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+    },
+    "FROSTBIT.BIN": {
+      "bytes": 21267,
+      "sha256": "b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e"
+    },
+    "FROSTBIT.COM": {
+      "bytes": 32527,
+      "sha256": "4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577"
+    },
+    "Frostbite-native-formats-performance-Issue44.xlsx": {
+      "bytes": 10331,
+      "sha256": "b630f5a65ed224a3273614dc77ee0de755763d4a68fd75f9dffd26c579c22e4a"
+    },
+    "PERFORMANCE.json": {
+      "bytes": 1272,
+      "sha256": "b962522adc1fea799fedffc5a78b484bd06cbaa456d7da985c14d0f067a7aff9"
+    },
+    "SOURCE.txt": {
+      "bytes": 216,
+      "sha256": "128dd540a9ee6eae76685744fecaca8e603bd50c0c93e566407eec0991199c7f"
+    },
+    "TESTS.md": {
+      "bytes": 5694,
+      "sha256": "e18d08126d594fbe7237fe6ff155bc68a9dc7dce0662e33557de8fee458d9f02"
+    },
+    "VALIDATION.json": {
+      "bytes": 23966,
+      "sha256": "fe775f5930dffff03b6d41655cd3373bfd5b2201b0b9ba719545d53844915c7c"
+    },
+    "frostbite-0.0.31-native-formats-diagnostic.rom": {
+      "bytes": 32768,
+      "sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d"
+    },
+    "v0.0.31-native-formats-diagnostic.zip": {
+      "bytes": 98122,
+      "sha256": "0f1bc9a8cd67708ae8c75a9e0b241e65f6a6bff065c06dc558cc202e013c2fab"
+    }
+  },
+  "WebMSX_public_link_loaded": true,
+  "WebMSX_manual_gameplay": false,
+  "physical_hardware": false,
+  "cadence_accepted": false,
+  "issue44_complete": false
+}

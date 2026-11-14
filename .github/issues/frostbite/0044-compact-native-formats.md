@@ -45,7 +45,7 @@ with every original MSX1 RAM configuration;64 KiB remains the established target
   system ownership and DOS/BASIC integration. Do not ship empty wrappers.
 - [ ] Compare source state/input/audio, pixels/ownership and full-density
   NTSC/PAL cadence against the accepted v30 baseline on all relevant paths.
-- [ ] Publish every useful testable candidate with exact artifacts/hashes/source,
+- [x] Publish every useful testable candidate with exact artifacts/hashes/source,
   machine/RAM/VRAM/format requirements and precise human loading/test instructions.
 
 ## Native diagnostic progress (2026-11-14)
@@ -59,7 +59,7 @@ Critical/Important findings; minor provenance wording was corrected.
 
 Cadence remains below acceptedv30: regular30.168/28.441 and bear28.016/24.045
 NTSC/PAL. No owner cadence exception, manual listening or physical hardware
-acceptance is inferred. The forthcoming v0.0.31 diagnostic does not close44;
+acceptance is inferred. The published [v0.0.31 native diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic) does not close44;
 PR45 remains draft while recovery and acceptance continue. See
 `docs/native-formats.md` and `docs/reviews/issue-44-native-formats.md`.
 

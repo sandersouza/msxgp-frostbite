@@ -1,3 +1,48 @@
+# Published native delivery — continue Issue44 cadence work
+
+[Prerelease v0.0.31](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic)
+is published with12 assets: exact32K Normal ROM, genuine COM/BIN/BASIC companion,
+ZIP, workbook, SHA-256, runtime/qualification sources and test instructions.
+All downloaded bytes equal the sealed package and tested artifacts; the public
+WebMSX Normal link visibly loaded the game. This is browser-startup evidence,
+not manual gameplay/listening or physical MSX acceptance. Immutable receipts:
+`references/compact-delivery/issue-44-native-formats.json` and
+`issue-44-native-formats-delivery.json`.
+
+Runtime source424aab92bd269821a703fda81749e74f4ca6616c; qualification/release tag
+sourceee704f2c9698ca2d625ffe3cd6a89e7281212111. Product source archive:
+`outputs/compact/issue44-native-delivery-03/source`; all five hashes equal the
+selected artifacts listed below. Final fresh natural quartet:
+`outputs/compact/issue44-native-qualification-01`; actual cold matrix2115:
+`issue44-native-plain32-check-15/matrix`; density1920/header54:
+`issue44-native-extended-01`; nine native IRQ boundaries per video family:
+`issue44-native-extended-02`; actual DOS/BASIC NTSC/PAL quartet:
+`issue44-native-disk-check-07`. All pass. Boundary timings are intentionally
+perturbed and excluded from cadence metrics. First two old mapper labels now
+explicitly observe native interrupt-restoration entry/+1 and fixed-RAM/slot
+preservation. Fresh independent review confirms this adaptation and supports
+diagnostic publication; no Critical/Important findings.721 host tests and both
+exact-source GitHub CI runs pass.
+
+Issue44 stays **In progress**; PR45 stays draft, because selected cadence is
+still4.1–8.3% below accepted v30. Human feedback was requested asynchronously
+against the concrete published ROM, with no assumption that silence approves
+an exception. Keep working autonomously; do not stop at this publication.
+Preserve v30, v31 and every previous measured candidate. No merge/Done until
+Issue44's own acceptance passes. Sole writer/issue chat/branch remain unchanged.
+
+Immediate next step: measure a concrete representation improvement against
+v31 before another game ROM. Read-only inventory found188 footer tiles can
+share exact8-byte windows:600-byte literal pool +752-byte offset directory,
+1352 total vs3008 frozen VRAM bytes. This is a **size observation only**. A blue
+ice atlas could avoid dynamic playfield uploads but bank-specific VRAM roles
+are tighter than total VRAM: legacy fixed capacities56/60/50, current footer
+uses117/69/2 free tile pairs, bank2 remains the constraining bank. Do not treat
+unused CPU key slots as unused physical tiles. Full blue atlas feasibility and
+whole-frame win remain unproved. Plan/source-proof before changing architecture.
+
+---
+
 # Current Issue44 continuation — real native formats built, acceptance pending
 
 This section supersedes the historical progress entries below. Sole writer stays

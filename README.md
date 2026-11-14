@@ -14,7 +14,7 @@ Original source/picture/IRQ checks and real DOS/BASIC loading pass; cadence is
 4.1–8.3% below accepted v30 on measured routes. Issue44 and PR45 remain open.
 [Play the32K cartridge in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.31-native-formats-diagnostic%2Ffrostbite-0.0.31-native-formats-diagnostic.rom&ROM_FORMAT=Normal).
 
-The latest [v0.0.30 reference credit diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.30-reference-credit-diagnostic)
+The accepted [v0.0.30 reference credit diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.30-reference-credit-diagnostic)
 uses separated lowercase `retroworks`, matching the owner's supplied pixel-font
 reference without a year or hyphen. The right edge and Activision baseline
 remain aligned. Only98 pattern bytes change; all executable/color/NAME bytes

@@ -1,0 +1,567 @@
+{
+  "complete": true,
+  "scope": "bounded automated native-format diagnostic qualification",
+  "version": "v0.0.31-native-formats-diagnostic",
+  "runtime_source_commit": "424aab92bd269821a703fda81749e74f4ca6616c",
+  "artifacts": {
+    "FROSTBIT.ROM": {
+      "size": 32768,
+      "sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d"
+    },
+    "FROSTBIT.COM": {
+      "size": 32527,
+      "sha256": "4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577"
+    },
+    "FROSTBIT.BIN": {
+      "size": 21267,
+      "sha256": "b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e"
+    },
+    "FBGFX.BIN": {
+      "size": 11797,
+      "sha256": "789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f"
+    },
+    "FROSTBIT.BAS": {
+      "size": 80,
+      "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+    }
+  },
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-native-qualification-01/ntsc/native-takeover.json",
+      "sha256": "0face448160af8e71488bcfd22f80462656128eb24f67e913793362a374fc51c",
+      "result": {
+        "complete": true,
+        "mode": "ntsc",
+        "scenario": null,
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 29130,
+          "rows": 1457
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "6f7b73a0bd8e441f5a22500b080c51825dcdee39ab2898196f7f1b5eb277c657",
+        "native_IRQ_boundary_relocation": null,
+        "oracle_receipt_sha256": "f35e2b57942a781fbb4cd5247f6aaec914de7b24b59652b7786460eadc0190c1",
+        "metrics": {
+          "source_checkpoints": 2253,
+          "active_pictures_per_second": 30.168185475582035,
+          "mean_prepare_elapsed_cycles": 55991.60672614962,
+          "max_prepare_elapsed_cycles": 395646,
+          "source_cpu_all_ram_equal": true,
+          "coherent_picture_pixels_equal": true,
+          "physical_owners_equal": true,
+          "late_vblanks": 0,
+          "canonical_source_writes": 0
+        },
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-native-qualification-01/pal/native-takeover.json",
+      "sha256": "77f59946da4d8bf7c1d2fa122624ddaaef58115cd36bd6ed5c81bc3cce8e8e1e",
+      "result": {
+        "complete": true,
+        "mode": "pal",
+        "scenario": null,
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 26050,
+          "rows": 1303
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "6f7b73a0bd8e441f5a22500b080c51825dcdee39ab2898196f7f1b5eb277c657",
+        "native_IRQ_boundary_relocation": null,
+        "oracle_receipt_sha256": "6c9fdfe2869c4317a929aaf741cbd87f702cd941d96fc6a4af98af0653f8a5a1",
+        "metrics": {
+          "source_checkpoints": 2254,
+          "active_pictures_per_second": 28.440667738200297,
+          "mean_prepare_elapsed_cycles": 57537.62547966232,
+          "max_prepare_elapsed_cycles": 384118,
+          "source_cpu_all_ram_equal": true,
+          "coherent_picture_pixels_equal": true,
+          "physical_owners_equal": true,
+          "late_vblanks": 0,
+          "canonical_source_writes": 0
+        },
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-native-qualification-01/bear-ntsc/native-takeover.json",
+      "sha256": "0a8a9326838a616a79d597873dea374140da2120ba29861b8c23e41ce947e978",
+      "result": {
+        "complete": true,
+        "mode": "bear-ntsc",
+        "scenario": null,
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 7576,
+          "rows": 370
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "6f7b73a0bd8e441f5a22500b080c51825dcdee39ab2898196f7f1b5eb277c657",
+        "native_IRQ_boundary_relocation": null,
+        "oracle_receipt_sha256": "1d78367f12922b085b24aa02df1ef55bfb461a4270ca30306b4c9cb5d688b69a",
+        "metrics": {
+          "source_checkpoints": 621,
+          "active_pictures_per_second": 28.01582605485593,
+          "mean_prepare_elapsed_cycles": 62663.95675675676,
+          "max_prepare_elapsed_cycles": 395646,
+          "source_cpu_all_ram_equal": true,
+          "coherent_picture_pixels_equal": true,
+          "physical_owners_equal": true,
+          "late_vblanks": 0,
+          "canonical_source_writes": 0
+        },
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-native-qualification-01/bear-pal/native-takeover.json",
+      "sha256": "79f90e1c071968b34cfdb344eacf45c527e5c04797aa1dc9e4f5f04183acc7f8",
+      "result": {
+        "complete": true,
+        "mode": "bear-pal",
+        "scenario": null,
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 6508,
+          "rows": 318
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "6f7b73a0bd8e441f5a22500b080c51825dcdee39ab2898196f7f1b5eb277c657",
+        "native_IRQ_boundary_relocation": null,
+        "oracle_receipt_sha256": "f0dcc4210dd67a4f8e1e9e87e3d11eede4a6cfb22a7dba18aed741aece9e30e9",
+        "metrics": {
+          "source_checkpoints": 621,
+          "active_pictures_per_second": 24.045079745855674,
+          "mean_prepare_elapsed_cycles": 65698.72955974843,
+          "max_prepare_elapsed_cycles": 384118,
+          "source_cpu_all_ram_equal": true,
+          "coherent_picture_pixels_equal": true,
+          "physical_owners_equal": true,
+          "late_vblanks": 0,
+          "canonical_source_writes": 0
+        },
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-native-plain32-check-15/matrix/native-takeover.json",
+      "sha256": "24693d9f20a548adc0e5923241a607d42c684608ba43f99e3cf51f86aa4b9173",
+      "result": {
+        "complete": true,
+        "mode": "matrix",
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 45522,
+          "rows": 2115
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "04acf2def42b64496d38788c5154c29d800f76203e76e03da1608e16172c1b36",
+        "oracle_receipt_sha256": "2e3c36243dda1104bcd7f0eb6ecd4bb7e5a91421672e5d91a28deb8034fc98c8",
+        "metrics": {},
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "density": {
+      "path": "outputs/compact/issue44-native-extended-01/density/native-takeover.json",
+      "sha256": "a0669dab28b11b9767e750f3ad40957677a6d1140d720b76f5dbb895b058f9a0",
+      "result": {
+        "complete": true,
+        "mode": "matrix",
+        "scenario": "density",
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 46078,
+          "rows": 1920
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "a2cb79b4553301e9041e45c1ba7022e97ef381eb7e779f7a4d6308517287e4f6",
+        "oracle_receipt_sha256": "afd37cd91dd6d9fc65dd525029f0c3a6b1f3def4e6f16b7be25de80372445757",
+        "metrics": {},
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "header": {
+      "path": "outputs/compact/issue44-native-extended-01/header/native-takeover.json",
+      "sha256": "9358d59ef5ef813336a5bd144ef245ba6da914a456caaf18d01ae1a498756759",
+      "result": {
+        "complete": true,
+        "mode": "matrix",
+        "scenario": "header",
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 648,
+          "rows": 54
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "a2cb79b4553301e9041e45c1ba7022e97ef381eb7e779f7a4d6308517287e4f6",
+        "oracle_receipt_sha256": "fa7c903ba487fd06f82e6db5e0925716fe3be17dbfd1f5e111272805888e4d31",
+        "metrics": {},
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "boundary-ntsc": {
+      "path": "outputs/compact/issue44-native-extended-02/boundary-ntsc/native-takeover.json",
+      "sha256": "8e7308d477aa003c58ef0d8ac091e15914ef03f4fb6e6bc8434c6a46b2ffb56d",
+      "result": {
+        "complete": true,
+        "mode": "ntsc",
+        "scenario": "boundary-ntsc",
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 3850,
+          "rows": 193
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "6f7b73a0bd8e441f5a22500b080c51825dcdee39ab2898196f7f1b5eb277c657",
+        "native_IRQ_boundary_relocation": {
+          "mapper-before": 59686,
+          "mapper-shadow": 59687,
+          "hardware_invariant": "byte-exact fixed RAM and actual primary/secondary slot restoration"
+        },
+        "oracle_receipt_sha256": "da98f07e93c374b61dd03d29c507c55279b9d10f6165e7d1c9b2a27e0ad312a7",
+        "metrics": {
+          "source_checkpoints": 321,
+          "active_pictures_per_second": 29.826241075124273,
+          "mean_prepare_elapsed_cycles": 58406.01554404145,
+          "max_prepare_elapsed_cycles": 395646,
+          "source_cpu_all_ram_equal": true,
+          "coherent_picture_pixels_equal": true,
+          "physical_owners_equal": true,
+          "late_vblanks": 0,
+          "canonical_source_writes": 0
+        },
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "boundary-pal": {
+      "path": "outputs/compact/issue44-native-extended-02/boundary-pal/native-takeover.json",
+      "sha256": "334fff064d4a83ba1aa72f5f613de2b1368cbafde4ba0447fad4f8ab16af702b",
+      "result": {
+        "complete": true,
+        "mode": "pal",
+        "scenario": "boundary-pal",
+        "input_rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "native_image_sha256": "b2aa7961db988b882592f3a5491e282671fe70a498dca4756d7dc4759fa24622",
+        "audits": {
+          "keys": 3430,
+          "rows": 172
+        },
+        "all_RAM_execution": true,
+        "legacy_ROM_cold_init_required": false,
+        "source_defined_cold_start": true,
+        "native_product_loader": true,
+        "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+        "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+        "producer_sha256": "6f7b73a0bd8e441f5a22500b080c51825dcdee39ab2898196f7f1b5eb277c657",
+        "native_IRQ_boundary_relocation": {
+          "mapper-before": 59686,
+          "mapper-shadow": 59687,
+          "hardware_invariant": "byte-exact fixed RAM and actual primary/secondary slot restoration"
+        },
+        "oracle_receipt_sha256": "f9985e70c675d6cfd79dcd425f760f9d005b2f3c5b94273f98a0616da06f98f0",
+        "metrics": {
+          "source_checkpoints": 321,
+          "active_pictures_per_second": 27.77547767629659,
+          "mean_prepare_elapsed_cycles": 61548.441860465115,
+          "max_prepare_elapsed_cycles": 384118,
+          "source_cpu_all_ram_equal": true,
+          "coherent_picture_pixels_equal": true,
+          "physical_owners_equal": true,
+          "late_vblanks": 0,
+          "canonical_source_writes": 0
+        },
+        "scope": "Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance."
+      }
+    },
+    "ntsc-dos": {
+      "path": "outputs/compact/issue44-native-disk-check-07/ntsc-dos/native-disk-check.json",
+      "sha256": "fe24af0537192235f481022d6c7d723b861baf03deb432b4b9a87e2270d5ffad",
+      "result": {
+        "complete": true,
+        "format": "dos",
+        "family": "ntsc",
+        "actual_disk_loading": true,
+        "real_MSX1_BIOS_and_BASIC": true,
+        "firmware": [
+          {
+            "filename": "hb-701_basic-bios1.rom",
+            "sha256": "413a2b601a94b3792e054be2439cc77a1819cceadbfa9542f88d51c7480f2ef0"
+          },
+          {
+            "filename": "hb-701fd_disk.rom",
+            "sha256": "229a168db7ae7e5d6f06fae15f0da02e096537430a0298bfd1d072c4d8bd468a"
+          },
+          {
+            "filename": "hb-701_firmware.rom",
+            "sha256": "55edb73f37bc7601746a905284a8de9dc8ca59a7a8aa373407ce8d730fa38db2"
+          }
+        ],
+        "source_bootdisk_sha256": "5fb34d8c1664a60e4cc81c1a4f1a8585428dc2420f00bce9f74d85b0e38b928e",
+        "profile_sha256": "695ed42a66df95a5c6ddf3f34822f6f635aed6167f91981781ba41d2df2cd3eb",
+        "files": {
+          "FROSTBIT.COM": {
+            "size": 32527,
+            "sha256": "4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577"
+          },
+          "FROSTBIT.BIN": {
+            "size": 21267,
+            "sha256": "b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e"
+          },
+          "FBGFX.BIN": {
+            "size": 11797,
+            "sha256": "789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f"
+          },
+          "FROSTBIT.BAS": {
+            "size": 80,
+            "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+          }
+        },
+        "exact_cold_RAM_and_VRAM": true,
+        "host_target_state_injection": false,
+        "physical_hardware": false,
+        "scope": "Real disk file load, exact shared cold low/high/VRAM initializer equality and subsequent renderer/IRQ execution; no physical acceptance."
+      }
+    },
+    "ntsc-basic": {
+      "path": "outputs/compact/issue44-native-disk-check-07/ntsc-basic/native-disk-check.json",
+      "sha256": "e6bc25380b1468b4f8acc617f69511a35709a9eab5085cb1eb243c8b7c3425b3",
+      "result": {
+        "complete": true,
+        "format": "basic",
+        "family": "ntsc",
+        "actual_disk_loading": true,
+        "real_MSX1_BIOS_and_BASIC": true,
+        "firmware": [
+          {
+            "filename": "hb-701_basic-bios1.rom",
+            "sha256": "413a2b601a94b3792e054be2439cc77a1819cceadbfa9542f88d51c7480f2ef0"
+          },
+          {
+            "filename": "hb-701fd_disk.rom",
+            "sha256": "229a168db7ae7e5d6f06fae15f0da02e096537430a0298bfd1d072c4d8bd468a"
+          },
+          {
+            "filename": "hb-701_firmware.rom",
+            "sha256": "55edb73f37bc7601746a905284a8de9dc8ca59a7a8aa373407ce8d730fa38db2"
+          }
+        ],
+        "source_bootdisk_sha256": "5fb34d8c1664a60e4cc81c1a4f1a8585428dc2420f00bce9f74d85b0e38b928e",
+        "profile_sha256": "695ed42a66df95a5c6ddf3f34822f6f635aed6167f91981781ba41d2df2cd3eb",
+        "files": {
+          "FROSTBIT.COM": {
+            "size": 32527,
+            "sha256": "4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577"
+          },
+          "FROSTBIT.BIN": {
+            "size": 21267,
+            "sha256": "b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e"
+          },
+          "FBGFX.BIN": {
+            "size": 11797,
+            "sha256": "789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f"
+          },
+          "FROSTBIT.BAS": {
+            "size": 80,
+            "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+          }
+        },
+        "exact_cold_RAM_and_VRAM": true,
+        "host_target_state_injection": false,
+        "physical_hardware": false,
+        "scope": "Real disk file load, exact shared cold low/high/VRAM initializer equality and subsequent renderer/IRQ execution; no physical acceptance."
+      }
+    },
+    "pal-dos": {
+      "path": "outputs/compact/issue44-native-disk-check-07/pal-dos/native-disk-check.json",
+      "sha256": "9bd2834d379e1df5b9028c061ec7e5398b40a2c2397411da62219e797d0acf19",
+      "result": {
+        "complete": true,
+        "format": "dos",
+        "family": "pal",
+        "actual_disk_loading": true,
+        "real_MSX1_BIOS_and_BASIC": true,
+        "firmware": [
+          {
+            "filename": "hb-701_basic-bios1.rom",
+            "sha256": "413a2b601a94b3792e054be2439cc77a1819cceadbfa9542f88d51c7480f2ef0"
+          },
+          {
+            "filename": "hb-701fd_disk.rom",
+            "sha256": "229a168db7ae7e5d6f06fae15f0da02e096537430a0298bfd1d072c4d8bd468a"
+          },
+          {
+            "filename": "hb-701_firmware.rom",
+            "sha256": "55edb73f37bc7601746a905284a8de9dc8ca59a7a8aa373407ce8d730fa38db2"
+          }
+        ],
+        "source_bootdisk_sha256": "5fb34d8c1664a60e4cc81c1a4f1a8585428dc2420f00bce9f74d85b0e38b928e",
+        "profile_sha256": "6ad5e2f3695b6bde90125f66c619f0cea1dbee125aa50e442c4cd209a4b46cbe",
+        "files": {
+          "FROSTBIT.COM": {
+            "size": 32527,
+            "sha256": "4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577"
+          },
+          "FROSTBIT.BIN": {
+            "size": 21267,
+            "sha256": "b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e"
+          },
+          "FBGFX.BIN": {
+            "size": 11797,
+            "sha256": "789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f"
+          },
+          "FROSTBIT.BAS": {
+            "size": 80,
+            "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+          }
+        },
+        "exact_cold_RAM_and_VRAM": true,
+        "host_target_state_injection": false,
+        "physical_hardware": false,
+        "scope": "Real disk file load, exact shared cold low/high/VRAM initializer equality and subsequent renderer/IRQ execution; no physical acceptance."
+      }
+    },
+    "pal-basic": {
+      "path": "outputs/compact/issue44-native-disk-check-07/pal-basic/native-disk-check.json",
+      "sha256": "d46d37b17599348979ab7905fa59affd48e8d90430cac92f829d58097ca35d56",
+      "result": {
+        "complete": true,
+        "format": "basic",
+        "family": "pal",
+        "actual_disk_loading": true,
+        "real_MSX1_BIOS_and_BASIC": true,
+        "firmware": [
+          {
+            "filename": "hb-701_basic-bios1.rom",
+            "sha256": "413a2b601a94b3792e054be2439cc77a1819cceadbfa9542f88d51c7480f2ef0"
+          },
+          {
+            "filename": "hb-701fd_disk.rom",
+            "sha256": "229a168db7ae7e5d6f06fae15f0da02e096537430a0298bfd1d072c4d8bd468a"
+          },
+          {
+            "filename": "hb-701_firmware.rom",
+            "sha256": "55edb73f37bc7601746a905284a8de9dc8ca59a7a8aa373407ce8d730fa38db2"
+          }
+        ],
+        "source_bootdisk_sha256": "5fb34d8c1664a60e4cc81c1a4f1a8585428dc2420f00bce9f74d85b0e38b928e",
+        "profile_sha256": "6ad5e2f3695b6bde90125f66c619f0cea1dbee125aa50e442c4cd209a4b46cbe",
+        "files": {
+          "FROSTBIT.COM": {
+            "size": 32527,
+            "sha256": "4d467ba7ef6dd70c48043f9bbd9cdf7c09dc5231d7a38bebf21d46a949585577"
+          },
+          "FROSTBIT.BIN": {
+            "size": 21267,
+            "sha256": "b90ea83e4a66656aeb846e74e90957b1546a4fe9d1261904777b5f17ad8fb83e"
+          },
+          "FBGFX.BIN": {
+            "size": 11797,
+            "sha256": "789af131facff6b60c97a036decd0f39de0885d556f74e12d3d011a6c045a95f"
+          },
+          "FROSTBIT.BAS": {
+            "size": 80,
+            "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+          }
+        },
+        "exact_cold_RAM_and_VRAM": true,
+        "host_target_state_injection": false,
+        "physical_hardware": false,
+        "scope": "Real disk file load, exact shared cold low/high/VRAM initializer equality and subsequent renderer/IRQ execution; no physical acceptance."
+      }
+    }
+  },
+  "issue44_complete": false,
+  "cadence_accepted": false,
+  "owner_acceptance": false,
+  "physical_hardware": false,
+  "manual_audio_listening": false,
+  "qualification_source_commit": "ee704f2c9698ca2d625ffe3cd6a89e7281212111",
+  "release_version": "v0.0.31-native-formats-diagnostic",
+  "release_url": "https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic",
+  "release_package": "outputs/compact/issue44-native-release-02",
+  "whole_frame_performance": {
+    "version": "v0.0.31-native-formats-diagnostic",
+    "metrics": {
+      "ntsc": {
+        "active_pictures_per_second": 30.168185475582035,
+        "accepted_v30_pictures_per_second": 32.53896141054464,
+        "cadence_change": -0.07285960682796477,
+        "mean_prepare_elapsed_cycles": 55991.60672614962,
+        "source_steps_per_second": 59.92274518685549
+      },
+      "pal": {
+        "active_pictures_per_second": 28.440667738200297,
+        "accepted_v30_pictures_per_second": 30.99913887907773,
+        "cadence_change": -0.08253361975174811,
+        "mean_prepare_elapsed_cycles": 57537.62547966232,
+        "source_steps_per_second": 59.92467533075751
+      },
+      "bear-ntsc": {
+        "active_pictures_per_second": 28.01582605485593,
+        "accepted_v30_pictures_per_second": 29.69779166275396,
+        "cadence_change": -0.0566360498113232,
+        "mean_prepare_elapsed_cycles": 62663.95675675676,
+        "source_steps_per_second": 59.92275150710942
+      },
+      "bear-pal": {
+        "active_pictures_per_second": 24.045079745855674,
+        "accepted_v30_pictures_per_second": 25.078849904497336,
+        "cadence_change": -0.04122079611219642,
+        "mean_prepare_elapsed_cycles": 65698.72955974843,
+        "source_steps_per_second": 59.93899715897265
+      }
+    },
+    "cadence_accepted": false
+  }
+}
