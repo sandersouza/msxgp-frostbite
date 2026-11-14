@@ -4,6 +4,10 @@
 def script(out,s,linked):
     entries={n:s[n] for n in ('presentation_prepare','presentation_world_prepare',
         'p_player_prepare','p_player_cache_lookup','p_player_emit_all','p_player_points',
+        'p_player_count_band','p_player_nonempty','p_player_select',
+        'p_bg_describe','p_dirty_describe','p_fast_release_dirty',
+        'p_fast_background_rows','p_fast_upload_dirty','presentation_sprites_prepare',
+        'p_fast_header_prepare','p_fast_igloo_prepare','p_fast_put',
         't_irq','presentation_hud_prepare','presentation_footer_prepare','nb_body',
         'ng_build','floe_acquire','hazard_lookup_common') if n in s}
     objects={'nf_stream':'floe-stream','co_lookup':'occupancy-lookup','ct_build':'enemy-buffer',

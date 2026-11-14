@@ -1,3 +1,22 @@
+# Issue44 accepted delivery — integrate PR45
+
+Owner explicitly accepted publishedv31 fluency as pleasant likev30 on2026-11-14,
+after disclosure of4.1–8.3% lower presentation cadence. Bind acceptance to ROM
+4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d.
+Source/audio/pixels/IRQ/native-loader qualification and independent review pass.
+P0 SAT and standing-body experiments are NOT SELECTED; no new game ROM was
+generated from them. Current runtime/default builder stays publishedv31.
+Archive: references/compact-delivery/issue-44-standing-body.json and ignored
+outputs/compact/issue44-standing-research-archive. No failed experimental matrix
+is used as selected-product evidence. Human listening/physical tests remain
+separate; cadence parity and final hardware/legacy gates remain39/15/16/17.
+
+Finalization: commit acceptance/research records, run final suite/source policy,
+review remaining diff, push/CI, ready and mergePR45 into main, verify merged
+tests and exact published assets, close44/Done. Stop old issue writer on handoff.
+
+---
+
 # Published native delivery — continue Issue44 cadence work
 
 [Prerelease v0.0.31](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic)

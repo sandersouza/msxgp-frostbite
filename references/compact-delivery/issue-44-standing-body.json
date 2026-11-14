@@ -1,0 +1,74 @@
+{
+  "complete": true,
+  "finite_cases": 3672,
+  "domain": "Y27/X0..152/poses0..5/reflection/coarse; displacement0/coloroffset0",
+  "control_image_sha256": "1d3707077a56063910db61905f9aaa3c6c3d576ad50666dac2b149f51481c62b",
+  "same_existing_stream": true,
+  "no_product_data_added": true,
+  "selected_stream_extent": [
+    44951,
+    45073
+  ],
+  "selected_stream_sha256": "f70f9ec2d662e6f324efe5e15a5954ccdf07f598324ada58dd7e2ba55373193a",
+  "byte_equal_expected_planes": true,
+  "canonical_VRAM_heap_stack_slot_guards": true,
+  "cycles": {
+    "control": 35102,
+    "stream": 14133
+  },
+  "source_sha256": "c93e4dfadee598d04e6a53b255020e18c5c007c9f349117fd286617576a54f7f",
+  "stream_source_sha256": "5bb0cab931c3410ad600090e9b45decf66d6d0ccf5925c41552d2659948ee488",
+  "evidence": "outputs/compact/issue44-standing-body-02/standing-body-check.json",
+  "selection": "rejected/unselected after completed natural-route measurement",
+  "selected": false,
+  "new_testable_game_ROM_generated": false,
+  "scope": "Unclipped source-plane component proof only; not acceptance of final viewport clipping or full native format.",
+  "archive": "outputs/compact/issue44-standing-research-archive",
+  "whole_frame": {
+    "ntsc": {
+      "source_checkpoints": 2253,
+      "active_pictures_per_second": 30.168183977022487,
+      "mean_prepare_elapsed_cycles": 55999.57309540151,
+      "max_prepare_elapsed_cycles": 395646,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0
+    },
+    "pal": {
+      "source_checkpoints": 2254,
+      "active_pictures_per_second": 28.440666319975456,
+      "mean_prepare_elapsed_cycles": 57545.47582501919,
+      "max_prepare_elapsed_cycles": 384118,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0
+    },
+    "bear-ntsc": {
+      "source_checkpoints": 621,
+      "active_pictures_per_second": 28.275000307990425,
+      "mean_prepare_elapsed_cycles": 62625.37567567568,
+      "max_prepare_elapsed_cycles": 395646,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0
+    },
+    "bear-pal": {
+      "source_checkpoints": 621,
+      "active_pictures_per_second": 24.169666356817476,
+      "mean_prepare_elapsed_cycles": 65183.6394984326,
+      "max_prepare_elapsed_cycles": 384118,
+      "source_cpu_all_ram_equal": true,
+      "coherent_picture_pixels_equal": true,
+      "physical_owners_equal": true,
+      "late_vblanks": 0,
+      "canonical_source_writes": 0
+    }
+  },
+  "rejection": "Regular cadence unchanged; bear gain only0.5\u20130.9%. No reason to replace owner-accepted publishedv31. Controlled cold-injection matrix failed its historical setup poison guard, not treated as product evidence."
+}

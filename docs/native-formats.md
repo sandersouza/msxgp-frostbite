@@ -5,10 +5,12 @@ All formats execute one shared flat runtime on a standard-speed MSX1 with
 complete32,768-byte Normal ROM. It needs no mapper or external payload. Disk
 formats naturally need a disk interface and the corresponding operating system.
 
-The accepted v0.0.30 remains immutable. Native-format diagnostics have not yet
-recovered its whole-frame cadence; do not describe a size/boot result as full
-Issue44 acceptance. Original mechanics/source state and per-picture graphics
-are checked independently from presentation frequency.
+The accepted v0.0.30 remains immutable. On2026-11-14 the owner explicitly
+accepted publishedv0.0.31 fluency as pleasant likev30 after being told its
+measured presentation cadence is4.1–8.3% lower. This is an owner-approved
+cadence tradeoff for Issue44, not numerical parity or physical-hardware proof.
+Original mechanics/source state, audio and per-picture graphics have separate
+automated equivalence checks. See references/compact-delivery/issue-44-owner-acceptance.json.
 
 ## Loading and reset
 

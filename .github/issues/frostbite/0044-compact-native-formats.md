@@ -43,7 +43,7 @@ with every original MSX1 RAM configuration;64 KiB remains the established target
   `FROSTBIT.BIN` with the correct binary header/load/end/execute addresses.
 - [x] Document and verify start/reset/return behavior, slot placement, stack,
   system ownership and DOS/BASIC integration. Do not ship empty wrappers.
-- [ ] Compare source state/input/audio, pixels/ownership and full-density
+- [x] Compare source state/input/audio, pixels/ownership and full-density
   NTSC/PAL cadence against the accepted v30 baseline on all relevant paths.
 - [x] Publish every useful testable candidate with exact artifacts/hashes/source,
   machine/RAM/VRAM/format requirements and precise human loading/test instructions.
@@ -58,9 +58,9 @@ loading and exact cold RAM/VRAM checks in NTSC/PAL. Independent review found no
 Critical/Important findings; minor provenance wording was corrected.
 
 Cadence remains below acceptedv30: regular30.168/28.441 and bear28.016/24.045
-NTSC/PAL. No owner cadence exception, manual listening or physical hardware
-acceptance is inferred. The published [v0.0.31 native diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic) does not close44;
-PR45 remains draft while recovery and acceptance continue. See
+NTSC/PAL. At diagnostic publication no owner cadence exception, manual listening or
+physical hardware acceptance was inferred. See the subsequent owner acceptance below. The published [v0.0.31 native diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic) did not by itself close44;
+PR45 was held draft pending the explicit owner decision recorded below. See
 `docs/native-formats.md` and `docs/reviews/issue-44-native-formats.md`.
 
 ## Definition of Ready
@@ -94,3 +94,13 @@ No established milestone is assigned. Do not change shared labels/settings.
 Issue39 retains the unmet original-cadence goal;15/16 remain final timing,
 full-game and physical qualification. Legacy deletion remains issue17. This
 task may remove measured dead active code after preservation, not erase history.
+
+## Owner acceptance2026-11-14
+
+Exact publishedv31 ROM4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d
+was accepted for fluency as pleasant likev30 after measured4.1–8.3% lower
+presentation cadence was disclosed. No silent cadence-parity claim. Automated
+ordered-audio qualification now passes2115 intervals/3499 source writes/2472
+physical PSG writes with a deliberate-corruption negative control. Actual native
+formats and immutable published assets remain unchanged. PR45 integration is
+the remaining delivery step; physical testing remains issue16.

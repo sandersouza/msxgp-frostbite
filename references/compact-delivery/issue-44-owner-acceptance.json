@@ -1,0 +1,11 @@
+{
+  "owner_feedback_date": "2026-11-14",
+  "owner_feedback": "Está agradável como a v0.0.30",
+  "question_scope": "v0.0.31 fluency compared withv0.0.30, with explicit disclosure of4.1–8.3% lower measured presentation cadence",
+  "accepted_version": "v0.0.31-native-formats-diagnostic",
+  "ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+  "scope": "Owner acceptance of gameplay fluency; no inferred manual audio listening, disk-owner test or physical hardware acceptance.",
+  "cadence_measurement_unchanged": true,
+  "experimental_standing_gate_selected": false,
+  "experimental_P0_SAT_selected": false
+}
