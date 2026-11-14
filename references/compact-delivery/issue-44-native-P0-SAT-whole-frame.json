@@ -1,0 +1,59 @@
+{
+  "complete": true,
+  "experiment": "bounded P0 cache SAT writer",
+  "selected": false,
+  "new_testable_game_ROM_generated": false,
+  "control_v31_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+  "method": "paired source-defined cold all-RAM injection; no product loader/cadence acceptance claim",
+  "routes": {
+    "ntsc": {
+      "control_fps": 30.16818547558203,
+      "candidate_fps": 30.138713648710084,
+      "FPS_change": -0.0009769174515251722,
+      "control_prepare_cycles": 55991.60672614962,
+      "candidate_prepare_cycles": 55877.76321207962,
+      "source_pixel_owner_IRQ_pass": true,
+      "receipts": {
+        "control": "08fc3e5978164eca8129d5fb9cd79913951fcefe9fef36bf383a572c762a67b9",
+        "candidate": "9f96e836a1b65413f50a5a3f09ec9c39b053efc9d59f622dc6ba1d7f9a1f5590"
+      }
+    },
+    "pal": {
+      "control_fps": 28.440667738200297,
+      "candidate_fps": 28.55966634798358,
+      "FPS_change": 0.004184100418410663,
+      "control_prepare_cycles": 57537.62547966232,
+      "candidate_prepare_cycles": 57368.66743295019,
+      "source_pixel_owner_IRQ_pass": true,
+      "receipts": {
+        "control": "1a6cb2247a8e84a24a689e5b39b7af590809119f5d73fc97a0263d4eb55f1506",
+        "candidate": "8bc213fc253aa256a0cd4272b91d48aef15f04459c65351a69f32e325b02ddbe"
+      }
+    },
+    "bear-ntsc": {
+      "control_fps": 28.015826054855935,
+      "candidate_fps": 28.015830115410413,
+      "FPS_change": 1.4493788147440512e-07,
+      "control_prepare_cycles": 62663.95675675676,
+      "candidate_prepare_cycles": 62554.975675675676,
+      "source_pixel_owner_IRQ_pass": true,
+      "receipts": {
+        "control": "4fddbd127aff4903d6e34685560b2cd98d5b37c239ed48541eb01bd73d0fb2fc",
+        "candidate": "fccef5f88defb382d51ae1e21ea6d5da51728bb769f36f26e67e34aae6edb2ce"
+      }
+    },
+    "bear-pal": {
+      "control_fps": 24.04507974585568,
+      "candidate_fps": 24.04507974585568,
+      "FPS_change": 0.0,
+      "control_prepare_cycles": 65698.72955974843,
+      "candidate_prepare_cycles": 65596.11635220126,
+      "source_pixel_owner_IRQ_pass": true,
+      "receipts": {
+        "control": "c5736387af6994ce6a19f834304f315d096f1e8e463fe1937717d23efdba5007",
+        "candidate": "3c16b97e1c8316634f89aa162c63875664047cba05d4ba136040d4f2c2c39f76"
+      }
+    }
+  },
+  "reason": "PAL+0.4184%, regularNTSC-0.0977%, bear unchanged. Lower routine/prepare cost is insufficient for promotion."
+}

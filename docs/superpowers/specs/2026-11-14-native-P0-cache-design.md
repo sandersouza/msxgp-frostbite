@@ -13,10 +13,10 @@ all six32-byte metadata ways keep their current placement and exact keys.
 Restore the same final IY/p_s_sat pointer and clear carry on return. The caller
 permits AF/BC/DE/HL scratch; IX, metadata and publication validity stay intact.
 
-The lookup also initializes variant0 twice. Redirect only its one source-owned
-CALL to variant_lookup.scan after proving the earlier default initialization
-and unchanged IX/way/pointer through key construction. Keep the original public
-lookup entry for any other caller; keep miss/replacement/invalidation ordering.
+Integration inspection found the selected v31 already calls variant_lookup.scan
+from B0A5, avoiding the second initialization described by older maintained
+assembly. Preserve and verify that compiled direct caller and its initial
+checked default. Do not claim another saving or alter miss/replacement ordering.
 
 First certify original control assembly against the actual v31 instruction
 extent. Compare native SAT bytes, final pointer, ABI and timings over both

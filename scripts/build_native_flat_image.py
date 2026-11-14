@@ -19,7 +19,7 @@ from environment import ROOT
 def digest(data):return hashlib.sha256(data).hexdigest()
 
 
-def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_clear_proof=None):
+def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_clear_proof=None,p0_sat_proof=None):
     base=base.resolve();catalog=catalog.resolve();out=out.resolve()
     if out.exists():raise ValueError('fresh output required')
     m=json.loads((base/'build.json').read_bytes());r=(base/m['rom']['filename']).read_bytes()
@@ -338,12 +338,41 @@ def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_
             if image[a:a+3]!=expected:
                 superseded.append(dict(address=a,reason='explicit native replacement supersedes original site'));continue
             patch(a,bytes(3),'source-proved all-RAM no-op mapper CALL elision');removed.append(a)
+    p0_cache=None
+    if p0_sat_proof:
+        proof=json.loads((p0_sat_proof/'component-result.json').read_bytes())
+        if not proof['complete'] or proof['cases']!=1872 or not proof['full256byte_metadata_unchanged'] or not proof['final_IY_and_p_s_sat_equal'] or not proof['return_carry_clear']:
+            raise ValueError('complete bounded P0 SAT byte/metadata/ABI proof required')
+        if digest(image)!=proof['control_image_sha256'] or any(digest((ROOT/n).read_bytes())!=h for n,h in proof['sources'].items()):
+            raise ValueError('P0 SAT experiment requires its exact source-bound control image')
+        a=s['p_player_cache_lookup.entry']-5;b=s['p_player_cache_lookup.miss']
+        if [a,b]!=proof['control_extent'] or digest(image[a:b])!=proof['control_code_sha256']:
+            raise ValueError('actual selected P0 SAT instruction extent differs')
+        sat=replace_gate(a,b,(ROOT/'src/native_p0_sat.asm').read_text())
+        # The selected v31 already bypasses duplicate initialization. Verify
+        # that compiled caller instead of claiming another saving from the
+        # older maintained source. Public lookup remains unchanged/protected.
+        source_name='src/presentation_player_cache.asm'
+        if digest((ROOT/source_name).read_bytes())!=m['source_files'][source_name]:
+            raise ValueError('certified original P0 key construction changed')
+        first=s['p_player_cache_lookup']
+        expected=b'\xCD'+s['p_player_init_masks'].to_bytes(2,'little')+b'\xCD'+s['p_player_variant_default'].to_bytes(2,'little')+b'\xDA'+s['p_world_fail'].to_bytes(2,'little')
+        if image[first:first+len(expected)]!=expected:raise ValueError('checked initial cache default must remain')
+        needle=b'\xCD'+s['p_player_variant_lookup.scan'].to_bytes(2,'little');region=image[first:a]
+        if region.count(needle)!=1 or b'\xCD'+s['p_player_variant_lookup'].to_bytes(2,'little') in region:
+            raise ValueError('selected v31 direct P0 scan caller required')
+        site=first+region.index(needle)
+        if s['p_player_variant_lookup.scan']!=s['p_player_variant_lookup']+4:
+            raise ValueError('exact duplicate default/RET C prefix required')
+        p0_cache=dict(experimental=True,component_proof_sha256=digest((p0_sat_proof/'component-result.json').read_bytes()),
+                      control_image_sha256=proof['control_image_sha256'],SAT_extent=[a,b],writer_bytes=sat['ns_end']-sat['ns_sat'],
+                      unchanged_scan_caller=site,duplicate_default_already_elided=True,allocation_bytes=0,whole_frame_acceptance=False)
     out.mkdir(parents=True,exist_ok=True)
     (out/'native-image.bin').write_bytes(image)
     manifest.update(source_linked_partial=True,complete=False,objects=q.objects,native_symbols={**edge,**p0,**floe,**nh,**co,**enemy,**footer,**credit,**gd,**grid,**white,**igloo,**temp},
                     patches=patches,image_sha256=digest(image),remaining_interfaces=[],
                     source_ROM_required_for_cold_init=True,mapperless_product=False,
-                    elided_mapper_CALLs=removed,superseded_mapper_sites=superseded)
+                    elided_mapper_CALLs=removed,superseded_mapper_sites=superseded,native_P0_cache=p0_cache)
     (out/'native-link.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(dict(source_linked_partial=True,allocated_bytes=manifest['allocated_bytes'],remaining_bytes=manifest['remaining_bytes'],objects=len(q.objects)))
 
@@ -355,4 +384,5 @@ if __name__=='__main__':
     p.add_argument('--bear-proof',type=Path);p.add_argument('--grid-proof',type=Path)
     p.add_argument('--elide-mapper',action='store_true')
     p.add_argument('--p0-clear-proof',type=Path)
-    a=p.parse_args();build(a.base,a.catalog,a.out,a.p0_proof,dict(bear=a.bear_proof,grid=a.grid_proof) if a.bear_proof and a.grid_proof else None,a.elide_mapper,a.p0_clear_proof)
+    p.add_argument('--p0-sat-proof',type=Path)
+    a=p.parse_args();build(a.base,a.catalog,a.out,a.p0_proof,dict(bear=a.bear_proof,grid=a.grid_proof) if a.bear_proof and a.grid_proof else None,a.elide_mapper,a.p0_clear_proof,a.p0_sat_proof)

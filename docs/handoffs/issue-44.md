@@ -31,7 +31,9 @@ an exception. Keep working autonomously; do not stop at this publication.
 Preserve v30, v31 and every previous measured candidate. No merge/Done until
 Issue44's own acceptance passes. Sole writer/issue chat/branch remain unchanged.
 
-Immediate next step: measure a concrete representation improvement against
+Latest additive qualification: actual published native ROM passes2115 audio intervals,3499 ordered source writes and2472 physical PSG writes; deliberate event corruption is rejected. See references/compact-delivery/issue-44-native-audio.json. No manual listening or cadence claim. Optional P0 SAT experiment was NOT SELECTED (NTSC-0.10%, PAL+0.42%, bear unchanged); default image remains byte-identical. Continue with larger P0 band-search work.
+
+Earlier inventory: measure a concrete representation improvement against
 v31 before another game ROM. Read-only inventory found188 footer tiles can
 share exact8-byte windows:600-byte literal pool +752-byte offset directory,
 1352 total vs3008 frozen VRAM bytes. This is a **size observation only**. A blue

@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans inline. The owner authorized autonomous execution; this plan is not another approval checkpoint.
 
 **Goal:** Reduce native P0 cache-hit CPU work without changing its SAT or metadata.
-**Architecture:** Replace only the bounded SAT byte writer in its existing extent, then bypass one redundant initialization through the certified caller. Qualify optional all-RAM images before any new ROM.
+**Architecture:** Replace only the bounded SAT byte writer in its existing extent, and verify the already optimized scan caller. Qualify optional all-RAM images before any new ROM.
 **Tech Stack:** Z80/sjasmplus,Python in.venv,standard-speed MSX1/openMSX.
 **Spec:** docs/superpowers/specs/2026-11-14-native-P0-cache-design.md
 
@@ -38,7 +38,7 @@
 **Interfaces:** consume Task1 proof; produce a patched native image in a fresh output root. Existing cold builder/checker consumes it unchanged.
 
 - [ ] Verify exact old SAT prefix/body bytes and the unique certified variant-lookup caller, initial default and source instruction provenance.
-- [ ] Patch the SAT body within its original extent and redirect only the caller to .scan; preserve all other entry/miss metadata semantics.
+- [ ] Patch the SAT body within its original extent and preserve its existing direct .scan caller; preserve all other entry/miss metadata semantics.
 - [ ] Run fresh control/candidate source-defined cold NTSC/PAL regular/bear routes with unchanged input-only/pixel/owner/IRQ oracles, then2115 scenes if worthwhile.
 - [ ] Select only a defensible whole-frame improvement; otherwise retain private evidence and revert optional runtime selection.
 
