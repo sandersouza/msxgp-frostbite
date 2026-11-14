@@ -76,7 +76,7 @@ The command independently proves70 P0 patterns,512 bear geometries and1280
 NAME rows, allocates/links the whole game, creates cold images, compresses the
 cartridge and produces genuine COM/BIN files. It archives maintained producer
 sources and hashes. Builders intentionally do not self-certify game acceptance.
-No previous output directory is overwritten. The ZX0 revision/hash is checked;
+No previous output directory is overwritten. The ZX0 revision is checked and its executable hash is recorded;
 the exact executable path is explicit and may be another audited local checkout.
 
 For real native-cartridge qualification:

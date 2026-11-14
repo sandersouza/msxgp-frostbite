@@ -1,8 +1,10 @@
-"""Execute the source-linked flat overlay after genuine old cold init.
+"""Qualify all-RAM execution with explicit startup provenance.
 
-This diagnostic explicitly uses legacy ROM startup. It does not qualify a
-Normal cartridge, COM or BIN loader. Original source/graphics/physical/IRQ
-oracles run on actual all-RAM code, with exact immutable overlay guards.
+Default uses legacy initialization and source-bound overlays; --cold uses
+injected source-defined images; --cold plus --cartridge executes the actual
+Normal-ROM loader. Controlled matrices inject scenes after startup. DOS/BASIC
+loading is qualified separately. Original source/pixel/physical/IRQ oracles and
+exact immutable ownership guards remain active.
 """
 import argparse
 from functools import lru_cache
@@ -24,7 +26,9 @@ from environment import ROOT
 from build_native_flat_image import digest
 
 
-def check(base,linked,out,mode,cold=None,cartridge=None,profile=False):
+def check(base,linked,out,mode,cold=None,cartridge=None,profile=False,scenario=None):
+    if scenario in ('density','header') and mode!='matrix':raise ValueError('controlled extended scenes require matrix mode')
+    if scenario in ('boundary-ntsc','boundary-pal') and mode!=scenario.split('-')[1]:raise ValueError('IRQ boundary scenario must match its video family')
     producer=digest(Path(__file__).read_bytes())
     base,linked,out=base.resolve(),linked.resolve(),out.resolve()
     m=json.loads((base/'build.json').read_bytes());l=json.loads((linked/'native-link.json').read_bytes())
@@ -90,6 +94,22 @@ def check(base,linked,out,mode,cold=None,cartridge=None,profile=False):
     def run(args,*a,**kw):
         if isinstance(args,list) and '-script' in args and 'openmsx' in Path(args[0]).name.lower():
             p=Path(args[args.index('-script')+1]);text=p.read_text()
+
+            if scenario and scenario.startswith('boundary-'):
+                # The old mapper transaction no longer exists. Exercise the
+                # native interrupt-restore entry and its next real instruction,
+                # keeping the nine inherited observer labels for the host audit.
+                for address,target,name in ((s['t_mapper'],s['t_restore_interrupts'],'mapper-before'),
+                                            (s['t_mapper']+3,s['t_restore_interrupts']+1,'mapper-shadow')):
+                    before=f'debug set_bp {address} {{}} {{boundary_select {name}}}'
+                    if text.count(before)!=1:raise ValueError('one source-owned retired mapper boundary required')
+                    text=text.replace(before,f'debug set_bp {target} {{}} {{boundary_select {name}}}')
+                before=f''' if {{[debug read_block memory 0x8000 16384] ne [string range $::boundary_rom [expr {{$::boundary_bank*16384}}] [expr {{($::boundary_bank+1)*16384-1}}]]}} {{fail boundary-bank-hardware}}'''
+                if text.count(before)!=1:raise ValueError('unique obsolete hardware bank invariant required')
+                text=text.replace(before,' if {[debug read_block memory 0x8000 16384] ne [binary format H* '+image[0x8000:0xC000].hex()+']} {fail native-fixed-RAM-mutated}\n if {[debug read ioports 168]!=$::native_irq_primary || [debug read memory 65535]!=$::native_irq_secondary} {fail native-IRQ-slot-restoration}')
+                before=f" set ::boundary_bank [debug read memory {s['t_bank']}]"
+                if text.count(before)!=1:raise ValueError('unique boundary slot snapshot location required')
+                text=text.replace(before,before+'\n set ::native_irq_primary [debug read ioports 168]\n set ::native_irq_secondary [debug read memory 65535]')
 
             # Replace historical whole-code comparisons with the exact source-
             # linked bytes, retaining their original ranges and fault checks.
@@ -239,7 +259,11 @@ debug set_watchpoint write_mem 0x7000 {{$::native_flat_ready}} {{{fail} native-m
     subprocess.run=run
     try:
         from native_host_oracles import original_namespaces
-        with original_namespaces(m):result=compact_game_probe.check(base,out,mode)
+        with original_namespaces(m):
+            if scenario:
+                if scenario not in ('density','header','boundary-ntsc','boundary-pal'):raise ValueError('explicit original extended scenario required')
+                result=compact_game_probe.checker.check(base,out,scenario,1920 if scenario=='density' else 54 if scenario=='header' else 2252)
+            else:result=compact_game_probe.check(base,out,mode)
     finally:
         subprocess.run=old_run;atlas.audit_row=old_owner
         ownership.decorate_owners,clock.decorate_owners,prepared.decorate_owners=old_decorators
@@ -247,10 +271,11 @@ debug set_watchpoint write_mem 0x7000 {{$::native_flat_ready}} {{{fail} native-m
     if cartridge and cartridge.read_bytes()!=native_cart_bytes:raise ValueError('executed native artifact changed during validation')
     if digest(Path(__file__).read_bytes())!=producer:raise ValueError('native qualification driver changed during validation')
     oracle=json.loads((out/'check.json').read_bytes())
-    receipt=dict(complete=True,mode=mode,input_rom_sha256=m['rom']['sha256'],native_image_sha256=digest(image),audits=count,
+    receipt=dict(complete=True,mode=mode,scenario=scenario,input_rom_sha256=m['rom']['sha256'],native_image_sha256=digest(image),audits=count,
                  all_RAM_execution=True,legacy_ROM_cold_init_required=not bool(cold),source_defined_cold_start=bool(cold),native_product_loader=bool(cartridge),
                  executed_ROM_sha256=digest(native_cart_bytes) if cartridge else m['rom']['sha256'],
                  host_oracle_ROM_sha256=m['rom']['sha256'],producer_sha256=producer,
+                 native_IRQ_boundary_relocation=({'mapper-before':s['t_restore_interrupts'],'mapper-shadow':s['t_restore_interrupts']+1,'hardware_invariant':'byte-exact fixed RAM and actual primary/secondary slot restoration'} if scenario and scenario.startswith('boundary-') else None),
                  oracle_receipt_sha256=digest((out/'check.json').read_bytes()),
                  metrics={n:oracle[n] for n in ('source_checkpoints','active_pictures_per_second','mean_prepare_elapsed_cycles','max_prepare_elapsed_cycles','source_cpu_all_ram_equal','coherent_picture_pixels_equal','physical_owners_equal','late_vblanks','canonical_source_writes') if n in oracle},
                  scope='Source/pixel/physical/IRQ original route oracle plus immutable linked objects; not standalone format acceptance.')
@@ -263,4 +288,5 @@ if __name__=='__main__':
     p.add_argument('--mode',choices=('ntsc','pal','bear-ntsc','bear-pal','matrix'),required=True)
     p.add_argument('--cold',type=Path);p.add_argument('--cartridge',type=Path)
     p.add_argument('--profile',action='store_true')
-    a=p.parse_args();check(a.base,a.linked,a.out,a.mode,a.cold,a.cartridge,a.profile)
+    p.add_argument('--scenario',choices=('density','header','boundary-ntsc','boundary-pal'))
+    a=p.parse_args();check(a.base,a.linked,a.out,a.mode,a.cold,a.cartridge,a.profile,a.scenario)
