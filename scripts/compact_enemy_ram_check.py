@@ -22,7 +22,17 @@ def check(build, out, mode):
             raise ValueError('initializer changed')
         initializers.append((row['ram_address'], data))
     s = symbols(build/'presentation.sym')
+    cache = m.get('compact_bear_record_cache')
+    expected_cache = None
+    if cache:
+        if (cache.get('complete_native_records'), cache.get('RAM_cache_address'), cache.get('RAM_cache_bytes'),
+                cache.get('published_id_plus_one'), cache.get('reserved_zero_byte')) != (96, 0xDFC0, 64, 0xDFBE, 0xDFBF):
+            raise ValueError('explicit exact original-record cache contract required')
+        expected_cache = build/cache['original_records_file']
+        if expected_cache.stat().st_size != 6144 or digest(expected_cache.read_bytes()) != cache['original_records_sha256']:
+            raise ValueError('independent full original record bytes changed')
     marker = out/'enemy-ram-validated.txt'
+    cache_marker = out/'bear-record-publications.txt'
     original_run = subprocess.run
 
     def run(args, *a, **kw):
@@ -51,9 +61,29 @@ debug set_watchpoint read_mem {{0xA800 0xB7FF}} {{$::enemy_ram_guard && $::enemy
                 text += f'debug set_watchpoint write_mem {span} {{$::enemy_ram_guard}} {{{fail} immutable-enemy-RAM-write}}\n'
                 if mode == 'matrix':
                     text += f'debug set_watchpoint read_mem {span} {{$::enemy_ram_guard}} {{{fail} cold-uninitialized-enemy-RAM-read}}\n'
-            for first, last in ((0xDFBE, 0xDFFF), (0xE370, 0xE4FF)):
+            unused = ((0xDFBF, 0xDFBF), (0xE370, 0xE4FF)) if cache else ((0xDFBE, 0xDFFF), (0xE370, 0xE4FF))
+            for first, last in unused:
                 for access in ('read_mem', 'write_mem'):
                     text += f'debug set_watchpoint {access} {{{first} {last}}} {{$::enemy_ram_guard}} {{{fail} unused-enemy-RAM-suffix}}\n'
+            if cache:
+                text += f'''
+set f [open {{{expected_cache}}} rb];set bear_expected_records [read $f];close $f
+set bear_record_publications 0
+debug set_watchpoint write_mem 0xDFBE {{$::enemy_ram_guard}} {{
+ set key $::wp_last_value
+ if {{$key!=0 && $key!=255}} {{
+  if {{$key<1 || $key>96}} {{{fail} invalid-bear-record-publication}}
+  set at [expr {{($key-1)*64}}]
+  if {{[debug read_block memory 0xDFC0 64] ne [string range $::bear_expected_records $at [expr {{$at+63}}]]}} {{{fail} original-bear-record-cache-differs}}
+  incr ::bear_record_publications
+  set f [open {{{cache_marker}}} w];puts $f $::bear_record_publications;close $f
+ }}
+}}
+debug set_watchpoint write_mem {{0xDFC0 0xDFFF}} {{$::enemy_ram_guard}} {{
+ set key [debug read memory 0xDFBE]
+ if {{$key!=0 && $key!=255}} {{{fail} valid-bear-record-mutated-without-invalidation}}
+}}
+'''
             p.write_text(text)
         return original_run(args, *a, **kw)
     subprocess.run = run
@@ -63,9 +93,14 @@ debug set_watchpoint read_mem {{0xA800 0xB7FF}} {{$::enemy_ram_guard && $::enemy
         subprocess.run = original_run
     if mode != 'matrix' and not marker.exists():
         raise ValueError('RAM module guards never armed')
+    publications = int(cache_marker.read_text()) if cache_marker.exists() else 0
+    if cache and mode == 'matrix' and not publications:
+        raise ValueError('original record publication guard never exercised')
     result = dict(complete=True, mode=mode, rom_sha256=m['rom']['sha256'],
         native_RAM_code_bytes=112, immutable_RAM_asset_bytes=1214,
-        unused_suffix_bytes=466, hot_source_ROM_reads=0 if mode != 'matrix' else None,
+        unused_suffix_bytes=401 if cache else 466,
+        exact_original_record_cache_publications=publications if cache else None,
+        hot_source_ROM_reads=0 if mode != 'matrix' else None,
         cold_matrix_avoids_uninitialized_RAM=mode == 'matrix',
         all_original_and_retirement_oracles_retained=True,
         producer_sha256=digest(Path(__file__).read_bytes()),

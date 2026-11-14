@@ -1,5 +1,62 @@
 # Issue44 — compact native formats
 
+## Active native bitmap-renderer work (continue, do not stop)
+
+Selected integration parent remains `issue44-enemy-resident-game-03/build`,
+SHA5ffac6a983c6bb770bf540db33a7fb506f2120fb5c3e7d9c7d47af2e64ea9717.
+The subsequent packed-record experiment is qualified but NOT selected:
+`issue44-bear-record-cache-game-02/build`, SHA309c1572c47bf92cb85ab43a98fce5f65f70746a21eb3145f3039953545fd8ce.
+All96 record miss+hit native cases and all five original whole-game checks pass;
+cache publications1/1/10/10/40 are checked against all64 original bytes and
+invalidation-before-write.6144 data bytes become3168 packed+940 raw map, with
+166-byte decoder,15-byte bridge and66 bytes atDFBE..DFFF formerly unused. DFBE
+publishesID+1 so cold zero is invalid; DFBF stays zero. Regular31.50327/30.04709,
+bear28.27500/24.81824: PAL bear loses cadence. Receipt/source archive retained
+as issue-44-bear-record-cache.json / issue44-bear-record-cache-stage-01/source.
+673 host tests pass. This experiment is not a delivered native executable.
+
+Ruling: pursue a native bitmap bear renderer from the same six source pictures,
+rather than preserve all expanded raw-ID/strip representations. This is an
+implementation decision under the owner's explicit autonomy and freedom to
+change architecture, with no new visual/mechanics adaptation. Spec/plan:
+docs/superpowers/specs/2026-11-14-native-bear-renderer-design.md and
+plans/2026-11-14-native-bear-renderer.md. Ledger/Task1 brief under matching
+.superpowers/sdd/2026-11-14-native-bear-renderer/. Existing checkout/branch and
+sole-writer ownership remain; no new worktree or approval checkpoint is needed.
+
+Task1 native masks: scripts/native_bear_grid_probe.py, src/native_bear_grid.asm
+(direct sprite-row shifting) and src/native_bear_grid_rows.asm(preferred row
+atlas). Both pass512 group/phase/coarse combinations independently against
+original Atari glyph pixels through mask_tiles, with fixed96-byte4x3 output
+C480..C4DF and boundedC500..C50F scratch. IX/IY/SP/IFF and unowned writes guarded.
+Direct generator13200 mean/16629 max cycles. Preferred row atlas8852.5 mean /
+8864 max, using22 distinct24-bit rows x8 shifts x4 bytes704, six20-byte row ID
+streams120, and existing32-byte group aliases. Its code is169 bytes including
+the fixture input loads. All470 old native masks are generated exactly. Proofs:
+outputs/compact/issue44-native-bear-grid-01 and issue44-native-bear-rows-01.
+These are component fixtures, not complete game or cadence measurements.
+
+Next Task2: semantic kind10 keys and canonical native palette representation.
+Word=(group<<9)|(phase<<5)|(coarse<<4)|cell; cell=row*4+column0..11.
+Fields2..5 remain(backgroundID,clip0,foreground1..15,kind10). Bank0 slots0..7
+map rows6/7, bank1 slots0..3 map row8, both pages; reject type10 elsewhere.
+Independently derive each mask from ORIGINAL Atari glyphs, never new target row
+atlas. For solid-per-row background(PGTFF and equal CGT nibbles), the canonical
+native tile is rawmask8 plusCGT8=(FG<<4)|BG. This preserves all RGB pixels even
+when mask0/FF or FG==BG, and removes the costly old per-mask merge. Reject
+nonuniform/clip1 keys. Native background vectors are only five8-byte patterns;
+key/physical-role and original RGB audits remain strict, not exemptions.
+
+Then Task3 integrates a new native tile fallback while retaining complete
+sprites/admission, dirty union, wrap(col31->1, skipcol1), both generations and
+original source clock/controls/audio. C480..C4DF scratch is safe before HUD
+selectors are freshly derived; source IRQ does not touch it. Prefer batch32-byte
+PGT+CGT row upload with fixed physical roles and exact key hit checks; original
+expanded native mask/record/strip tables may only be retired after readers are
+superseded and all original oracles pass. No full-game integration exists yet.
+Task4 full dense/header/IRQ checks, then continue actual flat link/loaders and
+Issue44 delivery; do not end this task at another component milestone.
+
 ## Continuing execution: unified bear and mapper-independent enemy renderer
 
 Current qualified internal base: `outputs/compact/issue44-enemy-resident-game-03/build`,
