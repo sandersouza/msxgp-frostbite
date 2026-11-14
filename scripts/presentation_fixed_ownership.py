@@ -27,7 +27,8 @@ def kinds(bank,slot,templates=False):
     return (0,) if slot<9 else ((9,) if templates else (0,7)) if slot<41 else (1,)
 
 
-def audit_row(raw,vram,tile,*,templates=False,shared_ice=False):
+def audit_row(raw,vram,tile,*,templates=False,shared_ice=False,native_bear=False):
+    if type(native_bear) is not bool:raise ValueError('explicit native bear feature selection required')
     if type(templates)is not bool:raise ValueError('explicit fixed/template role selection required')
     if len(raw)!=ROW_BYTES or len(vram)!=16384:raise ValueError('complete fixed metadata, both NAME pages and16KiB VRAM required')
     names=raw[:1536];keys=raw[1536:3840];footer=raw[3840:4104];counts=raw[4104:]
@@ -47,7 +48,10 @@ def audit_row(raw,vram,tile,*,templates=False,shared_ice=False):
         for slot in range(64):
             key=keys[(group*64+slot)*6:(group*64+slot+1)*6]
             if key==bytes([255])*6:continue
-            if slot>=COUNTS[bank] or key[5] not in kinds(bank,slot,templates):raise ValueError('key belongs to another fixed primitive role')
+            if key[5]==10 and native_bear:
+                from native_bear_keys import validate_role
+                validate_role(bank,slot+page*64,key)
+            elif slot>=COUNTS[bank] or key[5] not in kinds(bank,slot,templates):raise ValueError('key belongs to another fixed primitive role')
             identifier=slot+page*64;check_tile(bank,identifier,key);valid[page,bank,identifier]=key
     for index in range(44):
         key=footer[index*6:(index+1)*6]
@@ -65,6 +69,9 @@ def audit_row(raw,vram,tile,*,templates=False,shared_ice=False):
                        and (19 if bank==1 else 9)<=identifier%64<(51 if bank==1 else 41))
             if physical_key is None or physical_page!=page and not cross_ice:raise ValueError('NAME references another generation or an unpublished fixed role')
             slot=identifier&63
+            if physical_key[5]==10 and native_bear:
+                from native_bear_keys import fields
+                if row!=6+fields(physical_key)[3]:raise ValueError('native bear NAME escaped its exact row')
             if bank==0:
                 if slot<8 and row not in (6,7) or 8<=slot<38 and (row!=(slot-8)//10 or column!=5+(slot-8)%10) or slot>=38 and (row!=3+(slot-38)//6 or column!=22+(slot-38)%6):
                     raise ValueError('NAME position differs from its bank0 role')
