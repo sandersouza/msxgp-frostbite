@@ -1,5 +1,46 @@
 # Issue44 — compact native formats
 
+## Continuing execution: immutable footer VRAM allocation qualified
+
+Latest internal build `outputs/compact/issue44-footer-vram-game-01/build`, SHA
+`06fc8f61ca30c44b5abce683e9ffff5994604e5b5030e258b533e60ef4c581df`.
+Four natural routes +2115 scenes pass with ALL prior source/picture/owner/IRQ/
+retirement gates. New footer checker proves an exact188-tile cold VDP upload,
+no post-preload CPU reads of13:8000..8BBF, immutable bytes in4401/3978/972/858
+natural snapshots and4231 matrix snapshots, and zero references from BOTH NAME
+pages to stored tiles. Native188-case store/read proof is exact2706cycles with
+ABI/write guards; no dummy VDP read is needed (also matches audited Seaquest
+plain loader). No physical-hardware evidence is claimed.
+
+Allocation excludes both fixed generations(counts56/60/50), every background
+ID(counts27/5/6), ice atlas1/2, both44 footer slots and14 bank2 Retroworks IDs.
+216 free PGT/CGT pairs exist; first188 hold3008 original footer bytes.188x2=376
+address bytes in62:B900; source/read/store code62:B800;93-byte resident bridge
+at560E. cache_init now jumps to an init wrapper that calls the original fast
+init then clearsC7E3. First footer miss uploads from original13:8000 through
+existingC520 scratch; C7E4 indexes loading. FlagA5 publishes only after all188
+pairs. Later misses read16 bytes toC520; existing footer writer/key publisher
+is retained and62 always restores13. No new VRAM capacity or graph changes.
+
+Cadence unchanged:32.215212/30.285086 regular,29.312114/25.078857 bear. Mean
+preparation increases~31/114 regular and~215/277 bear cycles vs literal-window
+parent, with no interval lost. The current ASCII16 image still has its footer
+ROM source; the important native-link lifetime result is that3008 bytes can be
+startup-only VRAM assets, avoiding that decompressed RAM allocation. Receipt:
+references/compact-delivery/issue-44-footer-vram.json; archived source at
+outputs/compact/issue44-footer-vram-stage-01/source.
+
+Next: reduce the5632-byte expanded NAME matrix without a costly generic tile
+constructor. Use22 normalized32-byte rows (704B),160-byte phase directory and
+8 owner palettes (9 significant bytes each), plus a straight-line lookup copier.
+Proposed lower RAM: directory1000, palette pages1100..1800(first9 bytes only),
+normalized rows1900..1BBF, code1C00..1CFF; all other old expanded-grid bytes can
+be reclaimed. Expected physical contiguous free1D00..26FF plus palette-page
+holes, not a size success. White immutable ice atlas stays direct and cold
+matrix keeps the existing ROM constructor. Require all1280 rows native proof,
+new exact boot/immutable/read guards in all four routes, and full-frame cost
+measurement. Then finish the actual flat layout and native loaders; keep going.
+
 ## Continuing execution: full occupancy dictionary and literal windows qualified
 
 Latest fully checked internal build `outputs/compact/issue44-literal-windows-game-01/build`,
