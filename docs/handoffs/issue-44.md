@@ -1,5 +1,51 @@
 # Issue44 — compact native formats
 
+## Continuing execution: two resident relinks qualified
+
+Latest fully checked stage `outputs/compact/issue44-bear-resident-game-01/build`,
+ROM `01dc10ba242ea8deddcdadbffbe512a9d3c8a8b49d781267d22c58802b3aeb89`.
+All four routes and2115 scenes pass both NAME-decoder reclamation and native bear
+residency. Receipts: `issue-44-resident-dirty.json` and
+`issue-44-bear-resident.json` under references/compact-delivery/.
+
+12704 bank1 expansion/reverse/clip bytes and1272 resident contact-pointer bytes
+were removed with cold read guards. The first attempt wrongly included literal
+original pageB000..B3FF, which contains live HUD color selectors atB3F9; the
+corrected stage preserves the entire original1KiB page plus colors/backgrounds.
+Resident dirty traversal898B now occupies7408..7789, removing its113/2 mapper
+round trip. All31752 floe,79386 hazard and402960 adversarial cached-shore native
+query comparisons were rerun againstv30 and pass with exactly unchanged output
+hashes/cycle ranges. These remain directed integration coverage, not Cartesian
+all-view proof.374 reclaimed resident bytes remain at778A..78FF.
+
+The obsolete NAME decoder538A..578F was then erased/guarded (live NAME uploader
+52F0..5389 remains). Native bear body/context code now occupies538A..55FE(629B),
+leaving401 bytes through578F. Full1024-index context proof (1015 misses) validates
+the nine-case branch selector: max237cycles, no context table. The scalar sparse
+prototype was slower(max718) and stays as component history. Native helper
+addresses remain unchanged; copy/constructor returns no longer map102, and the
+three-sprite fallback calls the resident body. Current112 bulk-strip patch is
+preserved byte-for-byte; old102:B800..BFFF is erased and guarded. Rates remain
+32.215210/30.404084 regular,29.312116/25.078850 bear. Still ASCII16, no32K/COM/BIN.
+
+Corrected opcode-fetch observer now passes real matrix qualification:
+`issue44-compact-active-live-03/matrix`, startup13079/runtime26578 physical bytes.
+Combined with the four correctly phased natural probes: startup22606,
+runtime38140, total union53471. Tested coverage is a lower bound and includes
+copied code/data in the union; it is not a flat live layout or size guarantee.
+654 host tests pass. No active long check remains at this checkpoint.
+
+Next concrete RAM-residency opportunity:29A0..2FFF is free after query scratch
+2990..2998 and before common code3000. Relocate hot header constructor to29A0,
+font1360B to2A00 and phases to2F60, preload after cfi_boot before t_enabled=1.
+Keep the existing bank52 cold constructor for matrix/pre-clock rendering.
+FD00 lookup has28 padding bytes, enough for a t_enabled hot/cold gate. Current
+cfi_boot ends at7CE9; its7CDF..7CE9 restore/vector tail can grow by8 bytes before
+7D29's live exceptional-enemy gate.52:BE70..C000 is unused after header phases;
+store relocated code and a cold copying helper there. Require exact boot-RAM
+comparison and immutable-write guards in all four natural routes. Finish actual
+flat linking/loaders; keep executing rather than ending at progress checkpoints.
+
 ## Continuing execution: P0 shore sharing qualified, resident reclamation next
 
 Latest qualified internal build `outputs/compact/issue44-shore-pattern-game-01/build`,

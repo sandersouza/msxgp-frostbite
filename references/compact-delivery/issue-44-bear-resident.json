@@ -1,0 +1,78 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "01dc10ba242ea8deddcdadbffbe512a9d3c8a8b49d781267d22c58802b3aeb89",
+  "bound_source_files": 295,
+  "source_archive": "outputs/compact/issue44-bear-resident-stage-01/source",
+  "checks": {
+    "issue44-name-retirement-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-name-retirement-game-01/ntsc/resident-retirement-check.json",
+        "sha256": "042f78e2f09ce57329d6cc2bff9788d5890f2ba32f99909420368366e69eea5c"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-name-retirement-game-01/pal/resident-retirement-check.json",
+        "sha256": "ae01cf1765eb07a8cdadd101f97a9070c054f1f0efdcc45028d6bc8b837bf998"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-name-retirement-game-01/bear-ntsc/resident-retirement-check.json",
+        "sha256": "af6e3b4f1de66d8712bb1ef0a17442249c5f04f7048a9a56f35c0959d3dbe1cb"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-name-retirement-game-01/bear-pal/resident-retirement-check.json",
+        "sha256": "22bf06f551c5938e9cb5233cb605ce66dacd1dc18f0efb621afd10dad6b03fde"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-name-retirement-game-01/matrix/resident-retirement-check.json",
+        "sha256": "e3009d0bfe5533764eddb95e32dccf79c6b231cefca0308b34d792e527e984e4"
+      }
+    },
+    "issue44-bear-resident-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-bear-resident-game-01/ntsc/resident-retirement-check.json",
+        "sha256": "ca62702bd29fa73a8c475fafb2cdfea0c1356a547a068a59abd567e8971ab8cb"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-bear-resident-game-01/pal/resident-retirement-check.json",
+        "sha256": "e6ef305461eea634938b9a942cd1fa1e1f8f8cec654764f547330235b555eab9"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-bear-resident-game-01/bear-ntsc/resident-retirement-check.json",
+        "sha256": "d57e7846c602180f66b3f9df621497584bdb798537c27dbf1785db29c63d3eee"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-bear-resident-game-01/bear-pal/resident-retirement-check.json",
+        "sha256": "fa9fda937689487e6488e2c2f7939688e750fc33dc14e52d9ea597d655ff3dd4"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-bear-resident-game-01/matrix/resident-retirement-check.json",
+        "sha256": "7c110ddd0e568e2c709a3a55e7a50317e1a762d89449b9e39c3ca5bcd8e61f4f"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-name-retirement-game-01": {
+      "ntsc": 32.21521050413598,
+      "pal": 30.404078595170247,
+      "bear-ntsc": 29.31211581112609,
+      "bear-pal": 25.078849904497336
+    },
+    "issue44-bear-resident-game-01": {
+      "ntsc": 32.21521050413599,
+      "pal": 30.404083648935185,
+      "bear-ntsc": 29.312115811126098,
+      "bear-pal": 25.07884990449734
+    }
+  },
+  "reclaimed_decoder_bytes": 1030,
+  "resident_bear_bytes": 629,
+  "remaining_decoder_bytes": 401,
+  "context_selector_cases": 1024,
+  "old_context_bytes": 1024,
+  "new_context_table_bytes": 0,
+  "public_RAM_ABI_preserved": true,
+  "scope": "Second resident relink with exact sparse context selection and guarded whole-game proof. Bank102 body/table erased. No native cartridge/loaders/size success yet."
+}

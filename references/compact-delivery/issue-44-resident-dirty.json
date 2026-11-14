@@ -1,0 +1,94 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "02c9551741a8ff726232d55c8001ce2eea251b2d2cd58148f943d3f5e9a12245",
+  "bound_source_files": 291,
+  "source_archive": "outputs/compact/issue44-resident-dirty-stage-01/source",
+  "checks": {
+    "issue44-resident-retirement-game-02": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-resident-retirement-game-02/ntsc/resident-retirement-check.json",
+        "sha256": "3dad45df82968e5ba7d791f905784fdee44b3782990b34d1f2c47caaf4216efa"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-resident-retirement-game-02/pal/resident-retirement-check.json",
+        "sha256": "638b652b443710c56084f9d671362abb0dc4a91d1177a116e478489687a3d067"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-resident-retirement-game-02/bear-ntsc/resident-retirement-check.json",
+        "sha256": "e6f77ab895eccbc6495a3e6e90ad6e26a18902c6099cb4c591d891d04c7f399d"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-resident-retirement-game-02/bear-pal/resident-retirement-check.json",
+        "sha256": "981ddffb043e70a5dc0f3a0dbe88ce7e41aa0342b8a87eb870fd0722631035e0"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-resident-retirement-game-02/matrix/resident-retirement-check.json",
+        "sha256": "5f1e6d0deba699b3857f50193b75e489f29cf41531484093f1d7174ee6c64797"
+      }
+    },
+    "issue44-dirty-resident-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-dirty-resident-game-01/ntsc/resident-retirement-check.json",
+        "sha256": "6b8b0149aebb7d8bcd8da475bf654235aa4d6f6ccef189b10cedfed8d231b865"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-dirty-resident-game-01/pal/resident-retirement-check.json",
+        "sha256": "440c907d1e7d5147f309ba15fdb4cbc40b54b452b921d985a95081cd54d96ff7"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-dirty-resident-game-01/bear-ntsc/resident-retirement-check.json",
+        "sha256": "65c337d549e0e13d89d341ed4d1de48606eb298d5b76e56c5ba1466385912ef6"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-dirty-resident-game-01/bear-pal/resident-retirement-check.json",
+        "sha256": "20d77d563aec0ae3e33f1489bf865648726f5ddf0e56ad4d528cccdc1d4959d6"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-dirty-resident-game-01/matrix/resident-retirement-check.json",
+        "sha256": "b09991749fa484abffdd7f483ccfdc08700965f21e75e9dcbffcf390825be7e0"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-resident-retirement-game-02": {
+      "ntsc": 32.21521210596282,
+      "pal": 30.404079100546664,
+      "bear-ntsc": 29.312111562798492,
+      "bear-pal": 25.078842583402423
+    },
+    "issue44-dirty-resident-game-01": {
+      "ntsc": 32.21521050413598,
+      "pal": 30.404078595170247,
+      "bear-ntsc": 29.31211581112609,
+      "bear-pal": 25.078849904497336
+    }
+  },
+  "directed_queries": {
+    "floe": {
+      "path": "outputs/compact/issue44-resident-query-checks-01/floe/glue-check.json",
+      "sha256": "dd7157ffb1c3f0dbb4e27032ed8809069655f9f3819eeafe541af7e5c1182ae4",
+      "cases": 31752
+    },
+    "hazard": {
+      "path": "outputs/compact/issue44-resident-query-checks-01/hazard/glue-check.json",
+      "sha256": "0345e5a6b25c759ce7019687b5935a4c05cc4b7f72936de42f110acc05cdafa1",
+      "cases": 79386
+    },
+    "shore": {
+      "path": "outputs/compact/issue44-resident-query-checks-01/shore/glue-check.json",
+      "sha256": "c4af30bf597806ab789768ebfc65ee413d3a47cb24f5977094f430bb3b655016",
+      "cases": 402960
+    }
+  },
+  "retired_primitive_table_bytes": 12704,
+  "reclaimed_resident_bytes": 1272,
+  "resident_dirty_code_bytes": 898,
+  "remaining_reclaimed_bytes": 374,
+  "removed_mapper_calls_per_prepare": 2,
+  "preserved_original_page": "bank1:B000..B3FF contains live HUD color selectors; rejected first prefix removal captured B3F9.",
+  "scope": "First real resident relink with guarded whole-game and directed contact parity. Target flat layout/32K/native loaders and final cadence remain pending."
+}
