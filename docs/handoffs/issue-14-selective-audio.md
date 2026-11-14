@@ -7,6 +7,9 @@ Issue14 is the sole writer; issue39 and44 are not editing this checkout.
 Implementation commit: `001f802f9589c826d5e0463834b6b09ca8dc6329`.
 Branch: `codex/test/14-native-presentation-acceptance`; PR46 references #14
 without closing it. Release notes: `docs/releases/v0.0.32-selective-audio-diagnostic.md`.
+PR46 merged at `71d4e824b66cf1a1fa3b28920614630c8c7d698f`. The prerelease is
+published; all seven assets were freshly downloaded and verified byte-for-byte.
+Local publication receipt: `outputs/releases/v0.0.32-publication.json`.
 
 The requested1.25 amplitude factor is quantized to PSG4->5, nominal sqrt(2),
 approximately+41.4%. Do not describe the result as exact25%. All four original
