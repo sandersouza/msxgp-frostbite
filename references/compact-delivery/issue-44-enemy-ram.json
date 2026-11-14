@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "8ba356cf708a951493ffa474798ba8f8eef8e48438a91eedf0bcf79e8d2caa51",
+  "source_archive": "outputs/compact/issue44-enemy-ram-stage-01/source",
+  "bound_source_files": 335,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-enemy-ram-game-02/ntsc/enemy-ram-check.json",
+      "sha256": "e6bec9533d892015e89a9dca1dd828f6b7359f1be8825963c90280f9fac012b5"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-enemy-ram-game-02/pal/enemy-ram-check.json",
+      "sha256": "2d8205623647543c406334ff54c90ab63ac17d25947ca7eabd781b74c041b949"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-enemy-ram-game-02/bear-ntsc/enemy-ram-check.json",
+      "sha256": "16e09d94fb7521025cb3ad22fd8fa6b5bdc2539d8bf61fcb668e9792b558e93a"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-enemy-ram-game-02/bear-pal/enemy-ram-check.json",
+      "sha256": "b7234deb132b5aeaf0045be38a1ccf66369465196e32134916aa3ed32b8253a5"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-enemy-ram-game-02/matrix/enemy-ram-check.json",
+      "sha256": "e86afcd45d1ab6feb97e9b4820cb4fed849801345f84d35a305566b268ee98c6"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.472115948966962,
+    "pal": 29.98759184464269,
+    "bear-ntsc": 28.274998258948333,
+    "bear-pal": 25.340515128990244
+  },
+  "mean_prepare_elapsed_cycles": {
+    "ntsc": 55185.75240715268,
+    "pal": 55841.21785173979,
+    "bear-ntsc": 60961.855227882035,
+    "bear-pal": 63858.1006097561
+  },
+  "scope": "Internal migration qualification; complete native flat executable and loaders remain undelivered."
+}

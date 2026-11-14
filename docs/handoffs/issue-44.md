@@ -1,5 +1,105 @@
 # Issue44 — compact native formats
 
+## Continuing execution: unified bear and mapper-independent enemy renderer
+
+Current qualified internal base: `outputs/compact/issue44-enemy-resident-game-03/build`,
+SHA `5ffac6a983c6bb770bf540db33a7fb506f2120fb5c3e7d9c7d47af2e64ea9717`.
+Four successive stages pass all four natural routes plus2115 original scenes,
+with source/pixel/physical-owner/IRQ/active-page/clock/retirement gates unchanged.
+670 host tests pass again. Receipts and complete source archives:
+`references/compact-delivery/issue-44-{bear-unified,enemy-ram,renderer-retirement,enemy-resident}.json`
+and `outputs/compact/issue44-<same-label>-stage-01/source`.
+Still4MiB ASCII16, NO linked flat game/Normal32K/COM/BIN. Do not stop here.
+
+1. Native bear architecture: for the existing late bear publisher, try its
+complete three-sprite monochrome shape with the unchanged full rectangle
+admission, then exact native tile fallback. The former hybrid sprite-prefix /
+prepared suffix path is source-deleted. All earlier-level ordering remains.
+The initial trial moved earlier levels into the late publisher and failed the
+matrix dirty-union contract; it is rejected. The corrected trial and subsequent
+reclamation pass every original oracle. Sprite clipping/edge fallback and32
+SAT entries/four rectangles per scanline remain enforced.994-byte body at2:9C10,
+old bulk still2:A1D7; former hybrid dictionary/records8KiB, duplicate directory
+1KiB,485 body bytes and15-byte bridge retired/read-guarded:9716 physical bytes.
+132:B800..BBFF stays host-only for old independent packet verification; no CPU
+read. Full sprite608-byte pool/info remains132:BC00..BE5F. Native fallback still
+needs96x64-byte records67..69 and mask/strip dictionaries. The former hybrid
+metadata/old source files are ancestry, not active input allocations.
+
+Ruling: keep this as internal native-link work, not a human performance release.
+Regular cadence unchanged vs enemy-windows parent; bearNTSC28.274994 vs29.312122
+and bearPAL25.340515 vs25.078854. Source, graphics and controls pass; final flat
+link still must recover the measured cadence loss before promotion. No accepted
+baseline binary changed. No performance parity is inferred from size reduction.
+
+2. Entire enemy SGT code/assets now preloaded into reclaimed upper RAM:
+112-byte codeE300..E36F,1214-byte literal directory/poolDB00..DFBD. All132 native
+RAM read and132 real VDP upload/readback cases pass. Old scalar NAME staging and
+E300/E400 fixed-floe buffers have no current producer: their generic decoder/
+loader were already retired, native world dispatch is unconditionalF400, and
+old fixed-floe entry585F is guarded. Bootstrap end7CF1 JP55FF uses the former
+hybrid bridge to select64:BF00 preload code/data, then restores1. New resident
+SGT gates566B..56D8 preserve original public RAM entries and cold paths; hot
+calls never read64:A800..B7FF. Natural exact-preload/immutable data+code guards
+and unused suffix read/write guards pass. Matrix intentionally uses the old
+cold constructor and forbids uninitialized new RAM reads. Remaining unused
+suffixes:DFBE..DFFF66 andE370..E4FF400. These are not yet allocated to anything.
+
+3. Superseded scalar render code reclaimed2550 resident bytes. Its typed gate
+now accepts igloo kind5 only; retain pt_background, igloo and merge closures.
+All old generic mono/literal/union/floe/footer constructors, scalar actor path,
+old generic loaders/primitive and the unreachable scalar world tail are guarded.
+Source-level dispatch proof checks the actual unconditionalJP F400 and declared
+separate enemy/floe rows. Old bank7 code/data residue4519 bytes is retired:
+A000..A3CC andAA26..B7FF. Original geometry/raw-floe owner expectations still
+come independently from sealedv30. No oracle was relaxed to permit deletion.
+These are internal retired constructor APIs; original gameplay is unchanged.
+
+4. Remaining bank7 native renderer source-relinked into reclaimed resident:
+qe_bulk/role routines+96-byte roles:5AF6..5C35(320B);
+certified hybrid enemy admission/upload/clip585F..5A4B(493B);
+right mask/bits/preflight/invalid masks7A13..7B0A(248B).
+The complete old native code is first reproduced byte for byte from maintained
+sources, incorporating the accepted grid24 anchors/role swaps, expanded border
+eligibility and clip reader. Remove only old alignment padding. Four exact
+world CALL operands now target relocated functions; other world bytes and all
+public SGT entries remain. All bank7:A000..B7FF CPU reads are now forbidden from
+cartridge entry; all checks pass. Keep same-valued bank2 labels such as x_resume
+separate: symbol ownership, not numeric coincidence, controls relocation.
+
+Latest rates:31.472117/29.987590 regularNTSC/PAL,28.274998/25.340515 bear.
+Mean prepare55163.90/55839.33 regular and60961.86/63858.10 bear cycles. Enemy
+residency itself changes neither cadence nor these costs; old mapper restore
+calls remain until the final flat source link. Existing670 host tests pass.
+
+Current pending work: actual conservative all-state flat object/lifetime map,
+finish removal of remaining foreign data/code dependencies, compile the shared
+native executable, then genuine Normal32K attempt / DOS1 COM / BASIC BLOAD BIN
+loaders and complete integration/release. Continue autonomously. No native
+loader or delivery artifact has been created yet.
+
+Concrete next reduction prepared by inspection (NOT implemented): native bear
+records6144 bytes contain470 one-to-one(raw_ID,dense_mask) pairs. Can encode
+96 records as18 bytes of12 nine-bit dense IDs plus15 metadata bytes (3168),
+plus470x2-byte raw-ID/empty-left-predicate map940 =4108 bytes. Reconstruct the
+original64-byte record intoDFC0..DFFF; useDFBE as cached recordID andDFBF owned
+state, claiming the66-byte currently guarded suffix. This avoids per-cell
+decoding and shares one persistent original record across both pages. Unused
+cells in3-column records must be reset to zero after decoding; used empty raw0
+has an8000 predicate while unused original cells have four zero bytes. Keep
+native IX/IY/SP/IFF and raw keys exactly. Need96 native record/miss+hit proofs,
+cache publication/immutable-SGT RAM guards, source patch ofai_body record load,
+initializer invalidation, and whole-frame timing before integrating. New data
+can occupy erased contact prefix67:A800..BAAB, codeBB00; old67..69 record tails
+become host-only/read-guarded. This is an idea, not a delivered allocation.
+
+The maintained coverage-only `scripts/compact_flat_probe.py` ran NTSC, bearNTSC
+and matrix on the enemy-window parent. It collects phase-aware physical reads
+and initial RAM/VRAM with all five existing checker layers. Coverage remains a
+lower bound; it never authorizes pruning unseen values. Outputs are under
+outputs/compact/issue44-flat-coverage-01/. It has not yet been rerun after the
+latest source relocations, and is not a flat-memory feasibility result.
+
 ## Continuing execution: literal NAME and enemy planes qualified
 
 Current internal base: `outputs/compact/issue44-enemy-windows-game-02/build`,
