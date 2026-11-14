@@ -1,0 +1,82 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "human_test_candidate": false,
+  "rom_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+  "source_archive": "outputs/compact/issue44-native-graphic-irq-stage-01/source",
+  "source_files": 367,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-native-enemy-irq-game-02/ntsc/native-bear-renderer-check.json",
+      "sha256": "19eacaee14ccf38d43b33e2b1181c3c694adfe32fadf32b3598af535caa92e3e"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-native-enemy-irq-game-02/pal/native-bear-renderer-check.json",
+      "sha256": "4ccfcf15f8d297eaced1e7764d861c71c11292dc7ed96feeb6d3ef08adeda08b"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-native-enemy-irq-game-02/bear-ntsc/native-bear-renderer-check.json",
+      "sha256": "8de765896c6f9b2f48f7cd077521bc33dbd065f3c28bacd6d7bdffe539567f55"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-native-enemy-irq-game-02/bear-pal/native-bear-renderer-check.json",
+      "sha256": "cf8f1f6a2bc00f75e0eb57faa88ce98db20eb3182517ab95f565bbde31f69deb"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-native-enemy-irq-game-02/matrix/native-bear-renderer-check.json",
+      "sha256": "d030a2412bf30ea4efe98675321df3160e39b35f0568db03020379496fb180b8"
+    }
+  },
+  "routes": {
+    "ntsc": {
+      "receipt_sha256": "19eacaee14ccf38d43b33e2b1181c3c694adfe32fadf32b3598af535caa92e3e",
+      "native_key_audits": 28160,
+      "active_pictures_per_second": 29.013362234152083,
+      "mean_prepare_elapsed_cycles": 57629.693181818184
+    },
+    "pal": {
+      "receipt_sha256": "4ccfcf15f8d297eaced1e7764d861c71c11292dc7ed96feeb6d3ef08adeda08b",
+      "native_key_audits": 25780,
+      "active_pictures_per_second": 27.865508955437782,
+      "mean_prepare_elapsed_cycles": 58643.05896043444
+    },
+    "bear-ntsc": {
+      "receipt_sha256": "8de765896c6f9b2f48f7cd077521bc33dbd065f3c28bacd6d7bdffe539567f55",
+      "native_key_audits": 7602,
+      "active_pictures_per_second": 27.75642428100847,
+      "mean_prepare_elapsed_cycles": 62536.46630727763
+    },
+    "bear-pal": {
+      "receipt_sha256": "cf8f1f6a2bc00f75e0eb57faa88ce98db20eb3182517ab95f565bbde31f69deb",
+      "native_key_audits": 6578,
+      "active_pictures_per_second": 24.04507800908837,
+      "mean_prepare_elapsed_cycles": 65611.21183800623
+    },
+    "matrix": {
+      "receipt_sha256": "d030a2412bf30ea4efe98675321df3160e39b35f0568db03020379496fb180b8",
+      "native_key_audits": 45522
+    }
+  },
+  "source_mask_component_cases": {
+    "P0": 70,
+    "floe_PGT_packets": 160,
+    "forced_SGT_IRQ": 264,
+    "footer_addresses": 188,
+    "temperature": 256
+  },
+  "refused_parent": {
+    "rom_sha256": "2a7916a47afdc5a5e7edb6afa7dcb97fc73f11e6c61769a39d6550637d22a6fc",
+    "reason": "PAL source-picture157 differs at23 enemy pixels; old SGT upload address latch was unprotected against source IRQ status reads."
+  },
+  "actual_native_RAM_link": false,
+  "closed_all_state_RAM_budget": false,
+  "missing_catalog_families": [
+    49,
+    50,
+    51
+  ],
+  "scope": "Internal mask-grammar/IRQ migration, all five complete source/RGB/owner routes pass. Accepted cadence still regresses; native loaders and edge-module linkage remain required."
+}

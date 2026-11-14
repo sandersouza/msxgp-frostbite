@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "807c613cc0f43a3f890b5b9dbcf9e1d90f1006ca0f0fb7051d09a4f700ed6433",
+  "source_archive": "outputs/compact/issue44-renderer-retirement-stage-01/source",
+  "bound_source_files": 336,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-renderer-retirement-game-01/ntsc/enemy-ram-check.json",
+      "sha256": "e51eae71d9d6cfe7c5ddabe0a93177d3b9b65438aced84dfeed6967774782e8c"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-renderer-retirement-game-01/pal/enemy-ram-check.json",
+      "sha256": "46b03d5c8913a3c63a98ab7d715abab245639ecc9e65f25dec952cd6bbfd581e"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-renderer-retirement-game-01/bear-ntsc/enemy-ram-check.json",
+      "sha256": "b9a570d81ae8897a49db2891d7084a8edbd9f2c41b21f73b8ca161dc9fa3b717"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-renderer-retirement-game-01/bear-pal/enemy-ram-check.json",
+      "sha256": "77c7d6ef4fa8e143b5416e717b0b4450241871f55fd0978d8927c13d9727e1de"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-renderer-retirement-game-01/matrix/enemy-ram-check.json",
+      "sha256": "b0948f940017bbeb0277dcc66332bfcdf6cc9d3166e7d283b3a738d200a0b549"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.47211699118731,
+    "pal": 29.987590349281678,
+    "bear-ntsc": 28.274998258948333,
+    "bear-pal": 25.340515128990244
+  },
+  "mean_prepare_elapsed_cycles": {
+    "ntsc": 55163.89553264605,
+    "pal": 55839.32980332829,
+    "bear-ntsc": 60961.855227882035,
+    "bear-pal": 63858.1006097561
+  },
+  "scope": "Internal migration qualification; complete native flat executable and loaders remain undelivered."
+}

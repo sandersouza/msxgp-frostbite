@@ -1,0 +1,50 @@
+{
+  "qualification_only": true,
+  "unchanged_published_ROM": true,
+  "positive": {
+    "complete": true,
+    "negative_control": false,
+    "expected_failure": null,
+    "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+    "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+    "actual_native_loader": true,
+    "controlled_source_phase_injection": true,
+    "target_state_used_as_build_input": false,
+    "source_CPU_all_RAM_equal": true,
+    "ordered_source_and_physical_PSG_equal": true,
+    "cases": 2115,
+    "ordered_source_writes": 3499,
+    "physical_PSG_writes": 2472,
+    "immutable_native_objects_guarded": 219,
+    "producer_sha256": "87405af17acd3443c5ff8ef54ab2c4a5cbc9187e9b7c4e27424015f71ca2b2bd",
+    "original_receipt_sha256": "be59868ff7b311f3f810c7965450f03ca12b5996917ca742eb3e1adb1f72fc95",
+    "manual_listening": false,
+    "physical_hardware": false,
+    "cadence_accepted": false
+  },
+  "negative": {
+    "complete": true,
+    "negative_control": true,
+    "expected_failure": "native ordered source audio events differ or truncate",
+    "executed_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+    "host_oracle_ROM_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+    "actual_native_loader": true,
+    "controlled_source_phase_injection": true,
+    "target_state_used_as_build_input": false,
+    "source_CPU_all_RAM_equal": false,
+    "ordered_source_and_physical_PSG_equal": false,
+    "cases": 2115,
+    "ordered_source_writes": null,
+    "physical_PSG_writes": null,
+    "immutable_native_objects_guarded": 219,
+    "producer_sha256": "87405af17acd3443c5ff8ef54ab2c4a5cbc9187e9b7c4e27424015f71ca2b2bd",
+    "original_receipt_sha256": null,
+    "manual_listening": false,
+    "physical_hardware": false,
+    "cadence_accepted": false
+  },
+  "evidence": [
+    "outputs/compact/issue44-native-audio-01/native-audio-check.json",
+    "outputs/compact/issue44-native-audio-negative-01/native-audio-check.json"
+  ]
+}

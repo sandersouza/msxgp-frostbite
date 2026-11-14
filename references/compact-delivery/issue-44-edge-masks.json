@@ -1,0 +1,129 @@
+{
+  "complete": true,
+  "component_fixture_only": true,
+  "game_runtime_changed": false,
+  "component": "floe-edge-horizontal-masks",
+  "cases": 24000,
+  "complete_native_horizontal_domain": true,
+  "masks_equal": true,
+  "mask_bytes_per_case": 32,
+  "source_commit": "c79bfb2c3bbd5513b07f7e2acdc0360e98681935",
+  "sources": {
+    "scripts/compact_floe.py": "228efe1066c337d58a5b015f086db9720b0bd4c85264ccd28e568617997cba12",
+    "scripts/compact_floe_edge.py": "ea1f93e0553721d06913d6acaa060405e23c4703e599e3850e3370a2aa20f354",
+    "scripts/compact_floe_edge_probe.py": "1f2e6c84f6e96c15743e730dc2024a95a3118118be31fc102f42f18b74bf889e",
+    "src/compact_floe_edge.asm": "fee31802154b8a76cdf55d797cd3910df34e0bf95f247f6050b8c65a8ac5a7a5"
+  },
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "oracle_metadata_sha256": "cb207af5a74c1113eda366ae8b312a4cc0ea3337ab797a85c20a6b10b094b2e9",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "component_rom_sha256": "a30eaa77379b378f79d63a9372ce130dfe1508598d72bae0c872c401a0cbafff",
+  "component_code_bytes": 652,
+  "component_data_bytes": 666,
+  "scratch_reserved_bytes": 32,
+  "mask_output_bytes": 32,
+  "ix_iy_sp_preserved": true,
+  "bounded_writes": true,
+  "mapper_accesses": 0,
+  "cycles_including_call_and_jump": {
+    "min": 19352,
+    "mean": 20766.211625,
+    "p95": 23104,
+    "max": 24969
+  },
+  "host_proof": {
+    "complete": true,
+    "edge_columns": 24000,
+    "edge_cells": 816000,
+    "literal_views": 228,
+    "source_y": [
+      45,
+      77
+    ],
+    "outside_y_sentinel": 0,
+    "edge_player_x": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159
+    ],
+    "interior_proof": {
+      "complete": true,
+      "shadow_cells": 8704000,
+      "interior_cells": 7888000,
+      "literal_views": 228,
+      "geometric_cells": 54400,
+      "footprint_groups": 147,
+      "scalar_shadow_cells": 8704000,
+      "scalar_shadow_table_bytes": 0,
+      "reference_shadow_dictionary_bytes": 420,
+      "player_x_domain": [
+        9,
+        153
+      ],
+      "sizes": {
+        "directory": 1600,
+        "footprints": 1029,
+        "glyphs": 512,
+        "bases": 6
+      },
+      "scope": "Exact finite floe component only; no edge/enemy/shore, target timing or whole-game equivalence claim."
+    },
+    "sizes": {
+      "directory": 1600,
+      "footprints": 1029,
+      "glyphs": 512,
+      "bases": 6,
+      "edge_windows": 320,
+      "edge_low_masks": 32,
+      "edge_bits": 32,
+      "edge_control_clocks": 20,
+      "edge_motion_clocks": 6
+    },
+    "scope": "Host proof of all declared floe edge cells and clipped visible footprints; no native kernel or whole-game integration proof."
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "files": {
+    "inputs.bin": "6156a966b252b94e449f899ef356df07b4a8209bd3e6427b9967321979a5c7a5",
+    "edge_windows.bin": "c6a5c99d07fe14583413f4b4e85da680edd6358c7295a41408863c8359bdc51b",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "edge_bits.bin": "a6172743709cea02250a8846db09847b6bea81f468be14761280dc4c5c1279ac",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "edge_low_masks.bin": "75e8c11f247ddef196345653e0fe08702fa7ed087b36cac1787b43bde518f2f5",
+    "assembler.log": "eee36dce4f856542b3f55e7c564acd46d8c7faccb49428fb29f8bf69e4d6ab4f",
+    "expected.bin": "3377038a23f4d3bee442cf71c4e5f04ed1a1b0cd2daf0636cc24e258c7affc2f",
+    "edge_motion_clocks.bin": "99e54cfb34b9b9e8355ad15289cdc1287369e2655fd9ae12ad58b0e02744c7b2",
+    "edge_reverse.bin": "459cb7f92764cf14cedc73ac8441f9632c2f3c921d6548a7f0672d182b2f13f6",
+    "probe.tcl": "9992385e81117674e4b2ea0c5d60c182057e70a5986785531aa960cc41904c4c",
+    "actual.bin": "923b682f0e775b49e958c68440ba5c5240bac2bb443b0006642d4aca937ee26f",
+    "component-fixture.rom": "a30eaa77379b378f79d63a9372ce130dfe1508598d72bae0c872c401a0cbafff",
+    "fixture.sym": "1cdbac8165b7f7d9a31de8f8248c1410ae3c7dd6754f7cb64f87a99f660100cc",
+    "edge_control_clocks.bin": "aa87cc180e345c4c3520b4c7ac9f52b7efb38afe49062da871e229f5bddce0d0",
+    "fixture.asm": "56667345390550e7a6dcf23b11a18bfba51847152fa9bc1935308c3c6603115b",
+    "host-proof.json": "099f236c14715d9ac60a76dca0b12fe7859bc4e6fbac960ed48941606b175717"
+  },
+  "scope": "Native geometry masks only; view/Y convolution, combined kernel, default game integration and whole-frame timing remain separate.",
+  "raw_receipt": {
+    "path": "outputs/compact/issue44-edge-native-full-01/component-result.json",
+    "sha256": "7b970c2a77533aed8ecfe44c5c841f095b827019ab7628ec813eb6359992d1bf"
+  },
+  "host_tests": {
+    "count": 640,
+    "log_sha256": "f6d92f1141163f8f9ecf5fd68d8109831db47cbb90f45b076f12899ab2a03cee"
+  },
+  "independent_review": "All native masks, recorded hashes and frozen sources verified; complete host proof and independent private analytic model reproduced. No correctness blockers within horizontal-generator scope.",
+  "promotion_gate": "Native view/Y convolution and combined electrical outputs remain pending. Worst generator cost is about6.98ms; measured full-game IRQ/cadence equivalence is required before accepted-game promotion, with optimization/caching if necessary."
+}

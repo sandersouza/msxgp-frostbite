@@ -1,0 +1,75 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "aebc738cffc034374657471d1e6d4540f0befe1dfae64e77eee78f31fc82bda4",
+  "bound_source_files": 301,
+  "source_archive": "outputs/compact/issue44-hybrid-stage-01/source",
+  "checks": {
+    "issue44-header-ram-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-header-ram-game-01/ntsc/header-ram-check.json",
+        "sha256": "2393926b124b2fb53a3acc8cb1dd4903f034a786491bc43f5c32d6dc6fa5018a"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-header-ram-game-01/pal/header-ram-check.json",
+        "sha256": "a6650fd6f6d7f6102f4512e6d07acd5bc4a4ad10d46f86fe221d8e8b0db68566"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-header-ram-game-01/bear-ntsc/header-ram-check.json",
+        "sha256": "f7cc1211e69cb268ef6fb6e14daf0a3651bc88fcb088d28c43c7260741549ebd"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-header-ram-game-01/bear-pal/header-ram-check.json",
+        "sha256": "7adb32e396a6a1d29ba9ea4e6b97cf54f877c1400ab5cd454ba823df2b470ce2"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-header-ram-game-01/matrix/header-ram-check.json",
+        "sha256": "d531e6b59eb4dab6faf0e9c73d078dbbc1ef9d518b90c46c1db8951c1aac4588"
+      }
+    },
+    "issue44-hybrid-game-02": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-hybrid-game-02/ntsc/header-ram-check.json",
+        "sha256": "9169670c0517c85851aded529a36744645669d90d58266eb3bf121b463698994"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-hybrid-game-02/pal/header-ram-check.json",
+        "sha256": "5aac7851b6309e8df75cbbc854ddf199a0420dbcb7b1d92111d3ac2953c55932"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-hybrid-game-02/bear-ntsc/header-ram-check.json",
+        "sha256": "a29f78f131997cf840eb9877a5381b0b950532fd08b4d9c3507eec59f1662923"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-hybrid-game-02/bear-pal/header-ram-check.json",
+        "sha256": "c9f2f8ebd49bdc3cf0b980c42f735164482a3c2e4d010d420178d25db28eb8ff"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-hybrid-game-02/matrix/header-ram-check.json",
+        "sha256": "df4cda77920dcb18386978e0eca4422cf58eb1ff57b02689ede7e5cf82101299"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-header-ram-game-01": {
+      "ntsc": 32.2152089023093,
+      "pal": 30.285085278489262,
+      "bear-ntsc": 29.31212005945492,
+      "bear-pal": 25.078857225596536
+    },
+    "issue44-hybrid-game-02": {
+      "ntsc": 32.2152089023093,
+      "pal": 30.285085278489262,
+      "bear-ntsc": 29.312117935290345,
+      "bear-pal": 25.078853565046405
+    }
+  },
+  "hybrid_component_cases": 352,
+  "old_hybrid_program_bytes": 15488,
+  "new_hybrid_dictionary_bytes": 5712,
+  "header_immutable_ram_bytes": 1455,
+  "scope": "Qualified data sharing and hot header RAM step. Four source/pixel/owner/IRQ routes and2115 scenes; still ASCII16, no native-format delivery."
+}

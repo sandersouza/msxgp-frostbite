@@ -1,0 +1,134 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "11e307b8e550f904fffaa5f8379db10476d6e7de928ca7dd566e9fee501ea110",
+  "source_archive": "outputs/compact/issue44-literal-windows-stage-01/source",
+  "bound_source_files": 319,
+  "checks": {
+    "issue44-bear-fast-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-bear-fast-game-01/ntsc/header-ram-check.json",
+        "sha256": "d7aac50cfecf9c95a9e5151846968dcb35095d32f1861bc96c840e028736546a"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-bear-fast-game-01/pal/header-ram-check.json",
+        "sha256": "4dc0f69bd63358b482e2da61be2322ef231f754660af47c245c36ff440f20903"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-bear-fast-game-01/bear-ntsc/header-ram-check.json",
+        "sha256": "77bd6568be9108ca96b8f1a32a8e7533a674e116b0b02db8e97a073330c3674e"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-bear-fast-game-01/bear-pal/header-ram-check.json",
+        "sha256": "c6f6929923b1822473ced3729ecbc656f9d87c59ca7a266a8a178099c90b2619"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-bear-fast-game-01/matrix/header-ram-check.json",
+        "sha256": "46092038a9d68c4d82ebcaa67847243eedb7b0fdec4c53aa31004a2b1c4a7da7"
+      }
+    },
+    "issue44-occupancy-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-occupancy-game-01/ntsc/header-ram-check.json",
+        "sha256": "aa5fee6a043b35557a75ec82c91b54ca897e503bb35d7d013382290c0c50c1d6"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-occupancy-game-01/pal/header-ram-check.json",
+        "sha256": "8a89b43302ea3279ce13aa08221fb417c8b2ff47301b6eb193e1e66beb049666"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-occupancy-game-01/bear-ntsc/header-ram-check.json",
+        "sha256": "d59efce0f55932e0205a79af3f2c9284a09a595a795f5c63398c19d1680f622e"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-occupancy-game-01/bear-pal/header-ram-check.json",
+        "sha256": "63794f804f1f61b4bd1122cbf68fb0cbf04a6e4797daa6db743855197cd1c3df"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-occupancy-game-01/matrix/header-ram-check.json",
+        "sha256": "70a50c6d8efdf4e3e3b55261b213e6b5de732ea31f188f0fc093392d1caf6ec1"
+      }
+    },
+    "issue44-literal-windows-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-literal-windows-game-01/ntsc/header-ram-check.json",
+        "sha256": "b332ba83a6ceac4b6e316cd15fb5ad20ad466b2270a638e07d76385c499b7cc7"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-literal-windows-game-01/pal/header-ram-check.json",
+        "sha256": "9fc7ec9fe6f34a5068d3d621bfdb5a025f1e79a3b35398aebcadd1fc65a8c757"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-literal-windows-game-01/bear-ntsc/header-ram-check.json",
+        "sha256": "95e0607a1bf6186ba0a88b4247fb7fd11246130cb015fabe8f765bbf1b47c458"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-literal-windows-game-01/bear-pal/header-ram-check.json",
+        "sha256": "3f8cac080b394a0d78b03c74e8c6c24352e0f13bfa856081cdd4ed65dc4889aa"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-literal-windows-game-01/matrix/header-ram-check.json",
+        "sha256": "19a4a393e804a72258e3380b1c2b9bd2c25f0e5177b70d9f967b49fc1a4b6c62"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-bear-fast-game-01": {
+      "ntsc": 32.21520730048278,
+      "pal": 30.285085781887858,
+      "bear-ntsc": 29.31211793529036,
+      "bear-pal": 25.078844413675746
+    },
+    "issue44-occupancy-game-01": {
+      "ntsc": 32.215208902309314,
+      "pal": 30.28508376829357,
+      "bear-ntsc": 29.312113686962146,
+      "bear-pal": 25.07884624394935
+    },
+    "issue44-literal-windows-game-01": {
+      "ntsc": 32.2152089023093,
+      "pal": 30.28508125130109,
+      "bear-ntsc": 29.312113686962146,
+      "bear-pal": 25.07884624394935
+    }
+  },
+  "components": {
+    "bear-fast-native-01": {
+      "path": "outputs/compact/issue44-bear-fast-native-01/component-result.json",
+      "sha256": "81dfc8c1a937acbcc0d7bba85916bc7a95f917a1b12ccb93a7781a764108297b",
+      "cases": 4230
+    },
+    "occupancy-native-01": {
+      "path": "outputs/compact/issue44-occupancy-native-01/component-result.json",
+      "sha256": "dbe48cd6806349ca8b90d935952116fd0606417598ba9c4f867566c27b6d42b6",
+      "cases": 8448
+    },
+    "bear-window-native-01": {
+      "path": "outputs/compact/issue44-bear-window-native-01/component-result.json",
+      "sha256": "7be2f9a21242e10cd1b68451726b27d0a9db82055950716aec3396a9e1feea80",
+      "cases": 4230
+    },
+    "bear-window-strip-native-01": {
+      "path": "outputs/compact/issue44-bear-window-strip-native-01/component-result.json",
+      "sha256": "2610cbc513fdaa1bdaad82d0a19ebddc869d99d18e8fe09a2222cf907c0af102",
+      "cases": 210
+    },
+    "shore-window-native-01": {
+      "path": "outputs/compact/issue44-shore-window-native-01/component-result.json",
+      "sha256": "59c821139bbbe629fc8cf90af47051b1ad684e3fb3fe045ef6f304d84fe15438",
+      "cases": 239
+    }
+  },
+  "old_occupancy_bytes": 8448,
+  "new_occupancy_bytes": 1360,
+  "bear_masks_before": 3760,
+  "bear_masks_after": 2355,
+  "shore_halves_before": 3712,
+  "shore_halves_after": 2342,
+  "retired_contact_shadow_bytes": 6400,
+  "retired_generic_header_bytes": 1360,
+  "scope": "All-state occupancy and literal window sharing. Four source/pixel/owner/IRQ routes and2115 scenes, all retired reads trapped. Still banked ASCII16, native formats unfinished."
+}

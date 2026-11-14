@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "06fc8f61ca30c44b5abce683e9ffff5994604e5b5030e258b533e60ef4c581df",
+  "source_archive": "outputs/compact/issue44-footer-vram-stage-01/source",
+  "bound_source_files": 324,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-footer-vram-game-01/ntsc/footer-vram-check.json",
+      "sha256": "617692f45624e6e51c81ab052ab204b1bcbdcd9c434175c3c9bc60fa98b12ff3"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-footer-vram-game-01/pal/footer-vram-check.json",
+      "sha256": "9dcf855518a58264425d09eeb28a4908229fc375c86fa40ad76274ed1fc8ad51"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-footer-vram-game-01/bear-ntsc/footer-vram-check.json",
+      "sha256": "a1da6236592fefda3d49f1a233a60d4ce33b6d37537d14442d229274b8b66c05"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-footer-vram-game-01/bear-pal/footer-vram-check.json",
+      "sha256": "9d9027afad3145b5fc8221e60c4a0de574f8d7561ac29060a6888817ed7a960b"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-footer-vram-game-01/matrix/footer-vram-check.json",
+      "sha256": "2bd4450752ed71fe792b6320784afed99451cfaf3601afe2b9ca554a20368af7"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 32.21521157202053,
+    "pal": 30.285086285286464,
+    "bear-ntsc": 29.31211368696215,
+    "bear-pal": 25.078857225596533
+  },
+  "snapshot_counts": {
+    "ntsc": 4401,
+    "pal": 3978,
+    "bear-ntsc": 972,
+    "bear-pal": 858,
+    "matrix": 4231
+  },
+  "cold_footer_tile_bytes": 3008,
+  "resident_footer_lookup_bytes": 376,
+  "no_post_preload_ROM_reads": true,
+  "both_NAME_pages_never_reference_storage": true,
+  "scope": "Startup footer upload and frozen unused VRAM storage qualified. Native flat link may omit3008 runtime RAM bytes but the current image remains banked. No native loader/size delivery."
+}

@@ -1,0 +1,117 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "fa7a2e8f2dacb67ff693c9e83e3a396c348cc40d54fe859520c648e38a89b6bb",
+  "source_archive": "outputs/compact/issue44-native-bear-stage-01/source",
+  "bound_source_files": 350,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/ntsc/native-bear-renderer-check.json",
+      "sha256": "bb2e0c9af86239c9bf3f87f93a312a70cee591b501f953144a445e3e1e338747"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/pal/native-bear-renderer-check.json",
+      "sha256": "cb9196d134de48fde2a7457404a13de3ec24d5eb8f72908f7c56e1c9dd09adc3"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/bear-ntsc/native-bear-renderer-check.json",
+      "sha256": "906cb85cb2a6e1791281626fbeb9c8480ddf7a24c43047ae9fafcc3f80d4d244"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/bear-pal/native-bear-renderer-check.json",
+      "sha256": "ff6cdf96f06b01d846e6a950221b88c12969c99fd8358a3e789bf876d7bd5b84"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/matrix/native-bear-renderer-check.json",
+      "sha256": "6b8e72f13f2234ea3472c3162c644759c8429e0b5903f3379247d5a4c75c0ff5"
+    },
+    "density": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/density/native-bear-renderer-check.json",
+      "sha256": "a75480b6533a894012474e226e987093c4da47ae87504b77272ba6f9137bd4e7"
+    },
+    "header": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/header/native-bear-renderer-check.json",
+      "sha256": "dfef88c8b24a9f66c0c2e00455e38979a6db4268a827ef3318a315d85674cac2"
+    },
+    "boundary-ntsc": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/boundary-ntsc/native-bear-renderer-check.json",
+      "sha256": "9f12ad22908dfb72988c10d437c3054111524c0ad4b637ecf8fe65269e2f5f75"
+    },
+    "boundary-pal": {
+      "path": "outputs/compact/issue44-native-bear-retirement-02/boundary-pal/native-bear-renderer-check.json",
+      "sha256": "f8f6565449523fb00dd8f41e238f02c3d312c60c65c508815b37851dabfa391e"
+    }
+  },
+  "native_grid_cases": 512,
+  "native_palette_cases": 38400,
+  "host_palette_tile_cases": 460800,
+  "host_suite_tests": 685,
+  "allocations": {
+    "parent_rom_sha256": "5ffac6a983c6bb770bf540db33a7fb506f2120fb5c3e7d9c7d47af2e64ea9717",
+    "kind": 10,
+    "body_bytes": 491,
+    "helper_bytes": 220,
+    "atlas_bytes": 856,
+    "atlas_address": 40946,
+    "source_grid_cases": 512,
+    "palette_native_cases": 38400,
+    "sprite_admission_unchanged": true,
+    "expanded_assets_retired": true,
+    "mapperless": false,
+    "human_test_candidate": false,
+    "retired_upper_helper_address": 61247,
+    "retired_upper_helper_bytes": 130,
+    "newly_retired_foreign_allocation_bytes": 16883,
+    "retired_resident_bridge_bytes": 28
+  },
+  "routes": {
+    "ntsc": {
+      "receipt_sha256": "bb2e0c9af86239c9bf3f87f93a312a70cee591b501f953144a445e3e1e338747",
+      "native_key_audits": 29060,
+      "active_pictures_per_second": 31.503273194738313,
+      "mean_prepare_elapsed_cycles": 55190.37715072264
+    },
+    "pal": {
+      "receipt_sha256": "cb9196d134de48fde2a7457404a13de3ec24d5eb8f72908f7c56e1c9dd09adc3",
+      "native_key_audits": 26440,
+      "active_pictures_per_second": 30.047090035925287,
+      "mean_prepare_elapsed_cycles": 55836.29425113464
+    },
+    "bear-ntsc": {
+      "receipt_sha256": "906cb85cb2a6e1791281626fbeb9c8480ddf7a24c43047ae9fafcc3f80d4d244",
+      "native_key_audits": 7686,
+      "active_pictures_per_second": 28.27499416086503,
+      "mean_prepare_elapsed_cycles": 61615.058666666664
+    },
+    "bear-pal": {
+      "receipt_sha256": "ff6cdf96f06b01d846e6a950221b88c12969c99fd8358a3e789bf876d7bd5b84",
+      "native_key_audits": 6818,
+      "active_pictures_per_second": 24.81823857876541,
+      "mean_prepare_elapsed_cycles": 63942.692307692305
+    },
+    "matrix": {
+      "receipt_sha256": "6b8e72f13f2234ea3472c3162c644759c8429e0b5903f3379247d5a4c75c0ff5",
+      "native_key_audits": 45522
+    },
+    "density": {
+      "receipt_sha256": "a75480b6533a894012474e226e987093c4da47ae87504b77272ba6f9137bd4e7",
+      "native_key_audits": 46078
+    },
+    "header": {
+      "receipt_sha256": "dfef88c8b24a9f66c0c2e00455e38979a6db4268a827ef3318a315d85674cac2",
+      "native_key_audits": 648
+    },
+    "boundary-ntsc": {
+      "receipt_sha256": "9f12ad22908dfb72988c10d437c3054111524c0ad4b637ecf8fe65269e2f5f75",
+      "native_key_audits": 4120
+    },
+    "boundary-pal": {
+      "receipt_sha256": "f8f6565449523fb00dd8f41e238f02c3d312c60c65c508815b37851dabfa391e",
+      "native_key_audits": 3620
+    }
+  },
+  "scope": "Native source-glyph bear retirement; all four natural routes plus original2115, dense1920, header54 and both IRQ boundaries pass. Internal only; accepted cadence not yet recovered and native formats remain required."
+}

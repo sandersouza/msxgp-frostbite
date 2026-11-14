@@ -1,0 +1,146 @@
+{
+  "complete": true,
+  "component_fixture_only": true,
+  "game_runtime_changed": false,
+  "component": "floe-edge-program-accumulation",
+  "cases": 16170672,
+  "complete_native_program_domain": true,
+  "programs": 2086,
+  "classified_native_geometry_cases": 24000,
+  "literal_views": 228,
+  "outputs_equal": true,
+  "source_commit": "c7a08c188db55031006f1fa6d2f62d41c790bbb2",
+  "sources": {
+    "scripts/compact_floe.py": "228efe1066c337d58a5b015f086db9720b0bd4c85264ccd28e568617997cba12",
+    "scripts/compact_floe_edge.py": "85f9201fd31b9e87691ed50cd8f03817b0d1457ad78a1a811c752347b4362db1",
+    "scripts/compact_floe_contact_probe.py": "ab0a0179fdfd2ce20e1e5143fc634dfcfd448694ebbed963743b49dcb79c7220",
+    "src/compact_floe_edge.asm": "fee31802154b8a76cdf55d797cd3910df34e0bf95f247f6050b8c65a8ac5a7a5",
+    "src/compact_floe_edge_row.asm": "e85db710f52e15aa643daf2f2f2ef54b0e87616b6eebe3884049658e5ae7a8cc",
+    "src/compact_floe_edge_contact.asm": "c554689693f9de245f44c5f4cc48423d465734b6f29bc0026d0279c2f1c28406"
+  },
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "oracle_metadata_sha256": "cb207af5a74c1113eda366ae8b312a4cc0ea3337ab797a85c20a6b10b094b2e9",
+  "original_sha256": "cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834",
+  "mask_proof": {
+    "path": "outputs/compact/issue44-edge-native-full-01/component-result.json",
+    "sha256": "7b970c2a77533aed8ecfe44c5c841f095b827019ab7628ec813eb6359992d1bf"
+  },
+  "component_rom_sha256": "3e883412e9812af63fa65e25ec71799ed9673701ff25f92c5ce18bcf4e567f7b",
+  "accumulation_code_bytes": 126,
+  "row_code_bytes": 101,
+  "component_data_bytes": 518,
+  "scratch_reserved_bytes": 11,
+  "program_input_bytes": 39,
+  "ix_iy_sp_preserved": true,
+  "bounded_writes": true,
+  "mapper_accesses": 0,
+  "cycles_including_call_and_jump": {
+    "min": 75,
+    "mean": 3129.2105461665415,
+    "p95": 6711,
+    "max": 6775
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "host_proof": {
+    "complete": true,
+    "edge_columns": 24000,
+    "edge_cells": 816000,
+    "literal_views": 228,
+    "source_y": [
+      45,
+      77
+    ],
+    "outside_y_sentinel": 0,
+    "edge_player_x": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159
+    ],
+    "interior_proof": {
+      "complete": true,
+      "shadow_cells": 8704000,
+      "interior_cells": 7888000,
+      "literal_views": 228,
+      "geometric_cells": 54400,
+      "footprint_groups": 147,
+      "scalar_shadow_cells": 8704000,
+      "scalar_shadow_table_bytes": 0,
+      "reference_shadow_dictionary_bytes": 420,
+      "player_x_domain": [
+        9,
+        153
+      ],
+      "sizes": {
+        "directory": 1600,
+        "footprints": 1029,
+        "glyphs": 512,
+        "bases": 6
+      },
+      "scope": "Exact finite floe component only; no edge/enemy/shore, target timing or whole-game equivalence claim."
+    },
+    "sizes": {
+      "directory": 1600,
+      "footprints": 1029,
+      "glyphs": 512,
+      "bases": 6,
+      "edge_windows": 320,
+      "edge_low_masks": 32,
+      "edge_bits": 32,
+      "edge_control_clocks": 20,
+      "edge_motion_clocks": 6
+    },
+    "scope": "Host proof of all declared floe edge cells and clipped visible footprints; no native kernel or whole-game integration proof."
+  },
+  "files": {
+    "programs.bin": "99452d31ea9897df250d55a5fbc7accf0917443a249cd3f9fff8c8426268b370",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "8a5271ee076bba8028c16baa6554364ff0992231e8ffe77ff8a3f8f31a047553",
+    "expected.bin": "628161f1e5851c1ea78f827e1f034d0cc33428eeffc0f9269ca16168d244566f",
+    "probe.tcl": "7379fa94d72c76833e90e3727b9289c171f4a36107f9a6d877e314fd2058cf17",
+    "glyphs.bin": "951dd5d31ca1c38f8a3c722cf96b6267aa62bed9ba6b4f46aa5fade4bbdaf535",
+    "bases.bin": "bcf4ea69951b0f26b79b0f01491e5331e10549813d11c02f1aecf122ef70c874",
+    "cases.json": "8733c6d13fac1a793e76558b3d54fdaf1d335e3e288d97e368d242282b894b3e",
+    "actual.bin": "76cf8a921517b3639035a47e9166f49a8309a57986013ff6c78328cb2067cab0",
+    "component-fixture.rom": "3e883412e9812af63fa65e25ec71799ed9673701ff25f92c5ce18bcf4e567f7b",
+    "fixture.sym": "5f79c43cd906bd2d195059f7cc5d9602dfa246d293bfeab398e3971f433703a0",
+    "fixture.asm": "ce00a9949a4815c5f0c72cc805025e2772075dabe0bcbc812b11b8d08dbb5478",
+    "host-proof.json": "099f236c14715d9ac60a76dca0b12fe7859bc4e6fbac960ed48941606b175717"
+  },
+  "scope": "Native bit7 accumulation for all qualified intermediate program classes. Geometry generator is separately qualified; combined caller, shadow merge, default game integration and cadence remain separate.",
+  "raw_receipt": {
+    "path": "outputs/compact/issue44-edge-contact-native-full-02/component-result.json",
+    "sha256": "4602a788a02b7a5d8d0582e8b22a1057c489d5b6ce2387651e176b4e6ab6df53"
+  },
+  "guard_checks": {
+    "exact_forbidden_address_equivalence": 65536,
+    "smoke_cases": 100000,
+    "smoke_output_and_cycle_bytes_equal": true,
+    "smoke_actual_sha256": "10a808b4670af5047139c4c2ead69e460bbeb7c4d5e468d5d1d584f99505ce50",
+    "negative_cpu_writes": {
+      "path": "outputs/compact/issue44-edge-write-guard-neg-02/result.json",
+      "sha256": "9fe58f18fca0602f32dd35bd9f6b96501ed8f7ac19bf43fa33505289f6ebf17e",
+      "count": 4
+    }
+  },
+  "independent_review": "All16,170,672outputs,14file hashes and6frozen sources verified; classification and direct-ROM expected corpus independently reproduced; no blockers within declared scope.",
+  "logical_combined_storage": {
+    "bytes": 7996,
+    "shared_player_data_counted_once": 518,
+    "whole_game_size_claim": false
+  }
+}

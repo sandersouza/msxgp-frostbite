@@ -1,0 +1,47 @@
+{
+  "complete": true,
+  "selected_base": false,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "309c1572c47bf92cb85ab43a98fce5f65f70746a21eb3145f3039953545fd8ce",
+  "source_archive": "outputs/compact/issue44-bear-record-cache-stage-01/source",
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-bear-record-cache-game-02/ntsc/enemy-ram-check.json",
+      "sha256": "86c65cd484a1a7c13d0b7e9fe028866cf316f606b85814881a81c52c2c573560",
+      "original_record_publications": 1
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-bear-record-cache-game-02/pal/enemy-ram-check.json",
+      "sha256": "7ccefbe557c0d86e15c27872e4fcd529572863583a2ddee9e7d27648764389a2",
+      "original_record_publications": 1
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-bear-record-cache-game-02/bear-ntsc/enemy-ram-check.json",
+      "sha256": "1385b1149729e2476335edad9ee58d1bf4be9160632ba3f6dd11f41009301036",
+      "original_record_publications": 10
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-bear-record-cache-game-02/bear-pal/enemy-ram-check.json",
+      "sha256": "9fde9064705de449395ae6141e625411fe54d58738e18ab066b30f78b3a6ebf3",
+      "original_record_publications": 10
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-bear-record-cache-game-02/matrix/enemy-ram-check.json",
+      "sha256": "b2700a986bf4989a5d914cda52858f9e74802c9ac4d54b5510b00d322357ac38",
+      "original_record_publications": 40
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.50327058402622,
+    "pal": 30.047090035925287,
+    "bear-ntsc": 28.275004406075517,
+    "bear-pal": 24.81823676746516
+  },
+  "packed_record_and_map_bytes": 4108,
+  "original_record_bytes": 6144,
+  "persistent_cache_bytes": 66,
+  "scope": "Qualified internal record-cache experiment; preserve for rollback/research. PAL bear cadence loses relative to resident-enemy control. Procedural native bear work uses preceding5ffac6a9 instead."
+}

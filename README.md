@@ -5,7 +5,16 @@ original ROM as the authority for gameplay mechanics.
 
 ## Current state
 
-The latest [v0.0.30 reference credit diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.30-reference-credit-diagnostic)
+The new [v0.0.31 native-format diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic)
+provides a complete32 KiB **Normal cartridge without a mapper**, standalone
+MSX-DOS1 COM and real Disk BASIC BIN/launcher/VRAM companion. All three formats
+execute one shared flat game. [Loading, exact artifacts and human tests](docs/releases/v0.0.31-native-formats-diagnostic.md)
+and [reproduction/loader layout](docs/native-formats.md) are documented.
+Original source/picture/IRQ checks and real DOS/BASIC loading pass; cadence is
+4.1–8.3% below accepted v30 on measured routes. Issue44 and PR45 remain open.
+[Play the32K cartridge in WebMSX](https://webmsx.org/?M=MSX1A&P=RAMNORMAL,NODISK&ROM=https%3A%2F%2Fgithub.com%2Fsandersouza%2Fmsxgp-frostbite%2Freleases%2Fdownload%2Fv0.0.31-native-formats-diagnostic%2Ffrostbite-0.0.31-native-formats-diagnostic.rom&ROM_FORMAT=Normal).
+
+The accepted [v0.0.30 reference credit diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.30-reference-credit-diagnostic)
 uses separated lowercase `retroworks`, matching the owner's supplied pixel-font
 reference without a year or hyphen. The right edge and Activision baseline
 remain aligned. Only98 pattern bytes change; all executable/color/NAME bytes
@@ -17,8 +26,9 @@ timings and source behavior. See the
 The owner accepted v30 as stable and enjoyable on2026-11-13 and authorized
 closing issue42 after integration. [Issue44](https://github.com/sandersouza/msxgp-frostbite/issues/44)
 targets a compact32 KiB mapperless cartridge plus native MSX-DOS COM and BASIC
-BIN formats, preserving this accepted baseline.32 KiB feasibility remains to be
-measured;39/15/16 retain original-cadence and final timing/hardware qualification.
+BIN formats, preserving this accepted baseline. The native diagnostic reaches
+the size/format targets; accepted cadence recovery and Issue44 acceptance remain
+open.39/15/16 retain original-cadence and final timing/hardware qualification.
 
 The previous [v0.0.28 viewport edge diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.28-viewport-edges-diagnostic)
 keeps the player visible through the expanded left edge and prevents a right

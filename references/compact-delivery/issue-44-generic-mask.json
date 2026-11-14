@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "component_fixture_only": true,
+  "game_runtime_changed": false,
+  "cases": 1091680,
+  "complete_declared_domain": true,
+  "outputs_equal": true,
+  "source_commit": "177eeb2245e8dcdfe15bde8efe61f3f3ad2f0752",
+  "sources": {
+    "scripts/compact_mask_probe.py": "4df73b8c6e46fc64acff6449ce8e6b8978772d509611a39d3c7bbbcc38782beb",
+    "scripts/compact_floe_edge.py": "85f9201fd31b9e87691ed50cd8f03817b0d1457ad78a1a811c752347b4362db1",
+    "src/compact_floe_edge_row.asm": "e85db710f52e15aa643daf2f2f2ef54b0e87616b6eebe3884049658e5ae7a8cc",
+    "src/compact_mask_program.asm": "e988e8d1fd80f319bf29a2dd594732aac0c0c4a36d398df4b0d50fa887c2ff78"
+  },
+  "control_receipt_sha256": "4602a788a02b7a5d8d0582e8b22a1057c489d5b6ce2387651e176b4e6ab6df53",
+  "component_rom_sha256": "7e2d3c1fe1f7d38f70dabc52bc7a7d37b468f898c08624c190844c3ad6424583",
+  "wrapper_code_bytes": 85,
+  "row_code_bytes": 101,
+  "shared_data_bytes": 518,
+  "programs": 2207,
+  "floe_sampled_cases": 70924,
+  "scratch_bytes": 11,
+  "ix_iy_sp_preserved": true,
+  "bounded_writes": true,
+  "cycles_including_call_and_jump": {
+    "min": 75,
+    "mean": 5146.788181518394,
+    "p95": 12446,
+    "max": 13223
+  },
+  "files": {
+    "inputs.bin": "f573ece89990bec26c6efb3a8d5a5b7e7bcddbc3338b5c2e35b9517d98f3080e",
+    "programs.bin": "2906c3023e9390ed8f1da55af4fb03629848b6db3a938403f77ddf184e3a663a",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "b0c14ec0b1664cafc44e23439968f7de740492c06c2efe019e27b1e3d4309f59",
+    "expected.bin": "0a2722fd1854f945c43698c7f80674b03f1b908d6d818ac46f17ee9ea6c68bb6",
+    "probe.tcl": "2136173d5aa5c971662f998c0f462d3a69242b65443a6fc0a13b5a76736867c3",
+    "glyphs.bin": "951dd5d31ca1c38f8a3c722cf96b6267aa62bed9ba6b4f46aa5fade4bbdaf535",
+    "bases.bin": "bcf4ea69951b0f26b79b0f01491e5331e10549813d11c02f1aecf122ef70c874",
+    "actual.bin": "5288e188f92790084b44548a3498ca1b4e871be4b5679ee1786e49ccfe435d41",
+    "component-fixture.rom": "7e2d3c1fe1f7d38f70dabc52bc7a7d37b468f898c08624c190844c3ad6424583",
+    "fixture.sym": "d5dc008bc03ea1e6fa63820416b85b7cb557b39fafc92d3b251edfc5f1aa73bd",
+    "fixture.asm": "ba5a499e866c26e25c43a73727b820aa2e4fb37251431f115168d043357bb8be"
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "scope": "Generic0/1/8/18-row accumulation: sampled sealed floe classes and complete declared one-hot last-row boundary corpus. Native hazard geometry callers, game integration and cadence remain separate."
+}

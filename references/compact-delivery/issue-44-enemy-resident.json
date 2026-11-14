@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "5ffac6a983c6bb770bf540db33a7fb506f2120fb5c3e7d9c7d47af2e64ea9717",
+  "source_archive": "outputs/compact/issue44-enemy-resident-stage-01/source",
+  "bound_source_files": 337,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-enemy-resident-game-03/ntsc/enemy-ram-check.json",
+      "sha256": "baf9dc7b96a525bc7f68770b462a1a7613a9a90f6f2fc1bd51a8f5eccb244c7f"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-enemy-resident-game-03/pal/enemy-ram-check.json",
+      "sha256": "d2e613e15e47e6a070e28b401e95a3ad470632e66fad0a6d355e1827cb1490c6"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-enemy-resident-game-03/bear-ntsc/enemy-ram-check.json",
+      "sha256": "2b7e49a43754b27d0cd4c822a891b8038883e5d9ceb6340201b164273ba73fb7"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-enemy-resident-game-03/bear-pal/enemy-ram-check.json",
+      "sha256": "261189579aa67e3fda6659782f840f4d80405daefcc0721fdd2fbd0006a2aa75"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-enemy-resident-game-03/matrix/enemy-ram-check.json",
+      "sha256": "f8de485460e4361da73b2d26d3d1dfb2e6163094eefbff8d4492a437531227c4"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.47211699118731,
+    "pal": 29.987590349281678,
+    "bear-ntsc": 28.274998258948333,
+    "bear-pal": 25.340515128990244
+  },
+  "mean_prepare_elapsed_cycles": {
+    "ntsc": 55163.89553264605,
+    "pal": 55839.32980332829,
+    "bear-ntsc": 60961.855227882035,
+    "bear-pal": 63858.1006097561
+  },
+  "scope": "Internal migration qualification; complete native flat executable and loaders remain undelivered."
+}

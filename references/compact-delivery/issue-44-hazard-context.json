@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "component_fixture_only": true,
+  "game_runtime_changed": false,
+  "component": "ordinary-horizontal-context",
+  "cases": 102400,
+  "complete_native_domain": true,
+  "outputs_equal": true,
+  "source_commit": "9354be9dfa583678ff5f818e54fa98d80d7e5c7a",
+  "sources": {
+    "scripts/compact_hazard_edge.py": "a951236bea06cde5e0dbf404e2298d44e2dc2287597a62c2f97aec421479f717",
+    "scripts/compact_hazard_probe.py": "bbb78c493f4ee973832f5fc829f078a90e9f7de26da48ba56e2e5f0ba230ca6a",
+    "src/compact_hazard_context.asm": "95edc363f894556c351ac8c1835c46d0b7597369ee39d05704438752e794ea6e"
+  },
+  "component_rom_sha256": "e4ecfdb8386001d8bc35dea8f9da5c4d9a3f6a30b41241269b5880d4e11d2371",
+  "component_code_bytes": 112,
+  "component_data_bytes": 0,
+  "output_bytes": 4,
+  "scratch_bytes": 0,
+  "ix_iy_sp_preserved": true,
+  "bounded_writes": true,
+  "mapper_accesses": 0,
+  "cycles_including_call_and_jump": {
+    "min": 598,
+    "mean": 1012.9421875,
+    "p95": 1366,
+    "max": 1369
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "files": {
+    "inputs.bin": "f758fe6c5614969cd6aadfef3ad4edd23b77021a48a79d9b29ac2934111563cc",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assembler.log": "5b7ce2a2829324b91dce83385e4d4542209d9edf35b16a590d959b0d7d0e2eff",
+    "expected.bin": "4247921a0340592d3666784abed287c63532c8a2cb64e9506d5b65b05b9a9d5a",
+    "probe.tcl": "20e8cf3ed684caf6ce89d97158211caa1d8f1c4ee85d12825d2cae05c3ceaa09",
+    "actual.bin": "8ebb827be5c6c5b73dac4edf5f2e666a0579cab8b4733085e19ed13e04c0dc4a",
+    "component-fixture.rom": "e4ecfdb8386001d8bc35dea8f9da5c4d9a3f6a30b41241269b5880d4e11d2371",
+    "fixture.sym": "984792f2e7f22ef321e26526ac436583801a3f04ec56086dae28c63f465dab2a",
+    "fixture.asm": "3ba9bccfaec590f7c6754653ce3c6b5e2cfd633bc95503919eed591782d23e56"
+  },
+  "scope": "Native coordinate/copy contexts only; glyph masks, collisions, game integration and whole-frame cadence remain separate."
+}

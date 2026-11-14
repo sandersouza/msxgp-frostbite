@@ -29,24 +29,39 @@ with every original MSX1 RAM configuration;64 KiB remains the established target
 
 ## Work
 
-- [ ] Audit occupied versus padded bytes, live versus retired code, duplicate
+- [x] Audit occupied versus padded bytes, live versus retired code, duplicate
   assets, lookup tables and prepared rendering programs. Produce ROM/RAM/VRAM
   budgets, startup/steady-state costs and a measured feasibility assessment.
-- [ ] Inspect Seaquest's working Normal-ROM and COM loaders/builds as reusable
+- [x] Inspect Seaquest's working Normal-ROM and COM loaders/builds as reusable
   infrastructure. Audit and adapt selected pieces; its test results do not prove
   Frostbite. Include BASIC BLOAD conventions and actual entry/load addresses.
-- [ ] Design and implement a compact shared runtime/payload. Evaluate dedup,
+- [x] Design and implement a compact shared runtime/payload. Evaluate dedup,
   compact encodings and startup decompression against RAM and whole-frame costs.
-- [ ] Build a complete <=32,768-byte Normal cartridge with no external payload
+- [x] Build a complete <=32,768-byte Normal cartridge with no external payload
   or bank-switching hardware dependency, if the measured architecture permits.
-- [ ] Produce an actual native `FROSTBIT.COM` for MSX-DOS and a BASIC-loadable
+- [x] Produce an actual native `FROSTBIT.COM` for MSX-DOS and a BASIC-loadable
   `FROSTBIT.BIN` with the correct binary header/load/end/execute addresses.
-- [ ] Document and verify start/reset/return behavior, slot placement, stack,
+- [x] Document and verify start/reset/return behavior, slot placement, stack,
   system ownership and DOS/BASIC integration. Do not ship empty wrappers.
-- [ ] Compare source state/input/audio, pixels/ownership and full-density
+- [x] Compare source state/input/audio, pixels/ownership and full-density
   NTSC/PAL cadence against the accepted v30 baseline on all relevant paths.
-- [ ] Publish every useful testable candidate with exact artifacts/hashes/source,
+- [x] Publish every useful testable candidate with exact artifacts/hashes/source,
   machine/RAM/VRAM/format requirements and precise human loading/test instructions.
+
+## Native diagnostic progress (2026-11-14)
+
+Complete32KiB Normal cartridge, actual DOS1 COM and Disk BASIC BIN/companion
+are built from runtime424aab9.721 host tests, four actual cold source/pixel/IRQ
+routes,2115 original scenes,1920 density scenes,54 header transitions and9 IRQ
+boundaries in both video families pass. Both disk loaders pass real DOS/BASIC
+loading and exact cold RAM/VRAM checks in NTSC/PAL. Independent review found no
+Critical/Important findings; minor provenance wording was corrected.
+
+Cadence remains below acceptedv30: regular30.168/28.441 and bear28.016/24.045
+NTSC/PAL. At diagnostic publication no owner cadence exception, manual listening or
+physical hardware acceptance was inferred. See the subsequent owner acceptance below. The published [v0.0.31 native diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.31-native-formats-diagnostic) did not by itself close44;
+PR45 was held draft pending the explicit owner decision recorded below. See
+`docs/native-formats.md` and `docs/reviews/issue-44-native-formats.md`.
 
 ## Definition of Ready
 
@@ -79,3 +94,13 @@ No established milestone is assigned. Do not change shared labels/settings.
 Issue39 retains the unmet original-cadence goal;15/16 remain final timing,
 full-game and physical qualification. Legacy deletion remains issue17. This
 task may remove measured dead active code after preservation, not erase history.
+
+## Owner acceptance2026-11-14
+
+Exact publishedv31 ROM4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d
+was accepted for fluency as pleasant likev30 after measured4.1–8.3% lower
+presentation cadence was disclosed. No silent cadence-parity claim. Automated
+ordered-audio qualification now passes2115 intervals/3499 source writes/2472
+physical PSG writes with a deliberate-corruption negative control. Actual native
+formats and immutable published assets remain unchanged. PR45 integration is
+the remaining delivery step; physical testing remains issue16.

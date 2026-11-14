@@ -1,0 +1,52 @@
+{
+  "complete": true,
+  "component_fixture_only": true,
+  "game_runtime_changed": false,
+  "cases": 8448,
+  "outputs_equal": true,
+  "complete_packet_domain": true,
+  "code_bytes": 184,
+  "reused_original_bytes": 1024,
+  "reused_expansion_bytes": 1024,
+  "reused_reverse_bytes": 256,
+  "extra_shape_bytes": 33,
+  "replaced_packet_bytes": 21992,
+  "scratch_bytes": 5,
+  "output_buffer_bytes": 48,
+  "ix_iy_sp_preserved": true,
+  "bounded_writes": true,
+  "source_commit": "06c8b0f9f77e957aaab03572dd8a232fe62697eb",
+  "sources": {
+    "scripts/compact_enemy_packets.py": "23d961d603aeedc88e4422479e87ac1cd8fc0687b99f7dddff981efe48e3cd21",
+    "scripts/compact_enemy_packet_probe.py": "bb15b1abeddb4e1e2031f051112687b82aed0043275b4a034fba1de6e0ffb260",
+    "src/compact_enemy_packet.asm": "b304503848dd56d99fecc986ef810223db547c2299aac5aafaa6a1e1686ad08a"
+  },
+  "oracle_rom_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "component_rom_sha256": "3b083da75361186ea2fe349f97fd2da53761dedbd36865116dbbe3276f679d1d",
+  "cycles_including_call_and_jump": {
+    "min": 4549,
+    "mean": 5867,
+    "p95": 7245,
+    "max": 7245
+  },
+  "files": {
+    "inputs.bin": "97df2e98f5b9998e3cc3b10431a2fef7906b40e1190ff213682a8adf5cea5ae0",
+    "original.bin": "3b54e38fe8e5ae545d89b556e5e3f99345afe6874ecba195cf22aec46b7b14d2",
+    "settings.xml": "6d17981a7a3a98c54c3e1520cc6b8497cdc70545a45a6bca580299fa9062bb85",
+    "emulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "shapes.bin": "260e0bb96088ee4661398e66f4c0fdee99d4f40bf40736dc50217afdad9a7c1f",
+    "assembler.log": "b28077bd86ac3fd5f51e4b32920c1dcb87bd08a547312d8d8c6e71c4679c291c",
+    "expected.bin": "93e95eae6fb6080a56738bf1866e7c94133d03759e2bb95f14091da2e3a16da8",
+    "probe.tcl": "e8692785102bdfa154db79308dc7c06db43cb70466ea8848d55835243358355c",
+    "actual.bin": "cee6a036081e66baa52bdd3564f288c198908049f8de6d033f32320490b024fd",
+    "component-fixture.rom": "3b083da75361186ea2fe349f97fd2da53761dedbd36865116dbbe3276f679d1d",
+    "fixture.sym": "1f073ed6ffab0c9056a41a19b25c1afc2150a054edf258a0bf2c677a48b14759",
+    "reverse.bin": "459cb7f92764cf14cedc73ac8441f9632c2f3c921d6548a7f0672d182b2f13f6",
+    "expansion.bin": "9bca837a4d2b6cddb0112f3bac8420a5a0e2a2b52abd63c030b15ed21f29ca5a",
+    "fixture.asm": "52680e1e8f747e1edc5ff6f4dcc0123463be31ff47462c20439c4165fa58ab7e"
+  },
+  "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+  "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+  "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7",
+  "scope": "All66groups x16horizontal x8vertical phases, all48bytes and third-column flags; unlinked native constructor, no game cadence claim."
+}

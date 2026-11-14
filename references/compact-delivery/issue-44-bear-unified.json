@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "1d40e0ef8654a2c322a6c8005529925b00b14e5819dd3175ec5402d36bf18466",
+  "source_archive": "outputs/compact/issue44-bear-unified-stage-01/source",
+  "bound_source_files": 333,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-bear-unified-game-01/ntsc/grid-window-check.json",
+      "sha256": "b0b437dc5caf60de4a59f857cfce535c4f02591d11c6ea9edce8755173a4e11c"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-bear-unified-game-01/pal/grid-window-check.json",
+      "sha256": "2196284bc812f2914b6b6b7be3048f40c209f9c73fbb6f39a9d25156a4daec7e"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-bear-unified-game-01/bear-ntsc/grid-window-check.json",
+      "sha256": "f49446d725e2579740a2080136a9322b8c7479d6ccaf104d2aa1af8303370346"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-bear-unified-game-01/bear-pal/grid-window-check.json",
+      "sha256": "714e42f81cf2da7bb52bdd856f90bf5dccaebac3abaf8f9eeed0de2de7f6b652"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-bear-unified-game-01/matrix/grid-window-check.json",
+      "sha256": "3255a4983e1c6ddae4c391b3fde2d3a0991dc83afe94b7f1d46a852dba4d9246"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.503269539741517,
+    "pal": 30.047091534253333,
+    "bear-ntsc": 28.27499416086503,
+    "bear-pal": 25.340515128990244
+  },
+  "mean_prepare_elapsed_cycles": {
+    "ntsc": 55190.98141775637,
+    "pal": 55836.08850226929,
+    "bear-ntsc": 61108.76612903226,
+    "bear-pal": 64033.04892966361
+  },
+  "scope": "Internal migration qualification; complete native flat executable and loaders remain undelivered."
+}

@@ -1,0 +1,111 @@
+{
+  "complete": true,
+  "evidence_class": "Internal compact integration; no native loader or human release",
+  "rom_sha256": "c380391e09c02e29653866e77f1be38a0ac65fb29e470b1e2b57691e19009274",
+  "build": "outputs/compact/issue44-temperature-game-03/build",
+  "bound_source_files": 272,
+  "source_archive": "outputs/compact/issue44-header-temperature-stage-01/source",
+  "retired_collision_bytes": 3662389,
+  "retired_graphics_bytes": 58392,
+  "header_dictionary_bytes": 5328,
+  "header_fragment_bytes": 1370,
+  "temperature_old_bytes": 8192,
+  "temperature_plane_bytes": 768,
+  "host_tests": 651,
+  "checks": {
+    "issue44-header-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-header-game-01/ntsc/retired-table-check.json",
+        "sha256": "4a46147deb9c76effd9ba78fd8363ca67c4677416c698a9da7a16a449f4105b4"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-header-game-01/pal/retired-table-check.json",
+        "sha256": "3c49dbfd862733277350fc8125c1457ffe051f9014b443e9309928ac2e493df8"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-header-game-01/bear-ntsc/retired-table-check.json",
+        "sha256": "b348867b44a98bf480f24f4ccb3877b994483cf6a33c63d6b6be0e49aa652789"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-header-game-01/bear-pal/retired-table-check.json",
+        "sha256": "516a066c7fb60afc8c31a40317c64f1d560e846023d4b155378fa2218568d45e"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-header-game-01/matrix/retired-table-check.json",
+        "sha256": "e2dad43b35f2b32185b027325ed8eceac4f8489e126b8edde8482bc40c1832eb"
+      }
+    },
+    "issue44-retired-graphics-game-02": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-retired-graphics-game-02/ntsc/retired-graphics-check.json",
+        "sha256": "821396827a39202e0199ba1956eb51b4913ec0247ea44959b810c696a05edb2e"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-retired-graphics-game-02/pal/retired-graphics-check.json",
+        "sha256": "5c96f836fe573b84341525649de8c85d7afbf65309e9862a639b34f498a2680f"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-retired-graphics-game-02/bear-ntsc/retired-graphics-check.json",
+        "sha256": "16244f9b6de1572a16309b26c2920ff973bd93363138ef72ce4587d2452a84b8"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-retired-graphics-game-02/bear-pal/retired-graphics-check.json",
+        "sha256": "c98013430979c0ed546d4e8f549809a27b3dbff499c46971221b1200530a951c"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-retired-graphics-game-02/matrix/retired-graphics-check.json",
+        "sha256": "a2800cb3267683b449e5727a04744d7e1fd5f2549dc06e83ae8b095a74ac96f0"
+      }
+    },
+    "issue44-temperature-game-03": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-temperature-game-03/ntsc/retired-graphics-check.json",
+        "sha256": "f72c929ec08305de836e77e7be781c71e8411b5fb5430c190c716d03eb8088ce"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-temperature-game-03/pal/retired-graphics-check.json",
+        "sha256": "a6dd8a1c17ad93741c69922fb184e797b44d1c23c67507ed1b563d75a096b7b6"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-temperature-game-03/bear-ntsc/retired-graphics-check.json",
+        "sha256": "d690071709c6cf5179a38da9afa83b5691dd800f98606a3007c2f540d9386ba1"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-temperature-game-03/bear-pal/retired-graphics-check.json",
+        "sha256": "c73fe27748e31cd4297bd2c58ff20e94c226d30fdca5928a8c21a2d82df17d6b"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-temperature-game-03/matrix/retired-graphics-check.json",
+        "sha256": "05f43e7ff1984e2e196c384ffc6299010d86bafc8faeaa59d4de4c6dc7759493"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-header-game-01": {
+      "ntsc": 32.53895925544593,
+      "pal": 30.999134241660673,
+      "bear-ntsc": 29.306454167866427,
+      "bear-pal": 25.078844413675753
+    },
+    "issue44-retired-graphics-game-02": {
+      "ntsc": 32.53895925544593,
+      "pal": 30.999134241660673,
+      "bear-ntsc": 29.306454167866427,
+      "bear-pal": 25.078844413675753
+    },
+    "issue44-temperature-game-03": {
+      "ntsc": 32.53896572074288,
+      "pal": 30.880135132432947,
+      "bear-ntsc": 29.306449883262964,
+      "bear-pal": 25.07884990449734
+    }
+  },
+  "size_target_met": false,
+  "mapperless": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "limitations": [
+    "Temperature sparse constructor restores NTSC cadence but PAL regular route is0.38percent below header-only parent; no final acceptance claimed.",
+    "Bear route remains1.3percent below acceptedv30 NTSC; finalflat layout and cadence qualification pending."
+  ]
+}

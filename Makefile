@@ -1,5 +1,9 @@
 .DEFAULT_GOAL := build
 PYTHON ?= .venv/bin/python
+.PHONY: native-delivery
+native-delivery:
+	@test -n "$(NATIVE_BASE)" -a -n "$(NATIVE_CONTROL)" -a -n "$(NATIVE_OUT)" -a -n "$(ZX0)" || (echo "Set NATIVE_BASE, NATIVE_CONTROL, NATIVE_OUT and ZX0; see docs/native-formats.md"; exit 1)
+	@$(PYTHON) -B scripts/build_native_delivery.py --base "$(NATIVE_BASE)" --control "$(NATIVE_CONTROL)" --out "$(NATIVE_OUT)" --compressor "$(ZX0)"
 .PHONY: native-check native-phase-check native-input-check movement-build movement-check movement-run
 native-check:
 	@$(PYTHON) -B scripts/native_contract.py

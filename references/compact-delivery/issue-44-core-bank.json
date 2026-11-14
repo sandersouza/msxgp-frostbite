@@ -1,0 +1,83 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "8b77e72429fa094490d8cac0a441207a5d0de30feead7a4b0057aab9947b598f",
+  "source_archive": "outputs/compact/issue44-bear-core-stage-01/source",
+  "bound_source_files": 306,
+  "checks": {
+    "issue44-core-loop-game-02": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-core-loop-game-02/ntsc/header-ram-check.json",
+        "sha256": "e105da94dfdac5bbd5fbcb904426a642688dd459984fe379a45f8f382131e583"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-core-loop-game-02/pal/header-ram-check.json",
+        "sha256": "28ee500278becc2b76bf41552c61b27aa04d3169c0c09b9574515c0c02db30e9"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-core-loop-game-02/bear-ntsc/header-ram-check.json",
+        "sha256": "bbd2999e115fd952afc384822e0d3b2a37c311521f1004275412416b7cc0f97a"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-core-loop-game-02/bear-pal/header-ram-check.json",
+        "sha256": "acd608b7cab246a02e738d2f2e259e02d31d7b4e146bfda9c5992b46227c0b5c"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-core-loop-game-02/matrix/header-ram-check.json",
+        "sha256": "de4878de00224c79b488440c102dd380807acbb6f23f8b047ec3f26f285456ae"
+      }
+    },
+    "issue44-bear-core-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-bear-core-game-01/ntsc/header-ram-check.json",
+        "sha256": "b5311c92bdfd68f1b57ec4aa616ec5e5445cdc519ddde6912eb8ef3d69f38eb3"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-bear-core-game-01/pal/header-ram-check.json",
+        "sha256": "7f51c641d991a93e871856728c8ccca495721c307841380cf62136e815fee6d7"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-bear-core-game-01/bear-ntsc/header-ram-check.json",
+        "sha256": "45be7263723164eda9979cdbcc2e8653614d7af40061624fd334b3623acbd187"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-bear-core-game-01/bear-pal/header-ram-check.json",
+        "sha256": "8536ca5825e9563d879e447e0f41af4f529c24ecdda6dfcce40f2f0f7f7c5077"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-bear-core-game-01/matrix/header-ram-check.json",
+        "sha256": "9bb55f5da592b9cf314b82a46ede821506cec2034dad3b43a77027718f6a90d0"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-core-loop-game-02": {
+      "ntsc": 32.215207300482774,
+      "pal": 30.285085781887858,
+      "bear-ntsc": 29.312117935290345,
+      "bear-pal": 25.078853565046405
+    },
+    "issue44-bear-core-game-01": {
+      "ntsc": 32.21520730048278,
+      "pal": 30.285085781887858,
+      "bear-ntsc": 29.31211793529036,
+      "bear-pal": 25.078844413675746
+    }
+  },
+  "core_loop_microproof": {
+    "path": "outputs/compact/issue44-core-loop-native-01/check.json",
+    "sha256": "e4dadd47f45ff46b76fbcb2f818265d00dd0a505db6cf3d38d45e58d56829701",
+    "cases": 135168
+  },
+  "old_effect_table_bytes": 2304,
+  "new_effect_table_bytes": 272,
+  "reclaimed_native_bytes": 2032,
+  "hybrid_core_bytes": 1479,
+  "bulk_core_bytes": 420,
+  "remaining_native_bytes": 133,
+  "host_only_registry_bytes": 240,
+  "scope": "Two foreign bear render bodies relinked into reclaimed core-bank space. Exact source/pixel/owner/IRQ routes and2115 scenes; no flat/native-format delivery claimed."
+}

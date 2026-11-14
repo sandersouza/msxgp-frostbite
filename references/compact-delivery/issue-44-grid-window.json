@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "d98821d6811723ec3000ada1c614077830a048668ab8041d4b8f562688921de6",
+  "source_archive": "outputs/compact/issue44-grid-window-stage-01/source",
+  "bound_source_files": 327,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-grid-window-game-01/ntsc/grid-window-check.json",
+      "sha256": "c7e1336a262cbc31c0c059e4477034d06d1abe3ddd7056fb684978a8b306319a"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-grid-window-game-01/pal/grid-window-check.json",
+      "sha256": "14293a043b8e8b032b5370d65dae8fa50c1187c56ca9d162b2b44bc07f43b098"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-grid-window-game-01/bear-ntsc/grid-window-check.json",
+      "sha256": "088d88dd3c92c547599496c1f48a8251100b610185b40fe5801685226bb5c185"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-grid-window-game-01/bear-pal/grid-window-check.json",
+      "sha256": "e5e43eb86431a9e434308656882684eecd4276bcbb9cfe77720c95f0cd2ca601"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-grid-window-game-01/matrix/grid-window-check.json",
+      "sha256": "31858e14fc00cac3cc0c044a532392327acb2808227961661f2c85e5b6767150"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.886999432016577,
+    "pal": 30.285088802279788,
+    "bear-ntsc": 29.31211368696214,
+    "bear-pal": 25.07884807422321
+  },
+  "scope": "Internal representation qualification only; actual flat link and native loaders remain unfinished.",
+  "reclaimed_lower_RAM_bytes": 1200,
+  "paletted_rejected_for_cadence": true,
+  "paletted_reclaimed_RAM_bytes": 4674
+}

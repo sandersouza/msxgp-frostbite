@@ -1,0 +1,75 @@
+{
+  "complete": true,
+  "component_only": true,
+  "cases": 1872,
+  "control_image_sha256": "1d3707077a56063910db61905f9aaa3c6c3d576ad50666dac2b149f51481c62b",
+  "control_ROM_sha256": "4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d",
+  "control_extent": [
+    45287,
+    45337
+  ],
+  "control_code_sha256": "8d47db32eb75e14dcc829ba15e11c5ddc062ba1b15e5528d2a476a2fd5a9bc98",
+  "generations": 2,
+  "ways_per_generation": 3,
+  "entries": [
+    1,
+    6
+  ],
+  "signed_offset_vectors": 13,
+  "horizontal_values": [
+    0,
+    8,
+    127,
+    255
+  ],
+  "full256byte_metadata_unchanged": true,
+  "final_IY_and_p_s_sat_equal": true,
+  "return_carry_clear": true,
+  "native_results": {
+    "control": {
+      "complete": true,
+      "component_fixture_only": true,
+      "game_runtime_changed": false,
+      "cases": 1872,
+      "outputs_equal": true,
+      "component_rom_sha256": "3d7829a05c49182646ea8ad38ec824506a5954d2dca0d0d4edf4c1579fb2a258",
+      "code_bytes": 131,
+      "bounded_writes": true,
+      "ix_iy_sp_preserved": true,
+      "cycles_including_call_and_jump": {
+        "min": 12714,
+        "mean": 13246.5,
+        "p95": 13779,
+        "max": 13779
+      },
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+      "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7"
+    },
+    "candidate": {
+      "complete": true,
+      "component_fixture_only": true,
+      "game_runtime_changed": false,
+      "cases": 1872,
+      "outputs_equal": true,
+      "component_rom_sha256": "78b79533f2c3f70d0345f3dbf688886307642910d268b3bb3d757764439851b0",
+      "code_bytes": 127,
+      "bounded_writes": true,
+      "ix_iy_sp_preserved": true,
+      "cycles_including_call_and_jump": {
+        "min": 12683,
+        "mean": 13068,
+        "p95": 13453,
+        "max": 13453
+      },
+      "emulator_sha256": "4d98ffae382c09547b904dfa0a4c884df28509ca153c8975c79101d7fddc359d",
+      "assembler_sha256": "d731bfa8651dae877ee7772d520d084456180d8384dc3698f55d74850b12f25f",
+      "machine_profile_sha256": "ba34cdfc2fd8fc2d85e0412b4337efd13f2a83e440adeea2e515e4b8e6b01ac7"
+    }
+  },
+  "sources": {
+    "scripts/native_p0_sat_probe.py": "f39c0b0a69a7a0c76c26fca5b2d8d4d8011fe101c875529fa90a35201ec8713e",
+    "src/native_p0_sat.asm": "ad4966d2494b6d19b6f8e396adf0759de3f5022adcec12dc6c8d0077b4d7728e",
+    "src/presentation_player_bands.asm": "c310053f422b16d62e0d0cd3150d60e171bee2a5cf205df229ed6064fb3ddcba"
+  }
+}

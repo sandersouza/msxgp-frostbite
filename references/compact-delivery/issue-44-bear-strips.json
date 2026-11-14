@@ -1,0 +1,46 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "9bc6fc071f508a08012da6484a5f5e70645f3373b99d1b72d933eb96db18ab51",
+  "bound_source_files": 286,
+  "source_archive": "outputs/compact/issue44-bear-strip-stage-01/source",
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-bear-strip-game-02/ntsc/retired-floe-assets-check.json",
+      "sha256": "c4b927dc25a1b0c34c67f8623666c068a8e7a6c1dc766d7d10e16236a8156f3e"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-bear-strip-game-02/pal/retired-floe-assets-check.json",
+      "sha256": "6d61024665ec5fe1cf3bc07717b10a47ad38ffd08f380e71dd07ad44757093d3"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-bear-strip-game-02/bear-ntsc/retired-floe-assets-check.json",
+      "sha256": "450c90d5eac82ddb8442f977207e91dd44ac420ba95edd1f936822e9d82b0710"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-bear-strip-game-02/bear-pal/retired-floe-assets-check.json",
+      "sha256": "5af1f1649e4c8e1b122e5cb8144fa5f7100101e18762fbeafdad82b1ba70da68"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-bear-strip-game-02/matrix/retired-floe-assets-check.json",
+      "sha256": "186a76aa5e146d93407e5ca3618a58688aad1c9dc7e4175c6ff084f0ee3de482"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 32.21520997019373,
+    "pal": 30.404079100546664,
+    "bear-ntsc": 29.312117935290345,
+    "bear-pal": 25.078842583402423
+  },
+  "old_strip_bytes": 13440,
+  "recipe_bytes": 1680,
+  "shared_mask_bytes": 3760,
+  "white_strip_direct_stream": true,
+  "scalar_component": "outputs/compact/issue44-bear-strip-native-02/component-result.json",
+  "fast_component": "outputs/compact/issue44-bear-strip-fast-native-01/component-result.json",
+  "native_strip_cases": 210,
+  "scope": "Guarded whole-game equivalence and retirement. Original VDP stream/owner publication retained. Final flat size/loaders and accepted-v30 cadence qualification remain pending."
+}
