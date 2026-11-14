@@ -3,17 +3,23 @@
 ; Outputs C790visible distance+7 orFF, C791hidden distance+7 orFF,
 ; C792source sample at clock8 orFF, C793playerX. No other scratch.
 ; Preserve IX/IY/SP/IFF; clobber AF/BC/DE. No mapper or VDP access.
+    IFNDEF CX_INPUT_ORIGIN
+    DEFINE CX_INPUT_ORIGIN $C780
+    ENDIF
+    IFNDEF CX_OUTPUT_ORIGIN
+    DEFINE CX_OUTPUT_ORIGIN $C790
+    ENDIF
 cx_context:
-    LD A,($C781)
+    LD A,(CX_INPUT_ORIGIN+1)
     LD B,A
-    LD A,($C782)
+    LD A,(CX_INPUT_ORIGIN+2)
     LD C,A
-    LD A,($C780)
+    LD A,(CX_INPUT_ORIGIN+0)
     CALL cx_find_distance
-    LD ($C790),A
+    LD (CX_OUTPUT_ORIGIN+0),A
     XOR A
     CALL cx_find_distance
-    LD ($C791),A
+    LD (CX_OUTPUT_ORIGIN+1),A
     LD A,8
     CALL cx_find_distance
     CP 7
@@ -25,9 +31,9 @@ cx_context:
 .no_sample:
     LD A,255
 .sample:
-    LD ($C792),A
-    LD A,($C780)
-    LD ($C793),A
+    LD (CX_OUTPUT_ORIGIN+2),A
+    LD A,(CX_INPUT_ORIGIN+0)
+    LD (CX_OUTPUT_ORIGIN+3),A
     RET
 
 ; A source point, B objectX, C NUSIZ. At most one copy lies within-7..7:

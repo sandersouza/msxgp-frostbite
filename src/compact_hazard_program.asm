@@ -2,25 +2,37 @@
 ; Inputs C780..C784: playerX, objectX, NUSIZ, shape index, reflection.
 ; Outputs eight five-byte rows atC800..C827; scratchC7A0..C7BF.
 ; Each row: old/equal/different/exit/visible. Preserve IX/IY/SP/IFF.
-hp_ctx EQU $C7A0
-hp_row EQU $C7A4
-hp_pointer EQU $C7A5
-hp_old EQU $C7A7
-hp_new EQU $C7A8
-hp_clock EQU $C7A9
-hp_screen EQU $C7AA
-hp_last EQU $C7AB
-hp_event EQU $C7AC
-hp_on EQU $C7AD
+    IFNDEF HP_INPUT_ORIGIN
+    DEFINE HP_INPUT_ORIGIN $C780
+    ENDIF
+    IFNDEF HP_OUTPUT_ORIGIN
+    DEFINE HP_OUTPUT_ORIGIN $C800
+    ENDIF
+    IFNDEF HP_SCRATCH_ORIGIN
+    DEFINE HP_SCRATCH_ORIGIN $C7A0
+    ENDIF
+    IFNDEF CX_OUTPUT_ORIGIN
+    DEFINE CX_OUTPUT_ORIGIN $C790
+    ENDIF
+hp_ctx EQU HP_SCRATCH_ORIGIN+0
+hp_row EQU HP_SCRATCH_ORIGIN+4
+hp_pointer EQU HP_SCRATCH_ORIGIN+5
+hp_old EQU HP_SCRATCH_ORIGIN+7
+hp_new EQU HP_SCRATCH_ORIGIN+8
+hp_clock EQU HP_SCRATCH_ORIGIN+9
+hp_screen EQU HP_SCRATCH_ORIGIN+10
+hp_last EQU HP_SCRATCH_ORIGIN+11
+hp_event EQU HP_SCRATCH_ORIGIN+12
+hp_on EQU HP_SCRATCH_ORIGIN+13
 
 hp_build:
     PUSH IY
     CALL cx_context
-    LD HL,$C790
+    LD HL,CX_OUTPUT_ORIGIN
     LD DE,hp_ctx
     LD BC,4
     LDIR
-    LD A,($C783)
+    LD A,(HP_INPUT_ORIGIN+3)
     LD L,A
     LD H,0
     LD DE,hp_shapes
@@ -28,7 +40,7 @@ hp_build:
     LD A,(HL)
     ADD A,7
     LD L,A
-    LD A,($C784)
+    LD A,(HP_INPUT_ORIGIN+4)
     AND 1
     ADD A,hp_enemy/256
     LD H,A
@@ -75,11 +87,30 @@ hp_build:
     XOR A
     LD (hp_old),A
     LD (hp_row),A
-    LD IY,$C800
+    LD IY,HP_OUTPUT_ORIGIN
 .row:
     LD HL,(hp_pointer)
     LD A,(HL)
     LD (hp_new),A
+    IFDEF HP_QUERY_TAG
+    LD A,(HP_QUERY_TAG)
+    LD B,A
+    LD A,(hp_row)
+    LD C,A
+    LD A,B
+    SUB C
+    INC A
+    CP 20
+    JR C,.needed
+    XOR A
+    LD (IY+0),A
+    LD (IY+1),A
+    LD (IY+2),A
+    LD (IY+3),A
+    LD (IY+4),A
+    JP .next
+.needed:
+    ENDIF
     LD A,(hp_ctx+1)
     LD C,A
     LD A,(hp_old)

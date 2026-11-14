@@ -1,5 +1,60 @@
 # Issue44 — compact native formats
 
+## Current execution: all active contacts native, pools erased (2026-11-13)
+
+Keep working autonomously until Issue44's full deliverables are complete. The
+owner repeatedly objected to ending turns at progress checkpoints. This is the
+same Issue44 chat/branch/root checkout, not a successor issue or a completed task.
+
+Latest internal ROM `68cac83ed4f7c1a91f194b0ffa07656f89cd9e5446aa5c3b6e2a2095d1b24735`,
+build `outputs/compact/issue44-retired-pools-game-01/build`. No human-test ROM,
+release, mapperless cartridge, COM or BIN has been delivered. The image remains
+4MiB ASCII16;473,275 bytes are non-FF and host zlib9 uses228,768 bytes. These
+host/storage numbers are not final link or target-decompression results.
+
+Floe HMOVE edges, exceptional ordinary hazards and shore edges now use native
+source-clock mask programs plus the already-qualified row evaluator. Old
+record/block/tree storage is erased over3,662,389 bytes, preserving all993
+inherited noncontact allocations and every live reclaimed tail. All four
+regular/bear NTSC/PAL routes and2,115 source scenes pass from cold boot with a
+physical read/fetch guard over every retired prefix and a breakpoint forbidding
+the old decoder. Zero retired reads and zero decoder calls, including boot.
+Every source/owner/IRQ/picture/capture buffer is byte-identical to the immediate
+pre-erasure parent; matrix capture/ownership/timing/scenes/bands also identical.
+651 host tests pass after these changes. No source freeze or long check remains.
+
+Directed acquisition checks against sealedv30:31,752 full four-floe calls,
+79,386 ordinary hazard calls, and402,960 shore queries including same geometry
+with changed P0 views to exercise program reuse. These are directed integrated
+coverage, separate from the older complete mask/convolution component domains.
+New shore compiler passes all153,600 programs(six modes x160PX x160bearX),
+584code+290data bytes,18,023..37,297cycles before clipped integration.
+Source/checker archives and public receipt:
+`outputs/compact/issue44-retired-pools-stage-01/source`(271files),
+`references/compact-delivery/issue-44-retired-pools.json`.
+
+Current regular cadence32.7168NTSC/30.8206PAL; bear29.3064NTSC/25.0789PAL.
+Source clock remains exact per original source route; no uniform30FPS claim.
+The expanded shore common domain is PX9..152 with modulo160 distance; native
+query proof covers it. Edge programs reject only geometry proven empty in the
+complete native program corpus, and reuse mode/PX/bearX/Y-tag masks. Inputs at
+0FA0..0FA3 are initialized FF by bootstrap (invalid mode); the cache is owned
+only by the shore query. P0 pose/shift/reflection stay live evaluation inputs.
+
+Rejected internal steps remain immutable: first shore edge bridge lost A to
+the mapper (fixed by reading canonical C066); uncached shore edges slowed the
+bear and one PAL attempt missed the clock. Current exact rejection/program
+reuse fixes the demonstrated route issue. Floe/enemy geometry clips only tags
+the row evaluator defines as misses. Default legacy component fixture rebuilds
+are byte-identical after making input/scratch/output origins configurable.
+
+Next: factor/remove remaining prepared graphics and retired payloads, establish
+the complete flat code/data/RAM/VRAM budget, then build and qualify real
+Normal32K/COM/BLOAD BIN entrypoints. Contact pool removal is now proven for the
+declared runtime; do not resurrect the giant tables to resolve unrelated
+graphics/link work. Cold fallback guards remain in code but are never reached
+by the qualified boot/runtime routes. Keep all accepted v30 controls immutable.
+
 ## Active continuation: startup grid and common contacts (2026-11-13)
 
 Continue execution toward the full Issue44 DoD; the owner explicitly rejected

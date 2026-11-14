@@ -2,27 +2,36 @@
 ; C780control0..9, C782relative floeX, C786absolute floeX. Other input bytes
 ; unused. Writes four masks per row atC800..C81F and scratchC7A0..C7BF.
 ; Preserves IX/IY/SP/IFF, clobbers AF/BC/DE/HL. No mapper or VDP access.
-ce_row EQU $C7A0
-ce_px EQU $C7A1
-ce_qp EQU $C7A2
-ce_qm EQU $C7A3
-ce_kp EQU $C7A4
-ce_km EQU $C7A5
-ce_max EQU $C7A6
-ce_sp EQU $C7A7
-ce_sm EQU $C7A9
-ce_before EQU $C7AB
-ce_exit EQU $C7AD
-ce_after EQU $C7AE
-ce_after_ne EQU $C7AF
-ce_union EQU $C7B0
+    IFNDEF CE_INPUT_ORIGIN
+    DEFINE CE_INPUT_ORIGIN $C780
+    ENDIF
+    IFNDEF CE_SCRATCH_ORIGIN
+    DEFINE CE_SCRATCH_ORIGIN $C7A0
+    ENDIF
+    IFNDEF CE_OUTPUT_ORIGIN
+    DEFINE CE_OUTPUT_ORIGIN $C800
+    ENDIF
+ce_row EQU CE_SCRATCH_ORIGIN+0
+ce_px EQU CE_SCRATCH_ORIGIN+1
+ce_qp EQU CE_SCRATCH_ORIGIN+2
+ce_qm EQU CE_SCRATCH_ORIGIN+3
+ce_kp EQU CE_SCRATCH_ORIGIN+4
+ce_km EQU CE_SCRATCH_ORIGIN+5
+ce_max EQU CE_SCRATCH_ORIGIN+6
+ce_sp EQU CE_SCRATCH_ORIGIN+7
+ce_sm EQU CE_SCRATCH_ORIGIN+9
+ce_before EQU CE_SCRATCH_ORIGIN+11
+ce_exit EQU CE_SCRATCH_ORIGIN+13
+ce_after EQU CE_SCRATCH_ORIGIN+14
+ce_after_ne EQU CE_SCRATCH_ORIGIN+15
+ce_union EQU CE_SCRATCH_ORIGIN+16
 
 ce_build_masks:
     PUSH IY
-    LD IY,$C800
-    LD A,($C786)
+    LD IY,CE_OUTPUT_ORIGIN
+    LD A,(CE_INPUT_ORIGIN+6)
     LD B,A
-    LD A,($C782)
+    LD A,(CE_INPUT_ORIGIN+2)
     LD C,A
     LD A,B
     SUB C
@@ -59,7 +68,7 @@ ce_build_masks:
     LD (ce_km),A
     JR .windows
 .initial_clocks:
-    LD A,($C780)
+    LD A,(CE_INPUT_ORIGIN+0)
     ADD A,A
     LD L,A
     LD H,0
@@ -76,6 +85,25 @@ ce_build_masks:
     LD (ce_kp),A
     LD (ce_km),A
 .windows:
+    IFDEF CE_CLIP_QUERY_Y
+    LD A,(CE_INPUT_ORIGIN+1)
+    SUB 50
+    LD B,A
+    LD A,(ce_row)
+    LD C,A
+    LD A,B
+    SUB C
+    INC A
+    CP 20
+    JR C,.needed
+    XOR A
+    LD (IY+0),A
+    LD (IY+1),A
+    LD (IY+2),A
+    LD (IY+3),A
+    JP .advance
+.needed:
+    ENDIF
     LD A,(ce_kp)
     LD C,A
     LD A,(ce_qp)
@@ -248,6 +276,7 @@ ce_build_masks:
     LD A,(ce_exit)
     CALL ce_align
     LD (IY+3),A
+.advance:
     LD DE,4
     ADD IY,DE
     LD A,(ce_kp)
