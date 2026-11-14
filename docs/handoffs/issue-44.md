@@ -1,5 +1,41 @@
 # Issue44 — compact native formats
 
+## Continuing execution: header, retired graphics, temperature
+
+Current qualified internal stage:
+`outputs/compact/issue44-temperature-game-03/build`, ROM
+`c380391e09c02e29653866e77f1be38a0ac65fb29e470b1e2b57691e19009274`.
+The complete source archive and15 guarded integration results are bound by
+`references/compact-delivery/issue-44-header-temperature.json`.651 host tests
+pass. Every four-route/source-matrix check retains the original source, picture,
+owner, active-page, clock, retired-collision and now retired-graphics guards.
+
+Header fragments are integrated, replacing the5328-byte prepared dictionary.
+50,200 superseded graphics bytes were erased with zero CPU reads from boot.
+Physical template hashes had to be refreshed for banks5/6 which share reclaimed
+packet space; the independent raw-floe namespace hash remains unchanged.
+The temperature's8192-byte burst table becomes768 plane bytes plus native code;
+all256 records match. The first2684-cycle constructor lost0.4/1.2percent NTSC/PAL
+cadence and was rejected. The sparse1159-cycle constructor restores NTSC but
+regular PAL remains0.38percent below its header-only parent. This is measured
+internal progress, not accepted final cadence or a new release.
+
+Current whole-route picture rates:32.538966NTSC/30.880135PAL regular,
+29.306450NTSC/25.078850PAL bear. Still4MiB ASCII16; no Normal32K/COM/BIN.
+The maintained candidate observer preserves all guards. Across four routes and
+matrix for temperature stage02 it observes59,073 physical ROM bytes, including
+copies/bootstrap data; coverage is a lower bound, not a complete flat layout.
+
+Work continues without another owner checkpoint. A standalone floe packet
+constructor passes all160 phase0 packets using4686 data bytes versus20480 old
+packet bytes. Its direct-VDP integration is currently being checked under
+`outputs/compact/issue44-floe-stream-game-01/` (five modes; logs
+`/tmp/frostbite44-floe-stream01-<mode>.log`). The new stream reuses54:A800..C000,
+keeps all640 owner metadata bytes, and retains the original VDP byte spacing.
+Its result and whole-frame cadence must be read before adoption. Do not edit
+bound sources until those checks finish. No source-only size figure establishes
+a mapperless cartridge; continue to concrete flat linking and real native loaders.
+
 ## Current execution: all active contacts native, pools erased (2026-11-13)
 
 Keep working autonomously until Issue44's full deliverables are complete. The
