@@ -1,5 +1,35 @@
 # Issue44 — compact native formats
 
+## Continuing execution: both foreign bear bodies now share the core bank
+
+Latest qualified internal build `outputs/compact/issue44-bear-core-game-01/build`,
+SHA `8b77e72429fa094490d8cac0a441207a5d0de30feead7a4b0057aab9947b598f`.
+Both core-loop and bear-core stages pass four natural routes and2115 scenes
+with the full inherited source/pixel/physical-owner/clock/retirement gates.
+The independent original6502/Z80 write-loop proof passes135168 cases, including
+all65536 guard-index pairs. Nine padded256-byte source effect columns became
+seventeen16-byte rows (272B), freeing2032B at2:9C10..A3FF. Original slow guard
+path and public native entry remain intact. No frame interval lost: rates
+32.215207/30.285086 regular,29.312118/25.078854 bear before the relink.
+
+Hybrid bear body1479B now occupies2:9C10; native bulk420B immediately follows;
+133 bytes remain. The80-entry cropped-mask registry240B is host verification
+input, never read by runtime: moved to60:A800 under the CPU read guard. The
+independent source/ROM registry comparison still runs unchanged. Original
+hybrid admission, palette, SAT/SGT and physical key paths remain; bulk helper
+addresses in RAM remain unchanged and now select2. The inplace old bulk strip
+patch is source-relinked without dead FF/jump padding, retaining5033 and the
+same strip/owner publisher. Old112/114 full tails are erased/read-guarded.
+Source archival + receipt: issue44-bear-core-stage-01/source and
+references/compact-delivery/issue-44-core-bank.json.660 host tests pass.
+
+Active next component: `issue44-bear-fast-native-01` proves all4230 mask/context
+tiles with specialized original-context painting. Exact outputs and ABI pass;
+mean1531/max2181 cycles vs prior2728/max3648, code189B plus wrapper,144B bases
+instead288B contexts. Not integrated yet. This supplies timing margin for a
+smaller procedural mask representation and the eventual flat link. Main task
+remains unfinished: still ASCII16, no32K/COM/BIN. Keep executing.
+
 ## Continuing execution: header RAM and hybrid plane dictionary qualified
 
 Latest internal artifact `outputs/compact/issue44-hybrid-game-02/build`, SHA
