@@ -1,5 +1,40 @@
 # Issue44 — compact native formats
 
+## Continuing execution: header RAM and hybrid plane dictionary qualified
+
+Latest internal artifact `outputs/compact/issue44-hybrid-game-02/build`, SHA
+`aebc738cffc034374657471d1e6d4540f0befe1dfae64e77eee78f31fc82bda4`.
+Both header RAM and hybrid sharing pass four natural routes and2115 scenes,
+including all inherited source/pixel/physical-owner/IRQ/retirement guards.
+Header font1360B/phases10B/code85B now preload into29A0/2A00/2F60 before IRQ;
+four natural routes verify exact immutable bytes and exercise529/481/50/50
+hot calls. Matrix intentionally exercises the retained cold ROM constructor.
+Header relocation shifts one PAL picture interval: regular30.285085 vs30.404084
+before it; NTSC32.215209 and bear29.312120/25.078857. This is not cadence parity
+with acceptedv30. Final flat link must recover the remaining losses.
+
+All352 hybrid bear row programs now use5712 dictionary bytes instead15488,
+with a152-byte paced streamer and15-byte resident bridge at55FF.
+The exact stored arena is5968 bytes including code alignment.59:A000 code,
+59:A100 recipes, followed by229 PGT planes and45 CGT planes. Two raw IDs and
+shared background/color reconstruct both six-byte physical keys atC520.
+All352 native component cases prove exact44 output bytes and bounded ABI.
+The whole-game rates remain32.215209/30.285085 regular and29.312118/25.078854
+bear. Mean bear preparation increases~107NTSC/~100PAL cycles; no interval lost
+relative to the header-RAM parent. Full matrix has zero differing scenes.
+
+Ruling: preserve the current36-byte background rows directly from the bound
+parent before reproducing bank114. Its old generated include was stale byfive
+accepted open-view bytes. Full2048-byte bank114 then reproduces exactly before
+rewriting; no graphics adaptation is introduced. Final source archive includes
+all bound implementation files under issue44-hybrid-stage-01/source.
+Receipt: references/compact-delivery/issue-44-header-hybrid.json.
+
+Remaining main work is actual all-state flat code/data/RAM linking and native
+loaders/size qualification, not another human ROM checkpoint. Current internal
+image is still4MiB ASCII16 and must not be described as32KiB or native COM/BIN.
+Continue execution through the delivery objective without ending at this stage.
+
 ## Continuing execution: two resident relinks qualified
 
 Latest fully checked stage `outputs/compact/issue44-bear-resident-game-01/build`,
