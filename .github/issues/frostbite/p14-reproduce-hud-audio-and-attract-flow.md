@@ -1,9 +1,54 @@
 # Reproduce Frostbite HUD, PSG event timing and attract flow
 
-Planning ID: P14. Status: In review; owner-authorized diagnostic integration.
+Planning ID: P14. Status: In review; selective audio delivery and listening acceptance.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/14
 
-## Current owner decision — 2026-11-03
+## Current execution — 2026-11-14
+
+Issue44 is closed/Done and PR45 merged at
+`d4459424e7ef4ee39791ec5bc259621449e6d8fd`. The owner accepted v0.0.31 fluency.
+This issue resumes in its existing dedicated chat on
+`codex/test/14-native-presentation-acceptance`, preserving the accepted native
+32768-byte Normal cartridge SHA-256
+`4ddec8fb72c6e744982864a997688f0de9a9f27e8221dd488083ab7d8f5ba04d`.
+Do not restore old v0.0.9, the black band, or the 4MiB format. See
+[handoff](https://github.com/sandersouza/msxgp-frostbite/blob/main/docs/handoffs/issue-44-to-14.md).
+
+The owner subsequently requested a 25% volume increase only for drowning,
+bear pursuit and freezing. The current opt-in candidate changes their four
+original store-site projections from PSG4 to PSG5, leaving source latches and
+other sounds intact. Because PSG static levels are logarithmic, this realizes
+approximately +41.4% nominal amplitude, the nearest available step to +25%;
+it is explicitly an approximation requiring human listening.
+
+The native 24-route NTSC/PAL acceptance batch completed on unchanged v31.
+The gain candidate passes 5,724 actual-ROM callback cases (including all256
+clear entries and equal-raw4 context reversal), 2,115 controlled CPU/audio
+intervals, 2,115 original image cases, continuous bear-route audio/CPU/pixels
+in NTSC/PAL, and four real DOS/BASIC loading cases. Dense scenes and IRQ checks
+also pass. The committed rebuild reproduces all five tested product files;
+independent review found no release-blocking defect. Regular presented cadence
+is about 0.20%/0.21% lower, bear cadence effectively unchanged. Delivery is
+tracked in PR46 and the v0.0.32 selective-audio diagnostic release notes.
+No listening or hardware
+acceptance is inferred from these automated results.
+
+Remaining issue-wide work: native HUD/console/player turns,
+bounded attract/re-entry and simultaneous inputs, continuous PSG/source-event
+comparison, and separately recorded human listening. Existing exact-ROM matrix,
+IRQ and controlled-audio evidence is reusable only within its stated scope.
+The first new checks passed v1 exhaustion/restart NTSC (2536 source checkpoints)
+and v3 exhaustion/restart PAL (3262), including seven player turns each and exact
+terminal/restart milestones. Their live audio and physical joystick ports were
+not checked. Fresh724 host tests pass. Broader qualification remains in progress.
+
+Human listening was requested against v0.0.31; the new gain candidate will have
+its own release and listening instructions. #39 retains numerical cadence parity;
+#15 final timing; #16 full-game/hardware; #17 legacy cleanup. None is closed by
+inference. This section supersedes the historical baseline/ownership statements
+below, not their recorded measurements.
+
+## Historical owner decision — 2026-11-03
 
 Integrate the pre-mask-removal v0.0.9 runtime into main, retaining the seven black
 left-edge sprites. Runtime at `266f272` is identical to `12e204e`; experiments
@@ -94,7 +139,7 @@ version; automated, manual-emulator and physical evidence stay separate.
 
 ## Tracking and target
 
-[MSX Game Ports #7](https://github.com/users/sandersouza/projects/7): In progress.
+[MSX Game Ports #7](https://github.com/users/sandersouza/projects/7): In review.
 Type Task; Priority P2; Size L; exploratory estimate12 hours, not a deadline.
 Native issue types/priority labels unavailable at planning; project fields and
 this body retain those values. No milestone, following repository convention.

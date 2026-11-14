@@ -19,7 +19,7 @@ from environment import ROOT
 def digest(data):return hashlib.sha256(data).hexdigest()
 
 
-def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_clear_proof=None,p0_sat_proof=None):
+def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_clear_proof=None,p0_sat_proof=None,effect_gain=False):
     base=base.resolve();catalog=catalog.resolve();out=out.resolve()
     if out.exists():raise ValueError('fresh output required')
     m=json.loads((base/'build.json').read_bytes());r=(base/m['rom']['filename']).read_bytes()
@@ -322,6 +322,12 @@ def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_
         code,_=assemble(out/'assembly','grid-palette-fast',' ORG $1C00\n'+''.join(f'{n} EQU ${v:04X}\n' for n,v in cg.items())+(ROOT/'src/native_grid_palette_fast.asm').read_text())
         if len(code)!=182:raise ValueError('same exact palette-code footprint required')
         patch(0x1C00,code,'aligned byte-index NAME palette constructor')
+    gain_symbols={}
+    if effect_gain:
+        from native_effect_gain import install
+        if not manifest.get('fast_bands') or p0_clear_proof:
+            raise ValueError('gain requires the selected sparse-bear tail without clear experiment')
+        gain_symbols=install(q,image,s,out/'assembly/effect-gain',patch,(bear_grid['ng_end'],s['np_end']))
     for name,row in q.objects.items():
         a,n=row['address'],row['size'];image[a:a+n]=q.image[a:a+n]
     removed=[];superseded=[]
@@ -369,10 +375,13 @@ def build(base,catalog,out,p0_proof=None,band_proofs=None,elide_mapper=False,p0_
                       unchanged_scan_caller=site,duplicate_default_already_elided=True,allocation_bytes=0,whole_frame_acceptance=False)
     out.mkdir(parents=True,exist_ok=True)
     (out/'native-image.bin').write_bytes(image)
-    manifest.update(source_linked_partial=True,complete=False,objects=q.objects,native_symbols={**edge,**p0,**floe,**nh,**co,**enemy,**footer,**credit,**gd,**grid,**white,**igloo,**temp},
+    manifest.update(source_linked_partial=True,complete=False,objects=q.objects,native_symbols={**edge,**p0,**floe,**nh,**co,**enemy,**footer,**credit,**gd,**grid,**white,**igloo,**temp,**gain_symbols},
                     patches=patches,image_sha256=digest(image),remaining_interfaces=[],
                     source_ROM_required_for_cold_init=True,mapperless_product=False,
-                    elided_mapper_CALLs=removed,superseded_mapper_sites=superseded,native_P0_cache=p0_cache)
+                    elided_mapper_CALLs=removed,superseded_mapper_sites=superseded,native_P0_cache=p0_cache,
+                    selective_effect_gain=effect_gain,free=q.free,
+                    remaining_bytes=sum(b-a for a,b in q.free),
+                    allocated_bytes=manifest['free_declared_bytes']-sum(b-a for a,b in q.free))
     (out/'native-link.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(dict(source_linked_partial=True,allocated_bytes=manifest['allocated_bytes'],remaining_bytes=manifest['remaining_bytes'],objects=len(q.objects)))
 

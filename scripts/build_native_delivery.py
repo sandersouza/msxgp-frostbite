@@ -33,7 +33,7 @@ def sources():
     return {n:digest((ROOT/n).read_bytes()) for n in sorted(names)}
 
 
-def build(base,control,out,compressor):
+def build(base,control,out,compressor,effect_gain=False):
     base,control,out=base.resolve(),control.resolve(),out.resolve()
     if out.exists():raise ValueError('fresh delivery output required')
     before=sources();out.mkdir(parents=True)
@@ -42,7 +42,7 @@ def build(base,control,out,compressor):
     grid_check(control,out/'proof-grid',True)
     catalog(base,out/'layout',native_lifetimes=True,fast_P0=True,fast_bands=True)
     link(base,out/'layout',out/'linked',out/'proof-P0/component-result.json',
-         dict(bear=out/'proof-bear',grid=out/'proof-grid'),True)
+         dict(bear=out/'proof-bear',grid=out/'proof-grid'),True,effect_gain=effect_gain)
     cold(base,out/'linked',out/'cold')
     cartridge(out/'cold',out/'cartridge',compressor)
     disk(out/'cartridge',out/'disk')
@@ -67,4 +67,5 @@ def build(base,control,out,compressor):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('base','control','out','compressor'):p.add_argument('--'+n,type=Path,required=True)
-    a=p.parse_args();build(a.base,a.control,a.out,a.compressor)
+    p.add_argument('--effect-gain',action='store_true')
+    a=p.parse_args();build(a.base,a.control,a.out,a.compressor,a.effect_gain)

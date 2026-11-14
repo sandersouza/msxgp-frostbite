@@ -1,0 +1,102 @@
+{
+  "complete": true,
+  "source_commit": "001f802f9589c826d5e0463834b6b09ca8dc6329",
+  "files": {
+    "cartridge/FROSTBIT.ROM": {
+      "size": 32768,
+      "sha256": "cfce4fe274165e1cd0be0a0ba76ef0a48e38c7ed7fec10de84c673335c2b82b4"
+    },
+    "disk/FROSTBIT.COM": {
+      "size": 32585,
+      "sha256": "a556452bc1f5af3091d8f4c43e1b6c3b9581cb7ef37f627b80ececad1bfcfd39"
+    },
+    "disk/FROSTBIT.BIN": {
+      "size": 21325,
+      "sha256": "f7f54f973008187b91274f260ed2a5ea113240ca100092b7f73958d35f5bd903"
+    },
+    "disk/FBGFX.BIN": {
+      "size": 11797,
+      "sha256": "b07a3d00775b85513c2978394e42fedc2076f0843b97ae956c7576b48342ad9b"
+    },
+    "disk/FROSTBIT.BAS": {
+      "size": 80,
+      "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+    }
+  },
+  "requested_amplitude_factor": 1.25,
+  "nominal_realized_amplitude_factor": 1.4142135623730951,
+  "selected_volume_codes": [
+    4,
+    5
+  ],
+  "original_store_sites": [
+    "F4D7",
+    "F4D9",
+    "F7F0",
+    "F7F2"
+  ],
+  "qualification": {
+    "outputs/compact/issue14-effect-component-02/component-result.json": {
+      "sha256": "7d45907078f4a94b3e33993d080012e5ec7ce71e2e62f7b2d921ec2a2d23929c",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-audio-03/effect-gain-check.json": {
+      "sha256": "c9092563fb4afb56e3bc1daf0c12365dee7f9822e5c9432d5ba5285622ad1bae",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-matrix-01/native-takeover.json": {
+      "sha256": "82dc2db187e431b78fc8c20056775309cfa9a34b02b6b37a8703ac0309bcc178",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-live-02/bear-ntsc/native-live-audio.json": {
+      "sha256": "5f223c06b9a525fe64de31c6945062377c02f8db37bf9742d4cff2ae2b42b166",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-live-02/bear-pal/native-live-audio.json": {
+      "sha256": "9bcf116a68541e98897ab3acd12c3f49f4e0b4dfdfc07a7ce8f3ce217837b58e",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-route-02/regular-ntsc/native-takeover.json": {
+      "sha256": "784dddd48124f01ffaac861e7f937699899d009424e1d40418241e9b8703c5ae",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-route-02/regular-pal/native-takeover.json": {
+      "sha256": "2034aad134d74566c27b2e69b3cd9d14325f586b05207c8bc28cb244bc01e3ff",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-extended-01/density/native-takeover.json": {
+      "sha256": "cd3405b583dc618f33d07d65d1fc6a9646db3a771a76290f628ca29e3ae1df5d",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-extended-01/boundary-ntsc/native-takeover.json": {
+      "sha256": "776e73356b5ff6d445ec0834cffe2e9e25d6bcda20deeebd40a67a22a783acc4",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-extended-01/boundary-pal/native-takeover.json": {
+      "sha256": "2ab0c8c4583205928d424126e1954e4803804f9d09b1901398ff88f04a077b2e",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-disk-01/ntsc-dos/native-disk-check.json": {
+      "sha256": "536c70c1d2fd10fe85bd9356a4e003be79101cce9e67f9c69c67fe8a4157abb1",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-disk-01/ntsc-basic/native-disk-check.json": {
+      "sha256": "aff4f7bc80928c82e8aa7413b618428b3d9f54b826d3e0d8e7130e66d39f772d",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-disk-01/pal-dos/native-disk-check.json": {
+      "sha256": "658a7fceb01958b5acb0e6465487e54a06ea3361d991e42d1f7363636939e87f",
+      "complete": true
+    },
+    "outputs/compact/issue14-effect-disk-01/pal-basic/native-disk-check.json": {
+      "sha256": "370394dd0499b1687fcfba11204f2a30d06752adb0feedeb3ee91de581adc73f",
+      "complete": true
+    }
+  },
+  "committed_rebuild_matches_tested_files": true,
+  "manual_listening": false,
+  "physical_hardware": false,
+  "original_cadence_parity": false,
+  "owner_gain_acceptance": false,
+  "local_pending_test": "Untracked test_native_console_route.py references an unfinished console helper; excluded from this delivered change and retained for issue14."
+}
