@@ -1,0 +1,45 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "d231bbaca461afa6f061c845d7985b3df3afe7244daaf5109dd4895daba5b1bc",
+  "bound_source_files": 282,
+  "source_archive": "outputs/compact/issue44-bear-records-stage-01/source",
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-bear-records-game-01/ntsc/retired-floe-assets-check.json",
+      "sha256": "8788dc4e4dba642fe17e8203fd3e5c5c0ec13b3e644799070dc04823637b3a38"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-bear-records-game-01/pal/retired-floe-assets-check.json",
+      "sha256": "35df7e9807caed134731b43676fe192d1f38c0820d5ca335c4b16e685cad8ca3"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-bear-records-game-01/bear-ntsc/retired-floe-assets-check.json",
+      "sha256": "21c55526c0e93c80b853ffdc0244780c60fee7bf67820ebd7bd6694c2338c788"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-bear-records-game-01/bear-pal/retired-floe-assets-check.json",
+      "sha256": "eabd6479fd8216be3b038bd15297aa6d1c3c85aadcdaab472acd79e89f4aed7e"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-bear-records-game-01/matrix/retired-floe-assets-check.json",
+      "sha256": "038613a78bc75310e6568884913b430fa087b15c9f609a06f069808b6ed8c383"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 32.21520997019373,
+    "pal": 30.285087292083748,
+    "bear-ntsc": 29.30643917175978,
+    "bear-pal": 25.078849904497336
+  },
+  "old_records_bytes": 24576,
+  "new_records_bytes": 6144,
+  "record_count": 96,
+  "record_stride": 64,
+  "accepted_native_module_byte_reproduced": true,
+  "accepted_open_view_clipping_nop_preserved": true,
+  "scope": "Internal guarded source/pixel/owner/clock equivalence; PAL regular cadence0.39percent below compact parent. Final flat layout/loaders/size and accepted-v30 cadence remain pending."
+}

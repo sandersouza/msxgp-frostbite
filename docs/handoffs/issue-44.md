@@ -1,5 +1,33 @@
 # Issue44 — compact native formats
 
+## Continuing execution: native bear records packed64
+
+Latest checked internal build `outputs/compact/issue44-bear-records-game-01/build`,
+ROM `d231bbaca461afa6f061c845d7985b3df3afe7244daaf5109dd4895daba5b1bc`.
+All four guarded routes plus2115 scenes pass.96 records now consume6144 bytes
+instead24576:12 four-byte raw-ID/dense-mask cells plus16 attribute/strip bytes.
+Masks carry the empty-left predicate; context words are derived at lookup.
+AI native RAM/body/bulk module was first reproduced byte-for-byte againstv30,
+including its accepted INC A->NOP left-clip adaptation, before coordinated
+record address/stride changes. Public RAM helper addresses remain unchanged.
+Records occupy67..69 tails;70..78 tails are erased and physically guarded.
+Receipt/archive: `references/compact-delivery/issue-44-bear-records.json`.
+
+Rates32.215210NTSC /30.285087PAL regular;29.306439 /25.078850 bear. PAL loses
+one more picture interval versus its compact parent; final mapperless linking
+must recover the accumulated cadence cost before promotion. Still4MiB ASCII16,
+163053 nonFF; host zlib83435/lzma54696 are not target sizes. No native loaders.
+
+Next in progress: reuse the literal bear masks for all210 native64-byte bulk
+strips. Old210*64=13440 meaningful strip bytes can become210*8=1680 recipe
+bytes sharing the existing4048 mask/context bytes. Strip0 is64FF and has a
+constant fast path. Component proof is running under
+`outputs/compact/issue44-bear-strip-native-01`, log
+`/tmp/frostbite44-bear-strip-native01.log`; four tile recipes must match exact
+PGT/CGT and remain inside existing C480/C520 scratch. Integrate only after it
+passes, then measure whole-frame performance again. Keep executing toward actual
+flat linking/native formats; do not return an intermediate final response.
+
 ## Continuing execution: relocated keys and native bear tile composition
 
 Latest fully checked internal build:
