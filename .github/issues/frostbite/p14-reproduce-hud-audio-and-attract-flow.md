@@ -1,6 +1,6 @@
 # Reproduce Frostbite HUD, PSG event timing and attract flow
 
-Planning ID: P14. Status: In progress; resumed native presentation acceptance.
+Planning ID: P14. Status: In review; selective audio delivery and listening acceptance.
 GitHub: https://github.com/sandersouza/msxgp-frostbite/issues/14
 
 ## Current execution — 2026-11-14
@@ -25,8 +25,12 @@ The native 24-route NTSC/PAL acceptance batch completed on unchanged v31.
 The gain candidate passes 5,724 actual-ROM callback cases (including all256
 clear entries and equal-raw4 context reversal), 2,115 controlled CPU/audio
 intervals, 2,115 original image cases, continuous bear-route audio/CPU/pixels
-in NTSC/PAL, and four real DOS/BASIC loading cases. Final timing, evidence
-sealing, review and release delivery are in progress. No listening or hardware
+in NTSC/PAL, and four real DOS/BASIC loading cases. Dense scenes and IRQ checks
+also pass. The committed rebuild reproduces all five tested product files;
+independent review found no release-blocking defect. Regular presented cadence
+is about 0.20%/0.21% lower, bear cadence effectively unchanged. Delivery is
+tracked in PR46 and the v0.0.32 selective-audio diagnostic release notes.
+No listening or hardware
 acceptance is inferred from these automated results.
 
 Remaining issue-wide work: native HUD/console/player turns,
@@ -135,7 +139,7 @@ version; automated, manual-emulator and physical evidence stay separate.
 
 ## Tracking and target
 
-[MSX Game Ports #7](https://github.com/users/sandersouza/projects/7): In progress.
+[MSX Game Ports #7](https://github.com/users/sandersouza/projects/7): In review.
 Type Task; Priority P2; Size L; exploratory estimate12 hours, not a deadline.
 Native issue types/priority labels unavailable at planning; project fields and
 this body retain those values. No milestone, following repository convention.
