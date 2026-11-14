@@ -1,0 +1,75 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "c8231b6c9d54d6eae9b4018e1faa34043a4d5331b835634f9e21e87ec26018cf",
+  "source_archive": "outputs/compact/issue44-floe-template-stage-01/source",
+  "bound_source_files": 277,
+  "checks": {
+    "issue44-floe-stream-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-floe-stream-game-01/ntsc/retired-graphics-check.json",
+        "sha256": "69a4078e11f0cdf2fe54e0b7c1feb0ba62bfef739c86b339f94246177178b021"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-floe-stream-game-01/pal/retired-graphics-check.json",
+        "sha256": "79492974b97d3d6537421072dfbbd42ff835836c92269530231a981fc2dde5d4"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-floe-stream-game-01/bear-ntsc/retired-graphics-check.json",
+        "sha256": "1585280e7349de37b204c29b7ea14c8e68a53ed70c9517f0208b0688db9d8b8d"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-floe-stream-game-01/bear-pal/retired-graphics-check.json",
+        "sha256": "51dcdafa0bbc662328cc60e892d58f100ca6382a222d9ff03a5a8c62ce0a4a7b"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-floe-stream-game-01/matrix/retired-graphics-check.json",
+        "sha256": "e35e947a8a63c23969f05e928e53eab8407ad06481acab0a3157ff752645f46d"
+      }
+    },
+    "issue44-retired-templates-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-retired-templates-game-01/ntsc/retired-template-check.json",
+        "sha256": "1177d22a2c58ac2f197990da93c16e4412dd784699adfbd856dddbd0f696c454"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-retired-templates-game-01/pal/retired-template-check.json",
+        "sha256": "a2b87add21f65d7495cd771f5885c3a64a7dd8723c0ce77325c87f8ae699615e"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-retired-templates-game-01/bear-ntsc/retired-template-check.json",
+        "sha256": "1e25a8d5d4ef8592c4dadd54166c135de76fa1d770a3658f0520629cbe931edd"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-retired-templates-game-01/bear-pal/retired-template-check.json",
+        "sha256": "e8904a1ed419e24bb7645e8337f891c5a1a4539b9c623af30b62638a8ad2951f"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-retired-templates-game-01/matrix/retired-template-check.json",
+        "sha256": "1a75ac23aada1942bed2c159a881031ca575d2218f5994c3597df05d274a81e5"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-floe-stream-game-01": {
+      "ntsc": 32.21521263990514,
+      "pal": 30.404086681194958,
+      "bear-ntsc": 29.306449883262967,
+      "bear-pal": 25.07884990449734
+    },
+    "issue44-retired-templates-game-01": {
+      "ntsc": 32.21521263990514,
+      "pal": 30.404086681194958,
+      "bear-ntsc": 29.306449883262967,
+      "bear-pal": 25.07884990449734
+    }
+  },
+  "prepared_phase0_bytes": 20480,
+  "compact_phase0_data_bytes": 4686,
+  "retained_owner_pointer_bytes": 640,
+  "geometry_validation_oracle_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "scope": "Internal byte retirement and guarded source/pixel equivalence. Floe stream costs1-1.5percent cadence; not final performance acceptance. Whole flat runtime/32K/native loaders remain pending."
+}

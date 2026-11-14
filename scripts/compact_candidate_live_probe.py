@@ -10,6 +10,7 @@ import subprocess
 from compact_inventory import read_trace
 from compact_live_probe import observer_tcl,instrument_harness,sha
 import compact_retired_graphics_check
+import compact_retired_template_check
 from render_build import symbols
 
 
@@ -25,7 +26,9 @@ def probe(build,out,mode):
             kw['timeout']=900
         return original_run(args,*a,**kw)
     subprocess.run=run
-    try:compact_retired_graphics_check.check(build,out,mode)
+    try:
+        checker=compact_retired_template_check if m.get('compact_retired_templates') else compact_retired_graphics_check
+        checker.check(build,out,mode)
     finally:subprocess.run=original_run
     phases=read_trace((out/'rom-reads.tsv').read_text(),len(rom))
     if sha(artifact)!=m['rom']['sha256'] or sha(Path(__file__))!=producer:raise ValueError('producer or candidate changed')

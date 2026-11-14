@@ -1,5 +1,41 @@
 # Issue44 — compact native formats
 
+## Continuing execution: floe dictionary and generic-atlas retirement
+
+Latest internal build `outputs/compact/issue44-retired-templates-game-01/build`,
+ROM `c8231b6c9d54d6eae9b4018e1faa34043a4d5331b835634f9e21e87ec26018cf`.
+277 bound sources plus ten complete guarded checks are archived/bound by
+`references/compact-delivery/issue-44-floe-template-retirement.json`.
+All four routes and2115 scenes pass both the floe stream and generic-atlas
+retirement stages. No generic geometry, pattern or template-load entry is called;
+physical reads from every retired region remain forbidden from cartridge entry.
+The host ownership decorator deliberately reads exact sealedv30 geometry,
+separately from game data; source/picture/owner/IRQ audits are unchanged.
+This establishes the declared finite scenarios, not a complete all-state CFG
+proof. Current grid24 actor/ice rows are distinct; native sprite P0, direct enemy
+packets and native/hybrid bear paths supersede generic atlas dispatch. Verify
+the finite entry invariants before final flat promotion rather than infer them
+from trace absence alone. Bank7 A000..B800 is conservatively protected code.
+
+Direct floe streams replace20480 packet bytes with4686 dictionary bytes,
+retaining all640 original owner-pointer bytes. The stream uses existing paced
+VDP byte writes and interrupt restoration.54:A800..C000 reuses4096 retired
+contact bytes plus2048 retired NAME bytes; guards exclude only that declared
+replacement and forbid the old contact decoder. Current rates32.215213NTSC /
+30.404087PAL regular,29.306450NTSC /25.078850PAL bear. The1-1.5percent regular
+cadence cost remains experimental; no final acceptance or human build claimed.
+
+The generic atlas retirement leaves253838 nonFF bytes in a4MiB ASCII16 image;
+host zlib125594/lzma78676 are not target ROM sizes. Old banks253/254 still hold
+large prepared keys/names; original packet owner keys live in those records.
+Next trace under `outputs/compact/issue44-name-pair-origin-01` identifies actual
+255:9400..A3FF read origins, separate from passive coverage under
+`issue44-retired-templates-live-01/ntsc`. Both may still be running; logs are
+`/tmp/frostbite44-name-pair-origins.log` and
+`/tmp/frostbite44-retired-templates-live01-ntsc.log`. Root remains the only writer.
+Continue through concrete flat layout, native loaders and final qualification;
+do not end the owner task at this checkpoint.
+
 ## Continuing execution: header, retired graphics, temperature
 
 Current qualified internal stage:
