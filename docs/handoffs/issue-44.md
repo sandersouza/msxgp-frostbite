@@ -1,5 +1,47 @@
 # Issue44 — compact native formats
 
+## Continuing execution: relocated keys and native bear tile composition
+
+Latest fully checked internal build:
+`outputs/compact/issue44-bear-tile-game-01/build`, ROM
+`2c730c5681a86b913eda6ccb637b31018641e028e1221f8efeb7c74798d5404b`.
+Source snapshot and ten guarded route/matrix results:
+`references/compact-delivery/issue-44-floe-assets-bear-tiles.json`.
+All four rates are identical to the compact floe-stream parent:
+32.215213/30.404087 regular,29.306450/25.078850 bear (NTSC/PAL).
+Still4MiB ASCII16,181453 nonFF bytes; no Normal32K/COM/BIN or human release.
+
+947 live owner keys (1894 bytes) moved to55:B800; all160 packet owner records
+retain exact logical IDs/counts through new far pointers.50,560 obsolete raw
+mask/template-key/index/NAME bytes are erased. The logical2049-ID raw-floe
+oracle now lives only in exact sealedv30 host validation. Existing constructor
+and pixel/owner/IRQ checks are retained; expected floe patterns are explicitly
+supplied by that immutable oracle rather than deleted product bytes.
+
+Rejected first attempt erased255:9400..A3FF. That physical region was historically
+name_pairs but is now live P0 SGT storage: x_pattern_read atF89B and x_sgt_upload
+select255 and read32-byte patterns. All4096 bytes are preserved in corrected
+stage02. The builder's historical-name comment needs clarification at final
+cleanup; do not treat metadata section names as current liveness authority.
+
+The native bear constructor passes470 masks x9 contexts=4230 exact16-byte
+PGT/CGT cases, preserving ABI and bounded scratch.3760 mask bytes plus288 context
+bytes replace45760 prepared final-tile bytes. All1116 native record cells retain
+original logical IDs and skip flags; their context words now select the compact
+mask/context routine.56:A800..C000 holds new data/code;4FE3 is a bridge in the
+retired generic-half decoder. Old79..101 tile tails are physically forbidden.
+Bulk strips103..111 and hybrid bear134..137 are still live/unchanged.
+
+Next concrete size cut: compact96 native bear records from256 to64 bytes. Each
+cell needs only original logicalID plus dense-mask ID/empty-left flag; derive
+the9-context code at lookup rather than storing9 words. Keep12 four-byte cells
+plus16 metadata/strip bytes per record (6144 total vs24576). Update native
+ai_body record addressing, ai_tile stride/context construction and ai_bulk_ids
+stride together. First reproduce unchanged native module bytes from its public
+source against sealedv30; reject unrelated changes. Then qualify all four
+routes/matrix and whole-frame cadence before adoption. Continue toward actual
+flat linking/native loaders without ending at this checkpoint.
+
 ## Continuing execution: floe dictionary and generic-atlas retirement
 
 Latest internal build `outputs/compact/issue44-retired-templates-game-01/build`,

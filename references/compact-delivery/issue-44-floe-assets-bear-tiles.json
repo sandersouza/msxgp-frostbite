@@ -1,0 +1,78 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "2c730c5681a86b913eda6ccb637b31018641e028e1221f8efeb7c74798d5404b",
+  "bound_source_files": 281,
+  "source_archive": "outputs/compact/issue44-floe-assets-bear-stage-01/source",
+  "checks": {
+    "issue44-retired-floe-assets-game-02": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-retired-floe-assets-game-02/ntsc/retired-floe-assets-check.json",
+        "sha256": "f4851a4f5b43c15e0aa337fff00a7b2f131d02be62949c300923beeec68b702b"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-retired-floe-assets-game-02/pal/retired-floe-assets-check.json",
+        "sha256": "a2f1249e718445f456fd02d0d2a4f281720b4cd21c5983056281c4e9733a7923"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-retired-floe-assets-game-02/bear-ntsc/retired-floe-assets-check.json",
+        "sha256": "f65f1358a136c32921f83d07c5f9164e4e01f11b114ad4f72285a87c729ddd2b"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-retired-floe-assets-game-02/bear-pal/retired-floe-assets-check.json",
+        "sha256": "4e75eaad208ba2d33dfd05e1a793b921ac1a188d41b4dbd2df75c6ca7645ee49"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-retired-floe-assets-game-02/matrix/retired-floe-assets-check.json",
+        "sha256": "771c3479476464800ba5ffd22b9bce079409f61deb599fa4f60f87b97f15ac88"
+      }
+    },
+    "issue44-bear-tile-game-01": {
+      "ntsc": {
+        "path": "outputs/compact/issue44-bear-tile-game-01/ntsc/retired-floe-assets-check.json",
+        "sha256": "c04d140cadf0960542d0e564c3272272db804686692eb86887468bcbbf8936d2"
+      },
+      "pal": {
+        "path": "outputs/compact/issue44-bear-tile-game-01/pal/retired-floe-assets-check.json",
+        "sha256": "4b98bd431efc80ae4365dd93cd2f634cba25f5798799b74ffc38e0f2125f8e40"
+      },
+      "bear-ntsc": {
+        "path": "outputs/compact/issue44-bear-tile-game-01/bear-ntsc/retired-floe-assets-check.json",
+        "sha256": "068b1a958de51c50f335b2b3032ab9c70a8c26553c5dcfb43c30499ef9d8b2d9"
+      },
+      "bear-pal": {
+        "path": "outputs/compact/issue44-bear-tile-game-01/bear-pal/retired-floe-assets-check.json",
+        "sha256": "8cbdd0db406f772c938a8746ec8ab3d3ed3699144a36fef2ae93616ee1b6f243"
+      },
+      "matrix": {
+        "path": "outputs/compact/issue44-bear-tile-game-01/matrix/retired-floe-assets-check.json",
+        "sha256": "ff689f1d3f4bdd67d11e3d99af406488cb645b6ae416e2969a9340aa476ed795"
+      }
+    }
+  },
+  "active_picture_rates": {
+    "issue44-retired-floe-assets-game-02": {
+      "ntsc": 32.21521263990514,
+      "pal": 30.404086681194958,
+      "bear-ntsc": 29.306449883262967,
+      "bear-pal": 25.07884990449734
+    },
+    "issue44-bear-tile-game-01": {
+      "ntsc": 32.21521263990514,
+      "pal": 30.404086681194958,
+      "bear-ntsc": 29.306449883262967,
+      "bear-pal": 25.07884990449734
+    }
+  },
+  "relocated_owner_key_bytes": 1894,
+  "retired_floe_asset_bytes": 50560,
+  "prepared_bear_tile_bytes": 45760,
+  "bear_mask_bytes": 3760,
+  "bear_context_bytes": 288,
+  "bear_native_cases": 4230,
+  "scope": "Internal guarded equivalence and retirement. Bear tile reconstruction adds no observed cadence change to its compact parent. Final flat runtime, size gate, native loaders and accepted-v30 cadence qualification remain pending.",
+  "rejected_first_retirement": "255:9400..A3FF is live P0 SGT pattern storage used by x_pattern_read/x_sgt_upload, repurposed from historical name_pairs; preserve all4096bytes."
+}
