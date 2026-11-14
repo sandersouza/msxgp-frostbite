@@ -29,7 +29,11 @@ in NTSC/PAL, and four real DOS/BASIC loading cases. Dense scenes and IRQ checks
 also pass. The committed rebuild reproduces all five tested product files;
 independent review found no release-blocking defect. Regular presented cadence
 is about 0.20%/0.21% lower, bear cadence effectively unchanged. Delivery is
-tracked in PR46 and the v0.0.32 selective-audio diagnostic release notes.
+integrated by PR46 at `71d4e824b66cf1a1fa3b28920614630c8c7d698f`.
+[v0.0.32 selective-audio diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.32-selective-audio-diagnostic)
+is published with all seven freshly downloaded assets byte-identical to the
+local seal. ROM SHA-256:
+`cfce4fe274165e1cd0be0a0ba76ef0a48e38c7ed7fec10de84c673335c2b82b4`.
 No listening or hardware
 acceptance is inferred from these automated results.
 
@@ -42,8 +46,8 @@ and v3 exhaustion/restart PAL (3262), including seven player turns each and exac
 terminal/restart milestones. Their live audio and physical joystick ports were
 not checked. Fresh724 host tests pass. Broader qualification remains in progress.
 
-Human listening was requested against v0.0.31; the new gain candidate will have
-its own release and listening instructions. #39 retains numerical cadence parity;
+Human listening was requested against v0.0.31; v0.0.32 now supplies its own
+release and listening instructions. #39 retains numerical cadence parity;
 #15 final timing; #16 full-game/hardware; #17 legacy cleanup. None is closed by
 inference. This section supersedes the historical baseline/ownership statements
 below, not their recorded measurements.
