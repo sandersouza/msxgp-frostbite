@@ -1,0 +1,44 @@
+{
+  "complete": true,
+  "mapperless": false,
+  "size_target_met": false,
+  "com_delivered": false,
+  "bin_delivered": false,
+  "rom_sha256": "739ad81460f4e3252d5cae5fef1a53bb6d48f4d65a8c11854af8ddc04d1478fa",
+  "source_archive": "outputs/compact/issue44-enemy-windows-stage-01/source",
+  "bound_source_files": 331,
+  "checks": {
+    "ntsc": {
+      "path": "outputs/compact/issue44-enemy-windows-game-02/ntsc/grid-window-check.json",
+      "sha256": "ee4b9cd3e6c2889f06ff8664f7ca6e1522914cf29d6308e5e49c4d8097f68db7"
+    },
+    "pal": {
+      "path": "outputs/compact/issue44-enemy-windows-game-02/pal/grid-window-check.json",
+      "sha256": "492504eff0d90d1a65904eaf8571558f09948aa81ebcc0a3da868f96322fef95"
+    },
+    "bear-ntsc": {
+      "path": "outputs/compact/issue44-enemy-windows-game-02/bear-ntsc/grid-window-check.json",
+      "sha256": "de9bc95389c04b0880239a875579a430cf2f985c697bac97d2de765155469f30"
+    },
+    "bear-pal": {
+      "path": "outputs/compact/issue44-enemy-windows-game-02/bear-pal/grid-window-check.json",
+      "sha256": "ed5dd52635389a579e6b637f925d79f0bc6e78590cc3d7b30721491bd3011c18"
+    },
+    "matrix": {
+      "path": "outputs/compact/issue44-enemy-windows-game-02/matrix/grid-window-check.json",
+      "sha256": "b064af5ba638135b7ee28cd45a3590dfcd70bc2cb9e25584c7b070170967f10a"
+    }
+  },
+  "active_picture_rates": {
+    "ntsc": 31.503269539741517,
+    "pal": 30.047091534253333,
+    "bear-ntsc": 29.312122183619795,
+    "bear-pal": 25.078853565046398
+  },
+  "scope": "Internal representation qualification only; actual flat link and native loaders remain unfinished.",
+  "original_enemy_atlas_bytes": 4224,
+  "enemy_plane_pool_bytes": 686,
+  "enemy_directory_bytes": 528,
+  "enemy_zero_padding_bytes": 8,
+  "old_atlas_guarded_host_oracle_only": true
+}

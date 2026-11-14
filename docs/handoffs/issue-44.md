@@ -1,5 +1,64 @@
 # Issue44 — compact native formats
 
+## Continuing execution: literal NAME and enemy planes qualified
+
+Current internal base: `outputs/compact/issue44-enemy-windows-game-02/build`,
+SHA `739ad81460f4e3252d5cae5fef1a53bb6d48f4d65a8c11854af8ddc04d1478fa`.
+All four natural routes and2115 matrix scenes pass the inherited original
+source/picture/physical-owner/IRQ/clock/retirement gates.670 host tests pass.
+Still4MiB ASCII16: NO flat game, Normal32K, COM, BIN or human release yet.
+Keep executing the approved objective; do not stop at this internal checkpoint.
+
+Literal NAME windows replace5632 expanded row bytes with4080 literal pool bytes
+plus352 pointer bytes. Directory160 remains. Lower RAM20F0..20FF and2260..26FF
+is reclaimed/poisoned and read/write guarded:1200 bytes.95-byte hot gate returns
+an existing30-byte row to the unchanged row copier. Cold matrix constructor is
+retained. New bank63 startup-only sources and60-byte loader are exactly checked.
+All1280 phase/owner native cases produce the original32-byte reference rows.
+Rates31.886999NTSC/30.285089PAL regular,29.312114/25.078848 bear.
+
+Ruling: keep the alternative palette experiment as research, not the base.
+It reclaims4674 bytes but costs~2%NTSC/~1.4%PAL versus its footer parent.
+The literal pool reclaims less but avoids per-byte translation. The final flat
+link still has to meet accepted cadence; no loss is silently accepted.
+
+Correction:255:9400..A47F is the132-pattern ENEMY SGT atlas, not P0. The separate
+P0 shore half-window pool remains unchanged. Both enemy paths now use528 bytes
+of offsets,686 literal plane bytes and8 zero padding bytes instead4224 atlas
+bytes.104-byte banked code plus86-byte bridge preserve public upload/read
+entries, clipping, SAT, IX/IY and their original buffer roles. Ordinary uploads
+stream four eight-byte planes with the original OUTI/JP pacing, without a RAM
+SGT build.132 native read cases and132 real VDP upload/readback cases are exact.
+The procedural alternative(110-byte code) was proved but rejected for its
+~2960-cycle glyph-generation cost. The literal read proof is1463 cycles; its
+upload+readback fixture is2821 cycles, not a whole-frame cost.
+
+The old4224-byte atlas stays physically present for the independent original-
+glyph/edge host oracle, but all CPU reads from it are forbidden from cartridge
+entry. Runtime-only source closure may exclude it. The historical mode0 edge-projection script fails identically at(group0,
+reflectionFalse,X1) on BOTH acceptedv30 and the new candidate: its former
+X<8 clipping assumption predates the accepted open-view adaptation. It is not
+claimed as a current passing proof. All132 source atlas bytes and both runtime
+paths are independently exact; the maintained viewport and full-scene oracles
+pass unchanged. No oracle was patched to hide the legacy mismatch.
+Regular cadence31.503270NTSC/30.047092PAL, bear29.312122/25.078854: the extra
+lookup/bridge costs another~1.2%NTSC/~0.8%PAL versus literal NAME parent.
+This is internal size research, not a promoted performance-equivalent build.
+Final native linking must remove mapper overhead/recover cadence before release.
+
+Receipts: references/compact-delivery/issue-44-grid-window.json and
+issue-44-enemy-windows.json. Complete source archives under outputs/compact/
+issue44-grid-window-stage-01/source and issue44-enemy-windows-stage-01/source.
+
+Next: finish a conservative all-state flat object/lifetime map, then link and
+qualify the actual no-mapper executable and loaders. Reclaim only structurally
+superseded code. Candidate obsolete512 resident bytes585F..5A5E need a finite
+no-fusion proof: native enemy and floe tile rows are disjoint; all66 groups,
+160X and4copy modes must be enumerated from the sealed occupancy descriptors.
+Typed igloo constructor/background/merge remain live; do not erase all typed
+code. Trace coverage is only a lower bound. Current resident free range is now
+56C1..578F(207 bytes), plus778A..78FF(374). Main delivery remains open.
+
 ## Continuing execution: immutable footer VRAM allocation qualified
 
 Latest internal build `outputs/compact/issue44-footer-vram-game-01/build`, SHA
