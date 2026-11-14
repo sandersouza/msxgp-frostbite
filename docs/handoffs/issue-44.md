@@ -1,5 +1,54 @@
 # Issue44 — compact native formats
 
+## Continuing execution: full occupancy dictionary and literal windows qualified
+
+Latest fully checked internal build `outputs/compact/issue44-literal-windows-game-01/build`,
+SHA `11e307b8e550f904fffaa5f8379db10476d6e7de928ca7dd566e9fee501ea110`.
+Three consecutive stages (bear-fast, occupancy, literal-windows) pass all four
+natural routes plus2115 scenes.667 host tests pass. Receipt and source archive:
+references/compact-delivery/issue-44-literal-windows.json and
+outputs/compact/issue44-literal-windows-stage-01/source.
+
+Fast native bear contexts preserve all4230 outputs, reduce padded context data
+288->144B and component mean2728->1531cycles. Native natural routes predominantly
+use bulk/sprite paths, so their cadence is unchanged; do not claim a measured
+whole-frame gain from this component reduction. Its188-byte runtime keepsA800.
+
+All8448 occupancy descriptors now use528-byte(group,Y) directory plus52x16=832
+phase bytes. No grid-only restriction: native8448-case proof and full gameplay
+checks pass.61:B800 code,61:B900 directory/rows; EB61 RAM helper retains the same
+consumer/flag logic and maps7 on return. Old142..145 tails and146:B800..B8FF
+only are erased/guarded. The rest of146, including live header/player data,
+remains intact. The short new RAM stub currently executes NOP padding before
+its original consumer; final source link can remove that padding. No cadence
+interval lost relative to its parent.
+
+Deterministic maximum-overlap path packing retains literal byte windows; it
+is an offline representation, not per-frame decompression.470 bear masks now
+use940-byte offset directory at56:A900 plus1415-byte pool at56:ACAC (2355 total
+vs3760). Both the193-byte tile reader and254-byte resident strip reader are
+natively proved:4230 tiles,210 strips; +22cycles/tile and~88mean/strip.232 P0
+halves now share2342 bytes instead3712; existing956-byte offset directory and
+runtime instructions remain unchanged (all239 outputs, exactly960cycles).
+
+The obsolete6400-byte root/base shadow at255:A700..BFFF and old1360-byte generic
+header at12:B880..BDCF are erased with cold-to-end read guards. Four routes and
+matrix record zero reads and unchanged source/pixels/owners/clock. Raw-floe,
+geometry and header expectations remain independently derived from the sealed
+control/original; no oracle was weakened. Current native font remains at lower
+RAM2A00 and bank52 cold storage. Existing SGT source255:9400..A3FF is preserved.
+
+Next concrete architecture step: use genuinely unallocated SCREEN2 tile slots
+as startup-only immutable footer storage, freeing3008 runtime RAM bytes for the
+flat link. Reservation proof must include both generations' fixed counts,
+all static background IDs, ice atlas, both footer generations and Retroworks.
+Store original16-byte footer tiles across unused PGT/CGT pairs, read misses into
+existingC520 scratch, preserve runtime caches/graphics. Source data remains a
+cold asset and the loader will upload it before reclaiming startup RAM. Need
+native all188 store/read proof, immutable-VRAM and no-visible-NAME-alias guards,
+then full routes/cadence; no prototype exists yet. This remains within16KiB VRAM.
+Do not claim32K/COM/BIN until actual all-state flat layout and loaders pass.
+
 ## Continuing execution: both foreign bear bodies now share the core bank
 
 Latest qualified internal build `outputs/compact/issue44-bear-core-game-01/build`,
