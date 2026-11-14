@@ -1,5 +1,42 @@
 # Issue44 — compact native formats
 
+## Continuing execution: shared-mask bulk strips and shore-pattern sharing
+
+Latest fully checked stage `outputs/compact/issue44-bear-strip-game-02/build`, ROM
+`9bc6fc071f508a08012da6484a5f5e70645f3373b99d1b72d933eb96db18ab51`.
+All four guarded routes and2115 scenes pass. The210 native strips now use1680
+recipe bytes plus existing3760 mask bytes, replacing13440 prepared bytes.
+White strip0 remains a direct immutable64FF stream; colored strips use a
+specialized resident compositor. The first scalar210-case prototype cost up to
+15674cycles; specialized variant up to6372, both exact. Native callback6A50
+reuses the retired generic geometry body but preserves6A49's forbidden-entry
+trap.5033 is the uploader bridge;57:A800 holds recipes,57:AF00 white bytes.
+103..108 tails and109:B800..BC80 are erased;110/111 are protected collision
+bootstrap data, not unused strip padding. Original output/cache ownership stays.
+Receipt/source archive: `references/compact-delivery/issue-44-bear-strips.json`.
+Rates32.215210NTSC/30.404079PAL regular,29.312118/25.078843 bear.
+
+Current integration under test: `outputs/compact/issue44-shore-pattern-game-01`,
+ROM `92a9789c691f8d0c1fb3c0992e7cb05145b65da47b2b4e81dc70a62099d776ba`.
+239 exact32-byte P0 left-shore patterns share232 sixteen-byte halves (3712B)
+plus956 directory bytes vs7648 full bytes. All239 native component cases pass,
+960cycles each.58:A800 code/data,50EE resident pattern bridge, original sprite
+emit/cache path retained; old123..126 payload spans erased. Five whole-game
+checks may still be running, logs `/tmp/frostbite44-shore-pattern01-<mode>.log`.
+Do not edit bound sources until checks finish. Current nonFF153017 is not ROM size.
+
+Candidate physical observer now separates true cold boot from active natural
+play at t_main.frame, after RAM expansion. Four routes observe20-21K active ROM
+bytes; those are lower bounds and exclude existing RAM-resident code/data.
+Initial matrix variant never entered that loop and mislabeled its33391-byte
+set as startup. Three actual-Tcl regression tests reproduce/fix phase selection:
+matrix active phase now begins at its directC760 render RPC. Corrected matrix
+probe is running under `issue44-compact-active-live-02/matrix`, log
+`/tmp/frostbite44-compact-active-live02-matrix.log`. Earlier complete physical
+unions remain valid; their matrix phase classification is explicitly superseded.
+Next finish shore sharing, bind cold/hot/complete runtime intervals and perform
+actual flat relocation/linking; no Normal32K/COM/BIN has been delivered.
+
 ## Continuing execution: native bear records packed64
 
 Latest checked internal build `outputs/compact/issue44-bear-records-game-01/build`,
