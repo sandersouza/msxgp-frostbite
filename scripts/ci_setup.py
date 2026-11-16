@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Prepare only the pinned synthetic-build assembler; no host-package installation."""
+"""Prepare only the pinned native-build assembler; no host-package installation."""
 import json
 import sys
-from environment import ROOT, prepare_tool, python_dependencies
+from environment import ROOT, prepare_tool
 
 
 if __name__ == '__main__':
     try:
-        python_dependencies(ROOT)
         spec = json.loads((ROOT / 'references/tools-lock.json').read_text())['tools']['sjasmplus']
         print(prepare_tool(ROOT, 'sjasmplus', spec))
     except Exception as error:

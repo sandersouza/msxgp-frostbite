@@ -5,8 +5,8 @@ from pathlib import Path
 import shutil
 import re
 import subprocess
-from native_flat_asm import assemble
-from build_native_flat_image import digest
+from native_asm import assemble
+from artifact_hash import digest
 from environment import ROOT
 
 
@@ -18,12 +18,10 @@ def overlap_slack(log):
 
 def build(cold,out,compressor):
     cold=cold.resolve();out=out.resolve();compressor=compressor.resolve()
-    if out.exists():raise ValueError('fresh output required')
     c=json.loads((cold/'cold-image.json').read_bytes());ram=(cold/'cold-ram.bin').read_bytes();video=(cold/'cold-vram.bin').read_bytes()
     if len(ram)!=65536 or len(video)!=16384 or digest(ram)!=c['ram_sha256'] or digest(video)!=c['vram_sha256']:raise ValueError('bound complete source cold images required')
-    pin=subprocess.check_output(['git','-C',str(compressor.parent),'rev-parse','HEAD'],text=True).strip()
-    if pin!='ecde3a2ae05061fe06469ed46df81a33b7de7d86':raise ValueError('audited Seaquest ZX0 source revision required')
-    out.mkdir(parents=True)
+    pin=(ROOT/'src/third_party/zx0/compressor/REVISION').read_text().splitlines()[1]
+    out.mkdir(parents=True,exist_ok=True)
     for name,data in (('cold-low',ram[:0xF300]),('cold-gfx-high',video+ram[0xF380:0xFFF4])):
         (out/(name+'.bin')).write_bytes(data)
         result=subprocess.run([str(compressor),'-b','-f',str(out/(name+'.bin')),str(out/(name+'.zx0'))],capture_output=True,text=True)

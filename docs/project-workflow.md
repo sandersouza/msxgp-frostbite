@@ -45,7 +45,7 @@ cadence and complete presented-picture cadence require separate measurements.
 See [development](development.md) for validation entry points and
 [CI boundaries](ci-and-tracking.md) for the public checks.
 
-Original ROMs, full disassemblies, generated assets, licensed OS/BIOS files and
-raw research outputs remain local/ignored. Historical Seaquest results never
+Original ROMs, full Atari disassemblies, licensed OS/BIOS files and raw research
+outputs remain local/ignored. Native build sources and static data are versioned. Historical Seaquest results never
 establish Frostbite correctness. Preserve its verified external snapshot and
 local inputs; see [recovery/provenance](baseline-preservation.md).

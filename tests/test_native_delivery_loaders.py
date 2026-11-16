@@ -7,7 +7,7 @@ import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from build_native_disk import shared_payloads
 from build_native_plain32 import overlap_slack
-from build_native_flat_image import digest
+from artifact_hash import digest
 
 
 class NativeLoaderContracts(unittest.TestCase):

@@ -7,14 +7,15 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-FORBIDDEN = ('.legacy/', '.tools/', '.venv/', 'outputs/', 'references/roms/',
+FORBIDDEN = ('.legacy/', '.tools/', '.venv/', '.local-inputs/', 'outputs/', 'references/roms/',
              'references/dissasm/', 'references/generated/', 'assets/generated/')
 SUFFIXES = {'.rom', '.bin', '.a26', '.car', '.zip', '.gz', '.tar', '.dsk', '.cas'}
 ORIGINAL_SHA256 = 'cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834'
-# Owner-supplied donation banner, introduced in 52ff734. Only these reviewed
-# bytes may bypass the text-only gate; generated game assets remain forbidden.
+# Owner-supplied README images, introduced in 52ff734 and 4898460. Only these
+# exact reviewed bytes bypass the text gate; generated game assets remain local.
 PUBLIC_ASSETS = {
     'docs/bymeacoffee.png': '9ea7ed5815e311967b9c2208b23d37f8143f0780d14c0f12891d89a6d7559ac9',
+    'docs/frostbite.png': '4b72d6bffcaf87bdbc6e9d006eca8f64be4de9e714e708d2b85c0eb15ae05de2',
 }
 
 

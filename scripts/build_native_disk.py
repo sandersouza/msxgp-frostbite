@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import shutil
 import struct
-from native_flat_asm import assemble
-from build_native_flat_image import digest
+from native_asm import assemble
+from artifact_hash import digest
 from environment import ROOT
 
 
@@ -24,10 +24,9 @@ def shared_payloads(cartridge,m):
 
 def build(cartridge,out):
     cartridge=cartridge.resolve();out=out.resolve()
-    if out.exists():raise ValueError('fresh output required')
     m=json.loads((cartridge/'native32.json').read_bytes())
     low,gfx=shared_payloads(cartridge,m)
-    out.mkdir(parents=True)
+    out.mkdir(parents=True,exist_ok=True)
     for name in ('cold-low.zx0','cold-gfx-high.zx0'):shutil.copyfile(cartridge/name,out/name)
     # Same cold graphics/high initializer and the exact decoder/relocator. The
     # BASIC file cannot occupy BIOS work area, so its companion arrives in VRAM.

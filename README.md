@@ -12,7 +12,7 @@ this work and want to see more of it, please consider buying me a coffee.
 Every contribution helps keep these projects moving. Thank you for being part
 of what comes next!
 
-# Frostbite for MSX1
+# Frostbite for MSX
 ![Frostbite](docs/frostbite.png)
 A native MSX1 port of Activision's Atari 2600 Frostbite, with Activision /
 Retroworks credits and the supplied original ROM as the gameplay authority.
@@ -46,14 +46,24 @@ hardware certification are not claimed. See the
 - [Build, validation and source layout](docs/development.md)
 - [Host tools and setup](docs/toolchain.md)
 - [Native cartridge and disk loaders](docs/native-formats.md)
-- [Original gameplay contracts](docs/gameplay-contracts.md)
+- [Original gameplay contracts](https://github.com/sandersouza/msxgp-frostbite/blob/v1.0.0/docs/gameplay-contracts.md)
 - [Delivery workflow](docs/project-workflow.md)
 
-`make build`, `make run` and `make smoke` exercise the original-free hardware
-diagnostic. They do **not** build or certify the released game. Native game
-builds require the local, hash-qualified inputs described in the development
-guide. Original ROMs, full disassemblies and derived generated assets remain
-local and excluded from public CI.
+The project is in **maintenance freeze**, limited to small adjustments.
+Build from a fresh checkout with Python >=3.11, Git, Make and a C/C++ compiler:
+
+```sh
+make build
+make verify
+make run     # requires openMSX
+make clean   # removes outputs/; the next build recreates it
+```
+
+The first build provisions the pinned assembler; native code, graphics data,
+loaders and ZX0 compressor source are all versioned. No original ROM, private
+inputs, previous outputs or sibling repository is required. `make verify`
+compares all five generated game files with the reviewed 1.0.0 baseline.
+`make ci-verify` runs the essential unit checks; CI also builds the real game.
 
 Pre-1.0 plans, handoffs and superseded experiments are available in Git history
 and the [v1.0.0 source tree](https://github.com/sandersouza/msxgp-frostbite/tree/v1.0.0).
@@ -69,6 +79,7 @@ help sustain Frostbite for MSX1 and future ports, with the code freely available
 ## License
 
 [GPLv3](LICENSE). Original Atari/Activision material retains its ownership and
-is not included in the public source. ZX0 notices are retained under
+is credited to its owners. The Atari ROM and its full disassembly are not
+distributed; native build source/data is versioned. ZX0 notices are retained under
 `src/third_party/zx0/`; inherited infrastructure provenance and local recovery
 information are recorded in [baseline preservation](docs/baseline-preservation.md).

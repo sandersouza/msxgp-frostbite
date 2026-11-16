@@ -1,0 +1,14 @@
+{
+  "format": "native Z80 source consolidation",
+  "version": "1.0.0",
+  "historical_source_commit": "52ff734c3f658e735854e548dbdbc1cc5a71b2fc",
+  "source_built_parent_sha256": "e38fe5ce0917c5dfde1f8c6c6465438cfebae8c4812841fedd82588376b4f239",
+  "accepted_graphics_control_sha256": "e75535923a5751e3f4924dc7a3a2f762041b825efb7a5336650d35890cd3ff1d",
+  "cold_ram_sha256": "111eaee3aa6d2a99ddd13359b94f1860942eaf9be879acfbe5f3b7758e7ed554",
+  "cold_vram_sha256": "f4a75898464491a372b3c9cd43d0e28254011385814b7ae6ce574ec4531d75dc",
+  "native_instructions": 12978,
+  "method": "Recompiled historical native sources and integrations; consolidated native instruction boundaries from regenerated assembly listings, resolved operands and explicit static data into the accepted fixed layout.",
+  "compilation_inputs": "Only versioned native source/data and the toolchain; no Atari ROM, private upstream cartridge, captured emulator state, downloaded game release or precompiled executable payload.",
+  "intermediate_qualification": "Historical whole-game route gates were omitted during authoring replay, without inventing receipts. Reconstructed upstream and all five final outputs matched their reviewed hashes. This is byte-identity evidence, not new play, audio or physical acceptance.",
+  "baseline": "compact-delivery/issue-14-selective-gain.json"
+}
