@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Prepare pinned macOS source tools without replacing supplied caches/venvs."""
-import argparse
 import hashlib
 import json
 import os
@@ -28,11 +27,6 @@ def output(command, cwd=ROOT):
     return run(command, cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True).stdout.strip()
 
 
-def validate_host(system, machine):
-    if system != 'Darwin' or machine not in ('arm64', 'x86_64'):
-        raise ValueError('supported setup hosts: macOS arm64/x86_64; Intel is prepared but untested')
-    if sys.version_info < (3, 11):
-        raise ValueError('Python >=3.11 required; install Homebrew python and rerun')
 
 
 def validate_binary_architecture(description, machine):
@@ -80,11 +74,6 @@ def verified_tool(name, root=ROOT):
     return binary
 
 
-def describe_plan(root=ROOT):
-    return (f'Would verify macOS/CLT/Homebrew/Python prerequisites; install missing openMSX/Stella; '
-            f'preserve or create {root / ".venv"}; add only missing pinned Python dependencies; '
-            f'build pinned sjasmplus/DiStella/DASM under {root / ".tools/frostbite"}; '
-            'preserve existing .tools and fail on dirty/mismatched managed inputs. No changes applied.')
 
 
 def version_output(binary,args):
@@ -122,76 +111,3 @@ def prepare_tool(root, name, spec):
         'binary_sha256': digest(binary), 'architecture': platform.machine(), 'file': architecture,
         'version_banner': banner.strip(), 'build': spec['build']}, indent=2) + '\n')
     return verified_tool(name, root)
-
-
-def python_dependencies(root, install=False):
-    python = root / '.venv/bin/python'
-    if not python.exists():
-        if not install:
-            raise ValueError('missing .venv; run bash scripts/setup.sh')
-        if (root / '.venv').exists():
-            raise ValueError('existing .venv has no usable Python; preserved, repair explicitly')
-        run([sys.executable, '-m', 'venv', root / '.venv'])
-    output([python, '-c', 'import sys; assert sys.version_info >= (3,11), "Python>=3.11 required"'])
-    query = 'import importlib.metadata as m; print(m.version("py65") if list(m.distributions(name="py65")) else "missing")'
-    observed = output([python, '-c', query])
-    if observed == 'missing' and install:
-        run([python, '-m', 'pip', 'install', '--disable-pip-version-check', '-r', root / 'requirements-reference.txt'])
-        observed = output([python, '-c', query])
-    if observed != '1.2.0':
-        raise ValueError(f'existing .venv py65={observed}; requires1.2.0, preserved without upgrade/downgrade')
-    output([python, '-m', 'pip', 'check'])
-    return python
-
-
-def check(root=ROOT):
-    problems = []
-    for executable in ('git', 'cc', 'make', 'brew', 'file', 'openmsx', 'stella'):
-        if not shutil.which(executable):
-            problems.append(f'missing {executable}; install Xcode command-line tools/Homebrew or run setup for emulators')
-    try:
-        python_dependencies(root)
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
-        problems.append(str(error))
-    for name in json.loads((root / 'references/tools-lock.json').read_text())['tools']:
-        try:
-            verified_tool(name, root)
-        except (OSError, ValueError, subprocess.SubprocessError) as error:
-            problems.append(f'{name}: {error}; run setup or inspect preserved managed directory')
-    return problems
-
-
-def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument('--check', action='store_true')
-    group.add_argument('--dry-run', action='store_true')
-    args = parser.parse_args(argv)
-    try:
-        validate_host(platform.system(), platform.machine())
-        if args.dry_run:
-            print(describe_plan())
-            return 0
-        if not args.check:
-            for executable in ('git', 'cc', 'make', 'brew', 'file'):
-                if not shutil.which(executable):
-                    raise ValueError(f'missing {executable}; install Xcode CLT/Homebrew first')
-            for name in ('openmsx', 'stella'):
-                if not shutil.which(name):
-                    run(['brew', 'install', name])
-            python_dependencies(ROOT, install=True)
-            for name, spec in json.loads(LOCK_PATH.read_text())['tools'].items():
-                prepare_tool(ROOT, name, spec)
-        problems = check()
-        if problems:
-            raise ValueError('\n'.join(problems))
-        print('Verified pinned Frostbite assemblers, preserved Python environment and host emulator availability.')
-        print('Intel x86_64 and physical MSX remain untested; run build/smoke separately.')
-        return 0
-    except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
-        print(f'Environment preparation failed: {error}', file=sys.stderr)
-        return 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())

@@ -7,9 +7,20 @@ from pathlib import Path
 import shutil
 import subprocess
 import xml.etree.ElementTree as ET
-from build_native_flat_image import digest
-from smoke import validate_machine_profile
-from render_build import symbols
+from artifact_hash import digest
+from native_asm import symbols
+
+
+def validate_machine_profile(data):
+    root=ET.fromstring(data)
+    ram=sum(int(node.attrib['size'],0) for node in root.findall('.//RAM/mem'))
+    if ram!=65536 or root.findall('.//MemoryMapper'):
+        raise ValueError('requires unexpanded 64 KiB RAM')
+    vdp=root.find('.//VDP')
+    if vdp is None or not vdp.findtext('version','').startswith(('TMS9918','TMS9928','TMS9929')):
+        raise ValueError('requires TMS9918-family VDP')
+    if vdp.findtext('vram')!='16':
+        raise ValueError('requires configured 16 KiB VRAM')
 
 
 def check(disk,cold,out,mode,family,*,dos1_disk,machine_profile=None,firmware_dir=None,emulator=None):

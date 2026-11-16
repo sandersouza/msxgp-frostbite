@@ -33,7 +33,7 @@ class SourcePolicyTests(unittest.TestCase):
             return api.check_index(root)
 
     def test_original_and_generated_locations_are_rejected(self):
-        for name in ('references/roms/game.txt', 'references/dissasm/game.asm',
+        for name in ('.local-inputs/game.txt', 'references/roms/game.txt', 'references/dissasm/game.asm',
                      'assets/generated/tiles.asm', '.legacy/seaquest/source.py', 'outputs/report.json'):
             with self.subTest(name=name):
                 self.assertTrue(self.check(name, b'text\n'))
@@ -63,11 +63,19 @@ class SourcePolicyTests(unittest.TestCase):
         self.assertEqual(self.check('src/diagnostic.asm', b'org $4000\ndb "AB"\n'), [])
         self.assertEqual(self.check('references/manifest.json', b'{"sha256":"abc"}\n'), [])
 
+    def test_reviewed_images_are_bound_to_their_exact_paths_and_bytes(self):
+        for name in self.api().PUBLIC_ASSETS:
+            data = (Path(__file__).resolve().parents[1] / name).read_bytes()
+            self.assertEqual(self.check(name, data), [])
+            self.assertTrue(self.check(name, b'changed\x00image'))
+            self.assertTrue(self.check('assets/generated/banner.png', data))
+            self.assertTrue(self.check('docs/other.png', data))
+
 
 class VersionIdentityTests(unittest.TestCase):
     def api(self):
-        self.assertIsNotNone(importlib.util.find_spec('ci_verify'), 'CI identity gate missing')
-        return importlib.import_module('ci_verify')
+        self.assertIsNotNone(importlib.util.find_spec('release_check'), 'CI identity gate missing')
+        return importlib.import_module('release_check')
 
     def test_changed_bytes_need_new_baseline_version(self):
         baseline = {'version': '0.0.1', 'rom': {'size': 3, 'sha256':

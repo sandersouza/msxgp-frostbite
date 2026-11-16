@@ -1,71 +1,54 @@
-"""Reproducibly build the shared flat game and all three genuine native formats.
-
-Private, hash-qualified game/authority inputs are required. No emulator snapshot,
-operating-system disk or BIOS is a product build input. Qualification is separate.
-"""
+"""Compile the complete native game from repository Z80 source and static data."""
 import argparse
 import json
 from pathlib import Path
-import shutil
 import subprocess
 
+from artifact_hash import digest
 from environment import ROOT
-from build_native_flat_image import build as link, digest
-from native_flat_catalog import catalog
-from native_cold_image import build as cold
+from native_asm import assemble
 from build_native_plain32 import build as cartridge
 from build_native_disk import build as disk
-from native_p0_fast_probe import check as p0_check
-from native_bear_grid_sparse_probe import check as bear_check
-from native_grid_palette_fast_probe import check as grid_check
+from release_check import PAYLOADS
 
 
-def sources():
-    # Archive the complete maintained producer/checker tree. Original/generated
-    # assets are private inputs, not source files to copy into this archive.
-    names=set()
-    for folder in ('scripts','src'):
-        for p in (ROOT/folder).rglob('*'):
-            if p.is_file() and (p.suffix in ('.py','.asm','.inc','.tcl') or p.name=='LICENSE'):
-                names.add(str(p.relative_to(ROOT)))
-    names.discard('scripts/build_compact_grid_experiment.py') # unrelated preserved local experiment
-    names.update(str(p.relative_to(ROOT)) for p in (ROOT/'references').glob('*.json'))
-    return {n:digest((ROOT/n).read_bytes()) for n in sorted(names)}
-
-
-def build(base,control,out,compressor,effect_gain=False):
-    base,control,out=base.resolve(),control.resolve(),out.resolve()
-    if out.exists():raise ValueError('fresh delivery output required')
-    before=sources();out.mkdir(parents=True)
-    p0_check(base,out/'proof-P0')
-    bear_check(base,out/'proof-bear','sparse')
-    grid_check(control,out/'proof-grid',True)
-    catalog(base,out/'layout',native_lifetimes=True,fast_P0=True,fast_bands=True)
-    link(base,out/'layout',out/'linked',out/'proof-P0/component-result.json',
-         dict(bear=out/'proof-bear',grid=out/'proof-grid'),True,effect_gain=effect_gain)
-    cold(base,out/'linked',out/'cold')
-    cartridge(out/'cold',out/'cartridge',compressor)
-    disk(out/'cartridge',out/'disk')
-    if sources()!=before:raise ValueError('producer/checker source changed during native build')
-    for name,sha in before.items():
-        target=out/'source'/name;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(ROOT/name,target)
-        if digest(target.read_bytes())!=sha:raise ValueError('source archive differs')
-    commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
-    files={str(p.relative_to(out)):dict(size=p.stat().st_size,sha256=digest(p.read_bytes()))
-           for p in (out/'cartridge/FROSTBIT.ROM',*(out/'disk'/n for n in ('FROSTBIT.COM','FROSTBIT.BIN','FBGFX.BIN','FROSTBIT.BAS')))}
-    result=dict(complete=False,native_formats_built=True,qualification_required=True,
-                source_commit=commit,source_files=before,source_archive='source',files=files,
-                build_input=str(base.relative_to(ROOT)),accepted_control=str(control.relative_to(ROOT)),
-                no_mapper=True,RAM_KiB=64,VRAM_KiB=16,emulator_state_used_as_input=False,
-                remaining=['fresh all-format qualification','accepted whole-frame cadence','independent review/release/integration'])
-    (out/'native-delivery-build.json').write_text(json.dumps(result,indent=2)+'\n')
-    print(dict(native_formats_built=True,source_commit=commit,files=files))
+def build(out, compressor):
+    out = Path(out).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    receipt = out/'native-delivery-build.json'
+    receipt.unlink(missing_ok=True)
+    source_files = [ROOT/'Makefile', *sorted((ROOT/'scripts').glob('*.py')),
+                    *sorted(p for p in (ROOT/'src').rglob('*') if p.is_file())]
+    before = {str(p.relative_to(ROOT)): digest(p.read_bytes()) for p in source_files}
+    print('Assembling native game and SCREEN 2 data...', flush=True)
+    ram, native_symbols = assemble(out/'cold', 'cold-ram', ' INCLUDE "game/game.asm"\n')
+    video, _ = assemble(out/'cold', 'cold-vram', ' INCLUDE "game/video.asm"\n')
+    if len(ram) != 65536 or len(video) != 16384:
+        raise ValueError('complete 64 KiB RAM and 16 KiB VRAM source layouts required')
+    (out/'cold/cold-image.json').write_text(json.dumps(dict(
+        ram_sha256=digest(ram), vram_sha256=digest(video),
+        native_symbols={name[3:]: value for name, value in native_symbols.items()
+                        if name.startswith('fb_nc_')},
+        emulator_state_used_as_input=False), indent=2)+'\n')
+    print('Compressing payloads and assembling native loaders...', flush=True)
+    cartridge(out/'cold', out/'cartridge', Path(compressor))
+    disk(out/'cartridge', out/'disk')
+    if any(digest((ROOT/name).read_bytes()) != sha for name, sha in before.items()):
+        raise ValueError('source changed during compilation')
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    files = {name: dict(size=(out/name).stat().st_size,
+                        sha256=digest((out/name).read_bytes())) for name in PAYLOADS}
+    result = dict(native_formats_built=True, source_commit=commit,
+                  source_files=before, files=files, no_mapper=True,
+                  RAM_KiB=64, VRAM_KiB=16, emulator_state_used_as_input=False)
+    receipt.write_text(json.dumps(result, indent=2)+'\n')
+    print('Built cartridge/FROSTBIT.ROM and four disk files.', flush=True)
     return result
 
 
-if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__)
-    for n in ('base','control','out','compressor'):p.add_argument('--'+n,type=Path,required=True)
-    p.add_argument('--effect-gain',action='store_true')
-    a=p.parse_args();build(a.base,a.control,a.out,a.compressor,a.effect_gain)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--out', type=Path, default=ROOT/'outputs/native')
+    parser.add_argument('--compressor', type=Path, default=ROOT/'.tools/zx0')
+    args = parser.parse_args()
+    build(args.out, args.compressor)

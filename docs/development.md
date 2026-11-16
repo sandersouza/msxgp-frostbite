@@ -1,78 +1,59 @@
-# Frostbite development status
+# Frostbite maintenance freeze
 
-## Current supported target
+The supported product is [1.0.0](release-1.0.0.md). Maintenance is limited to
+small adjustments. Preserve its mechanics, hardware requirements and published
+baseline.
 
-Standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG.
-No extra accessories. The owner approved the
-[design](superpowers/specs/2026-10-31-frostbite-design.md) on 2026-10-31.
+## Build from a fresh checkout
 
-## What is available now
+Install Python >=3.11, Git, Make, a C/C++ compiler and `file`, then run:
 
-The published issue13 diagnostic and its accepted capture matrix are documented in
-[scoring-progression.md](scoring-progression.md); use the
-[dedicated reproduction checklist](progression-checklist.md) for source/native
-checks. It has all-four-mode progression/terminal/restart evidence on the
-standard MSX1 target. Complete raw sealing and independent review/fix checks pass;
-integration, clean-main rebuild and four published release downloads pass. The
-[compact validation](../references/progression-result.json) binds the exact ROM;
-definitive HUD/art/audio and whole-game/manual/physical acceptance remain separate.
-The older reference/toolchain milestones below retain their own evidence scope.
+```sh
+make build
+make verify
+make run
+```
 
-- A verified local Atari reference identity and measured NTSC steady cadence:
-  262 scanlines / 19,912 CPU cycles per frame. See the
-  [inventory/timing evidence](reference-inventory.md) for startup observations,
-  revision/provenance limits and pending full-state replay repeatability.
-- A verified [disassembly reconstruction and state map](reference-disassembly.md):
-  byte-identical rebuild, reviewed routine/RAM/hardware boundaries and explicit
-  open contracts for issues #4/#7.
-- [Gameplay contracts and boundary routes](gameplay-contracts.md), supported by
-  101 bounded CPU-slice probes. These do not establish TIA geometry, aligned
-  full-game replay or native gameplay acceptance.
-- The [issue roadmap](superpowers/specs/2026-10-31-frostbite-backlog.md),
-  [workflow](project-workflow.md) and verified
-  [baseline preservation](baseline-preservation.md).
-- Locally preserved tools/environment from the supplied copy; their presence
-  does not establish a fresh Frostbite installation.
-- A [macOS toolchain and MSX1 diagnostic scaffold](toolchain.md), exercised from
-  a fresh source clone on arm64. The 16 KiB plain-ROM diagnostic checks video,
-  interrupts, controls and PSG; native Frostbite gameplay remains pending.
+The first build fetches and compiles the pinned sjasmplus toolchain. ZX0 is
+compiled from its versioned C source. No Python packages, Atari ROM, emulator,
+private inputs, previous outputs or sibling repositories are required to build.
+Internet is needed only to provision sjasmplus; later builds use its local cache.
+`make run` additionally requires openMSX with C-BIOS MSX1 data.
 
-Reference utilities now run with Python's standard library:
-`python3 -B scripts/reference_inventory.py` and
-`python3 -B scripts/source_timing.py` (the latter requires Stella 7.0/Debugger).
-`python3 -B scripts/reference_rebuild.py` reconstructs the original with local
-DiStella/DASM and compares all bytes; generated source/binaries remain ignored.
-`python3 -B -m unittest discover -s tests -v` runs original-free utility tests.
-The optional CPU-slice backend is pinned in requirements-reference.txt;
-`.venv/bin/python -B scripts/mechanics_probe.py` runs the canonical source cases.
-Use `.venv/bin/python -B -m unittest discover -s tests -v` for the full suite
-with py65 present; standard Python explicitly skips CPU-specific unit cases
-when that optional backend is unavailable.
+`outputs/native/cartridge/FROSTBIT.ROM` is the complete Normal 32 KiB cartridge.
+`outputs/native/disk/` contains COM, BIN, graphics companion and BASIC launcher.
+`make verify` checks all five files against the reviewed 1.0.0 hashes.
+`make clean` is simply `rm -rf outputs`. A subsequent build recreates everything
+under that directory. Tool binaries remain in `.tools/`.
 
-`make environment`, `make environment-check`, `make environment-dry-run`,
-`make test`, `make build`, `make smoke`, `make run` and `make package` are the
-current development entry points. See the command-by-command checklist in
-[toolchain.md](toolchain.md). The copied Seaquest tree remains quarantined;
-its historical results are not current acceptance.
+## Maintained sources
 
-## Upcoming developer entry points
+- `src/game/game.asm`: complete native Z80 instructions, tables and cold RAM defaults.
+- `src/game/symbols.inc`: fixed native symbol addresses.
+- `src/game/video.asm`: explicit initial SCREEN 2 graphics and attributes.
+- `src/native_*.asm`: native cartridge, DOS and BASIC loaders.
+- `src/third_party/zx0/`: decoder and compressor source with their licenses.
+- `scripts/`: source assembly, packaging, tool provisioning and focused checks.
 
-[Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) supplies the
-toolchain/diagnostic. macOS Intel, physical MSX and human listening results
-remain pending; automatic checks here use an isolated NTSC C-BIOS MSX1 profile.
+The native sources consolidate the historical source-built integrations into
+the exact accepted address layout. They assemble into cold RAM/VRAM products;
+there is no precompiled game payload or captured emulator state in the build.
+The fixed symbol addresses and layout assertions deliberately preserve the
+freeze ABI. Changes that alter instruction sizes require updating that layout.
+See [source provenance](../references/native-source.json).
 
-[Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) delivered
-original-free CI and scoped tracking helpers; see [ci-and-tracking.md](ci-and-tracking.md).
-Original-dependent native/pixel acquisition remains a local acceptance step.
+## Checks
 
-## Human tests and releases
+```sh
+make ci-verify
+make verify
+```
 
-Each new testable ROM comes through a versioned GitHub release with the exact
-ROM attached, hash/source commit, current state, next work and a specific human
-test checklist. Development builds are prereleases. Load/mapper/controls and
-expected results will be given in each release.
+The three unit test files contain 16 checks covering loaders, release identity
+and public-source policy. CI also compiles the actual game and compares all five
+artifacts. Byte identity is separate from emulator play, listening and physical
+hardware evidence. Use the [release play checklist](release-1.0.0.md) for changes.
+Changed game bytes require a new version and appropriate release validation.
 
-The first diagnostic is [v0.0.1-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic),
-with concrete human checks in its release notes. It has no Frostbite gameplay.
-Automated checks, rendered preview, human listening and physical hardware
-acceptance remain separate.
+Pre-1.0 research tools and handoffs remain available in the immutable `v1.0.0`
+source tree and commit `52ff734c3f658e735854e548dbdbc1cc5a71b2fc`.

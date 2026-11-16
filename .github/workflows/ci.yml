@@ -7,10 +7,10 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: synthetic-${{ github.workflow }}-${{ github.ref }}
+  group: maintenance-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  synthetic:
+  maintenance:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -19,28 +19,29 @@ jobs:
           persist-credentials: false
       - name: Validate public staged sources
         run: python3 -B scripts/source_policy.py
-      - name: Prepare isolated Python and pinned assembler
+      - name: Prepare isolated Python
         run: |
           python3 -m venv .venv
-          .venv/bin/python -m pip install --require-hashes --only-binary=:all: -r requirements-ci.txt
-          .venv/bin/python -B scripts/ci_setup.py
-      - name: Run complete original-free tests
+      - name: Run essential maintenance checks
         run: |
           mkdir -p outputs/ci
-          .venv/bin/python -B -m unittest discover -s tests -v > outputs/ci/tests.log 2>&1 || { cat outputs/ci/tests.log; exit 1; }
+          make ci-verify > outputs/ci/tests.log 2>&1 || { cat outputs/ci/tests.log; exit 1; }
           tail -5 outputs/ci/tests.log
-      - name: Repeat diagnostic build and verify published byte identity
-        run: .venv/bin/python -B scripts/ci_verify.py
-      - name: Build original-free SCREEN2 renderer diagnostic
-        run: make render-build
-      - name: Preserve synthetic reports only
+      - name: Build and compare all native formats
+        run: |
+          make verify > outputs/ci/build.log 2>&1 || { tail -80 outputs/ci/build.log; exit 1; }
+          tail -40 outputs/ci/build.log
+      - name: Preserve native artifacts and logs
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: synthetic-reports-${{ github.run_id }}-${{ github.run_attempt }}
+          name: maintenance-tests-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            outputs/ci/tests.log
-            outputs/diagnostic/build.json
-            outputs/diagnostic/SHA256SUMS
+            outputs/ci/*.log
+            outputs/native/cartridge/FROSTBIT.ROM
+            outputs/native/disk/FROSTBIT.COM
+            outputs/native/disk/FROSTBIT.BIN
+            outputs/native/disk/FBGFX.BIN
+            outputs/native/disk/FROSTBIT.BAS
           if-no-files-found: warn
           retention-days: 14

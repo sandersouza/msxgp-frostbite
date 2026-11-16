@@ -8,7 +8,9 @@
 - The supplied Atari 2600 Frostbite ROM is the gameplay authority. Preserve its
   mechanics exactly; document presentation adaptations separately.
 - The owner approved the design and autonomous execution on 2026-10-31.
-  Read the approved design, relevant local issue copy and handoff before work.
+  Read docs/release-1.0.0.md and docs/development.md before work, plus the
+  relevant issue and any current handoff. The original approved design and
+  pre-1.0 handoffs are recoverable from the immutable v1.0.0 source tree.
 
 ## One GitHub issue per forked chat
 

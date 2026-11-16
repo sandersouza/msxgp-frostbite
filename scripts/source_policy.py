@@ -7,10 +7,16 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-FORBIDDEN = ('.legacy/', '.tools/', '.venv/', 'outputs/', 'references/roms/',
+FORBIDDEN = ('.legacy/', '.tools/', '.venv/', '.local-inputs/', 'outputs/', 'references/roms/',
              'references/dissasm/', 'references/generated/', 'assets/generated/')
 SUFFIXES = {'.rom', '.bin', '.a26', '.car', '.zip', '.gz', '.tar', '.dsk', '.cas'}
 ORIGINAL_SHA256 = 'cbfdad89480def69d922adf16a1d89d55a6cb515929edf74e5bea884c9fb7834'
+# Owner-supplied README images, introduced in 52ff734 and 4898460. Only these
+# exact reviewed bytes bypass the text gate; generated game assets remain local.
+PUBLIC_ASSETS = {
+    'docs/bymeacoffee.png': '9ea7ed5815e311967b9c2208b23d37f8143f0780d14c0f12891d89a6d7559ac9',
+    'docs/frostbite.png': '4b72d6bffcaf87bdbc6e9d006eca8f64be4de9e714e708d2b85c0eb15ae05de2',
+}
 
 
 def git(root, *args):
@@ -37,6 +43,10 @@ def check_index(root=ROOT):
             problems.append(f'{name}: oversized source blob requires provenance review')
             continue
         data = git(root, 'cat-file', 'blob', blob)
+        if name in PUBLIC_ASSETS:
+            if hashlib.sha256(data).hexdigest() != PUBLIC_ASSETS[name]:
+                problems.append(f'{name}: public asset bytes changed; provenance review required')
+            continue
         if hashlib.sha256(data).hexdigest() == ORIGINAL_SHA256 or b'\0' in data:
             problems.append(f'{name}: original ROM or binary content')
             continue

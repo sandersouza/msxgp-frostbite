@@ -1,65 +1,35 @@
 .DEFAULT_GOAL := build
-PYTHON ?= .venv/bin/python
-.PHONY: native-delivery
-native-delivery:
-	@test -n "$(NATIVE_BASE)" -a -n "$(NATIVE_CONTROL)" -a -n "$(NATIVE_OUT)" -a -n "$(ZX0)" || (echo "Set NATIVE_BASE, NATIVE_CONTROL, NATIVE_OUT and ZX0; see docs/native-formats.md"; exit 1)
-	@$(PYTHON) -B scripts/build_native_delivery.py --base "$(NATIVE_BASE)" --control "$(NATIVE_CONTROL)" --out "$(NATIVE_OUT)" --compressor "$(ZX0)"
-.PHONY: native-check native-phase-check native-input-check movement-build movement-check movement-run
-native-check:
-	@$(PYTHON) -B scripts/native_contract.py
-native-phase-check:
-	@$(PYTHON) -B scripts/native_contract.py --fast-phase
-native-input-check:
-	@$(PYTHON) -B scripts/native_input_check.py
-	@$(PYTHON) -B scripts/native_input_check.py --fast-phase
-movement-build:
-	@$(PYTHON) -B scripts/movement_build.py
-movement-check: movement-build
-	@$(PYTHON) -B scripts/movement_bench.py --suite
-movement-run: movement-build
-	@openmsx -machine C-BIOS_MSX1 -cart outputs/movement/frostbite-0.0.3-movement.rom -romtype ASCII16
-.PHONY: environment environment-check environment-dry-run build run smoke package test source-check ci-verify reference-check reference-rebuild mechanics-check reference-traces reference-cpu reference-ale reference-refuge reference-console reference-report render-build render-bench graphics-check
-graphics-check:
-	@$(PYTHON) -B scripts/graphics_reference.py
-source-check:
-	@$(PYTHON) -B scripts/source_policy.py
-ci-verify:
-	@$(PYTHON) -B scripts/ci_verify.py
-environment:
-	@bash scripts/setup.sh
-environment-check:
-	@bash scripts/setup.sh --check
-environment-dry-run:
-	@bash scripts/setup.sh --dry-run
-build:
-	@$(PYTHON) -B scripts/rom.py build
-run: build
-	@$(PYTHON) -B scripts/rom.py run
-smoke: build
-	@$(PYTHON) -B scripts/smoke.py
-package:
-	@$(PYTHON) -B scripts/package_diagnostic.py
+PYTHON ?= python3
+CC ?= cc
+NATIVE_OUT ?= outputs/native
+ZX0 ?= .tools/zx0
+
+NATIVE_SOURCES := $(shell find src -type f) $(wildcard scripts/*.py) Makefile
+ZX0_SOURCE := src/third_party/zx0/compressor
+ASSEMBLER := .tools/frostbite/sjasmplus-d379eeac9ad3857fb48fd3a3929175d0a56038ce/sjasmplus
+
+.PHONY: build native-delivery verify run clean test ci-verify source-check environment environment-check
+clean:
+	rm -rf outputs
 test:
 	@$(PYTHON) -B -m unittest discover -s tests -v
-reference-check:
-	@$(PYTHON) -B scripts/reference_inventory.py
-reference-rebuild:
-	@$(PYTHON) -B scripts/reference_rebuild.py
-mechanics-check:
-	@$(PYTHON) -B scripts/mechanics_probe.py
-reference-traces:
-	@$(PYTHON) -B scripts/reference_traces.py
-reference-cpu:
-	@$(PYTHON) -B scripts/reference_cpu_check.py
-reference-ale:
-	@$(PYTHON) -B scripts/reference_ale_check.py
-reference-refuge:
-	@$(PYTHON) -B scripts/reference_routes.py
-reference-console:
-	@$(PYTHON) -B scripts/reference_routes.py --route console
-reference-report:
-	@$(PYTHON) -B scripts/reference_report.py
-render-build:
-	@$(PYTHON) -B scripts/render_build.py
-render-bench: render-build
-	@$(PYTHON) -B scripts/render_bench.py --suite
+ci-verify: test
+	@$(PYTHON) -B -c 'import ast,pathlib; [ast.parse(p.read_text(),filename=str(p)) for p in pathlib.Path("scripts").glob("*.py")]; print("Maintained Python sources parsed successfully.")'
+source-check:
+	@$(PYTHON) -B scripts/source_policy.py
+environment: $(ASSEMBLER) $(ZX0)
+environment-check:
+	@$(PYTHON) -B -c 'import sys; sys.path.insert(0,"scripts"); from environment import verified_tool; print(verified_tool("sjasmplus"))'
+$(ASSEMBLER): references/tools-lock.json scripts/environment.py scripts/ci_setup.py
+	@$(PYTHON) -B scripts/ci_setup.py
+	@touch "$@"
+$(ZX0): $(wildcard $(ZX0_SOURCE)/*.c) $(ZX0_SOURCE)/zx0.h
+	@mkdir -p "$(@D)"
+	$(CC) -O2 -o "$@" $(addprefix $(ZX0_SOURCE)/,zx0.c optimize.c compress.c memory.c)
+build native-delivery: $(NATIVE_OUT)/native-delivery-build.json
+$(NATIVE_OUT)/native-delivery-build.json: $(NATIVE_SOURCES) $(ASSEMBLER) $(ZX0)
+	@$(PYTHON) -B scripts/build_native_delivery.py --out "$(NATIVE_OUT)" --compressor "$(ZX0)"
+verify: build
+	@$(PYTHON) -B scripts/release_check.py --delivery "$(NATIVE_OUT)"
+run: build
+	@openmsx -machine C-BIOS_MSX1 -cart "$(NATIVE_OUT)/cartridge/FROSTBIT.ROM" -romtype Normal

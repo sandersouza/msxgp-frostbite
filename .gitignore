@@ -9,6 +9,7 @@
 
 # Build/research outputs, host tools and environments
 /outputs/
+/.local-inputs/
 /.tools/
 /.venv/
 /.superpowers/
