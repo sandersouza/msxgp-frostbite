@@ -22,7 +22,8 @@ Internet is needed only to provision sjasmplus; later builds use its local cache
 
 `outputs/native/cartridge/FROSTBIT.ROM` is the complete Normal 32 KiB cartridge.
 `outputs/native/disk/` contains COM, BIN, graphics companion and BASIC launcher.
-`make verify` checks all five files against the reviewed 1.0.0 hashes.
+`make verify` checks all five files against the current 1.0.1-rc.1 hashes.
+The published 1.0.0 baseline remains immutable in its separate receipt.
 `make clean` is simply `rm -rf outputs`. A subsequent build recreates everything
 under that directory. Tool binaries remain in `.tools/`.
 
@@ -31,6 +32,7 @@ under that directory. Tool binaries remain in `.tools/`.
 - `src/game/game.asm`: complete native Z80 instructions, tables and cold RAM defaults.
 - `src/game/symbols.inc`: fixed native symbol addresses.
 - `src/game/video.asm`: explicit initial SCREEN 2 graphics and attributes.
+- `src/game/start_hints.asm`: pre-game text and its fixed source overlays.
 - `src/native_*.asm`: native cartridge, DOS and BASIC loaders.
 - `src/third_party/zx0/`: decoder and compressor source with their licenses.
 - `scripts/`: source assembly, packaging, tool provisioning and focused checks.
@@ -54,6 +56,25 @@ and public-source policy. CI also compiles the actual game and compares all five
 artifacts. Byte identity is separate from emulator play, listening and physical
 hardware evidence. Use the [release play checklist](release-1.0.0.md) for changes.
 Changed game bytes require a new version and appropriate release validation.
+
+The [1.0.1-rc.1 candidate](release-1.0.1-rc.1.md) adds aligned F1/F2 hints.
+They reuse igloo tiles only before gameplay, invalidate the corresponding keys
+and restore each offscreen NAME page on start. The native-only loader bypasses
+the legacy bootstrap extents used by this module. The old unreachable SCREEN 2
+initializer is cleared to keep the complete cartridge within 32 KiB.
+
+For the focused keyboard/display regression check, preserve a built 1.0.0
+delivery outside `outputs/` before cleaning, then run:
+
+```sh
+python3 scripts/start_hints_check.py --baseline /path/to/1.0.0-delivery \
+  --delivery outputs/native --out outputs/hints-check
+```
+
+This requires openMSX and its C-BIOS MSX1/European profiles. It exercises actual
+keyboard input, all four variations, start, movement/jump, return to selection
+and restart in NTSC/PAL. It compares published pictures at matching coherent
+source states. It is a bounded route, not a new full-density or hardware claim.
 
 Pre-1.0 research tools and handoffs remain available in the immutable `v1.0.0`
 source tree and commit `52ff734c3f658e735854e548dbdbc1cc5a71b2fc`.

@@ -3205,7 +3205,7 @@
 ; $4A0B..$4A10: native tables, workspace or alignment
     DB $00,$00,$00,$00,$00,$00
     ASSERT $ = $04A11
-    call fb_p_fast_upload_dirty
+    call fb_start_hints_prepare ; original upload plus pre-game instructions
     ret
     ASSERT $ = $04A15
 ; $4A15..$4A17: native tables, workspace or alignment

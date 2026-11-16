@@ -1,4 +1,5 @@
 ; Native MSX symbol addresses. Frozen 1.0.0 layout.
+fb_start_hints_prepare EQU $7C51
 fb_DELTA EQU $C214
 fb_INPUT EQU $C2C0
 fb_NAMES EQU $C800
