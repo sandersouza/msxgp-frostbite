@@ -17,7 +17,7 @@ from environment import ROOT
 from presentation_fixed_clock import ram_code
 import presentation_fixed_clock_probe as legacy
 from presentation_ready_clock import clocks
-from render_build import symbols
+from native_support import symbols
 
 
 def sha(path):

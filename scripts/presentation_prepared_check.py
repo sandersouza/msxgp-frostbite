@@ -9,7 +9,7 @@ import sys
 import presentation_matrix_check as matrix
 from presentation_fixed_ownership import audit_row
 from presentation_prepared_ownership import decorate_owners
-from render_build import symbols
+from native_support import symbols
 
 MATRIX_CHECK=matrix.check
 

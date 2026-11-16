@@ -9,7 +9,7 @@ from pathlib import Path
 import subprocess
 
 from environment import ROOT, verified_tool
-from render_build import symbols
+from native_support import symbols
 
 PARENT_SHA = '0e43bd16a5219a2d2548580e581ee5e26c7f440e715c18d96e07dbe033351ad0'
 COMPANIONS = {

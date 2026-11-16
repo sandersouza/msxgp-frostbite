@@ -17,7 +17,7 @@ from collision_compact import CompactRows,read_row
 from floe_tables import pointer,verified_profiles as verified_floe_profiles
 from floe_catalog import YS as FLOE_YS
 from floe_tables import shadow_byte
-from reference_traces import private_output
+from native_support import private_output
 from reference_routes import source_reset_checkpoint
 
 

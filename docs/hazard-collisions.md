@@ -54,10 +54,10 @@ Independent review passed with no blocking findings. PR35 is integrated, the
 clean merged-main rebuild is byte-identical, and all four published release
 assets were downloaded and verified; see the
 [delivery receipt](../references/hazard-delivery.json). See
-[human test instructions](releases/v0.0.5-hazards.md); original presentation,
+[human test instructions](https://github.com/sandersouza/msxgp-frostbite/blob/v1.0.0/docs/releases/v0.0.5-hazards.md); original presentation,
 progression/whole-game and manual/physical acceptance remain later work.
 
-[The reproducible local checklist](hazard-checklist.md) lists the build,
+[The reproducible local checklist](https://github.com/sandersouza/msxgp-frostbite/blob/v1.0.0/docs/hazard-checklist.md) lists the build,
 source replay, whole-native, all-view paced and stress commands. They require
 the ignored original/capture inputs; public CI never downloads those inputs.
 

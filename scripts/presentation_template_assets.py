@@ -9,7 +9,7 @@ from pathlib import Path
 
 from presentation_fragments import BankImage,GEOMETRY_BANKS,pack_descriptors
 from presentation_static_assets import header_fragments,footer_tiles
-from reference_traces import private_output
+from native_support import private_output
 
 SHADOW_OFFSET=13*16384+0x2700
 

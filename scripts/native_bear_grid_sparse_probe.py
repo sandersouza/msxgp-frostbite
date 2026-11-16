@@ -5,9 +5,9 @@ from pathlib import Path
 
 from compact_native_fixture import run, sha
 from environment import ROOT
-from original_graphics import view
-from presentation_fragments import mask_tiles
-from reference_traces import private_output
+from native_support import view
+from native_support import mask_tiles
+from native_support import private_output
 
 
 def check(build, out, renderer='packet'):
@@ -87,7 +87,7 @@ def check(build, out, renderer='packet'):
         input_address=0xC7B4, input_stride=3, output_address=0xC480, output_stride=96,
         entry_name='ng_entry', end_name='ng_end', writes=((0xC480, 0xC4DF), (0xC500, 0xC50F)))
     names = ('scripts/native_bear_grid_sparse_probe.py', 'src/'+source,
-             'scripts/original_graphics.py', 'scripts/presentation_fragments.py')
+             'scripts/native_support.py', 'scripts/native_support.py')
     for name in names:
         p = out/'source'/name
         p.parent.mkdir(parents=True, exist_ok=True)

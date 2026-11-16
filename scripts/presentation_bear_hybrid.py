@@ -36,10 +36,10 @@ def compile_assets(base):
     from presentation_fast_model import prepare
     from presentation_palette import audit_palette
     from presentation_floe_templates import compile_templates
-    from presentation_fragments import mask_tiles
-    from original_graphics import view
+    from native_support import mask_tiles
+    from native_support import view
     from presentation_constructors import construct
-    from render_build import symbols
+    from native_support import symbols
     base=Path(base);m=json.loads((base/'build.json').read_text());rom=(base/m['rom']['filename']).read_bytes();source=(ROOT/'references/roms/frostbite.bin').read_bytes();s=symbols(base/'presentation.sym')
     if hashlib.sha256(rom).hexdigest()!=m['rom']['sha256']:raise ValueError('parent ROM differs')
     cfg=json.loads((ROOT/'references/presentation-assets-config.json').read_text());tables=prepare(source,audit_palette(ROOT/cfg['palette']),base/'geometry')

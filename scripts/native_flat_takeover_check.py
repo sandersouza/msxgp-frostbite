@@ -21,7 +21,7 @@ import native_bear_keys
 from native_unused_keys import extents,audit_and_shadow
 from presentation_fast_model import prepare
 from presentation_palette import audit_palette
-from render_build import symbols
+from native_support import symbols
 from environment import ROOT
 from build_native_flat_image import digest
 

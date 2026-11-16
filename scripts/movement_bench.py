@@ -17,8 +17,8 @@ from native_input_check import hardware
 from reference_provenance import snapshot_paths,audit_manifest
 from reference_inventory import verified_input
 from render_bench import visible_signature,PACED_MODES,validate_source_files
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 import render_model as model
 
 

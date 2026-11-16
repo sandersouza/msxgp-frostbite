@@ -17,7 +17,7 @@ from reference_inventory import verified_input
 from reference_provenance import audit_manifest,snapshot_paths
 from reference_routes import source_reset_checkpoint
 from reference_state import decode_state
-from reference_traces import private_output
+from native_support import private_output
 from stella_hazard import HELPERS as OBSERVER_HELPERS,digest,fixture,observe,verified_backend
 
 EDGE_XS=(*range(9),*range(152,160))

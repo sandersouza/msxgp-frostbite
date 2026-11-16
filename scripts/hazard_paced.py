@@ -17,10 +17,10 @@ from hazard_routes import HELPERS as SOURCE_HELPERS,assess,validate_policy
 from hazard_play import input_records
 from native_contract import compare
 from reference_provenance import snapshot_paths,audit_manifest
-from reference_traces import private_output
+from native_support import private_output
 from render_bench import validate_source_files,visible_signature
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 from stella_floe import digest
 from trace_compare import validate_trace
 import render_model as model

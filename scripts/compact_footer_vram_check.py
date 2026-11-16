@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 
-from build_compact_packet_experiment import digest
+from artifact_hash import digest
 import compact_header_ram_check
 
 

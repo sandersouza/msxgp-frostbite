@@ -18,7 +18,7 @@ from presentation_audio_check import verify_streams
 from presentation_records import parse_records
 from reference_state import decode_state
 from reference_provenance import snapshot_paths
-from render_build import symbols
+from native_support import symbols
 
 
 def sha(path):

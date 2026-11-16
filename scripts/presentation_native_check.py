@@ -2,7 +2,7 @@
 import json,subprocess,sys,hashlib
 from pathlib import Path
 sys.path.insert(0,str(Path('scripts').resolve()))
-from render_build import symbols
+from native_support import symbols
 HERE=Path(__file__).resolve().parent
 build=Path(sys.argv[1]).resolve();out=Path(sys.argv[2]).resolve();mode=sys.argv[3];limit=int(sys.argv[4]) if len(sys.argv)>4 else 2115
 meta=json.loads((build/'build.json').read_text());code=(build/'world.bin').read_bytes();s=symbols(build/'presentation.sym');original_run=subprocess.run

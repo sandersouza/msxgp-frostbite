@@ -5,12 +5,12 @@ from pathlib import Path
 import subprocess
 import sys
 
-from build_compact_packet_experiment import digest
-from compact_live_probe import CONTROL_SHA
+from artifact_hash import digest
+from native_support import CONTROL_SHA
 import compact_retired_graphics_check
 from environment import ROOT
 import presentation_direct_enemy as geometry
-from render_build import symbols
+from native_support import symbols
 
 
 def check(build,out,mode):

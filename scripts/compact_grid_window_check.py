@@ -4,11 +4,11 @@ import json
 from pathlib import Path
 import subprocess
 
-from build_compact_packet_experiment import digest
+from artifact_hash import digest
 import compact_footer_vram_check
 import compact_game_probe
 import compact_grid_ram_check
-from render_build import symbols
+from native_support import symbols
 
 
 def check(build,out,mode):

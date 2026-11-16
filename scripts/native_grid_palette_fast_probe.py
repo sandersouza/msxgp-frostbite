@@ -5,10 +5,10 @@ import json
 from pathlib import Path
 
 from compact_grid_fast_probe import prepared_data
-from compact_live_probe import CONTROL_SHA
+from native_support import CONTROL_SHA
 from compact_native_fixture import run,sha
 from environment import ROOT
-from reference_traces import private_output
+from native_support import private_output
 
 
 def assets(build):

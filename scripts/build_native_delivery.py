@@ -28,7 +28,6 @@ def sources():
         for p in (ROOT/folder).rglob('*'):
             if p.is_file() and (p.suffix in ('.py','.asm','.inc','.tcl') or p.name=='LICENSE'):
                 names.add(str(p.relative_to(ROOT)))
-    names.discard('scripts/build_compact_grid_experiment.py') # unrelated preserved local experiment
     names.update(str(p.relative_to(ROOT)) for p in (ROOT/'references').glob('*.json'))
     return {n:digest((ROOT/n).read_bytes()) for n in sorted(names)}
 

@@ -8,8 +8,8 @@ import shutil
 import subprocess
 import xml.etree.ElementTree as ET
 from build_native_flat_image import digest
-from smoke import validate_machine_profile
-from render_build import symbols
+from native_support import validate_machine_profile
+from native_support import symbols
 
 
 def check(disk,cold,out,mode,family,*,dos1_disk,machine_profile=None,firmware_dir=None,emulator=None):

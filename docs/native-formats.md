@@ -1,20 +1,18 @@
-# Native MSX1 formats — Issue44
+# Native MSX1 formats
 
 All formats execute one shared flat runtime on a standard-speed MSX1 with
 64 KiB RAM,16 KiB VRAM,TMS9918-family VDP and built-in PSG. The cartridge is a
 complete32,768-byte Normal ROM. It needs no mapper or external payload. Disk
 formats naturally need a disk interface and the corresponding operating system.
 
-The accepted v0.0.30 remains immutable. On2026-11-14 the owner explicitly
-accepted publishedv0.0.31 fluency as pleasant likev30 after being told its
-measured presentation cadence is4.1–8.3% lower. This is an owner-approved
-cadence tradeoff for Issue44, not numerical parity or physical-hardware proof.
-Original mechanics/source state, audio and per-picture graphics have separate
-automated equivalence checks. See references/compact-delivery/issue-44-owner-acceptance.json.
+The supported product is [Frostbite 1.0.0](release-1.0.0.md). Original
+mechanics/source state, audio, per-picture graphics and presentation cadence
+have separate checks. Owner approval is distinct from physical-hardware proof.
 
 ## Loading and reset
 
-- Cartridge: insert `FROSTBIT.ROM`, select **Normal** (no mapper) and reset.
+- Cartridge: insert release file `frostbite-1.0.0.rom` (builder output
+  `FROSTBIT.ROM`), select **Normal** (no mapper) and reset.
 - MSX-DOS1: copy `FROSTBIT.COM` to a bootable DOS disk and run `FROSTBIT`.
   It is a self-contained executable loaded at0100h. It checks DOS TPA before
   taking over; an insufficient TPA prints an error and returns to DOS.
@@ -28,8 +26,8 @@ input and graphics without overwriting BASIC's program or disk workspace.
 Neither disk executable contains or depends on the Atari ROM, the old4MiB
 cartridge or an emulator. After successful takeover **RESET exits/restarts**;
 return to DOS/BASIC is not implemented. The game owns the64KiB RAM and VRAM.
-Controls are the same as the accepted cartridge: joystick1 or cursor keys,
-trigger/space; use the existing console controls documented in the release.
+Controls: joystick1 or cursor keys, trigger/space, F1 start/reset and F2 game
+selection (release between presses).
 
 ## Loader layout and guarantees
 
@@ -71,10 +69,12 @@ make native-delivery \
   NATIVE_BASE=outputs/compact/issue44-native-enemy-irq-game-02/build \
   NATIVE_CONTROL=outputs/presentation/credit-reference-at/build-final \
   NATIVE_OUT=outputs/compact/my-fresh-native-build \
-  ZX0=../seaquest/.tools/zx0/zx0
+  ZX0=/absolute/path/to/verified/zx0 \
+  NATIVE_EFFECT_GAIN=--effect-gain
 ```
 
-The command independently proves70 P0 patterns,512 bear geometries and1280
+The explicit gain option selects the 1.0.0 audio behavior; omitting it builds
+the earlier audio configuration. The command independently proves70 P0 patterns,512 bear geometries and1280
 NAME rows, allocates/links the whole game, creates cold images, compresses the
 cartridge and produces genuine COM/BIN files. It archives maintained producer
 sources and hashes. Builders intentionally do not self-certify game acceptance.

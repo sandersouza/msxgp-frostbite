@@ -11,8 +11,8 @@ import subprocess
 import types
 
 from environment import ROOT
-from reference_traces import private_output
-from render_build import symbols
+from native_support import private_output
+from native_support import symbols
 from compact_inventory import read_trace
 import presentation_credit_reference_check as checker
 import presentation_border_check as border

@@ -13,10 +13,10 @@ import subprocess
 from collision_compact import CompactRows
 from environment import ROOT,verified_tool
 from floe_truth import sample
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 from stella_hazard import digest
-from reference_traces import private_output
+from native_support import private_output
 from hazard_tables import compile_component,emit_component,read_bytes
 
 

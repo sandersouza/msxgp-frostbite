@@ -16,7 +16,7 @@ from hazard_truth import FULL_BYTES,compare_roi,contacts,full_record,validate_in
 from native_contract import compare
 from reference_inventory import verified_input
 from reference_state import decode_state
-from reference_traces import private_output,run_debugger
+from native_support import private_output,run_debugger
 from stella_floe import control_pairs,observe as observe_floes
 from stella_hazard import HELPERS,digest,fixture,helper_identity,observe
 

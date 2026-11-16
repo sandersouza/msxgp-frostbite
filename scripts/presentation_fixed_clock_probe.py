@@ -26,9 +26,9 @@ from presentation_player_palette import adapted_frame
 from presentation_prepared_ownership import decorate_owners
 from presentation_shared_ownership import constructor
 from progression_play import input_records
-from reference_traces import private_output
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import private_output
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 
 CAPTURE_BYTES=128+3*16392
 OWNER_BYTES=4214

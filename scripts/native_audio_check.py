@@ -9,7 +9,7 @@ from pathlib import Path
 import subprocess
 import presentation_audio_check as audio
 from build_native_flat_image import digest
-from render_build import symbols
+from native_support import symbols
 
 
 def check(base,delivery,out,negative=False):

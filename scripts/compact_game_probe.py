@@ -6,7 +6,7 @@ from pathlib import Path
 import types
 
 from environment import ROOT
-from reference_traces import private_output
+from native_support import private_output
 import presentation_border_check as border
 import presentation_credit_reference_check as checker
 

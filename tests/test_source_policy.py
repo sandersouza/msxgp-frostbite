@@ -63,11 +63,18 @@ class SourcePolicyTests(unittest.TestCase):
         self.assertEqual(self.check('src/diagnostic.asm', b'org $4000\ndb "AB"\n'), [])
         self.assertEqual(self.check('references/manifest.json', b'{"sha256":"abc"}\n'), [])
 
+    def test_reviewed_banner_is_bound_to_its_exact_path_and_bytes(self):
+        banner = (Path(__file__).resolve().parents[1] / 'docs/bymeacoffee.png').read_bytes()
+        self.assertEqual(self.check('docs/bymeacoffee.png', banner), [])
+        self.assertTrue(self.check('docs/bymeacoffee.png', b'changed\x00banner'))
+        self.assertTrue(self.check('assets/generated/banner.png', banner))
+        self.assertTrue(self.check('docs/other.png', banner))
+
 
 class VersionIdentityTests(unittest.TestCase):
     def api(self):
-        self.assertIsNotNone(importlib.util.find_spec('ci_verify'), 'CI identity gate missing')
-        return importlib.import_module('ci_verify')
+        self.assertIsNotNone(importlib.util.find_spec('release_check'), 'CI identity gate missing')
+        return importlib.import_module('release_check')
 
     def test_changed_bytes_need_new_baseline_version(self):
         baseline = {'version': '0.0.1', 'rom': {'size': 3, 'sha256':

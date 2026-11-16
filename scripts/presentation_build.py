@@ -16,12 +16,12 @@ from presentation_palette import HELPERS as PALETTE_FILES, audit_palette
 from presentation_sprites import tables as sprite_tables
 from presentation_static_assets import pack_static
 from presentation_cache_hash import table as cache_crc_table
-from presentation_fixed import COUNTS as FIXED_COUNTS
+from native_support import COUNTS as FIXED_COUNTS
 from presentation_floe_templates import compile_templates
 from presentation_template_assets import pack as pack_template_assets
 from reference_inventory import verified_input
-from reference_traces import private_output
-from render_build import symbols
+from native_support import private_output
+from native_support import symbols
 from native_audio_codegen import generate as generate_audio
 from presentation_audio import tables as audio_tables
 

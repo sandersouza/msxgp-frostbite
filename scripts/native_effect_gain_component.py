@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from environment import ROOT
-from render_build import symbols
+from native_support import symbols
 from smoke import isolated_profile,find_machine_profile,validate_machine_profile
 from native_effect_gain import project_write
 from presentation_audio import psg_step,MASKS,OWNED_REGISTERS

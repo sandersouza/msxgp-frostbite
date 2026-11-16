@@ -7,9 +7,9 @@ import subprocess
 
 from compact_game_probe import check
 from compact_grid_name_probe import prepared_data
-from compact_live_probe import CONTROL_SHA
+from native_support import CONTROL_SHA
 from environment import ROOT
-from render_build import symbols
+from native_support import symbols
 
 
 def guarded(build,out,mode):

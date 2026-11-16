@@ -64,7 +64,7 @@ def dirty_rows(previous,current):
 def expected_frame(meta,original,description,ram,raw,palette):
     """Independent role-aware pixel view; reads no generated target assets."""
     from graphics_mapping import map_frame,map_x,map_y,palette_map
-    from original_graphics import view
+    from native_support import view
     from presentation_model import pixels
     from presentation_player_palette import player_color,adapted_frame
     if not meta.get('grid24'):return adapted_frame(meta,original,description,ram,raw,palette)

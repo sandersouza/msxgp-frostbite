@@ -18,8 +18,8 @@ from presentation_model import describe, pixels
 from presentation_palette import audit_palette
 from presentation_reference import HELPERS as SOURCE_FILES
 from reference_provenance import audit_manifest,snapshot_paths
-from reference_traces import private_output
-from render_build import symbols
+from native_support import private_output
+from native_support import symbols
 from smoke import find_machine_profile, isolated_profile, validate_machine_profile
 
 HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,'scripts/presentation_check.py','scripts/presentation_cache_ownership.py')))

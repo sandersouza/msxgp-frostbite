@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 import subprocess
 from environment import ROOT,verified_tool
-from render_build import symbols
+from native_support import symbols
 
 
 def assemble(out,name,text):

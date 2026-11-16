@@ -7,7 +7,7 @@ from hazard_build import OUT
 from hazard_check import run_target
 from hazard_routes import HELPERS as SOURCE_HELPERS,assess,validate_policy
 from reference_provenance import audit_manifest
-from reference_traces import private_output
+from native_support import private_output
 from stella_hazard import digest
 from trace_compare import validate_trace
 

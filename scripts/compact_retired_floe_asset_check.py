@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import sys
 
-from build_compact_packet_experiment import digest
-from compact_live_probe import CONTROL_SHA
+from artifact_hash import digest
+from native_support import CONTROL_SHA
 import compact_retired_template_check
 from environment import ROOT
 import presentation_constructors

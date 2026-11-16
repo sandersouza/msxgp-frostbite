@@ -11,7 +11,7 @@ from pathlib import Path
 
 from environment import ROOT, verified_tool
 from presentation_band_spike import apply_patch, sha, verified_bytes
-from render_build import symbols
+from native_support import symbols
 
 PARENT = 'e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5'
 SELECTED = 'd28c68590a27004d6624af3d1ecb9d80dc422ed3f4f4241caed2df278d1a5db0'

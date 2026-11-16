@@ -1,6 +1,6 @@
 """Exact source-mask grammars for the final fixed-RAM link; no state pruning."""
 from compact_byte_windows import pack_windows
-from presentation_sprites import expand_pair
+from native_support import expand_pair
 
 
 def floes(patterns,indices):

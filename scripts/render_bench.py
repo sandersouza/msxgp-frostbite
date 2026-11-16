@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 
 from render_build import ROOT,OUT,ROM,validate_identity,symbols
 import render_model as model
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 
 PACED_MODES=tuple((family if layout==width==0 else f'{family}_layout{layout}_width{width}',family,layout,width,False)
     for family in ('ntsc','pal') for layout in (0,1) for width in (0,1)) + (

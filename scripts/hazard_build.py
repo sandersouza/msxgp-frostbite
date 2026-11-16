@@ -12,8 +12,8 @@ from hazard_catalog import HELPERS as SOURCE_HELPERS
 from hazard_tables import compile_catalog
 from native_shifts import generate as generate_fast
 from reference_inventory import verified_input
-from reference_traces import private_output
-from render_build import symbols
+from native_support import private_output
+from native_support import symbols
 import render_model as model
 
 VERSION='0.0.5-hazards'

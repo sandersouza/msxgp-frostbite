@@ -1,8 +1,8 @@
 """Original-glyph reference for the explicit native kind10 bear key grammar."""
 from functools import lru_cache
 
-from original_graphics import view
-from presentation_fragments import mask_tiles
+from native_support import view
+from native_support import mask_tiles
 
 
 def bounded(value, low, high):

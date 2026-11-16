@@ -11,7 +11,7 @@ from environment import ROOT
 from floe_truth import ROI_BYTES,roi_record
 from hazard_truth import FULL_BYTES,full_record
 from reference_state import decode_state
-from reference_traces import private_output,run_debugger
+from native_support import private_output,run_debugger
 from stella_floe import HELPERS as FLOE_HELPERS,PATCH as FLOE_PATCH,REVISION,UPSTREAM,digest
 from stella_floe import fixture as floe_fixture
 

@@ -14,7 +14,7 @@ import subprocess
 from environment import ROOT
 from floe_truth import FULL_BYTES, ROI_BYTES, full_record, roi_record
 from reference_state import decode_state
-from reference_traces import private_output, run_debugger
+from native_support import private_output, run_debugger
 
 UPSTREAM='https://github.com/stella-emu/stella.git'
 REVISION='d55b1aec0d067a4c901a6dcdf81cb8f579685659'

@@ -4,9 +4,9 @@ import json
 from pathlib import Path
 import subprocess
 
-from build_compact_packet_experiment import digest
+from artifact_hash import digest
 import compact_grid_window_check
-from render_build import symbols
+from native_support import symbols
 
 
 def native_code_size(metadata):

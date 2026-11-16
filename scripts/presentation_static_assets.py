@@ -5,10 +5,10 @@ from pathlib import Path
 
 from graphics_mapping import map_frame
 from presentation_fragments import BankImage,GEOMETRY_BANKS
-from reference_traces import private_output
-from original_graphics import view
+from native_support import private_output
+from native_support import view
 from presentation_model import background_rows,footer
-from presentation_sprites import expand_pair
+from native_support import expand_pair
 
 
 def header_fragments(rom):

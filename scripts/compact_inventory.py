@@ -8,7 +8,7 @@ from pathlib import Path
 import zlib
 
 from environment import ROOT
-from reference_traces import private_output
+from native_support import private_output
 
 BANK_SIZE = 16384
 

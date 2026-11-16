@@ -13,7 +13,7 @@ from hazard_observer_check import cases_for,invariant_cases
 from hazard_query import RawContacts
 from hazard_truth import FULL_BYTES,contacts,full_record
 from reference_state import decode_state
-from reference_traces import private_output
+from native_support import private_output
 from stella_floe import control_pairs
 from stella_hazard import digest,fixture,observe
 

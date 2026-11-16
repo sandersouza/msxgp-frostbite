@@ -21,8 +21,8 @@ from reference_cpu_check import arithmetic_vectors
 from native_build import OUT,ROM,BUILD_FILES,build_contract
 from native_codegen import observable_stops
 from reference_provenance import snapshot_paths
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 
 HELPERS=tuple(dict.fromkeys((*BUILD_FILES,'scripts/native_fast.py','scripts/native_analysis.py','scripts/native_contract.py','scripts/native_contract.tcl','scripts/mechanics_probe.py',
     'scripts/reference_cpu_check.py','scripts/reference_provenance.py','scripts/reference_state.py','scripts/source_timing.py',

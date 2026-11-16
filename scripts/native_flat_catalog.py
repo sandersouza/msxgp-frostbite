@@ -8,11 +8,11 @@ import argparse
 import json
 from pathlib import Path
 
-from build_compact_packet_experiment import digest
+from artifact_hash import digest
 from native_flat_layout import Layout
 from native_graphic_grammar import floes,p0
-from render_build import symbols
-from reference_traces import private_output
+from native_support import symbols
+from native_support import private_output
 
 
 def merged(rows):
@@ -24,7 +24,7 @@ def merged(rows):
 
 
 def free_extents(m,*,native_lifetimes=False):
-    from compact_enemy_ram_check import native_code_size
+    from native_support import native_code_size
     enemy_end=0xE300+native_code_size(m)
     rows=[(r['address'],r['address']+r['size']) for r in m['compact_retired_resident']['ranges']]
     rows += [(r['address'],r['address']+r['size']) for r in m['compact_grid_palette']['reclaimed_ranges']]

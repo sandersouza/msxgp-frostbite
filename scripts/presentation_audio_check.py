@@ -20,8 +20,8 @@ from presentation_records import parse_records
 from presentation_source_cases import collect,verify_files,FILES as SOURCE_FILES
 from reference_state import decode_state
 from reference_traces import STATE_NAME,private_output
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 
 HELPERS=tuple(dict.fromkeys((*FILES,*SOURCE_FILES,'scripts/presentation_audio_check.py',
     'scripts/presentation_audio_source_check.py','scripts/native_contract.py','scripts/reference_state.py',

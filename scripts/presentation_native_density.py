@@ -4,7 +4,7 @@ import sys,json,hashlib
 sys.path.insert(0,'scripts')
 import presentation_matrix_check as matrix
 from presentation_model import describe,pixels
-from render_build import symbols
+from native_support import symbols
 p=Path(__file__).parent;build=Path(sys.argv[1]);out=Path(sys.argv[2]);rom=Path('references/roms/frostbite.bin').read_bytes()
 control=Path('outputs/presentation/header-palette-w/ntsc-clean')
 receipt=json.loads((control/'check.json').read_text())

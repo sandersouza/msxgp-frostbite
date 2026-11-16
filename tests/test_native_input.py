@@ -10,14 +10,14 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 class NativeInputTests(unittest.TestCase):
     def test_raw_opposing_keyboard_directions_join_only_selected_port(self):
-        hardware=importlib.import_module('native_input_check').hardware
+        hardware=importlib.import_module('native_support').hardware
         # All opposing directions, SPACE, F1 and F2 held simultaneously.
         self.assertEqual(hardware((96,241,0,0),0),(15,60,0,128))
         self.assertEqual(hardware((96,241,0,0),1),(240,60,128,0))
         self.assertEqual(hardware((0,0,5,26),0),(165,63,128,0))
 
     def test_sixteen_raw_joystick_combinations_are_not_normalized(self):
-        hardware=importlib.import_module('native_input_check').hardware
+        hardware=importlib.import_module('native_support').hardware
         for bits in range(16):
             self.assertEqual(hardware((0,0,bits,15^bits),0)[0],((15^bits)<<4)|bits)
 

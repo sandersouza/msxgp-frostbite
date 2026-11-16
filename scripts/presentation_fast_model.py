@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 from graphics_mapping import map_x,map_y,palette_map
-from original_graphics import view
+from native_support import view
 from presentation_check import decode_target
 from presentation_constructors import (mono_key,union_key,literal_key,header_key,igloo_key,footer_key,construct)
 from presentation_fragments import background_tables,background_vram,mask_tiles

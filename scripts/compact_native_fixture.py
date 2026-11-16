@@ -7,8 +7,8 @@ import statistics
 import subprocess
 
 from environment import ROOT,verified_tool
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()

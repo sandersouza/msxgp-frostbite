@@ -8,7 +8,7 @@ def pack_record(cut,entries):
 def compile_standing(rom,palette):
     import itertools
     from presentation_model import player
-    from presentation_sprites import expand_pair
+    from native_support import expand_pair
     if len(rom)!=4096 or len(palette)!=256:raise ValueError('complete source ROM and actual P0 palette required')
     pool=[];poolids={};records=[];recordids={};directory=[];maxcolor=0;maxentries=0;empty=0;checks=0
     for y,x,pose,reflect,coarse in itertools.product((27,),range(24),range(6),range(2),range(2)):

@@ -6,7 +6,7 @@ from pathlib import Path
 from graphics_mapping import palette_map
 from original_graphics import catalog, view
 from presentation_model import background_rows
-from reference_traces import private_output
+from native_support import private_output
 
 GEOMETRY_BANKS = tuple(range(3, 14)) + (253, 254, 255)
 

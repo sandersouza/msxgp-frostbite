@@ -7,7 +7,7 @@ import subprocess
 
 import compact_game_probe
 import compact_grid_ram_check
-from render_build import symbols
+from native_support import symbols
 
 
 def check(build,out,mode):

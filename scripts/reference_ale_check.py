@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 from reference_inventory import ROOT, verified_input
-from reference_traces import private_output, verify_fingerprints
+from native_support import private_output, verify_fingerprints
 from reference_provenance import producer_snapshot, verify_snapshot
 
 ALE_COMMIT = '8a8fafb1ac37796e3e8197a2e5727204fa1b926d'

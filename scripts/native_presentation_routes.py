@@ -43,7 +43,7 @@ def check(base, delivery, source, out, family):
     import compact_game_probe as compact
     from progression_play import assess_receipt, source_helpers
     from reference_provenance import audit_manifest
-    from reference_traces import private_output
+    from native_support import private_output
     from environment import ROOT
 
     source, delivery, base = source.resolve(), delivery.resolve(), base.resolve()

@@ -9,7 +9,7 @@ from pathlib import Path
 from build_native_flat_image import digest
 from native_flat_asm import assemble
 from environment import ROOT
-from render_build import symbols
+from native_support import symbols
 
 
 def build(base,linked,out):
@@ -30,7 +30,7 @@ def build(base,linked,out):
     write(0xD900,bytes([255])*264,'unpublished footer keys')
     write(0xE5C0,bytes([255])*32,'unpublished floe tuples')
     write(0xE800,bytes([255])*128,'unpublished native enemy cache/metadata')
-    from presentation_fixed import COUNTS
+    from native_support import COUNTS
     write(0xCCA0,bytes(COUNTS*2),'unchanged fixed capacities')
     write(s['p_fx_force'],b'\xFF','initial forced fixed generation')
     write(s['p_bg_previous'],b'\xFF\xFF','initial background invalidation')

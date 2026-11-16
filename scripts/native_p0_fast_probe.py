@@ -3,10 +3,10 @@ import argparse
 import json
 from pathlib import Path
 from compact_native_fixture import run,sha
-from compact_live_probe import CONTROL_SHA
+from native_support import CONTROL_SHA
 from native_graphic_grammar import p0
 from environment import ROOT
-from reference_traces import private_output
+from native_support import private_output
 
 
 def check(build,out):

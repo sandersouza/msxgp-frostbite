@@ -16,7 +16,7 @@ from presentation_dirty import scene
 from presentation_grid24 import anchor,actor_segments,dirty_rows,delta_table
 from presentation_border import expected_frame
 from presentation_ready_check import ready_contract,verify_admission
-from render_build import symbols
+from native_support import symbols
 
 def check(build,out,mode,steps=2252):
     build,out=Path(build).resolve(),Path(out).resolve()

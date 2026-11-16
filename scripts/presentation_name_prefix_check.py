@@ -5,7 +5,7 @@ import presentation_matrix_check as matrix
 from presentation_border_closure_check import check as parent_check
 from presentation_dirty_audit import audit_list as complete_list
 from presentation_name_prefix import start
-from render_build import symbols
+from native_support import symbols
 
 def check(build,out,mode,steps=2252):
     build,out=Path(build).resolve(),Path(out).resolve();m=json.loads((build/'build.json').read_text())

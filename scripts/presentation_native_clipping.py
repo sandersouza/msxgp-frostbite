@@ -2,9 +2,9 @@
 from pathlib import Path
 import hashlib,json,sys
 sys.path.insert(0,'scripts')
-from original_graphics import view
+from native_support import view
 from graphics_mapping import map_x
-from render_build import symbols
+from native_support import symbols
 here=Path(__file__).resolve().parent
 build=Path(sys.argv[1]).resolve();report_path=Path(sys.argv[2]).resolve();assert not report_path.exists()
 meta=json.loads((build/'build.json').read_text());rom=(build/meta['rom']['filename']).read_bytes();original=Path('references/roms/frostbite.bin').read_bytes();s=symbols(build/'presentation.sym')

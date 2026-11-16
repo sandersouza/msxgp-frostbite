@@ -9,7 +9,7 @@ def compile_standing_edges(rom,palette):
  """Finite sourceY27 packets; exact LEFT16 raster, including half source pixels."""
  from itertools import product
  from presentation_model import player
- from presentation_sprites import expand_pair
+ from native_support import expand_pair
  from presentation_shore_recipes import pack_record
  if len(rom)!=4096 or len(palette)!=256:raise ValueError('Complete source and palette required')
  pool=[];records=[];directory=[];checks=0;maximum=0
@@ -69,7 +69,7 @@ def expected_frame(meta,original,description,ram,raw,palette):
   if not 0<=x<160 or y is None or not 0<=y<192:return
   for tx in range(map_x(x),map_x(x+1)):
    if not clip or 16<=tx<248:result[y*256+tx]=color
- from original_graphics import view
+ from native_support import view
  for obj in description['objects']:
   if obj['x']==0:continue
   image=view(original,obj['address'],8,obj['reflect'])

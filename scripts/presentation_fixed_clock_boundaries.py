@@ -11,7 +11,7 @@ from pathlib import Path
 import subprocess
 
 import presentation_fixed_clock_probe as clock
-from render_build import symbols
+from native_support import symbols
 
 
 def script(s,out,negative_register=False):

@@ -2,10 +2,10 @@
 from contextlib import contextmanager
 import json
 import sys
-from compact_live_probe import CONTROL_SHA
-from build_compact_packet_experiment import digest
+from native_support import CONTROL_SHA
+from artifact_hash import digest
 from environment import ROOT
-from render_build import symbols
+from native_support import symbols
 import presentation_constructors
 import presentation_direct_enemy as geometry
 

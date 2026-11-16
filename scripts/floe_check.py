@@ -20,10 +20,10 @@ from floe_truth import full_record
 from native_contract import compare,HELPERS as NATIVE_HELPERS
 from reference_provenance import snapshot_paths,audit_manifest
 from reference_state import decode_state
-from reference_traces import private_output
+from native_support import private_output
 from render_bench import validate_source_files
-from render_build import symbols
-from smoke import find_machine_profile,isolated_profile,validate_machine_profile
+from native_support import symbols
+from native_support import find_machine_profile,isolated_profile,validate_machine_profile
 from stella_floe import control_pairs,digest,fixture,observe,HELPERS as OBSERVER_HELPERS
 
 HELPERS=tuple(dict.fromkeys((*FILES,*OBSERVER_HELPERS,*NATIVE_HELPERS,'scripts/floe_check.py','scripts/floe_native.tcl',

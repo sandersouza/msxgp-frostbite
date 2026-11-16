@@ -12,7 +12,7 @@ import re
 from native_flat_asm import assemble,link_functions
 from native_flat_edges import sources as edge_sources,assets as edge_assets
 from native_flat_layout import Layout
-from render_build import symbols
+from native_support import symbols
 from environment import ROOT
 
 

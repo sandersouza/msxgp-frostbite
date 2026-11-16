@@ -1,78 +1,98 @@
-# Frostbite development status
+# Frostbite development
 
-## Current supported target
+The supported product baseline is [1.0.0](release-1.0.0.md): a shared native Z80
+game delivered as a 32 KiB Normal cartridge, MSX-DOS COM and Disk BASIC package.
+Preserve original gameplay mechanics; document presentation adaptations and
+measure cadence changes independently from original-state equivalence.
 
-Standard-speed MSX1, 64 KiB RAM, 16 KiB VRAM, TMS9918-family VDP and built-in PSG.
-No extra accessories. The owner approved the
-[design](superpowers/specs/2026-10-31-frostbite-design.md) on 2026-10-31.
+## Source layout
 
-## What is available now
+- `src/`: native Z80 runtime, loaders, constructors and licensed ZX0 decoder.
+- `scripts/`: source translation, asset production, linking and validation.
+- `tests/`: original-free unit and component checks.
+- `references/`: consumed contracts/configuration, tool pins and retained
+  native-delivery evidence. These are inputs and evidence, not game binaries.
+- `tools/`: maintained Atari observer/backend patches.
+- `outputs/`: ignored local builds, raw evidence and qualified input artifacts.
 
-The published issue13 diagnostic and its accepted capture matrix are documented in
-[scoring-progression.md](scoring-progression.md); use the
-[dedicated reproduction checklist](progression-checklist.md) for source/native
-checks. It has all-four-mode progression/terminal/restart evidence on the
-standard MSX1 target. Complete raw sealing and independent review/fix checks pass;
-integration, clean-main rebuild and four published release downloads pass. The
-[compact validation](../references/progression-result.json) binds the exact ROM;
-definitive HUD/art/audio and whole-game/manual/physical acceptance remain separate.
-The older reference/toolchain milestones below retain their own evidence scope.
+The maintained scripts are the dependency closure of current build/validation
+commands and regression checks. Superseded integration stages and standalone
+experimental probes are recoverable from Git history. Shared artifact hashing
+lives in `scripts/artifact_hash.py`, independently of historical builders.
 
-- A verified local Atari reference identity and measured NTSC steady cadence:
-  262 scanlines / 19,912 CPU cycles per frame. See the
-  [inventory/timing evidence](reference-inventory.md) for startup observations,
-  revision/provenance limits and pending full-state replay repeatability.
-- A verified [disassembly reconstruction and state map](reference-disassembly.md):
-  byte-identical rebuild, reviewed routine/RAM/hardware boundaries and explicit
-  open contracts for issues #4/#7.
-- [Gameplay contracts and boundary routes](gameplay-contracts.md), supported by
-  101 bounded CPU-slice probes. These do not establish TIA geometry, aligned
-  full-game replay or native gameplay acceptance.
-- The [issue roadmap](superpowers/specs/2026-10-31-frostbite-backlog.md),
-  [workflow](project-workflow.md) and verified
-  [baseline preservation](baseline-preservation.md).
-- Locally preserved tools/environment from the supplied copy; their presence
-  does not establish a fresh Frostbite installation.
-- A [macOS toolchain and MSX1 diagnostic scaffold](toolchain.md), exercised from
-  a fresh source clone on arm64. The 16 KiB plain-ROM diagnostic checks video,
-  interrupts, controls and PSG; native Frostbite gameplay remains pending.
+## Maintenance freeze
 
-Reference utilities now run with Python's standard library:
-`python3 -B scripts/reference_inventory.py` and
-`python3 -B scripts/source_timing.py` (the latter requires Stella 7.0/Debugger).
-`python3 -B scripts/reference_rebuild.py` reconstructs the original with local
-DiStella/DASM and compares all bytes; generated source/binaries remain ignored.
-`python3 -B -m unittest discover -s tests -v` runs original-free utility tests.
-The optional CPU-slice backend is pinned in requirements-reference.txt;
-`.venv/bin/python -B scripts/mechanics_probe.py` runs the canonical source cases.
-Use `.venv/bin/python -B -m unittest discover -s tests -v` for the full suite
-with py65 present; standard Python explicitly skips CPU-specific unit cases
-when that optional backend is unavailable.
+The owner has frozen major development after 1.0.0; maintenance is limited to
+small adjustments. The unit suite is deliberately limited to six files and
+36 checks: source/release identity, native loaders, selective audio gain, raw
+input, RAM allocation and bounded validation routes. Broad compiler, component,
+experimental and historical-diagnostic unit suites remain in Git history.
 
-`make environment`, `make environment-check`, `make environment-dry-run`,
-`make test`, `make build`, `make smoke`, `make run` and `make package` are the
-current development entry points. See the command-by-command checklist in
-[toolchain.md](toolchain.md). The copied Seaquest tree remains quarantined;
-its historical results are not current acceptance.
+For a game change, use the actual native build and the relevant source/pixel,
+audio or loading harness below. This focused unit suite alone does not certify
+the game. Reopen broader testing only if development scope changes.
 
-## Upcoming developer entry points
+## Original-free checks
 
-[Issue #5](https://github.com/sandersouza/msxgp-frostbite/issues/5) supplies the
-toolchain/diagnostic. macOS Intel, physical MSX and human listening results
-remain pending; automatic checks here use an isolated NTSC C-BIOS MSX1 profile.
+Prepare the [host tools](toolchain.md), then run:
 
-[Issue #6](https://github.com/sandersouza/msxgp-frostbite/issues/6) delivered
-original-free CI and scoped tracking helpers; see [ci-and-tracking.md](ci-and-tracking.md).
-Original-dependent native/pixel acquisition remains a local acceptance step.
+```sh
+make test
+make ci-verify
+make render-build
+```
 
-## Human tests and releases
+The unit suite and synthetic diagnostics require no original ROM. CI checks
+the synthetic diagnostic's repeatable byte identity; it does not build or
+validate the native 1.0.0 game. `make build`, `make run`, `make smoke` and
+`make package` remain hardware-diagnostic commands. See
+[CI boundaries](ci-and-tracking.md).
 
-Each new testable ROM comes through a versioned GitHub release with the exact
-ROM attached, hash/source commit, current state, next work and a specific human
-test checklist. Development builds are prereleases. Load/mapper/controls and
-expected results will be given in each release.
+## Native game build and qualification
 
-The first diagnostic is [v0.0.1-diagnostic](https://github.com/sandersouza/msxgp-frostbite/releases/tag/v0.0.1-diagnostic),
-with concrete human checks in its release notes. It has no Frostbite gameplay.
-Automated checks, rendered preview, human listening and physical hardware
-acceptance remain separate.
+Use the hash-qualified native graphics/IRQ base and accepted graphics control
+described in [native formats](native-formats.md). Build into a fresh directory:
+
+```sh
+.venv/bin/python -B scripts/build_native_delivery.py \
+  --base outputs/compact/issue44-native-enemy-irq-game-02/build \
+  --control outputs/presentation/credit-reference-at/build-final \
+  --out outputs/compact/my-fresh-native-build \
+  --compressor /absolute/path/to/verified/zx0 \
+  --effect-gain
+```
+
+`--effect-gain` is required for the 1.0.0 audio behavior. The default without
+that option targets the older audio configuration. `make native-delivery`
+forwards `NATIVE_EFFECT_GAIN=--effect-gain` to this builder.
+
+Qualified inputs, original-derived graphics/contact data and licensed OS/BIOS
+files are local prerequisites. A public checkout alone cannot reconstruct the
+game. The native builder archives maintained producer/checker sources and
+hashes; its successful exit is not acceptance. Use native takeover checks for
+`ntsc`, `pal`, `bear-ntsc`, `bear-pal` and `matrix`, plus actual DOS/BASIC
+loading checks in both video families. Loader details and invocations are in
+[native formats](native-formats.md).
+
+The selected graphics/IRQ base and accepted graphics control are immutable
+upstream build inputs. To reconstruct their historical integration stages,
+use the release source checkout; those old command-line stages are not part
+of the maintained native delivery pipeline.
+
+Separate original CPU/state equivalence, pixel/ownership checks, emulator
+routes, manual play/listening and physical hardware results. After renderer,
+input, assets, HUD or audio changes, measure complete active routes in both
+NTSC and PAL, including dense scenes and bear pursuit. Booting is insufficient.
+
+## Historical recovery
+
+The post-1.0 cleanup removes superseded plans, issue drafts, handoffs, reports
+and unused experimental entry points. Runtime assembly, consumed contracts,
+native qualification and regression checks remain. Local ignored inputs,
+outputs, tools and the inherited snapshot are preserved.
+
+Use `git show v1.0.0:path/to/file` for files present at release time. The last
+pre-cleanup source is `52ff734c3f658e735854e548dbdbc1cc5a71b2fc`; it also contains
+the subsequently committed experimental builder and unfinished console test.
+Restore historical builds in a separate checkout. Recorded hashes remain tied
+to their original source tree; cleanup does not recertify them.

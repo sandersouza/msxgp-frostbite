@@ -15,7 +15,7 @@ from environment import ROOT
 from floe_truth import roi_record, validate_row
 from reference_inventory import verified_input
 from reference_state import decode_state
-from reference_traces import private_output
+from native_support import private_output
 from stella_floe import control_pairs,digest,fixture,helper_identity,observe
 
 YS=(0,*range(45,78))

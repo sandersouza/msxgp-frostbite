@@ -7,7 +7,7 @@ from pathlib import Path
 from environment import ROOT
 from original_graphics import SOURCE_SHA256
 from reference_provenance import audit_manifest, snapshot_paths
-from reference_traces import private_output
+from native_support import private_output
 
 HELPERS = ('scripts/presentation_palette.py', 'scripts/environment.py', 'scripts/original_graphics.py',
            'scripts/reference_provenance.py', 'scripts/reference_inventory.py', 'scripts/reference_traces.py',

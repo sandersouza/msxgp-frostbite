@@ -10,8 +10,8 @@ from floe_tables import compile_catalog
 import movement_build
 from native_fast import generate_fast
 from reference_inventory import verified_input
-from reference_traces import private_output
-from render_build import symbols
+from native_support import private_output
+from native_support import symbols
 import render_model as model
 
 VERSION='0.0.4-buildloop'

@@ -6,7 +6,7 @@ import subprocess
 from environment import ROOT,verified_tool
 from reference_inventory import verified_input
 from native_fast import generate_fast
-from render_build import symbols
+from native_support import symbols
 import render_model as model
 from movement_atlas import compile_atlas
 

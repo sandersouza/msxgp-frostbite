@@ -12,7 +12,7 @@ from pathlib import Path
 from environment import ROOT, verified_tool
 from presentation_band_spike import apply_patch, sha, verified_bytes
 from presentation_header_dictionary import compile_dictionary
-from render_build import symbols
+from native_support import symbols
 
 PARENT = 'b92478f778a57c70e152497e92102637879248fefac7a9161a9f196928a2c0dc'
 SELECTED = 'e59d719e9169a4a73300eb9099008d1a92c77a247b205c78d6961015d16886c5'

@@ -1,5 +1,5 @@
 """Audit permanent roles against both NAME pages and real PGT/CGT bytes."""
-from presentation_fixed import COUNTS
+from native_support import COUNTS
 from presentation_dirty_audit import audit_physical_names
 
 ROW_BYTES=4110

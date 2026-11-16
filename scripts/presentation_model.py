@@ -1,5 +1,5 @@
 """Read-only original presentation commands; no native gameplay replacement."""
-from original_graphics import view as glyph
+from native_support import view as glyph
 
 
 def _ram(ram):
