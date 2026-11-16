@@ -1,3 +1,17 @@
+[![Buy me a coffee!](docs/bymeacoffee.png)](https://link.mercadopago.com.br/buymecoke)
+
+**Help bring more projects to the community.** This is a passion project with
+no profit motive, no sponsors and no outside funding so far. Every piece of
+equipment, all materials and every hour of development have been paid for or
+contributed personally, without reimbursement.
+
+Your contribution helps sustain Seaquest for MSX1 and makes room for new
+projects, with the code always freely available to the community. More financial
+support means more resources and time to build, test and share. If you enjoy
+this work and want to see more of it, please consider buying me a coffee.
+Every contribution helps keep these projects moving. Thank you for being part
+of what comes next!
+
 # Frostbite for MSX1
 
 A native MSX1 port of Activision's Atari 2600 Frostbite, with the supplied
