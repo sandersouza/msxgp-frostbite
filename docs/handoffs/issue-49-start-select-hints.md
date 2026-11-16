@@ -33,6 +33,10 @@
 
 ## Implementation and verification
 
+- PR: https://github.com/sandersouza/msxgp-frostbite/pull/50
+- Test release: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v1.0.1-rc.1
+- Exact tested source: `d0c8ba225aa650006e2ec47ea43a6d5568dcc174`.
+
 - `src/game/start_hints.asm` provides the two-line block at x=168, y=8/16.
   `presentation_prepare` calls it after the original dirty upload. The normal
   active path returns after a visibility guard, without extra VRAM traffic.

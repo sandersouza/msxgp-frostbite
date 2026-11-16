@@ -57,3 +57,13 @@ F2: SELECT
 - Repository metadata limitation: no `priority:p2` label or open milestone is
   currently configured. Record P2 in the project's existing Priority field;
   leave the milestone unset rather than inventing shared configuration.
+
+## Delivery for review
+
+- PR: https://github.com/sandersouza/msxgp-frostbite/pull/50
+- Test prerelease: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v1.0.1-rc.1
+- Exact tested source: `d0c8ba225aa650006e2ec47ea43a6d5568dcc174`.
+- Sixteen unit checks, source-only five-format build and NTSC/PAL keyboard/display
+  qualification passed. Exact hashes and evidence limits are recorded in
+  `references/compact-delivery/issue-49-start-select-hints.json` and release assets.
+- Status: In review. Owner display/play feedback is pending before stable promotion.
