@@ -61,9 +61,11 @@ F2: SELECT
 ## Delivery for review
 
 - PR: https://github.com/sandersouza/msxgp-frostbite/pull/50
-- Test prerelease: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v1.0.1-rc.1
-- Exact tested source: `d0c8ba225aa650006e2ec47ea43a6d5568dcc174`.
+- Test prerelease: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v1.0.1-rc.2
+- Exact tested source: `c3dcda4`.
 - Sixteen unit checks, source-only five-format build and NTSC/PAL keyboard/display
   qualification passed. Exact hashes and evidence limits are recorded in
-  `references/compact-delivery/issue-49-start-select-hints.json` and release assets.
+  `references/compact-delivery/issue-49-igloo-fix.json` and release assets.
 - Status: In review. Owner display/play feedback is pending before stable promotion.
+
+RC1 was found to corrupt igloo graphics and is superseded. RC2 preserves the live graphics assets and adds a separate controlled diagnostic for all 16 stages on both pages in NTSC/PAL. Existing construction takes priority over borrowing font tiles.
