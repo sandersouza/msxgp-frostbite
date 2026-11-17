@@ -7,6 +7,7 @@ import argparse
 import collections
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import struct
@@ -129,6 +130,8 @@ debug set_bp {commit+3} {{$::native_seen}} {{
 }}
 after realtime 180 {{hint_fail "hint check watchdog"}}
 '''
+    if matrix:
+        tcl=re.sub(r'keymatrix(?:down|up) 8 \d+', '', tcl)
     (out/'probe.tcl').write_text(tcl)
     settings=out/'settings.xml'
     settings.write_text('<!DOCTYPE settings SYSTEM "settings.dtd"><settings><settings><setting id="save_settings_on_exit">false</setting></settings></settings>')
@@ -165,7 +168,8 @@ def check(baseline,delivery,out,ticks=3600,matrix=False):
             pixels=picture(video,page,sat)
             hint=state[0x46]!=0 and state[0x4D]==255
             if matrix and 900<=tick<1412 and state[0x4D]<16:
-                stages.add(state[0x4D]);stage_pages.add((state[0x4D],page))
+                if any(pixels[y*256+x]==14 for y in range(24,48) for x in range(176,224)):
+                    stages.add(state[0x4D]);stage_pages.add((state[0x4D],page))
             visible=b''.join(video[0x1800+page*1024+row*32+21:0x1800+page*1024+row*32+31] for row in (1,2))
             if hint:
                 expected=bytes(38+page*64+GLYPHS.index(c) for line in TEXT for c in line)

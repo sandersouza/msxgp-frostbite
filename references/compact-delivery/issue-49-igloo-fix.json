@@ -74,8 +74,8 @@
     "families": {
       "ntsc": {
         "shown": 309,
-        "hidden": 1933,
-        "matching_source_pictures": 2229,
+        "hidden": 1956,
+        "matching_source_pictures": 2264,
         "variations": [
           0,
           1,
@@ -101,16 +101,17 @@
           15
         ],
         "igloo_stage_pages": 32,
-        "committed_pictures": 2242,
-        "control_pictures": 2253,
-        "play_pictures_per_vblank": 0.5895614576899321,
-        "control_pictures_per_vblank": 0.5633106856084003,
-        "cadence_change_percent": 4.660087719298245
+        "committed_pictures": 2265,
+        "control_pictures": 2268,
+        "play_pictures_per_vblank": 0.5966646077825818,
+        "control_pictures_per_vblank": 0.5679431747992588,
+        "cadence_change_percent": 5.057096247960846,
+        "minimum_stage_page_captures": 7
       },
       "pal": {
         "shown": 317,
-        "hidden": 2156,
-        "matching_source_pictures": 2458,
+        "hidden": 2228,
+        "matching_source_pictures": 2541,
         "variations": [
           0,
           1,
@@ -136,14 +137,15 @@
           15
         ],
         "igloo_stage_pages": 32,
-        "committed_pictures": 2473,
-        "control_pictures": 2485,
-        "play_pictures_per_vblank": 0.657919110836678,
-        "control_pictures_per_vblank": 0.6322939178758876,
-        "cadence_change_percent": 4.052734375
+        "committed_pictures": 2545,
+        "control_pictures": 2547,
+        "play_pictures_per_vblank": 0.6801481938870022,
+        "control_pictures_per_vblank": 0.6437171966656375,
+        "cadence_change_percent": 5.6594724220623505,
+        "minimum_stage_page_captures": 9
       }
     }
   },
-  "checker_sha256": "cc67203a186a8ee5c52ef01e6565cb82723f4b71d6a9179ae0f47c54bd1db199",
+  "checker_sha256": "bdad719f62e4b7536f8e71e4eb3296eea0c5d899fd5503ce55a27dc541dcaeb6",
   "limitation": "The matrix injects construction state and is renderer evidence, not natural progression. No fresh full-density timing or physical/owner acceptance claimed."
 }
