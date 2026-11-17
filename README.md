@@ -5,7 +5,7 @@ no profit motive, no sponsors and no outside funding so far. Every piece of
 equipment, all materials and every hour of development have been paid for or
 contributed personally, without reimbursement.
 
-Your contribution helps sustain Seaquest for MSX1 and makes room for new
+Your contribution helps sustain Frostbite for MSX1 and makes room for new
 projects, with the code always freely available to the community. More financial
 support means more resources and time to build, test and share. If you enjoy
 this work and want to see more of it, please consider buying me a coffee.
