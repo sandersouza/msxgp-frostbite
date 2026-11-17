@@ -1,0 +1,86 @@
+{
+  "version": "1.0.1-rc.1",
+  "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/49",
+  "files": {
+    "cartridge/FROSTBIT.ROM": {
+      "size": 32768,
+      "sha256": "d648cd3b1ffc8aaa4bc282a8f17f1aa49029f6d73a961bd585b39265a212490e"
+    },
+    "disk/FROSTBIT.COM": {
+      "size": 32571,
+      "sha256": "d6e4f8f01130e6c149e97281a7990f7b3f28b684764580ee2b5e52f40f547cec"
+    },
+    "disk/FROSTBIT.BIN": {
+      "size": 21311,
+      "sha256": "e25cc87ee10b98ed0154f0d296d80ed8d06b6f845b66022f157f1cf17629e2d3"
+    },
+    "disk/FBGFX.BIN": {
+      "size": 11797,
+      "sha256": "83b489a54a7acd2ba55e6763524836a553cf5fe60225bc21240d66fbfe54023b"
+    },
+    "disk/FROSTBIT.BAS": {
+      "size": 80,
+      "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+    }
+  },
+  "display": {
+    "text": [
+      "F1: START",
+      "F2: SELECT"
+    ],
+    "x": 168,
+    "y": [
+      8,
+      16
+    ],
+    "font": "MSX-style 8x8",
+    "hide_on_gameplay": true
+  },
+  "qualification": {
+    "complete": true,
+    "keyboard_only": true,
+    "emulator_state_injected": false,
+    "physical_hardware": false,
+    "families": {
+      "ntsc": {
+        "shown": 432,
+        "hidden": 1901,
+        "matching_source_pictures": 2328,
+        "variations": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "committed_pictures": 2333,
+        "control_pictures": 2343,
+        "play_pictures_per_vblank": 0.5796788140827671,
+        "control_pictures_per_vblank": 0.5815318097591106,
+        "cadence_change_percent": -0.31864046733935947
+      },
+      "pal": {
+        "shown": 446,
+        "hidden": 2141,
+        "matching_source_pictures": 2571,
+        "variations": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "committed_pictures": 2587,
+        "control_pictures": 2605,
+        "play_pictures_per_vblank": 0.6532880518678604,
+        "control_pictures_per_vblank": 0.6585365853658537,
+        "cadence_change_percent": -0.7969995311767564
+      }
+    }
+  },
+  "checker_sha256": "9b9741a3af1f7a64c96f92e6dbd4173aff671b8078f03c904a527d2f1d31be5d",
+  "baseline_control": "issue-14-selective-gain.json",
+  "limits": [
+    "Bounded keyboard routes, not fresh full-density timing qualification.",
+    "No owner listening/play or physical-hardware acceptance claimed.",
+    "Small bounded-route cadence differences are recorded; no speedup claimed."
+  ]
+}

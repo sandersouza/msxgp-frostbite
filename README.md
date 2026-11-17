@@ -62,8 +62,12 @@ make clean   # removes outputs/; the next build recreates it
 The first build provisions the pinned assembler; native code, graphics data,
 loaders and ZX0 compressor source are all versioned. No original ROM, private
 inputs, previous outputs or sibling repository is required. `make verify`
-compares all five generated game files with the reviewed 1.0.0 baseline.
+compares all five generated game files with the current version baseline.
 `make ci-verify` runs the essential unit checks; CI also builds the real game.
+
+The [1.0.1-rc.2 development candidate](docs/release-1.0.1-rc.2.md) adds aligned
+`F1: START` / `F2: SELECT` instructions before gameplay. The stable download
+above remains 1.0.0.
 
 Pre-1.0 plans, handoffs and superseded experiments are available in Git history
 and the [v1.0.0 source tree](https://github.com/sandersouza/msxgp-frostbite/tree/v1.0.0).

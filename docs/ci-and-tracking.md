@@ -2,7 +2,7 @@
 
 [CI](../.github/workflows/ci.yml) checks public sources, runs three essential
 unit test files (16 checks), compiles the native game from a fresh checkout
-and compares all five resulting files with the 1.0.0 hashes.
+and compares all five resulting files with the current 1.0.1-rc.2 hashes.
 No original ROM, private inputs, emulator or firmware is required.
 
 ```sh

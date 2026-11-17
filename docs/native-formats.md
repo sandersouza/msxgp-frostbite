@@ -45,8 +45,9 @@ The transient loader workspace is not additional runtime RAM.
 
 ## Freeze checks
 
-`make verify` checks all five files and their build receipt against the reviewed
-1.0.0 baseline. Changed game bytes require a new version and release; identity
+`make verify` checks all five files and their build receipt against the current
+1.0.1-rc.2 baseline. The published 1.0.0 receipt is preserved separately.
+Changed game bytes require a new version and release; identity
 does not certify manual play, audio listening or physical hardware.
 
 For real disk loading, retain `scripts/native_disk_boot_check.py --disk ...
