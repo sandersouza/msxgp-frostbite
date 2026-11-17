@@ -36,7 +36,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--delivery', type=Path, required=True)
     parser.add_argument('--baseline', type=Path,
-                        default=ROOT/'references/compact-delivery/issue-49-start-select-hints.json')
+                        default=ROOT/'references/compact-delivery/issue-49-igloo-fix.json')
     args = parser.parse_args()
     files = verify_delivery(args.delivery, json.loads(args.baseline.read_text()))
     print(json.dumps(dict(matches_release_baseline=True, files=files), indent=2))

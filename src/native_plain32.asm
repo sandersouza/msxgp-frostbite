@@ -95,7 +95,8 @@ rom_write_vram:
  RET
 rom_header_end:
  ASSERT $ <= $4100
- DS $4100-$,$FF
+ ; Payload references are symbolic; page alignment is unnecessary. Retain the
+ ; reclaimed header padding as payload capacity instead of reusing live assets.
 main_data:
  INCBIN "cold-low.zx0"
 gfx_data:

@@ -46,7 +46,7 @@ The transient loader workspace is not additional runtime RAM.
 ## Freeze checks
 
 `make verify` checks all five files and their build receipt against the current
-1.0.1-rc.1 baseline. The published 1.0.0 receipt is preserved separately.
+1.0.1-rc.2 baseline. The published 1.0.0 receipt is preserved separately.
 Changed game bytes require a new version and release; identity
 does not certify manual play, audio listening or physical hardware.
 

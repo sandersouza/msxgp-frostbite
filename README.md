@@ -65,7 +65,7 @@ inputs, previous outputs or sibling repository is required. `make verify`
 compares all five generated game files with the current version baseline.
 `make ci-verify` runs the essential unit checks; CI also builds the real game.
 
-The [1.0.1-rc.1 development candidate](docs/release-1.0.1-rc.1.md) adds aligned
+The [1.0.1-rc.2 development candidate](docs/release-1.0.1-rc.2.md) adds aligned
 `F1: START` / `F2: SELECT` instructions before gameplay. The stable download
 above remains 1.0.0.
 

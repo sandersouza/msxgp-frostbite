@@ -1,0 +1,149 @@
+{
+  "version": "1.0.1-rc.2",
+  "issue": "https://github.com/sandersouza/msxgp-frostbite/issues/49",
+  "files": {
+    "cartridge/FROSTBIT.ROM": {
+      "size": 32768,
+      "sha256": "e23e3518160027deb92b29d154fad6e2e8e1895753c6854cc4751f88b4477f87"
+    },
+    "disk/FROSTBIT.COM": {
+      "size": 32678,
+      "sha256": "07de1fda4bd807e60d5dcb9b2c63d1c94e40836b679120b7455b91ee9fa95252"
+    },
+    "disk/FROSTBIT.BIN": {
+      "size": 21418,
+      "sha256": "1e78e4b6d01620ad6a2e72c272b45f21fcf6bd4ef90d77aec4a1187353d7e1cc"
+    },
+    "disk/FBGFX.BIN": {
+      "size": 11797,
+      "sha256": "8df8d541ddf052b9ee5a999dd663ff3c0ee91e1a9e21f4e976d7922b13e55d4c"
+    },
+    "disk/FROSTBIT.BAS": {
+      "size": 80,
+      "sha256": "8dda3742fd166fcd6448f98e7c344a92646b556f188ab2b99757aba3f0f26cd8"
+    }
+  },
+  "fix": "Preserve native background assets at 4000..40B0 and 7C51..7D28; move hint module to unused bootstrap/RST extents; keep IRQ vector intact; remove unused cartridge header alignment.",
+  "natural_keyboard": {
+    "complete": true,
+    "keyboard_only": true,
+    "emulator_state_injected": false,
+    "physical_hardware": false,
+    "families": {
+      "ntsc": {
+        "shown": 432,
+        "hidden": 1896,
+        "matching_source_pictures": 2316,
+        "variations": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "igloo_stages": [],
+        "committed_pictures": 2328,
+        "control_pictures": 2343,
+        "play_pictures_per_vblank": 0.5781346510191476,
+        "control_pictures_per_vblank": 0.5815318097591106,
+        "cadence_change_percent": -0.5841741901221442
+      },
+      "pal": {
+        "shown": 446,
+        "hidden": 2132,
+        "matching_source_pictures": 2561,
+        "variations": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "igloo_stages": [],
+        "committed_pictures": 2578,
+        "control_pictures": 2605,
+        "play_pictures_per_vblank": 0.6505094164865699,
+        "control_pictures_per_vblank": 0.6585365853658537,
+        "cadence_change_percent": -1.2189404594467934
+      }
+    }
+  },
+  "controlled_igloo_matrix": {
+    "complete": true,
+    "keyboard_only": false,
+    "emulator_state_injected": true,
+    "physical_hardware": false,
+    "families": {
+      "ntsc": {
+        "shown": 309,
+        "hidden": 1933,
+        "matching_source_pictures": 2229,
+        "variations": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "igloo_stages": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "igloo_stage_pages": 32,
+        "committed_pictures": 2242,
+        "control_pictures": 2253,
+        "play_pictures_per_vblank": 0.5895614576899321,
+        "control_pictures_per_vblank": 0.5633106856084003,
+        "cadence_change_percent": 4.660087719298245
+      },
+      "pal": {
+        "shown": 317,
+        "hidden": 2156,
+        "matching_source_pictures": 2458,
+        "variations": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "igloo_stages": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "igloo_stage_pages": 32,
+        "committed_pictures": 2473,
+        "control_pictures": 2485,
+        "play_pictures_per_vblank": 0.657919110836678,
+        "control_pictures_per_vblank": 0.6322939178758876,
+        "cadence_change_percent": 4.052734375
+      }
+    }
+  },
+  "checker_sha256": "cc67203a186a8ee5c52ef01e6565cb82723f4b71d6a9179ae0f47c54bd1db199",
+  "limitation": "The matrix injects construction state and is renderer evidence, not natural progression. No fresh full-density timing or physical/owner acceptance claimed."
+}

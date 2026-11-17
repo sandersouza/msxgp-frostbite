@@ -1,3 +1,5 @@
+> Superseded: this candidate corrupts igloo graphics during construction. Use [1.0.1-rc.2](release-1.0.1-rc.2.md).
+
 # Frostbite 1.0.1-rc.1 — pre-game instructions
 
 Test candidate for [issue #49](https://github.com/sandersouza/msxgp-frostbite/issues/49).

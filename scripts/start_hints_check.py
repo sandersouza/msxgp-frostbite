@@ -58,7 +58,7 @@ def png(path, pixels):
                      +chunk(b'IDAT',zlib.compress(data))+chunk(b'IEND',b''))
 
 
-def run(delivery,out,family,changed,ticks):
+def run(delivery,out,family,changed,ticks,matrix=False):
     out.mkdir(parents=True)
     metadata=json.loads((delivery/'native-delivery-build.json').read_text())
     rom=delivery/'cartridge/FROSTBIT.ROM'
@@ -72,8 +72,7 @@ def run(delivery,out,family,changed,ticks):
     if changed:
         s=cold['hint_symbols']
         guards=f'''
-debug set_watchpoint read_mem {{0x4971 0x49DA}} {{$::native_seen}} {{hint_fail "retired initializer read"}}
-debug set_bp {s['sh_load_font']} {{}} {{
+debug set_bp {s['sh_load_font']} {{$::native_seen}} {{
  set page [debug read memory 0xC200]
  set names [debug read_block memory [expr {{0xC800+$page*1280}}] 256]
  binary scan $names cu* values
@@ -82,6 +81,9 @@ debug set_bp {s['sh_load_font']} {{}} {{
  }}
 }}
 '''
+    injection=''
+    if matrix:
+        injection='if {$::ticks>=900 && $::ticks<1412} {debug write memory 0xC04D [expr {($::ticks-900)/32}]} '
     tcl=f'''set save_settings_on_exit false
 set renderer none
 set throttle off
@@ -99,6 +101,7 @@ debug set_bp {cold['native_symbols']['nc_entry']} {{!$::native_seen}} {{
 {guards}
 debug set_bp 0xE9EE {{$::native_seen}} {{
  incr ::ticks
+ {injection}
  switch $::ticks {{
   90 - 150 - 210 - 270 {{keymatrixdown 6 64}}
   98 - 158 - 218 - 278 {{keymatrixup 6 64}}
@@ -141,22 +144,28 @@ after realtime 180 {{hint_fail "hint check watchdog"}}
             for a in range(0,len(raw),RECORD)]
 
 
-def check(baseline,delivery,out,ticks=3600):
+def check(baseline,delivery,out,ticks=3600,matrix=False):
     out=out.resolve()
     if out.exists():raise ValueError('fresh evidence output required')
     out.mkdir(parents=True)
+    original=(baseline/'cold/cold-ram.bin').read_bytes()
+    modified=(delivery/'cold/cold-ram.bin').read_bytes()
+    for lo,hi in ((0x4014,0x40B1),(0x7C51,0x7CF2)):
+        if original[lo:hi]!=modified[lo:hi]:raise ValueError('immutable native assets overwritten')
     summary={}
     for family in ('ntsc','pal'):
-        control=run(baseline.resolve(),out/(family+'-control'),family,False,ticks)
-        actual=run(delivery.resolve(),out/family,family,True,ticks)
+        control=run(baseline.resolve(),out/(family+'-control'),family,False,ticks,matrix)
+        actual=run(delivery.resolve(),out/family,family,True,ticks,matrix)
         known=collections.defaultdict(set)
         for (tick,page),state,sat,video in control:
             known[state].add(picture(video,page,sat))
-        matches=shown=hidden=0;variations=set();examples={};active_ticks=[]
+        matches=shown=hidden=0;variations=set();examples={};active_ticks=[];stages=set();stage_pages=set()
         control_ticks=[tick for (tick,_),state,_,_ in control if tick>=360 and not state[0x46]]
         for (tick,page),state,sat,video in actual:
             pixels=picture(video,page,sat)
-            hint=state[0x46]!=0
+            hint=state[0x46]!=0 and state[0x4D]==255
+            if matrix and 900<=tick<1412 and state[0x4D]<16:
+                stages.add(state[0x4D]);stage_pages.add((state[0x4D],page))
             visible=b''.join(video[0x1800+page*1024+row*32+21:0x1800+page*1024+row*32+31] for row in (1,2))
             if hint:
                 expected=bytes(38+page*64+GLYPHS.index(c) for line in TEXT for c in line)
@@ -179,15 +188,16 @@ def check(baseline,delivery,out,ticks=3600):
                 matches+=1
         if not shown or not hidden or variations!={0,1,2,3} or matches<0.95*len(actual):
             raise ValueError(f'{family}: insufficient lifecycle/control coverage {shown,hidden,variations,matches}')
+        if matrix and (stages!=set(range(16)) or len(stage_pages)!=32):raise ValueError('all sixteen igloo stages required')
         for name,pixels in examples.items():png(out/f'{family}-{name}.png',pixels)
         cadence=(len(active_ticks)-1)/(active_ticks[-1]-active_ticks[0])
         control_cadence=(len(control_ticks)-1)/(control_ticks[-1]-control_ticks[0])
         summary[family]=dict(shown=shown,hidden=hidden,matching_source_pictures=matches,variations=sorted(variations),
-                             committed_pictures=len(actual),control_pictures=len(control),
+                             igloo_stages=sorted(stages),igloo_stage_pages=len(stage_pages),committed_pictures=len(actual),control_pictures=len(control),
                              play_pictures_per_vblank=cadence,control_pictures_per_vblank=control_cadence,
                              cadence_change_percent=100*(cadence/control_cadence-1))
         print(family,summary[family],flush=True)
-    result=dict(complete=True,keyboard_only=True,emulator_state_injected=False,physical_hardware=False,families=summary)
+    result=dict(complete=True,keyboard_only=not matrix,emulator_state_injected=matrix,physical_hardware=False,families=summary)
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     return result
 
@@ -196,4 +206,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('baseline','delivery','out'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--ticks',type=int,default=3600)
-    a=p.parse_args();check(a.baseline,a.delivery,a.out,a.ticks)
+    p.add_argument('--igloo-matrix',action='store_true',help='controlled renderer diagnostic: inject stages 0..15, not natural gameplay evidence')
+    a=p.parse_args();check(a.baseline,a.delivery,a.out,a.ticks,a.igloo_matrix)

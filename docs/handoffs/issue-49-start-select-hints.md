@@ -33,6 +33,24 @@
 
 ## Implementation and verification
 
+### RC2 correction after owner play
+
+The owner reported igloo/HUD corruption in RC1. The hint overlays had mistaken
+addresses 4014h and 7C51h for unused bootstrap code, but native packing had
+already reused them for live graphics assets. RC2 preserves these ranges and
+guards them during linking. It uses only explicit unused initializer/RST
+extents and removes unnecessary cartridge-header alignment to remain 32 KiB.
+The initial text layout is unchanged. Existing construction takes precedence
+over borrowing igloo tiles; hints are limited to empty initial/selection states.
+
+RC2: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v1.0.1-rc.2
+Receipt: `references/compact-delivery/issue-49-igloo-fix.json`.
+Both natural keyboard routes and a separate injected renderer matrix passed
+NTSC/PAL. The matrix covers all 16 stages on both NAME pages (64 combinations).
+Injected diagnostics are explicitly separate from natural gameplay evidence.
+The original RC1 evidence below did not cover construction and did not catch
+the regression; RC1 must not be used for gameplay acceptance.
+
 - PR: https://github.com/sandersouza/msxgp-frostbite/pull/50
 - Test release: https://github.com/sandersouza/msxgp-frostbite/releases/tag/v1.0.1-rc.1
 - Exact tested source: `d0c8ba225aa650006e2ec47ea43a6d5568dcc174`.

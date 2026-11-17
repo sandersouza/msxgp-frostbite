@@ -22,7 +22,7 @@ Internet is needed only to provision sjasmplus; later builds use its local cache
 
 `outputs/native/cartridge/FROSTBIT.ROM` is the complete Normal 32 KiB cartridge.
 `outputs/native/disk/` contains COM, BIN, graphics companion and BASIC launcher.
-`make verify` checks all five files against the current 1.0.1-rc.1 hashes.
+`make verify` checks all five files against the current 1.0.1-rc.2 hashes.
 The published 1.0.0 baseline remains immutable in its separate receipt.
 `make clean` is simply `rm -rf outputs`. A subsequent build recreates everything
 under that directory. Tool binaries remain in `.tools/`.
@@ -57,11 +57,15 @@ artifacts. Byte identity is separate from emulator play, listening and physical
 hardware evidence. Use the [release play checklist](release-1.0.0.md) for changes.
 Changed game bytes require a new version and appropriate release validation.
 
-The [1.0.1-rc.1 candidate](release-1.0.1-rc.1.md) adds aligned F1/F2 hints.
-They reuse igloo tiles only before gameplay, invalidate the corresponding keys
-and restore each offscreen NAME page on start. The native-only loader bypasses
-the legacy bootstrap extents used by this module. The old unreachable SCREEN 2
-initializer is cleared to keep the complete cartridge within 32 KiB.
+The [1.0.1-rc.2 candidate](release-1.0.1-rc.2.md) adds aligned F1/F2 hints.
+They borrow unused igloo slots only on the empty initial/selection screen.
+Existing construction is preserved; instructions stay hidden when an existing
+igloo occupies those slots. Returning to an empty selection restores the text.
+All native background assets are retained. Explicit source overlays use the
+bypassed cold initializer, old auxiliary bootstrap and clock-setup tail, plus
+unused RST-vector bytes. The IRQ vector remains intact. The cartridge loader
+uses symbolic payload addresses without unnecessary header alignment, keeping
+all five native formats and the complete Normal 32 KiB cartridge.
 
 For the focused keyboard/display regression check, preserve a built 1.0.0
 delivery outside `outputs/` before cleaning, then run:
@@ -78,3 +82,8 @@ source states. It is a bounded route, not a new full-density or hardware claim.
 
 Pre-1.0 research tools and handoffs remain available in the immutable `v1.0.0`
 source tree and commit `52ff734c3f658e735854e548dbdbc1cc5a71b2fc`.
+
+The same checker accepts `--igloo-matrix` for a separate renderer diagnostic
+that injects all 16 construction stages. This is not natural gameplay evidence;
+its receipt explicitly marks target-state injection. Both checks compare against
+1.0.0 and require live native assets to remain byte-identical.

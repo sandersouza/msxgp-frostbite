@@ -1,11 +1,8 @@
-; Pre-game instructions. These three legacy bootstrap extents are not entered
-; by native cartridge/DOS/BASIC loading: all formats enter nc_entry at C400h.
-; The native clock ends at E99Dh and skips the former slot/mapper bootstrap.
-; Reuse the offscreen igloo slots only while the source is waiting to start.
-; Invalidate their keys after uploading so a later igloo always reconstructs.
+; Pre-game instructions. Existing native assets remain untouched.
+; Only the unused cold initializer, bypassed clock/auxiliary bootstrap and
+; unused RST vector area are replaced. IRQ vector 0038h remains intact.
     INCLUDE "symbols.inc"
-
-    ORG $4014
+    ORG $496E
 sh_data:
 sh_font:
     DB $7C,$40,$40,$78,$40,$40,$40,$00 ; F
@@ -20,61 +17,53 @@ sh_font:
     DB $7C,$40,$40,$78,$40,$40,$7C,$00 ; E
     DB $40,$40,$40,$40,$40,$40,$7C,$00 ; L
     DB $3C,$40,$40,$40,$40,$40,$3C,$00 ; C
-sh_lines:
-    ; Two rows per page, same column; padded START keeps both rows ten cells.
-    DUP 2, page
-    DB 38+page*64,39+page*64,40+page*64,41+page*64,42+page*64
-    DB 43+page*64,44+page*64,45+page*64,43+page*64,41+page*64
-    DB 38+page*64,46+page*64,40+page*64,41+page*64,42+page*64
-    DB 47+page*64,48+page*64,47+page*64,49+page*64,43+page*64
-    EDUP
 sh_visible:
     DB 0,0
-    ASSERT $ <= $40B1
-    DS $40B1-$,0
+sh_invalidate:
+    LD D,H
+    LD E,L
+    INC DE
+    LD BC,71
+    LD (HL),255
+    LDIR
+    RET
+    ASSERT $ <= $49DE
+    DS $49DE-$,0
 sh_data_end:
-
-    ORG $7C51
+    ORG $E99D
 sh_prepare:
     CALL fb_p_fast_upload_dirty
-    LD A,($F046)
-    OR A
-    JR NZ,.state
-    LD HL,(sh_visible)
-    LD A,H
-    OR L
-    RET Z                    ; steady active play: only the visibility guard
-.state:
     LD A,(fb_PAGE)
     LD E,A
     LD D,0
     LD HL,sh_visible
     ADD HL,DE
-    LD A,($F046)             ; coherent pre-game flag, never live source RAM
-    OR A
+    CALL sh_waiting          ; do not borrow slots of an existing igloo
     JR Z,.hide
     LD A,(HL)
     OR A
     JR NZ,.shown
-    PUSH HL
+    INC (HL)
     CALL sh_load_font
-    POP HL
-    LD (HL),1
 .shown:
     LD A,(fb_PAGE)
-    ADD A,A
-    ADD A,A
-    LD E,A
-    ADD A,A
-    ADD A,A
-    ADD A,E                  ; twenty NAME bytes per page
-    LD E,A
-    LD D,0
+    RRCA
+    RRCA
+    LD C,A
     LD HL,sh_lines
-    ADD HL,DE
+    LD DE,$C480
+    LD B,20
+.copy:
+    LD A,(HL)
+    OR C
+    LD (DE),A
+    INC HL
+    INC DE
+    DJNZ .copy
+    LD HL,$C480
     CALL sh_names_address
-    XOR A                    ; consecutive source rows
-    JR sh_rows
+    XOR A
+    JP sh_rows
 .hide:
     LD A,(HL)
     OR A
@@ -89,7 +78,11 @@ sh_prepare:
     LD H,A
     LD L,53
     CALL sh_names_address
-    LD A,22                  ; normal NAME rows have a 32-byte stride
+    JP sh_rows
+    ASSERT $ <= $E9EE
+    DS $E9EE-$,0
+sh_code_end:
+    ORG $7FBE
 sh_rows:
     PUSH AF
     PUSH DE
@@ -112,12 +105,21 @@ sh_names_address:
     ADD A,$58
     LD D,A
     LD E,53                  ; x=168, y=8/16; eight-pixel top/right margins
+    LD A,22                  ; normal NAME source row gap (shown path clears A)
     RET
-    ASSERT $ <= $7CF2
-    DS $7CF2-$,0
-sh_code_end:
-
-    ORG $E99D
+sh_lines:
+    DB 38,39,40,41,42,43,44,45,43,41
+    DB 38,46,40,41,42,47,48,47,49,43
+sh_waiting:
+    LD A,($F04D)
+    INC A                    ; FF is the original empty-igloo sentinel
+    JP Z,sh_waiting_empty
+    XOR A
+    RET
+    ASSERT $ <= $8000
+    DS $8000-$,0
+sh_rows_end:
+    ORG $0000
 sh_load_font:
     LD A,(fb_PAGE)
     ADD A,A
@@ -141,27 +143,19 @@ sh_load_font:
     NOP
     DJNZ .colors
     CALL fb_t_restore_interrupts
-    LD A,(fb_PAGE)
-    LD HL,$D0E4              ; twelve six-byte igloo keys, page zero
-    OR A
+    LD HL,$D0E4
+    BIT 1,D
     JR Z,.keys
-    LD HL,$D564              ; same keys, page one
+    LD HL,$D564
 .keys:
-    LD D,H
-    LD E,L
-    INC DE
-    LD BC,71
-    LD (HL),255
-    LDIR
-    RET
-    ASSERT $ <= $E9EE
-    DS $E9EE-$,0
+    JP sh_invalidate
+    ASSERT $ <= $0038
+    DS $0038-$,0
 sh_helper_end:
 
-    ; The former SCREEN 2/cache initializer is also bypassed by native cold
-    ; loading, which supplies the complete static RAM/VRAM image directly.
-    ; Clear its unreachable body to keep the cartridge within 32 KiB.
-    ORG $4971
-sh_retired_init:
-    DS $49DB-$,0
-sh_retired_init_end:
+    ORG $003B
+sh_waiting_empty:
+    LD A,($F046)
+    OR A
+    RET
+    ASSERT $ = $0040
